@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Saubara</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Saubara</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/saubara.pdf?v=1792248189" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Saubara (178ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 178ª Zona Eleitoral <strong>1 rota nova</strong> no transporte gratuito de Saubara.
+Traçamos pelas estradas o percurso das 4 rotas do Edital ZE-178 nº 32, de 11/09/2026 (Quadro Geral de Percursos para o Transporte dos Eleitores da Zona Rural – Santo Amaro e Saubara), anexo &quot;Quadro geral Transporte Eleitor eleições 26.pdf&quot;. 1 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>Saubara tem 13.431 eleitores aptos em 8 locais de votação e 38 seções. São 4 locais rurais, com 4.424 eleitores (33% do total).</li>
+
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Barra do Paraguaçu (120,8 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 6 localidades rurais de Saubara que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Barra do Paraguaçu</td><td>120,8</td><td>Rota 01</td><td>2,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Araripe</td><td>5,8</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Araripe de Baixo</td><td>5,4</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>3 das 12 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Porto (Rota 04), Rodoviária (Rota 04) e Ricardo Câmara (Rota 04). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 6 localidades rurais de Saubara, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 850" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Saubara: 1 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital ZE-178 nº 32, de 11/09/2026 (Quadro Geral de Percursos para o Transporte dos Eleitores da Zona Rural – Santo Amaro e Saubara), anexo &quot;Quadro geral Transporte Eleitor eleições 26.pdf&quot; e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="690.2,295.3 725.0,175.2 431.3,144.3 378.3,130.4 319.1,176.1 223.4,172.1 203.8,155.6 145.1,142.6 76.8,174.3 95.5,224.8 97.6,273.9 119.0,339.6 156.8,373.6 102.9,481.0 112.4,514.5 82.0,612.9 35.0,665.1 98.5,716.0 153.3,718.1 184.7,704.7 226.0,662.5 265.1,633.3 378.7,604.6 511.4,560.7 675.4,497.6 672.4,436.7 690.2,295.3 690.2,295.3" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="193.6,614.5 185.4,621.0 192.7,631.5 209.5,617.5 212.4,606.2 219.6,600.3 231.3,598.6 234.1,586.5 234.8,573.7 239.5,564.7 251.9,566.1 260.7,571.2 266.6,564.1 281.1,565.2 291.2,559.6 302.3,555.5 314.6,554.5 323.3,548.4 327.9,537.9 332.5,525.4 338.2,514.6 342.0,503.2 344.0,491.3 344.6,476.0 347.7,464.9 349.9,452.6 353.2,442.7 351.9,430.6 356.6,418.9 356.6,404.4 344.2,405.1 356.6,404.0 356.1,390.5 350.3,382.3 348.7,368.5 347.8,355.9 345.7,343.3 337.8,326.5 334.0,317.0 335.6,299.6 331.5,284.9 337.2,273.3 342.3,265.3 345.7,255.3 357.0,250.8 366.4,246.5 371.4,237.8 372.3,225.0 378.2,218.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="300.5,559.3 310.7,555.8 320.9,550.3 324.8,540.6 330.9,533.4 333.5,522.6 339.0,513.2 342.2,500.0 343.7,485.6 345.2,473.5 348.5,461.1 351.6,448.4 351.0,434.8 354.7,423.5 357.6,412.7 352.3,404.1 342.9,407.8 352.3,404.1 356.7,395.3 351.8,384.6 348.8,373.7 348.5,360.5 345.7,343.3 337.8,326.5 334.0,317.0 335.6,299.6 331.5,284.9 337.2,273.3 342.3,265.3 345.7,255.3 357.0,250.8 366.4,246.5 371.4,237.8 372.3,225.0 378.2,218.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="431.9,80.0 420.6,81.8 408.7,91.9 404.4,101.2 405.4,120.7 404.0,133.1 397.4,159.6 392.0,175.2 388.3,186.4 380.7,197.4 378.4,209.1 378.2,218.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="377.8,204.0 260.6,681.7 377.8,204.0 377.8,204.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Barra do Paraguaçu</title></polyline>
+<circle cx="193.8" cy="614.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="197.4" cy="620.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="344.8" cy="205.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="314.0" cy="540.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="344.2" cy="408.2" r="2.2" fill="#b9b9b2"/>
+<polygon points="383.0,213.7 370.4,236.9 395.7,236.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="320.4,545.2 310.7,563.1 330.1,563.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="320.4" y="576.7" text-anchor="middle" fill="#5c5c57">Bom Jesus dos Pobres</text>
+<polygon points="352.2,398.0 342.3,416.2 362.1,416.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="352.2" y="429.8" text-anchor="middle" fill="#5c5c57">Cabuçu</text>
+<polygon points="387.4,212.5 374.9,235.5 399.9,235.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="330.4,528.2 319.9,547.6 340.9,547.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="376.5,218.0 365.6,238.2 387.5,238.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="353.5,388.8 343.6,407.0 363.3,407.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="377.8,190.4 365.0,214.0 390.6,214.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="260.6" cy="681.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="267.6" y="676.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Barra do Paraguaçu 120,8 km</text>
+<rect x="375.9" y="217.1" width="10" height="10" fill="#1d1d1b"/><text x="389.9" y="240.1" font-weight="600" fill="#1d1d1b">Sede de Saubara</text>
+<line x1="35" x2="231.0" y1="748.1" y2="748.1" stroke="#8a8a84" stroke-width="2"/><text x="35" y="762.1" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="739.1412358133672" y2="739.1412358133672" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="743.1412358133672" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,732.1 421.4,744.4 434.6,744.4" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="743.1412358133672" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="757.1412358133672" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="766.1412358133672" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="762.1412358133672" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="766.1412358133672" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="785.1412358133672" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="789.1412358133672" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="785.1412358133672" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="789.1412358133672" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="808.1412358133672" y2="808.1412358133672" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="812.1412358133672" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="831.1412358133672" y2="831.1412358133672" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="835.1412358133672" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital ZE-178 nº 32, de 11/09/2026 (Quadro Geral de Percursos para o Transporte dos Eleitores da Zona Rural – Santo Amaro e Saubara), anexo &quot;Quadro geral Transporte Eleitor eleições 26.pdf&quot; · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (3):</strong> Barra do Paraguaçu, Araripe e Araripe de Baixo.</li>
+<li><strong>De 3 a 5 km (0):</strong> nenhuma.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (3):</strong> Bom Jesus dos Pobres, Cabuçu e Loteamento Nova Saubara.</li>
+</ul><h2>Rotas do Edital ZE-178 nº 32, de 11/09/2026 (Quadro Geral de Percursos para o Transporte dos Eleitores da Zona Rural – Santo Amaro e Saubara), anexo &quot;Quadro geral Transporte Eleitor eleições 26.pdf&quot;</h2>
+<p>O edital tem 4 rotas para Saubara. Horários: Saída às 7h, roteiro completo (ida e volta) até 12h; à tarde saída às 14h, até 17h. Veículos: Micro-ônibus, Doblô e Fiat Mobi; Fiat Mobi de apoio extra.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Araripe – Bom Jesus – Cabuçu – Sede</td></tr><tr><td>02</td><td>Bom Jesus – Cabuçu – Sede</td></tr><tr><td>03</td><td>Itapema – Sede</td></tr><tr><td>04</td><td>Porto – Rodoviária – Ricardo Câmara</td></tr></tbody></table></div>
+
+<p>Fonte: Edital ZE-178 nº 32, de 11/09/2026 (Quadro Geral de Percursos para o Transporte dos Eleitores da Zona Rural – Santo Amaro e Saubara), anexo &quot;Quadro geral Transporte Eleitor eleições 26.pdf&quot;; DJE/TRE-BA nº 191, disponibilizado em 11/09/2026, p. 349 (https://dje.tse.jus.br/dje/pdf/v1/edicao/129432); quadro no anexo do DJE (https://sitdoc.tse.jus.br/sitdoc/DownloadFile?id=2e040131-58b5-4a17-b2a4-4700fc27e17d&amp;app=dje&amp;extensao=pdf), cópia em fontes/coleta_agentes/rodada2/BA/anexos/ze178_ed191_2e040131.pdf.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 1 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Barra do Paraguaçu</strong></td><td>Sede – Barra do Paraguaçu – Sede</td><td>Barra do Paraguaçu</td><td>32,6 km (ida e volta)</td><td>~49 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMS</strong></p><p>Saubara/BA, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Abraão Barreto Cordeiro</strong><br>Juiz Eleitoral da 178ª Zona Eleitoral – Santo Amaro/BA</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital ZE-178 nº 32, de 11/09/2026 (Quadro Geral de Percursos para o Transporte dos Eleitores da Zona Rural – Santo Amaro e Saubara), anexo &quot;Quadro geral Transporte Eleitor eleições 26.pdf&quot;) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Saubara, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital ZE-178 nº 32, de 11/09/2026 (Quadro Geral de Percursos para o Transporte dos Eleitores da Zona Rural – Santo Amaro e Saubara), anexo &quot;Quadro geral Transporte Eleitor eleições 26.pdf&quot;: Barra do Paraguaçu.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Barra do Paraguaçu (Sede – Barra do Paraguaçu – Sede).</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital ZE-178 nº 32, de 11/09/2026 (Quadro Geral de Percursos para o Transporte dos Eleitores da Zona Rural – Santo Amaro e Saubara), anexo &quot;Quadro geral Transporte Eleitor eleições 26.pdf&quot; deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Saubara</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Saubara; Edital ZE-178 nº 32, de 11/09/2026 (Quadro Geral de Percursos para o Transporte dos Eleitores da Zona Rural – Santo Amaro e Saubara), anexo &quot;Quadro geral Transporte Eleitor eleições 26.pdf&quot;; DJE/TRE-BA nº 191, disponibilizado em 11/09/2026, p. 349 (https://dje.tse.jus.br/dje/pdf/v1/edicao/129432); quadro no anexo do DJE (https://sitdoc.tse.jus.br/sitdoc/DownloadFile?id=2e040131-58b5-4a17-b2a4-4700fc27e17d&amp;app=dje&amp;extensao=pdf), cópia em fontes/coleta_agentes/rodada2/BA/anexos/ze178_ed191_2e040131.pdf; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>
