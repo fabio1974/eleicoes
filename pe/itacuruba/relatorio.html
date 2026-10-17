@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Itacuruba</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Itacuruba</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/itacuruba.pdf?v=1792247747" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Itacuruba (73ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 73ª Zona Eleitoral <strong>1 rota nova e 4 paradas extras em rotas do edital</strong> no transporte gratuito de Itacuruba.
+Traçamos pelas estradas o percurso das 5 rotas do Edital nº 23 - TRE-PE/PRES/DG/ZE073. 1 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 4 ficam a 1–2 km.</p>
+<ul>
+<li>Itacuruba tem 4.774 eleitores aptos em 4 locais de votação e 18 seções. São 0 locais rurais, com 0 eleitores (0% do total).</li>
+
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Fazeda Jatina (23,3 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Maravilha, Aldeia Indígena Tuxá, Comunidade Quilombola Poço dos Cavalos 2 e União Simpatia 1.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 16 localidades rurais de Itacuruba que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Fazeda Jatina</td><td>23,3</td><td>Rota 04</td><td>4,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Maravilha</td><td>19,7</td><td>Rota 03</td><td>1,6</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Aldeia Indígena Tuxá</td><td>12,7</td><td>Rota 04</td><td>1,5</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Comunidade Quilombola Associação Santa Clara</td><td>12,7</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Comunidade Quilombola Poço dos Cavalos 1</td><td>10,7</td><td>Rota 01</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Comunidade Quilombola Poço dos Cavalos 2</td><td>10,4</td><td>Rota 01</td><td>1,3</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>União Simpatia 1</td><td>7,3</td><td>Rota 02</td><td>1,9</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Angico</td><td>6,9</td><td>Rota 05</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Aldeia Indígena Serrote dos Campos</td><td>3,9</td><td>Rota 04</td><td>0,6</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>18 das 25 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Faz. Fernandes (Rota 01), Riacho (Rota 01), Avalete (Rota 01), Erem Prof. Maria de Menezes (Rota 01, Rota 02, Rota 03 e Rota 04), Lealdade (Rota 02), Simpatia (Rota 02), São Jose (Rota 02), Aldeia Pajeu (Rota 02), Bom Viver (Rota 03), Ingazeira (Rota 03), Cafundó (Rota 03), Aldeia Tuxa Campos (Rota 04), Ass. Angico III (Rota 05), Angico I (paulo Freire) (Rota 05) e EREM Prof. Maria de Menezes (Rota 05). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 16 localidades rurais de Itacuruba, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1090" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Itacuruba: 5 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 23 - TRE-PE/PRES/DG/ZE073 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="516.8,957.8 576.4,932.8 609.7,898.3 622.4,833.1 615.9,792.1 623.3,695.7 605.0,627.3 617.4,588.9 611.8,528.8 625.6,445.1 637.7,397.6 663.7,349.5 671.0,300.6 705.8,264.9 725.0,215.6 710.8,202.1 702.0,128.1 677.2,110.1 703.2,99.2 707.3,80.3 100.8,289.9 74.8,300.0 68.6,358.1 45.3,388.1 52.1,425.0 51.2,508.7 35.0,531.2 41.2,562.1 182.1,571.8 211.9,588.7 277.7,643.5 287.1,658.8 380.9,739.9 447.5,764.7 478.8,791.5 502.7,849.0 516.5,911.5 516.8,957.8 516.8,957.8" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="386.9,600.1 383.2,593.9 382.9,584.1 377.3,575.8 378.0,563.4 380.6,550.6 380.6,550.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="558.9,690.2 536.6,391.9 536.6,391.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="225.4,250.4 246.8,239.0 255.0,236.2 321.5,212.9 351.8,202.4 358.5,200.1 365.2,197.7 370.9,201.9 372.3,210.4 374.1,217.4 377.4,223.0 382.6,228.5 389.8,234.8 394.2,239.5 400.5,243.7 405.8,247.2 409.7,252.3 413.2,258.8 417.8,267.4 417.7,276.6 414.3,282.3 415.7,290.0 418.0,296.9 416.5,337.7 436.5,365.8 472.4,393.7 479.4,396.8 490.8,395.2 514.9,388.0 522.0,385.9 529.8,387.9 535.9,391.0 536.8,391.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="231.7,443.8 243.3,443.7 252.3,446.6 261.1,446.3 269.9,447.3 280.4,453.0 284.1,459.6 288.9,466.9 292.0,475.3 302.0,480.7 310.2,488.4 316.8,497.3 322.3,505.6 327.6,512.1 332.6,516.7 337.3,524.5 347.3,527.8 358.2,532.8 367.5,538.4 380.1,545.1 383.2,536.7 381.9,524.2 381.0,514.8 389.5,497.0 397.2,486.6 407.4,472.6 411.2,465.3 412.2,455.2 413.1,444.4 421.3,431.5 428.6,421.4 435.7,411.8 447.8,416.6 456.7,417.0 470.0,409.7 481.6,402.8 490.8,398.4 514.9,388.0 522.0,385.9 529.8,387.9 535.9,391.0 536.8,391.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="715.7,212.5 712.1,218.5 708.7,224.3 705.2,230.1 700.8,234.8 693.7,232.9 689.5,239.2 687.6,246.6 681.9,249.9 673.5,248.5 669.0,242.4 663.5,238.7 658.2,235.1 649.6,235.7 644.7,239.9 641.2,245.3 638.2,251.6 635.3,257.7 629.2,260.6 624.3,256.5 621.4,250.4 619.6,248.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="540.7,393.2 534.0,389.9 527.9,386.9 518.9,386.8 492.0,394.9 484.1,397.0 476.0,395.7 436.5,365.8 418.2,343.3 418.4,300.1 415.7,290.0 414.3,282.3 417.7,276.6 418.0,267.8 413.2,258.8 409.7,252.3 405.8,247.2 400.5,243.7 394.8,239.9 389.8,234.8 385.4,230.0 379.8,226.6 376.1,220.8 373.0,214.6 371.6,206.1 370.3,197.6 358.5,200.1 351.8,202.4 321.5,212.9 255.0,236.2 246.8,239.0 226.7,246.1 217.2,249.4 191.2,258.6 191.0,267.7 187.8,273.6 187.0,281.7 188.1,290.1 189.2,298.4 191.3,305.8 190.0,313.9 189.6,322.6 187.1,330.4 183.8,336.0 179.6,342.3 176.4,348.4 172.7,356.9 174.6,364.8 172.5,357.9 175.1,351.3 179.6,342.3 183.8,336.0 187.1,330.4 189.4,323.3 190.0,313.9 191.3,305.8 189.2,298.4 188.1,290.1 187.0,281.7 187.8,273.6 191.0,267.7 191.2,258.6 216.8,249.6 226.7,246.1 246.8,239.0 255.0,236.2 321.5,212.9 351.8,202.4 358.5,200.1 365.2,197.7 370.9,201.9 372.3,210.4 374.1,217.4 377.4,223.0 382.6,228.5 389.8,234.8 394.2,239.5 400.5,243.7 405.8,247.2 409.7,252.3 413.2,258.8 417.8,267.4 417.7,276.6 414.3,282.3 415.7,290.0 418.0,296.9 416.5,337.7 436.5,365.8 472.4,393.7 479.4,396.8 490.8,395.2 514.9,388.0 522.0,385.9 529.8,387.9 535.9,391.0 543.4,394.8 540.7,393.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fazeda Jatina</title></polyline>
+<polyline points="380.6,550.6 380.6,550.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 01</title></polyline>
+<polyline points="536.8,391.5 530.6,388.2 523.9,385.6 516.0,387.7 492.0,394.9 481.6,402.8 470.0,409.7 459.9,415.8 450.4,417.2 438.9,412.0 428.6,421.4 421.3,431.5 414.7,440.5 412.2,455.2 411.2,465.3 407.4,472.6 411.2,465.3 412.2,455.2 413.1,444.4 421.3,431.5 428.6,421.4 435.7,411.8 447.8,416.6 456.7,417.0 470.0,409.7 481.6,402.8 490.8,398.4 514.9,388.0 522.0,385.9 529.8,387.9 535.9,391.0 536.8,391.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 02</title></polyline>
+<polyline points="225.4,250.4 217.2,249.4 191.2,258.6 191.0,267.7 191.2,258.6 216.8,249.6 226.7,246.1 225.4,250.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 03</title></polyline>
+<polyline points="327.6,512.1 327.6,512.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 04</title></polyline>
+<circle cx="385.9" cy="600.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="385.3" cy="558.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="620.6" cy="248.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="452.5" cy="434.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="538.0" cy="350.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="581.1" cy="368.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="523.0" cy="458.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="531.9" cy="385.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="531.6" cy="387.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="536.6" cy="391.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="572.0" cy="439.2" r="2.2" fill="#b9b9b2"/>
+<polygon points="541.0,387.5 535.9,396.9 546.1,396.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="544.8,378.3 532.4,401.2 557.3,401.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="540.7,386.6 529.8,406.8 551.7,406.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="546.9,382.1 537.5,399.4 556.3,399.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="150.0" cy="370.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="157.0" y="365.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazeda Jatina 23,3 km</text>
+<circle cx="188.8" cy="272.8" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="195.8" y="267.8" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Maravilha 19,7 km</text>
+<circle cx="298.3" cy="539.7" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="305.3" y="534.7" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Aldeia Indígena Tuxá 12,7 km</text>
+<circle cx="416.0" cy="556.8" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="423.0" y="551.8" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Comunidade Quilombola Poço dos Cavalos 2 10,4 km</text>
+<circle cx="496.2" cy="540.6" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="503.2" y="535.6" fill="#2f6fd6" fill-opacity=".8" font-weight="600">União Simpatia 1 7,3 km</text>
+<rect x="531.6" y="386.9" width="10" height="10" fill="#1d1d1b"/><text x="545.6" y="409.9" font-weight="600" fill="#1d1d1b">Sede de Itacuruba</text>
+<line x1="35" x2="167.8" y1="987.8" y2="987.8" stroke="#8a8a84" stroke-width="2"/><text x="35" y="1001.8" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="978.8333333333237" y2="978.8333333333237" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="982.8333333333237" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,971.8 421.4,984.1 434.6,984.1" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="982.8333333333237" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="996.8333333333237" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="1005.8333333333237" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="1001.8333333333237" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="1005.8333333333237" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1024.8333333333237" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1028.8333333333237" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1024.8333333333237" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1028.8333333333237" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1047.8333333333237" y2="1047.8333333333237" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1051.8333333333237" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1070.8333333333237" y2="1070.8333333333237" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1074.8333333333237" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 23 - TRE-PE/PRES/DG/ZE073 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (8):</strong> Fazeda Jatina, Maravilha, Aldeia Indígena Tuxá, Comunidade Quilombola Associação Santa Clara, Comunidade Quilombola Poço dos Cavalos 1, Comunidade Quilombola Poço dos Cavalos 2, União Simpatia 1 e Angico.</li>
+<li><strong>De 3 a 5 km (1):</strong> Aldeia Indígena Serrote dos Campos.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (7):</strong> Agrovila do PA Paulo Freire, Aldeia Indígena Agrovila do PA Angico, Aldeia Indígena Tuxá Pajeú, Comunidade Quilombola Negros de Gilu, Itacuruba, Sem Denominação e União Simpatia 2.</li>
+</ul><h2>Rotas do Edital nº 23 - TRE-PE/PRES/DG/ZE073</h2>
+<p>O edital tem 5 rotas para Itacuruba. Horários: não informados. Veículos: Rota 01: micro ônibus SOA 9A38; Rota 02: micro ônibus SOY 0A89; Rota 03: ônibus SOM 5A91; Rota 04: micro ônibus SOA 9A38; Rota 05: ônibus SOC 1D67.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Faz. Fernandes – Riacho – Avalete – Coite – Pocos dos Cavalos – Erem Prof. Maria de Menezes</td></tr><tr><td>02</td><td>Faz. Serrinha – Lealdade – Simpatia – São Jose – Aldeia Pajeu – Erem Prof. Maria de Menezes</td></tr><tr><td>03</td><td>Faz. Recanto – Bom Viver – Ingazeira – Cafundó – Erem Prof. Maria de Menezes</td></tr><tr><td>04</td><td>Faz. Jatinã – Aldeia Tuxa Campos – Erem Prof. Maria de Menezes</td></tr><tr><td>05</td><td>Faz Barrocas – Ass. Angico III – Angico II – Angico I (paulo Freire) – EREM Prof. Maria de Menezes</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 23 - TRE-PE/PRES/DG/ZE073 (Quadro geral de percursos programados para o transporte de eleitores de Itacuruba, Anexo I), de 18/09/2026, DJE/TRE-PE nº 227 (Edição Eleitoral), disponibilizado em 21/09/2026, publicação em 22/09/2026, p. 59-60 (https://dje.tse.jus.br/dje/pdf/v1/edicao/129773).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 5 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Fazeda Jatina</strong></td><td>Sede – Fazeda Jatina – Sede</td><td>Fazeda Jatina</td><td>46,7 km (ida e volta)</td><td>~1h00</td></tr><tr><td><strong>Parada extra na Rota 01</strong></td><td>desvio pelo caminho atual: Comunidade Quilombola Poço dos Cavalos 2</td><td>Comunidade Quilombola Poço dos Cavalos 2</td><td>+0,1 km</td><td>+0 min</td></tr><tr><td><strong>Parada extra na Rota 02</strong></td><td>desvio pelo caminho atual: União Simpatia 1</td><td>União Simpatia 1</td><td>+14,1 km</td><td>+29 min</td></tr><tr><td><strong>Parada extra na Rota 03</strong></td><td>desvio pelo caminho atual: Maravilha</td><td>Maravilha</td><td>+4,4 km</td><td>+7 min</td></tr><tr><td><strong>Parada extra na Rota 04</strong></td><td>desvio pelo caminho atual: Aldeia Indígena Tuxá</td><td>Aldeia Indígena Tuxá</td><td>+0,0 km</td><td>+0 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMI</strong></p><p>Itacuruba/PE, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Tiago Mendes Freire</strong><br>Juiz Eleitoral da 73ª Zona Eleitoral – Belém do São Francisco/PE</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 23 - TRE-PE/PRES/DG/ZE073) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Itacuruba, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 23 - TRE-PE/PRES/DG/ZE073: Fazeda Jatina, Maravilha, Aldeia Indígena Tuxá, Comunidade Quilombola Poço dos Cavalos 2 e União Simpatia 1.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Fazeda Jatina (Sede – Fazeda Jatina – Sede);</li><li>a inclusão de parada em Comunidade Quilombola Poço dos Cavalos 2 na Rota 01, mantido todo o percurso atual;</li><li>a inclusão de parada em União Simpatia 1 na Rota 02, mantido todo o percurso atual;</li><li>a inclusão de parada em Maravilha na Rota 03, mantido todo o percurso atual;</li><li>a inclusão de parada em Aldeia Indígena Tuxá na Rota 04, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 23 - TRE-PE/PRES/DG/ZE073 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Itacuruba</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Itacuruba; Edital nº 23 - TRE-PE/PRES/DG/ZE073 (Quadro geral de percursos programados para o transporte de eleitores de Itacuruba, Anexo I), de 18/09/2026, DJE/TRE-PE nº 227 (Edição Eleitoral), disponibilizado em 21/09/2026, publicação em 22/09/2026, p. 59-60 (https://dje.tse.jus.br/dje/pdf/v1/edicao/129773); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

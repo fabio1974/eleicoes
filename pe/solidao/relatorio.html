@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Solidão</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Solidão</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/solidao.pdf?v=1792247178" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Solidão (98ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 98ª Zona Eleitoral <strong>3 rotas novas e 3 paradas extras em rotas do edital</strong> no transporte gratuito de Solidão.
+Traçamos pelas estradas o percurso das 10 rotas do Edital nº 32 - TRE-PE/PRES/DG/ZE098 (aditamento aos Editais nº 22 e 31). 10 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 3 ficam a 1–2 km.</p>
+<ul>
+<li>Solidão tem 5.556 eleitores aptos em 5 locais de votação e 20 seções. São 2 locais rurais, com 1.069 eleitores (19% do total).</li>
+<li>1 locais rurais ficam a 10 km ou mais da sede, com 416 eleitores. Os mais distantes: Povoado De Sao Francisco               Sn (11,6 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Muriçoca (11,8 km do local de votação), Azevém (11,1 km do local de votação), Diamante (10,3 km do local de votação), Dona Joana (7,8 km do local de votação), Sítio Poço Dantas - Barro Branco (7,7 km do local de votação), Calista (6,9 km do local de votação), Paizinho (6,4 km do local de votação), Sítio Poço Dantas (6,0 km do local de votação), Bola (5,4 km do local de votação) e Caveira (5,2 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Lourenço, Catolé e Furnas.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 31 localidades rurais de Solidão que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Muriçoca</td><td>11,8</td><td>Rota 04</td><td>4,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Azevém</td><td>11,1</td><td>Rota 04</td><td>3,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Diamante</td><td>10,3</td><td>Rota 04</td><td>2,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Caldeirão Grande 1</td><td>9,3</td><td>Rota 09</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Caldeirão Grande</td><td>9,2</td><td>Rota 09</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Caldeirão Grande 2</td><td>8,8</td><td>Rota 09</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Mato Grosso</td><td>8,7</td><td>Rota 09</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Lourenço</td><td>8,2</td><td>Rota 04</td><td>1,8</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Dona Joana</td><td>7,8</td><td>Rota 04</td><td>3,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Sítio Poço Dantas - Barro Branco</td><td>7,7</td><td>Rota 02</td><td>4,2</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Caldeirão</td><td>7,6</td><td>Rota 09</td><td>1,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Calista</td><td>6,9</td><td>Rota 04</td><td>4,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Catolé</td><td>6,7</td><td>Rota 09</td><td>1,8</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Paizinho</td><td>6,4</td><td>Rota 04</td><td>4,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Furnas</td><td>6,1</td><td>Rota 07</td><td>1,8</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Sítio Poço Dantas</td><td>6,0</td><td>Rota 02</td><td>2,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Pintada</td><td>5,9</td><td>Rota 07</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Bola</td><td>5,4</td><td>Rota 09</td><td>3,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Caveira</td><td>5,2</td><td>Rota 09</td><td>2,3</td><td>Sem rota (mais de 2 km)</td></tr></tbody></table></div>
+<p>3 das 22 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Sítio Boqueirão (Rota 01), Sítio Jardim 2 (Rota 08) e Jardim 1 (de Fora) (Rota 09). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 31 localidades rurais de Solidão, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 667" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Solidão: 13 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 32 - TRE-PE/PRES/DG/ZE098 (aditamento aos Editais nº 22 e 31) e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="196.3,454.4 238.7,463.5 304.2,430.5 310.8,453.3 389.7,456.6 412.9,515.3 452.7,532.6 472.3,516.4 533.8,488.8 636.6,503.3 652.6,519.2 681.5,512.0 725.0,535.2 634.8,393.2 503.8,124.9 465.7,148.8 426.3,137.2 396.9,142.3 373.8,115.9 298.5,160.1 278.2,206.4 190.2,214.4 177.5,253.8 189.8,282.8 151.1,322.3 110.5,320.5 87.4,383.1 63.5,384.2 48.2,426.9 112.0,453.0 185.8,441.0 196.3,454.4 196.3,454.4" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="492.8,504.4 488.9,495.4 486.5,485.1 484.8,475.0 489.3,467.7 493.7,461.0 491.7,452.2 486.7,443.4 483.7,434.3 476.1,430.3 483.3,426.3 491.6,422.4 502.9,421.0 512.9,418.6 515.4,406.6 503.3,405.3 493.2,404.2 476.7,406.8 462.5,405.6 442.2,402.5 429.2,400.6 418.2,398.9 408.6,397.2 399.1,395.7 389.8,396.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="415.1,492.5 411.5,485.1 413.9,476.5 409.8,469.2 401.3,465.9 407.5,460.5 413.7,455.6 409.6,448.8 401.4,446.1 393.4,443.1 386.6,438.4 383.2,430.8 379.0,423.8 378.3,413.5 378.6,402.9 384.4,397.8 389.8,396.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="384.2,255.2 373.2,255.2 364.1,257.3 357.7,262.7 351.6,268.4 346.0,275.0 349.1,283.8 354.6,290.6 356.2,300.7 357.9,310.5 355.8,319.6 353.4,332.5 357.5,339.7 364.7,344.8 372.5,348.4 382.9,354.1 391.9,356.6 397.7,362.4 402.3,370.0 400.3,379.0 391.4,384.0 383.6,387.3 388.0,394.7 389.8,396.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="426.7,311.6 426.1,322.0 425.9,333.2 423.5,342.4 425.6,354.9 431.2,363.3 434.0,371.7 444.6,374.2 454.8,375.1 463.7,377.8 475.9,379.2 467.8,382.6 458.2,386.0 447.2,386.1 439.9,389.9 432.1,393.0 428.1,400.5 418.2,398.9 408.6,397.2 399.1,395.7 389.8,396.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="182.2,228.6 184.4,238.2 182.6,247.3 174.6,250.2 178.4,258.8 182.5,265.9 183.8,275.5 189.8,281.0 197.7,285.3 209.1,290.2 219.6,292.7 225.7,298.0 236.6,298.5 246.0,301.3 254.3,297.6 262.8,294.8 273.6,294.5 284.1,296.2 292.2,299.5 303.4,299.8 307.7,307.0 316.7,309.8 325.3,312.7 336.1,313.4 339.6,321.1 342.8,328.9 348.3,335.1 357.0,338.5 363.9,344.1 371.4,348.1 382.9,354.1 391.9,356.6 397.7,362.4 402.3,370.0 400.3,379.0 391.4,384.0 383.6,387.3 388.0,394.7 389.8,396.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="281.8,276.0 279.3,285.1 277.3,294.4 267.1,295.4 256.2,295.5 250.2,300.9 239.9,299.6 229.2,299.0 221.8,294.7 213.1,291.9 203.8,287.5 195.0,284.8 188.2,279.7 182.4,274.1 181.9,263.5 176.8,257.1 181.8,247.6 185.6,240.4 182.4,231.7 182.2,228.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="35.0,406.2 42.4,410.0 52.7,409.1 64.1,408.6 74.7,409.3 94.7,414.4 104.2,417.0 117.3,423.2 127.0,424.9 139.2,425.2 148.0,422.8 156.7,420.1 167.6,418.3 180.7,419.1 191.1,418.5 195.3,410.9 202.9,407.7 211.6,404.3 220.0,401.2 230.0,398.7 237.5,394.4 246.7,392.3 254.2,396.4 267.2,396.6 276.1,398.8 286.2,396.9 296.0,395.7 303.9,392.7 314.0,390.8 323.2,389.2 331.9,386.7 342.5,387.2 351.2,389.6 361.1,392.8 371.2,394.2 379.7,396.6 389.7,394.9 389.8,396.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 09</title></polyline>
+<polyline points="84.1,483.1 87.4,475.1 89.8,484.2 100.0,482.9 108.2,480.2 116.8,477.7 122.6,472.3 128.5,466.7 135.9,463.0 145.1,461.0 155.5,459.9 164.9,457.3 169.5,450.8 175.4,445.3 186.1,446.1 194.8,443.6 201.6,439.1 211.3,436.9 220.2,434.3 223.9,426.7 227.0,417.1 234.9,413.5 240.8,408.2 247.7,403.1 256.1,400.0 265.7,397.9 276.1,398.8 286.2,396.9 296.0,395.7 303.9,392.7 314.0,390.8 323.2,389.2 331.9,386.7 342.5,387.2 351.2,389.6 361.1,392.8 371.2,394.2 379.7,396.6 389.7,394.9 389.8,396.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 10</title></polyline>
+<polyline points="182.5,225.1 182.5,236.3 186.5,243.2 178.0,248.3 178.4,258.8 182.5,265.9 179.4,273.7 170.2,276.2 160.1,278.1 152.2,281.3 144.3,285.2 137.9,292.5 135.8,301.4 127.7,305.1 108.9,308.2 101.9,312.1 90.3,320.3 101.6,319.3 112.5,319.2 122.7,317.9 123.5,328.8 128.6,335.8 123.7,329.6 126.7,319.9 128.2,310.5 135.5,301.7 137.9,292.5 144.3,285.2 152.2,281.3 160.1,278.1 170.2,276.2 179.4,273.7 182.5,265.9 178.4,258.8 174.4,251.8 181.8,247.6 185.6,240.4 182.4,231.7 182.6,220.8 188.1,214.5 191.5,206.8 196.8,200.7 205.4,194.6 218.0,193.6 238.6,185.4 247.8,181.7 255.0,178.0 265.8,165.6 283.2,144.0 288.4,137.7 295.3,132.3 305.3,127.6 318.1,121.7 339.9,111.5 344.8,118.9 339.5,128.1 337.3,137.2 344.4,142.9 337.3,137.2 339.5,128.1 344.3,121.7 340.8,114.1 346.9,108.3 355.0,104.6 364.9,101.7 393.8,94.1 404.3,91.3 413.8,88.6 422.8,86.0 430.4,80.1 435.1,86.5 440.1,92.8 442.1,102.1 447.1,108.7 452.7,115.8 462.6,119.6 469.6,123.5 472.9,132.3 469.6,123.5 462.6,119.6 454.1,116.6 448.8,110.9 444.0,104.4 441.0,96.5 436.3,88.2 431.3,81.1 423.6,85.6 413.8,88.6 404.3,91.3 393.8,94.1 364.9,101.7 356.3,104.2 346.9,108.3 325.3,118.4 312.6,124.3 297.8,131.2 290.6,135.3 283.2,144.0 265.8,165.6 258.2,175.0 251.7,180.1 238.6,185.4 218.0,193.6 208.0,195.1 196.1,192.4 195.4,202.7 191.1,209.6 186.1,217.4 181.9,224.3 182.5,225.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Muriçoca</title></polyline>
+<polyline points="391.3,394.8 384.1,390.9 388.8,384.3 397.7,382.0 402.5,374.6 400.5,364.6 406.9,355.2 417.2,350.0 423.2,343.6 425.2,334.4 427.2,325.3 425.3,315.1 426.4,305.0 423.4,296.7 418.7,290.1 415.1,281.4 410.5,274.5 406.4,267.5 408.8,258.3 401.3,252.6 407.2,246.7 414.7,243.3 421.7,239.1 428.8,234.9 430.8,225.8 427.3,217.1 420.9,207.4 417.5,199.3 419.7,189.7 416.1,182.3 406.3,179.5 410.8,172.7 420.3,171.4 410.8,172.7 403.6,176.6 410.6,180.9 420.5,182.7 417.3,190.9 418.4,201.0 424.8,210.6 428.1,218.7 430.0,228.1 427.2,237.5 419.2,240.6 411.8,245.0 404.7,249.2 407.5,257.8 408.0,268.3 410.5,276.9 416.6,282.1 420.2,291.9 424.3,299.4 427.0,308.0 425.0,317.3 426.7,327.4 424.2,336.1 421.5,345.3 412.9,351.0 401.3,357.3 402.0,368.5 400.3,379.0 391.4,384.0 383.6,387.3 388.0,394.7 391.3,394.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Azevém</title></polyline>
+<polyline points="486.3,496.9 486.5,485.1 484.8,475.0 489.3,467.7 493.7,461.0 491.7,452.2 500.6,449.4 511.4,449.0 518.1,444.1 527.0,441.6 534.9,438.2 542.8,435.2 555.7,434.2 565.9,429.8 575.7,425.9 585.6,424.9 597.1,417.2 604.2,413.2 612.9,416.5 621.6,419.1 625.0,426.7 633.9,431.3 642.3,434.4 651.8,436.4 642.3,434.4 633.9,431.3 625.8,427.7 622.3,419.7 612.9,416.5 605.0,413.0 597.1,417.2 590.3,422.7 581.7,426.2 568.1,424.0 561.7,430.5 553.2,435.2 542.0,435.0 533.9,438.8 526.3,442.4 513.6,445.3 502.7,449.3 491.2,448.8 493.0,458.0 490.6,467.5 484.2,472.1 486.0,482.0 488.4,492.2 486.3,496.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Sítio Poço Dantas - Barro Branco</title></polyline>
+<polyline points="384.2,255.2 386.0,245.1 394.8,248.6 406.3,247.7 413.8,243.8 420.8,239.3 428.4,236.1 430.6,226.9 427.9,217.9 430.6,226.9 428.4,236.1 420.8,239.3 413.8,243.8 406.3,247.7 396.8,250.6 389.2,246.2 382.7,250.9 384.2,255.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 04</title></polyline>
+<polyline points="281.8,276.0 290.8,272.2 301.2,271.1 311.2,269.0 307.4,258.8 301.2,253.0 300.8,241.7 301.7,231.4 307.5,226.2 301.7,231.4 300.8,241.7 301.2,253.0 307.1,258.4 312.4,266.2 303.9,271.0 293.6,271.7 283.4,273.7 281.8,276.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 07</title></polyline>
+<polyline points="69.4,408.8 68.2,398.9 71.0,390.2 74.1,382.1 76.3,373.0 68.4,370.0 68.9,359.0 69.6,348.6 68.9,359.0 65.6,366.6 73.9,369.2 74.0,380.0 72.0,389.4 68.2,396.5 68.0,407.3 69.4,408.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 09</title></polyline>
+<circle cx="81.6" cy="409.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="35.2" cy="405.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="68.2" cy="404.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="129.1" cy="422.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="96.5" cy="382.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="282.2" cy="275.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="419.2" cy="420.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="486.7" cy="379.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="238.8" cy="183.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="480.2" cy="374.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="415.0" cy="492.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="214.0" cy="203.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="224.2" cy="245.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="225.3" cy="248.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="492.0" cy="504.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="181.7" cy="228.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="490.7" cy="502.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="389.6" cy="396.4" r="2.2" fill="#b9b9b2"/>
+<polygon points="391.2,381.0 378.1,405.0 404.2,405.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="182.6,216.8 174.6,231.5 190.6,231.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="392.6,385.3 383.7,401.7 401.5,401.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="486.0,487.5 477.2,503.7 494.8,503.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="412.2,389.7 402.2,407.9 422.1,407.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="476.0" cy="133.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="483.0" y="128.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Muriçoca 11,8 km</text>
+<circle cx="418.9" cy="164.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="425.9" y="159.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Azevém 11,1 km</text>
+<circle cx="413.5" cy="173.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="420.5" y="188.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Diamante 10,3 km</text>
+<circle cx="426.1" cy="212.2" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="433.1" y="207.2" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Lourenço 8,2 km</text>
+<circle cx="344.6" cy="142.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="351.6" y="137.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Dona Joana 7,8 km</text>
+<circle cx="651.1" cy="433.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="402.3" y="428.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Poço Dantas - Barro Branco 7,7 km</text>
+<circle cx="344.6" cy="121.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="351.6" y="116.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Calista 6,9 km</text>
+<circle cx="75.1" cy="349.1" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="82.1" y="344.1" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Catolé 6,7 km</text>
+<circle cx="337.6" cy="113.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="299.8" cy="218.8" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="306.8" y="213.8" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Furnas 6,1 km</text>
+<circle cx="608.4" cy="413.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="452.6" y="408.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Poço Dantas 6,0 km</text>
+<circle cx="88.1" cy="314.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="95.1" y="309.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Bola 5,4 km</text>
+<circle cx="131.0" cy="344.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="138.0" y="359.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Caveira 5,2 km</text>
+<rect x="384.6" y="391.4" width="10" height="10" fill="#1d1d1b"/><text x="398.6" y="414.4" font-weight="600" fill="#1d1d1b">Sede de Solidão</text>
+<line x1="35" x2="198.1" y1="565.2" y2="565.2" stroke="#8a8a84" stroke-width="2"/><text x="35" y="579.2" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="556.1793407815924" y2="556.1793407815924" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="560.1793407815924" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,549.2 421.4,561.4 434.6,561.4" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="560.1793407815924" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="574.1793407815924" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="583.1793407815924" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="579.1793407815924" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="583.1793407815924" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="602.1793407815924" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="606.1793407815924" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="602.1793407815924" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="606.1793407815924" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="625.1793407815924" y2="625.1793407815924" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="629.1793407815924" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="648.1793407815924" y2="648.1793407815924" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="652.1793407815924" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 32 - TRE-PE/PRES/DG/ZE098 (aditamento aos Editais nº 22 e 31) · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (19):</strong> Muriçoca, Azevém, Diamante, Caldeirão Grande 1, Caldeirão Grande, Caldeirão Grande 2, Mato Grosso, Lourenço, Dona Joana, Sítio Poço Dantas - Barro Branco, Caldeirão, Calista, Catolé, Paizinho, Furnas, Sítio Poço Dantas, Pintada, Bola e Caveira.</li>
+<li><strong>De 3 a 5 km (0):</strong> nenhuma.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (12):</strong> Angico Torto, Baixo, Canoa, Felipe, Macambira, Pelo Sinal, Pelo-Sinal, Solidão, São Francisco, Sítio Baixio, Sítio Barra e Três Umbuzeiros.</li>
+</ul><h2>Rotas do Edital nº 32 - TRE-PE/PRES/DG/ZE098 (aditamento aos Editais nº 22 e 31)</h2>
+<p>O edital tem 10 rotas para Solidão. Horários: 7:00h a 17:00h. Veículos: Rota 01: micro- ônibus SNL- 5I39; Rota 02: micro- ônibus SOC- 8D98; Rota 03: ônibus PFY- 8878; Rota 04: micro- ônibus SOF- 6H61; Rota 05: micro- ônibus SOB- 5F15; Rota 06: ônibus KGO- 9850; Rota 07: micro- ônibus PCE- 1C81; Rota 08: ônibus PFY- 8778 PEU-; Rota 09: ônibus 0547; Rota 10: ônibus KGY- 1812.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Sítio Boqueirão – Sede</td></tr><tr><td>02</td><td>Distrito de pelo Sinal – Sede</td></tr><tr><td>03</td><td>Sítio Três Umbuzeiros – Sede</td></tr><tr><td>04</td><td>Sítio Oitis – Sede</td></tr><tr><td>05</td><td>Sítio Gato – Barra – Sede</td></tr><tr><td>06</td><td>Povoado São Francisco – Sede</td></tr><tr><td>07</td><td>Sítio Pintada – Povoado São Francisco</td></tr><tr><td>08</td><td>Sítio Jardim 2 – Sede</td></tr><tr><td>09</td><td>Sítio Caldeirão Grande – Jardim 1 (de Fora) – Sede</td></tr><tr><td>10</td><td>Sítio Jardim – Sede</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 32 - TRE-PE/PRES/DG/ZE098 (aditamento aos Editais nº 22 e 31 - quadro geral de percursos de Carnaíba, Quixaba e Solidão), DJE/TRE-PE nº 253 (Edição Eleitoral), disponibilizado em 03/10/2026, publicação em 04/10/2026, p. 693-698 (https://dje.tse.jus.br/dje/pdf/v1/edicao/130234).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 13 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Muriçoca</strong></td><td>Sede – Bola – Caveira – Dona Joana – Calista – Paizinho – Muriçoca – Sede</td><td>Bola, Caveira, Dona Joana, Calista, Paizinho, Muriçoca</td><td>38,9 km (ida e volta)</td><td>~1h05</td></tr><tr><td><strong>Rota nova – Azevém</strong></td><td>Sede – Diamante – Azevém – Sede</td><td>Diamante, Azevém</td><td>22,2 km (ida e volta)</td><td>~51 min</td></tr><tr><td><strong>Rota nova – Sítio Poço Dantas - Barro Branco</strong></td><td>Sede – Sítio Poço Dantas – Sítio Poço Dantas - Barro Branco – Sede</td><td>Sítio Poço Dantas, Sítio Poço Dantas - Barro Branco</td><td>15,4 km (ida e volta)</td><td>~30 min</td></tr><tr><td><strong>Parada extra na Rota 04</strong></td><td>desvio pelo caminho atual: Lourenço</td><td>Lourenço</td><td>+5,4 km</td><td>+13 min</td></tr><tr><td><strong>Parada extra na Rota 07</strong></td><td>desvio pelo caminho atual: Furnas</td><td>Furnas</td><td>+5,6 km</td><td>+14 min</td></tr><tr><td><strong>Parada extra na Rota 09</strong></td><td>desvio pelo caminho atual: Catolé</td><td>Catolé</td><td>+5,1 km</td><td>+12 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMS</strong></p><p>Solidão/PE, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Erasmo José da Silva Neto</strong><br>Juiz Eleitoral da 98ª Zona Eleitoral – Carnaíba/PE</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 32 - TRE-PE/PRES/DG/ZE098 (aditamento aos Editais nº 22 e 31)) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Solidão, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 32 - TRE-PE/PRES/DG/ZE098 (aditamento aos Editais nº 22 e 31): Muriçoca, Azevém, Diamante, Dona Joana, Sítio Poço Dantas - Barro Branco, Calista, Paizinho, Sítio Poço Dantas, Bola, Caveira, Lourenço, Catolé e Furnas.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Muriçoca (Sede – Bola – Caveira – Dona Joana – Calista – Paizinho – Muriçoca – Sede);</li><li>a criação da Rota nova – Azevém (Sede – Diamante – Azevém – Sede);</li><li>a criação da Rota nova – Sítio Poço Dantas - Barro Branco (Sede – Sítio Poço Dantas – Sítio Poço Dantas - Barro Branco – Sede);</li><li>a inclusão de parada em Lourenço na Rota 04, mantido todo o percurso atual;</li><li>a inclusão de parada em Furnas na Rota 07, mantido todo o percurso atual;</li><li>a inclusão de parada em Catolé na Rota 09, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 32 - TRE-PE/PRES/DG/ZE098 (aditamento aos Editais nº 22 e 31) deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Solidão</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Solidão; Edital nº 32 - TRE-PE/PRES/DG/ZE098 (aditamento aos Editais nº 22 e 31 - quadro geral de percursos de Carnaíba, Quixaba e Solidão), DJE/TRE-PE nº 253 (Edição Eleitoral), disponibilizado em 03/10/2026, publicação em 04/10/2026, p. 693-698 (https://dje.tse.jus.br/dje/pdf/v1/edicao/130234); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

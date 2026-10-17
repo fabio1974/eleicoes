@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Maribondo</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Maribondo</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/maribondo.pdf?v=1792247013" download>Baixar em PDF</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Maribondo (48ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 48ª Zona Eleitoral <strong>nenhuma proposta necessária</strong> no transporte gratuito de Maribondo.
+Traçamos pelas estradas o percurso das 11 rotas do Edital ZE nº 20/2026 (novas rotas; substitui o quadro do Edital ZE nº 18/2026). 0 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>Maribondo tem 11.160 eleitores aptos em 5 locais de votação e 37 seções. São 1 locais rurais, com 827 eleitores (7% do total).</li>
+<li>1 locais rurais ficam a 10 km ou mais da sede, com 827 eleitores. Os mais distantes: Povoado Mata Verde (14,5 km).</li>
+
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 10 localidades rurais de Maribondo que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Tamanduá</td><td>6,9</td><td>Rota Ed18-02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Baixa da Areia</td><td>6,4</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Lagedo</td><td>6,2</td><td>Rota Ed18-03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Oiteiro</td><td>4,3</td><td>Rota 05</td><td>0,3</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Serra José Correia</td><td>3,7</td><td>Rota Ed18-04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>7 das 33 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Sitio Tapuia (Rota 03), Sitio Matão (Rota 04), De Baixo (Rota 04), Do Meio (Rota 04), Sitio Fundo de Vazias (Rota 05), Matão (Rota Ed18-05) e Porangaba (Rota Ed18-06). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 10 localidades rurais de Maribondo, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 704" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b">Maribondo: nenhuma localidade rural fica a 3 km ou mais do local de votação</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital ZE nº 20/2026 (novas rotas; substitui o quadro do Edital ZE nº 18/2026) e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="163.7,462.0 185.7,483.5 178.6,505.5 268.1,524.9 283.6,534.5 327.8,507.6 364.3,493.8 384.4,520.3 501.8,565.2 519.2,571.6 554.2,466.2 655.3,474.7 725.0,489.5 630.2,359.0 600.9,186.8 621.4,80.0 549.9,173.0 499.0,202.0 367.8,204.5 319.7,214.7 306.6,199.5 269.8,198.5 238.4,171.6 200.5,175.1 160.2,159.9 49.9,149.7 35.0,169.5 36.8,197.4 75.7,235.3 50.9,279.8 59.8,315.2 52.3,351.3 95.5,420.6 153.8,448.9 163.7,462.0 163.7,462.0" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="72.1,198.3 77.0,204.1 76.3,214.9 76.8,225.4 78.8,237.5 75.9,250.1 69.5,265.6 67.1,274.2 65.2,284.6 62.8,295.4 64.4,305.1 67.2,315.0 71.8,322.0 72.8,333.5 64.9,344.5 63.8,354.9 67.8,365.9 72.8,372.8 79.8,377.7 91.8,377.8 100.2,380.4 112.4,382.1 123.8,381.1 137.6,376.6 155.7,376.5 163.6,379.7 169.3,385.7 175.3,393.6 181.0,398.7 190.2,402.9 200.6,407.5 208.5,411.0 217.0,414.9 228.9,422.5 247.1,429.9 260.5,435.2 268.4,438.2 260.5,435.2 247.1,429.9 232.5,424.3 222.9,418.2 214.1,413.6 200.6,407.5 190.2,402.9 182.6,399.6 175.3,393.6 170.6,387.4 165.6,381.2 158.9,376.9 153.2,376.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="257.5,333.2 255.9,324.2 254.6,314.1 249.4,307.6 241.2,304.8 231.6,301.8 222.9,297.7 217.6,291.5 217.8,281.0 218.9,270.5 217.8,281.0 217.6,291.5 222.9,297.7 231.6,301.8 239.8,304.8 249.4,307.6 254.5,313.6 261.8,309.4 269.6,306.0 277.9,303.5 287.1,305.2 297.8,304.7 306.0,302.2 315.8,300.0 323.3,296.6 333.2,294.4 335.7,286.2 332.3,277.8 335.9,270.4 343.2,266.9 572.4,393.4 572.4,393.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="527.5,281.0 508.5,302.4 502.9,308.1 501.7,312.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="361.7,493.9 367.2,499.3 374.8,502.4 380.6,510.0 385.8,516.8 390.2,510.5 395.8,505.1 403.3,500.5 409.2,491.1 416.7,487.9 425.7,489.8 434.8,488.0 445.1,487.4 450.6,481.1 457.6,475.9 465.2,470.6 473.5,470.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="182.7,345.2 176.7,350.2 170.1,357.9 166.6,365.3 164.6,375.3 167.4,383.1 165.1,391.6 156.8,389.1 152.2,395.1 148.3,402.5 143.7,409.2 138.2,415.1 133.0,421.5 131.2,430.4 138.6,435.7 141.8,444.1 151.7,446.9 156.1,453.3 161.7,458.4 169.8,461.0 178.2,463.3 182.2,470.0 185.9,477.1 189.0,484.8 199.2,485.7 200.5,496.2 207.0,501.0 215.4,503.9 207.3,501.1 200.7,496.8 199.8,486.6 199.8,486.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="182.2,345.5 176.5,350.6 170.1,357.9 166.6,365.3 164.6,375.3 146.8,375.9 129.6,379.1 121.4,381.8 104.8,381.1 94.8,378.3 82.5,377.7 76.0,377.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota Ed18-01</title></polyline>
+<polyline points="501.7,312.0 503.8,321.8 506.2,330.4 508.5,339.1 514.3,344.4 510.2,351.1 509.0,362.6 500.8,365.8 510.0,367.3 517.3,362.8 522.2,355.3 527.4,349.2 528.0,339.0 531.3,331.0 535.9,324.9 542.6,320.7 545.4,311.9 547.8,302.1 551.5,294.5 555.6,287.5 551.5,294.5 547.8,302.1 545.4,311.9 542.6,320.7 535.9,324.9 531.3,331.0 528.0,339.0 527.4,349.2 522.5,355.0 518.1,361.5 510.8,366.6 499.8,368.0 508.0,365.3 509.6,355.8 512.5,347.3 510.4,338.0 505.5,331.8 504.1,322.4 501.8,313.1 506.1,306.0 497.0,308.4 487.2,309.8 477.1,316.7 461.8,329.2 456.2,337.5 449.4,341.6 440.6,343.5 428.7,350.3 420.8,355.3 411.3,362.7 401.4,368.6 390.6,374.5 375.9,382.5 369.0,386.2 354.3,394.2 342.1,400.9 334.6,404.9 327.6,408.8 321.3,414.7 318.8,417.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota Ed18-02</title></polyline>
+<polyline points="318.8,417.5 313.4,423.5 306.1,427.6 296.6,429.0 283.9,430.9 272.8,436.5 260.5,435.2 247.1,429.9 232.5,424.3 222.9,418.2 214.1,413.6 200.6,407.5 190.2,402.9 182.6,399.6 175.3,393.6 170.6,387.4 165.6,381.2 158.9,376.9 146.8,375.9 129.6,379.1 121.4,381.8 104.8,381.1 94.8,378.3 82.5,377.7 72.3,377.0 69.5,368.0 64.0,356.1 64.3,345.3 71.4,336.6 73.7,327.0 69.3,318.9 66.3,310.3 63.0,302.4 63.0,290.1 67.1,280.5 67.9,270.1 73.2,256.3 76.4,245.2 78.2,233.0 76.4,219.9 76.5,209.0 73.0,201.2 72.1,198.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota Ed18-03</title></polyline>
+<polyline points="218.9,270.3 217.8,281.0 217.6,291.5 222.9,297.7 231.6,301.8 239.8,304.8 249.4,307.6 254.5,313.6 255.7,323.7 257.5,332.6 263.0,338.1 269.2,343.2 266.2,351.6 264.0,360.5 267.7,368.1 275.9,372.0 282.8,376.2 286.8,383.7 291.0,391.3 297.3,398.9 304.0,404.8 310.6,409.5 318.8,414.4 314.7,422.0 308.6,427.1 298.4,428.8 283.9,430.9 272.8,436.5 264.7,440.7 256.5,443.6 249.6,450.7 243.6,457.1 239.4,467.1 233.2,473.6 231.0,482.5 227.1,489.6 223.1,498.2 220.7,502.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota Ed18-04</title></polyline>
+<circle cx="502.2" cy="312.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="218.9" cy="270.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="76.0" cy="377.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="226.3" cy="508.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="257.8" cy="333.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="268.3" cy="439.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="269.5" cy="439.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="86.6" cy="192.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="323.2" cy="375.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="72.1" cy="198.1" r="2.2" fill="#b9b9b2"/>
+<polygon points="316.5,397.4 303.5,421.3 329.5,421.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="332.4,396.4 318.5,422.0 346.4,422.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="327.1,379.3 313.8,403.9 340.4,403.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="69.3,192.6 60.0,209.7 78.6,209.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="69.3" y="223.2" text-anchor="middle" fill="#5c5c57">Zona Rural</text>
+<polygon points="313.0,411.2 302.4,430.7 323.5,430.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<rect x="314.0" y="412.7" width="10" height="10" fill="#1d1d1b"/><text x="328.0" y="435.7" font-weight="600" fill="#1d1d1b">Sede de Maribondo</text>
+<line x1="35" x2="194.3" y1="601.6" y2="601.6" stroke="#8a8a84" stroke-width="2"/><text x="35" y="615.6" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="592.5940543311071" y2="592.5940543311071" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="596.5940543311071" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,585.6 421.4,597.8 434.6,597.8" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="596.5940543311071" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="610.5940543311071" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="619.5940543311071" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="615.5940543311071" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="619.5940543311071" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="638.5940543311071" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="642.5940543311071" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="638.5940543311071" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="642.5940543311071" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="661.5940543311071" y2="661.5940543311071" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="665.5940543311071" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="684.5940543311071" y2="684.5940543311071" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="688.5940543311071" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital ZE nº 20/2026 (novas rotas; substitui o quadro do Edital ZE nº 18/2026) · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (3):</strong> Tamanduá, Baixa da Areia e Lagedo.</li>
+<li><strong>De 3 a 5 km (2):</strong> Oiteiro e Serra José Correia.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (5):</strong> Fazenda Coitú, Mata Verde, Povoado Santa Rosa, Santa Rosa e Urumbeba.</li>
+</ul><h2>Rotas do Edital ZE nº 20/2026 (novas rotas; substitui o quadro do Edital ZE nº 18/2026)</h2>
+<p>O edital tem 11 rotas para Maribondo. Horários: não informados. Veículos: não informados (veículos cedidos pelos órgãos públicos locais).</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Povoado Mata Verde – Povoado Lajedo – Povoado Santa Rosa – Sitio Boca da Mata dos Malheiros</td></tr><tr><td>02</td><td>Serra do José Correia – Povoado Baixa da Areia – Sitio Mutum – Fazenda Camarão</td></tr><tr><td>03</td><td>Sitio Tapuia – Povoado Salgado – Povoado Tamandua</td></tr><tr><td>04</td><td>Sitio Matão – Sitio Tamoata – Sitio Matão de Cima – De Baixo – Do Meio</td></tr><tr><td>05</td><td>Fazenda Olhos D´águas – Sitio Baixa Funda – Sitio Fundo de Vazias – Sitio Oiteiro – Sitio Antonio Gomes</td></tr><tr><td>01</td><td>Olho D&#x27;Água – Lajedo</td></tr><tr><td>02</td><td>Tamaduá – Himalaia – Sede</td></tr><tr><td>03</td><td>Sede – Mata Verde</td></tr><tr><td>04</td><td>Baixa da Areia – Oiteiro</td></tr><tr><td>05</td><td>Matão</td></tr><tr><td>06</td><td>Porangaba – Sede</td></tr></tbody></table></div>
+
+<p>Fonte: Edital ZE nº 20/2026 da 48ª ZE (novas rotas), DJE/TRE-AL nº 191/2026 (disp. 29/09/2026) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=AL&amp;numDiario=191&amp;anoDiario=2026); Edital ZE nº 18/2026, DJE/TRE-AL nº 183/2026 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=AL&amp;numDiario=183&amp;anoDiario=2026).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 0 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<p>Nenhuma localidade precisa de rota nova.</p>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMM</strong></p><p>Maribondo/AL, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Dra. Patrícia Siqueira de Freitas Curvelo</strong><br>Juíza Eleitoral da 48ª Zona Eleitoral – Boca da Mata/AL</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital ZE nº 20/2026 (novas rotas; substitui o quadro do Edital ZE nº 18/2026)) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de Maribondo, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital ZE nº 20/2026 (novas rotas; substitui o quadro do Edital ZE nº 18/2026): .</p><p>Sugerimos, respeitosamente:</p><p></p><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital ZE nº 20/2026 (novas rotas; substitui o quadro do Edital ZE nº 18/2026) deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Maribondo</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Maribondo; Edital ZE nº 20/2026 da 48ª ZE (novas rotas), DJE/TRE-AL nº 191/2026 (disp. 29/09/2026) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=AL&amp;numDiario=191&amp;anoDiario=2026); Edital ZE nº 18/2026, DJE/TRE-AL nº 183/2026 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=AL&amp;numDiario=183&amp;anoDiario=2026); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

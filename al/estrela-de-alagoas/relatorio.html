@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Estrela de Alagoas</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Estrela de Alagoas</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/estrela-de-alagoas.pdf?v=1792246915" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Estrela de Alagoas (46ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 46ª Zona Eleitoral <strong>1 rota nova e 2 paradas extras em rotas do edital</strong> no transporte gratuito de Estrela de Alagoas.
+Traçamos pelas estradas o percurso das 6 rotas do Edital ZE nº 50/2026. 3 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 2 ficam a 1–2 km.</p>
+<ul>
+<li>Estrela de Alagoas tem 13.048 eleitores aptos em 7 locais de votação e 41 seções. São 4 locais rurais, com 4.112 eleitores (32% do total).</li>
+<li>1 locais rurais ficam a 10 km ou mais da sede, com 1.142 eleitores. Os mais distantes: Povoado Lagoa Da Areia Do Ciriaco S/N. (12,7 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Comunidade Quilombola Mocó (14,1 km do local de votação), Salgadinho (11,4 km do local de votação) e Salobrinho (8,2 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Sítio Rompe Gibão 2 e Lagoa dos Porcos 2.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 44 localidades rurais de Estrela de Alagoas que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Comunidade Quilombola Mocó</td><td>14,1</td><td>Rota 04</td><td>3,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Salgadinho</td><td>11,4</td><td>Rota 04</td><td>4,2</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Marcação</td><td>10,1</td><td>Rota 05</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Salobrinho</td><td>8,2</td><td>Rota 03</td><td>3,2</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Sítio Lageiro do Nicácio</td><td>7,6</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Caraíbas Dantas</td><td>5,2</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Jurema</td><td>5,1</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Mandacaru 2</td><td>5,0</td><td>Rota 01</td><td>0,3</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Gameleira</td><td>4,8</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Serrote do Vento</td><td>4,8</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Lagoa Dantas</td><td>4,7</td><td>Rota 01</td><td>1,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Lagoa do Exú</td><td>4,3</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Rompe Gibão 2</td><td>4,1</td><td>Rota 02</td><td>1,0</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Xexéu de Baixo</td><td>4,0</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Pé da Serra</td><td>3,8</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Pilões</td><td>3,7</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Lagoa do Mourão</td><td>3,5</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Xexéu de Cima</td><td>3,5</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Povoado Mata Burro</td><td>3,4</td><td>Rota 05</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Torrões</td><td>3,3</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Barriguda</td><td>3,3</td><td>Rota 02</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Lagoa dos Porcos 2</td><td>3,2</td><td>Rota 03</td><td>1,0</td><td>Rota passa perto (1–2 km)</td></tr></tbody></table></div>
+<p>5 das 66 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Lagoa Nova (Rota 03), Mourão Velho (Rota 03), Lagoa Primeira (Rota 04), Lisa (Rota 04) e Gravatá (Rota 04). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 44 localidades rurais de Estrela de Alagoas, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1338" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Estrela de Alagoas: 5 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital ZE nº 50/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="681.4,1091.5 678.1,1059.3 627.3,1025.1 623.0,984.8 644.9,907.5 642.0,875.3 616.9,846.8 610.2,643.4 641.5,630.6 664.8,588.4 660.0,546.2 626.8,513.9 626.8,445.2 660.5,345.6 664.3,281.5 725.0,182.0 430.5,80.0 264.5,122.2 259.3,432.4 264.5,483.1 235.6,538.1 123.7,646.7 106.6,676.6 118.9,788.5 110.4,822.6 36.4,882.4 35.0,933.1 50.2,1002.4 44.0,1099.6 101.9,1170.7 84.8,1206.3 283.5,1100.1 681.4,1091.5 681.4,1091.5" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="489.4,655.3 521.6,657.3 545.6,661.4 570.8,665.7 595.6,669.9 619.0,673.9 637.5,677.1 648.2,681.4 657.9,686.8 670.4,697.2 658.5,700.8 647.1,704.8 635.6,711.7 621.1,715.7 607.1,721.8 610.3,733.6 607.4,755.0 595.8,758.7 590.4,767.6 595.8,758.7 607.4,755.0 610.3,733.6 607.1,721.8 601.5,711.6 605.5,696.3 589.7,695.0 578.1,698.1 562.3,696.9 547.9,697.1 530.8,700.8 520.3,707.6 524.4,719.5 521.3,731.4 517.6,743.8 512.9,753.8 519.1,766.4 520.9,780.1 533.6,786.0 547.9,793.1 559.6,800.1 575.1,801.7 586.0,805.7 606.8,809.5 620.7,812.4 624.9,827.3 619.9,837.2 614.0,847.5 610.1,861.3 602.8,870.9 583.0,880.8 568.7,884.2 557.4,894.0 551.5,917.1 546.8,932.4 537.6,941.5 532.8,955.1 531.0,967.9 524.4,977.3 516.5,988.4 508.5,997.9 506.5,1013.5 511.4,1027.1 514.0,1040.6 501.2,1050.4 488.1,1047.7 476.0,1044.2 467.5,1035.9 458.7,1028.5 440.0,1020.6 430.4,1011.2 419.5,1006.3 407.5,1000.7 400.3,988.2 398.4,973.9 387.4,965.8 376.4,960.4 366.1,955.9 359.8,944.8 362.2,932.7 363.3,919.5 366.0,903.7 368.6,891.5 370.3,878.8 372.2,866.2 374.3,852.0 374.8,838.1 367.3,829.1 375.8,820.4 388.2,815.5 396.5,809.1 402.2,800.4 406.0,788.6 401.0,773.7 408.4,756.4 413.4,745.3 415.2,726.4 420.5,717.1 430.4,710.2 446.3,713.0 461.9,713.1 478.1,713.5 493.0,711.6 505.3,709.6 520.0,707.7 524.4,719.5 521.3,731.4 517.6,743.8 512.9,753.8 538.3,747.3 553.3,738.9 563.2,733.7 576.6,731.9 590.1,728.0 607.1,721.8 621.1,715.7 633.4,712.5 639.5,720.8 636.6,737.2 634.2,751.7 630.4,765.4 625.7,782.4 623.4,794.4 629.2,803.9 623.2,813.3 624.9,827.3 622.1,841.2 628.3,850.1 633.9,862.4 640.6,871.9 629.4,883.9 625.0,894.4 617.5,910.2 616.2,925.6 612.7,938.6 609.8,950.4 603.4,960.3 592.1,963.8 604.4,968.3 615.2,972.7 624.0,978.9 626.6,995.2 622.5,1005.9 626.3,1018.7 618.3,1027.0 611.4,1036.3 603.0,1048.8 594.9,1063.5 586.2,1071.8 579.1,1079.9 564.4,1082.7 551.8,1080.7 537.1,1078.1 524.2,1065.9 513.0,1059.9 502.8,1054.6 492.4,1050.7 481.6,1046.9 472.4,1041.3 465.0,1032.5 455.0,1027.0 440.0,1020.6 430.4,1011.2 419.5,1006.3 407.5,1000.7 400.3,988.2 398.4,973.9 387.4,965.8 376.4,960.4 366.1,955.9 359.8,944.8 362.2,932.7 363.3,919.5 366.0,903.7 368.6,891.5 370.3,878.8 372.2,866.2 374.3,852.0 374.8,838.1 367.3,829.1 375.8,820.4 388.2,815.5 396.5,809.1 402.2,800.4 406.0,788.6 401.0,773.7 408.4,756.4 413.4,745.3 415.2,726.4 420.5,717.1 423.0,701.2 424.2,688.0 426.3,673.7 427.5,656.2 429.7,641.5 430.8,637.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="414.7,727.7 413.6,743.5 408.4,756.4 401.4,766.0 402.0,783.2 406.3,793.6 402.0,783.2 386.4,782.4 377.1,775.7 365.6,779.8 380.8,785.1 377.0,796.2 379.1,812.1 373.3,824.2 369.5,834.6 373.4,846.8 372.5,865.0 370.3,877.9 371.8,892.2 366.0,903.7 363.3,916.9 362.2,932.7 356.5,942.5 336.9,939.0 330.2,927.5 325.5,915.8 317.3,905.7 306.7,900.9 293.8,903.1 283.2,908.1 274.4,915.4 264.2,921.1 252.0,925.6 232.3,929.8 234.3,944.1 225.8,935.3 247.9,925.1 264.2,921.1 274.4,915.4 283.2,908.1 293.8,903.1 283.1,895.2 296.4,898.0 309.3,901.1 321.9,910.4 327.4,920.8 321.9,910.4 314.2,903.6 297.9,901.9 283.2,908.1 274.4,915.4 264.2,921.1 252.0,925.6 232.3,929.8 219.5,944.5 208.9,953.7 180.2,962.0 202.1,954.9 213.9,950.6 232.7,965.8 227.4,997.7 225.7,1015.7 227.7,1030.0 224.4,1041.6 218.5,1054.7 214.8,1069.6 201.1,1066.2 188.3,1069.1 181.7,1077.5 178.9,1089.1 167.1,1092.4 154.8,1090.1 143.7,1098.4 137.2,1112.1 143.7,1098.4 148.4,1087.2 160.7,1093.8 173.7,1092.2 180.6,1079.5 187.7,1069.5 201.1,1066.2 214.1,1069.7 218.0,1059.0 219.8,1045.6 228.5,1033.1 225.0,1020.8 224.8,1005.8 236.6,972.6 224.2,952.9 225.6,935.7 247.9,925.1 264.2,921.1 274.4,915.4 283.2,908.1 293.8,903.1 306.7,900.9 317.3,905.7 325.5,915.8 330.2,927.5 335.0,937.7 345.0,943.5 356.9,949.0 366.1,955.9 376.4,960.4 387.4,965.8 398.4,973.9 400.4,986.8 405.6,999.1 414.7,1004.5 419.1,1014.4 433.1,1015.1 447.4,1009.5 458.1,1004.9 469.4,996.8 485.0,995.4 499.6,995.6 507.2,987.0 506.1,972.5 495.2,963.2 487.1,955.9 478.0,947.9 487.1,955.9 495.2,963.2 506.1,972.5 507.2,987.0 501.1,995.6 485.0,995.4 471.6,996.9 461.1,1003.7 447.4,1009.5 437.5,1014.9 425.5,1019.6 409.6,1023.4 396.6,1021.3 382.3,1024.1 361.0,1031.8 346.6,1022.4 349.0,1004.8 357.0,990.2 369.3,992.5 381.2,994.8 386.8,985.8 400.3,987.7 398.4,973.9 387.4,965.8 376.4,960.4 366.1,955.9 359.8,944.8 362.2,932.7 363.3,919.5 377.6,918.4 389.0,914.3 403.1,916.0 426.8,911.5 435.7,901.0 435.8,885.5 440.7,875.5 455.2,875.9 467.7,869.3 487.8,868.6 486.0,886.1 491.8,895.1 504.9,896.4 519.9,900.1 514.8,917.3 512.0,929.4 509.5,947.1 506.4,964.1 510.8,976.8 506.4,988.9 506.8,1003.1 507.3,1017.5 512.0,1029.2 513.6,1042.6 501.2,1050.4 488.3,1057.3 477.4,1065.9 472.1,1078.5 461.1,1082.2 457.2,1096.1 448.5,1103.8 433.4,1102.0 417.4,1103.8 392.6,1113.9 378.3,1110.5 362.6,1108.4 346.8,1104.3 331.2,1103.8 319.1,1100.3 305.4,1095.5 295.1,1091.5 305.4,1095.5 319.1,1100.3 331.2,1103.8 342.8,1098.4 346.4,1085.4 351.8,1067.1 356.2,1054.9 358.5,1042.0 346.6,1022.4 349.0,1004.8 345.8,993.3 344.4,978.8 346.3,965.5 350.8,951.8 356.5,942.5 362.1,933.4 363.3,919.5 366.0,903.7 368.6,891.5 370.3,878.8 372.2,866.2 374.3,852.0 374.8,838.1 367.3,829.1 375.8,820.4 388.2,815.5 396.5,809.1 402.2,800.4 406.0,788.6 401.0,773.7 408.4,756.4 413.4,745.3 415.2,726.4 420.5,717.1 423.0,701.2 424.2,688.0 426.3,673.7 427.5,656.2 429.7,641.5 430.8,637.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="498.3,551.4 502.0,540.0 501.9,525.0 513.3,509.7 522.9,505.0 528.4,493.1 537.3,485.5 538.7,466.7 539.4,450.3 543.9,438.3 538.7,428.1 533.6,411.4 530.0,396.9 522.3,386.5 529.8,396.5 533.6,411.4 536.1,423.3 543.5,437.4 539.4,450.3 539.0,465.4 537.1,480.1 543.5,489.9 561.5,497.1 574.9,501.2 588.6,506.5 600.7,509.1 613.8,510.6 625.7,514.1 636.9,518.7 645.6,525.6 653.6,533.8 658.8,545.9 662.6,557.0 660.6,570.5 650.7,575.5 635.7,575.1 621.3,572.7 606.8,572.1 596.6,581.3 592.7,593.6 577.9,596.2 574.8,607.6 572.4,622.4 586.4,631.6 601.8,638.1 613.7,641.2 628.7,640.3 637.0,633.4 644.2,623.9 651.0,615.2 659.4,599.5 664.4,589.3 662.5,575.5 662.3,560.6 658.8,545.9 653.6,533.8 645.6,525.6 636.9,518.7 626.9,514.2 622.3,503.1 621.6,485.2 624.2,471.9 625.0,456.7 625.0,441.5 635.0,435.9 641.0,422.1 643.2,401.3 641.4,387.7 634.1,380.2 625.5,374.0 615.9,369.0 613.7,354.3 618.9,338.9 612.8,353.3 602.3,349.0 588.8,348.1 573.8,345.7 550.3,338.9 536.8,335.3 524.9,337.9 515.9,344.7 513.0,357.2 517.1,367.3 523.2,375.5 523.6,390.6 530.7,400.4 535.1,418.0 539.6,430.0 539.4,450.3 539.0,465.4 537.1,480.1 533.2,491.0 526.7,498.7 521.2,508.3 503.8,520.8 502.0,538.2 498.2,551.7 493.3,562.3 488.1,573.9 483.7,586.5 475.2,595.3 469.4,608.0 464.6,619.2 459.7,632.8 453.4,644.7 439.3,640.2 430.8,637.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="318.6,435.7 305.6,437.1 289.5,437.0 275.8,435.7 279.5,456.7 289.3,468.4 304.2,483.8 320.5,474.2 329.4,480.9 324.6,494.7 319.1,504.5 320.0,518.0 321.5,533.2 320.0,518.0 319.1,504.5 324.6,494.7 329.4,480.9 336.1,471.3 344.7,465.2 355.1,458.6 361.5,442.6 366.1,432.2 371.4,419.7 376.9,410.7 380.2,396.7 385.4,381.4 390.2,368.7 392.2,352.4 395.3,337.2 400.2,324.8 404.8,310.2 407.1,292.6 412.6,279.3 415.3,266.9 404.8,262.1 415.3,266.9 432.0,272.6 437.8,281.5 440.1,293.9 454.8,291.6 468.5,296.2 481.7,300.0 494.1,307.6 507.8,316.6 518.5,324.5 532.0,331.9 521.6,339.3 512.0,353.3 517.1,367.3 523.2,375.5 523.6,390.6 530.7,400.4 535.1,418.0 539.6,430.0 539.4,450.3 539.0,465.4 537.1,480.1 533.2,491.0 526.7,498.7 521.2,508.3 503.8,520.8 502.0,538.2 498.2,551.7 493.3,562.3 488.1,573.9 483.7,586.5 475.2,595.3 469.4,608.0 464.6,619.2 459.7,632.8 453.4,644.7 439.3,640.2 430.8,637.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="182.0,641.6 209.3,640.4 205.2,654.0 205.7,670.7 209.2,681.5 218.0,691.4 225.5,701.2 232.1,710.0 241.5,721.7 247.1,735.8 252.5,745.1 258.4,753.9 253.4,769.6 244.7,777.9 238.3,787.1 231.3,799.0 225.5,810.2 223.6,826.4 219.8,837.1 221.8,854.0 213.6,861.7 211.4,876.9 210.3,892.8 211.2,878.9 213.6,861.7 199.5,867.3 187.8,878.2 171.4,895.9 157.6,903.1 144.9,905.7 131.2,907.2 117.9,909.4 131.2,907.2 144.9,905.7 157.6,903.1 170.1,896.7 184.8,881.3 192.6,872.8 204.0,865.8 213.4,860.8 204.8,854.4 190.2,855.4 181.5,861.3 171.6,865.7 158.2,867.9 145.6,866.1 131.3,864.6 144.3,866.3 158.2,867.9 171.6,865.7 181.5,861.3 190.2,855.4 202.8,853.8 213.7,859.1 210.5,871.8 211.6,885.7 207.4,899.2 202.2,908.4 203.9,921.5 211.6,929.8 219.0,943.3 208.9,953.7 180.2,962.0 166.6,964.7 157.0,971.4 141.8,976.1 134.8,984.6 131.2,995.9 123.8,1004.0 114.2,1009.8 105.1,1015.6 97.8,1022.7 90.8,1030.0 80.7,1036.0 70.5,1041.4 80.5,1037.1 89.5,1031.0 97.8,1022.7 105.1,1015.6 114.2,1009.8 123.8,1004.0 131.2,995.9 134.8,984.6 141.8,976.1 153.6,972.6 162.2,966.9 174.5,963.3 202.1,954.9 213.9,950.6 225.6,935.7 247.9,925.1 264.2,921.1 274.4,915.4 283.2,908.1 293.8,903.1 306.7,900.9 320.1,897.8 330.9,894.0 335.3,883.8 338.6,871.2 343.1,860.1 345.9,847.4 351.4,835.3 361.4,829.2 373.3,824.2 380.8,816.2 394.3,813.2 400.7,802.2 406.0,790.5 401.0,773.7 408.4,756.4 413.4,745.3 415.2,726.4 420.5,717.1 423.0,701.2 424.2,688.0 426.3,673.7 427.5,656.2 429.7,641.5 430.8,637.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="624.3,513.6 622.1,499.3 621.6,485.2 624.2,471.9 625.0,456.7 625.0,441.5 635.0,435.9 641.0,422.1 643.2,401.3 641.4,387.7 647.1,376.7 650.8,365.1 657.0,349.7 660.7,338.8 656.6,327.8 657.4,310.5 660.7,299.3 659.4,282.6 663.2,263.4 678.6,265.4 687.2,259.0 689.5,246.4 695.2,233.2 700.5,222.2 695.2,233.2 690.5,243.7 686.8,256.3 682.1,266.3 663.2,263.4 646.0,256.5 634.1,253.8 632.7,235.5 630.1,189.2 628.0,176.7 615.8,174.2 594.0,174.7 585.5,167.5 580.5,157.7 571.7,151.8 564.2,144.8 556.5,136.6 564.2,144.8 571.7,151.8 580.5,157.7 585.5,167.5 578.8,184.2 570.7,191.2 564.5,199.8 554.1,210.4 543.1,217.1 534.7,224.0 524.5,229.9 510.2,231.1 497.8,233.5 487.0,243.0 475.2,253.3 447.2,268.2 434.3,273.8 415.3,266.9 404.8,262.1 397.6,254.6 393.3,237.0 390.7,211.8 384.7,191.9 376.4,185.0 371.7,168.8 368.1,157.0 367.8,133.6 377.5,128.5 389.5,125.7 377.5,128.5 367.8,133.6 368.0,149.2 371.7,168.8 376.4,185.0 384.7,191.9 390.7,211.8 395.1,225.9 395.2,247.3 399.8,259.3 415.3,266.9 432.0,272.6 437.8,281.5 440.1,293.9 454.8,291.6 468.5,296.2 481.7,300.0 494.1,307.6 507.8,316.6 518.5,324.5 532.0,331.9 521.6,339.3 512.0,353.3 517.1,367.3 523.2,375.5 523.6,390.6 530.7,400.4 535.1,418.0 539.6,430.0 539.4,450.3 539.0,465.4 537.1,480.1 543.5,489.9 561.5,497.1 574.9,501.2 588.6,506.5 600.7,509.1 613.8,510.6 624.3,513.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Mocó</title></polyline>
+<polyline points="460.9,869.1 450.5,875.0 434.0,874.8 434.4,858.2 442.7,849.7 440.2,836.5 442.7,849.7 434.7,856.7 434.0,874.8 450.5,875.0 460.9,869.1 460.9,869.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 02</title></polyline>
+<polyline points="497.2,554.2 503.1,564.3 512.8,574.0 521.3,580.4 533.4,576.6 521.3,580.4 512.8,574.0 504.0,565.0 498.2,555.7 497.2,554.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 03</title></polyline>
+<circle cx="61.6" cy="1038.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="312.9" cy="435.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="636.3" cy="875.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="622.6" cy="330.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="627.3" cy="936.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="564.2" cy="735.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="522.0" cy="381.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="540.5" cy="837.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="607.4" cy="868.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="619.7" cy="641.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="279.2" cy="894.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="537.2" cy="434.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="642.0" cy="378.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="569.9" cy="620.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="182.0" cy="642.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="582.3" cy="671.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="359.4" cy="768.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="217.1" cy="851.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="561.9" cy="1082.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="414.9" cy="727.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="417.7" cy="948.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="588.9" cy="962.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="413.0" cy="1003.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="633.5" cy="574.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="413.9" cy="1022.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="663.8" cy="587.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="395.4" cy="812.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="605.0" cy="429.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="329.0" cy="925.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="202.9" cy="669.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="457.5" cy="713.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="511.1" cy="1047.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="241.8" cy="780.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="533.9" cy="974.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="588.0" cy="506.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="627.3" cy="523.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="258.4" cy="750.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="374.1" cy="890.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="507.3" cy="997.2" r="2.2" fill="#b9b9b2"/>
+<polygon points="456.1,639.8 440.6,668.4 471.6,668.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="449.9,627.4 437.0,651.2 462.9,651.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="370.8,876.6 360.3,895.9 381.2,895.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="370.8" y="909.6" text-anchor="middle" fill="#5c5c57">Zona Rural</text>
+<polygon points="624.5,503.8 614.8,521.5 634.1,521.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="250.3,732.6 241.3,749.1 259.3,749.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="509.2,987.9 499.1,1006.6 519.3,1006.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="458.0,616.5 446.8,637.0 469.2,637.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="398.3" cy="122.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="405.3" y="117.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Mocó 14,1 km</text>
+<circle cx="550.0" cy="132.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="557.0" y="147.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Salgadinho 11,4 km</text>
+<circle cx="699.9" cy="218.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="587.5" y="213.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Salobrinho 8,2 km</text>
+<circle cx="439.5" cy="831.2" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="446.5" y="826.2" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Sítio Rompe Gibão 2 4,1 km</text>
+<circle cx="537.2" cy="574.1" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="544.2" y="569.1" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Lagoa dos Porcos 2 3,2 km</text>
+<rect x="426.1" y="631.7" width="10" height="10" fill="#1d1d1b"/><text x="440.1" y="654.7" font-weight="600" fill="#1d1d1b">Sede de Estrela de Alagoas</text>
+<line x1="35" x2="248.6" y1="1236.3" y2="1236.3" stroke="#8a8a84" stroke-width="2"/><text x="35" y="1250.3" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="1227.2886597938302" y2="1227.2886597938302" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="1231.2886597938302" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,1220.3 421.4,1232.5 434.6,1232.5" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="1231.2886597938302" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="1245.2886597938302" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="1254.2886597938302" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="1250.2886597938302" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="1254.2886597938302" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1273.2886597938302" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1277.2886597938302" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1273.2886597938302" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1277.2886597938302" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1296.2886597938302" y2="1296.2886597938302" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1300.2886597938302" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1319.2886597938302" y2="1319.2886597938302" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1323.2886597938302" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital ZE nº 50/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (7):</strong> Comunidade Quilombola Mocó, Salgadinho, Marcação, Salobrinho, Sítio Lageiro do Nicácio, Caraíbas Dantas e Jurema.</li>
+<li><strong>De 3 a 5 km (15):</strong> Mandacaru 2, Gameleira, Serrote do Vento, Lagoa Dantas, Lagoa do Exú, Sítio Rompe Gibão 2, Xexéu de Baixo, Sítio Pé da Serra, Sítio Pilões, Lagoa do Mourão, Xexéu de Cima, Povoado Mata Burro, Torrões, Barriguda e Lagoa dos Porcos 2.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (22):</strong> Impueiras, Ipueiras, Itapecuru, Lagoa Seca, Lagoa da Areia, Lagoa da Areia 2, Lagoa da Areia dos Marianos, Lagoa da Areia dos Marianos 2, Lagoa da Coroa, Lagoa da Serra, Lagoa da Serra 2, Lagoa do Canto, Lagoa do Mato, Lagoa dos Porcos, Mandacaru, Renascença, Santa Cruz, Serra Bernardino, Serra do Bernardino, Sítio Jiquiri, Sítio Pilões 2 e Sítio Rompe Gibão.</li>
+</ul><h2>Rotas do Edital ZE nº 50/2026</h2>
+<p>O edital tem 6 rotas para Estrela de Alagoas. Horários: Primeira viagem às 6h, saindo dos &quot;marcos zero&quot;, de hora em hora. Veículos: Ônibus e vans (camioneta e meio caminhão com bancos e cobertura); credenciamento em 03/10/2026, 14h-18h, em cada município.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Alto da Boa Vista – Torrões – Canafístula – Cascavel – Lagoa Grande – Lagoa do Exú – Casinhas – Lagoa da Areia do Ciríaco – Lagoa da Coroa – Lagoa Seca – Lagoa Grande – Gameleira – Craibas Dantas – Mandacarú – Itapecuru – Sede</td></tr><tr><td>02</td><td>Lagoa do Mato – Vaca Morta – Barriguda – Impueiras – Mangabeiras – Pé da Serra – Jiquiri – Imbé – Cruz do Meio – Queimada Bonita – Lagoa da Serra – Preguiça – Caboclo – Rompe Gibão – Furnas – Junça – Marias Pretas – Sede</td></tr><tr><td>03</td><td>Logradouro das Vassouras – Lagoinha dos Tonheiros – Pilões – Serrote dos Ventos – Lagoa dos Porcos – Xexeu de Cima – Xexeu de Baixo – Lagoa Nova – Lagoa do Canto – Lagoa da Areia dos Marianos – Lagoa do Mourão – Mourão Velho – Jurema – Sede</td></tr><tr><td>04</td><td>Lagoa Primeira – Lageiro dos Nicácios – Lisa – Salgado – Travessa – Calango – Gravatá – Timbaúba – Sede</td></tr><tr><td>05</td><td>Mata Burro – Santa Cruz – Serra do Bernardino – Areia Branca – Teta – Boa Vista – Marcação – Sede</td></tr><tr><td>06</td><td>Sede</td></tr></tbody></table></div>
+
+<p>Fonte: Edital ZE nº 50/2026 da 46ª ZE, DJE/TRE-AL nº 183/2026 (disp. 17/09/2026) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=AL&amp;numDiario=183&amp;anoDiario=2026); Portaria nº 4/2026 (comissão), DJE/TRE-AL nº 173/2026 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=AL&amp;numDiario=173&amp;anoDiario=2026).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 5 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Comunidade Quilombola Mocó</strong></td><td>Sede – Salobrinho – Salgadinho – Comunidade Quilombola Mocó – Sede</td><td>Salobrinho, Salgadinho, Comunidade Quilombola Mocó</td><td>39,6 km (ida e volta)</td><td>~1h11</td></tr><tr><td><strong>Parada extra na Rota 02</strong></td><td>desvio pelo caminho atual: Sítio Rompe Gibão 2</td><td>Sítio Rompe Gibão 2</td><td>+3,8 km</td><td>+9 min</td></tr><tr><td><strong>Parada extra na Rota 03</strong></td><td>desvio pelo caminho atual: Lagoa dos Porcos 2</td><td>Lagoa dos Porcos 2</td><td>+2,5 km</td><td>+4 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMEA</strong></p><p>Estrela de Alagoas/AL, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Robério Monteiro de Souza</strong><br>Juiz Eleitoral da 46ª Zona Eleitoral – Cacimbinhas/AL</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital ZE nº 50/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Estrela de Alagoas, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital ZE nº 50/2026: Comunidade Quilombola Mocó, Salgadinho, Salobrinho, Sítio Rompe Gibão 2 e Lagoa dos Porcos 2.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Comunidade Quilombola Mocó (Sede – Salobrinho – Salgadinho – Comunidade Quilombola Mocó – Sede);</li><li>a inclusão de parada em Sítio Rompe Gibão 2 na Rota 02, mantido todo o percurso atual;</li><li>a inclusão de parada em Lagoa dos Porcos 2 na Rota 03, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital ZE nº 50/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Estrela de Alagoas</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Estrela de Alagoas; Edital ZE nº 50/2026 da 46ª ZE, DJE/TRE-AL nº 183/2026 (disp. 17/09/2026) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=AL&amp;numDiario=183&amp;anoDiario=2026); Portaria nº 4/2026 (comissão), DJE/TRE-AL nº 173/2026 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=AL&amp;numDiario=173&amp;anoDiario=2026); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

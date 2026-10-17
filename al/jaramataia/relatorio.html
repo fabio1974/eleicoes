@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Jaramataia</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Jaramataia</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/jaramataia.pdf?v=1792246878" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Jaramataia (44ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 44ª Zona Eleitoral <strong>2 rotas novas e 1 parada extra em rotas do edital</strong> no transporte gratuito de Jaramataia.
+Traçamos pelas estradas o percurso das 5 rotas do Edital ZE nº 6/2026. 4 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 1 ficam a 1–2 km.</p>
+<ul>
+<li>Jaramataia tem 5.243 eleitores aptos em 3 locais de votação e 16 seções. São 0 locais rurais, com 0 eleitores (0% do total).</li>
+
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Morros (9,5 km do local de votação), Estrada para Altão (7,9 km do local de votação), Altão (7,6 km do local de votação) e Gravatá (7,5 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Fé em Deus.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 16 localidades rurais de Jaramataia que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Morros</td><td>9,5</td><td>Rota 02</td><td>2,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Nova 1</td><td>8,2</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fazenda Nova</td><td>8,0</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Estrada para Altão</td><td>7,9</td><td>Rota 03</td><td>3,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Jangada</td><td>7,7</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Altão</td><td>7,6</td><td>Rota 03</td><td>3,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Gravatá</td><td>7,5</td><td>Rota 02</td><td>5,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Igrejinha</td><td>6,9</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Vila Campestre</td><td>5,5</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fé em Deus</td><td>5,5</td><td>Rota 03</td><td>1,4</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Campo Alegre</td><td>5,2</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>DNOCS</td><td>3,9</td><td>Rota 03</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Cágados</td><td>3,7</td><td>Rota 02</td><td>0,5</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>São Pedro 2</td><td>3,3</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>3 das 15 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Assentamentos (Rota 01), Povoado Altão de Baixo (Rota 05) e Altão de Cima (Rota 05). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 16 localidades rurais de Jaramataia, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 701" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Jaramataia: 5 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital ZE nº 6/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="89.9,163.7 84.3,202.1 35.0,414.4 299.7,569.4 339.0,542.9 332.9,506.5 358.6,493.7 371.4,455.6 397.4,459.6 415.4,383.2 440.7,345.5 463.9,333.1 475.9,279.8 499.9,249.4 490.3,213.8 535.2,186.5 563.2,194.5 600.5,186.9 658.9,193.3 659.3,162.9 697.8,112.4 723.8,108.4 725.0,80.0 268.9,202.5 89.9,163.7 89.9,163.7" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="267.6,205.4 272.7,212.6 277.3,223.1 279.8,235.9 283.6,248.0 281.8,262.8 277.1,275.8 280.2,286.0 277.0,296.9 273.5,308.3 271.4,318.4 267.6,323.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="315.3,376.8 322.9,382.8 330.4,387.6 338.6,393.7 346.3,399.3 353.6,406.2 354.6,417.3 357.2,428.3 356.6,446.6 358.3,466.9 360.5,477.6 355.5,485.1 348.9,490.7 340.7,498.2 330.3,501.1 324.8,508.0 328.3,518.2 331.8,529.8 329.2,540.5 324.9,548.5 315.2,552.5 300.2,553.6 309.5,550.2 300.2,553.6 288.0,547.7 281.9,537.3 272.3,530.9 267.4,523.7 255.3,519.3 249.7,511.2 243.3,505.4 244.1,492.9 247.4,478.7 251.1,462.6 254.4,451.0 256.6,440.5 259.2,430.1 261.6,420.1 263.4,408.9 267.0,398.5 269.8,385.8 272.7,374.7 275.8,359.1 277.5,346.8 274.1,335.4 268.1,328.6 267.6,323.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="380.9,258.5 388.9,254.5 378.8,251.9 365.0,252.1 349.8,253.1 330.9,253.4 319.1,257.7 305.0,264.0 292.5,269.1 281.1,274.0 280.2,286.0 277.0,296.9 273.5,308.3 271.4,318.4 267.6,323.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="265.0,319.8 273.5,308.3 277.0,296.9 280.2,286.0 285.9,273.3 272.9,278.1 262.6,282.7 233.7,285.7 180.8,291.0 167.8,294.6 152.4,299.6 143.3,302.5 109.2,313.8 98.3,317.3 86.7,318.7 74.1,317.9 75.1,275.6 69.7,315.9 86.9,319.4 98.5,318.0 109.4,314.4 135.8,305.7 152.6,300.2 168.0,295.2 177.4,292.3 232.9,286.5 241.3,302.9 246.1,310.9 259.5,315.2 265.0,319.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Morros</title></polyline>
+<polyline points="269.7,322.9 272.5,333.9 277.9,341.7 276.3,355.4 274.2,367.6 271.8,378.6 269.1,389.4 266.6,400.9 263.2,410.2 252.5,414.4 246.1,420.1 240.5,426.8 234.5,432.8 223.1,433.8 215.5,439.4 211.5,447.9 202.6,443.6 193.9,440.0 187.1,455.1 178.7,450.7 166.4,446.3 157.0,443.7 149.1,439.1 138.2,437.8 125.1,433.6 115.8,429.5 125.1,433.6 138.2,437.8 149.1,439.1 157.0,443.7 166.4,446.3 176.1,449.4 184.6,454.8 190.5,447.1 197.9,441.7 206.5,447.4 212.4,441.2 220.2,436.6 227.5,429.1 239.5,428.2 245.4,420.6 252.5,414.4 263.1,412.4 266.6,400.9 269.1,389.4 271.8,378.6 274.2,368.2 276.3,355.4 277.9,343.5 272.5,333.9 269.3,324.0 269.7,322.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Estrada para Altão</title></polyline>
+<polyline points="353.6,406.2 362.6,401.8 379.5,408.6 391.5,401.3 397.3,383.4 391.5,401.3 384.8,407.5 362.6,401.8 353.6,406.2 353.6,406.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 03</title></polyline>
+<circle cx="326.9" cy="542.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="312.5" cy="552.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="298.9" cy="562.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="323.7" cy="506.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="246.4" cy="510.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="381.0" cy="258.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="353.4" cy="399.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="250.4" cy="202.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="337.7" cy="393.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="314.9" cy="377.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="267.9" cy="322.4" r="2.2" fill="#b9b9b2"/>
+<polygon points="269.3,311.6 258.8,331.0 279.8,331.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="264.9,307.9 253.5,328.9 276.2,328.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="265.3,310.3 253.1,332.7 277.4,332.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="174.0" cy="256.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="181.0" y="251.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Morros 9,5 km</text>
+<circle cx="115.9" cy="429.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="122.9" y="424.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Estrada para Altão 7,9 km</text>
+<circle cx="120.3" cy="436.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="127.3" y="451.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Altão 7,6 km</text>
+<circle cx="77.1" cy="275.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="84.1" y="270.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Gravatá 7,5 km</text>
+<circle cx="398.2" cy="382.3" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="405.2" y="377.3" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Fé em Deus 5,5 km</text>
+<rect x="262.9" y="317.4" width="10" height="10" fill="#1d1d1b"/><text x="276.9" y="340.4" font-weight="600" fill="#1d1d1b">Sede de Jaramataia</text>
+<line x1="35" x2="215.4" y1="599.4" y2="599.4" stroke="#8a8a84" stroke-width="2"/><text x="35" y="613.4" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="590.3673824724298" y2="590.3673824724298" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="594.3673824724298" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,583.4 421.4,595.6 434.6,595.6" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="594.3673824724298" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="608.3673824724298" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="617.3673824724298" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="613.3673824724298" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="617.3673824724298" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="636.3673824724298" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="640.3673824724298" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="636.3673824724298" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="640.3673824724298" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="659.3673824724298" y2="659.3673824724298" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="663.3673824724298" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="682.3673824724298" y2="682.3673824724298" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="686.3673824724298" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital ZE nº 6/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (11):</strong> Morros, Fazenda Nova 1, Fazenda Nova, Estrada para Altão, Jangada, Altão, Gravatá, Igrejinha, Vila Campestre, Fé em Deus e Campo Alegre.</li>
+<li><strong>De 3 a 5 km (3):</strong> DNOCS, Cágados e São Pedro 2.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (2):</strong> Jaramataia e São Pedro.</li>
+</ul><h2>Rotas do Edital ZE nº 6/2026</h2>
+<p>O edital tem 5 rotas para Jaramataia. Horários: A partir das 7h até o final da votação (17h). Veículos: não informados (credenciamento em 03/10 e 24/10/2026).</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Assentamentos – Sede</td></tr><tr><td>02</td><td>Povoado Cágados – Sede</td></tr><tr><td>03</td><td>Povoado São Pedro – Igrejinha – Jangada – Fazenda Nova – Campestre – Sede</td></tr><tr><td>04</td><td>Povoado Campo Alegre – Sede</td></tr><tr><td>05</td><td>Povoado Altão de Baixo – Altão de Cima – Sede</td></tr></tbody></table></div>
+
+<p>Fonte: Edital ZE nº 6/2026 da 44ª ZE (Jaramataia), DJE/TRE-AL nº 182/2026 (disp. 15/09/2026) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=AL&amp;numDiario=182&amp;anoDiario=2026).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 5 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Morros</strong></td><td>Sede – Morros – Gravatá – Sede</td><td>Morros, Gravatá</td><td>16,9 km (ida e volta)</td><td>~18 min</td></tr><tr><td><strong>Rota nova – Estrada para Altão</strong></td><td>Sede – Estrada para Altão – Altão – Sede</td><td>Estrada para Altão, Altão</td><td>15,8 km (ida e volta)</td><td>~33 min</td></tr><tr><td><strong>Parada extra na Rota 03</strong></td><td>desvio pelo caminho atual: Fé em Deus</td><td>Fé em Deus</td><td>+3,7 km</td><td>+9 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMJ</strong></p><p>Jaramataia/AL, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Dra. Natália Cerqueira de Castro</strong><br>Juíza Eleitoral da 44ª Zona Eleitoral – Girau do Ponciano/AL</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital ZE nº 6/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de Jaramataia, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital ZE nº 6/2026: Morros, Estrada para Altão, Altão, Gravatá e Fé em Deus.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Morros (Sede – Morros – Gravatá – Sede);</li><li>a criação da Rota nova – Estrada para Altão (Sede – Estrada para Altão – Altão – Sede);</li><li>a inclusão de parada em Fé em Deus na Rota 03, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital ZE nº 6/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Jaramataia</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Jaramataia; Edital ZE nº 6/2026 da 44ª ZE (Jaramataia), DJE/TRE-AL nº 182/2026 (disp. 15/09/2026) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=AL&amp;numDiario=182&amp;anoDiario=2026); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>
