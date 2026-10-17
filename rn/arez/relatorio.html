@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Arez</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Arez</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/arez.pdf?v=1792185701" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Arez (67ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 67ª Zona Eleitoral <strong>1 parada extra em rotas do edital</strong> no transporte gratuito de Arez.
+Traçamos pelas estradas o percurso das 4 rotas da Portaria nº 003/2026 (67ª ZE). 0 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 1 ficam a 1–2 km.</p>
+<ul>
+<li>Arez tem 11.510 eleitores aptos em 8 locais de votação e 37 seções. São 5 locais rurais, com 3.644 eleitores (32% do total).</li>
+<li>3 locais rurais ficam a 10 km ou mais da sede, com 1.956 eleitores. Os mais distantes: Povoado Mundo Novo (23,0 km), Nascença (18,3 km) e Urucará (16,6 km).</li>
+
+<li><strong>Rota passa perto</strong> (1–2 km): Usina Estivas.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 8 localidades rurais de Arez que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Usina Estivas</td><td>9,6</td><td>Rota 01</td><td>1,2</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Urucará</td><td>6,9</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Sapé</td><td>3,7</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>4 das 18 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Campo Limpo (Rota 03), 1º Rio (Rota 03), Dendê de Baixo (Rota 04) e Dendê de Cima (Rota 04). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 8 localidades rurais de Arez, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 588" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Arez: 1 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Portaria nº 003/2026 (67ª ZE) e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="725.0,222.6 634.0,149.6 594.6,137.5 593.9,96.9 554.8,80.0 543.0,102.5 486.6,141.5 403.8,140.0 350.7,174.7 321.6,163.3 258.2,140.8 176.5,161.8 35.0,128.3 80.7,290.4 281.8,426.7 302.5,427.0 365.1,389.8 387.6,354.5 508.4,324.2 535.3,340.1 581.0,337.5 725.0,222.6 725.0,222.6" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="41.6,135.9 48.0,142.3 59.5,146.5 69.8,149.3 81.5,152.3 90.4,164.2 98.3,190.8 85.9,187.9 75.7,185.8 85.9,187.9 98.3,190.8 127.8,193.2 141.7,198.0 150.3,202.6 159.3,205.7 168.2,208.1 177.2,210.6 185.9,213.1 195.2,215.7 206.0,216.0 218.6,212.5 228.3,209.9 239.5,209.2 228.3,209.9 218.7,212.5 209.1,215.3 198.6,214.6 188.1,213.3 177.8,210.8 168.2,208.1 159.3,205.7 150.3,202.6 142.6,198.8 135.6,193.6 132.0,184.4 136.8,174.1 142.6,162.3 147.1,153.6 147.9,142.8 238.6,132.9 147.7,136.8 148.2,148.7 142.6,162.3 138.6,170.5 133.8,181.0 130.0,188.5 136.5,194.1 143.1,199.3 152.2,203.3 161.7,206.4 177.2,210.6 185.9,213.1 197.3,214.1 206.8,216.0 218.6,212.5 228.3,209.9 239.5,209.2 243.6,201.8 252.0,198.7 262.7,197.9 272.0,195.9 281.9,193.7 291.4,191.8 302.1,190.6 310.7,186.8 315.2,179.6 327.7,177.9 332.7,184.6 333.7,198.3 343.1,219.3 347.2,227.8 347.0,245.5 344.9,266.3 342.8,287.8 340.9,307.2 339.7,319.5 338.4,332.2 345.2,338.1 356.6,339.3 368.3,340.3 376.6,347.3 386.7,345.7 394.5,340.7 402.9,337.7 410.9,332.6 416.3,326.4 433.0,315.1 445.5,307.8 452.8,301.5 458.0,295.5 465.2,286.0 470.6,279.8 477.8,270.9 484.5,265.3 492.0,261.6 499.4,257.8 510.5,259.7 523.1,259.9 527.9,259.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="466.6,251.5 456.0,250.3 446.5,248.7 434.3,246.7 423.8,244.8 412.4,242.6 401.5,240.6 391.4,238.9 380.3,236.8 370.6,235.1 359.9,233.0 350.3,231.4 340.3,212.3 336.5,204.6 339.2,195.6 342.0,186.1 346.6,179.5 355.8,174.0 364.8,170.5 373.2,167.4 380.7,162.5 388.3,158.4 398.4,155.5 405.9,150.7 413.1,146.1 418.8,152.0 428.8,157.7 441.4,166.1 451.8,175.6 457.7,181.8 462.0,188.8 468.2,194.0 476.7,196.8 486.2,195.1 494.2,201.0 499.2,207.2 500.3,217.9 504.8,225.0 516.7,232.9 523.4,237.2 533.0,243.6 541.0,248.9 548.2,254.3 561.3,249.0 572.6,248.4 582.1,252.0 591.7,249.0 600.5,246.5 610.7,245.4 621.4,241.1 628.1,235.1 635.7,231.1 641.6,225.3 644.4,216.6 651.9,211.2 654.3,202.2 655.9,191.4 654.2,201.1 651.9,211.2 644.4,216.6 641.6,225.3 635.7,231.1 628.1,235.1 621.4,241.1 614.3,245.3 602.4,246.0 592.8,248.4 585.6,252.7 577.3,249.5 564.1,248.7 552.5,249.6 541.9,250.1 536.4,258.2 527.9,259.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="244.3,206.1 248.7,199.0 259.4,198.3 272.0,195.9 281.9,193.7 291.4,191.8 302.1,190.6 310.7,186.8 315.2,179.6 327.7,177.9 332.7,184.6 333.7,198.3 343.1,219.3 347.2,227.8 347.0,245.5 344.9,266.3 342.8,287.8 340.9,307.2 339.7,319.5 338.4,332.2 345.2,338.1 356.6,339.3 368.3,340.3 376.6,347.3 386.7,345.7 394.5,340.7 402.9,337.7 410.9,332.6 416.3,326.4 433.0,315.1 445.5,307.8 452.8,301.5 458.0,295.5 465.2,286.0 470.6,279.8 477.8,270.9 484.5,265.3 492.0,261.6 499.4,257.8 510.5,259.7 523.1,259.9 527.9,259.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="377.8,348.2 372.0,342.2 360.2,339.6 346.9,338.3 337.1,336.9 336.8,348.1 337.3,360.8 338.8,377.0 339.8,387.8 335.5,397.6 333.7,407.6 333.0,418.1 332.3,430.0 333.1,441.9 336.1,452.5 333.8,442.4 332.7,430.0 333.4,419.6 334.2,407.6 339.2,400.5 345.2,395.2 353.5,390.0 361.3,384.2 351.4,386.4 344.6,391.0 337.7,398.1 340.0,389.4 339.3,376.7 337.2,353.9 337.8,342.8 345.2,338.1 356.6,339.3 368.3,340.3 376.6,347.3 377.8,348.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 01</title></polyline>
+<circle cx="240.5" cy="133.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="459.4" cy="188.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="288.8" cy="227.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="244.6" cy="206.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="191.0" cy="218.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="193.0" cy="218.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="656.1" cy="183.5" r="2.2" fill="#b9b9b2"/>
+<polygon points="537.1,245.3 524.7,268.1 549.5,268.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="207.0,206.5 198.1,223.0 216.0,223.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="207.0" y="236.4" text-anchor="middle" fill="#5c5c57">Nascença</text>
+<polygon points="656.5,178.7 647.7,194.9 665.3,194.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="251.2,148.9 241.8,166.3 260.6,166.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="251.2" y="179.7" text-anchor="middle" fill="#5c5c57">Urucará</text>
+<polygon points="535.6,243.2 520.6,270.9 550.7,270.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="526.8,252.1 516.3,271.3 537.3,271.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="55.3,167.2 47.4,181.6 63.1,181.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="655.0,183.1 645.2,201.2 664.9,201.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="655.0" y="214.8" text-anchor="middle" fill="#5c5c57">Patané</text>
+<circle cx="358.8" cy="383.6" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="365.8" y="378.6" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Usina Estivas 9,6 km</text>
+<rect x="522.9" y="254.5" width="10" height="10" fill="#1d1d1b"/><text x="536.9" y="277.5" font-weight="600" fill="#1d1d1b">Sede de Arez</text>
+<line x1="35" x2="200.9" y1="486.1" y2="486.1" stroke="#8a8a84" stroke-width="2"/><text x="35" y="500.1" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="477.0628937533368" y2="477.0628937533368" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="481.0628937533368" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,470.1 421.4,482.3 434.6,482.3" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="481.0628937533368" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="495.0628937533368" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="504.0628937533368" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="500.0628937533368" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="504.0628937533368" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="523.0628937533368" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="527.0628937533368" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="523.0628937533368" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="527.0628937533368" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="546.0628937533368" y2="546.0628937533368" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="550.0628937533368" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="569.0628937533368" y2="569.0628937533368" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="573.0628937533368" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Portaria nº 003/2026 (67ª ZE) · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (2):</strong> Usina Estivas e Urucará.</li>
+<li><strong>De 3 a 5 km (1):</strong> Sítio Sapé.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (5):</strong> Comunidade Quilombola Patané, Comunidade de Nascença-Arês/RN, Dendê, Nascença e Rio do Meio.</li>
+</ul><h2>Rotas do Portaria nº 003/2026 (67ª ZE)</h2>
+<p>O edital tem 4 rotas para Arez. Horários: Primeira viagem de cada rota às 7 horas. Veículos: não informados.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Mundo Novo de Baixo – Mundo Novo de Cima – Nascença – Rio do Meio – Urucará – Centro</td></tr><tr><td>02</td><td>Areias – Baldum – Sapé – Patané – Centro</td></tr><tr><td>03</td><td>Campo Limpo – 1º Rio – Centro</td></tr><tr><td>04</td><td>Dendê de Baixo – Rio do meio – Dendê de Cima – Centro</td></tr></tbody></table></div>
+<p>Fonte: Portaria nº 003/2026 da 67ª ZE (Anexo I), DJE/TRE-RN nº 191/2026 (disp. 17/09/2026), PDF da edição; idMateria 6116648.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 1 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Parada extra na Rota 01</strong></td><td>desvio pelo caminho atual: Usina Estivas</td><td>Usina Estivas</td><td>+12,2 km</td><td>+17 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMA</strong></p><p>Arez/RN, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Tiago Neves Câmara</strong><br>Juiz Eleitoral da 67ª Zona Eleitoral – Nísia Floresta/RN</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Portaria nº 003/2026 (67ª ZE)) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Arez, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Portaria nº 003/2026 (67ª ZE): Usina Estivas.</p><p>Sugerimos, respeitosamente:</p><ol><li>a inclusão de parada em Usina Estivas na Rota 01, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Portaria nº 003/2026 (67ª ZE) deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Arez</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Arez; Portaria nº 003/2026 da 67ª ZE (Anexo I), DJE/TRE-RN nº 191/2026 (disp. 17/09/2026), PDF da edição; idMateria 6116648; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Miguel Leão</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Miguel Leão</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/miguel-leao.pdf?v=1792185001" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Miguel Leão (58ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 58ª Zona Eleitoral <strong>2 rotas novas e 2 paradas extras em rotas do edital</strong> no transporte gratuito de Miguel Leão.
+Traçamos pelas estradas o percurso das 3 rotas do Edital nº 35/2026 - TRE/58ª ZONA. 6 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 4 ficam a 1–2 km.</p>
+<ul>
+<li>Miguel Leão tem 1.892 eleitores aptos em 3 locais de votação e 8 seções. São 0 locais rurais, com 0 eleitores (0% do total).</li>
+
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Estaca Zero (22,5 km do local de votação), Baixão do Anajá (13,0 km do local de votação), Jatobazal (12,9 km do local de votação), São Francisco (11,9 km do local de votação), Bom Princípio (11,1 km do local de votação) e Fazenda Mocambo (4,0 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Milagres, Fazenda Monte Verde, Placa e Jatobá.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 24 localidades rurais de Miguel Leão que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Estaca Zero</td><td>22,5</td><td>Rota 01</td><td>4,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Milagres</td><td>21,4</td><td>Rota 01</td><td>2,0</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Fazenda Monte Verde</td><td>17,9</td><td>Rota 01</td><td>1,6</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Placa</td><td>17,7</td><td>Rota 01</td><td>1,5</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Cruzeiro do Sul</td><td>16,5</td><td>Rota 01</td><td>0,6</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Cruz do Paiva</td><td>16,0</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Baixão do Anajá</td><td>13,0</td><td>Rota 01</td><td>2,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Jatobazal</td><td>12,9</td><td>Rota 03</td><td>3,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Grajaú</td><td>12,8</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Agrovila do PA Faveral</td><td>12,5</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>São Francisco</td><td>11,9</td><td>Rota 03</td><td>2,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Bom Princípio</td><td>11,1</td><td>Rota 03</td><td>2,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Centro</td><td>11,0</td><td>Rota 01</td><td>1,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Baixão Grande</td><td>10,8</td><td>Rota 01</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Faveira</td><td>9,7</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Jatobá</td><td>8,9</td><td>Rota 03</td><td>1,4</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Sítio do Meio</td><td>7,1</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fazenda Mocambo</td><td>4,0</td><td>Rota 03</td><td>2,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Campina</td><td>3,7</td><td>Rota 03</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Brejinho</td><td>3,6</td><td>Rota 03</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>4 das 13 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Placa de Miguel Leão (Rota 01 e Rota 02), Mangabeira (Rota 02) e Carnaíba (Rota 03). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 24 localidades rurais de Miguel Leão, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 555" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Miguel Leão: 10 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 35/2026 - TRE/58ª ZONA e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="275.8,281.1 315.8,289.7 307.9,267.8 341.2,247.4 356.2,260.8 346.0,295.7 393.6,271.0 415.6,271.6 441.6,242.0 504.5,239.8 518.5,245.9 496.3,277.6 461.6,284.9 450.8,304.3 481.0,357.4 513.7,332.0 549.9,321.5 587.8,337.0 621.1,316.7 630.6,335.1 628.7,389.1 659.9,389.8 682.7,410.4 675.8,378.3 692.0,339.3 708.2,319.9 725.0,265.9 408.9,140.1 310.1,101.9 55.9,156.3 75.3,217.3 205.2,190.6 275.8,281.1 275.8,281.1" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="676.0,289.3 671.6,295.3 662.7,292.7 652.4,293.8 644.3,301.7 634.1,306.5 618.4,309.1 593.2,301.5 585.3,298.4 574.4,297.8 557.3,288.5 547.0,278.8 541.8,274.2 532.9,270.5 530.6,277.8 533.4,284.6 535.0,293.5 531.6,301.4 523.2,305.5 517.9,310.0 509.3,312.2 501.1,317.0 506.8,312.8 515.4,311.5 523.2,305.5 531.6,301.4 535.0,293.5 533.4,284.6 530.6,277.8 532.9,270.5 524.4,267.8 521.5,250.6 513.6,240.7 506.6,237.1 498.1,234.5 493.3,229.4 485.4,222.6 476.8,218.3 471.6,213.7 467.3,205.3 462.8,199.8 456.2,196.1 439.6,188.6 429.8,179.9 421.7,174.7 408.3,175.6 394.7,179.5 376.5,185.1 365.8,188.6 357.9,190.8 349.4,188.3 340.0,179.1 330.3,169.2 325.2,164.2 318.4,160.1 309.1,158.8 300.8,160.7 300.1,166.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="495.6,186.8 497.0,197.7 505.0,196.1 504.4,205.1 507.7,211.7 518.6,213.1 525.5,223.1 529.4,231.2 525.2,238.3 522.8,248.6 513.6,240.7 506.6,237.1 498.1,234.5 493.3,229.4 485.4,222.6 476.8,218.3 471.6,213.7 467.3,205.3 462.8,199.8 456.2,196.1 439.6,188.6 429.8,179.9 421.7,174.7 408.3,175.6 394.7,179.5 376.5,185.1 365.8,188.6 357.9,190.8 349.4,188.3 340.0,179.1 330.3,169.2 325.2,164.2 318.4,160.1 309.1,158.8 300.8,160.7 300.1,166.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="138.4,153.9 146.1,156.2 155.5,155.0 163.7,153.2 173.3,152.5 182.0,154.8 191.9,154.1 197.4,149.4 200.3,141.7 205.7,136.6 215.2,137.2 221.6,140.9 225.3,147.3 233.0,149.4 241.9,147.2 247.3,140.9 253.0,135.9 263.4,135.0 271.4,137.5 275.9,144.1 280.1,149.8 286.1,155.5 292.0,160.6 299.3,164.2 300.1,166.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="298.1,161.7 306.0,159.0 318.4,160.1 325.2,164.2 330.1,169.0 335.6,174.6 345.5,184.5 350.9,189.2 359.2,190.6 376.5,185.1 394.7,179.5 404.2,176.4 417.4,174.2 426.4,177.0 435.4,186.0 454.3,195.2 461.6,199.0 466.9,204.4 470.7,212.2 476.8,218.3 483.9,221.5 492.0,228.3 498.1,234.5 506.6,237.1 513.6,240.7 520.2,245.9 524.5,240.5 535.4,240.4 542.9,244.3 548.4,250.3 558.3,249.9 569.1,251.2 579.9,248.9 587.4,251.4 590.8,243.7 597.9,240.1 591.2,243.0 587.9,250.5 600.5,251.5 609.9,250.3 618.6,251.4 625.8,254.4 633.2,250.1 640.0,246.9 648.4,243.2 657.8,242.7 667.5,245.9 670.2,254.2 673.5,260.8 672.2,270.7 671.6,279.7 675.2,287.5 671.6,295.3 676.8,301.8 684.7,304.1 697.8,302.3 712.9,298.2 715.0,308.1 711.6,315.3 695.2,335.3 690.8,340.8 687.3,350.8 678.8,370.9 675.2,379.9 673.9,391.0 675.2,400.6 682.5,410.0 680.7,418.3 686.2,423.0 684.2,415.3 678.4,405.6 674.8,399.5 674.2,387.5 676.3,376.8 684.9,356.6 690.1,342.4 695.2,335.3 708.1,319.8 712.7,313.8 717.4,298.4 697.8,302.3 688.9,304.5 678.7,302.4 672.5,298.9 664.2,293.3 655.0,292.6 644.3,301.7 634.1,306.5 618.4,309.1 593.2,301.5 585.3,298.4 574.4,297.8 557.3,288.5 547.0,278.8 541.8,274.2 532.9,270.5 524.4,267.8 521.5,250.6 513.6,240.7 506.6,237.1 498.1,234.5 493.3,229.4 485.4,222.6 476.8,218.3 471.6,213.7 467.3,205.3 462.8,199.8 456.2,196.1 439.6,188.6 429.8,179.9 421.7,174.7 408.3,175.6 394.7,179.5 376.5,185.1 365.8,188.6 357.9,190.8 349.4,188.3 340.0,179.1 330.3,169.2 325.2,164.2 318.4,160.1 309.1,158.8 300.8,160.7 298.1,161.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Estaca Zero</title></polyline>
+<polyline points="296.3,162.9 288.6,158.0 283.4,152.5 275.9,144.1 271.4,137.5 274.3,129.4 278.6,123.8 276.8,115.2 281.7,109.6 285.2,102.0 290.6,97.2 296.4,90.9 295.1,81.2 300.1,86.5 293.4,94.7 287.5,98.7 283.8,105.3 278.7,111.5 278.1,121.5 275.5,128.8 269.5,132.8 259.8,135.3 250.7,136.8 246.0,142.4 240.8,148.0 231.7,149.5 224.3,146.4 220.5,139.3 210.1,138.0 203.0,134.4 201.5,125.8 194.1,119.9 188.9,115.2 180.9,113.1 173.0,109.1 166.8,103.4 161.3,96.2 157.2,90.1 148.4,87.2 136.0,82.7 125.2,86.6 118.7,89.8 111.7,92.5 106.4,96.8 100.6,101.1 91.5,104.2 82.1,103.4 75.8,99.5 69.5,104.9 70.9,113.5 77.6,118.4 79.1,126.8 74.1,133.2 64.1,138.3 55.9,142.0 49.0,145.1 41.4,148.4 49.0,145.1 55.9,142.0 63.3,138.7 70.2,135.8 75.9,130.9 79.2,122.8 72.7,115.8 69.1,109.0 71.1,101.0 81.0,102.3 89.3,104.3 98.3,101.9 104.3,98.3 111.7,92.5 118.7,89.8 125.2,86.6 133.4,82.1 140.6,85.8 152.1,88.8 158.6,92.0 162.9,99.2 168.4,105.4 174.9,109.7 182.7,113.6 190.6,116.6 196.7,121.6 202.1,126.8 203.7,135.1 212.9,137.6 221.6,140.9 225.3,147.3 233.0,149.4 241.9,147.2 247.3,140.9 253.0,135.9 263.4,135.0 271.4,137.5 275.9,144.1 280.1,149.8 286.1,155.5 292.0,160.6 296.3,162.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Jatobazal</title></polyline>
+<polyline points="640.7,304.3 649.5,296.3 656.9,292.2 667.8,294.9 673.4,299.8 684.7,304.1 697.8,302.3 712.9,298.2 715.0,308.1 711.6,315.3 695.2,335.3 690.8,340.8 687.3,350.8 678.8,370.9 669.7,369.6 664.4,365.3 659.2,361.0 664.4,365.3 669.7,369.6 677.8,371.3 684.9,356.6 690.1,342.4 695.2,335.3 708.1,319.8 712.7,313.8 717.4,298.4 719.5,290.4 716.8,297.3 697.8,302.3 688.9,304.5 678.7,302.4 672.5,298.9 675.0,291.0 673.0,281.5 671.0,272.8 674.0,262.9 670.8,255.7 669.2,247.3 664.1,242.7 669.2,247.3 670.8,255.7 674.0,262.9 672.2,270.7 671.6,279.7 675.2,287.5 676.0,289.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 01</title></polyline>
+<polyline points="146.1,156.2 155.5,155.0 163.7,153.2 173.3,152.5 182.0,154.8 189.0,157.9 185.4,164.4 186.1,173.3 186.6,182.5 187.7,192.6 190.8,200.1 182.7,202.5 173.9,203.4 167.1,206.5 160.2,209.3 151.2,208.3 145.6,203.7 142.4,196.0 145.6,203.7 151.2,208.3 157.8,211.2 164.3,208.1 169.6,203.7 178.3,202.8 188.8,202.9 187.9,193.9 186.7,185.5 185.8,176.5 185.0,167.2 189.0,161.2 183.6,156.6 178.5,152.0 168.5,152.7 159.8,151.4 154.1,155.8 146.1,156.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 03</title></polyline>
+<circle cx="665.9" cy="276.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="678.0" cy="288.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="499.7" cy="319.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="495.9" cy="186.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="555.9" cy="250.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="541.6" cy="279.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="523.8" cy="239.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="137.8" cy="154.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="214.6" cy="133.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="217.0" cy="138.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="295.3" cy="109.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="251.5" cy="141.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="326.9" cy="168.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="279.6" cy="152.8" r="2.2" fill="#b9b9b2"/>
+<polygon points="297.7,152.9 289.3,168.3 306.0,168.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="296.7,156.0 288.3,171.5 305.2,171.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="296.4,153.1 287.1,170.3 305.8,170.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="686.2" cy="423.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="561.4" y="418.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Estaca Zero 22,5 km</text>
+<circle cx="658.2" cy="357.9" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="552.0" y="352.9" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Milagres 21,4 km</text>
+<circle cx="663.8" cy="244.8" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="489.4" y="239.8" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Fazenda Monte Verde 17,9 km</text>
+<circle cx="720.4" cy="290.6" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="632.8" y="285.6" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Placa 17,7 km</text>
+<circle cx="600.5" cy="235.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="35.0" cy="149.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="42.0" y="144.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Jatobazal 12,9 km</text>
+<circle cx="65.5" cy="141.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="75.6" cy="124.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="82.6" y="119.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Bom Princípio 11,1 km</text>
+<circle cx="144.8" cy="195.8" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="151.8" y="190.8" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Jatobá 8,9 km</text>
+<circle cx="293.8" cy="80.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="300.8" y="75.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Mocambo 4,0 km</text>
+<rect x="295.0" y="161.0" width="10" height="10" fill="#1d1d1b"/><text x="309.0" y="184.0" font-weight="600" fill="#1d1d1b">Sede de Miguel Leão</text>
+<line x1="35" x2="178.1" y1="453.3" y2="453.3" stroke="#8a8a84" stroke-width="2"/><text x="35" y="467.3" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="444.32159998379547" y2="444.32159998379547" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="448.32159998379547" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,437.3 421.4,449.6 434.6,449.6" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="448.32159998379547" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="462.32159998379547" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="471.32159998379547" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="467.32159998379547" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="471.32159998379547" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="490.32159998379547" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="494.32159998379547" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="490.32159998379547" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="494.32159998379547" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="513.3215999837955" y2="513.3215999837955" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="517.3215999837955" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="536.3215999837955" y2="536.3215999837955" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="540.3215999837955" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 35/2026 - TRE/58ª ZONA · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (17):</strong> Estaca Zero, Milagres, Fazenda Monte Verde, Placa, Cruzeiro do Sul, Cruz do Paiva, Baixão do Anajá, Jatobazal, Grajaú, Agrovila do PA Faveral, São Francisco, Bom Princípio, Centro, Baixão Grande, Faveira, Jatobá e Sítio do Meio.</li>
+<li><strong>De 3 a 5 km (3):</strong> Fazenda Mocambo, Fazenda Campina e Brejinho.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (4):</strong> Barro Branco, Conjunto Habitacional Prefeito José Angerry, Fazenda Coité e Fazenda Paraíso.</li>
+</ul><h2>Rotas do Edital nº 35/2026 - TRE/58ª ZONA</h2>
+<p>O edital tem 3 rotas para Miguel Leão. Horários: Rota 1: 07:00-11:00, 09:00-13:00, 14:00-17:00; Rota 2: 07:00-12:00; Rota 3: 06:00-11:00 e 14:00-18:00. Veículos: R1 Micro ônibus Volare NIJ-6454 (Josimar Pereira de Sousa); R2 Micro ônibus Mercedes Benz SLN-0E63 (Elicésar Pereira de Sena); R3 Micro ônibus VW Neobus QRT5J85 (Francisco Alberto Sousa Costa).</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Placa de Miguel Leão – Cruz do Paiva – Assentamento Grajau – Miguel Leão</td></tr><tr><td>02</td><td>Placa de Miguel Leão – Faveral – Mangabeira – Miguel Leão</td></tr><tr><td>03</td><td>Carnaíba – Sitio do Meio – Carpina – Brejinho – Miguel Leão</td></tr></tbody></table></div>
+<p>Fonte: Edital nº 35/2026 - TRE/58ª ZONA, DJE/TRE-PI nº 191/2026 (disp. 18/09/2026), PDF da edição; fonte complementar: INFO ROTAS – sistema oficial do TRE-PI (inforotas.tre-pi.jus.br), consulta em 2026-10-16 (rotas do INFO ROTAS preservadas em &quot;rotas_inforotas&quot;).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 10 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Estaca Zero</strong></td><td>Sede – Baixão do Anajá – Estaca Zero – Sede</td><td>Baixão do Anajá, Estaca Zero</td><td>48,2 km (ida e volta)</td><td>~1h04</td></tr><tr><td><strong>Rota nova – Jatobazal</strong></td><td>Sede – Fazenda Mocambo – Bom Princípio – São Francisco – Jatobazal – Sede</td><td>Fazenda Mocambo, Bom Princípio, São Francisco, Jatobazal</td><td>30,9 km (ida e volta)</td><td>~56 min</td></tr><tr><td><strong>Parada extra na Rota 01</strong></td><td>desvio pelo caminho atual: Milagres – Placa – Fazenda Monte Verde</td><td>Milagres, Placa, Fazenda Monte Verde</td><td>+17,1 km</td><td>+24 min</td></tr><tr><td><strong>Parada extra na Rota 03</strong></td><td>desvio pelo caminho atual: Jatobá</td><td>Jatobá</td><td>+11,5 km</td><td>+28 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMML</strong></p><p>Miguel Leão/PI, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Sílvio Valoís Cruz Júnior</strong><br>Juiz Eleitoral da 58ª Zona Eleitoral – Monsenhor Gil/PI</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 35/2026 - TRE/58ª ZONA) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Miguel Leão, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 35/2026 - TRE/58ª ZONA: Estaca Zero, Baixão do Anajá, Jatobazal, São Francisco, Bom Princípio, Fazenda Mocambo, Milagres, Fazenda Monte Verde, Placa e Jatobá.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Estaca Zero (Sede – Baixão do Anajá – Estaca Zero – Sede);</li><li>a criação da Rota nova – Jatobazal (Sede – Fazenda Mocambo – Bom Princípio – São Francisco – Jatobazal – Sede);</li><li>a inclusão de paradas em Milagres, Placa e Fazenda Monte Verde na Rota 01, mantido todo o percurso atual;</li><li>a inclusão de parada em Jatobá na Rota 03, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 35/2026 - TRE/58ª ZONA deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Miguel Leão</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Miguel Leão; Edital nº 35/2026 - TRE/58ª ZONA, DJE/TRE-PI nº 191/2026 (disp. 18/09/2026), PDF da edição; fonte complementar: INFO ROTAS – sistema oficial do TRE-PI (inforotas.tre-pi.jus.br), consulta em 2026-10-16 (rotas do INFO ROTAS preservadas em &quot;rotas_inforotas&quot;); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

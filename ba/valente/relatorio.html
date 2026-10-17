@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Valente</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Valente</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/valente.pdf?v=1792240571" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Valente (120ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 120ª Zona Eleitoral <strong>2 rotas novas e 2 paradas extras em rotas do edital</strong> no transporte gratuito de Valente.
+Traçamos pelas estradas o percurso das 3 rotas do Edital ZE-120 nº 46, de 24/09/2026 (Percursos – Rotas Definitivas), confirmando o Edital ZE-120 nº 41, de 14/09/2026 (Quadro Sintético de Percursos). 2 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 2 ficam a 1–2 km.</p>
+<ul>
+<li>Valente tem 20.236 eleitores aptos em 24 locais de votação e 78 seções. São 14 locais rurais, com 7.859 eleitores (39% do total).</li>
+<li>8 locais rurais ficam a 10 km ou mais da sede, com 4.717 eleitores. Os mais distantes: Povoado Itareru - Zona Rural (32,6 km), Povoado De Santa Rita De Cássia - Zona Rural (17,2 km) e Povoado Valilândia - Zona Rural (14,9 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Ouro Verde (4,1 km do local de votação) e Samambaia (3,4 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Limoeiro e Pau Fava.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 40 localidades rurais de Valente que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Papagaio</td><td>7,2</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Capoeira</td><td>7,0</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Lagoa Seca</td><td>6,9</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Lagoa da Pedra</td><td>5,2</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Ferros</td><td>5,1</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Ouro Verde</td><td>4,1</td><td>Rota 03</td><td>2,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Limoeiro</td><td>4,0</td><td>Rota 02</td><td>1,7</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Raposa Nova</td><td>3,5</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Samambaia</td><td>3,4</td><td>Rota 01</td><td>5,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Mato Grosso</td><td>3,3</td><td>Rota 02</td><td>1,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Pau Fava</td><td>3,2</td><td>Rota 01</td><td>2,0</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Santa Rita de Valilândia</td><td>3,1</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fazenda Santa Rita</td><td>3,1</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>2 das 19 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Madalena (Rota 03) e Manoel Lagoa (Rota 03). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 40 localidades rurais de Valente, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 588" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Valente: 4 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital ZE-120 nº 46, de 24/09/2026 (Percursos – Rotas Definitivas), confirmando o Edital ZE-120 nº 41, de 14/09/2026 (Quadro Sintético de Percursos) e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="35.0,192.9 54.4,200.4 62.1,212.5 53.4,221.6 69.1,246.1 78.8,239.2 126.3,304.5 169.6,320.8 275.8,382.9 282.9,423.5 276.7,455.8 371.4,425.7 458.7,417.0 495.3,391.0 678.5,244.5 689.4,250.7 709.0,267.1 725.0,257.4 708.8,209.3 713.5,175.4 698.1,187.3 686.4,205.5 646.8,235.0 637.5,235.6 595.1,183.7 298.1,97.8 256.4,80.0 35.0,192.9 35.0,192.9" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="552.6,254.6 548.2,256.7 544.7,259.3 544.5,265.3 546.0,270.0 548.6,274.7 551.3,278.8 553.6,282.6 550.8,288.0 547.1,294.4 545.7,300.6 541.7,303.3 540.4,308.7 538.6,313.3 537.0,318.3 539.3,322.0 545.8,322.5 551.4,319.8 555.4,317.2 558.1,313.4 562.5,311.5 566.3,309.2 565.1,304.1 562.7,299.8 560.4,295.5 563.2,299.5 565.1,304.1 567.5,307.9 572.8,310.4 575.2,311.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="442.4,162.6 442.1,168.5 440.0,174.6 431.8,187.2 420.9,204.0 412.5,217.0 418.9,216.1 419.8,226.0 438.9,231.8 452.2,230.2 443.0,231.3 421.0,228.5 417.9,235.8 419.1,240.9 417.2,248.1 419.5,258.9 421.7,267.7 423.1,273.5 424.3,279.4 426.1,285.4 419.1,287.0 409.5,289.1 402.9,290.6 400.8,281.4 392.3,277.3 385.1,274.4 378.2,274.6 373.4,277.3 374.1,284.1 368.3,285.1 364.5,289.7 361.0,293.3 356.4,298.0 351.3,303.1 345.4,309.2 342.4,312.4 339.5,315.7 334.9,319.1 330.3,321.1 327.3,324.2 328.5,322.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="175.8,231.0 180.5,228.8 183.6,225.7 185.4,221.4 182.5,217.2 177.9,215.5 174.4,212.1 171.7,208.6 169.5,203.9 167.5,199.5 165.0,194.6 163.3,190.2 161.6,184.7 158.9,178.4 157.9,172.4 156.5,166.0 154.1,162.1 156.5,166.0 158.8,170.4 157.9,175.9 159.9,181.2 162.4,186.1 155.7,187.8 151.2,191.7 147.8,194.6 143.7,198.2 139.0,202.3 135.4,205.5 122.1,217.3 116.4,222.3 112.1,226.0 108.0,229.5 104.5,232.5 99.4,230.2 95.0,227.5 90.0,225.8 85.9,222.5 82.3,218.2 80.8,216.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="87.1,215.8 88.2,221.2 85.6,225.2 76.3,233.4 78.8,239.1 74.8,242.9 69.9,247.2 72.2,251.2 74.6,255.2 77.2,259.7 79.8,265.0 82.0,269.2 79.8,265.0 77.2,259.7 74.6,255.2 72.2,251.2 69.9,247.2 74.8,242.9 78.9,239.3 76.0,234.3 84.3,226.3 89.0,222.2 85.2,217.6 87.1,215.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Ouro Verde</title></polyline>
+<polyline points="507.3,349.1 505.2,354.0 505.6,359.8 504.7,365.3 499.3,366.2 496.2,369.1 493.8,372.9 490.1,375.4 487.5,379.0 486.1,384.3 475.2,389.5 482.5,386.0 487.3,383.8 487.9,378.3 491.0,374.8 494.6,372.2 497.3,368.3 501.1,366.0 504.7,363.4 505.4,357.9 506.0,351.6 507.3,349.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Samambaia</title></polyline>
+<polyline points="547.1,322.5 549.4,326.5 552.8,329.5 555.9,332.7 553.7,337.0 552.8,342.4 552.6,348.3 554.9,352.6 557.7,356.0 554.9,352.6 552.6,348.8 552.8,342.4 553.7,337.0 556.5,333.4 553.3,329.9 550.1,327.0 547.4,323.4 547.1,322.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 01</title></polyline>
+<polyline points="376.0,273.2 380.2,266.8 390.3,251.1 386.1,248.2 383.1,251.5 376.4,251.6 369.0,251.4 364.1,253.8 357.4,253.4 363.7,253.9 369.0,251.4 376.4,251.6 383.1,251.5 386.1,248.2 390.4,250.9 380.2,266.8 376.0,273.2 376.0,273.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 02</title></polyline>
+<circle cx="452.2" cy="229.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="154.4" cy="161.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="421.5" cy="267.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="442.3" cy="162.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="176.0" cy="230.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="376.3" cy="286.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="343.3" cy="285.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="552.7" cy="254.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="553.3" cy="254.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="370.2" cy="122.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="374.6" cy="406.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="538.6" cy="271.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="539.1" cy="271.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="487.6" cy="380.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="487.0" cy="378.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="397.3" cy="162.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="247.8" cy="143.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="545.5" cy="270.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="545.4" cy="270.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="348.0" cy="216.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="394.2" cy="163.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="539.9" cy="308.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="538.9" cy="322.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="223.3" cy="194.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="354.0" cy="201.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="80.7" cy="216.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="559.9" cy="294.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="575.2" cy="311.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="414.7" cy="395.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="698.7" cy="229.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="259.7" cy="257.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="453.4" cy="407.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="365.6" cy="187.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="234.4" cy="210.1" r="2.2" fill="#b9b9b2"/>
+<polygon points="333.2,306.2 318.8,332.9 347.7,332.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="334.8,321.2 325.4,338.6 344.3,338.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="328.4,323.9 319.8,339.8 337.0,339.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="328.0,320.8 317.7,339.6 338.2,339.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="87.1,204.7 76.6,224.1 97.6,224.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="87.1" y="237.8" text-anchor="middle" fill="#5c5c57">Povoado Santa Rita De Cássia</text>
+<polygon points="258.9,250.2 251.1,264.6 266.7,264.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="321.7,313.7 310.5,334.3 332.9,334.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="321.7" y="348.3" text-anchor="middle" fill="#5c5c57">Povoado Valilândia</text>
+<polygon points="419.7,382.0 410.6,398.8 428.8,398.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="419.7" y="412.2" text-anchor="middle" fill="#5c5c57">Povoado Tanquinho</text>
+<polygon points="570.8,302.3 562.0,318.5 579.6,318.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="364.5,176.5 355.9,192.5 373.2,192.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="321.9,317.5 312.2,335.4 331.6,335.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="342.1,318.6 332.9,335.6 351.3,335.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="563.4,291.2 553.4,309.5 573.3,309.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="699.1,219.9 691.6,233.9 706.7,233.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="280.7,119.1 273.1,133.1 288.3,133.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="235.4,202.1 228.2,215.4 242.7,215.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="334.8,326.6 327.4,340.2 342.3,340.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="507.4,340.8 499.5,355.3 515.3,355.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="367.2,162.5 359.5,176.6 374.8,176.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="452.4,397.6 444.9,411.4 460.0,411.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="320.1,313.9 310.8,331.0 329.4,331.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="336.3,330.6 326.8,348.1 345.8,348.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="343.7,316.2 332.6,336.7 354.9,336.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="83.3" cy="273.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="90.3" y="268.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Ouro Verde 4,1 km</text>
+<circle cx="353.2" cy="252.8" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="360.2" y="247.8" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Limoeiro 4,0 km</text>
+<circle cx="472.6" cy="393.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="479.6" y="388.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Samambaia 3,4 km</text>
+<circle cx="558.1" cy="356.4" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="565.1" y="351.4" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Pau Fava 3,2 km</text>
+<rect x="323.4" y="317.5" width="10" height="10" fill="#1d1d1b"/><text x="337.4" y="340.5" font-weight="600" fill="#1d1d1b">Sede de Valente</text>
+<line x1="35" x2="126.0" y1="485.8" y2="485.8" stroke="#8a8a84" stroke-width="2"/><text x="35" y="499.8" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="476.8125915080566" y2="476.8125915080566" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="480.8125915080566" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,469.8 421.4,482.1 434.6,482.1" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="480.8125915080566" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="494.8125915080566" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="503.8125915080566" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="499.8125915080566" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="503.8125915080566" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="522.8125915080566" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="526.8125915080566" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="522.8125915080566" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="526.8125915080566" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="545.8125915080566" y2="545.8125915080566" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="549.8125915080566" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="568.8125915080566" y2="568.8125915080566" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="572.8125915080566" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital ZE-120 nº 46, de 24/09/2026 (Percursos – Rotas Definitivas), confirmando o Edital ZE-120 nº 41, de 14/09/2026 (Quadro Sintético de Percursos) · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (5):</strong> Papagaio, Capoeira, Lagoa Seca, Lagoa da Pedra e Ferros.</li>
+<li><strong>De 3 a 5 km (8):</strong> Ouro Verde, Limoeiro, Raposa Nova, Samambaia, Mato Grosso, Pau Fava, Santa Rita de Valilândia e Fazenda Santa Rita.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (27):</strong> Bezerra, Boi Novo, Cabochard, Cabrocha, Encruzilhada ou São João, Fazenda Nova América, Feira do Pau, Ichu 1, Ichu 2, Ichú I de Valilândia, Ichú II de Valilândia, Itareru, Junco, Lagoinha, Poço, Queimada das Pedras, Queimada de Dentro, Queimada do Curral, Recreio, Santa Rita de Cássia, Santana, Tanquinho, VAGEM GRANDE, Valilândia, Vargem Grande, Varginha e Várzea dos Porcos.</li>
+</ul><h2>Rotas do Edital ZE-120 nº 46, de 24/09/2026 (Percursos – Rotas Definitivas), confirmando o Edital ZE-120 nº 41, de 14/09/2026 (Quadro Sintético de Percursos)</h2>
+<p>O edital tem 3 rotas para Valente. Horários: Veículos iniciam às 08h; Rota 01 com saídas às 08h e 13h; demais às 08h.. Veículos: Rota 01: Van Master DTK5J83 (15 lugares), motorista Maikson Ramos Duarte; saída de Santa Rita de Valilânda às 08h e 13h; Rota 02: Van Citroen TMS1H46 (15 lugares), motorista Noilton da Cunha Santos; saída 08h de Lagoa da Pedra (próximo ao restaurante Adaltino); Rota 03: Van Citroen TMS3H99 (15 lugares), motorista Caetano Oliveira Xavier; saída 08h de Ferros.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Santa Rita de Vailândia – Ichu – Queimada do Alto – Queimada das Pedras – Valilândia – Queimada do Curral</td></tr><tr><td>02</td><td>Lagoa da Pedra – Papagaio – Lagoa Seca – Formiga – Raposa Velha – Raposa Nova – Sede</td></tr><tr><td>03</td><td>Ferros – Capoeira – Everaldão – Madalena – Manoel Lagoa – Santa Rita de Cássia</td></tr></tbody></table></div>
+
+<p>Fonte: Edital ZE-120 nº 46/2026 da 120ª ZE/BA (Valente), rotas definitivas (confirma o Edital ZE-120 nº 41/2026, DJE nº 195, que vale para o 1º e o 2º turno); DJE/TRE-BA nº 207, disp. 25/09/2026 (https://dje.tse.jus.br/dje/pdf/v1/edicao/129936).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 4 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Ouro Verde</strong></td><td>Sede – Ouro Verde – Sede</td><td>Ouro Verde</td><td>8,2 km (ida e volta)</td><td>~20 min</td></tr><tr><td><strong>Rota nova – Samambaia</strong></td><td>Sede – Samambaia – Sede</td><td>Samambaia</td><td>6,8 km (ida e volta)</td><td>~17 min</td></tr><tr><td><strong>Parada extra na Rota 01</strong></td><td>desvio pelo caminho atual: Pau Fava</td><td>Pau Fava</td><td>+4,5 km</td><td>+11 min</td></tr><tr><td><strong>Parada extra na Rota 02</strong></td><td>desvio pelo caminho atual: Limoeiro</td><td>Limoeiro</td><td>+7,5 km</td><td>+14 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMV</strong></p><p>Valente/BA, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Renata Furtado Folígno</strong><br>Juíza Eleitoral da 120ª Zona Eleitoral – Valente/BA</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital ZE-120 nº 46, de 24/09/2026 (Percursos – Rotas Definitivas), confirmando o Edital ZE-120 nº 41, de 14/09/2026 (Quadro Sintético de Percursos)) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de Valente, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital ZE-120 nº 46, de 24/09/2026 (Percursos – Rotas Definitivas), confirmando o Edital ZE-120 nº 41, de 14/09/2026 (Quadro Sintético de Percursos): Ouro Verde, Samambaia, Limoeiro e Pau Fava.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Ouro Verde (Sede – Ouro Verde – Sede);</li><li>a criação da Rota nova – Samambaia (Sede – Samambaia – Sede);</li><li>a inclusão de parada em Pau Fava na Rota 01, mantido todo o percurso atual;</li><li>a inclusão de parada em Limoeiro na Rota 02, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital ZE-120 nº 46, de 24/09/2026 (Percursos – Rotas Definitivas), confirmando o Edital ZE-120 nº 41, de 14/09/2026 (Quadro Sintético de Percursos) deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Valente</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Valente; Edital ZE-120 nº 46/2026 da 120ª ZE/BA (Valente), rotas definitivas (confirma o Edital ZE-120 nº 41/2026, DJE nº 195, que vale para o 1º e o 2º turno); DJE/TRE-BA nº 207, disp. 25/09/2026 (https://dje.tse.jus.br/dje/pdf/v1/edicao/129936); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

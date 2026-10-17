@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Sítio Novo</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Sítio Novo</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/sitio-novo.pdf?v=1792185683" download>Baixar em PDF</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Sítio Novo (53ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 53ª Zona Eleitoral <strong>nenhuma proposta necessária</strong> no transporte gratuito de Sítio Novo.
+Traçamos pelas estradas o percurso das 5 rotas do Edital nº 33/2026 (53ª ZE). 0 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>Sítio Novo tem 5.171 eleitores aptos em 3 locais de votação e 16 seções. São 1 locais rurais, com 1.592 eleitores (31% do total).</li>
+
+
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 3 localidades rurais de Sítio Novo que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Agrovila São Pedro/Santa Helena</td><td>3,5</td><td>Rota 01</td><td>0,4</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>9 das 32 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Sítio Catolé de Cima (Rota 01), Sítio Catolé de Baixo (Rota 01), Emater / Praça Central (Rota 01, Rota 02 e Rota 04), Centro Turístico de Serra da Tapuia (Rota 03 e Rota 05), Catolé dos Raimundos (Rota 04) e Praça Central (Rota 05). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 3 localidades rurais de Sítio Novo, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 743" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b">Sítio Novo: nenhuma localidade rural fica a 3 km ou mais do local de votação</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital nº 33/2026 (53ª ZE) e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="35.0,273.8 46.2,273.8 124.3,337.5 146.4,330.5 184.3,369.1 180.7,398.5 202.8,454.8 182.7,516.2 234.1,538.2 254.2,536.3 268.7,558.0 244.7,571.2 249.0,611.4 307.0,606.2 346.2,591.6 409.5,581.8 722.7,290.3 387.7,80.0 245.7,159.8 35.0,273.8 35.0,273.8" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="280.3,418.8 272.2,426.0 265.0,431.9 249.9,435.5 243.0,440.0 236.9,443.9 222.7,449.1 212.1,449.9 204.3,454.4 194.4,455.9 189.7,462.9 191.9,470.8 193.7,479.3 196.5,488.0 190.6,493.1 183.7,498.0 184.2,508.4 183.9,518.5 187.5,527.1 191.7,533.2 199.2,535.7 208.7,534.4 217.7,536.0 227.8,536.9 305.2,520.4 310.8,515.6 317.7,511.5 329.5,507.7 335.5,502.4 344.2,492.9 351.6,481.3 356.4,468.4 354.1,458.7 355.0,449.6 360.8,443.2 366.0,443.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="456.6,388.8 458.1,379.5 456.4,370.4 459.4,361.8 470.7,360.0 480.6,353.6 485.5,348.4 487.7,334.8 498.4,328.9 502.5,322.2 505.0,313.3 511.2,308.4 518.1,299.9 523.8,289.3 519.3,281.7 515.9,273.5 511.6,267.6 500.4,264.5 489.0,258.1 492.5,246.3 498.2,238.6 500.1,228.9 495.7,218.9 488.3,213.6 493.7,205.9 499.8,201.9 499.2,190.0 484.1,191.0 493.3,192.1 499.8,188.4 503.2,196.9 498.1,203.5 489.4,207.6 493.4,215.8 498.6,221.9 499.8,231.2 494.4,242.3 492.1,252.9 489.1,257.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="327.8,346.2 312.9,345.9 301.4,343.5 291.5,343.4 282.0,343.0 273.3,341.7 264.4,342.8 258.8,347.6 253.1,351.8 243.2,349.7 238.2,355.3 235.3,363.5 226.2,361.7 220.4,368.1 215.5,373.3 211.9,381.1 201.5,381.0 193.6,378.6 185.0,376.2 185.3,366.4 177.5,364.3 169.5,361.5 165.6,355.0 160.3,347.7 156.6,340.5 153.1,332.1 154.7,322.2 151.1,314.6 154.7,322.2 152.6,330.6 156.0,338.2 159.1,345.5 165.2,351.2 168.1,358.4 173.9,364.0 184.3,365.3 184.9,374.7 192.5,378.1 201.5,381.0 211.2,381.5 215.5,373.3 220.4,368.1 225.6,362.0 234.6,364.3 238.2,355.3 242.1,349.1 250.2,351.8 256.9,347.9 266.5,348.4 270.6,341.4 282.2,343.3 292.7,343.0 304.9,344.4 319.0,346.9 331.7,345.8 343.5,348.3 346.6,341.3 351.3,330.0 356.5,324.9 356.5,324.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="455.3,298.0 452.2,305.1 450.0,312.8 443.3,318.5 433.6,315.9 421.1,312.9 421.8,325.5 427.0,336.7 421.8,325.5 420.5,313.7 419.9,303.3 418.6,294.7 417.2,283.8 418.0,274.2 419.9,262.1 416.7,252.5 408.9,249.0 406.3,240.4 413.2,234.9 403.9,231.5 395.0,222.5 392.2,213.7 393.0,204.5 387.7,198.5 383.6,190.9 379.4,182.8 376.3,173.0 380.8,165.6 376.0,158.2 376.0,158.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<circle cx="374.9" cy="452.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="328.9" cy="355.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="438.6" cy="395.2" r="2.2" fill="#b9b9b2"/>
+<polygon points="425.0,388.3 414.7,407.2 435.3,407.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="455.3,374.5 442.9,397.4 467.8,397.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="276.0,330.4 264.9,350.8 287.1,350.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="276.0" y="364.7" text-anchor="middle" fill="#5c5c57">Serra da Tapuia</text>
+<rect x="433.6" y="390.2" width="10" height="10" fill="#1d1d1b"/><text x="447.6" y="413.2" font-weight="600" fill="#1d1d1b">Sede de Sítio Novo</text>
+<line x1="35" x2="183.5" y1="641.4" y2="641.4" stroke="#8a8a84" stroke-width="2"/><text x="35" y="655.4" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="632.4285714285742" y2="632.4285714285742" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="636.4285714285742" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,625.4 421.4,637.7 434.6,637.7" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="636.4285714285742" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="650.4285714285742" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="659.4285714285742" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="655.4285714285742" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="659.4285714285742" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="678.4285714285742" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="682.4285714285742" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="678.4285714285742" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="682.4285714285742" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="701.4285714285742" y2="701.4285714285742" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="705.4285714285742" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="724.4285714285742" y2="724.4285714285742" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="728.4285714285742" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 33/2026 (53ª ZE) · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (0):</strong> nenhuma.</li>
+<li><strong>De 3 a 5 km (1):</strong> Agrovila São Pedro/Santa Helena.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (2):</strong> Serra da Tapuia e Sítio Novo.</li>
+</ul><h2>Rotas do Edital nº 33/2026 (53ª ZE)</h2>
+<p>O edital tem 5 rotas para Sítio Novo. Horários: Início às 07 horas. Veículos: não informados.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Sítio Salgadinho – Sítio Catolé de Cima – Sítio Catolé de Baixo – Pau de Leite – Êxu – Pedra de São Pedro – Emater / Praça Central</td></tr><tr><td>02</td><td>Sítio Novo de Baixo – Vaca Brava – Oiticica – Retiro – Trapiá – Monte Alegre – Ipueira – Emater / Praça Central</td></tr><tr><td>03</td><td>Distrito Serra da Tapuia – Tanque Verde – Serra Bonita – Velas – Olho Dágua – Serra de Baixo – Sítio Cabeço – Centro Turístico de Serra da Tapuia</td></tr><tr><td>04</td><td>Sítio Carrasco – Riacho dos Cavalos – Catolé dos Raimundos – Riacho do Cruzeiro – São José – Sítio Malhada do Galdino – Emater / Praça Central</td></tr><tr><td>05</td><td>Praça Central – Centro Turístico de Serra da Tapuia</td></tr></tbody></table></div>
+<p>Fonte: Edital nº 33/2026 da 53ª ZE (Quadro Definitivo), DJE/TRE-RN nº 191/2026 (disp. 17/09/2026), PDF da edição; idMateria 6116869 (republicado no DJE nº 193, de 18/09/2026; provisório idMateria 6083900 (Ed. 25/2026)).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 0 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<p>Nenhuma localidade precisa de rota nova.</p>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMSN</strong></p><p>Sítio Novo/RN, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Daniel Augusto Freire de Lucena e Couto Maurício</strong><br>Juiz Eleitoral da 53ª Zona Eleitoral – Tangará/RN</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 33/2026 (53ª ZE)) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Sítio Novo, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 33/2026 (53ª ZE): .</p><p>Sugerimos, respeitosamente:</p><p></p><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 33/2026 (53ª ZE) deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Sítio Novo</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Sítio Novo; Edital nº 33/2026 da 53ª ZE (Quadro Definitivo), DJE/TRE-RN nº 191/2026 (disp. 17/09/2026), PDF da edição; idMateria 6116869 (republicado no DJE nº 193, de 18/09/2026; provisório idMateria 6083900 (Ed. 25/2026)); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

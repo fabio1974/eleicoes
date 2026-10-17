@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Lagoa de São Francisco</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Lagoa de São Francisco</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/lagoa-de-sao-francisco.pdf?v=1792184691" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Lagoa de São Francisco (12ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 12ª Zona Eleitoral <strong>2 rotas novas e 1 parada extra em rotas do edital</strong> no transporte gratuito de Lagoa de São Francisco.
+Traçamos pelas estradas o percurso das 10 rotas do Edital Quadro de Percursos Lagoa de São Francisco (edital sem nº) - 12ª ZONA. 3 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 1 ficam a 1–2 km.</p>
+<ul>
+<li>Lagoa de São Francisco tem 6.051 eleitores aptos em 12 locais de votação e 29 seções. São 10 locais rurais, com 3.615 eleitores (60% do total).</li>
+<li>4 locais rurais ficam a 10 km ou mais da sede, com 1.398 eleitores. Os mais distantes: Povoado Sossego (15,0 km), Localidade Engano De Baixo (12,4 km) e Povoado Alazão (10,9 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Ingazeira (7,6 km do local de votação), Vargem (5,4 km do local de votação) e Formiga (3,1 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Olho d&#x27;água dos Paulinos.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 44 localidades rurais de Lagoa de São Francisco que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço. 1 locais não foram encontrados nas duas bases: Localidade Caraúbas De Baixo, com 26 eleitores.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Laranjeira</td><td>10,4</td><td>Rota 08</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Capivara</td><td>8,2</td><td>Rota 08</td><td>0,3</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Ingazeira</td><td>7,6</td><td>Rota 08</td><td>2,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Vargem</td><td>5,4</td><td>Rota 09</td><td>2,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Olho d&#x27;água dos Paulinos</td><td>4,5</td><td>Rota 04</td><td>1,9</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Riacho</td><td>3,6</td><td>Rota 09</td><td>0,3</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Tamboril</td><td>3,4</td><td>Rota 09</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Barra da Onça</td><td>3,1</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Formiga</td><td>3,1</td><td>Rota 09</td><td>2,4</td><td>Sem rota (mais de 2 km)</td></tr></tbody></table></div>
+<p>4 das 55 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Giral (Rota 03), Mato Grosso dos Eduvirgens (Rota 04), Mato Grosso do Manoel (Rota 05) e Pé da Ladeira (Rota 08). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 44 localidades rurais de Lagoa de São Francisco, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 751" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Lagoa de São Francisco: 4 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Quadro de Percursos Lagoa de São Francisco (edital sem nº) - 12ª ZONA e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="292.7,554.4 326.3,537.4 361.6,579.7 397.3,569.7 447.5,576.4 461.2,555.2 523.9,534.5 546.3,546.1 584.9,533.2 609.4,558.9 645.1,539.8 652.1,513.7 684.5,516.2 706.1,468.0 704.4,409.9 723.5,337.7 684.9,300.0 675.8,231.1 604.4,231.5 577.0,187.1 557.9,219.4 521.0,186.7 483.2,177.9 477.4,142.7 444.6,125.7 403.5,138.5 388.2,115.3 340.9,109.1 328.8,80.0 279.9,107.4 287.8,144.7 246.2,174.6 261.6,209.5 242.9,261.4 201.0,265.9 163.2,307.4 141.2,291.7 114.7,300.8 87.7,285.0 46.6,290.0 35.0,323.2 75.3,448.1 71.9,495.4 142.9,553.1 174.9,541.9 203.5,552.7 266.2,537.8 292.7,554.4 292.7,554.4" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="102.9,306.4 105.7,316.6 110.7,325.6 121.1,328.3 120.0,340.5 123.8,349.3 131.7,354.0 131.1,366.5 135.0,375.6 142.6,380.6 144.5,391.3 141.2,400.6 136.6,410.2 135.1,422.6 136.7,434.6 140.6,444.7 139.5,456.8 134.3,464.0 125.4,467.8 134.3,464.0 139.5,456.8 141.5,446.1 137.1,438.0 134.5,427.0 136.0,415.6 138.8,405.2 141.4,395.1 146.4,386.2 141.0,378.7 133.6,373.2 133.1,359.9 127.0,352.2 121.5,345.1 123.3,333.5 131.7,327.1 139.5,321.9 139.6,309.1 140.6,297.2 146.0,290.0 156.6,287.3 165.6,282.3 170.5,273.0 178.5,267.3 191.1,266.5 204.1,262.6 214.6,257.0 227.4,249.6 233.4,239.2 237.4,229.9 246.1,234.6 253.8,240.6 246.1,234.6 237.7,229.3 233.4,239.2 228.2,248.9 220.2,256.5 209.8,259.5 199.5,264.6 188.1,266.3 177.1,267.8 169.6,274.5 164.7,283.1 155.8,288.4 145.1,290.3 140.2,297.8 139.5,312.2 139.1,325.6 127.4,330.0 121.8,337.0 123.3,348.6 131.0,353.9 131.1,366.5 135.0,375.6 142.6,380.6 144.0,381.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="122.2,468.5 131.2,465.0 143.4,462.9 155.2,465.1 166.8,463.5 178.6,467.1 192.1,470.5 178.6,467.1 167.7,463.7 155.6,465.2 143.4,462.9 134.4,459.3 142.0,454.1 139.2,443.9 136.5,433.5 135.5,420.9 137.1,406.6 141.2,397.4 145.9,387.7 141.2,395.5 138.1,405.4 135.5,420.9 136.5,433.5 139.2,443.9 142.0,454.1 134.4,459.3 143.4,462.9 155.2,465.1 166.8,463.5 178.6,467.1 192.1,470.5 203.7,472.1 218.6,474.2 234.6,475.3 246.4,478.8 254.1,483.8 261.4,489.0 268.9,494.0 279.5,496.4 289.5,491.9 298.7,487.8 310.3,486.5 319.1,485.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="199.6,473.0 188.5,469.5 175.6,466.3 165.5,463.3 153.2,464.4 134.3,464.0 125.4,467.8 134.3,464.0 147.1,462.5 157.1,465.3 175.6,466.3 188.5,469.5 198.0,473.2 205.6,468.4 204.9,455.2 205.3,442.8 213.3,438.0 205.3,442.8 204.9,455.2 205.4,467.9 213.4,473.3 234.6,475.3 246.4,478.8 254.1,483.8 261.4,489.0 268.9,494.0 279.5,496.4 289.5,491.9 298.7,487.8 310.3,486.5 298.7,487.8 289.5,491.9 280.5,496.0 274.0,502.8 263.9,506.7 252.5,508.0 240.8,511.4 230.9,514.5 228.2,514.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="319.1,485.4 306.0,486.4 292.3,490.6 283.6,494.7 268.9,494.0 261.4,489.0 254.1,483.8 246.4,478.8 236.1,475.5 223.4,474.8 209.5,472.7 197.1,473.0 178.6,467.1 167.7,463.7 155.6,465.2 143.4,462.9 132.3,464.5 122.2,468.5 131.2,465.0 143.4,462.9 155.2,465.1 166.8,463.5 178.6,467.1 192.1,470.5 203.7,472.1 218.6,474.2 234.6,475.3 246.4,478.8 254.1,483.8 261.4,489.0 268.9,494.0 279.5,496.4 289.5,491.9 298.7,487.8 310.3,486.5 325.1,486.3 338.4,486.1 357.4,485.8 380.2,496.4 391.7,503.7 408.7,514.7 418.8,521.3 432.2,533.2 443.3,539.6 457.5,543.4 462.3,535.8 462.2,523.3 457.1,515.2 450.0,508.6 448.7,497.0 449.1,484.9 449.4,472.3 447.1,461.1 445.5,449.2 445.2,436.8 444.8,422.2 443.2,409.7 436.4,403.3 428.8,396.0 422.6,388.2 426.0,378.1 431.9,371.0 434.8,360.5 438.9,351.9 436.0,341.8 436.3,328.6 436.8,316.5 444.6,310.0 455.7,314.1 467.0,316.3 473.9,310.5 483.2,305.3 490.4,297.3 496.6,289.8 501.5,279.8 503.0,276.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="447.9,490.5 449.7,477.9 448.3,466.8 445.9,455.5 445.2,443.1 445.2,428.7 444.0,415.7 448.2,406.4 456.6,401.5 466.4,398.8 471.3,390.8 482.7,385.0 489.3,379.0 499.6,385.6 507.4,390.3 516.0,395.5 523.4,402.3 528.0,412.4 523.3,423.0 519.2,433.3 513.7,440.3 509.3,450.2 505.8,460.2 503.2,471.8 497.3,479.5 490.9,486.6 477.1,487.3 461.1,490.4 448.7,490.6 449.7,477.9 448.3,466.8 443.7,458.5 432.2,456.4 443.7,458.5 445.4,446.9 445.1,431.5 444.2,417.5 441.5,406.7 444.2,417.5 445.1,431.5 445.2,445.5 446.4,458.1 448.5,469.3 449.3,482.6 443.4,489.6 433.3,486.9 425.5,492.4 412.3,493.6 404.5,498.5 395.1,502.0 380.2,496.4 366.9,487.9 343.6,486.1 328.4,486.2 312.3,486.1 300.5,487.1 289.5,491.9 280.5,496.0 268.9,494.0 261.4,489.0 254.1,483.8 246.4,478.8 236.1,475.5 223.4,474.8 209.5,472.7 197.1,473.0 178.6,467.1 192.1,470.5 203.7,472.1 218.6,474.2 234.6,475.3 246.4,478.8 254.1,483.8 261.4,489.0 268.9,494.0 279.5,496.4 289.5,491.9 298.7,487.8 310.3,486.5 319.1,485.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="263.3,341.7 251.5,343.2 245.8,350.1 238.6,355.6 241.3,365.8 245.1,375.9 243.9,389.5 241.9,400.2 246.5,408.6 254.2,414.3 260.8,420.5 262.1,433.3 264.1,444.1 272.3,448.4 273.9,460.0 282.8,467.6 292.7,470.2 300.0,476.0 304.0,486.5 317.0,486.5 331.7,486.2 357.4,485.8 380.2,496.4 391.7,503.7 402.2,499.4 410.4,493.9 422.3,493.3 430.3,488.0 441.8,489.1 449.3,482.6 448.5,469.3 446.4,458.1 445.2,445.5 445.1,431.5 444.2,417.5 441.5,406.7 441.3,406.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="441.3,406.5 433.0,401.1 426.7,393.3 420.3,385.9 412.8,379.4 406.0,372.1 393.6,371.1 382.7,368.2 375.8,362.5 382.7,368.2 393.6,371.1 406.0,372.1 412.8,379.4 419.7,385.3 426.7,393.3 432.4,400.5 440.5,405.9 437.8,416.1 430.0,422.0 436.9,427.8 443.6,434.3 445.2,445.5 446.4,458.1 448.5,469.3 449.3,482.6 443.4,489.6 433.3,486.9 425.5,492.4 412.3,493.6 404.5,498.5 395.1,502.0 380.2,496.4 366.9,487.9 343.6,486.1 328.4,486.2 312.3,486.1 300.5,487.1 289.5,491.9 280.5,496.0 268.9,494.0 261.4,489.0 254.1,483.8 246.4,478.8 236.1,475.5 223.4,474.8 209.5,472.7 197.1,473.0 178.6,467.1 192.1,470.5 203.7,472.1 218.6,474.2 234.6,475.3 246.4,478.8 254.1,483.8 261.4,489.0 268.9,494.0 279.5,496.4 289.5,491.9 298.7,487.8 310.3,486.5 325.1,486.3 338.4,486.1 357.4,485.8 380.2,496.4 391.7,503.7 402.2,499.4 410.4,493.9 422.3,493.3 430.3,488.0 441.8,489.1 449.3,482.6 448.5,469.3 446.4,458.1 445.2,445.5 445.1,431.5 444.2,417.5 446.5,406.9 455.1,402.8 465.3,399.3 470.7,392.3 479.2,386.3 485.0,377.7 495.1,382.0 485.1,376.9 479.2,386.3 470.9,391.2 465.3,399.3 455.1,402.8 446.5,406.9 444.2,417.5 445.1,431.5 445.2,445.5 446.4,458.1 448.5,469.3 449.3,482.6 447.9,490.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="503.0,276.9 498.0,268.1 487.5,264.6 475.0,266.7 463.6,270.2 451.4,266.9 444.2,259.6 438.5,252.7 430.1,247.8 421.1,242.9 411.3,238.1 376.4,151.2 401.6,114.6 410.4,119.4 419.6,124.8 429.9,127.9 439.9,131.3 451.9,133.4 461.5,136.4 470.8,141.7 477.6,149.2 483.7,156.1 494.9,162.0 509.5,174.2 524.3,174.3 537.1,175.1 548.3,178.2 560.7,182.0 571.8,183.4 583.4,185.1 582.9,198.4 577.4,209.3 569.6,215.5 561.5,222.7 557.3,231.0 544.6,233.3 536.0,237.9 528.8,244.5 523.2,253.0 514.7,257.4 510.1,265.7 504.0,274.6 498.3,286.7 492.9,294.9 486.8,301.9 479.8,307.4 470.8,315.8 457.1,314.8 447.3,310.7 437.9,314.7 435.8,325.8 434.3,337.2 437.7,347.2 435.3,359.2 432.3,369.8 426.0,378.1 422.6,387.7 428.8,396.0 436.4,403.3 443.2,409.7 444.8,422.2 445.1,435.0 445.5,449.2 447.1,461.1 449.4,472.3 449.1,484.9 440.8,489.1 428.1,490.8 417.4,493.2 406.6,495.7 396.4,501.6 380.2,496.4 366.9,487.9 343.6,486.1 328.4,486.2 319.1,485.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="631.2,313.3 620.3,311.4 609.5,304.1 604.2,296.9 587.4,300.2 578.8,305.2 566.2,306.3 555.1,307.7 547.6,302.3 537.0,298.7 527.1,295.2 514.1,292.6 502.1,287.8 514.1,292.6 526.4,294.6 537.0,298.7 547.6,302.3 555.1,307.7 566.2,306.3 578.0,305.2 587.4,300.2 597.2,294.0 605.5,299.2 612.8,307.8 627.6,309.8 635.9,314.9 636.4,327.1 635.5,340.1 631.6,351.3 630.3,371.0 624.7,384.0 620.0,394.8 614.8,404.9 612.6,418.8 607.4,426.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 09</title></polyline>
+<polyline points="407.9,236.6 421.1,242.9 430.1,247.8 438.5,252.7 444.2,259.6 449.8,266.4 458.6,270.6 470.0,268.6 479.9,265.7 492.9,264.2 501.6,269.9 510.1,265.7 514.7,257.4 523.2,253.0 528.8,244.5 536.0,237.9 544.6,233.3 555.8,231.3 561.0,223.7 568.2,217.6 576.6,211.0 581.9,200.1 586.8,188.0 576.0,184.9 564.5,183.5 550.5,179.1 539.5,175.8 526.9,174.2 511.1,174.4 494.9,162.0 487.3,156.0 477.7,152.9 472.2,143.7 464.9,137.8 453.9,134.3 439.9,131.3 430.7,127.8 419.6,124.8 410.4,119.4 401.6,114.6 410.4,119.4 419.6,124.8 429.9,127.9 439.9,131.3 451.9,133.4 461.5,136.4 470.8,141.7 477.6,149.2 483.7,156.1 494.9,162.0 509.5,174.2 524.3,174.3 537.1,175.1 548.3,178.2 560.7,182.0 571.8,183.4 583.4,185.1 582.9,198.4 577.4,209.3 569.6,215.5 561.5,222.7 557.3,231.0 544.6,233.3 536.0,237.9 528.8,244.5 523.2,253.0 514.7,257.4 510.1,265.7 504.0,274.6 498.3,286.7 492.9,294.9 486.8,301.9 479.8,307.4 470.8,315.8 457.1,314.8 460.0,305.2 460.6,290.0 459.6,277.3 451.4,266.9 444.2,259.6 438.5,252.7 430.1,247.8 421.1,242.9 411.3,238.1 403.0,232.3 390.2,228.8 383.3,222.4 379.4,213.2 369.9,208.1 363.5,201.0 352.6,198.1 339.6,199.9 327.4,199.6 315.2,201.6 306.1,205.3 294.9,209.5 282.5,211.8 268.6,216.4 273.5,225.0 275.3,236.9 267.0,241.6 262.1,243.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 10</title></polyline>
+<polyline points="120.3,301.0 131.7,298.8 140.7,295.2 149.2,290.1 157.7,286.0 166.2,281.8 170.5,273.0 178.5,267.3 191.1,266.5 204.1,262.6 214.6,257.0 227.4,249.6 233.4,239.2 237.4,229.9 241.3,219.5 240.4,206.4 237.5,191.8 241.3,182.1 246.3,170.0 250.8,159.7 255.5,151.5 261.3,144.8 266.5,136.8 273.9,128.8 274.4,113.5 272.2,124.1 269.7,134.8 262.4,140.9 256.8,150.6 250.8,159.7 246.3,170.0 241.3,182.1 237.5,191.8 240.4,206.4 241.2,218.2 237.7,229.3 233.4,239.2 228.2,248.9 220.2,256.5 209.8,259.5 199.5,264.6 188.1,266.3 177.1,267.8 169.6,274.5 164.7,283.1 155.8,288.4 145.1,290.3 140.2,297.8 128.4,299.2 120.3,301.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Ingazeira</title></polyline>
+<polyline points="632.3,310.0 643.7,308.7 655.1,307.5 666.0,309.8 675.8,312.6 685.8,316.7 698.1,316.0 707.4,321.0 716.2,328.7 722.6,336.4 720.4,351.8 716.8,360.9 720.1,370.2 715.2,378.6 709.6,390.0 712.1,401.3 706.2,408.2 712.6,401.8 706.8,395.1 710.9,385.4 715.9,377.3 720.2,368.8 716.9,359.6 722.5,347.6 721.0,334.5 713.8,326.8 706.0,319.4 698.9,314.0 689.3,317.1 679.5,314.2 669.4,310.9 659.5,307.6 649.9,304.4 639.3,308.0 632.3,310.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Vargem</title></polyline>
+<polyline points="443.3,539.6 457.5,543.4 450.0,554.4 443.7,565.3 434.9,570.0 434.3,582.2 434.3,596.2 434.4,608.8 437.8,619.3 426.2,615.7 415.9,609.9 426.2,615.7 436.8,618.5 434.2,607.4 434.2,593.7 433.4,579.1 437.4,569.8 445.8,562.0 452.6,550.8 445.4,540.2 443.3,539.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 04</title></polyline>
+<circle cx="376.4" cy="151.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="463.3" cy="149.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="597.1" cy="431.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="607.3" cy="425.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="143.4" cy="384.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="402.4" cy="516.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="683.4" cy="297.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="374.3" cy="363.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="558.2" cy="308.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="431.3" cy="570.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="627.5" cy="389.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="354.5" cy="526.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="497.6" cy="382.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="220.1" cy="439.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="227.9" cy="512.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="470.8" cy="553.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="124.2" cy="338.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="137.7" cy="446.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="177.8" cy="469.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="452.3" cy="206.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="450.4" cy="326.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="243.0" cy="472.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="424.7" cy="428.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="461.5" cy="376.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="465.0" cy="531.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="460.3" cy="313.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="504.6" cy="277.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="263.7" cy="344.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="200.4" cy="475.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="493.2" cy="280.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="390.3" cy="221.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="427.2" cy="247.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="102.2" cy="308.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="122.2" cy="468.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="450.3" cy="490.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="447.9" cy="490.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="410.2" cy="250.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="110.5" cy="467.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="442.1" cy="405.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="632.3" cy="313.6" r="2.2" fill="#b9b9b2"/>
+<polygon points="113.0,468.4 105.1,483.0 121.0,483.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="309.7,465.8 298.9,485.7 320.6,485.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="485.7,292.8 476.2,310.4 495.3,310.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="485.7" y="323.9" text-anchor="middle" fill="#5c5c57">Zona Rural</text>
+<polygon points="240.9,347.1 234.0,359.7 247.7,359.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="444.2,396.3 435.6,412.2 452.8,412.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="285.7,484.0 276.0,501.8 295.4,501.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="449.6,495.0 441.3,510.3 457.9,510.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="213.9,478.9 205.6,494.1 222.1,494.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="120.5,294.3 113.9,306.4 127.1,306.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="632.6,302.7 625.8,315.3 639.5,315.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="407.7,229.7 400.8,242.3 414.5,242.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="299.8" cy="113.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="306.8" y="108.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Ingazeira 7,6 km</text>
+<circle cx="692.0" cy="425.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="604.4" y="420.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Vargem 5,4 km</text>
+<circle cx="412.2" cy="605.0" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="419.2" y="600.0" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Olho d&#x27;água dos Paulinos 4,5 km</text>
+<circle cx="725.0" cy="341.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="631.2" y="336.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Formiga 3,1 km</text>
+<rect x="314.4" y="480.4" width="10" height="10" fill="#1d1d1b"/><text x="328.4" y="503.4" font-weight="600" fill="#1d1d1b">Sede de Lagoa de São Francisco</text>
+<line x1="35" x2="221.9" y1="649.3" y2="649.3" stroke="#8a8a84" stroke-width="2"/><text x="35" y="663.3" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="640.3462087433256" y2="640.3462087433256" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="644.3462087433256" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,633.3 421.4,645.6 434.6,645.6" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="644.3462087433256" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="658.3462087433256" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="667.3462087433256" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="663.3462087433256" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="667.3462087433256" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="686.3462087433256" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="690.3462087433256" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="686.3462087433256" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="690.3462087433256" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="709.3462087433256" y2="709.3462087433256" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="713.3462087433256" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="732.3462087433256" y2="732.3462087433256" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="736.3462087433256" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital Quadro de Percursos Lagoa de São Francisco (edital sem nº) - 12ª ZONA · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (4):</strong> Laranjeira, Capivara, Ingazeira e Vargem.</li>
+<li><strong>De 3 a 5 km (5):</strong> Olho d&#x27;água dos Paulinos, Riacho, Tamboril, Barra da Onça e Formiga.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (35):</strong> Alazão, Baixa Grande, Barreiro, Cabaceiras, Cabeçeiras, Cabreiro, Cajazeiras, Canto do Urubú, Caripina, Chã dos Bringel, Chã dos Tucuns, Chã dos Vianas, Cipó, Cipó de Baixo, Cipó de Cima, Comunidade Indígena Engano de Baixo, Comunidade Indígena Nazaré, Comunidade Indígena Riachão, Córrego, Engano de Cima, Escondido, Joana, Lagoa de Fora, Mato Fino, Mato Grosso dos Brazilios, Mororó, Nazaré, Olho d&#x27;Água, Riachão, Roça velha, Saco, Sossego, Tucuns, Vitorino e Volta da Serra.</li>
+</ul><h2>Rotas do Edital Quadro de Percursos Lagoa de São Francisco (edital sem nº) - 12ª ZONA</h2>
+<p>O edital tem 10 rotas para Lagoa de São Francisco. Horários: &quot;O TRANSPORTE DE ELEITORES, será iniciado somente às primeiras horas do dia das eleições, podendo em caso de absoluta necessidade, sofrer alteração do horário programado.&quot;. Veículos: não informados no edital.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Alazão – Cipó – Caraúbas – Barra da Onça</td></tr><tr><td>02</td><td>Cipó – Mororó – Barra da Onça – Lagoa do São Francisco</td></tr><tr><td>03</td><td>Mororó – Cipó – Caripina – Giral – Lagoa de São Francisco – Chã dos Bringel</td></tr><tr><td>04</td><td>Lagoa de São Francisco – Cipó – Mororó – Cajazeiras – Mato Grosso dos Eduvirgens – Vitorino – Nazaré</td></tr><tr><td>05</td><td>Cabeceiras – Mato Grosso do Manoel – Lagoa de Fora – Descoberta – Mato Grosso dos Vicentes – Córrego – Tucuns – Lagoa de São Francisco</td></tr><tr><td>06</td><td>Cabreiro – Lagoa de São Francisco – Cabeceiras – Córrego</td></tr><tr><td>07</td><td>Córrego – Mato Fino – Mato Grosso dos Basílios – Tucuns – Lagoa de Fora – Cabeceiras</td></tr><tr><td>08</td><td>Nazaré – Engano de Baixo – Pé da Ladeira – Laranjeira – Riachão – Córrego – Lagoa de São Francisco</td></tr><tr><td>09</td><td>Sossego – Barreiro – Nazaré – Assentamento Tamboril</td></tr><tr><td>10</td><td>Engano de Baixo – Nazaré – Larangeira – Riachão – Caraubas</td></tr></tbody></table></div>
+<p>Fonte: Quadro de Percursos Lagoa de São Francisco (edital sem nº) - 12ª ZONA, DJE/TRE-PI nº 191/2026 (disp. 18/09/2026), PDF da edição.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 4 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Ingazeira</strong></td><td>Sede – Ingazeira – Sede</td><td>Ingazeira</td><td>15,2 km (ida e volta)</td><td>~36 min</td></tr><tr><td><strong>Rota nova – Vargem</strong></td><td>Sede – Formiga – Vargem – Sede</td><td>Formiga, Vargem</td><td>10,8 km (ida e volta)</td><td>~26 min</td></tr><tr><td><strong>Parada extra na Rota 04</strong></td><td>desvio pelo caminho atual: Olho d&#x27;água dos Paulinos</td><td>Olho d&#x27;água dos Paulinos</td><td>+7,2 km</td><td>+17 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMLSF</strong></p><p>Lagoa de São Francisco/PI, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Ermano Chaves Portela Martins</strong><br>Juiz Eleitoral da 12ª Zona Eleitoral – Pedro II/PI</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital Quadro de Percursos Lagoa de São Francisco (edital sem nº) - 12ª ZONA) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Lagoa de São Francisco, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital Quadro de Percursos Lagoa de São Francisco (edital sem nº) - 12ª ZONA: Ingazeira, Vargem, Formiga e Olho d&#x27;água dos Paulinos.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Ingazeira (Sede – Ingazeira – Sede);</li><li>a criação da Rota nova – Vargem (Sede – Formiga – Vargem – Sede);</li><li>a inclusão de parada em Olho d&#x27;água dos Paulinos na Rota 04, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital Quadro de Percursos Lagoa de São Francisco (edital sem nº) - 12ª ZONA deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Lagoa de São Francisco</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Lagoa de São Francisco; Quadro de Percursos Lagoa de São Francisco (edital sem nº) - 12ª ZONA, DJE/TRE-PI nº 191/2026 (disp. 18/09/2026), PDF da edição; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

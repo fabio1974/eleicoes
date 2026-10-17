@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Quixeré</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Quixeré</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/quixere.pdf?v=1792186977" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Quixeré (29ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 29ª Zona Eleitoral <strong>5 rotas novas</strong> no transporte gratuito de Quixeré.
+<strong>A Justiça Eleitoral dispensou o transporte gratuito de eleitores neste município nas Eleições 2026</strong> (A Portaria nº 08/2026 da 29ª ZE (DJE/TRE-CE nº 194, disponibilizado em 08/09/2026) determina que não haverá transporte gratuito de eleitores pela Justiça Eleitoral nas Eleições 2026). As 7 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Quixeré tem 18.916 eleitores aptos em 22 locais de votação e 67 seções. São 15 locais rurais, com 8.542 eleitores (45% do total).</li>
+<li>9 locais rurais ficam a 10 km ou mais da sede, com 3.368 eleitores. Os mais distantes: Ubáia (30,0 km), Lagoinha (29,2 km) e Tomé (17,0 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Lagoa do Sabino (9,0 km do local de votação), Serra do Vieira (8,9 km do local de votação), Lajedo do Mel (6,6 km do local de votação), Vertente (5,2 km do local de votação), Maxixe (5,0 km do local de votação), Santa Terezinha (3,6 km do local de votação) e Sítio Rasteira (3,3 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 26 localidades rurais de Quixeré que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista do TRE-CE e a posição de cada local publicada pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Lagoa do Sabino</td><td>9,0</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Serra do Vieira</td><td>8,9</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Lajedo do Mel</td><td>6,6</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Vertente</td><td>5,2</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Maxixe</td><td>5,0</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Santa Terezinha</td><td>3,6</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Sítio Rasteira</td><td>3,3</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 26 localidades rurais de Quixeré, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 686" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Quixeré: 7 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="35.0,264.1 59.8,274.0 65.7,261.2 139.3,265.0 198.8,303.6 217.8,325.6 222.0,345.5 231.3,367.5 249.5,379.3 262.2,404.9 275.2,416.4 277.2,430.9 373.0,483.8 461.3,527.8 530.5,554.4 531.4,551.2 534.6,537.0 525.3,513.5 522.0,498.5 526.7,485.9 546.7,455.7 567.0,370.3 597.0,330.8 611.9,317.5 623.8,300.2 627.0,271.3 638.7,246.3 665.0,229.2 721.9,218.6 725.0,213.4 468.6,91.1 448.9,107.3 423.7,106.1 410.6,88.6 392.0,80.0 350.3,93.1 320.1,85.2 301.6,90.1 279.7,105.0 263.7,124.0 240.5,124.2 238.2,132.0 210.3,131.6 140.9,152.5 121.5,163.8 112.1,163.2 97.7,180.5 88.8,183.2 76.0,204.6 60.9,213.9 51.7,231.2 43.1,261.9 35.0,264.1 35.0,264.1" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="539.3,200.1 541.5,196.1 540.1,192.0 537.6,188.7 534.2,186.5 491.8,180.4 486.7,181.1 485.0,187.2 482.7,193.8 480.1,196.9 474.3,199.9 470.4,202.1 465.9,207.0 458.1,206.4 452.5,208.9 440.1,216.4 435.8,220.2 441.0,220.8 452.5,208.9 456.9,206.3 462.5,208.6 467.8,204.7 471.5,201.4 478.3,197.9 482.0,195.7 483.5,191.1 486.4,184.0 488.6,176.0 494.5,169.6 498.8,165.4 501.0,161.9 505.1,148.5 508.0,145.5 505.8,141.2 503.2,138.3 500.2,128.2 498.6,121.7 497.5,117.1 495.7,113.3 491.2,108.5 486.6,103.7 482.7,99.6 479.7,97.1 474.6,95.7 471.9,100.4 472.8,95.5 478.8,96.7 482.1,99.0 486.6,103.7 491.2,108.5 495.1,112.6 497.2,115.9 498.6,121.7 500.2,128.0 501.8,134.6 503.5,138.8 506.5,142.0 509.3,146.9 511.4,151.5 513.7,156.6 516.2,162.3 519.9,170.4 523.0,177.4 525.3,180.7 528.6,183.0 532.4,185.4 536.5,187.9 539.4,190.6 541.0,194.5 542.4,198.5 539.3,200.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Lagoa do Sabino</title></polyline>
+<polyline points="539.3,200.1 544.2,199.6 549.0,200.4 557.7,201.8 567.3,203.4 575.0,204.6 581.4,205.6 589.1,206.8 605.4,209.3 610.6,209.8 617.1,210.7 618.3,215.3 623.2,216.2 628.3,215.3 632.4,213.8 639.0,212.8 632.4,213.8 628.3,215.3 623.2,216.2 618.3,215.4 617.1,210.7 612.3,210.0 606.7,209.5 589.1,206.8 581.4,205.6 575.0,204.6 567.3,203.4 561.1,202.4 553.4,201.1 548.3,200.3 543.6,199.5 539.3,200.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Lajedo do Mel</title></polyline>
+<polyline points="310.4,250.9 302.6,246.0 297.0,242.6 293.4,239.3 290.2,235.7 287.4,231.7 285.1,228.5 282.6,225.6 279.4,222.2 275.6,218.0 272.8,214.6 271.3,210.2 272.8,214.6 275.6,218.0 280.0,216.5 281.5,212.5 282.6,207.9 283.8,203.5 284.3,198.5 282.3,194.5 278.7,192.2 275.5,189.5 278.6,192.1 282.3,194.5 285.5,196.7 283.9,200.8 283.1,205.8 282.2,210.5 280.4,214.8 278.9,218.7 280.7,223.7 283.8,226.8 286.8,230.9 289.2,234.4 292.0,237.4 295.4,241.2 302.6,246.0 307.0,249.3 310.4,250.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Vertente</title></polyline>
+<polyline points="519.9,346.6 523.5,351.8 523.9,364.8 524.0,378.5 525.3,396.3 530.0,399.0 535.1,402.1 540.1,401.4 540.8,413.2 540.4,401.6 535.1,402.1 531.3,399.3 527.5,397.7 524.0,378.7 523.9,364.8 523.8,352.1 520.9,349.0 519.9,346.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Maxixe</title></polyline>
+<polyline points="304.9,268.0 300.8,265.3 297.0,262.8 292.0,261.4 288.7,258.1 284.8,256.6 280.5,253.0 277.8,249.8 274.9,247.0 270.7,245.7 266.1,244.4 270.7,245.7 274.9,247.0 277.8,249.8 280.5,253.0 283.5,255.6 287.4,257.3 290.6,259.7 293.2,263.3 298.8,264.2 302.1,266.3 304.9,268.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Sítio Rasteira</title></polyline>
+<circle cx="207.8" cy="151.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="75.1" cy="254.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="230.2" cy="200.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="273.0" cy="128.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="278.8" cy="123.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="127.6" cy="184.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="339.7" cy="295.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="520.2" cy="342.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="95.2" cy="239.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="231.7" cy="364.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="306.7" cy="269.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="540.4" cy="199.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="272.3" cy="354.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="293.0" cy="111.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="101.2" cy="241.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="101.2" cy="241.4" r="2.2" fill="#b9b9b2"/>
+<polygon points="163.9,238.9 152.7,259.4 175.1,259.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="163.0,237.9 150.6,260.8 175.4,260.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="158.5,244.2 147.8,263.9 169.2,263.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="273.6,345.4 265.7,359.8 281.4,359.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="167.0,236.2 158.1,252.6 175.9,252.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="539.3,192.4 532.0,205.9 546.6,205.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="136.8,176.1 126.5,195.1 147.1,195.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="136.8" y="208.8" text-anchor="middle" fill="#5c5c57">Água Fria</text>
+<polygon points="171.1,152.5 164.2,165.3 178.0,165.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="206.0,194.6 195.8,213.4 216.2,213.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="206.0" y="227.0" text-anchor="middle" fill="#5c5c57">Sede</text>
+<polygon points="234.4,352.0 223.8,371.5 244.9,371.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="234.4" y="385.3" text-anchor="middle" fill="#5c5c57">Tomé</text>
+<polygon points="304.9,260.1 293.2,281.6 316.5,281.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="304.9,255.4 292.8,277.6 316.9,277.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="219.1,316.8 210.6,332.5 227.6,332.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="99.4,233.4 90.5,249.7 108.2,249.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="294.8,104.0 287.0,118.3 302.6,118.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="277.5,420.9 270.6,433.7 284.5,433.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="521.1,339.0 514.0,352.0 528.2,352.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="310.4,240.6 300.7,258.4 320.1,258.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="310.4" y="272.0" text-anchor="middle" fill="#5c5c57">Lagoinha</text>
+<polygon points="340.1,254.5 332.5,268.5 347.7,268.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="337.6,277.6 329.2,293.0 345.9,293.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="310.1,329.6 303.4,341.8 316.7,341.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="312.9,268.7 305.5,282.4 320.4,282.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="435.7" cy="220.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="442.7" y="215.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Lagoa do Sabino 9,0 km</text>
+<circle cx="471.3" cy="103.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="478.3" y="98.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Serra do Vieira 8,9 km</text>
+<circle cx="639.1" cy="212.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="508.1" y="227.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Lajedo do Mel 6,6 km</text>
+<circle cx="275.9" cy="189.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="282.9" y="184.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Vertente 5,2 km</text>
+<circle cx="541.4" cy="415.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="548.4" y="410.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Maxixe 5,0 km</text>
+<circle cx="271.1" cy="210.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="278.1" y="205.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santa Terezinha 3,6 km</text>
+<circle cx="265.1" cy="247.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="272.1" y="242.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Rasteira 3,3 km</text>
+<rect x="158.8" y="247.9" width="10" height="10" fill="#1d1d1b"/><text x="172.8" y="270.9" font-weight="600" fill="#1d1d1b">Sede de Quixeré</text>
+<line x1="35" x2="116.0" y1="584.4" y2="584.4" stroke="#8a8a84" stroke-width="2"/><text x="35" y="598.4" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="575.4424179260102" y2="575.4424179260102" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="579.4424179260102" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,568.4 421.4,580.7 434.6,580.7" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="579.4424179260102" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="593.4424179260102" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="602.4424179260102" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="598.4424179260102" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="602.4424179260102" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="621.4424179260102" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="625.4424179260102" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="621.4424179260102" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="625.4424179260102" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="644.4424179260102" y2="644.4424179260102" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="648.4424179260102" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="667.4424179260102" y2="667.4424179260102" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="671.4424179260102" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TRE-CE e TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Portaria nº 08/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (4):</strong> Lagoa do Sabino, Serra do Vieira, Lajedo do Mel e Vertente.</li>
+<li><strong>De 3 a 5 km (3):</strong> Maxixe, Santa Terezinha e Sítio Rasteira.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (19):</strong> Alto do Bom Sossego, Barreiras, Barreiras V, Barreiras VI, Bonsucesso, Boqueirão, Botica, Carnaúbas, Cercado do Meio, Lagoa da Casca, Lagoinha, Macacos, Pocinhos, Poço da Onça, Queimadas, Sucurujuba, Tomé, Ubáia e Água Fria.</li>
+</ul><h2>Rotas do Portaria nº 08/2026</h2>
+<p>O edital tem 0 rotas para Quixeré. Horários: não se aplica. Veículos: não se aplica.</p>
+<p><strong>A Justiça Eleitoral dispensou o transporte gratuito de eleitores neste município nas Eleições 2026.</strong> A Portaria nº 08/2026 da 29ª ZE (DJE/TRE-CE nº 194, disponibilizado em 08/09/2026) determina que não haverá transporte gratuito de eleitores pela Justiça Eleitoral nas Eleições 2026</p>
+
+<p>Fonte: Portaria nº 08/2026 da 29ª ZE, DJE/TRE-CE nº 194, disponibilizado em 08/09/2026.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 7 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Lagoa do Sabino</strong></td><td>Lagoinha – Lagoa do Sabino – Serra do Vieira – Lagoinha</td><td>Lagoa do Sabino, Serra do Vieira</td><td>30,0 km (ida e volta)</td><td>~54 min</td></tr><tr><td><strong>Rota nova – Lajedo do Mel</strong></td><td>Lagoinha – Lajedo do Mel – Lagoinha</td><td>Lajedo do Mel</td><td>13,3 km (ida e volta)</td><td>~19 min</td></tr><tr><td><strong>Rota nova – Vertente</strong></td><td>Lagoinha – Santa Terezinha – Vertente – Lagoinha</td><td>Santa Terezinha, Vertente</td><td>11,8 km (ida e volta)</td><td>~23 min</td></tr><tr><td><strong>Rota nova – Maxixe</strong></td><td>Ubáia – Maxixe – Ubáia</td><td>Maxixe</td><td>10,1 km (ida e volta)</td><td>~23 min</td></tr><tr><td><strong>Rota nova – Sítio Rasteira</strong></td><td>Sede – Sítio Rasteira – Sede</td><td>Sítio Rasteira</td><td>6,6 km (ida e volta)</td><td>~14 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMQ</strong></p><p>Quixeré/CE, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dra. Marília Ferreira de Souza Varella Barca</strong><br>Juiz Eleitoral da 29ª Zona Eleitoral – Limoeiro do Norte/CE</p><p><strong>Assunto:</strong> Pedido de reconsideração da dispensa do transporte gratuito de eleitores (Portaria nº 08/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Quixeré, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação que, com a dispensa do transporte gratuito determinada pela Portaria nº 08/2026, ficam sem nenhum meio de transporte da Justiça Eleitoral para votar: Lagoa do Sabino, Serra do Vieira, Lajedo do Mel, Vertente, Maxixe, Santa Terezinha e Sítio Rasteira.</p><p>Sugerimos, respeitosamente, que Vossa Excelência reconsidere a dispensa ao menos para essas localidades, com a criação das seguintes rotas:</p><ol><li>a criação da Rota nova – Lagoa do Sabino (Lagoinha – Lagoa do Sabino – Serra do Vieira – Lagoinha);</li><li>a criação da Rota nova – Lajedo do Mel (Lagoinha – Lajedo do Mel – Lagoinha);</li><li>a criação da Rota nova – Vertente (Lagoinha – Santa Terezinha – Vertente – Lagoinha);</li><li>a criação da Rota nova – Maxixe (Ubáia – Maxixe – Ubáia);</li><li>a criação da Rota nova – Sítio Rasteira (Sede – Sítio Rasteira – Sede).</li></ol><p>As rotas sugeridas atendem só as localidades mais distantes, que hoje não têm como chegar ao local de votação.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Quixeré</p></blockquote>
+<p class="fontes">Fontes: TRE-CE e TSE, Locais de Votação de Quixeré; Portaria nº 08/2026 da 29ª ZE, DJE/TRE-CE nº 194, disponibilizado em 08/09/2026; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

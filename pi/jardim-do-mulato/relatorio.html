@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Jardim do Mulato</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Jardim do Mulato</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/jardim-do-mulato.pdf?v=1792185065" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Jardim do Mulato (43ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 43ª Zona Eleitoral <strong>5 rotas novas</strong> no transporte gratuito de Jardim do Mulato.
+Traçamos pelas estradas o percurso das 1 rotas do Edital nº 51/2026 - TRE/43ª ZONA (republica o quadro do Edital nº 44/2026). 17 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>Jardim do Mulato tem 4.551 eleitores aptos em 9 locais de votação e 20 seções. São 8 locais rurais, com 2.668 eleitores (59% do total).</li>
+<li>3 locais rurais ficam a 10 km ou mais da sede, com 1.112 eleitores. Os mais distantes: Povoado Pitombeiras (28,6 km), Povoado Inhumas (15,5 km) e Povoado Seriema (14,4 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Agrovila do PA São Joaquim (9,6 km do local de votação), Tabuleirinho (9,5 km do local de votação), Retiro (9,2 km do local de votação), Coité (9,1 km do local de votação), Carrapato (8,3 km do local de votação), Mata (7,3 km do local de votação), Capitão de Campos (7,2 km do local de votação), Caldeirão (6,5 km do local de votação), Fazenda Jaques Santos (6,4 km do local de votação), Agrovila do PA Ouro Verde (6,2 km do local de votação), PA Ouro Verde (6,1 km do local de votação), Mata da Serra (5,7 km do local de votação), Chapadinha (5,4 km do local de votação), Várzea (4,8 km do local de votação), Pedra do Amolar (3,0 km do local de votação), Baltazar (3,0 km do local de votação) e Assentamento Santa Luz (3,0 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 32 localidades rurais de Jardim do Mulato que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço. 1 locais não foram encontrados nas duas bases: Povoado Pitombeira, com 125 eleitores.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Terra Vermelha</td><td>9,8</td><td>Rota 01</td><td>0,6</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Agrovila do PA São Joaquim</td><td>9,6</td><td>Rota 01</td><td>7,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Tabuleirinho</td><td>9,5</td><td>Rota 01</td><td>7,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Retiro</td><td>9,2</td><td>Rota 01</td><td>8,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Coité</td><td>9,1</td><td>Rota 01</td><td>8,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Carrapato</td><td>8,3</td><td>Rota 01</td><td>6,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Mata</td><td>7,3</td><td>Rota 01</td><td>6,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Capitão de Campos</td><td>7,2</td><td>Rota 01</td><td>7,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Caldeirão</td><td>6,5</td><td>Rota 01</td><td>6,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Jaques Santos</td><td>6,4</td><td>Rota 01</td><td>7,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Agrovila do PA Ouro Verde</td><td>6,2</td><td>Rota 01</td><td>6,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>PA Ouro Verde</td><td>6,1</td><td>Rota 01</td><td>6,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Mata da Serra</td><td>5,7</td><td>Rota 01</td><td>2,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Chapadinha</td><td>5,4</td><td>Rota 01</td><td>6,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Furnas</td><td>5,1</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Várzea</td><td>4,8</td><td>Rota 01</td><td>6,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Boa Vista</td><td>4,8</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Pedra do Amolar</td><td>3,0</td><td>Rota 01</td><td>8,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Baltazar</td><td>3,0</td><td>Rota 01</td><td>3,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Assentamento Santa Luz</td><td>3,0</td><td>Rota 01</td><td>8,0</td><td>Sem rota (mais de 2 km)</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 32 localidades rurais de Jardim do Mulato, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 635" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Jardim do Mulato: 17 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 51/2026 - TRE/43ª ZONA (republica o quadro do Edital nº 44/2026) e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="78.5,367.3 189.8,359.0 325.1,411.3 341.9,442.4 506.1,438.9 512.7,502.9 725.0,473.9 714.2,445.3 683.3,395.6 658.3,382.7 646.5,369.9 634.5,367.1 623.9,337.4 608.3,326.5 593.1,295.3 586.6,311.4 518.7,318.1 404.6,212.8 402.2,158.0 359.7,138.0 270.8,127.9 259.5,98.9 245.4,80.0 175.9,123.3 157.1,211.2 137.0,196.3 42.7,193.9 46.6,231.0 58.1,244.1 71.2,250.3 73.5,281.9 82.5,297.5 76.7,327.5 68.6,342.7 78.5,367.3 78.5,367.3" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="164.5,220.8 167.3,223.7 169.9,226.9 174.4,229.4 177.5,231.9 181.8,235.0 180.5,239.7 178.8,243.4 180.4,247.4 181.9,252.3 181.0,256.8 178.9,261.2 179.5,266.5 183.4,273.3 186.5,275.7 193.6,279.7 198.4,284.8 200.6,288.7 208.4,304.5 209.1,310.5 215.6,320.6 227.3,334.6 234.0,338.4 251.3,347.7 259.8,350.1 265.8,351.4 268.4,356.4 270.1,361.5 270.9,368.5 269.7,372.9 271.9,376.9 275.1,387.0 277.6,390.7 275.3,394.0 276.1,402.1 279.2,414.4 283.3,415.9 287.6,414.4 295.4,414.5 300.2,413.3 303.9,411.2 312.2,409.4 316.8,408.6 322.7,408.8 329.4,407.9 336.7,402.0 343.0,399.1 347.1,397.4 354.1,393.0 361.9,390.6 366.9,388.9 371.5,387.8 377.0,386.7 381.3,384.3 388.1,383.3 394.7,383.8 400.4,384.0 404.4,377.3 408.9,376.2 413.6,377.1 421.3,376.7 428.5,376.5 435.0,375.5 442.0,374.7 448.1,374.8 454.2,376.2 459.9,380.0 465.4,381.4 474.3,381.3 478.4,383.4 481.4,386.5 484.8,388.6 486.7,393.0 485.7,398.6 486.4,405.3 490.5,408.0 496.6,410.4 498.7,414.5 503.5,415.3 508.5,416.8 513.4,418.8 518.3,421.8 522.4,425.1 527.9,424.0 532.4,422.0 537.5,415.6 538.8,411.6 544.5,410.3 550.2,411.2 555.3,412.4 561.7,414.8 565.2,418.5 568.8,420.4 576.5,419.4 580.4,416.8 586.9,416.9 595.6,415.7 602.8,416.3 597.2,415.5 590.3,417.0 583.1,417.2 578.3,418.7 573.6,420.1 565.9,419.1 561.7,414.8 557.4,413.0 550.2,411.2 544.5,410.3 539.3,410.5 537.5,415.6 533.0,421.5 528.5,423.7 523.5,425.4 518.3,421.8 513.4,418.8 508.5,416.8 503.5,415.3 498.7,414.5 496.6,410.4 490.5,408.0 486.7,405.9 485.7,399.7 486.5,395.0 485.8,390.3 483.3,387.5 479.7,385.1 476.9,381.7 469.4,381.7 462.6,381.5 454.6,376.4 450.2,375.0 444.7,374.7 444.7,374.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="131.4,263.2 126.9,264.1 120.5,264.4 115.0,264.0 111.9,261.7 108.9,259.3 104.4,257.0 100.5,255.1 95.7,253.8 91.2,252.6 86.2,254.0 80.2,253.2 73.9,251.7 71.8,255.3 71.8,261.1 73.1,267.2 72.3,262.2 71.4,257.7 72.3,252.4 68.1,249.0 63.3,247.1 59.3,245.0 56.6,241.6 53.6,239.0 50.8,235.8 47.9,233.1 43.2,234.5 43.3,239.9 43.4,245.4 43.3,239.9 43.1,234.7 47.3,233.0 45.9,228.8 45.9,222.9 45.8,216.6 46.5,211.1 46.1,205.4 45.8,198.7 42.8,193.8 39.6,190.0 36.2,186.1 39.6,190.0 42.8,193.8 45.3,197.0 45.8,203.0 46.5,208.8 46.1,214.2 45.9,220.0 45.9,225.8 46.7,231.0 49.6,234.5 52.8,238.2 55.7,240.6 58.1,244.1 61.9,246.5 65.7,248.1 70.6,249.9 71.8,255.3 71.8,261.1 73.1,267.2 73.3,273.3 73.7,278.3 74.3,283.3 77.2,286.5 79.2,290.9 81.4,295.4 82.7,299.5 81.5,303.9 78.1,306.5 79.0,311.0 78.3,316.3 77.4,324.0 78.1,329.1 77.4,324.0 78.0,318.8 78.8,312.9 77.6,308.5 80.4,304.8 82.6,300.0 81.4,295.4 79.5,291.5 77.2,286.5 74.3,283.3 73.7,278.3 73.3,273.3 72.9,268.2 72.3,262.2 71.4,257.7 72.3,252.4 78.1,253.0 83.2,253.4 88.5,253.7 93.7,253.0 100.5,255.1 104.4,257.0 108.2,259.1 111.6,261.2 114.2,263.8 118.8,264.6 124.3,264.0 130.0,262.8 131.4,263.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Agrovila do PA São Joaquim</title></polyline>
+<polyline points="141.1,318.8 136.2,320.3 127.4,320.2 120.8,320.3 116.5,322.6 111.9,326.8 108.4,330.1 104.8,333.1 101.9,337.4 99.6,341.1 98.8,346.4 96.1,349.6 93.5,352.3 93.6,358.2 93.4,363.6 94.2,370.2 93.4,375.8 93.3,381.4 92.3,388.5 90.0,382.9 87.0,378.1 84.9,374.7 81.2,370.3 78.5,367.4 76.2,364.2 73.6,360.3 71.0,356.5 73.6,360.3 75.9,363.6 78.5,367.4 81.2,370.3 83.8,373.1 87.0,378.1 90.0,382.9 92.0,386.7 92.9,382.2 93.0,376.7 94.4,371.6 93.9,366.0 95.3,361.0 93.2,355.9 94.6,351.0 98.2,347.3 99.3,342.7 100.9,338.8 104.0,334.7 106.2,331.3 109.7,328.9 114.1,324.6 117.4,321.8 122.6,320.0 132.1,320.3 138.9,320.4 141.1,318.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Coité</title></polyline>
+<polyline points="175.7,229.6 171.9,227.8 168.4,225.5 165.8,222.2 162.3,219.6 160.0,216.6 157.9,212.8 155.4,209.5 152.8,205.6 148.9,202.6 146.7,199.2 142.3,198.0 137.5,196.2 132.9,195.4 129.7,192.7 127.3,188.8 124.3,186.3 121.0,184.2 114.8,183.6 109.5,181.5 105.7,178.9 100.3,178.0 95.8,180.2 92.3,182.4 87.2,183.0 82.2,182.5 78.3,180.8 73.9,177.6 69.4,178.6 73.9,177.6 77.2,180.2 81.4,182.4 87.2,183.0 92.3,182.4 95.8,180.2 99.8,178.0 105.7,178.9 109.5,181.5 113.1,183.3 118.2,183.7 123.4,185.6 126.8,188.2 129.1,191.5 131.7,194.7 136.0,196.2 141.6,197.8 146.0,199.0 148.9,202.6 152.5,205.4 154.7,208.5 157.6,212.3 159.6,215.9 162.3,219.6 165.8,222.2 168.4,225.5 171.8,227.8 175.7,229.6 175.7,229.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Carrapato</title></polyline>
+<polyline points="175.7,229.6 182.3,230.9 185.8,229.0 191.0,228.2 195.7,229.4 199.3,231.3 205.3,234.0 209.5,235.2 213.5,237.3 217.2,239.0 223.2,244.9 225.2,248.3 227.1,252.1 230.3,256.0 232.8,259.3 234.1,263.5 235.9,267.6 238.2,270.8 241.4,273.4 238.2,270.8 235.9,267.6 234.1,263.5 232.8,259.3 230.3,256.0 227.1,252.1 225.2,248.3 223.2,244.9 220.3,241.0 213.5,237.3 209.5,235.2 205.3,234.0 199.3,231.3 195.7,229.4 191.0,228.2 186.2,228.8 182.7,230.9 177.4,229.5 175.7,229.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Mata da Serra</title></polyline>
+<polyline points="265.7,189.1 259.9,188.2 256.3,186.4 250.8,186.9 247.0,189.0 243.9,191.7 241.1,194.8 235.6,197.2 232.1,199.1 228.5,202.2 231.6,199.7 235.6,197.2 240.0,195.5 243.2,192.7 246.2,189.9 250.5,187.0 256.3,186.4 259.9,188.2 263.5,190.9 269.8,194.3 274.8,194.6 279.9,196.0 284.7,198.5 288.2,200.7 292.6,202.3 296.7,200.8 302.7,199.9 298.1,200.7 294.2,202.2 289.3,201.6 285.8,198.8 281.8,197.0 278.2,194.7 273.1,195.3 266.0,192.9 264.6,185.0 262.2,181.9 259.5,178.7 258.0,173.8 256.2,170.1 250.3,167.5 243.9,166.1 239.0,167.5 229.9,170.2 227.8,166.4 226.3,162.6 224.6,158.6 221.2,150.2 218.8,144.1 215.8,136.8 213.9,132.2 211.9,127.5 213.9,132.2 215.8,136.8 217.5,141.0 220.2,147.5 223.3,155.4 226.3,162.6 227.8,166.4 229.8,169.8 239.0,167.5 243.9,166.1 250.3,167.5 256.2,170.1 258.0,173.8 259.2,178.1 262.2,181.9 264.6,185.0 265.7,189.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Agrovila do PA Ouro Verde</title></polyline>
+<circle cx="323.6" cy="418.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="389.3" cy="381.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="515.7" cy="420.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="381.6" cy="322.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="103.6" cy="336.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="240.1" cy="195.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="444.7" cy="373.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="328.6" cy="223.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="352.0" cy="336.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="257.6" cy="187.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="343.2" cy="332.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="132.0" cy="262.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="323.6" cy="239.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="151.3" cy="248.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="141.9" cy="316.9" r="2.2" fill="#b9b9b2"/>
+<polygon points="132.0,253.7 123.0,270.3 141.0,270.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="132.0" y="283.7" text-anchor="middle" fill="#5c5c57">Zona Rural</text>
+<polygon points="324.7,229.6 317.7,242.5 331.7,242.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="265.7,181.8 258.8,194.5 272.6,194.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="140.9,310.0 132.6,325.2 149.1,325.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="175.7,217.3 164.1,238.7 187.3,238.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="463.5,372.3 454.5,388.9 472.5,388.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="341.4,323.8 334.4,336.5 348.3,336.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="151.6,243.2 146.1,253.4 157.2,253.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="79.0" cy="332.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="86.0" y="327.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Agrovila do PA São Joaquim 9,6 km</text>
+<circle cx="79.3" cy="331.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="86.3" y="346.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Tabuleirinho 9,5 km</text>
+<circle cx="35.0" cy="187.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="42.0" y="182.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Retiro 9,2 km</text>
+<circle cx="71.4" cy="352.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="78.4" y="367.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Coité 9,1 km</text>
+<circle cx="69.0" cy="179.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="76.0" y="194.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Carrapato 8,3 km</text>
+<circle cx="80.4" cy="298.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="87.4" y="293.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Mata 7,3 km</text>
+<circle cx="45.0" cy="245.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="52.0" y="240.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Capitão de Campos 7,2 km</text>
+<circle cx="57.0" cy="225.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="64.0" y="220.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Caldeirão 6,5 km</text>
+<circle cx="43.0" cy="226.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="210.3" cy="127.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="217.3" y="122.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Agrovila do PA Ouro Verde 6,2 km</text>
+<circle cx="210.9" cy="127.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="217.9" y="142.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">PA Ouro Verde 6,1 km</text>
+<circle cx="243.2" cy="275.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="250.2" y="270.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Mata da Serra 5,7 km</text>
+<circle cx="70.9" cy="272.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="77.9" y="267.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Chapadinha 5,4 km</text>
+<circle cx="61.1" cy="247.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="304.6" cy="200.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="311.6" y="195.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pedra do Amolar 3,0 km</text>
+<circle cx="228.2" cy="202.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="235.2" y="217.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Baltazar 3,0 km</text>
+<circle cx="305.5" cy="200.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<rect x="159.4" y="215.7" width="10" height="10" fill="#1d1d1b"/><text x="173.4" y="238.7" font-weight="600" fill="#1d1d1b">Sede de Jardim do Mulato</text>
+<line x1="35" x2="114.6" y1="532.9" y2="532.9" stroke="#8a8a84" stroke-width="2"/><text x="35" y="546.9" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="523.8970322287096" y2="523.8970322287096" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="527.8970322287096" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,516.9 421.4,529.1 434.6,529.1" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="527.8970322287096" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="541.8970322287096" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="550.8970322287096" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="546.8970322287096" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="550.8970322287096" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="569.8970322287096" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="573.8970322287096" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="569.8970322287096" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="573.8970322287096" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="592.8970322287096" y2="592.8970322287096" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="596.8970322287096" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="615.8970322287096" y2="615.8970322287096" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="619.8970322287096" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 51/2026 - TRE/43ª ZONA (republica o quadro do Edital nº 44/2026) · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (15):</strong> Terra Vermelha, Agrovila do PA São Joaquim, Tabuleirinho, Retiro, Coité, Carrapato, Mata, Capitão de Campos, Caldeirão, Fazenda Jaques Santos, Agrovila do PA Ouro Verde, PA Ouro Verde, Mata da Serra, Chapadinha e Furnas.</li>
+<li><strong>De 3 a 5 km (5):</strong> Várzea, Boa Vista, Pedra do Amolar, Baltazar e Assentamento Santa Luz.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (12):</strong> Baixão das Caraíbas, Comunidade Jardim do Mulato, Inhuma, Lagoa dos Cocos, Mangabeira, Pitombeira, Poço do Pedro, Seriema, Siriema, Sussuarana, Vereda e Zé Ferreira.</li>
+</ul><h2>Rotas do Edital nº 51/2026 - TRE/43ª ZONA (republica o quadro do Edital nº 44/2026)</h2>
+<p>O edital tem 1 rotas para Jardim do Mulato. Horários: Saída de Jardim do Mulato às 07h; viagens entre a U. E. José Regino Teixeira (Povoado Melindrosa) e a UBS do Povoado Pitombeiras às 08h, 10h, 10h20, 12h, 14h, 15h30, 16h e 17h30; retorno a Jardim do Mulato às 18h. Veículos: Ônibus VW/Neobus 15.190 ESC placa SLV 3F90.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Jardim do Mulato – Povoado Melindrosa – Povoado Boqueirão – Povoado Mato Limpo – Povoado Boa Vista – Povoado Pitombeira</td></tr></tbody></table></div>
+<p>Fonte: Edital nº 51/2026 - TRE/43ª ZONA (republica o quadro do Edital nº 44/2026), DJE/TRE-PI nº 220/2026, disponibilizado em 14/10/2026 (publicação 15/10/2026), ID_MATERIA 6172899; Edital nº 44/2026 - TRE/43ª ZONA, DJE/TRE-PI nº 206/2026, disp. 30/09/2026, ID_MATERIA 6147251 (mesmo quadro); fonte complementar: INFO ROTAS – sistema oficial do TRE-PI (inforotas.tre-pi.jus.br), consulta em 2026-10-16 (rotas do INFO ROTAS preservadas em &quot;rotas_inforotas&quot;).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 17 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Agrovila do PA São Joaquim</strong></td><td>Sede – Chapadinha – Várzea – Capitão de Campos – Fazenda Jaques Santos – Caldeirão – Retiro – Mata – Tabuleirinho – Agrovila do PA São Joaquim – Sede</td><td>Chapadinha, Várzea, Capitão de Campos, Fazenda Jaques Santos, Caldeirão, Retiro, Mata, Tabuleirinho, Agrovila do PA São Joaquim</td><td>34,5 km (ida e volta)</td><td>~1h07</td></tr><tr><td><strong>Rota nova – Coité</strong></td><td>Sede – Coité – Sede</td><td>Coité</td><td>18,2 km (ida e volta)</td><td>~44 min</td></tr><tr><td><strong>Rota nova – Carrapato</strong></td><td>Sede – Carrapato – Sede</td><td>Carrapato</td><td>16,6 km (ida e volta)</td><td>~37 min</td></tr><tr><td><strong>Rota nova – Mata da Serra</strong></td><td>Sede – Mata da Serra – Sede</td><td>Mata da Serra</td><td>11,3 km (ida e volta)</td><td>~27 min</td></tr><tr><td><strong>Rota nova – Agrovila do PA Ouro Verde</strong></td><td>Sede – Baltazar – Pedra do Amolar – Assentamento Santa Luz – PA Ouro Verde – Agrovila do PA Ouro Verde – Sede</td><td>Baltazar, Pedra do Amolar, Assentamento Santa Luz, PA Ouro Verde, Agrovila do PA Ouro Verde</td><td>24,0 km (ida e volta)</td><td>~50 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMJM</strong></p><p>Jardim do Mulato/PI, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>José Cláudio Diógenes Porto</strong><br>Juiz Eleitoral da 43ª Zona Eleitoral – Regeneração/PI</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 51/2026 - TRE/43ª ZONA (republica o quadro do Edital nº 44/2026)) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Jardim do Mulato, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 51/2026 - TRE/43ª ZONA (republica o quadro do Edital nº 44/2026): Agrovila do PA São Joaquim, Tabuleirinho, Retiro, Coité, Carrapato, Mata, Capitão de Campos, Caldeirão, Fazenda Jaques Santos, Agrovila do PA Ouro Verde, PA Ouro Verde, Mata da Serra, Chapadinha, Várzea, Pedra do Amolar, Baltazar e Assentamento Santa Luz.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Agrovila do PA São Joaquim (Sede – Chapadinha – Várzea – Capitão de Campos – Fazenda Jaques Santos – Caldeirão – Retiro – Mata – Tabuleirinho – Agrovila do PA São Joaquim – Sede);</li><li>a criação da Rota nova – Coité (Sede – Coité – Sede);</li><li>a criação da Rota nova – Carrapato (Sede – Carrapato – Sede);</li><li>a criação da Rota nova – Mata da Serra (Sede – Mata da Serra – Sede);</li><li>a criação da Rota nova – Agrovila do PA Ouro Verde (Sede – Baltazar – Pedra do Amolar – Assentamento Santa Luz – PA Ouro Verde – Agrovila do PA Ouro Verde – Sede).</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 51/2026 - TRE/43ª ZONA (republica o quadro do Edital nº 44/2026) deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Jardim do Mulato</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Jardim do Mulato; Edital nº 51/2026 - TRE/43ª ZONA (republica o quadro do Edital nº 44/2026), DJE/TRE-PI nº 220/2026, disponibilizado em 14/10/2026 (publicação 15/10/2026), ID_MATERIA 6172899; Edital nº 44/2026 - TRE/43ª ZONA, DJE/TRE-PI nº 206/2026, disp. 30/09/2026, ID_MATERIA 6147251 (mesmo quadro); fonte complementar: INFO ROTAS – sistema oficial do TRE-PI (inforotas.tre-pi.jus.br), consulta em 2026-10-16 (rotas do INFO ROTAS preservadas em &quot;rotas_inforotas&quot;); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

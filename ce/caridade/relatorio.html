@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Caridade</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Caridade</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/caridade.pdf?v=1792187187" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Caridade (111ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 111ª Zona Eleitoral <strong>8 rotas novas</strong> no transporte gratuito de Caridade.
+Traçamos pelas estradas o percurso das 1 rotas do Edital nº 42/2026 (2º turno); 1º turno: nº 33/2026. 19 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>Caridade tem 17.518 eleitores aptos em 26 locais de votação e 67 seções. São 20 locais rurais, com 7.108 eleitores (41% do total).</li>
+<li>14 locais rurais ficam a 10 km ou mais da sede, com 5.520 eleitores. Os mais distantes: Boqueirão (34,1 km), Localidade De Sao Vicente (32,4 km) e Localidade De Humaita (31,1 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Fazenda Mel (11,7 km do local de votação), Fazenda Carnaubinha (11,6 km do local de votação), Fazenda Melzinho (9,8 km do local de votação), Fazenda Poço do Veado (9,7 km do local de votação), Valquírio Capemba (9,5 km do local de votação), Fazenda Desterro (8,1 km do local de votação), Fazenda Santa Fé (8,0 km do local de votação), Morosa (6,6 km do local de votação), Fazenda Pedra Vermelha (5,8 km do local de votação), Fazenda Barra do Facão (5,5 km do local de votação), Santa Edwirges (5,5 km do local de votação), Fazenda Camarão (5,4 km do local de votação), Pendanga (4,9 km do local de votação), Fazenda São João (4,6 km do local de votação), Fazenda Julião (4,6 km do local de votação), Fazenda Camboapina (4,3 km do local de votação), Fazenda Boa Vista (3,9 km do local de votação), Fazenda Juá dos Pimentel (3,7 km do local de votação) e São Domingos (3,0 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 47 localidades rurais de Caridade que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista do TRE-CE e a posição de cada local publicada pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Fazenda Mel</td><td>11,7</td><td>Rota 01</td><td>17,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Carnaubinha</td><td>11,6</td><td>Rota 01</td><td>24,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Melzinho</td><td>9,8</td><td>Rota 01</td><td>18,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Poço do Veado</td><td>9,7</td><td>Rota 01</td><td>26,2</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Valquírio Capemba</td><td>9,5</td><td>Rota 01</td><td>22,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Desterro</td><td>8,1</td><td>Rota 01</td><td>19,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Santa Fé</td><td>8,0</td><td>Rota 01</td><td>5,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Morosa</td><td>6,6</td><td>Rota 01</td><td>21,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Pedra Vermelha</td><td>5,8</td><td>Rota 01</td><td>24,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Barra do Facão</td><td>5,5</td><td>Rota 01</td><td>24,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Santa Edwirges</td><td>5,5</td><td>Rota 01</td><td>24,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Camarão</td><td>5,4</td><td>Rota 01</td><td>7,2</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Pendanga</td><td>4,9</td><td>Rota 01</td><td>21,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda São João</td><td>4,6</td><td>Rota 01</td><td>20,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Julião</td><td>4,6</td><td>Rota 01</td><td>21,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Camboapina</td><td>4,3</td><td>Rota 01</td><td>16,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Boa Vista</td><td>3,9</td><td>Rota 01</td><td>15,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Juá dos Pimentel</td><td>3,7</td><td>Rota 01</td><td>17,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>São Domingos</td><td>3,0</td><td>Rota 01</td><td>10,3</td><td>Sem rota (mais de 2 km)</td></tr></tbody></table></div>
+<p>3 das 6 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Casemiro (Rota 01), Carmozina (Rota 01) e Novo CRAS (Rota 01). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 47 localidades rurais de Caridade, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 899" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Caridade: 19 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital nº 42/2026 (2º turno); 1º turno: nº 33/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="42.4,421.5 202.3,572.9 216.7,571.6 228.5,578.2 245.1,574.4 256.4,583.4 256.4,610.6 284.1,614.3 286.4,653.6 299.8,666.5 299.1,673.7 310.3,691.3 323.9,738.4 335.8,747.2 447.9,747.2 493.6,767.5 493.8,750.7 508.0,729.3 484.5,711.1 522.2,699.8 516.8,688.4 541.6,684.0 550.4,660.6 564.9,653.0 563.6,632.9 543.0,633.0 543.8,612.4 529.3,616.2 530.3,600.6 546.3,584.4 559.5,581.2 555.1,558.6 569.5,561.3 582.8,549.5 594.8,553.7 601.9,534.8 614.4,528.0 601.4,516.0 610.2,507.6 601.9,487.8 567.1,482.8 574.7,470.4 598.0,476.2 597.0,451.7 606.6,444.4 640.4,435.8 642.3,421.6 663.2,407.8 690.9,401.2 682.1,397.3 671.6,377.4 678.7,356.6 674.7,347.8 683.8,325.2 725.0,327.6 702.4,296.3 711.0,277.6 702.5,268.8 688.7,266.1 680.6,216.8 634.0,168.8 601.4,80.0 560.4,200.4 499.4,206.1 263.3,172.9 275.6,191.1 287.1,191.1 300.3,206.7 310.3,240.9 316.3,250.4 345.0,259.7 335.6,298.3 336.1,307.8 258.8,315.4 255.5,341.4 267.0,362.3 261.3,390.9 85.2,394.8 61.7,405.4 43.1,403.2 35.0,415.2 42.4,421.5 42.4,421.5" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="278.8,484.8 281.4,482.3 284.7,479.9 291.0,475.4 294.3,473.0 298.3,470.9 302.3,469.5 305.2,466.9 302.3,469.5 298.3,470.9 294.3,473.0 291.0,475.4 286.3,478.7 282.9,481.1 279.1,484.1 278.8,484.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="505.8,252.6 500.6,253.0 495.9,252.4 490.9,251.9 486.4,251.3 485.8,246.4 484.4,242.1 482.4,238.9 480.8,234.9 478.7,228.5 476.8,225.3 475.5,220.7 476.3,216.1 477.2,211.5 479.0,208.1 477.2,211.5 476.3,215.9 475.5,220.3 476.4,224.6 478.7,228.5 480.1,232.5 481.4,236.4 483.7,241.0 485.6,244.3 485.7,249.6 480.2,249.7 475.2,249.3 468.4,250.3 462.1,251.2 454.6,252.2 449.9,251.4 445.0,251.9 441.7,249.4 440.9,245.0 439.7,240.9 437.9,236.8 435.8,233.8 439.0,231.8 439.0,226.7 440.7,223.0 441.6,218.8 445.7,216.0 443.7,211.5 437.8,208.8 432.3,203.8 430.9,200.0 428.3,197.1 424.4,195.7 421.3,193.5 417.0,192.5 412.0,193.5 408.9,195.6 404.1,197.9 405.7,201.9 408.3,204.7 406.3,209.8 404.8,214.5 402.9,218.4 406.3,221.1 411.8,220.4 408.1,222.9 404.5,220.5 404.5,215.1 405.8,210.6 407.6,206.6 409.4,203.3 405.2,201.5 404.6,195.9 411.4,193.7 415.8,192.4 419.7,193.9 423.4,195.4 428.3,197.1 430.9,200.0 432.3,203.8 435.8,206.6 441.1,211.3 445.7,212.7 448.2,216.0 455.6,219.4 469.3,219.9 474.4,220.3 476.3,224.4 478.7,228.5 480.1,232.5 481.4,236.4 483.7,241.0 485.6,244.3 485.7,249.6 488.8,251.9 493.7,252.1 498.6,252.7 503.1,253.3 505.8,252.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fazenda Mel</title></polyline>
+<polyline points="568.6,224.9 569.9,229.1 573.9,230.9 575.3,234.6 578.9,237.5 580.1,242.2 581.1,247.0 584.1,253.6 589.5,253.9 593.3,256.1 595.9,259.0 597.7,262.4 599.7,265.6 603.9,266.7 607.1,268.8 611.4,269.7 615.7,270.6 620.3,268.0 621.4,272.4 625.1,274.7 627.4,277.6 631.2,280.6 634.8,283.3 638.4,285.5 644.2,287.9 647.6,292.1 650.6,295.3 651.1,300.2 650.6,305.3 651.9,309.9 653.0,313.9 653.9,318.9 655.8,322.1 657.8,325.4 657.0,329.8 656.7,335.7 657.6,340.5 660.3,343.6 657.8,340.9 656.7,335.7 657.0,330.7 658.0,326.2 656.1,322.6 653.9,318.9 656.5,315.8 661.3,314.5 666.4,313.6 671.7,313.4 675.8,312.4 674.6,308.1 672.4,303.3 668.7,300.1 666.2,296.9 662.4,293.9 658.7,292.1 654.6,290.2 649.9,288.2 645.5,287.4 640.3,286.1 635.5,283.7 632.4,281.4 629.2,279.1 626.5,276.2 622.9,273.1 617.9,271.1 614.5,269.3 609.5,269.0 605.4,267.8 601.4,266.6 598.6,263.9 597.0,260.4 594.5,257.4 591.9,254.4 586.5,254.2 582.4,250.5 580.9,245.2 579.8,240.0 577.7,236.6 575.0,234.2 573.4,230.5 569.6,228.6 568.6,224.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fazenda Carnaubinha</title></polyline>
+<polyline points="307.4,464.5 304.8,467.2 302.1,469.7 297.4,471.2 297.6,465.9 297.8,460.5 297.9,455.4 298.2,448.5 294.8,446.8 296.4,441.4 298.8,433.6 301.1,426.3 302.7,421.3 304.9,416.7 307.1,413.3 309.8,410.6 313.4,407.1 316.5,404.0 321.4,399.3 329.1,391.7 332.6,388.3 337.6,384.6 333.8,387.3 329.1,391.7 323.4,397.3 318.6,402.0 314.4,406.1 310.9,409.5 307.7,412.6 305.4,415.7 303.5,419.3 301.1,426.3 298.8,433.6 296.4,441.4 295.1,445.6 298.2,447.5 297.9,455.4 297.8,460.5 297.6,465.9 297.1,470.5 301.8,469.9 304.8,467.2 307.4,464.7 307.4,464.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fazenda Santa Fé</title></polyline>
+<polyline points="589.4,355.3 591.8,358.3 595.4,362.7 600.7,367.0 603.3,370.6 608.0,374.9 609.8,379.4 611.0,394.6 611.5,399.4 614.3,402.0 619.4,401.5 622.6,398.8 626.8,400.1 625.8,404.9 624.6,409.0 625.0,413.9 629.1,415.2 632.6,416.8 629.1,415.2 625.2,413.9 624.7,409.4 625.6,405.1 627.6,401.3 624.2,399.4 620.6,401.2 615.8,402.0 611.9,400.1 611.0,394.6 610.1,383.8 609.6,377.7 604.7,372.1 602.4,369.1 597.4,364.8 593.5,360.4 590.6,356.7 589.4,355.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Morosa</title></polyline>
+<polyline points="255.9,572.9 257.6,569.0 256.7,564.8 254.7,561.5 250.6,559.8 247.4,557.3 245.5,553.1 242.3,551.1 238.3,549.9 236.0,547.0 234.3,543.6 221.8,554.5 215.9,560.9 211.4,565.7 208.5,568.7 211.4,565.7 215.9,560.9 221.0,555.4 232.4,543.1 235.4,545.1 236.7,549.3 241.6,550.9 245.1,552.4 246.6,556.2 249.0,559.1 252.9,560.5 255.8,563.1 257.7,567.0 256.4,570.9 255.9,572.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fazenda Camarão</title></polyline>
+<polyline points="517.7,255.9 518.0,260.7 520.0,264.5 520.8,269.1 521.2,273.9 522.1,278.9 524.6,281.5 527.6,283.9 528.5,288.3 528.4,293.5 526.0,297.0 522.7,299.3 526.0,297.0 528.4,293.5 528.7,288.7 528.1,284.1 525.3,281.8 522.5,279.6 521.2,273.9 520.8,269.1 522.6,264.6 524.1,259.2 529.0,260.1 531.7,263.3 535.7,264.9 539.9,266.8 543.9,268.6 548.2,270.3 553.1,269.5 557.9,270.0 563.1,270.0 568.8,271.9 567.1,275.3 568.7,279.1 566.1,276.5 568.3,273.6 566.9,269.2 562.6,270.1 556.8,269.6 552.1,270.0 546.9,269.5 542.4,268.3 539.2,266.3 535.2,264.7 531.2,262.4 528.5,259.7 525.1,257.7 520.8,256.8 517.7,255.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fazenda Julião</title></polyline>
+<polyline points="511.5,261.1 508.9,264.6 506.9,270.5 505.4,275.1 503.8,279.2 501.3,283.3 498.3,287.9 495.2,292.6 492.4,296.1 489.7,298.6 484.6,303.4 488.0,300.1 492.4,296.1 495.2,292.6 498.3,287.9 501.3,283.3 503.4,279.9 505.4,275.1 506.9,270.5 508.4,266.1 509.7,262.2 511.5,261.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fazenda Boa Vista</title></polyline>
+<polyline points="137.6,493.9 136.0,490.4 131.3,488.9 129.5,485.4 130.3,480.8 129.7,476.2 130.8,472.0 128.5,464.8 125.8,462.3 122.3,464.2 125.2,461.8 128.5,464.3 130.9,468.3 130.6,473.2 129.6,477.5 129.8,482.8 130.5,487.8 133.2,490.3 137.0,492.2 137.6,493.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – São Domingos</title></polyline>
+<circle cx="315.8" cy="487.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="310.4" cy="622.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="233.8" cy="543.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="534.6" cy="232.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="586.3" cy="256.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="560.2" cy="197.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="188.3" cy="480.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="494.6" cy="285.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="573.7" cy="191.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="599.0" cy="158.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="553.1" cy="235.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="492.9" cy="267.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="520.8" cy="242.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="494.5" cy="245.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="145.6" cy="411.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="494.1" cy="252.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="529.5" cy="255.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="174.7" cy="403.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="501.9" cy="366.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="573.4" cy="230.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="176.5" cy="448.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="533.3" cy="426.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="259.9" cy="577.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="513.9" cy="257.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="516.8" cy="256.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="172.3" cy="453.5" r="2.2" fill="#b9b9b2"/>
+<polygon points="271.6,481.3 261.8,499.2 281.3,499.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="517.6,243.1 505.2,265.9 530.0,265.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="282.2,467.0 268.1,493.1 296.4,493.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="139.7,483.4 131.7,498.2 147.7,498.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="137.3,482.5 126.5,502.5 148.2,502.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="511.2,250.2 500.9,269.1 521.5,269.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="511.2" y="282.8" text-anchor="middle" fill="#5c5c57">Campos Belos</text>
+<polygon points="281.7,603.7 273.1,619.6 290.4,619.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="307.6,456.7 300.1,470.4 315.0,470.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="255.7,565.2 248.5,578.4 262.9,578.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="176.5,503.2 169.0,517.1 184.0,517.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="196.8,442.2 189.6,455.5 204.0,455.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="173.6,447.6 166.4,461.0 180.9,461.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="183.6,396.9 176.3,410.3 190.9,410.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="421.0,623.1 414.0,636.0 428.0,636.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="498.4,369.5 491.4,382.4 505.3,382.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="589.2,348.8 582.8,360.7 595.7,360.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="568.6,217.5 561.6,230.5 575.7,230.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="589.1,167.9 581.6,181.6 596.5,181.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="630.4,171.4 623.3,184.6 637.6,184.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="506.0,242.5 496.2,260.4 515.7,260.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="156.6,410.8 148.9,425.0 164.3,425.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="86.7,382.2 80.0,394.5 93.3,394.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="531.6,412.8 523.6,427.6 539.7,427.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="389.0,576.8 382.4,588.9 395.5,588.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="273.3,477.5 261.5,499.1 285.0,499.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="277.7,605.1 271.2,617.1 284.1,617.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="412.3" cy="218.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="419.3" y="213.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Mel 11,7 km</text>
+<circle cx="663.3" cy="346.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="488.9" y="341.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Carnaubinha 11,6 km</text>
+<circle cx="409.5" cy="203.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="416.5" y="198.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Melzinho 9,8 km</text>
+<circle cx="674.2" cy="307.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="493.6" y="302.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Poço do Veado 9,7 km</text>
+<circle cx="622.4" cy="322.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="466.6" y="317.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Valquírio Capemba 9,5 km</text>
+<circle cx="419.1" cy="196.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="338.4" cy="382.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="345.4" y="377.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Santa Fé 8,0 km</text>
+<circle cx="634.8" cy="418.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="547.2" y="413.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Morosa 6,6 km</text>
+<circle cx="625.8" cy="275.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="439.0" y="270.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Pedra Vermelha 5,8 km</text>
+<circle cx="621.8" cy="266.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="620.5" cy="269.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="483.3" y="284.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santa Edwirges 5,5 km</text>
+<circle cx="208.1" cy="568.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="215.1" y="563.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Camarão 5,4 km</text>
+<circle cx="627.6" cy="401.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="527.6" y="396.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pendanga 4,9 km</text>
+<circle cx="481.1" cy="209.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="569.4" cy="280.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="443.7" cy="252.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="450.7" y="247.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Camboapina 4,3 km</text>
+<circle cx="485.1" cy="300.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="520.4" cy="299.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="123.6" cy="466.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="130.6" y="461.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">São Domingos 3,0 km</text>
+<rect x="273.6" y="480.0" width="10" height="10" fill="#1d1d1b"/><text x="287.6" y="503.0" font-weight="600" fill="#1d1d1b">Sede de Caridade</text>
+<line x1="35" x2="111.1" y1="797.5" y2="797.5" stroke="#8a8a84" stroke-width="2"/><text x="35" y="811.5" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="788.4669603524236" y2="788.4669603524236" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="792.4669603524236" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,781.5 421.4,793.7 434.6,793.7" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="792.4669603524236" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="806.4669603524236" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="815.4669603524236" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="811.4669603524236" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="815.4669603524236" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="834.4669603524236" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="838.4669603524236" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="834.4669603524236" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="838.4669603524236" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="857.4669603524236" y2="857.4669603524236" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="861.4669603524236" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="880.4669603524236" y2="880.4669603524236" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="884.4669603524236" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TRE-CE e TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 42/2026 (2º turno); 1º turno: nº 33/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (12):</strong> Fazenda Mel, Fazenda Carnaubinha, Fazenda Melzinho, Fazenda Poço do Veado, Valquírio Capemba, Fazenda Desterro, Fazenda Santa Fé, Morosa, Fazenda Pedra Vermelha, Fazenda Barra do Facão, Santa Edwirges e Fazenda Camarão.</li>
+<li><strong>De 3 a 5 km (7):</strong> Pendanga, Fazenda São João, Fazenda Julião, Fazenda Camboapina, Fazenda Boa Vista, Fazenda Juá dos Pimentel e São Domingos.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (28):</strong> Agrovila do PA Carneiro, Angelim, Boa Esperança, Boqueirão, Caboclo, Campos Belos, Caraúbas, Fazenda Alto Alegre, Fazenda Calábria, Fazenda Calábria do Ké, Fazenda Lagoa de Dentro, Fazenda Lagoa de Fora, Fazenda Massapê, Fazenda Pata Choca, Fazenda Santo Antônio, Fazenda Sulidade, Fazenda São Geraldo, Fazenda Umaitá, Fazenda Umarizeiras, Fazenda Umarizeiras de Dentro, Fazenda Vazante Grande, Inhuporanga, Ipueira, Nambi do Meio, Pato, Várzea, Várzea Comprida e Várzea Redonda.</li>
+</ul><h2>Rotas do Edital nº 42/2026 (2º turno); 1º turno: nº 33/2026</h2>
+<p>O edital tem 1 rotas para Caridade. Horários: Início do transporte às 7 horas e término às 17 horas (2º turno, 25/10/2026). Veículos: não informados no edital.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Sede – Vila Nova – Casemiro – Carmozina – Novo CRAS – Sede</td></tr></tbody></table></div>
+<p><strong>Atenção:</strong> No 1º turno (Edital nº 33/2026) Caridade tinha 4 rotas; o quadro do 2º turno (Edital nº 42/2026) manteve só 1. Ficaram sem ônibus no 2º turno: Casa Nova, Mutamba, Pará, Caboclo, Barra do Leão, Serrote, Arapuá, Pajeúna, Campos Belos, Boa Esperança, Vila do Mundico, Bom Sucesso, Massapê, Ingá e Patos. Vale pedir ao Juiz Eleitoral a volta dessas rotas.</p>
+<p>Fonte: Edital nº 42/2026 da 111ª ZE (2º turno), DJE/TRE-CE nº 237 (disp. 16/10/2026), p. 162–163; https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=CE&amp;numDiario=237&amp;anoDiario=2026; 1º turno: Edital nº 33/2026, DJE/TRE-CE nº 206 (disp. 18/09/2026), p. 188–189.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 19 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Fazenda Mel</strong></td><td>Campos Belos – Fazenda São João – Fazenda Camboapina – Fazenda Mel – Fazenda Melzinho – Fazenda Desterro – Campos Belos</td><td>Fazenda São João, Fazenda Camboapina, Fazenda Mel, Fazenda Melzinho, Fazenda Desterro</td><td>32,4 km (ida e volta)</td><td>~1h32</td></tr><tr><td><strong>Rota nova – Fazenda Carnaubinha</strong></td><td>Fazenda Umarizeiras – Fazenda Barra do Facão – Santa Edwirges – Fazenda Pedra Vermelha – Valquírio Capemba – Fazenda Carnaubinha – Fazenda Poço do Veado – Fazenda Umarizeiras</td><td>Fazenda Barra do Facão, Santa Edwirges, Fazenda Pedra Vermelha, Valquírio Capemba, Fazenda Carnaubinha, Fazenda Poço do Veado</td><td>26,0 km (ida e volta)</td><td>~1h16</td></tr><tr><td><strong>Rota nova – Fazenda Santa Fé</strong></td><td>Sede – Fazenda Santa Fé – Sede</td><td>Fazenda Santa Fé</td><td>15,9 km (ida e volta)</td><td>~23 min</td></tr><tr><td><strong>Rota nova – Morosa</strong></td><td>Sede – Pendanga – Morosa – Sede</td><td>Pendanga, Morosa</td><td>13,2 km (ida e volta)</td><td>~16 min</td></tr><tr><td><strong>Rota nova – Fazenda Camarão</strong></td><td>Sede – Fazenda Camarão – Sede</td><td>Fazenda Camarão</td><td>10,8 km (ida e volta)</td><td>~19 min</td></tr><tr><td><strong>Rota nova – Fazenda Julião</strong></td><td>Sede – Fazenda Juá dos Pimentel – Fazenda Julião – Sede</td><td>Fazenda Juá dos Pimentel, Fazenda Julião</td><td>15,7 km (ida e volta)</td><td>~37 min</td></tr><tr><td><strong>Rota nova – Fazenda Boa Vista</strong></td><td>Campos Belos – Fazenda Boa Vista – Campos Belos</td><td>Fazenda Boa Vista</td><td>7,8 km (ida e volta)</td><td>~9 min</td></tr><tr><td><strong>Rota nova – São Domingos</strong></td><td>Sede – São Domingos – Sede</td><td>São Domingos</td><td>6,0 km (ida e volta)</td><td>~13 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMC</strong></p><p>Caridade/CE, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Maurício Hoette</strong><br>Juiz Eleitoral da 111ª Zona Eleitoral – Caridade/CE</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 42/2026 (2º turno); 1º turno: nº 33/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Caridade, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 42/2026 (2º turno); 1º turno: nº 33/2026: Fazenda Mel, Fazenda Carnaubinha, Fazenda Melzinho, Fazenda Poço do Veado, Valquírio Capemba, Fazenda Desterro, Fazenda Santa Fé, Morosa, Fazenda Pedra Vermelha, Fazenda Barra do Facão, Santa Edwirges, Fazenda Camarão, Pendanga, Fazenda São João, Fazenda Julião, Fazenda Camboapina, Fazenda Boa Vista, Fazenda Juá dos Pimentel e São Domingos.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Fazenda Mel (Campos Belos – Fazenda São João – Fazenda Camboapina – Fazenda Mel – Fazenda Melzinho – Fazenda Desterro – Campos Belos);</li><li>a criação da Rota nova – Fazenda Carnaubinha (Fazenda Umarizeiras – Fazenda Barra do Facão – Santa Edwirges – Fazenda Pedra Vermelha – Valquírio Capemba – Fazenda Carnaubinha – Fazenda Poço do Veado – Fazenda Umarizeiras);</li><li>a criação da Rota nova – Fazenda Santa Fé (Sede – Fazenda Santa Fé – Sede);</li><li>a criação da Rota nova – Morosa (Sede – Pendanga – Morosa – Sede);</li><li>a criação da Rota nova – Fazenda Camarão (Sede – Fazenda Camarão – Sede);</li><li>a criação da Rota nova – Fazenda Julião (Sede – Fazenda Juá dos Pimentel – Fazenda Julião – Sede);</li><li>a criação da Rota nova – Fazenda Boa Vista (Campos Belos – Fazenda Boa Vista – Campos Belos);</li><li>a criação da Rota nova – São Domingos (Sede – São Domingos – Sede).</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 42/2026 (2º turno); 1º turno: nº 33/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Caridade</p></blockquote>
+<p class="fontes">Fontes: TRE-CE e TSE, Locais de Votação de Caridade; Edital nº 42/2026 da 111ª ZE (2º turno), DJE/TRE-CE nº 237 (disp. 16/10/2026), p. 162–163; https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=CE&amp;numDiario=237&amp;anoDiario=2026; 1º turno: Edital nº 33/2026, DJE/TRE-CE nº 206 (disp. 18/09/2026), p. 188–189; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

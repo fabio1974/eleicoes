@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Nísia Floresta</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Nísia Floresta</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/nisia-floresta.pdf?v=1792185712" download>Baixar em PDF</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Nísia Floresta (67ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 67ª Zona Eleitoral <strong>nenhuma proposta necessária</strong> no transporte gratuito de Nísia Floresta.
+Traçamos pelas estradas o percurso das 5 rotas da Portaria nº 003/2026 (67ª ZE). 0 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>Nísia Floresta tem 23.426 eleitores aptos em 24 locais de votação e 76 seções. São 5 locais rurais, com 5.158 eleitores (22% do total).</li>
+<li>3 locais rurais ficam a 10 km ou mais da sede, com 4.119 eleitores. Os mais distantes: Pirangi do Sul (17,8 km), Tabatinga (15,2 km) e Campo de Santana (11,3 km).</li>
+
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 17 localidades rurais de Nísia Floresta que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>São Roque</td><td>3,4</td><td>Rota 02</td><td>0,9</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>14 das 28 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Forró do Pote (Rota 01), Escola Municipal de Pium (RN 313) (Rota 01), Supermercado Abelhão (Rota 01), Colégio Francisco Camilo (Rota 01), Colégio Dr. Lavoisier Maia (Hortigranjeira) (Rota 01), Loteamento Carnaúbas (Rota 02), Conjuntos Habitacionais (Rota 02), Alto Monte Hermínio (Avenida Principal) (Rota 02), Clube dos Caçadores (Rota 03), Adutora (Rota 03), Loteamentos (Rota 03), Gogo da Ema (Rota 04), Brisa (Rota 04) e Pium das Flores (Rota 05). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 17 localidades rurais de Nísia Floresta, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1197" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b">Nísia Floresta: nenhuma localidade rural fica a 3 km ou mais do local de votação</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Portaria nº 003/2026 (67ª ZE) e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="111.1,164.8 155.3,154.5 176.2,245.0 181.1,317.1 164.3,372.8 178.7,434.2 154.1,552.6 146.7,632.1 185.2,652.9 193.4,788.9 158.6,771.3 162.7,825.8 180.3,856.1 192.2,1017.4 217.2,1051.8 249.5,1064.5 308.5,1026.0 400.6,1027.7 463.3,984.3 476.4,959.3 454.7,909.7 523.9,909.3 549.3,931.8 577.6,912.2 599.7,943.3 664.0,903.6 718.9,924.9 716.8,834.0 708.6,805.7 715.2,688.6 707.8,654.6 725.0,587.0 685.3,573.9 669.7,528.4 673.0,442.0 684.9,402.7 658.2,333.9 654.2,297.9 623.8,277.4 587.8,279.0 498.9,206.5 462.1,166.0 400.2,135.7 371.2,97.6 283.9,80.0 251.2,85.3 153.3,133.6 111.1,164.8 111.1,164.8" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="314.0,288.5 321.2,277.7 318.7,262.4 317.7,250.7 311.8,242.2 319.7,234.2 326.4,227.6 330.9,219.7 338.3,212.4 346.5,204.2 354.4,199.8 361.8,204.7 370.4,211.0 377.9,215.9 385.0,221.8 392.6,227.2 401.6,233.7 410.2,239.7 417.6,245.3 426.0,250.0 431.4,258.3 438.5,264.6 445.5,270.0 453.7,265.9 464.0,268.6 466.1,279.1 474.7,284.2 481.7,289.9 485.3,298.7 486.9,309.7 492.5,316.5 495.1,326.6 499.8,334.8 505.4,341.7 514.1,347.6 521.3,354.7 527.7,361.7 532.4,369.5 544.9,368.0 554.6,362.2 564.2,359.6 569.6,352.4 567.4,341.4 565.7,328.9 567.1,314.1 564.4,304.4 577.9,305.9 587.4,309.5 595.5,305.2 601.9,298.7 612.2,300.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="363.1,583.6 355.7,590.8 349.0,596.6 336.8,599.4 328.1,606.3 327.8,618.5 322.9,626.2 317.0,632.8 311.3,642.3 305.9,650.8 300.3,659.5 297.0,668.7 291.3,676.4 286.9,684.4 279.7,690.4 272.5,701.3 268.9,710.1 266.6,720.2 260.5,727.8 248.4,727.2 240.6,721.4 230.3,714.1 223.1,708.4 211.6,704.6 201.2,701.7 192.2,698.0 184.3,692.2 174.7,687.5 167.5,681.3 162.4,673.9 163.1,661.6 159.4,651.0 151.9,645.4 144.1,639.8 139.4,628.4 135.5,614.8 132.2,603.4 128.2,589.6 125.0,578.2 122.2,567.9 119.6,555.2 116.2,546.2 113.0,535.5 108.6,520.0 105.7,509.4 102.2,495.3 99.4,484.0 96.7,473.4 93.8,461.9 90.8,450.3 88.2,439.7 86.4,428.7 83.2,419.1 78.8,410.6 73.3,397.4 69.6,388.3 63.5,373.5 60.1,364.5 56.3,353.8 52.1,343.9 47.7,335.4 44.0,326.3 39.3,314.9 35.5,305.2 35.0,291.6 35.1,278.2 35.0,264.9 46.5,264.0 61.5,264.1 73.7,265.3 83.7,268.9 95.1,272.0 94.1,260.1 102.7,255.7 94.1,260.1 98.5,268.7 85.9,269.6 76.3,266.2 67.5,273.4 67.4,286.0 68.5,300.5 72.7,310.6 77.9,322.8 72.4,329.9 63.4,333.6 57.4,347.2 57.2,359.9 61.0,369.1 65.8,380.6 72.2,396.3 76.0,405.5 80.3,416.0 84.0,424.8 87.2,438.0 89.9,448.9 93.4,462.4 96.1,472.8 99.0,484.7 102.1,496.6 104.6,507.1 107.6,518.6 110.4,528.2 114.2,541.4 117.2,552.1 120.9,564.8 124.6,578.2 127.9,589.4 130.7,599.3 135.0,614.1 138.4,626.1 139.6,638.9 137.3,649.3 144.7,654.5 151.8,659.9 159.0,669.6 160.6,680.3 169.6,683.8 178.6,689.4 187.0,694.2 195.9,699.8 206.8,703.3 218.7,706.7 228.4,712.5 235.3,718.0 243.1,723.4 250.7,728.4 262.5,727.2 265.7,722.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="220.0,542.4 212.1,557.1 205.4,565.1 199.6,573.3 194.2,580.6 185.6,592.6 176.4,605.4 171.2,613.9 166.6,622.5 162.1,630.3 157.2,639.1 164.2,644.4 170.1,637.2 175.5,629.7 170.1,637.2 164.2,644.0 153.5,645.7 145.4,639.8 152.5,647.0 159.4,653.3 161.3,664.1 160.0,676.2 167.5,681.3 174.7,687.5 183.6,691.8 190.7,697.0 201.2,701.7 211.6,704.6 221.7,707.7 230.3,714.1 238.4,720.0 245.7,725.4 254.7,729.8 264.0,726.5 265.7,722.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="235.5,642.1 223.2,645.1 212.5,640.8 199.4,641.3 184.7,645.4 174.2,647.4 168.9,640.4 173.9,632.1 168.9,639.9 157.2,639.1 154.1,641.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="176.5,628.4 171.2,635.5 168.5,645.1 157.2,639.1 146.8,641.1 154.5,648.4 160.2,655.1 160.7,669.3 165.2,678.0 171.7,685.5 182.8,691.4 190.7,697.0 201.2,701.7 211.6,704.6 221.7,707.7 230.3,714.1 238.4,720.0 245.7,725.4 254.7,729.8 264.0,726.5 267.3,727.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<circle cx="190.5" cy="732.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="697.4" cy="865.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="693.3" cy="696.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="644.7" cy="435.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="333.1" cy="705.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="253.6" cy="762.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="221.2" cy="856.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="317.0" cy="223.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="175.2" cy="626.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="610.6" cy="302.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="622.6" cy="305.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="600.4" cy="806.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="694.6" cy="594.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="403.1" cy="895.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="551.8" cy="364.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="475.3" cy="245.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="362.7" cy="583.0" r="2.2" fill="#b9b9b2"/>
+<polygon points="268.8,708.3 257.2,729.7 280.4,729.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="268.0,713.3 254.9,737.4 281.0,737.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="315.1,756.2 305.4,774.0 324.7,774.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="551.4,349.0 542.0,366.3 560.7,366.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="593.1,797.2 582.0,817.8 604.3,817.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="593.1" y="831.7" text-anchor="middle" fill="#5c5c57">Campo de Santana</text>
+<polygon points="465.4,798.9 456.2,815.8 474.5,815.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="626.3,284.2 615.6,303.8 637.0,303.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="626.3" y="317.6" text-anchor="middle" fill="#5c5c57">Pirangi do Sul</text>
+<polygon points="698.0,591.7 688.0,610.0 707.9,610.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="698.0" y="623.7" text-anchor="middle" fill="#5c5c57">Tabatinga</text>
+<polygon points="364.2,768.3 355.1,785.0 373.2,785.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="412.9,885.7 404.5,901.2 421.4,901.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="478.9,688.9 469.8,705.5 487.9,705.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="451.8,177.6 440.7,198.1 463.0,198.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="183.2,627.2 171.6,648.6 194.8,648.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="670.5,373.2 660.4,391.9 680.7,391.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="702.9,760.4 692.9,778.8 712.9,778.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="357.2,580.8 349.0,596.0 365.5,596.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="474.0,242.5 465.3,258.4 482.6,258.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="295.8,190.1 287.2,206.0 304.4,206.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="258.1,875.3 250.7,889.0 265.6,889.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="189.7,516.1 181.5,531.3 198.0,531.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="270.0,697.4 261.3,713.5 278.8,713.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="362.2,121.8 354.0,136.8 370.3,136.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="302.4,861.3 294.1,876.5 310.7,876.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="511.6,783.7 504.4,797.1 518.9,797.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<rect x="260.5" y="717.0" width="10" height="10" fill="#1d1d1b"/><text x="274.5" y="740.0" font-weight="600" fill="#1d1d1b">Sede de Nísia Floresta</text>
+<line x1="35" x2="219.5" y1="1094.5" y2="1094.5" stroke="#8a8a84" stroke-width="2"/><text x="35" y="1108.5" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="1085.5266287993304" y2="1085.5266287993304" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="1089.5266287993304" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,1078.5 421.4,1090.8 434.6,1090.8" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="1089.5266287993304" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="1103.5266287993304" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="1112.5266287993304" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="1108.5266287993304" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="1112.5266287993304" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1131.5266287993304" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1135.5266287993304" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1131.5266287993304" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1135.5266287993304" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1154.5266287993304" y2="1154.5266287993304" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1158.5266287993304" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1177.5266287993304" y2="1177.5266287993304" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1181.5266287993304" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Portaria nº 003/2026 (67ª ZE) · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (0):</strong> nenhuma.</li>
+<li><strong>De 3 a 5 km (1):</strong> São Roque.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (16):</strong> Alcaçuz, Alto dos Coqueiros, Barreta, Boa Água, Búzios, Campo de Santana, Camurupim, Descanso, Engenho do Monte, Hortigranjeira, Jenipapeiro, Mazapás, Pirangi do Sul, Pium de Nísia, Tabatinga e Área de Praias.</li>
+</ul><h2>Rotas do Portaria nº 003/2026 (67ª ZE)</h2>
+<p>O edital tem 5 rotas para Nísia Floresta. Horários: Primeira viagem de cada rota às 7 horas. Veículos: não informados.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Lago Azul – Forró do Pote – Escola Municipal de Pium (RN 313) – Supermercado Abelhão – Colégio Francisco Camilo – Colégio Dr. Lavoisier Maia (Hortigranjeira) – Comunidade de Alcaçuz – Pirangi do Sul</td></tr><tr><td>02</td><td>Boa Água – Loteamento Carnaúbas – Loteamento Cidade Alta – Conjuntos Habitacionais – Alto Monte Hermínio (Avenida Principal) – Centro</td></tr><tr><td>03</td><td>Bonfim – Clube dos Caçadores – Adutora – Loteamentos – Mazapas – Centro</td></tr><tr><td>04</td><td>Loteamento Primavera – Mazapas – Gogo da Ema – KM 38 – Brisa</td></tr><tr><td>05</td><td>Pium das Flores – Mazapas – Escola Municipal Yayá Paiva</td></tr></tbody></table></div>
+<p>Fonte: Portaria nº 003/2026 da 67ª ZE (Anexo I), DJE/TRE-RN nº 191/2026 (disp. 17/09/2026), PDF da edição; idMateria 6116648.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 0 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<p>Nenhuma localidade precisa de rota nova.</p>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMNF</strong></p><p>Nísia Floresta/RN, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Tiago Neves Câmara</strong><br>Juiz Eleitoral da 67ª Zona Eleitoral – Nísia Floresta/RN</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Portaria nº 003/2026 (67ª ZE)) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Nísia Floresta, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Portaria nº 003/2026 (67ª ZE): .</p><p>Sugerimos, respeitosamente:</p><p></p><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Portaria nº 003/2026 (67ª ZE) deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Nísia Floresta</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Nísia Floresta; Portaria nº 003/2026 da 67ª ZE (Anexo I), DJE/TRE-RN nº 191/2026 (disp. 17/09/2026), PDF da edição; idMateria 6116648; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

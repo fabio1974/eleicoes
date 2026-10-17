@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Murici dos Portelas</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Murici dos Portelas</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/murici-dos-portelas.pdf?v=1792184800" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Murici dos Portelas (33ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 33ª Zona Eleitoral <strong>6 rotas novas e 2 paradas extras em rotas do edital</strong> no transporte gratuito de Murici dos Portelas.
+Traçamos pelas estradas o percurso das 4 rotas do Edital nº 29/2026 - TRE/33ª ZONA. 21 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 4 ficam a 1–2 km.</p>
+<ul>
+<li>Murici dos Portelas tem 6.070 eleitores aptos em 17 locais de votação e 34 seções. São 12 locais rurais, com 3.627 eleitores (60% do total).</li>
+<li>7 locais rurais ficam a 10 km ou mais da sede, com 2.232 eleitores. Os mais distantes: Povoado Baixa Dos Currais Uc 8.587.434- (26,6 km), Povoado Cágados S/N Uc 1.276.559-7 (26,3 km) e Localidade Tinguis (22,9 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Cajazeira de Cima (20,0 km do local de votação), Mirindiba (19,7 km do local de votação), Campestre (18,4 km do local de votação), Boi (17,9 km do local de votação), Canto do Cocho (16,0 km do local de votação), Pauliceia (15,3 km do local de votação), Entre Caatinga (13,0 km do local de votação), Entre Caatingas (12,7 km do local de votação), Jenipapeiro dos Neri (12,4 km do local de votação), Lagoa da Onça (12,1 km do local de votação), Coroa de São Remigio (11,5 km do local de votação), Agrovila do PA Josué de Castro (Tingui) (10,9 km do local de votação), Morro Vermelho (10,8 km do local de votação), Vila José França da Rocha (10,6 km do local de votação), Unha de Gato (10,0 km do local de votação), Nova Morada (9,8 km do local de votação), Tamboril (9,2 km do local de votação), Onça (9,0 km do local de votação), Jenipapeiro (6,2 km do local de votação), São Pedro (4,1 km do local de votação) e Touros (3,8 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Povoado Trincheiras, Agrovila Iracema, Agrovila do PA Iracema e Carreiras.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 44 localidades rurais de Murici dos Portelas que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Povoado Trincheiras</td><td>99,1</td><td>Rota 01</td><td>1,4</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Cajazeira de Cima</td><td>20,0</td><td>Rota 04</td><td>9,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Mirindiba</td><td>19,7</td><td>Rota 02</td><td>4,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Campestre</td><td>18,4</td><td>Rota 02</td><td>8,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Boi</td><td>17,9</td><td>Rota 02</td><td>4,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Canto do Cocho</td><td>16,0</td><td>Rota 04</td><td>5,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Pauliceia</td><td>15,3</td><td>Rota 02</td><td>5,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Entre Caatinga</td><td>13,0</td><td>Rota 04</td><td>7,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Entre Caatingas</td><td>12,7</td><td>Rota 04</td><td>6,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Jenipapeiro dos Neri</td><td>12,4</td><td>Rota 04</td><td>6,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Lagoa da Onça</td><td>12,1</td><td>Rota 04</td><td>6,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Coroa de São Remigio</td><td>11,5</td><td>Rota 03</td><td>7,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Agrovila do PA Josué de Castro (Tingui)</td><td>10,9</td><td>Rota 03</td><td>6,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Morro Vermelho</td><td>10,8</td><td>Rota 03</td><td>6,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Vila José França da Rocha</td><td>10,6</td><td>Rota 03</td><td>6,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Unha de Gato</td><td>10,0</td><td>Rota 03</td><td>6,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Nova Morada</td><td>9,8</td><td>Rota 03</td><td>6,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Tamboril</td><td>9,2</td><td>Rota 02</td><td>4,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Onça</td><td>9,0</td><td>Rota 02</td><td>3,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Agrovila Iracema</td><td>8,3</td><td>Rota 03</td><td>1,9</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Agrovila do PA Iracema</td><td>8,2</td><td>Rota 03</td><td>1,8</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Vaca Brava</td><td>7,5</td><td>Rota 02</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Povoado Vaca Braba</td><td>7,4</td><td>Rota 02</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Carreiras</td><td>6,5</td><td>Rota 03</td><td>1,3</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Jenipapeiro</td><td>6,2</td><td>Rota 02</td><td>5,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Covas</td><td>4,4</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Novo Horizonte</td><td>4,4</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>São Pedro</td><td>4,1</td><td>Rota 03</td><td>2,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Alto Bonito</td><td>4,0</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Touros</td><td>3,8</td><td>Rota 01</td><td>5,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Arame</td><td>3,5</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Barreiro dos Ribeiros</td><td>3,4</td><td>Rota 04</td><td>0,9</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>5 das 29 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Murici (Zona Urbana) (Rota 01, Rota 02, Rota 03 e Rota 04) e Assentamento Nova Terra (Rota 03). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 44 localidades rurais de Murici dos Portelas, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1104" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Murici dos Portelas: 25 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 29/2026 - TRE/33ª ZONA e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="46.9,478.7 90.0,509.5 237.1,628.5 190.0,671.9 167.4,731.8 134.1,765.1 168.0,791.7 252.7,802.4 277.1,791.1 292.4,845.2 291.8,881.6 266.7,918.9 309.5,933.6 329.4,951.9 367.0,960.8 427.8,962.9 463.0,958.6 492.0,972.1 508.9,967.8 503.7,796.3 522.6,807.3 544.0,794.2 566.9,795.7 608.2,825.0 659.3,849.5 713.1,807.6 720.4,788.0 718.3,756.2 696.9,727.8 688.6,680.1 661.1,676.5 619.5,632.1 594.2,641.0 577.0,622.0 593.8,561.2 566.0,527.3 535.8,520.8 495.7,525.4 483.2,493.0 422.3,476.2 418.4,453.3 507.9,441.7 535.8,445.3 549.2,435.5 592.9,432.2 653.2,417.5 638.5,334.4 664.2,348.1 705.7,382.7 725.0,373.2 696.0,333.1 693.5,311.7 704.5,277.5 686.8,244.2 658.7,216.7 644.6,175.4 648.0,139.3 619.5,125.9 557.2,129.5 535.2,119.4 493.3,80.0 475.5,99.9 437.9,149.1 392.4,178.1 373.4,181.8 306.2,175.1 262.5,192.8 241.4,218.2 220.6,228.0 133.1,219.1 94.9,219.7 53.6,235.3 36.8,255.2 35.0,283.0 54.9,305.0 122.4,312.3 138.0,336.2 127.6,383.6 102.3,388.5 63.7,368.9 43.9,383.6 42.6,402.2 57.6,428.8 58.5,463.4 46.9,478.7 46.9,478.7" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="77.7,236.3 70.4,240.5 65.4,246.6 60.7,254.4 58.3,263.4 56.5,272.8 57.1,282.3 60.3,290.3 63.7,296.3 68.2,301.0 76.6,302.4 85.7,303.8 92.8,306.0 100.9,304.8 108.2,300.0 115.3,295.3 123.7,293.6 138.0,292.7 148.5,291.9 158.3,291.1 165.7,289.3 171.2,284.1 175.7,277.8 181.1,267.9 186.3,272.1 193.1,267.2 198.1,271.9 208.1,273.7 218.3,278.3 223.3,283.4 229.5,279.8 234.2,275.0 237.3,268.2 237.2,258.7 241.0,252.6 248.8,250.0 255.0,254.2 261.8,260.6 261.7,251.0 265.5,245.4 261.7,251.0 261.8,260.6 262.4,269.5 259.2,277.1 257.0,286.3 251.5,294.4 242.2,293.3 237.0,288.4 231.2,292.9 234.9,299.4 240.5,304.4 245.6,310.8 249.1,320.5 246.7,330.4 241.8,338.4 238.1,345.7 235.6,353.9 232.0,364.8 228.5,372.7 227.0,381.3 236.1,385.5 244.1,388.6 249.2,393.8 252.8,398.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="181.8,784.4 179.4,777.2 174.5,771.8 169.8,767.2 166.3,761.4 162.2,754.3 158.6,746.7 166.3,732.8 170.1,727.4 172.5,719.9 178.9,699.0 189.2,692.5 199.0,691.1 206.7,694.8 224.2,691.1 234.2,691.4 224.2,691.1 212.1,693.9 203.2,693.4 189.2,692.5 180.4,697.6 184.1,682.6 187.0,675.5 196.9,666.0 223.8,642.5 241.2,624.0 246.3,628.1 249.0,635.7 251.6,642.4 254.0,652.8 253.5,662.4 256.1,669.7 261.8,675.0 266.5,680.3 271.4,686.9 279.5,691.7 284.9,698.9 289.9,703.9 294.5,708.9 299.2,714.9 305.0,721.6 309.0,727.3 310.9,734.7 310.6,744.5 307.5,751.8 303.2,756.7 297.9,761.7 291.1,764.8 287.0,770.5 283.2,777.9 277.4,787.0 280.1,794.8 283.3,801.7 282.0,809.9 283.6,817.7 285.0,826.8 293.8,828.5 306.8,829.9 319.8,832.1 326.9,835.3 330.4,843.2 335.6,849.2 342.0,852.2 351.3,854.6 360.7,857.8 365.6,862.2 371.1,870.5 376.7,877.9 384.5,879.6 392.3,876.3 399.3,873.6 405.2,862.5 404.8,871.4 394.8,875.2 387.5,878.4 380.3,881.4 374.8,875.4 367.5,865.5 363.7,859.1 356.9,856.6 348.6,853.7 340.1,852.0 334.0,847.7 329.6,841.4 325.9,834.0 314.2,831.3 301.4,828.7 291.7,829.1 284.5,823.5 282.1,815.1 282.5,805.8 282.0,797.1 277.0,791.0 280.1,783.4 284.5,775.9 288.8,767.1 295.4,763.4 303.2,756.7 307.5,751.8 310.6,744.5 310.9,734.7 309.0,727.3 305.0,721.6 299.2,714.9 294.5,708.9 289.9,703.9 289.9,703.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="701.5,380.3 691.2,369.7 676.7,357.8 665.9,349.7 638.5,334.3 627.5,336.7 625.6,344.4 629.2,356.5 629.9,375.9 630.3,385.3 629.9,375.9 629.2,356.5 625.6,344.4 627.5,336.7 632.5,332.2 604.1,316.0 596.9,313.6 585.7,313.3 575.6,315.8 524.1,346.4 517.3,342.9 508.0,344.4 496.9,344.5 489.5,337.3 486.3,330.3 482.1,324.4 478.3,318.7 474.2,311.6 476.2,302.0 473.7,294.0 467.9,290.1 463.4,295.8 459.6,303.1 457.3,309.9 451.9,313.7 445.9,317.1 439.2,323.6 431.7,326.8 430.3,336.2 433.5,344.9 436.0,351.6 442.5,369.0 452.7,396.3 410.1,445.3 418.4,449.6 420.8,450.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="456.7,573.5 457.5,584.1 456.5,594.5 454.6,602.1 457.1,611.1 461.3,617.0 460.8,625.9 452.8,627.9 450.8,636.6 454.2,643.3 455.9,651.1 453.9,659.2 456.9,665.7 461.1,673.6 462.7,681.7 472.2,680.8 478.9,676.6 486.1,673.5 493.4,670.7 498.8,666.8 493.4,670.7 487.0,673.6 478.9,676.6 472.2,680.8 465.4,684.3 460.9,676.8 458.3,667.0 454.2,660.5 455.9,651.1 454.2,643.3 450.8,636.6 452.8,627.9 460.8,625.9 461.3,617.0 457.1,611.1 454.6,602.1 456.5,594.5 457.5,584.1 456.6,574.3 458.4,566.3 463.5,559.1 469.4,555.1 481.2,555.3 487.3,550.6 498.0,546.6 501.9,539.2 503.0,531.0 500.1,523.1 492.5,508.3 488.5,499.8 484.5,492.7 462.9,484.4 443.0,477.3 430.3,487.4 439.4,477.9 462.9,484.4 483.8,492.2 488.5,499.8 492.5,508.3 498.0,517.6 501.1,524.8 503.5,533.9 501.0,542.4 494.1,548.3 485.5,553.4 477.6,555.9 466.3,557.2 460.4,561.8 456.8,571.5 457.5,584.1 456.5,594.5 454.6,602.1 457.1,611.1 461.3,617.0 460.8,625.9 452.8,627.9 450.8,636.6 454.2,643.3 455.9,651.1 453.9,659.2 456.9,665.7 461.1,673.6 458.3,667.0 454.2,660.5 455.9,651.1 454.2,643.3 450.8,636.6 441.6,634.8 430.6,636.8 422.9,640.1 414.2,645.0 402.0,651.8 393.6,656.5 389.5,664.6 386.1,670.6 384.0,679.6 381.1,686.3 378.4,693.4 371.4,695.9 363.4,697.2 355.3,695.3 346.8,696.3 339.8,689.6 342.0,680.4 340.3,671.3 336.9,665.4 332.8,656.9 328.7,650.2 324.9,643.9 323.2,636.0 321.1,621.5 320.4,609.4 317.0,600.9 315.1,592.3 304.4,584.6 295.1,578.1 288.4,573.5 301.9,559.2 313.0,547.5 319.5,540.6 328.1,532.7 332.4,526.9 337.5,521.4 352.3,505.8 367.2,490.2 388.5,467.8 394.7,461.4 407.7,447.7 418.4,449.6 420.8,450.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="460.2,626.2 450.2,629.5 451.1,638.6 455.5,645.0 455.3,654.3 455.8,663.5 460.0,669.0 461.9,679.7 467.1,684.2 473.8,679.8 480.0,675.5 487.7,673.5 495.1,670.0 500.9,664.9 504.1,658.0 507.5,652.1 514.2,654.7 522.8,653.9 529.0,649.9 535.3,646.4 544.0,645.1 552.0,642.4 558.2,639.2 564.3,633.7 571.3,630.5 580.7,630.9 587.5,634.7 587.8,643.9 589.2,652.1 587.6,661.0 587.6,671.7 587.6,682.0 589.8,689.1 593.2,695.3 595.5,703.3 590.2,708.6 585.3,714.5 590.4,723.6 593.1,731.2 590.1,739.6 584.4,743.1 583.9,752.4 580.0,758.7 577.3,767.2 572.7,773.9 567.5,781.5 568.6,791.5 561.2,794.0 553.9,791.6 544.5,790.3 539.0,795.4 528.4,794.4 522.3,798.0 516.7,802.8 507.1,800.9 500.8,803.9 507.1,800.9 516.1,803.0 522.3,798.0 528.4,794.4 538.3,795.6 544.5,790.3 553.9,791.6 561.2,794.0 568.7,791.9 575.4,797.5 570.5,792.1 562.6,793.7 553.9,791.6 544.5,790.3 539.0,795.4 528.4,794.4 522.3,798.0 516.7,802.8 507.1,800.9 500.8,803.9 497.3,811.2 498.5,820.5 500.5,829.3 499.8,840.0 503.8,848.3 499.8,841.5 502.9,834.0 499.6,828.0 498.7,819.0 498.0,809.6 500.7,801.4 511.2,801.9 519.9,799.3 526.3,794.4 538.3,795.6 544.5,790.3 553.9,791.6 561.2,794.0 568.7,791.9 575.4,797.5 581.8,801.6 588.8,806.2 594.7,811.9 600.5,815.4 605.8,819.6 615.3,821.6 622.5,823.9 629.7,826.3 635.1,830.4 639.0,837.7 644.1,842.3 652.7,846.8 660.7,847.9 669.1,846.7 676.8,844.9 683.4,839.7 678.1,844.2 669.1,846.7 660.7,847.9 652.7,846.8 645.6,844.2 639.9,839.3 636.8,832.7 632.2,827.4 626.3,824.2 615.3,821.6 605.8,819.6 600.5,815.4 594.7,811.9 588.8,806.2 583.7,801.6 576.8,798.6 570.5,792.1 567.8,784.5 572.7,773.9 576.6,768.3 579.1,761.4 583.2,754.3 584.5,744.3 590.1,739.6 595.8,735.7 592.5,729.4 586.9,718.2 589.9,710.0 594.2,704.7 608.5,699.3 625.3,697.9 630.6,692.2 637.7,687.4 644.8,684.7 651.8,681.9 658.6,679.5 664.9,674.7 675.3,675.2 684.8,676.1 688.7,681.5 684.8,676.1 675.3,675.2 664.9,674.7 670.0,664.6 664.3,673.2 657.3,671.0 649.3,665.2 643.8,660.6 636.6,652.2 631.9,645.4 627.7,639.2 623.8,633.6 618.7,629.4 609.2,632.3 603.1,636.5 595.4,638.9 587.5,634.7 582.1,630.7 571.3,630.5 564.3,633.7 558.2,639.2 552.0,642.4 544.8,644.8 535.3,646.4 529.0,649.9 522.8,653.9 514.2,654.7 507.5,652.1 504.1,658.0 501.2,664.5 496.4,669.1 490.0,672.7 481.9,674.4 476.4,678.5 470.4,682.8 461.9,679.7 460.6,671.1 456.4,664.7 453.8,658.1 456.5,648.7 452.7,641.7 450.4,634.4 456.7,627.1 460.2,626.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Cajazeira de Cima</title></polyline>
+<polyline points="465.7,290.1 473.1,292.3 480.7,288.9 484.0,281.9 484.2,272.7 489.4,268.3 496.8,265.5 502.2,260.8 509.1,257.8 514.7,254.0 524.0,250.6 529.9,247.1 534.4,242.1 532.3,234.5 536.9,229.9 541.6,225.1 551.7,225.0 574.9,204.8 558.9,188.4 547.3,176.8 541.4,170.9 538.5,164.5 541.1,156.5 542.6,144.5 538.9,137.8 534.4,131.9 533.0,123.9 530.3,116.5 520.4,108.1 513.8,102.6 507.9,97.8 503.8,92.7 507.9,97.8 513.8,102.6 520.4,108.1 528.7,115.1 532.5,121.3 534.4,131.9 538.9,137.8 542.6,144.5 541.8,155.3 538.3,162.2 541.4,170.9 547.3,176.8 558.9,188.4 574.9,204.8 579.8,209.9 591.9,222.1 598.4,217.3 605.6,211.1 614.1,206.7 620.0,202.5 626.4,196.9 630.3,190.3 631.1,181.4 634.6,174.8 640.2,168.0 644.1,161.7 648.5,153.0 651.0,146.2 648.5,153.0 644.1,161.7 640.2,168.0 636.3,174.1 631.1,181.4 630.3,190.3 626.4,196.9 620.0,202.5 614.1,206.7 607.5,210.0 601.8,213.6 597.2,218.2 579.8,209.9 574.9,204.8 559.3,223.6 550.7,225.0 539.1,227.2 530.7,232.4 536.7,236.2 532.7,243.2 528.6,249.8 517.2,251.4 512.5,256.9 505.3,258.9 499.1,263.3 492.9,267.6 485.6,270.6 482.7,276.9 482.7,286.4 478.5,291.7 468.9,290.6 465.7,290.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Coroa de São Remigio</title></polyline>
+<polyline points="417.4,866.3 420.1,875.1 425.7,878.7 433.3,881.5 436.9,890.9 439.4,897.7 442.3,905.1 451.1,904.4 454.0,911.3 456.3,923.5 457.9,931.3 459.3,939.7 461.4,950.2 463.2,958.7 476.2,962.8 483.6,965.5 490.5,971.3 499.6,971.6 506.6,968.2 514.9,969.1 514.3,959.6 513.3,951.2 516.5,944.9 519.2,937.1 523.5,931.3 529.0,925.7 534.0,921.1 536.6,913.6 538.5,905.7 536.6,913.6 534.0,921.1 529.0,925.7 524.1,930.4 519.9,936.0 516.9,944.2 513.3,951.2 514.3,959.6 514.9,969.1 506.6,968.2 499.6,971.6 490.5,971.3 484.5,966.1 476.2,962.8 469.2,960.6 462.7,957.6 460.3,945.0 458.7,935.3 457.1,927.3 455.4,918.4 453.2,907.4 444.9,905.7 439.4,897.7 436.9,890.9 433.3,881.5 425.7,878.7 420.1,875.1 417.7,867.1 417.4,866.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Tamboril</title></polyline>
+<polyline points="290.5,704.6 295.9,710.5 301.1,717.1 308.1,724.8 310.9,734.7 310.6,744.5 307.5,751.8 303.2,756.7 297.9,761.7 291.1,764.8 287.0,770.5 283.2,777.9 277.4,787.0 280.1,794.8 283.3,801.7 282.0,809.9 283.6,817.7 285.0,826.8 287.7,833.7 290.3,841.8 292.5,849.5 293.9,858.3 295.2,866.8 293.1,876.3 289.5,884.0 284.5,888.7 280.5,895.9 276.1,901.8 271.5,906.6 268.1,914.8 270.9,907.7 276.1,901.8 280.5,895.9 284.5,888.7 289.5,884.0 293.1,876.3 295.4,868.1 294.3,859.4 293.1,851.2 290.8,843.4 287.7,833.7 285.0,826.8 283.6,817.7 282.0,809.9 283.3,801.7 280.1,794.8 277.4,787.0 283.2,777.9 287.0,770.5 291.1,764.8 297.9,761.7 303.2,756.7 307.5,751.8 310.6,744.5 310.9,734.7 309.0,727.3 305.0,721.6 299.2,714.9 294.5,708.9 290.5,704.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Onça</title></polyline>
+<polyline points="700.5,379.5 691.2,369.7 676.7,357.8 682.8,352.6 685.3,345.6 688.9,334.9 695.9,325.0 693.8,315.0 695.6,306.8 698.7,295.0 700.3,286.8 698.7,295.0 695.6,306.8 693.8,315.0 696.1,322.6 691.4,330.9 685.3,345.6 682.8,352.6 677.0,357.0 686.8,365.5 699.5,378.6 700.5,379.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – São Pedro</title></polyline>
+<polyline points="144.6,400.1 141.9,407.3 137.7,412.8 130.8,415.1 122.0,417.6 113.6,423.6 108.2,429.4 103.7,436.3 102.5,444.9 105.7,454.2 105.2,463.4 102.2,469.8 105.2,463.4 105.7,454.2 102.8,445.8 103.7,436.3 107.2,430.2 112.4,425.9 116.8,421.0 123.6,416.6 133.5,414.7 138.2,408.8 140.6,400.4 144.6,400.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Touros</title></polyline>
+<polyline points="66.9,242.9 35.4,222.7 66.9,242.9 66.9,242.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 01</title></polyline>
+<polyline points="604.1,316.0 596.9,313.6 585.7,313.3 587.3,300.5 594.7,302.3 600.8,299.1 603.4,291.9 607.4,285.3 614.7,281.1 621.2,278.2 628.4,275.9 636.7,278.5 643.5,281.1 638.4,274.9 629.1,275.6 622.0,278.2 614.7,281.1 607.4,285.3 603.4,291.9 600.8,299.1 594.7,302.3 588.9,298.3 585.4,306.1 582.6,313.4 596.9,313.6 604.1,316.0 632.3,331.0 627.5,336.7 625.6,344.4 629.2,356.5 629.9,375.9 630.3,385.3 623.2,401.3 618.4,411.4 613.8,419.0 618.4,411.4 621.9,404.2 628.6,389.5 631.6,386.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 03</title></polyline>
+<circle cx="179.9" cy="784.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="183.2" cy="787.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="501.5" cy="661.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="320.5" cy="612.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="321.2" cy="623.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="77.8" cy="237.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="272.8" cy="591.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="459.6" cy="400.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="239.2" cy="691.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="188.5" cy="430.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="426.1" cy="453.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="267.0" cy="245.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="79.5" cy="302.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="81.8" cy="302.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="365.8" cy="696.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="230.7" cy="292.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="253.0" cy="397.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="338.6" cy="521.1" r="2.2" fill="#b9b9b2"/>
+<polygon points="231.3,286.1 223.4,300.5 239.1,300.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="410.4,435.2 401.9,450.8 418.9,450.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="291.2,695.5 283.1,710.3 299.2,710.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="417.8,858.7 410.5,872.0 425.0,872.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="465.8,282.8 458.9,295.5 472.6,295.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="371.0,687.9 363.3,702.1 378.7,702.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="150.9,393.5 140.9,412.0 160.9,412.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="86.4,296.6 79.2,309.7 93.5,309.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="701.2,371.8 694.6,383.9 707.7,383.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="156.4,400.8 146.0,419.9 166.8,419.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="275.0,236.3 267.5,250.1 282.5,250.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="335.2,513.4 327.5,527.5 342.9,527.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="255.1,394.0 248.5,406.2 261.7,406.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="144.4,394.5 138.8,404.8 150.1,404.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="146.3,394.6 140.8,404.7 151.8,404.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="146.6,394.5 141.3,404.3 151.9,404.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="459.9,618.0 452.3,632.0 467.6,632.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="35.4" cy="222.7" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="42.4" y="217.7" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Povoado Trincheiras 99,1 km</text>
+<circle cx="689.1" cy="837.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="527.1" y="832.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Cajazeira de Cima 20,0 km</text>
+<circle cx="531.8" cy="862.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="538.8" y="857.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Mirindiba 19,7 km</text>
+<circle cx="632.9" cy="866.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="520.5" y="881.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Campestre 18,4 km</text>
+<circle cx="505.2" cy="811.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="512.2" y="806.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Boi 17,9 km</text>
+<circle cx="540.6" cy="802.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="563.4" cy="824.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="451.0" y="819.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pauliceia 15,3 km</text>
+<circle cx="694.5" cy="678.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="551.1" y="673.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Entre Caatinga 13,0 km</text>
+<circle cx="685.6" cy="680.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="536.0" y="695.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Entre Caatingas 12,7 km</text>
+<circle cx="681.7" cy="667.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="667.9" cy="663.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="530.7" y="658.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Lagoa da Onça 12,1 km</text>
+<circle cx="502.1" cy="90.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="509.1" y="85.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Coroa de São Remigio 11,5 km</text>
+<circle cx="646.7" cy="146.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="348.3" y="141.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Agrovila do PA Josué de Castro (Tingui) 10,9 km</text>
+<circle cx="649.9" cy="145.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="506.5" y="160.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Morro Vermelho 10,8 km</text>
+<circle cx="520.4" cy="106.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="527.4" y="101.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Vila José França da Rocha 10,6 km</text>
+<circle cx="532.2" cy="118.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="533.3" cy="124.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="540.3" y="119.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Nova Morada 9,8 km</text>
+<circle cx="526.5" cy="875.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="266.7" cy="916.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="273.7" y="911.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Onça 9,0 km</text>
+<circle cx="641.4" cy="277.8" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="491.8" y="272.8" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Agrovila Iracema 8,3 km</text>
+<circle cx="641.9" cy="278.7" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="455.1" y="293.7" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Agrovila do PA Iracema 8,2 km</text>
+<circle cx="613.1" cy="418.4" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="506.9" y="413.4" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Carreiras 6,5 km</text>
+<circle cx="512.2" cy="970.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="519.2" y="965.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Jenipapeiro 6,2 km</text>
+<circle cx="699.9" cy="286.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="97.4" cy="468.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="104.4" y="463.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Touros 3,8 km</text>
+<rect x="150.0" y="399.9" width="10" height="10" fill="#1d1d1b"/><text x="164.0" y="422.9" font-weight="600" fill="#1d1d1b">Sede de Murici dos Portelas</text>
+<line x1="35" x2="172.7" y1="1002.1" y2="1002.1" stroke="#8a8a84" stroke-width="2"/><text x="35" y="1016.1" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="993.0779796189777" y2="993.0779796189777" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="997.0779796189777" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,986.1 421.4,998.3 434.6,998.3" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="997.0779796189777" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="1011.0779796189777" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="1020.0779796189777" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="1016.0779796189777" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="1020.0779796189777" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1039.0779796189777" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1043.0779796189777" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1039.0779796189777" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1043.0779796189777" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1062.0779796189777" y2="1062.0779796189777" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1066.0779796189777" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1085.0779796189777" y2="1085.0779796189777" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1089.0779796189777" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 29/2026 - TRE/33ª ZONA · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (25):</strong> Povoado Trincheiras, Cajazeira de Cima, Mirindiba, Campestre, Boi, Canto do Cocho, Pauliceia, Entre Caatinga, Entre Caatingas, Jenipapeiro dos Neri, Lagoa da Onça, Coroa de São Remigio, Agrovila do PA Josué de Castro (Tingui), Morro Vermelho, Vila José França da Rocha, Unha de Gato, Nova Morada, Tamboril, Onça, Agrovila Iracema, Agrovila do PA Iracema, Vaca Brava, Povoado Vaca Braba, Carreiras e Jenipapeiro.</li>
+<li><strong>De 3 a 5 km (7):</strong> Covas, Novo Horizonte, São Pedro, Alto Bonito, Touros, Arame e Barreiro dos Ribeiros.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (12):</strong> Baixão das Coivaras, Baixão do Coxo, Caiçara, Chamurro, Cocalinho, Pau d&#x27;Água, Pitombeira, Porcos, São Vicente, Tucuns II, Vitória e Vitório.</li>
+</ul><h2>Rotas do Edital nº 29/2026 - TRE/33ª ZONA</h2>
+<p>O edital tem 4 rotas para Murici dos Portelas. Horários: não informados. Veículos: não informados.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Arame – Vitório – Caiçara – São Vicente – Canto Grande – Chamurro – Murici (Zona Urbana)</td></tr><tr><td>02</td><td>Vaca Brava – Cocalinho – São Carlos – Cágados – Pitombeira – Murici (Zona Urbana)</td></tr><tr><td>03</td><td>Baixa dos Currais – Curimatá – Altamira – Assentamento Nova Terra – Tucuns – Murici (Zona Urbana)</td></tr><tr><td>04</td><td>Barreiro – Covas – Tinguis – Trapiá – Baixão do Capim – Primavera – Pau D&#x27;Água – Porcos – Tucuns – Murici (Zona Urbana)</td></tr></tbody></table></div>
+<p>Fonte: Edital nº 29/2026 - TRE/33ª ZONA, DJE/TRE-PI nº 191/2026 (disp. 18/09/2026), PDF da edição; fonte complementar: INFO ROTAS – sistema oficial do TRE-PI (inforotas.tre-pi.jus.br), consulta em 2026-10-16 (rotas do INFO ROTAS preservadas em &quot;rotas_inforotas&quot;).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 25 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Cajazeira de Cima</strong></td><td>Sede – Boi – Canto do Cocho – Pauliceia – Mirindiba – Campestre – Cajazeira de Cima – Entre Caatingas – Entre Caatinga – Jenipapeiro dos Neri – Lagoa da Onça – Sede</td><td>Boi, Canto do Cocho, Pauliceia, Mirindiba, Campestre, Cajazeira de Cima, Entre Caatingas, Entre Caatinga, Jenipapeiro dos Neri, Lagoa da Onça</td><td>64,4 km (ida e volta)</td><td>~2h36</td></tr><tr><td><strong>Rota nova – Coroa de São Remigio</strong></td><td>Sede – Nova Morada – Unha de Gato – Vila José França da Rocha – Coroa de São Remigio – Agrovila do PA Josué de Castro (Tingui) – Morro Vermelho – Sede</td><td>Nova Morada, Unha de Gato, Vila José França da Rocha, Coroa de São Remigio, Agrovila do PA Josué de Castro (Tingui), Morro Vermelho</td><td>32,5 km (ida e volta)</td><td>~1h01</td></tr><tr><td><strong>Rota nova – Tamboril</strong></td><td>Sede – Tamboril – Jenipapeiro – Sede</td><td>Tamboril, Jenipapeiro</td><td>18,5 km (ida e volta)</td><td>~44 min</td></tr><tr><td><strong>Rota nova – Onça</strong></td><td>Sede – Onça – Sede</td><td>Onça</td><td>18,1 km (ida e volta)</td><td>~27 min</td></tr><tr><td><strong>Rota nova – São Pedro</strong></td><td>Sede – São Pedro – Sede</td><td>São Pedro</td><td>8,1 km (ida e volta)</td><td>~16 min</td></tr><tr><td><strong>Rota nova – Touros</strong></td><td>Sede – Touros – Sede</td><td>Touros</td><td>7,4 km (ida e volta)</td><td>~12 min</td></tr><tr><td><strong>Parada extra na Rota 01</strong></td><td>desvio pelo caminho atual: Povoado Trincheiras</td><td>Povoado Trincheiras</td><td>+3,5 km</td><td>+5 min</td></tr><tr><td><strong>Parada extra na Rota 03</strong></td><td>desvio pelo caminho atual: Agrovila do PA Iracema – Agrovila Iracema – Carreiras</td><td>Agrovila do PA Iracema, Agrovila Iracema, Carreiras</td><td>+14,4 km</td><td>+26 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMMP</strong></p><p>Murici dos Portelas/PI, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Caio Emanuel Severiano Santos e Sousa</strong><br>Juiz Eleitoral da 33ª Zona Eleitoral – Buriti dos Lopes/PI</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 29/2026 - TRE/33ª ZONA) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Murici dos Portelas, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 29/2026 - TRE/33ª ZONA: Cajazeira de Cima, Mirindiba, Campestre, Boi, Canto do Cocho, Pauliceia, Entre Caatinga, Entre Caatingas, Jenipapeiro dos Neri, Lagoa da Onça, Coroa de São Remigio, Agrovila do PA Josué de Castro (Tingui), Morro Vermelho, Vila José França da Rocha, Unha de Gato, Nova Morada, Tamboril, Onça, Jenipapeiro, São Pedro, Touros, Povoado Trincheiras, Agrovila Iracema, Agrovila do PA Iracema e Carreiras.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Cajazeira de Cima (Sede – Boi – Canto do Cocho – Pauliceia – Mirindiba – Campestre – Cajazeira de Cima – Entre Caatingas – Entre Caatinga – Jenipapeiro dos Neri – Lagoa da Onça – Sede);</li><li>a criação da Rota nova – Coroa de São Remigio (Sede – Nova Morada – Unha de Gato – Vila José França da Rocha – Coroa de São Remigio – Agrovila do PA Josué de Castro (Tingui) – Morro Vermelho – Sede);</li><li>a criação da Rota nova – Tamboril (Sede – Tamboril – Jenipapeiro – Sede);</li><li>a criação da Rota nova – Onça (Sede – Onça – Sede);</li><li>a criação da Rota nova – São Pedro (Sede – São Pedro – Sede);</li><li>a criação da Rota nova – Touros (Sede – Touros – Sede);</li><li>a inclusão de parada em Povoado Trincheiras na Rota 01, mantido todo o percurso atual;</li><li>a inclusão de paradas em Agrovila do PA Iracema, Agrovila Iracema e Carreiras na Rota 03, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 29/2026 - TRE/33ª ZONA deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Murici dos Portelas</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Murici dos Portelas; Edital nº 29/2026 - TRE/33ª ZONA, DJE/TRE-PI nº 191/2026 (disp. 18/09/2026), PDF da edição; fonte complementar: INFO ROTAS – sistema oficial do TRE-PI (inforotas.tre-pi.jus.br), consulta em 2026-10-16 (rotas do INFO ROTAS preservadas em &quot;rotas_inforotas&quot;); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

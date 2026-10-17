@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Francinópolis</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Francinópolis</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/francinopolis.pdf?v=1792186410" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Francinópolis (48ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 48ª Zona Eleitoral <strong>1 rota nova e 1 parada extra em rotas do edital</strong> no transporte gratuito de Francinópolis.
+Traçamos pelas estradas o percurso das 2 rotas do Edital nº 28/2026 - TRE/48ª ZONA. 2 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 2 ficam a 1–2 km.</p>
+<ul>
+<li>Francinópolis tem 4.594 eleitores aptos em 6 locais de votação e 20 seções. São 1 locais rurais, com 396 eleitores (9% do total).</li>
+
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Água Fria (16,1 km do local de votação) e Alto da Vista (6,5 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Lagoa e Cabeça de Boi.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 9 localidades rurais de Francinópolis que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Campestre</td><td>31,1</td><td>Rota 02</td><td>2,7</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Água Fria</td><td>16,1</td><td>Rota 01</td><td>3,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Lagoa</td><td>13,8</td><td>Rota 01</td><td>1,9</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Chapadinha da Varjota</td><td>6,6</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Alto da Vista</td><td>6,5</td><td>Rota 01</td><td>2,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Cabeça de Boi</td><td>6,2</td><td>Rota 01</td><td>1,8</td><td>Rota passa perto (1–2 km)</td></tr></tbody></table></div>
+<p>2 das 10 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Chapada da Cruz (Rota 01) e Pulçar (Rota 01). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 9 localidades rurais de Francinópolis, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 790" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Francinópolis: 4 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 28/2026 - TRE/48ª ZONA e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="721.9,406.3 725.0,281.7 217.5,80.0 215.9,299.1 47.1,620.7 35.0,641.1 156.5,641.7 167.0,641.7 514.3,502.6 527.6,499.2 575.7,463.9 617.2,490.8 646.9,521.5 690.0,535.5 719.7,486.5 721.9,406.3 721.9,406.3" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="240.2,555.9 234.5,551.5 231.5,544.6 228.8,537.8 231.3,529.8 233.0,522.0 237.7,512.6 249.6,495.9 253.4,489.3 261.1,487.7 264.6,480.1 267.2,472.7 270.7,466.2 269.5,458.0 269.6,453.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="538.6,403.8 486.9,292.4 693.1,334.5 427.1,282.9 427.1,282.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="305.8,422.2 305.1,431.5 301.5,438.2 292.9,437.2 283.1,436.9 275.2,438.8 270.2,443.3 269.4,453.1 273.0,462.7 267.5,469.7 264.6,480.1 261.5,487.1 254.0,489.1 243.4,488.0 234.5,483.7 224.7,482.6 217.3,480.5 210.4,475.0 203.5,470.1 197.7,466.1 203.5,470.1 209.6,474.7 217.3,480.5 224.7,482.6 233.0,483.6 241.7,486.9 247.9,490.5 240.0,505.8 233.9,514.2 231.9,526.7 228.5,535.4 229.9,543.5 234.3,549.8 238.3,555.4 242.0,561.9 246.9,568.2 246.0,578.7 245.4,587.5 245.3,596.9 246.5,606.4 251.3,611.0 259.8,612.4 263.4,619.8 270.0,623.0 269.2,635.7 263.3,639.5 256.9,643.0 250.8,646.5 245.8,651.7 238.8,655.3 232.3,658.4 226.6,653.0 220.2,649.3 226.6,653.0 231.7,658.5 238.6,655.6 245.1,652.3 250.8,646.5 256.9,643.0 263.3,639.5 269.2,635.7 268.2,627.1 272.8,619.7 279.8,617.2 287.9,616.0 297.1,619.3 304.1,622.2 312.9,623.1 322.2,624.4 325.5,631.4 331.4,636.4 334.9,643.5 342.2,645.8 351.4,645.4 359.3,642.9 357.2,623.0 353.1,613.8 349.8,606.6 347.0,599.9 344.8,591.5 345.2,574.2 339.1,539.5 336.5,528.0 333.2,521.7 326.0,514.5 321.8,505.9 320.2,479.3 318.3,469.8 306.4,428.8 304.7,420.2 305.8,422.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Água Fria</title></polyline>
+<polyline points="240.2,555.9 242.5,563.9 247.4,569.0 246.0,578.7 245.4,587.5 245.3,596.9 246.5,606.4 245.5,597.3 245.4,587.5 246.0,578.7 247.6,569.8 242.5,563.9 240.7,556.1 234.5,551.5 231.5,544.6 228.8,537.8 231.3,529.8 233.0,522.0 237.7,512.6 249.6,495.9 246.2,489.8 239.5,486.3 232.1,484.3 224.3,482.5 214.7,478.1 208.6,474.1 214.6,477.9 221.4,481.9 231.2,484.4 239.5,486.3 246.2,489.8 249.6,490.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 01</title></polyline>
+<circle cx="614.1" cy="398.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="226.8" cy="541.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="256.4" cy="332.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="307.0" cy="322.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="306.9" cy="420.9" r="2.2" fill="#b9b9b2"/>
+<polygon points="312.9,284.5 302.1,304.5 323.8,304.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="309.8,287.7 301.7,302.7 318.0,302.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="295.9,278.8 284.8,299.1 306.9,299.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="305.8,413.7 297.9,428.3 313.7,428.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="306.7,288.1 299.0,302.4 314.5,302.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="296.8,294.6 289.3,308.4 304.3,308.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="217.1" cy="644.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="224.1" y="639.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Água Fria 16,1 km</text>
+<circle cx="249.0" cy="607.4" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="256.0" y="602.4" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Lagoa 13,8 km</text>
+<circle cx="197.0" cy="466.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="204.0" y="461.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Alto da Vista 6,5 km</text>
+<circle cx="203.9" cy="470.1" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="210.9" y="485.1" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Cabeça de Boi 6,2 km</text>
+<rect x="294.7" y="293.1" width="10" height="10" fill="#1d1d1b"/><text x="308.7" y="316.1" font-weight="600" fill="#1d1d1b">Sede de Francinópolis</text>
+<line x1="35" x2="174.6" y1="688.5" y2="688.5" stroke="#8a8a84" stroke-width="2"/><text x="35" y="702.5" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="679.4876964526384" y2="679.4876964526384" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="683.4876964526384" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,672.5 421.4,684.7 434.6,684.7" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="683.4876964526384" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="697.4876964526384" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="706.4876964526384" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="702.4876964526384" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="706.4876964526384" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="725.4876964526384" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="729.4876964526384" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="725.4876964526384" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="729.4876964526384" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="748.4876964526384" y2="748.4876964526384" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="752.4876964526384" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="771.4876964526384" y2="771.4876964526384" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="775.4876964526384" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 28/2026 - TRE/48ª ZONA · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (6):</strong> Campestre, Água Fria, Lagoa, Chapadinha da Varjota, Alto da Vista e Cabeça de Boi.</li>
+<li><strong>De 3 a 5 km (0):</strong> nenhuma.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (3):</strong> Malhada Vermelha, Peixe e Peixe do Adriano.</li>
+</ul><h2>Rotas do Edital nº 28/2026 - TRE/48ª ZONA</h2>
+<p>O edital tem 2 rotas para Francinópolis. Horários: Rotas 01 e 02: saídas às 07h00 e 12:30, retornos às 12h00 e 17:30. Veículos: Rota 01: 02 vans; Rota 02: 01 micro-ônibus; apoio: caminhonetes Hilux e L200 (equipe do TRE), Spin e Polo Track (pessoas com necessidades específicas) e ambulância, conforme demanda.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Chapada da Cruz – Vaquejador – Pulçar – Chapadinha da Varjota – Chapadinha do Arrogante</td></tr><tr><td>02</td><td>Campestre – Ponta da Serra – Chapada da Luiza – Canto do Estreito – Capoeiral</td></tr></tbody></table></div>
+<p>Fonte: Edital nº 28/2026 - TRE/48ª ZONA (Quadro Geral de Percursos e Horários), anexo &quot;Edital 28.pdf&quot; do DJE/TRE-PI nº 191/2026 (disp. 18/09/2026, publ. 19/09/2026, p. 116) – SEI 0012269-65.2026.6.18.8048, doc. 0002855530 (https://sitdoc.tse.jus.br/sitdoc-consulta-publica//DownloadFile?id=0b76e680-1400-4dde-9456-fe3678d4e61c&amp;app=dje&amp;extensao=pdf).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 4 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Água Fria</strong></td><td>Sede – Alto da Vista – Água Fria – Sede</td><td>Alto da Vista, Água Fria</td><td>34,0 km (ida e volta)</td><td>~1h09</td></tr><tr><td><strong>Parada extra na Rota 01</strong></td><td>desvio pelo caminho atual: Lagoa – Cabeça de Boi</td><td>Lagoa, Cabeça de Boi</td><td>+10,5 km</td><td>+25 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMF</strong></p><p>Francinópolis/PI, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Juscelino Norberto da Silva Neto</strong><br>Juiz Eleitoral da 48ª Zona Eleitoral – Elesbão Veloso/PI</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 28/2026 - TRE/48ª ZONA) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Francinópolis, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 28/2026 - TRE/48ª ZONA: Água Fria, Alto da Vista, Lagoa e Cabeça de Boi.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Água Fria (Sede – Alto da Vista – Água Fria – Sede);</li><li>a inclusão de paradas em Lagoa e Cabeça de Boi na Rota 01, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 28/2026 - TRE/48ª ZONA deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Francinópolis</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Francinópolis; Edital nº 28/2026 - TRE/48ª ZONA (Quadro Geral de Percursos e Horários), anexo &quot;Edital 28.pdf&quot; do DJE/TRE-PI nº 191/2026 (disp. 18/09/2026, publ. 19/09/2026, p. 116) – SEI 0012269-65.2026.6.18.8048, doc. 0002855530 (https://sitdoc.tse.jus.br/sitdoc-consulta-publica//DownloadFile?id=0b76e680-1400-4dde-9456-fe3678d4e61c&amp;app=dje&amp;extensao=pdf); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

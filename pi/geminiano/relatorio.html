@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Geminiano</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Geminiano</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/geminiano.pdf?v=1792185021" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Geminiano (62ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 62ª Zona Eleitoral <strong>3 rotas novas e 1 parada extra em rotas do edital</strong> no transporte gratuito de Geminiano.
+Traçamos pelas estradas o percurso das 5 rotas do Edital nº 43/2026 - TRE/62ª ZONA. 6 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 1 ficam a 1–2 km.</p>
+<ul>
+<li>Geminiano tem 6.484 eleitores aptos em 12 locais de votação e 32 seções. São 10 locais rurais, com 4.270 eleitores (66% do total).</li>
+<li>5 locais rurais ficam a 10 km ou mais da sede, com 2.047 eleitores. Os mais distantes: Barreiro (25,5 km), Povoado Milhans (21,7 km) e União (18,0 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Baixão (23,1 km do local de votação), Pitombeira (21,7 km do local de votação), Bela Vista (19,4 km do local de votação), Bem Te Vi (15,3 km do local de votação), Assentamento INCRA (4,1 km do local de votação) e Assentamento Milhã (4,1 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Lagoa Grande.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 26 localidades rurais de Geminiano que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço. 1 locais não foram encontrados nas duas bases: Comunidade Serra Branca I (Bem Te Vi), com 154 eleitores.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Baixão</td><td>23,1</td><td>Rota 04</td><td>8,2</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Pitombeira</td><td>21,7</td><td>Rota 04</td><td>9,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Bela Vista</td><td>19,4</td><td>Rota 01</td><td>7,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Bem Te Vi</td><td>15,3</td><td>Rota 04</td><td>12,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Baixa Grande</td><td>8,0</td><td>Rota 01</td><td>1,4</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Lagoa Grande</td><td>4,9</td><td>Rota 02</td><td>1,6</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Queimada Bonita</td><td>4,6</td><td>Rota 03</td><td>0,9</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Assentamento INCRA</td><td>4,1</td><td>Rota 04</td><td>2,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Assentamento Milhã</td><td>4,1</td><td>Rota 04</td><td>2,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Barracão</td><td>3,9</td><td>Rota 01</td><td>0,5</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>9 das 28 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Serra Branca I e II (Rota 01), Lagoa do Touro (Rota 01), Lagoa Salgada (Rota 02), Queimada Bonita Lagoa do Tabuleiro (Rota 02), Ibiratanha (Rota 03), Chapadas dos Andrés (Rota 04), Assentamento Ambrósio (Agrovila I) Pequenos (Rota 04), Baixio dos Mouras (Rota 05) e Baixio dos Constâncios (Rota 05). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 26 localidades rurais de Geminiano, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 770" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Geminiano: 7 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 43/2026 - TRE/62ª ZONA e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="693.8,513.0 677.8,513.0 544.1,431.5 725.0,151.4 623.2,140.2 368.2,112.3 313.6,120.1 230.9,131.3 210.9,181.3 196.4,187.7 177.6,172.7 148.2,169.4 132.2,175.5 87.8,164.3 72.1,151.6 53.5,151.6 43.1,168.1 35.0,297.8 40.3,334.6 81.4,377.2 120.3,434.8 180.7,490.9 206.3,525.9 223.8,519.1 345.6,592.9 426.1,637.8 427.6,587.8 494.6,536.3 580.6,558.2 684.9,557.6 693.8,513.0 693.8,513.0" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="299.1,174.0 292.7,172.1 285.1,171.7 279.2,169.1 271.5,169.0 264.4,169.8 257.8,171.0 253.0,173.8 244.2,173.2 237.0,173.6 228.9,175.0 222.5,173.7 213.7,174.6 209.1,179.6 217.0,185.3 226.6,189.3 239.0,200.7 253.4,214.8 258.2,219.7 265.1,231.3 272.9,238.6 278.2,242.7 285.7,248.6 293.2,254.4 293.6,259.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="110.5,238.8 107.7,233.5 110.8,228.8 114.0,224.4 119.3,221.8 126.5,223.5 131.9,217.5 133.6,211.5 136.1,205.3 140.2,200.4 147.3,195.6 152.2,192.6 159.7,191.3 166.6,189.7 165.8,196.8 166.4,204.2 166.7,211.9 166.5,219.9 168.5,225.7 173.2,230.5 176.3,236.2 177.7,242.5 178.5,249.5 179.6,256.3 180.5,265.3 180.6,274.2 182.3,281.0 180.7,292.8 187.1,284.0 188.2,274.3 190.9,250.3 192.1,239.3 193.5,227.2 194.5,218.3 195.6,208.3 196.5,199.4 197.3,192.2 198.5,181.7 198.2,174.1 204.2,177.0 209.0,180.0 217.0,185.3 226.6,189.3 239.0,200.7 253.4,214.8 258.2,219.7 265.1,231.3 272.9,238.6 278.2,242.7 285.7,248.6 293.2,254.4 293.6,259.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="270.1,336.0 269.9,328.5 264.1,324.2 256.2,322.8 250.0,320.7 242.4,320.8 250.0,320.7 253.6,316.5 259.2,312.8 261.7,305.1 258.2,297.6 256.0,290.4 255.4,283.1 257.3,277.3 256.6,269.9 263.2,264.2 268.7,267.0 276.2,265.1 284.1,262.2 291.3,263.2 293.6,259.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="664.2,481.9 658.0,479.7 653.6,475.9 648.6,472.0 644.0,468.5 639.7,464.1 635.0,459.7 631.0,454.2 626.2,449.6 622.5,445.4 617.8,440.5 614.8,448.8 611.2,458.7 607.5,469.3 605.0,476.1 602.7,482.7 600.0,489.4 545.0,448.3 538.9,443.6 502.3,415.5 445.8,372.0 416.2,349.3 410.4,344.8 417.0,333.8 420.4,325.0 424.3,320.2 420.4,325.0 417.0,333.8 411.7,342.7 369.3,313.2 362.6,308.0 351.1,299.2 345.6,294.9 339.0,289.9 312.7,269.5 308.2,266.0 302.3,261.4 296.1,256.6 293.6,259.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="343.4,293.2 339.0,289.9 312.7,269.5 308.2,266.0 302.3,261.4 296.1,256.6 293.6,259.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="538.0,442.1 544.6,416.4 544.2,406.0 558.8,364.4 568.2,361.6 575.7,312.0 582.9,307.0 586.4,293.8 602.2,245.5 615.6,240.8 630.7,141.2 638.1,142.0 646.3,142.8 655.6,143.9 663.0,144.7 673.2,145.8 682.9,146.9 697.1,148.4 696.0,155.4 693.1,173.0 691.5,181.7 689.9,191.3 691.8,198.1 695.2,203.5 698.0,208.6 698.8,215.5 701.3,221.2 703.3,227.1 701.0,233.1 702.9,239.5 706.0,245.0 708.2,251.1 711.3,256.6 708.5,262.3 711.3,257.2 708.2,251.1 706.0,245.0 702.9,239.5 700.8,233.9 702.9,228.2 701.3,221.2 698.9,215.9 698.1,209.1 695.0,204.5 691.8,198.1 689.9,191.3 691.5,181.7 693.1,173.0 695.6,157.9 697.1,148.4 688.9,147.5 677.0,146.2 668.4,145.3 659.8,144.3 652.0,143.5 644.7,142.7 636.7,141.8 617.4,237.9 603.0,244.6 586.4,293.8 582.9,307.0 575.7,312.0 570.1,357.1 564.0,364.7 544.5,404.3 545.3,414.1 539.1,440.8 538.0,442.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Baixão</title></polyline>
+<polyline points="165.9,198.9 166.3,191.4 167.9,185.2 166.4,178.5 168.3,172.6 172.4,167.8 175.6,163.2 177.3,157.2 175.7,150.9 172.4,146.0 168.5,140.4 165.1,135.1 157.9,124.7 154.6,119.7 151.2,114.5 155.9,108.3 166.9,98.7 175.3,91.4 183.1,85.1 188.4,81.3 198.0,82.8 204.9,85.1 211.0,87.4 222.9,92.0 230.0,94.4 236.5,95.6 244.8,97.0 251.8,98.1 264.7,100.2 271.9,101.3 280.9,102.6 292.9,103.9 339.6,109.0 368.8,112.2 445.0,120.7 468.0,123.2 445.0,120.7 368.8,112.2 340.5,109.1 292.9,103.9 284.6,103.0 277.1,102.1 269.8,101.0 258.1,99.1 249.7,97.7 242.3,96.6 232.5,95.0 222.9,92.0 215.9,89.3 207.5,86.2 199.1,83.0 192.6,80.5 186.7,82.4 179.3,87.9 170.7,95.4 155.9,108.3 151.7,112.7 154.6,119.7 157.9,124.7 165.1,135.1 168.5,140.4 172.4,146.0 175.7,150.9 181.8,156.5 176.4,159.0 174.7,165.2 171.4,169.8 167.2,173.6 167.0,182.1 166.6,189.7 165.8,196.8 165.9,198.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Bela Vista</title></polyline>
+<polyline points="664.2,481.9 663.9,489.3 660.2,497.4 655.7,507.4 650.7,518.6 647.5,526.0 675.8,548.9 677.2,540.9 676.1,548.2 649.4,528.6 650.7,518.6 653.4,512.5 657.9,502.5 663.0,491.1 666.0,485.4 664.2,481.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Assentamento INCRA</title></polyline>
+<polyline points="137.1,200.9 132.5,206.1 129.1,200.7 128.3,193.8 125.7,188.8 122.1,184.7 118.3,180.8 113.6,176.9 109.3,173.5 113.6,176.9 118.3,180.8 122.1,184.7 125.7,188.8 128.3,193.8 129.1,200.7 131.9,206.1 137.1,200.9 137.1,200.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 02</title></polyline>
+<circle cx="317.9" cy="149.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="262.2" cy="354.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="211.3" cy="164.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="342.8" cy="294.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="211.5" cy="418.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="443.6" cy="374.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="458.5" cy="350.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="228.4" cy="287.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="674.8" cy="502.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="429.4" cy="324.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="234.2" cy="285.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="279.1" cy="474.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="416.4" cy="354.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="191.7" cy="448.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="536.5" cy="442.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="538.5" cy="443.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="255.4" cy="270.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="166.7" cy="196.3" r="2.2" fill="#b9b9b2"/>
+<polygon points="256.5,263.0 247.8,279.0 265.2,279.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="292.8,249.9 282.1,269.7 303.6,269.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="663.8,474.0 656.2,488.1 671.5,488.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="391.3,321.8 382.5,337.9 400.0,337.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="538.0,433.0 529.5,448.6 546.4,448.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="165.7,189.9 157.2,205.5 174.2,205.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="454.2,472.5 446.4,486.9 462.1,486.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="286.2,497.3 278.8,511.0 293.6,511.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="186.8,440.5 178.4,455.9 195.1,455.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="293.8,250.8 284.7,267.7 303.0,267.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="409.8,337.6 402.6,351.0 417.1,351.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="669.0" cy="260.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="575.2" y="255.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Baixão 23,1 km</text>
+<circle cx="675.1" cy="234.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="556.5" y="229.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pitombeira 21,7 km</text>
+<circle cx="467.2" cy="130.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="474.2" y="125.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Bela Vista 19,4 km</text>
+<circle cx="648.5" cy="142.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="536.1" y="137.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Bem Te Vi 15,3 km</text>
+<circle cx="105.6" cy="182.1" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="112.6" y="177.1" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Lagoa Grande 4,9 km</text>
+<circle cx="677.6" cy="541.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="515.6" y="536.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Assentamento INCRA 4,1 km</text>
+<circle cx="677.3" cy="540.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="515.3" y="555.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Assentamento Milhã 4,1 km</text>
+<rect x="288.9" y="255.0" width="10" height="10" fill="#1d1d1b"/><text x="302.9" y="278.0" font-weight="600" fill="#1d1d1b">Sede de Geminiano</text>
+<line x1="35" x2="149.3" y1="667.8" y2="667.8" stroke="#8a8a84" stroke-width="2"/><text x="35" y="681.8" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="658.839242368529" y2="658.839242368529" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="662.839242368529" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,651.8 421.4,664.1 434.6,664.1" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="662.839242368529" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="676.839242368529" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="685.839242368529" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="681.839242368529" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="685.839242368529" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="704.839242368529" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="708.839242368529" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="704.839242368529" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="708.839242368529" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="727.839242368529" y2="727.839242368529" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="731.839242368529" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="750.839242368529" y2="750.839242368529" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="754.839242368529" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 43/2026 - TRE/62ª ZONA · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (5):</strong> Baixão, Pitombeira, Bela Vista, Bem Te Vi e Baixa Grande.</li>
+<li><strong>De 3 a 5 km (5):</strong> Lagoa Grande, Queimada Bonita, Assentamento INCRA, Assentamento Milhã e Barracão.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (16):</strong> Ambrósio, Assentamento Baixio da Cacimbinha, Assentamento Cacimbinha, Baixio do Cacimbinha, Baixio do Geminiano, Barreiro, Cacimbinha, Ibiratanha de Cima, Lagoa dos Pereiras, Milhã, Muquém, Os Pequenos, Samambaia dos Marques, Uberlândia, União e Veados.</li>
+</ul><h2>Rotas do Edital nº 43/2026 - TRE/62ª ZONA</h2>
+<p>O edital tem 5 rotas para Geminiano. Horários: Todas as rotas: saída às 7h e retorno às 11h / saída 13:30 e retorno às 18h. Veículos: não informados.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Serra Branca I e II – Baixa Grande – Lagoa do Touro – Sede</td></tr><tr><td>02</td><td>Saco – Lagoa Salgada – Samambaia dos Marques – Buji – Queimada Bonita Lagoa do Tabuleiro – Sede</td></tr><tr><td>03</td><td>Cantinho – Tamboril – Ibiratanha – Cândido Borges – Sede</td></tr><tr><td>04</td><td>Assentamento Milhans – Milhans – Exu – Chapadas dos Andrés – Uberlândia – Assentamento Ambrósio (Agrovila I) Pequenos – Cacimbinha – Baixio da Cacimbinha – Sede</td></tr><tr><td>05</td><td>Baixio dos Mouras – Baixio dos Constâncios – Baixio do Geminiano – Sede</td></tr></tbody></table></div>
+<p>Fonte: Edital nº 43/2026 - TRE/62ª ZONA, DJE/TRE-PI nº 188/2026, disponibilizado em 16/09/2026 (publicação 17/09/2026), ID_MATERIA 6112001; fonte complementar: INFO ROTAS – sistema oficial do TRE-PI (inforotas.tre-pi.jus.br), consulta em 2026-10-16 (rotas do INFO ROTAS preservadas em &quot;rotas_inforotas&quot;).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 7 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Baixão</strong></td><td>Sede – Baixão – Pitombeira – Bem Te Vi – Sede</td><td>Baixão, Pitombeira, Bem Te Vi</td><td>46,3 km (ida e volta)</td><td>~1h16</td></tr><tr><td><strong>Rota nova – Bela Vista</strong></td><td>Sede – Bela Vista – Sede</td><td>Bela Vista</td><td>38,6 km (ida e volta)</td><td>~37 min</td></tr><tr><td><strong>Rota nova – Assentamento INCRA</strong></td><td>Sede – Assentamento Milhã – Assentamento INCRA – Sede</td><td>Assentamento Milhã, Assentamento INCRA</td><td>8,3 km (ida e volta)</td><td>~15 min</td></tr><tr><td><strong>Parada extra na Rota 02</strong></td><td>desvio pelo caminho atual: Lagoa Grande</td><td>Lagoa Grande</td><td>+4,7 km</td><td>+11 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMG</strong></p><p>Geminiano/PI, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Rodrigo Tolentino</strong><br>Juiz Eleitoral da 62ª Zona Eleitoral – Picos/PI</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 43/2026 - TRE/62ª ZONA) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Geminiano, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 43/2026 - TRE/62ª ZONA: Baixão, Pitombeira, Bela Vista, Bem Te Vi, Assentamento INCRA, Assentamento Milhã e Lagoa Grande.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Baixão (Sede – Baixão – Pitombeira – Bem Te Vi – Sede);</li><li>a criação da Rota nova – Bela Vista (Sede – Bela Vista – Sede);</li><li>a criação da Rota nova – Assentamento INCRA (Sede – Assentamento Milhã – Assentamento INCRA – Sede);</li><li>a inclusão de parada em Lagoa Grande na Rota 02, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 43/2026 - TRE/62ª ZONA deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Geminiano</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Geminiano; Edital nº 43/2026 - TRE/62ª ZONA, DJE/TRE-PI nº 188/2026, disponibilizado em 16/09/2026 (publicação 17/09/2026), ID_MATERIA 6112001; fonte complementar: INFO ROTAS – sistema oficial do TRE-PI (inforotas.tre-pi.jus.br), consulta em 2026-10-16 (rotas do INFO ROTAS preservadas em &quot;rotas_inforotas&quot;); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

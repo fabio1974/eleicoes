@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Pacajus</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Pacajus</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/pacajus.pdf?v=1792186950" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Pacajus (49ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 49ª Zona Eleitoral <strong>2 rotas novas</strong> no transporte gratuito de Pacajus.
+Traçamos pelas estradas o percurso das 5 rotas do Edital nº 23/2026. 2 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>Pacajus tem 54.520 eleitores aptos em 54 locais de votação e 195 seções. São 13 locais rurais, com 6.577 eleitores (12% do total).</li>
+<li>10 locais rurais ficam a 10 km ou mais da sede, com 5.500 eleitores. Os mais distantes: Genipapo (22,2 km), Pascoal (18,0 km) e Itaipaba (17,8 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Alto Vermelho (6,7 km do local de votação) e Retiro (4,2 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 25 localidades rurais de Pacajus que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista do TRE-CE e a posição de cada local publicada pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Alto Vermelho</td><td>6,7</td><td>Rota 03</td><td>4,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Retiro</td><td>4,2</td><td>Rota 05</td><td>3,0</td><td>Sem rota (mais de 2 km)</td></tr></tbody></table></div>
+<p>2 das 31 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Umari de Baixo (Rota 01) e Fazenda Guarany (Rota 03). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 25 localidades rurais de Pacajus, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 552" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Pacajus: 2 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas do Edital nº 23/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="177.1,391.7 193.9,382.4 217.5,390.6 272.4,379.5 290.4,383.3 306.9,364.7 368.8,379.8 396.1,379.5 482.1,420.5 534.7,405.7 543.7,375.2 563.8,380.7 621.0,375.5 693.0,355.7 725.0,129.1 439.4,109.1 392.3,129.4 343.0,111.7 305.8,91.6 258.4,80.9 177.4,80.0 175.3,92.2 138.4,98.3 112.3,121.0 81.2,128.2 51.0,149.1 36.7,182.6 35.0,198.5 49.5,238.9 177.1,391.7 177.1,391.7" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="483.6,205.4 476.9,208.6 467.8,209.0 459.2,209.3 449.6,209.5 440.6,209.8 432.1,210.8 424.0,213.3 418.1,210.1 408.5,212.0 402.8,208.7 402.6,199.9 405.4,194.0 410.2,189.8 415.6,186.2 408.8,189.9 404.3,194.5 401.6,201.7 402.7,212.9 404.3,222.9 397.5,225.5 390.6,228.7 375.9,239.5 369.2,244.6 363.4,249.0 357.9,253.0 350.1,255.3 341.2,257.4 328.8,258.6 318.0,262.2 303.8,260.4 291.8,260.6 283.7,261.2 275.5,259.8 268.6,257.7 260.9,259.4 255.2,263.8 248.8,268.6 236.6,268.7 228.7,269.9 218.5,271.0 210.6,265.0 204.8,261.5 195.6,261.2 185.2,260.8 176.1,260.1 166.7,257.2 159.7,254.4 153.6,250.5 144.8,239.1 140.0,235.1 129.9,227.5 123.5,222.9 117.3,219.3 106.0,228.9 96.3,233.6 83.1,229.3 75.7,226.5 58.3,223.9 49.3,220.8 53.6,226.5 68.8,225.4 77.0,226.9 90.5,233.8 102.3,231.3 114.9,219.8 121.9,221.9 129.9,227.5 140.0,235.1 136.4,240.7 140.0,235.1 142.8,223.9 144.5,216.9 147.2,207.3 162.9,192.6 169.5,184.1 174.3,177.7 182.1,178.7 188.3,182.5 194.8,185.1 200.7,187.9 209.4,188.3 215.9,191.8 221.6,195.5 224.9,198.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="483.6,205.4 476.9,208.6 467.8,209.0 459.2,209.3 449.6,209.5 440.6,209.8 432.1,210.8 424.0,213.3 418.1,210.1 408.5,212.0 402.8,208.7 402.6,199.9 405.4,194.0 410.2,189.8 415.6,186.2 408.8,189.9 404.3,194.5 401.6,201.7 402.7,212.9 404.3,222.9 397.5,225.5 390.6,228.7 375.9,239.5 369.2,244.6 363.4,249.0 357.9,253.0 351.1,247.9 347.2,237.7 339.7,235.2 331.3,233.6 323.8,235.0 322.3,242.2 322.9,251.7 323.9,259.8 317.1,262.5 303.8,260.4 291.8,260.6 283.7,261.2 275.5,259.8 268.6,257.7 260.9,259.4 255.2,263.8 248.8,268.6 242.7,272.5 235.5,275.0 230.4,280.5 224.8,283.8 216.1,286.4 210.9,290.1 205.6,294.8 200.9,298.9 198.0,304.8 190.7,306.5 185.4,310.4 180.1,314.3 179.7,323.7 177.7,330.5 172.4,335.2 168.3,340.4 167.3,349.2 171.4,355.2 167.2,350.0 167.9,341.3 171.7,335.8 177.7,330.5 179.7,323.7 180.1,314.3 185.4,310.4 190.7,306.5 198.0,304.8 201.1,299.1 209.2,300.1 214.9,303.9 218.2,309.2 223.7,312.5 226.8,318.6 228.0,326.7 229.6,336.7 236.3,338.8 243.9,340.0 252.5,339.0 261.5,338.6 269.4,339.7 277.9,340.0 291.8,340.9 300.2,341.6 309.1,342.4 317.9,343.0 326.4,343.8 334.9,344.6 339.7,348.8 345.6,352.0 350.0,356.7 354.9,360.9 359.6,365.3 362.4,371.5 369.5,375.1 378.4,373.9 378.8,373.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="483.6,205.4 479.9,211.3 482.1,219.5 491.8,219.2 493.6,226.3 492.9,234.7 494.8,242.4 496.4,250.0 501.8,253.6 511.5,255.1 504.1,252.9 499.5,248.0 490.3,249.8 481.9,250.1 479.9,257.0 477.0,266.5 474.4,275.4 471.7,281.5 469.4,288.1 464.0,309.9 461.4,318.7 458.7,327.5 456.2,335.7 454.0,343.1 446.0,369.6 442.9,379.8 440.6,387.5 438.5,394.4 422.8,391.8 414.1,387.6 402.3,382.0 393.9,378.0 383.8,373.4 373.9,374.5 366.1,375.6 362.0,370.8 359.2,364.6 354.1,360.3 349.4,356.2 345.0,351.5 339.0,348.7 334.4,344.4 324.2,343.6 315.7,342.8 307.3,342.2 295.8,341.3 286.0,340.5 277.1,340.0 267.7,339.4 258.4,338.7 249.3,338.6 249.4,340.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="483.6,205.4 493.2,205.1 501.3,203.3 509.6,201.0 516.6,199.0 525.3,196.7 532.9,194.5 540.0,192.6 547.8,190.4 555.7,188.1 562.6,185.2 571.1,181.9 583.6,177.0 593.6,173.0 596.4,165.6 594.6,158.3 597.0,146.9 594.8,155.4 597.2,163.4 594.3,172.0 594.9,182.3 595.9,190.3 594.9,182.3 593.8,174.1 599.9,170.5 606.9,167.8 619.8,165.4 632.7,163.7 643.0,162.3 651.1,160.8 657.5,158.1 665.3,156.9 665.5,156.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="483.6,205.4 481.0,197.8 476.4,192.3 472.6,187.1 463.3,186.9 456.7,184.7 456.1,176.5 459.3,170.2 464.0,165.8 461.0,158.4 469.2,157.9 477.0,156.6 483.5,153.0 487.2,147.6 480.8,145.2 475.4,140.4 470.1,136.8 463.1,138.5 454.3,136.9 449.0,132.7 445.2,138.0 442.9,145.0 437.9,154.2 434.0,161.8 429.9,170.7 426.3,176.3 418.9,173.9 413.1,170.7 410.8,163.5 404.4,160.2 398.0,157.0 391.7,153.8 385.2,150.6 378.9,147.3 370.4,142.9 370.9,133.6 375.4,128.1 377.6,121.2 384.5,118.9 393.2,119.0 397.8,114.8 405.5,113.3 415.2,114.3 423.4,115.0 433.9,113.5 442.1,117.1 444.7,123.8 446.4,131.7 450.3,136.6 458.5,137.2 457.0,144.8 459.6,151.2 462.2,161.5 465.3,169.1 467.8,175.4 470.4,181.8 468.7,189.5 465.5,195.7 458.6,199.3 452.5,195.3 444.1,192.6 438.9,188.3 431.0,184.3 425.0,178.7 429.1,174.0 432.7,166.4 435.6,160.0 438.9,153.8 442.8,146.6 446.7,139.4 448.8,132.4 445.2,138.0 442.9,145.0 437.9,154.2 434.0,161.8 429.9,170.7 426.3,176.3 418.9,173.9 413.1,170.7 410.8,163.5 404.4,160.2 398.0,157.0 391.7,153.8 385.2,150.6 378.9,147.3 370.4,142.9 367.5,137.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="545.6,229.9 542.6,235.9 544.5,244.6 545.6,254.1 552.3,256.3 559.6,257.9 572.0,261.8 577.1,269.0 578.5,276.4 583.3,280.5 598.4,282.4 602.7,289.6 599.0,298.3 595.8,305.9 601.8,320.2 607.8,328.6 611.7,334.1 607.8,328.6 602.7,321.4 596.5,312.8 596.7,303.8 600.2,295.5 605.2,283.9 587.9,282.1 580.8,279.6 579.7,271.9 574.6,264.8 564.8,260.7 559.0,257.5 551.4,256.2 545.1,251.9 543.7,242.6 543.1,233.8 545.6,229.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Alto Vermelho</title></polyline>
+<polyline points="364.1,141.3 353.1,140.6 341.2,138.5 335.2,135.7 338.2,128.7 332.9,124.6 327.0,121.7 318.5,120.3 309.8,121.8 305.2,126.3 301.3,132.1 297.3,138.4 289.6,135.6 296.3,140.6 300.0,134.0 305.2,126.3 309.8,121.8 317.2,120.4 325.6,121.1 332.3,124.3 339.3,126.0 336.1,133.6 341.2,138.5 352.1,140.5 360.4,141.1 364.1,141.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Retiro</title></polyline>
+<circle cx="216.0" cy="229.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="249.7" cy="340.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="617.8" cy="173.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="149.9" cy="207.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="367.4" cy="162.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="181.7" cy="311.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="665.8" cy="157.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="219.0" cy="203.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="53.3" cy="225.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="607.0" cy="182.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="352.0" cy="138.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="199.8" cy="304.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="171.4" cy="355.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="366.8" cy="137.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="327.3" cy="231.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="366.8" cy="137.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="597.7" cy="196.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="49.5" cy="215.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="135.2" cy="242.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="325.4" cy="234.9" r="2.2" fill="#b9b9b2"/>
+<polygon points="495.2,192.6 481.8,217.2 508.5,217.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="483.6,189.2 468.9,216.2 498.2,216.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="468.2,180.3 457.7,199.5 478.6,199.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="494.6,198.6 485.6,215.2 503.6,215.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="495.5,199.8 486.7,215.9 504.2,215.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="364.2,132.9 356.2,147.6 372.2,147.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="494.9,198.6 483.1,220.3 506.7,220.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="545.5,218.0 534.2,238.8 556.7,238.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="328.7,223.6 319.1,241.3 338.3,241.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="328.7" y="254.8" text-anchor="middle" fill="#5c5c57">Cavalaria</text>
+<polygon points="281.9,251.5 273.8,266.6 290.1,266.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="136.4,233.0 128.5,247.4 144.3,247.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="204.7,286.1 195.4,303.2 214.0,303.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="204.7" y="316.7" text-anchor="middle" fill="#5c5c57">Paulicéia</text>
+<polygon points="275.3,343.5 266.4,359.8 284.1,359.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="137.6,229.6 128.9,245.4 146.2,245.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="685.2,134.9 673.9,155.7 696.5,155.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="166.3,344.9 156.9,362.3 175.8,362.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="166.3" y="375.8" text-anchor="middle" fill="#5c5c57">Pascoal</text>
+<polygon points="482.7,236.9 472.5,255.7 492.9,255.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="202.6,178.7 193.8,195.1 211.5,195.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="501.6,193.3 492.5,210.1 510.7,210.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="486.8,208.2 478.6,223.3 494.9,223.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="471.1,181.2 460.2,201.3 482.0,201.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="511.5,188.1 501.0,207.4 522.0,207.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="496.6,238.6 485.5,259.0 507.7,259.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="455.4,172.5 445.6,190.6 465.2,190.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="475.1,228.4 465.5,246.3 484.8,246.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="493.7,137.3 484.7,153.9 502.7,153.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="49.5,203.7 43.6,214.5 55.4,214.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="478.1,196.0 469.0,212.7 487.1,212.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="477.8,208.5 467.4,227.7 488.2,227.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="474.9,200.6 467.4,214.3 482.3,214.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="457.7,241.1 448.2,258.6 467.2,258.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="596.3,137.0 589.7,149.1 602.9,149.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="601.5,188.6 593.2,204.0 609.9,204.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="505.4,184.4 493.3,206.6 517.4,206.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="473.7,263.1 464.9,279.2 482.5,279.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="440.3,189.7 429.7,209.2 450.9,209.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="481.5,205.5 471.0,224.8 492.0,224.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="415.6,203.3 404.9,223.0 426.3,223.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="510.3,244.5 499.9,263.7 520.7,263.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="504.2,222.6 492.6,244.0 515.8,244.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="530.9,194.2 518.8,216.6 543.1,216.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="489.1,186.8 479.3,204.8 498.9,204.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="131.7,227.9 123.8,242.6 139.7,242.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="444.6,203.7 434.9,221.6 454.4,221.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="477.8,227.5 465.6,250.0 490.0,250.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="470.8,201.9 460.4,221.0 481.2,221.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="470.8,196.9 465.1,207.4 476.5,207.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="512.6,191.8 504.6,206.6 520.7,206.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="379.9,367.6 374.6,377.3 385.1,377.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="366.5,216.0 361.6,225.1 371.4,225.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="417.3,205.4 408.7,221.3 426.0,221.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="473.4,205.9 463.6,224.0 483.2,224.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="610.2" cy="338.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="479.2" y="333.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Alto Vermelho 6,7 km</text>
+<circle cx="285.7" cy="132.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="292.7" y="127.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Retiro 4,2 km</text>
+<rect x="478.6" y="199.6" width="10" height="10" fill="#1d1d1b"/><text x="492.6" y="222.6" font-weight="600" fill="#1d1d1b">Sede de Pacajus</text>
+<line x1="35" x2="165.9" y1="450.5" y2="450.5" stroke="#8a8a84" stroke-width="2"/><text x="35" y="464.5" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="441.49684210526846" y2="441.49684210526846" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="445.49684210526846" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,434.5 421.4,446.7 434.6,446.7" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="445.49684210526846" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="459.49684210526846" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="468.49684210526846" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="464.49684210526846" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="468.49684210526846" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="487.49684210526846" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="491.49684210526846" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="487.49684210526846" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="491.49684210526846" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="510.49684210526846" y2="510.49684210526846" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="514.4968421052685" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="533.4968421052685" y2="533.4968421052685" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="537.4968421052685" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TRE-CE e TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 23/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (1):</strong> Alto Vermelho.</li>
+<li><strong>De 3 a 5 km (1):</strong> Retiro.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (23):</strong> Caraúba, Cavalaria, Cavalaria 2, Coaçu, Comunidade Quilombola Tiririca, Comunidade Quilombola Tiririca 2, Comunidade Quilombola da Base, Curimatã, Formoso, Genipapo, Itaipaba, Lagamar, Limoeiro, Limoeiro 2, Limoeiro V, Mangabeira, Pascoal, Paulicéia, Paulicéia 2, Quilombo da Base, Tamanduá, Umari e Umari 2.</li>
+</ul><h2>Rotas do Edital nº 23/2026</h2>
+<p>O edital tem 5 rotas para Pacajus. Horários: Saídas às 9:00 e às 15:00, da Sede (Praça da Matriz). Veículos: não informados.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Sede – Genipapo – Itaipaba – Caraubas – Umari – Umari de Baixo</td></tr><tr><td>02</td><td>Sede – Lagoa Seca – Cavalaria – Curimatã – Pauliceia – Pascoal – Formoso – Lagamar</td></tr><tr><td>03</td><td>Sede – Banguê – Pajeú – Cumaru – Fazenda Guarany – Lagamar – Formoso</td></tr><tr><td>04</td><td>Sede – Dom Bosco – Limoeiro – Mangabeira</td></tr><tr><td>05</td><td>Sede – Alto da Boa Vista – Tucum – Coaçu – Pedra Branca – Sítio Base</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 23/2026 da 49ª ZE, DJE/TRE-CE nº 198 (disp. 11/09/2026), p. 324–325; https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=CE&amp;numDiario=198&amp;anoDiario=2026.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 2 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Alto Vermelho</strong></td><td>Sede – Alto Vermelho – Sede</td><td>Alto Vermelho</td><td>13,5 km (ida e volta)</td><td>~33 min</td></tr><tr><td><strong>Rota nova – Retiro</strong></td><td>Sede – Retiro – Sede</td><td>Retiro</td><td>8,4 km (ida e volta)</td><td>~20 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMP</strong></p><p>Pacajus/CE, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Dra. Danúbia Loss Nicoláo</strong><br>Juíza Eleitoral da 49ª Zona Eleitoral – Pacajus/CE</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 23/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de Pacajus, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 23/2026: Alto Vermelho e Retiro.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Alto Vermelho (Sede – Alto Vermelho – Sede);</li><li>a criação da Rota nova – Retiro (Sede – Retiro – Sede).</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 23/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Pacajus</p></blockquote>
+<p class="fontes">Fontes: TRE-CE e TSE, Locais de Votação de Pacajus; Edital nº 23/2026 da 49ª ZE, DJE/TRE-CE nº 198 (disp. 11/09/2026), p. 324–325; https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=CE&amp;numDiario=198&amp;anoDiario=2026; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

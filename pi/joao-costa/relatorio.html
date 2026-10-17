@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – João Costa</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← João Costa</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/joao-costa.pdf?v=1792184647" download>Baixar em PDF</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – João Costa (20ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 20ª Zona Eleitoral <strong>nenhuma proposta necessária</strong> no transporte gratuito de João Costa.
+Traçamos pelas estradas o percurso das 10 rotas do Edital nº 29/2026 - TRE/20ª ZONA. 0 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>João Costa tem 3.936 eleitores aptos em 5 locais de votação e 16 seções. São 3 locais rurais, com 1.520 eleitores (39% do total).</li>
+<li>1 locais rurais ficam a 10 km ou mais da sede, com 196 eleitores. Os mais distantes: Povoado Alegre (31,5 km).</li>
+
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 11 localidades rurais de João Costa que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Baixa das Covas</td><td>19,7</td><td>Rota 08</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Comunidade Quilombola Poço Salgado</td><td>8,1</td><td>Rota 02</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Caxé</td><td>5,3</td><td>Rota 02</td><td>0,7</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>17 das 82 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Bom Jesus Mucambro (Rota 01), Sede Travessão (Rota 01), Cambraia de Cima (Rota 01, Rota 02, Rota 03, Rota 04, Rota 05, Rota 06, Rota 07, Rota 08 e Rota 09), Santa Luzia (Rota 06), Vereda (Rota 06), Lambedor (Rota 07), Mucambo (Rota 08 e Rota 09) e Moquém (Rota 10). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 11 localidades rurais de João Costa, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 810" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b">João Costa: nenhuma localidade rural fica a 3 km ou mais do local de votação</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 29/2026 - TRE/20ª ZONA e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="725.0,425.4 686.6,327.4 559.9,255.4 515.4,194.9 185.7,80.0 170.2,99.6 165.6,112.4 164.1,128.1 167.5,136.2 162.3,167.8 157.7,173.0 150.4,198.7 145.2,203.2 142.8,216.5 150.0,238.4 147.1,253.9 149.7,309.1 125.8,333.8 114.8,338.6 99.8,363.8 81.8,377.6 67.3,410.2 63.9,422.7 63.1,442.7 57.0,456.6 54.9,481.0 47.6,501.1 47.4,511.7 41.8,535.5 44.0,538.9 35.0,677.9 190.6,591.7 345.1,505.9 542.6,512.2 565.8,473.2 663.4,496.1 688.3,417.9 725.0,425.4 725.0,425.4" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="399.6,376.7 403.1,376.3 410.3,373.5 412.2,371.0 413.0,366.2 415.2,353.0 415.7,349.5 417.4,339.4 418.5,332.5 419.5,326.7 419.4,322.7 418.2,318.5 416.2,310.6 415.4,307.5 414.5,304.0 414.3,303.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="401.2,213.4 403.3,215.0 407.2,215.6 409.2,212.9 411.2,210.4 411.5,207.0 413.5,205.1 415.6,203.2 417.9,201.7 420.5,200.7 421.7,203.7 426.7,203.8 430.0,204.8 434.3,204.0 437.2,202.3 440.2,201.1 442.8,199.9 444.6,197.9 447.2,195.6 450.4,196.1 455.5,195.6 458.6,194.6 461.9,190.7 464.0,192.5 465.4,194.7 465.9,198.4 463.8,202.7 461.8,204.5 459.2,206.5 456.9,207.9 455.3,210.1 453.6,212.1 454.2,215.7 454.7,219.1 454.5,223.2 453.1,225.9 452.9,229.6 453.4,232.9 454.3,235.7 452.7,238.4 450.1,241.7 448.5,244.0 445.9,245.9 447.7,248.2 446.1,250.3 444.3,252.6 442.4,254.7 444.6,256.2 444.6,259.9 441.9,261.1 439.7,259.4 436.8,258.3 435.9,262.4 434.6,265.4 433.4,268.5 437.6,269.9 439.0,272.5 439.5,275.6 441.2,278.4 435.9,283.9 431.6,287.3 426.8,291.3 420.1,296.7 417.3,298.9 415.2,300.7 414.3,303.5 415.3,307.1 416.2,310.6 418.2,318.5 419.4,322.7 419.5,326.7 418.8,331.2 417.4,339.4 415.7,349.5 415.2,353.0 413.0,366.2 412.2,371.0 410.3,373.5 405.7,376.0 400.0,376.6 399.6,376.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="349.5,450.2 351.4,447.9 349.5,450.4 348.3,453.6 345.9,456.0 344.9,458.8 343.2,461.0 344.8,458.9 345.9,456.0 347.9,453.9 349.4,451.2 351.4,447.9 352.7,445.6 353.1,442.3 351.4,440.4 355.6,431.8 360.0,428.9 362.7,427.5 363.8,424.4 369.6,418.1 381.2,415.4 383.9,414.0 384.8,410.8 385.9,407.8 387.7,404.8 390.1,400.8 390.5,394.8 389.8,391.3 390.7,387.9 391.3,384.4 393.7,382.1 398.3,377.9 402.7,376.4 410.3,373.5 412.2,371.0 413.0,366.2 415.2,353.0 415.7,349.5 417.4,339.4 418.5,332.5 419.5,326.7 419.4,322.7 418.2,318.5 416.2,310.6 415.4,307.5 414.5,304.0 414.3,303.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="434.1,265.8 435.2,269.1 438.9,270.4 438.5,273.8 439.7,276.8 441.5,278.8 435.9,283.9 431.6,287.3 426.8,291.3 420.1,296.7 417.3,298.9 415.2,300.7 414.3,303.5 415.3,307.1 416.2,310.6 418.2,318.5 419.4,322.7 419.5,326.7 418.8,331.2 417.4,339.4 415.7,349.5 415.2,353.0 413.0,366.2 412.2,371.0 410.3,373.5 405.7,376.0 400.0,376.6 399.6,376.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="526.6,383.4 540.6,330.9 550.7,293.0 551.7,290.1 555.1,285.1 554.5,281.7 556.6,272.5 553.1,273.5 549.0,273.8 546.1,272.8 543.3,271.4 540.2,270.8 536.7,271.0 533.6,271.6 530.5,270.4 527.1,268.5 523.8,269.4 520.8,270.5 517.5,269.4 513.7,267.5 510.9,266.1 507.5,267.0 498.9,274.6 492.5,271.4 486.6,271.0 482.2,270.5 477.7,270.4 475.4,271.7 473.9,274.0 472.2,276.5 470.1,278.0 468.1,280.0 465.2,283.7 455.2,281.0 447.6,278.4 444.6,277.6 441.9,279.0 435.9,283.9 431.6,287.3 426.8,291.3 420.1,296.7 417.3,298.9 415.2,300.7 414.3,303.5 415.3,307.1 416.2,310.6 418.2,318.5 419.4,322.7 419.5,326.7 418.8,331.2 417.4,339.4 415.7,349.5 415.2,353.0 413.0,366.2 412.2,371.0 410.3,373.5 405.7,376.0 400.0,376.6 394.9,381.1 392.7,382.7 391.1,384.9 388.9,386.5 384.8,385.9 381.3,384.8 376.8,383.5 374.7,381.7 371.8,383.1 369.6,381.3 368.2,379.0 365.1,376.8 362.6,373.2 360.6,370.8 357.2,370.6 353.3,370.2 350.5,368.3 348.9,366.1 348.7,361.8 348.9,366.1 350.5,368.3 352.8,369.9 355.6,370.9 358.8,370.2 355.6,370.9 352.8,369.9 350.5,368.3 348.9,366.1 348.7,361.8 346.5,359.6 344.8,357.0 342.6,354.1 339.9,352.4 337.5,351.1 334.9,349.5 332.5,348.1 329.4,346.3 326.2,344.5 313.3,336.8 310.6,335.2 308.1,333.7 304.9,331.9 301.1,329.6 298.8,328.3 296.2,326.7 291.3,323.8 287.7,321.6 285.0,320.0 282.2,318.5 280.0,317.1 276.3,315.0 274.1,313.6 270.9,311.7 268.4,310.3 265.2,308.4 262.6,306.8 259.0,304.6 256.1,303.0 251.3,300.2 248.2,298.4 244.5,296.1 242.2,294.5 240.4,290.0 238.2,284.8 233.7,284.0 230.2,283.7 226.6,283.9 222.7,284.0 219.8,282.2 216.3,281.9 214.2,280.3 211.0,278.4 207.2,278.4 203.5,280.4 200.0,280.2 198.1,278.0 196.1,279.8 194.2,281.6 193.6,282.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="401.2,213.4 400.1,216.4 397.4,218.3 394.8,219.6 393.4,222.1 392.6,225.0 392.2,228.6 391.0,231.6 389.1,233.8 387.3,237.8 386.1,240.8 385.5,244.6 388.3,246.5 392.4,247.4 395.4,248.0 397.8,249.4 396.9,252.6 395.9,255.6 394.0,257.5 395.1,260.0 394.0,262.7 391.9,265.8 390.1,267.8 392.3,269.8 394.8,271.5 396.7,273.4 398.7,275.3 400.2,277.7 403.2,278.3 405.2,280.2 405.7,283.3 409.4,284.4 411.8,287.3 411.0,291.3 412.0,294.8 413.0,297.6 415.9,300.1 414.4,302.3 414.9,305.6 415.8,309.2 418.2,318.5 419.4,322.7 419.5,326.7 418.8,331.2 417.4,339.4 415.7,349.5 415.2,353.0 413.0,366.2 412.2,371.0 410.3,373.5 405.7,376.0 400.0,376.6 394.9,381.1 392.7,382.7 391.1,384.9 390.5,388.6 390.3,393.8 390.3,400.1 389.1,402.6 386.9,406.2 385.4,408.6 384.3,412.9 382.7,415.4 371.8,416.9 363.8,424.4 362.7,427.1 360.0,428.9 356.7,430.5 351.8,439.4 353.1,442.3 352.7,445.6 351.4,447.9 349.5,450.2 348.8,453.1 346.4,455.3 345.1,458.0 343.2,461.0 343.1,461.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="386.5,406.9 389.1,402.6 390.3,400.1 390.5,394.8 389.8,391.3 390.7,387.9 388.5,386.5 384.8,385.9 381.3,384.8 384.0,385.6 387.3,386.3 390.5,387.0 391.9,383.5 394.9,381.1 398.3,377.9 402.7,376.4 410.3,373.5 412.2,371.0 413.0,366.2 415.2,353.0 415.7,349.5 417.4,339.4 418.5,332.5 419.5,326.7 419.4,322.7 418.2,318.5 416.2,310.6 415.4,307.5 414.5,304.0 414.3,303.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="527.5,380.0 540.6,330.9 528.8,328.2 519.2,327.0 511.8,322.0 509.7,320.4 505.5,317.6 501.8,313.3 497.2,304.8 494.0,298.7 491.5,293.8 489.1,289.3 486.5,284.3 483.0,282.5 475.8,283.0 465.2,284.0 455.2,281.0 447.6,278.4 444.6,277.6 441.9,279.0 435.9,283.9 431.6,287.3 426.8,291.3 420.1,296.7 417.3,298.9 415.2,300.7 414.3,303.5 415.3,307.1 416.2,310.6 418.2,318.5 419.4,322.7 419.5,326.7 418.8,331.2 417.4,339.4 415.7,349.5 415.2,353.0 413.0,366.2 412.2,371.0 410.3,373.5 405.7,376.0 400.0,376.6 399.6,376.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="440.3,277.8 435.9,283.9 431.6,287.3 426.8,291.3 420.1,296.7 417.3,298.9 415.2,300.7 414.3,303.5 415.3,307.1 416.2,310.6 418.2,318.5 419.4,322.7 419.5,326.7 418.8,331.2 417.4,339.4 415.7,349.5 415.2,353.0 413.0,366.2 412.2,371.0 410.3,373.5 405.7,376.0 400.0,376.6 399.6,376.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 09</title></polyline>
+<polyline points="488.1,191.6 485.4,190.3 480.9,190.8 477.7,191.3 474.4,190.6 471.0,190.8 468.0,191.8 463.4,191.8 458.8,191.7 458.4,194.9 453.8,196.1 450.0,196.0 445.4,197.1 443.5,199.1 441.1,200.6 438.2,201.9 435.2,203.2 433.0,205.0 429.5,204.7 424.5,204.3 421.4,203.2 420.2,200.6 417.6,202.0 414.4,204.7 411.7,206.5 411.4,209.9 409.3,212.3 407.9,214.8 405.1,215.6 401.8,214.7 399.8,216.8 397.4,218.3 394.8,219.6 393.4,222.1 392.6,225.0 392.2,228.6 391.0,231.6 389.1,233.8 387.3,237.8 386.1,240.8 385.5,244.6 388.3,246.5 392.4,247.4 395.4,248.0 397.8,249.4 396.9,252.6 395.9,255.6 394.0,257.5 395.1,260.0 394.0,262.7 391.9,265.8 390.1,267.8 392.3,269.8 394.8,271.5 396.7,273.4 398.7,275.3 400.2,277.7 403.2,278.3 405.2,280.2 405.7,283.3 409.4,284.4 411.8,287.3 411.0,291.3 412.0,294.8 413.0,297.6 415.9,300.1 414.4,302.3 414.9,305.6 415.8,309.2 418.2,318.5 419.4,322.7 419.5,326.7 418.8,331.2 417.4,339.4 415.7,349.5 415.2,353.0 413.0,366.2 412.2,371.0 410.3,373.5 405.7,376.0 400.0,376.6 394.9,381.1 392.7,382.7 391.1,384.9 388.9,386.5 387.3,386.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 10</title></polyline>
+<circle cx="528.7" cy="380.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="445.4" cy="249.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="427.7" cy="261.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="364.9" cy="385.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="374.8" cy="380.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="415.5" cy="351.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="397.8" cy="372.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="420.1" cy="294.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="418.6" cy="331.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="386.3" cy="388.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="193.4" cy="281.8" r="2.2" fill="#b9b9b2"/>
+<polygon points="414.2,296.2 403.0,316.8 425.3,316.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="390.9,376.0 381.4,393.4 400.3,393.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="390.9" y="406.9" text-anchor="middle" fill="#5c5c57">Zona Rural</text>
+<polygon points="194.2,274.0 187.2,286.8 201.2,286.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="416.1,327.8 408.0,342.7 424.2,342.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="413.2,294.5 404.0,311.4 422.4,311.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<rect x="409.4" y="298.5" width="10" height="10" fill="#1d1d1b"/><text x="423.4" y="321.5" font-weight="600" fill="#1d1d1b">Sede de João Costa</text>
+<line x1="35" x2="89.1" y1="707.9" y2="707.9" stroke="#8a8a84" stroke-width="2"/><text x="35" y="721.9" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="698.9119540629886" y2="698.9119540629886" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="702.9119540629886" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,691.9 421.4,704.2 434.6,704.2" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="702.9119540629886" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="716.9119540629886" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="725.9119540629886" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="721.9119540629886" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="725.9119540629886" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="744.9119540629886" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="748.9119540629886" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="744.9119540629886" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="748.9119540629886" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="767.9119540629886" y2="767.9119540629886" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="771.9119540629886" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="790.9119540629886" y2="790.9119540629886" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="794.9119540629886" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 29/2026 - TRE/20ª ZONA · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (3):</strong> Baixa das Covas, Comunidade Quilombola Poço Salgado e Caxé.</li>
+<li><strong>De 3 a 5 km (0):</strong> nenhuma.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (8):</strong> Alegre, Cambraia, Cambraia de Baixo, Comunidade Quilombola Umburana, Felipe, Sobradinho, Travessão e Umburana.</li>
+</ul><h2>Rotas do Edital nº 29/2026 - TRE/20ª ZONA</h2>
+<p>O edital tem 10 rotas para João Costa. Horários: O transporte terá início às 6:00 e se prolongará ao longo do dia de votação, incluindo ida e retorno. Veículos: não informados no edital.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Bom Jesus Mucambro – Sede Travessão – Cambraia de Baixo – Cambraia de Cima</td></tr><tr><td>02</td><td>Baixa do Caxé – Poço Salgado – Boa Vista – Sede – Travessão – Cambraia de Baixo – Cambraia de Cima</td></tr><tr><td>03</td><td>São João Vermelho – Coqueiro – Morro da Figura – Cambraia de Cima – Cambraia de Baixo – Felipe – Travessão – Sede</td></tr><tr><td>04</td><td>Boa Vista – São Paulo – Sede – Travessão – Felipe – Cambraia de Baixo – Cambraia de Cima</td></tr><tr><td>05</td><td>Pedra Furada – Malhada Alta – Aroeira – São Paulo – Sede – Travessão – Felipe – Cambraia de Baixo – Cambraia de Cima – Grajau – Carnaibas – Alegre</td></tr><tr><td>06</td><td>Baixa do Caxé – Tanquinho – Santa Luzia – Barra do Vento – Toca – Sede – Travessão – Vereda – Felipe – Cambraia de Baixo – Cambraia de Cima – São João Vermelho – Morro da Figura</td></tr><tr><td>07</td><td>Santo Inácio – Pocinho – Lambedor – Cambraia de Baixo – Cambraia de Cima – Felipe – Travessão – Sede</td></tr><tr><td>08</td><td>Baixa das Covas – Mucambo – Sede – Travessão – Felipe – Cambraia de Baixo – Cambraia de Cima</td></tr><tr><td>09</td><td>Mucambo – São Paulo – Sede – Travessão – Felipe – Cambraia de Baixo – Cambraia de Cima</td></tr><tr><td>10</td><td>Moquém – Alto dos Porcos – Pintado – Baixa do Caxé – Sede – Travessão – Felipe – Cambraia de Baixo – Cambraia</td></tr></tbody></table></div>
+<p>Fonte: Edital nº 29/2026 - TRE/20ª ZONA (Quadro Geral de Percursos e Horários Programados, anexo publicado no próprio edital), DJE/TRE-PI nº 191/2026, disponibilizado em 18/09/2026 (publicação 19/09/2026), ID_MATERIA 6119612.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 0 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<p>Nenhuma localidade precisa de rota nova.</p>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMJC</strong></p><p>João Costa/PI, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Dra. Carla de Lucena Bina Xavier</strong><br>Juíza Eleitoral da 20ª Zona Eleitoral – São João do Piauí/PI</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 29/2026 - TRE/20ª ZONA) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de João Costa, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 29/2026 - TRE/20ª ZONA: .</p><p>Sugerimos, respeitosamente:</p><p></p><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 29/2026 - TRE/20ª ZONA deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de João Costa</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de João Costa; Edital nº 29/2026 - TRE/20ª ZONA (Quadro Geral de Percursos e Horários Programados, anexo publicado no próprio edital), DJE/TRE-PI nº 191/2026, disponibilizado em 18/09/2026 (publicação 19/09/2026), ID_MATERIA 6119612; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

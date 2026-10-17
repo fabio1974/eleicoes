@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Joca Marques</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Joca Marques</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/joca-marques.pdf?v=1792184798" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Joca Marques (27ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 27ª Zona Eleitoral <strong>4 rotas novas e 2 paradas extras em rotas do edital</strong> no transporte gratuito de Joca Marques.
+Traçamos pelas estradas o percurso das 2 rotas do Edital nº 40/2026 - TRE/27ª ZONA (complemento do Edital nº 37/2026). 9 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 2 ficam a 1–2 km.</p>
+<ul>
+<li>Joca Marques tem 5.603 eleitores aptos em 9 locais de votação e 23 seções. São 8 locais rurais, com 4.809 eleitores (86% do total).</li>
+<li>5 locais rurais ficam a 10 km ou mais da sede, com 2.261 eleitores. Os mais distantes: Povoado Tabuleiro Grande (23,6 km), Povoado Jatobá (13,8 km) e Povoado Chapada Do Pinto, S/N (13,5 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Tapera (8,5 km do local de votação), Tucunzal (8,3 km do local de votação), Candeeiro (6,0 km do local de votação), Inhuma (5,3 km do local de votação), Aldeia (4,3 km do local de votação), Agrovila do PA Sem Denominação (4,0 km do local de votação), Vigilância (3,7 km do local de votação), São Gregório (3,6 km do local de votação) e Toco Preto (3,1 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Carreiras e Venceslau.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 46 localidades rurais de Joca Marques que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Tapera</td><td>8,5</td><td>Rota 02</td><td>4,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Tucunzal</td><td>8,3</td><td>Rota 02</td><td>3,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Carreiras</td><td>7,2</td><td>Rota 01</td><td>1,6</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Candeeiro</td><td>6,0</td><td>Rota 02</td><td>2,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Pote Seco</td><td>5,7</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Unha de Gato</td><td>5,7</td><td>Rota 02</td><td>0,9</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Inhuma</td><td>5,3</td><td>Rota 02</td><td>2,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Aldeia</td><td>4,3</td><td>Rota 02</td><td>2,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Agrovila do PA Sem Denominação</td><td>4,0</td><td>Rota 01</td><td>3,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Feitoria</td><td>3,8</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Olho d&#x27;Água da Palmeira</td><td>3,8</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Vigilância</td><td>3,7</td><td>Rota 01</td><td>3,2</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>São Gregório</td><td>3,6</td><td>Rota 02</td><td>3,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Bom Jardim</td><td>3,6</td><td>Rota 02</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Anajá II</td><td>3,1</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Venceslau</td><td>3,1</td><td>Rota 02</td><td>1,8</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Toco Preto</td><td>3,1</td><td>Rota 02</td><td>2,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Chapada dos Damiões</td><td>3,0</td><td>Rota 02</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Olho d&#x27;Água Grande</td><td>3,0</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>4 das 20 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Alice Castro (Rota 01 e Rota 02), Pinto (Rota 01) e Teófilo Leite (Rota 02). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 46 localidades rurais de Joca Marques, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1200" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Joca Marques: 11 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 40/2026 - TRE/27ª ZONA (complemento do Edital nº 37/2026) e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="143.1,251.1 35.0,399.6 54.7,440.2 119.4,469.4 127.9,546.5 209.5,597.7 192.6,647.8 234.8,709.2 168.4,733.9 143.1,758.7 86.2,911.8 182.4,941.0 205.0,965.2 234.8,1042.9 360.3,1068.2 415.4,1063.1 619.7,982.1 667.5,869.6 637.2,566.8 722.7,390.1 599.4,298.9 539.2,200.4 469.5,188.1 471.1,124.5 436.2,83.4 399.1,80.0 346.2,118.3 267.4,220.1 193.7,255.6 143.1,251.1 143.1,251.1" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="256.6,322.6 245.4,316.5 214.7,318.8 192.4,302.5 177.8,298.5 161.3,313.1 149.8,320.1 124.2,344.8 109.4,357.8 113.0,409.8 116.4,438.3 118.5,460.1 119.9,476.2 122.5,498.8 124.4,516.9 126.8,539.0 130.5,553.7 146.8,561.2 163.5,562.5 165.4,578.8 180.2,583.9 194.1,588.0 208.7,596.9 224.4,599.3 242.9,587.5 257.7,584.5 266.5,576.3 286.3,569.8 274.0,575.2 262.5,581.2 245.7,586.1 234.6,593.9 221.3,599.5 233.6,594.5 245.7,586.1 260.0,582.0 273.4,575.1 286.3,569.8 297.1,578.5 314.8,588.8 330.0,597.3 314.8,588.8 300.4,581.4 292.1,568.9 277.2,574.3 264.6,579.4 257.3,593.5 255.3,609.2 259.4,627.6 255.2,654.9 250.8,681.2 243.8,705.3 232.2,710.5 221.9,718.8 208.0,722.9 191.6,722.0 178.5,728.6 167.3,734.9 155.8,744.1 145.2,754.9 138.9,772.7 135.5,788.0 130.4,804.1 124.9,817.2 123.3,833.6 122.4,852.5 122.5,872.0 123.6,854.5 135.0,848.9 148.2,844.7 158.8,837.1 175.9,837.2 188.8,833.1 200.8,827.6 214.1,823.6 227.1,828.4 233.7,839.1 237.5,855.8 241.2,869.0 249.4,878.5 262.8,885.3 273.8,891.6 282.8,900.1 298.5,909.2 307.0,918.6 314.1,929.2 321.8,943.5 326.9,955.6 333.1,966.9 337.9,979.7 346.1,988.7 356.0,997.0 366.5,1004.1 376.6,1012.3 384.9,1021.1 394.9,1028.9 404.7,1036.7 408.3,1053.8 403.1,1061.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="418.3,413.9 421.9,396.7 404.9,385.6 392.9,376.0 377.1,378.2 361.4,380.2 355.7,391.7 356.7,407.9 357.8,426.0 358.1,443.6 356.9,460.2 359.5,475.5 356.1,490.3 350.3,503.9 345.0,518.8 328.9,523.6 327.0,539.6 320.4,550.5 304.2,561.1 292.1,568.9 277.2,574.3 264.6,579.4 257.3,593.5 255.3,609.2 259.4,627.6 255.2,654.9 250.8,681.2 243.8,705.3 232.2,710.5 221.9,718.8 208.0,722.9 191.6,722.0 178.5,728.6 167.3,734.9 155.8,744.1 145.2,754.9 138.9,772.7 135.5,788.0 130.4,804.1 124.9,817.2 123.3,833.6 122.4,852.5 122.5,872.0 122.4,852.5 123.3,835.7 124.4,819.9 130.4,804.1 135.5,788.0 138.9,772.7 143.5,757.8 155.8,744.1 167.3,734.9 178.5,728.6 190.6,722.5 208.0,722.9 221.9,718.8 232.2,710.5 245.1,705.8 257.9,700.7 272.9,704.3 285.9,708.7 302.4,710.0 309.1,697.2 319.4,682.8 330.8,672.8 347.2,671.8 375.7,665.3 386.5,654.3 392.3,642.4 407.3,637.3 417.7,624.9 424.7,614.7 443.6,609.0 460.6,609.1 473.0,601.2 488.6,598.7 504.4,589.9 511.9,579.1 520.1,566.9 531.3,557.8 544.6,552.5 554.9,544.6 572.7,545.3 587.0,542.5 602.4,539.6 604.9,525.0 616.0,518.7 631.0,513.2 645.7,515.6 660.4,511.8 669.2,500.4 643.5,551.0 637.5,564.6 646.5,657.1 646.5,657.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="646.5,657.1 648.3,674.8 651.7,708.5 655.1,743.0 659.8,789.3 644.3,791.1 631.7,795.9 614.0,795.8 601.4,788.8 589.2,783.2 601.4,788.8 614.0,795.8 630.5,795.5 644.3,791.1 659.8,789.3 655.1,743.0 652.0,712.3 648.3,674.8 646.7,659.3 638.3,576.9 639.2,557.9 679.0,501.1 715.9,449.3 721.3,437.7 722.5,398.3 723.1,380.4 712.3,374.3 698.9,369.6 691.4,357.6 677.0,353.8 662.5,349.9 650.5,343.8 639.2,332.4 629.8,322.0 639.2,332.4 650.5,343.8 662.5,349.9 677.0,353.8 691.4,357.6 698.2,368.2 712.3,374.3 723.1,380.4 722.5,398.3 721.9,421.6 721.2,438.6 684.5,493.4 643.5,551.0 637.5,564.6 646.5,657.1 646.5,657.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Tapera</title></polyline>
+<polyline points="347.2,319.3 359.0,324.5 361.3,340.7 367.0,355.0 386.7,370.9 402.2,383.3 412.5,392.9 426.3,396.1 439.1,386.0 457.1,378.5 474.3,370.3 491.0,357.1 505.4,353.1 522.9,358.8 536.5,373.4 549.9,379.4 536.5,373.4 528.7,363.3 516.5,356.1 496.3,354.0 484.0,364.2 463.0,376.7 445.6,382.4 434.2,389.8 423.6,396.9 404.9,385.6 392.9,376.0 367.0,355.0 361.8,343.1 359.4,324.2 347.2,319.3 347.2,319.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Inhuma</title></polyline>
+<polyline points="403.1,1061.0 436.1,1053.5 454.5,1045.6 480.8,1047.1 508.1,1028.4 525.5,1020.6 541.4,1013.7 566.3,1003.2 574.1,994.1 566.3,1003.2 547.4,1011.2 525.5,1020.6 511.3,1026.4 490.9,1043.0 461.4,1044.6 436.1,1053.5 417.6,1061.8 401.3,1062.5 403.1,1061.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Agrovila do PA Sem Denominação</title></polyline>
+<polyline points="433.7,842.8 444.8,834.7 452.1,824.7 457.9,812.4 461.3,798.2 473.8,793.5 483.9,786.7 482.4,770.1 485.6,754.7 501.4,751.3 512.7,744.0 501.4,751.3 485.6,754.7 482.0,768.8 483.9,786.7 473.8,793.5 461.3,798.2 457.9,812.4 452.1,824.7 444.8,834.7 459.8,836.9 470.1,844.4 478.3,854.1 484.4,865.1 500.2,856.1 534.3,834.3 551.7,834.3 568.8,836.2 553.8,833.5 537.5,835.0 509.0,849.7 487.8,862.3 478.3,854.1 470.7,844.7 459.8,836.9 442.5,836.4 433.7,842.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – São Gregório</title></polyline>
+<polyline points="119.4,348.7 106.6,344.3 104.3,328.4 98.1,315.3 86.8,296.6 77.5,288.5 63.7,292.1 77.5,288.5 86.8,296.6 98.1,315.3 103.9,326.4 105.6,342.3 118.7,347.1 119.4,348.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 01</title></polyline>
+<polyline points="493.0,599.1 513.7,685.1 493.0,599.1 493.0,599.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 02</title></polyline>
+<circle cx="106.4" cy="364.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="543.9" cy="498.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="177.8" cy="301.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="116.2" cy="461.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="362.0" cy="487.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="319.8" cy="947.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="237.2" cy="712.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="341.3" cy="603.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="421.4" cy="411.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="286.9" cy="1044.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="363.7" cy="530.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="522.4" cy="571.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="172.9" cy="516.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="296.8" cy="571.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="420.0" cy="919.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="405.9" cy="267.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="376.8" cy="668.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="638.8" cy="705.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="464.7" cy="901.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="218.1" cy="769.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="597.5" cy="667.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="481.6" cy="859.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="345.4" cy="206.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="398.0" cy="1023.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="216.2" cy="633.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="187.4" cy="579.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="121.1" cy="900.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="422.4" cy="611.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="408.1" cy="1051.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="213.3" cy="604.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="212.8" cy="596.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="226.9" cy="828.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="120.1" cy="876.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="434.2" cy="848.5" r="2.2" fill="#b9b9b2"/>
+<polygon points="204.4,584.7 195.7,600.7 213.1,600.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="385.6,203.1 376.4,220.1 394.8,220.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="233.7,829.5 226.0,843.5 241.3,843.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="347.3,307.3 336.1,328.1 358.6,328.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="347.3" y="342.0" text-anchor="middle" fill="#5c5c57">Zona Rural</text>
+<polygon points="434.0,599.7 426.8,613.0 441.2,613.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="644.5,648.3 635.9,664.2 653.1,664.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="402.5,1052.6 395.1,1066.1 409.8,1066.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="434.6,836.4 427.7,849.1 441.5,849.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="123.4,868.1 113.9,885.5 132.8,885.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="628.9" cy="300.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="541.3" y="295.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Tapera 8,5 km</text>
+<circle cx="625.0" cy="324.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="525.0" y="319.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Tucunzal 8,3 km</text>
+<circle cx="61.1" cy="291.4" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="68.1" y="286.4" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Carreiras 7,2 km</text>
+<circle cx="725.0" cy="378.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="618.8" y="373.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Candeeiro 6,0 km</text>
+<circle cx="551.9" cy="373.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="558.9" y="388.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Inhuma 5,3 km</text>
+<circle cx="584.2" cy="779.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="496.6" y="774.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Aldeia 4,3 km</text>
+<circle cx="571.3" cy="995.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="334.9" y="990.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Agrovila do PA Sem Denominação 4,0 km</text>
+<circle cx="561.9" cy="999.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="449.5" y="1014.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Vigilância 3,7 km</text>
+<circle cx="576.3" cy="838.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="451.5" y="833.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">São Gregório 3,6 km</text>
+<circle cx="521.4" cy="740.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="528.4" y="735.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Toco Preto 3,1 km</text>
+<circle cx="513.7" cy="685.1" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="520.7" y="680.1" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Venceslau 3,1 km</text>
+<rect x="354.9" y="329.6" width="10" height="10" fill="#1d1d1b"/><text x="368.9" y="352.6" font-weight="600" fill="#1d1d1b">Sede de Joca Marques</text>
+<line x1="35" x2="288.5" y1="1098.2" y2="1098.2" stroke="#8a8a84" stroke-width="2"/><text x="35" y="1112.2" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="1089.2089263737041" y2="1089.2089263737041" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="1093.2089263737041" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,1082.2 421.4,1094.5 434.6,1094.5" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="1093.2089263737041" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="1107.2089263737041" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="1116.2089263737041" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="1112.2089263737041" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="1116.2089263737041" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1135.2089263737041" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1139.2089263737041" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1135.2089263737041" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1139.2089263737041" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1158.2089263737041" y2="1158.2089263737041" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1162.2089263737041" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1181.2089263737041" y2="1181.2089263737041" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1185.2089263737041" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 40/2026 - TRE/27ª ZONA (complemento do Edital nº 37/2026) · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (7):</strong> Tapera, Tucunzal, Carreiras, Candeeiro, Pote Seco, Unha de Gato e Inhuma.</li>
+<li><strong>De 3 a 5 km (12):</strong> Aldeia, Agrovila do PA Sem Denominação, Feitoria, Olho d&#x27;Água da Palmeira, Vigilância, São Gregório, Bom Jardim, Anajá II, Venceslau, Toco Preto, Chapada dos Damiões e Olho d&#x27;Água Grande.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (27):</strong> Agrovila do PE Cadoz, Alto da Candeia, Anajá, Anajá dos Pereiras, Anajás, Baixas do Anajás, Barro Vermelho, Bom Jesus, Cacimba do Cocal, Calixto, Carnaubinha, Chapada do Pinto, Chapadinha, Cocalinho, Gameleira, Igarapé dos Nunes, Jatobá, Lagoa da Onça, Lagoinha, Olho d&#x27;Águinha, P.A. Chapadinha, Pequizeiro, Recurso, Taboleiro Grande, Tamboril, Três Irmãos e Vaca Velha.</li>
+</ul><h2>Rotas do Edital nº 40/2026 - TRE/27ª ZONA (complemento do Edital nº 37/2026)</h2>
+<p>O edital tem 2 rotas para Joca Marques. Horários: Rota 01: 07h (ida), 10h (volta), 13h (ida) e, após o encerramento da votação, Chapada do Pinto – Chapadinha – Jatobá – Anajás – Cocalinho – Delegacia de Polícia (recolhimento dos policiais); Rota 02: 07h e 10h (Teófilo Leite ↔ Piquizeiro), 13h (Tucunzal – Candieiro – Piquizeiro – Jatobá – Chapada dos Damiões – Chapada do Pinto – Chapadinha – Tabuleiro Grande – Posto Rural – São Gregório – Piquizeiro) e 16h (volta até a Sede). Veículos: Rota 01: ônibus OUA-8891 (motorista Danilo Costa Cruz); Rota 02: ônibus NIJ-3614 (motorista Antônio José do Vale Rocha).</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Alice Castro – Piranhas – Feitoria – Alto Bonito – Gameleira – Anajás – Olho D’Àgua Grande – Chapada do Pinto – Pinto – Chapada do Pinto – Chapadinha – Tabuleiro Grande</td></tr><tr><td>02</td><td>Teófilo Leite – Alice Castro – Carnaubinha – Bom Jardim – Chapada do Pinto – Chapada dos Damiões – Cocalinho – Piquizeiro</td></tr></tbody></table></div>
+<p>Fonte: Edital nº 40/2026 - TRE/27ª ZONA (complemento do Edital nº 37/2026), DJE/TRE-PI nº 196/2026, disponibilizado em 23/09/2026 (publicação 24/09/2026), ID_MATERIA 6130139; fonte complementar: INFO ROTAS – sistema oficial do TRE-PI (inforotas.tre-pi.jus.br), consulta em 2026-10-16 (rotas do INFO ROTAS preservadas em &quot;rotas_inforotas&quot;).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 11 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Tapera</strong></td><td>Sede – Aldeia – Candeeiro – Tucunzal – Tapera – Sede</td><td>Aldeia, Candeeiro, Tucunzal, Tapera</td><td>25,6 km (ida e volta)</td><td>~36 min</td></tr><tr><td><strong>Rota nova – Inhuma</strong></td><td>Sede – Inhuma – Sede</td><td>Inhuma</td><td>10,6 km (ida e volta)</td><td>~12 min</td></tr><tr><td><strong>Rota nova – Agrovila do PA Sem Denominação</strong></td><td>Sede – Vigilância – Agrovila do PA Sem Denominação – Sede</td><td>Vigilância, Agrovila do PA Sem Denominação</td><td>8,0 km (ida e volta)</td><td>~9 min</td></tr><tr><td><strong>Rota nova – São Gregório</strong></td><td>Sede – Toco Preto – São Gregório – Sede</td><td>Toco Preto, São Gregório</td><td>12,9 km (ida e volta)</td><td>~31 min</td></tr><tr><td><strong>Parada extra na Rota 01</strong></td><td>desvio pelo caminho atual: Carreiras</td><td>Carreiras</td><td>+3,8 km</td><td>+4 min</td></tr><tr><td><strong>Parada extra na Rota 02</strong></td><td>desvio pelo caminho atual: Venceslau</td><td>Venceslau</td><td>+4,5 km</td><td>+7 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMJM</strong></p><p>Joca Marques/PI, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Dra. Rita de Cássia da Silva</strong><br>Juíza Eleitoral da 27ª Zona Eleitoral – Luzilândia/PI</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 40/2026 - TRE/27ª ZONA (complemento do Edital nº 37/2026)) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de Joca Marques, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 40/2026 - TRE/27ª ZONA (complemento do Edital nº 37/2026): Tapera, Tucunzal, Candeeiro, Inhuma, Aldeia, Agrovila do PA Sem Denominação, Vigilância, São Gregório, Toco Preto, Carreiras e Venceslau.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Tapera (Sede – Aldeia – Candeeiro – Tucunzal – Tapera – Sede);</li><li>a criação da Rota nova – Inhuma (Sede – Inhuma – Sede);</li><li>a criação da Rota nova – Agrovila do PA Sem Denominação (Sede – Vigilância – Agrovila do PA Sem Denominação – Sede);</li><li>a criação da Rota nova – São Gregório (Sede – Toco Preto – São Gregório – Sede);</li><li>a inclusão de parada em Carreiras na Rota 01, mantido todo o percurso atual;</li><li>a inclusão de parada em Venceslau na Rota 02, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 40/2026 - TRE/27ª ZONA (complemento do Edital nº 37/2026) deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Joca Marques</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Joca Marques; Edital nº 40/2026 - TRE/27ª ZONA (complemento do Edital nº 37/2026), DJE/TRE-PI nº 196/2026, disponibilizado em 23/09/2026 (publicação 24/09/2026), ID_MATERIA 6130139; fonte complementar: INFO ROTAS – sistema oficial do TRE-PI (inforotas.tre-pi.jus.br), consulta em 2026-10-16 (rotas do INFO ROTAS preservadas em &quot;rotas_inforotas&quot;); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

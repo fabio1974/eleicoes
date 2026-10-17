@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Areia Branca</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Areia Branca</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/areia-branca.pdf?v=1792185629" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Areia Branca (32ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 32ª Zona Eleitoral <strong>2 rotas novas</strong> no transporte gratuito de Areia Branca.
+Traçamos pelas estradas o percurso das 8 rotas do Edital nº 21/2026 (32ª ZE). 2 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>Areia Branca tem 22.074 eleitores aptos em 21 locais de votação e 80 seções. São 10 locais rurais, com 5.095 eleitores (23% do total).</li>
+<li>8 locais rurais ficam a 10 km ou mais da sede, com 3.962 eleitores. Os mais distantes: Rua Manoel Filgueira Dos Santos, S/N - Praia De Ponta Do Mel (32,9 km), Rua Manoel Filgueira Dos Santos, S/N (32,9 km) e Rua Sao Paulo, S/N - Praia De Ponta Do Mel (32,7 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Vermelho (5,4 km do local de votação) e Grossos (4,2 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 11 localidades rurais de Areia Branca que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Vila Acre</td><td>6,5</td><td>Rota 03</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Vermelho</td><td>5,4</td><td>Rota 07</td><td>4,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Grossos</td><td>4,2</td><td>Rota 03</td><td>4,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Baixa Grande</td><td>3,9</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>23 das 40 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Santuário (Rota 01, Rota 02, Rota 03, Rota 04, Rota 05, Rota 06, Rota 07 e Rota 08), Entrada (Rota 01 e Rota 05), Praia de Ponta do Mel (Mel de Cima e Mel de Baixo) (Rota 01), Arraial (Rota 02 e Rota 05), Freire (BR 110) (Rota 02), Serra Vermelha até o km 22 (em frente à Escola Santo Amaro) (Rota 02), Casqueira I e II (Rota 03), Paraíso (Rota 04 e Rota 08), Casqueira (BR 110) (Rota 05), Praia da Redonda (Rota 06), Praia do Cristóvão (Rota 06), Praia de Ponta do Mel (Rota 06) e Garavelo IV, III, II, I (Rota 07). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 11 localidades rurais de Areia Branca, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 689" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Areia Branca: 2 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital nº 21/2026 (32ª ZE) e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="74.4,280.4 84.6,295.6 85.5,339.2 58.9,367.0 42.9,372.5 36.6,393.4 47.7,410.1 36.9,445.7 72.5,512.7 117.5,550.9 132.8,557.4 132.1,492.7 273.1,492.3 272.9,407.0 325.0,406.8 324.5,367.0 364.6,366.7 364.4,319.3 470.0,319.3 469.5,235.9 603.2,244.9 607.1,231.2 624.2,216.0 657.1,214.1 683.5,203.2 708.1,209.5 725.0,204.4 698.6,171.5 672.2,154.1 620.3,156.7 578.8,144.6 543.9,124.5 483.4,80.0 439.6,110.1 383.1,105.0 372.0,119.1 304.4,152.5 265.7,144.9 203.4,105.7 150.1,88.8 124.9,96.9 95.9,120.8 62.6,119.6 55.4,133.3 69.7,147.9 70.4,168.7 49.6,211.1 54.2,228.0 81.1,243.3 84.3,269.5 74.4,280.4 74.4,280.4" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="252.2,193.8 256.1,190.7 261.1,187.8 266.5,185.4 274.0,182.3 283.9,180.2 289.9,179.2 295.4,176.6 302.9,170.8 309.4,166.3 315.1,163.5 319.7,161.1 324.0,157.5 329.5,150.7 332.7,146.4 337.7,144.0 343.0,148.0 356.2,174.8 362.5,172.5 369.3,169.9 377.6,166.9 382.8,164.9 388.5,162.8 396.4,159.8 402.8,157.6 410.5,154.8 418.8,151.8 426.0,149.2 431.8,147.0 434.0,140.9 437.0,145.0 443.0,142.9 450.2,143.9 454.5,139.8 454.7,132.4 462.5,126.8 468.8,125.5 474.3,123.7 478.1,113.9 480.3,108.8 483.4,105.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="223.2,122.2 216.5,120.8 216.3,129.1 213.2,133.7 211.0,138.7 205.9,141.7 199.7,145.0 193.8,147.8 186.6,147.8 180.5,151.0 174.2,153.4 169.4,156.8 169.9,161.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="317.5,326.9 312.5,324.2 309.6,314.4 306.4,318.6 302.1,324.3 297.4,330.3 293.9,334.9 290.8,339.0 286.8,342.6 280.8,348.1 276.5,352.0 271.8,356.4 267.9,360.0 262.6,357.3 260.3,350.9 257.9,344.5 254.2,334.2 251.4,326.7 249.0,320.0 244.5,314.3 235.6,305.3 232.1,301.9 228.3,298.3 219.0,289.5 213.9,284.8 209.1,282.1 200.9,277.7 194.7,274.3 189.2,271.3 181.8,267.3 176.9,264.6 179.6,256.6 183.5,249.0 187.4,241.5 190.9,234.8 193.6,229.6 195.0,224.0 193.7,217.7 190.3,210.5 187.7,205.1 185.1,199.7 181.3,191.4 179.3,182.8 177.9,174.7 176.2,164.7 174.9,158.7 172.1,154.2 168.7,150.2 155.2,142.8 145.2,134.3 140.7,131.3 134.5,129.7 127.7,130.4 122.9,132.7 116.0,138.5 112.1,142.1 105.7,147.9 100.9,152.1 98.2,154.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="139.0,104.4 142.8,104.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="169.9,161.3 172.1,154.2 177.3,152.4 182.9,149.2 188.4,147.5 195.5,146.9 202.4,143.8 208.3,140.2 212.7,137.6 213.6,131.6 215.0,125.6 219.1,119.5 225.1,123.9 232.0,128.5 237.2,132.0 241.8,135.2 246.5,137.9 254.9,142.8 261.5,146.0 266.9,148.3 276.0,151.6 284.5,153.9 284.2,160.9 286.4,166.1 287.8,171.7 290.2,179.0 283.9,180.2 274.0,182.3 268.2,184.6 262.8,187.0 257.3,189.9 253.2,193.1 257.3,189.9 262.8,187.0 267.7,184.8 274.0,182.3 283.9,180.2 289.9,179.2 295.4,176.6 302.9,170.8 309.4,166.3 315.1,163.5 319.7,161.1 324.0,157.5 329.5,150.7 332.7,146.4 337.7,144.0 342.2,143.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="79.6,356.0 84.3,351.6 88.0,348.2 91.7,344.8 96.8,340.2 100.6,336.7 104.5,333.1 108.3,329.6 114.1,324.3 123.8,315.3 134.3,305.7 138.3,302.0 142.7,298.0 149.1,292.1 155.1,286.6 159.9,282.2 165.2,277.4 169.1,273.8 172.7,269.9 175.5,264.7 181.8,267.3 189.2,271.3 194.7,274.3 200.9,277.7 209.1,282.1 213.9,284.8 219.0,289.5 226.3,296.3 230.2,300.0 235.0,304.7 242.1,311.8 243.8,313.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="139.0,104.4 142.8,104.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="90.0,347.0 94.1,342.6 100.6,336.7 105.7,334.8 107.4,340.6 109.2,347.1 111.6,352.3 115.2,360.2 117.7,365.7 120.2,370.9 122.5,376.1 125.2,381.6 127.8,387.3 130.4,392.8 132.9,397.8 137.2,401.0 144.2,404.3 142.0,399.0 136.2,401.4 132.7,397.2 129.3,390.6 126.6,384.6 123.7,378.7 121.2,373.1 118.9,368.3 116.7,363.3 113.8,357.1 111.3,351.6 108.7,346.0 107.3,340.0 105.5,334.8 97.1,339.9 91.7,344.8 90.0,347.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Vermelho</title></polyline>
+<polyline points="73.2,168.6 67.5,174.9 62.2,183.0 57.1,189.5 53.0,197.6 50.1,203.9 48.2,210.3 47.1,217.4 43.9,221.8 38.0,222.9 40.0,231.8 42.7,236.1 37.3,227.5 39.7,222.7 45.1,221.1 48.2,210.3 50.1,203.9 53.0,197.6 57.1,189.5 62.2,183.0 67.5,174.9 71.1,168.4 73.2,168.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Grossos</title></polyline>
+<circle cx="203.4" cy="273.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="222.9" cy="122.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="79.2" cy="355.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="435.2" cy="138.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="170.1" cy="161.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="483.7" cy="105.5" r="2.2" fill="#b9b9b2"/>
+<polygon points="76.9,154.1 67.9,170.8 86.0,170.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="97.8,150.3 86.8,170.4 108.7,170.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="114.9,131.1 105.3,148.7 124.5,148.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="657.8,149.8 650.0,164.3 665.7,164.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="150.6,95.6 142.7,110.1 158.4,110.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="73.0,155.1 60.3,178.5 85.7,178.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="82.3,144.3 72.3,162.7 92.3,162.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="75.5,159.1 67.3,174.3 83.8,174.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="658.5,150.9 649.1,168.3 668.0,168.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="658.5" y="181.8" text-anchor="middle" fill="#5c5c57">Zona Rural</text>
+<polygon points="90.8,150.7 78.1,174.1 103.6,174.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="79.2,156.2 67.6,177.7 90.9,177.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="482.7,98.3 474.2,114.1 491.3,114.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="659.5,150.3 651.9,164.2 667.0,164.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="99.2,139.5 86.9,162.2 111.5,162.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="435.9,128.7 426.9,145.2 444.9,145.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="75.8,157.6 65.7,176.2 85.8,176.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="79.7,160.2 68.1,181.5 91.3,181.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="169.3,150.3 160.3,167.1 178.4,167.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="291.2,170.5 283.6,184.4 298.7,184.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="90.1,338.3 81.6,354.0 98.7,354.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="274.5,341.2 267.6,353.9 281.4,353.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="147.6" cy="407.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="154.6" y="402.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Vermelho 5,4 km</text>
+<circle cx="40.7" cy="232.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="47.7" y="227.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Grossos 4,2 km</text>
+<rect x="93.2" y="149.3" width="10" height="10" fill="#1d1d1b"/><text x="107.2" y="172.3" font-weight="600" fill="#1d1d1b">Sede de Areia Branca</text>
+<line x1="35" x2="139.3" y1="587.4" y2="587.4" stroke="#8a8a84" stroke-width="2"/><text x="35" y="601.4" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="578.3667938892896" y2="578.3667938892896" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="582.3667938892896" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,571.4 421.4,583.6 434.6,583.6" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="582.3667938892896" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="596.3667938892896" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="605.3667938892896" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="601.3667938892896" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="605.3667938892896" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="624.3667938892896" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="628.3667938892896" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="624.3667938892896" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="628.3667938892896" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="647.3667938892896" y2="647.3667938892896" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="651.3667938892896" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="670.3667938892896" y2="670.3667938892896" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="674.3667938892896" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 21/2026 (32ª ZE) · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (2):</strong> Vila Acre e Vermelho.</li>
+<li><strong>De 3 a 5 km (2):</strong> Grossos e Baixa Grande.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (7):</strong> Agrovila do PA Serra Vermelha, Cristóvão, Pedrinhas, Ponta do Mel, Redonda, São Cristóvão e São José.</li>
+</ul><h2>Rotas do Edital nº 21/2026 (32ª ZE)</h2>
+<p>O edital tem 8 rotas para Areia Branca. Horários: Das 07h às 18h do dia da eleição (04/10 e, em caso de 2º turno, 25/10), com quantas viagens forem necessárias. Veículos: Rota 01: ônibus NVD 9G33; Rota 02: ônibus NQT 9C02; Rota 03: QGR 5B14 (micro-ônibus no Anexo I); Rota 04: ônibus LKY 3G41; Rota 05: ônibus HYU 2D07; Rota 06: ônibus KKA 4J17; Rota 07: ônibus RQB 8F48; Rota 08: ônibus DTE 4486; reserva: ônibus LAH 7296 e HJM 6995, micro-ônibus OJZ 0728.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Santuário – Benfica – Entrada – Morro Pintado – Redonda – Cristóvão – Praia de Ponta do Mel (Mel de Cima e Mel de Baixo)</td></tr><tr><td>02</td><td>Santuário – Baixa Grande – Arraial – Pedrinhas – Freire (BR 110) – Serra Vermelha até o km 22 (em frente à Escola Santo Amaro)</td></tr><tr><td>03</td><td>Santuário – Casqueira I e II – Santos Reis</td></tr><tr><td>04</td><td>Santuário – Praia de Upanema – Upanema de Cima – Paraíso</td></tr><tr><td>05</td><td>Santuário – Pedrinhas – Arraial – Baixa Grande – Casqueira (BR 110) – Benfica – Entrada – Morro Pintado</td></tr><tr><td>06</td><td>Santuário – Praia da Redonda – Praia do Cristóvão – Praia de Ponta do Mel</td></tr><tr><td>07</td><td>Santuário – Serra Vermelha – Garavelo IV, III, II, I – Casqueira II</td></tr><tr><td>08</td><td>Santuário – Praia de Upanema – Upanema de Cima – Paraíso</td></tr></tbody></table></div>
+<p>Fonte: Edital nº 21/2026 da 32ª ZE (Anexo II, item B), DJE/TRE-RN nº 175 (disp. 04/09/2026), idMateria 6090011.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 2 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Vermelho</strong></td><td>Sede – Vermelho – Sede</td><td>Vermelho</td><td>10,9 km (ida e volta)</td><td>~24 min</td></tr><tr><td><strong>Rota nova – Grossos</strong></td><td>Sede – Grossos – Sede</td><td>Grossos</td><td>8,8 km (ida e volta)</td><td>~1h19</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMAB</strong></p><p>Areia Branca/RN, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Dra. Andressa Luara Holanda Rosado Fernandes</strong><br>Juíza Eleitoral da 32ª Zona Eleitoral – Areia Branca/RN</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 21/2026 (32ª ZE)) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de Areia Branca, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 21/2026 (32ª ZE): Vermelho e Grossos.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Vermelho (Sede – Vermelho – Sede);</li><li>a criação da Rota nova – Grossos (Sede – Grossos – Sede).</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 21/2026 (32ª ZE) deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Areia Branca</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Areia Branca; Edital nº 21/2026 da 32ª ZE (Anexo II, item B), DJE/TRE-RN nº 175 (disp. 04/09/2026), idMateria 6090011; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

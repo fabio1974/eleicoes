@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Marcolândia</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Marcolândia</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/marcolandia.pdf?v=1792185006" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Marcolândia (68ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 68ª Zona Eleitoral <strong>1 rota nova e 2 paradas extras em rotas do edital</strong> no transporte gratuito de Marcolândia.
+Traçamos pelas estradas o percurso das 9 rotas do Edital nº 40/2026 - TRE/68ª ZONA. 4 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 2 ficam a 1–2 km.</p>
+<ul>
+<li>Marcolândia tem 8.747 eleitores aptos em 11 locais de votação e 33 seções. São 2 locais rurais, com 912 eleitores (10% do total).</li>
+<li>2 locais rurais ficam a 10 km ou mais da sede, com 912 eleitores. Os mais distantes: Tamboril (11,2 km) e Serra de Cícero Mundinho (10,8 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Massapê (10,3 km do local de votação), Noite Escura (6,8 km do local de votação), Pai Boi (6,3 km do local de votação) e Alto Bonito (5,3 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Alto Vistoso e Deserto.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 21 localidades rurais de Marcolândia que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Massapê</td><td>10,3</td><td>Rota 05</td><td>3,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Alto Vistoso</td><td>9,1</td><td>Rota 05</td><td>1,4</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Socorro</td><td>7,7</td><td>Rota 05</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Noite Escura</td><td>6,8</td><td>Rota 04</td><td>4,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Pai Boi</td><td>6,3</td><td>Rota 04</td><td>3,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Cabeça da Ladeira</td><td>5,5</td><td>Rota 01</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Alto Bonito</td><td>5,3</td><td>Rota 05</td><td>2,2</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Serra de Sebastião Silvestre</td><td>4,6</td><td>Rota 05</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Aldeia de Cima</td><td>4,6</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Alvorada</td><td>4,0</td><td>Rota 06</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Vera Cruz</td><td>3,5</td><td>Rota 04</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Deserto</td><td>3,0</td><td>Rota 01</td><td>1,3</td><td>Rota passa perto (1–2 km)</td></tr></tbody></table></div>
+<p>13 das 46 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: BR-316 (Rota 01 e Rota 04), Serra de Marcolândia (Rota 02 e Rota 08), Serra dos Barreiros Dois Irmãos (Rota 03), Serra de Seu Dé (Rota 03), Massapê I e II (Rota 04), João Tomas (Rota 05), Serra de Caçulo (Rota 07), Barreiros Dois Irmãos (Rota 07), Serra do Bom Jardim (Rota 09), Serra do Elias Tomás (Rota 09) e PI-142 (Rota 09). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 21 localidades rurais de Marcolândia, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 836" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Marcolândia: 6 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 40/2026 - TRE/68ª ZONA e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="442.5,687.5 450.2,653.2 482.2,594.5 504.3,578.3 636.1,561.6 674.9,546.7 725.0,474.0 535.0,290.8 468.7,266.4 385.2,97.7 340.5,120.2 318.9,175.7 278.7,234.4 235.8,256.5 207.4,317.0 176.7,350.8 84.2,420.8 35.0,480.8 38.6,703.7 214.2,664.5 263.8,676.2 442.5,687.5 442.5,687.5" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="666.9,506.9 657.4,511.1 646.6,505.8 636.8,501.1 628.0,496.2 614.9,488.3 606.5,483.0 592.0,474.1 581.4,467.5 572.0,461.8 560.0,454.2 551.2,449.0 541.0,444.5 520.9,440.3 506.2,437.5 493.6,435.1 483.5,431.1 476.0,425.0 468.9,414.1 464.5,403.6 458.7,394.2 450.8,379.1 442.9,364.0 445.9,351.7 441.7,338.7 433.9,332.5 419.0,334.4 405.5,330.9 393.0,324.8 378.0,317.4 363.7,310.4 349.6,303.4 336.2,296.9 327.5,291.4 315.4,279.7 303.4,277.9 293.6,273.7 288.0,281.8 277.9,286.3 264.2,285.8 263.8,299.2 264.2,285.8 274.4,289.3 281.6,282.8 290.9,277.7 305.5,277.4 322.2,286.3 329.6,293.1 347.9,302.7 358.2,307.7 371.8,314.4 385.9,321.4 398.5,327.5 409.0,332.7 425.5,333.4 438.3,334.4 444.2,342.8 443.5,355.8 446.1,370.3 454.8,386.9 460.1,396.4 465.5,405.8 470.7,417.6 477.2,426.2 485.2,432.0 495.5,435.5 509.6,438.2 531.4,442.3 543.0,445.2 553.6,450.5 572.0,461.8 581.4,467.5 590.4,473.0 602.3,480.4 612.0,486.4 623.8,493.7 633.8,499.6 643.0,504.1 653.7,509.2 663.3,513.7 666.9,506.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="666.9,506.9 667.8,520.1 674.7,526.9 670.5,536.9 664.3,545.1 657.5,554.0 649.9,564.3 643.7,572.5 636.2,582.4 630.1,590.5 624.0,598.5 615.2,606.9 604.6,611.8 594.6,615.8 582.8,612.1 570.9,608.9 560.0,612.3 548.3,610.1 534.8,607.6 524.1,603.1 514.8,595.8 505.6,585.8 496.8,576.2 483.3,580.3 473.8,586.7 463.9,593.2 452.3,590.8 438.9,591.7 427.4,596.2 420.7,603.3 408.4,607.7 397.2,610.1 390.5,619.8 379.5,623.0 370.1,629.8 361.2,636.2 357.5,634.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="666.9,506.9 657.4,511.1 646.6,505.8 636.8,501.1 628.0,496.2 614.9,488.3 622.8,478.5 628.1,467.1 623.5,477.3 616.3,486.3 623.8,493.7 633.8,499.6 643.0,504.1 653.7,509.2 663.3,513.7 666.9,506.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="235.4,271.6 233.8,259.3 240.7,252.4 251.9,249.2 256.1,239.4 265.4,234.5 278.9,234.2 287.1,240.7 297.1,255.5 302.8,263.8 308.4,272.2 315.4,279.7 327.5,291.4 336.2,296.9 347.9,302.7 358.2,307.7 371.8,314.4 385.9,321.4 398.5,327.5 409.0,332.7 425.5,333.4 438.3,334.4 444.2,342.8 443.5,355.8 446.1,370.3 454.8,386.9 460.1,396.4 465.5,405.8 470.7,417.6 477.2,426.2 485.2,432.0 495.5,435.5 509.6,438.2 531.4,442.3 543.0,445.2 553.6,450.5 572.0,461.8 581.4,467.5 590.4,473.0 602.3,480.4 612.0,486.4 623.8,493.7 633.8,499.6 643.0,504.1 653.7,509.2 663.3,513.7 666.9,506.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="666.9,506.9 667.8,520.1 674.7,526.9 670.5,536.9 664.3,545.1 657.5,554.0 649.9,564.3 643.7,572.5 636.2,582.4 630.1,590.5 624.0,598.5 615.2,606.9 604.6,611.8 595.7,617.5 592.6,634.4 586.4,648.1 576.5,661.2 566.8,673.9 560.4,682.3 551.2,694.7 538.0,694.1 525.4,693.0 510.5,692.2 497.8,691.2 483.5,690.3 466.6,689.1 451.6,688.0 437.1,687.1 422.9,686.2 409.4,685.3 396.5,684.5 381.6,683.3 366.9,682.2 352.5,681.5 338.1,680.4 323.1,679.3 310.9,677.0 299.9,672.8 288.2,670.8 279.6,665.7 268.9,661.3 257.2,657.1 247.8,652.8 236.8,650.2 223.5,650.8 230.6,638.5 223.3,631.8 227.9,621.4 234.1,613.4 240.9,605.1 252.5,598.0 239.4,599.1 228.7,603.0 215.8,601.7 207.5,596.3 212.6,586.9 206.9,577.9 197.1,573.5 187.1,569.0 185.7,555.8 182.4,544.0 179.3,533.1 174.2,523.7 168.4,514.7 174.1,523.3 179.3,533.1 182.4,544.0 185.9,554.7 186.7,568.2 195.6,573.5 205.3,577.7 215.4,581.9 209.7,590.2 214.1,600.5 225.4,604.0 234.2,599.2 247.6,597.5 262.5,599.9 270.5,607.3 284.1,615.7 292.6,623.7 299.7,630.8 312.8,623.9 318.1,615.1 332.9,611.6 343.7,617.4 351.1,626.3 357.6,634.3 357.6,634.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="666.9,506.9 657.4,511.1 646.6,505.8 636.8,501.1 628.0,496.2 614.9,488.3 606.5,483.0 592.0,474.1 581.4,467.5 572.0,461.8 560.0,454.2 551.2,449.0 541.0,444.5 520.9,440.3 506.2,437.5 493.6,435.1 483.5,431.1 476.0,425.0 468.9,414.1 464.5,403.6 458.7,394.2 450.8,379.1 442.9,364.0 445.9,351.7 441.7,338.7 433.9,332.5 419.0,334.4 405.5,330.9 399.9,338.9 393.9,348.3 384.5,357.7 379.1,369.8 376.8,381.4 379.1,369.8 384.5,357.7 393.9,348.3 399.7,339.6 393.0,324.8 378.0,317.4 363.7,310.4 349.6,303.4 336.2,296.9 327.5,291.4 315.4,279.7 303.4,277.9 293.6,273.7 288.0,281.8 277.9,286.3 264.2,285.8 263.8,299.2 264.2,285.8 257.0,278.6 246.2,273.0 238.1,266.9 238.6,253.7 248.7,249.4 238.6,253.7 233.0,262.4 238.6,253.7 248.7,249.4 255.4,241.4 262.5,234.3 275.9,234.9 287.1,240.7 297.1,255.5 302.8,263.8 308.4,272.2 315.4,279.7 327.5,291.4 336.2,296.9 347.9,302.7 358.2,307.7 371.8,314.4 385.9,321.4 398.5,327.5 409.0,332.7 425.5,333.4 438.3,334.4 444.2,342.8 443.5,355.8 446.1,370.3 454.8,386.9 460.1,396.4 465.5,405.8 470.7,417.6 477.2,426.2 485.2,432.0 495.5,435.5 509.6,438.2 531.4,442.3 543.0,445.2 553.6,450.5 572.0,461.8 581.4,467.5 590.4,473.0 602.3,480.4 612.0,486.4 623.8,493.7 633.8,499.6 643.0,504.1 653.7,509.2 663.3,513.7 666.9,506.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="666.9,506.9 657.4,511.1 646.6,505.8 636.8,501.1 628.0,496.2 614.9,488.3 622.8,478.5 628.1,467.1 623.5,477.3 616.3,486.3 623.8,493.7 633.8,499.6 643.0,504.1 653.7,509.2 662.3,514.5 669.5,521.8 676.9,528.5 685.9,522.9 690.6,512.4 695.2,502.2 698.1,491.2 700.3,479.7 698.1,491.2 695.2,502.2 690.6,512.4 672.2,509.6 666.9,506.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="666.9,506.9 657.4,511.1 646.6,505.8 636.8,501.1 628.0,496.2 614.9,488.3 622.8,478.5 628.1,467.1 623.5,477.3 616.3,486.3 602.3,480.4 592.0,474.1 581.4,467.5 572.0,461.8 560.0,454.2 551.2,449.0 541.0,444.5 520.9,440.3 506.2,437.5 493.6,435.1 483.5,431.1 479.7,442.4 479.5,456.7 482.6,472.0 494.7,481.1 500.3,491.0 497.9,502.2 485.8,499.8 475.5,494.9 474.3,509.8 470.3,523.1 466.6,535.3 460.0,546.4 453.1,554.2 444.2,560.5 435.2,566.0 424.5,569.1 419.7,578.2 413.3,585.7 404.1,590.4 391.8,593.1 381.0,595.9 391.8,593.1 404.4,595.1 420.4,595.1 433.6,592.8 446.4,589.6 459.8,593.4 473.8,586.7 483.3,580.3 493.3,574.3 504.1,584.1 512.3,593.3 520.5,602.2 530.1,606.2 542.7,609.0 554.5,611.2 567.2,610.1 578.2,607.1 588.2,614.7 601.5,613.2 614.3,607.3 624.0,598.5 630.1,590.5 636.2,582.4 643.7,572.5 649.7,564.5 656.3,555.6 663.2,546.6 669.2,538.6 675.1,530.9 669.5,521.8 662.3,514.5 666.9,506.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="316.9,299.5 328.2,296.0 322.2,286.3 314.3,278.6 307.8,271.3 297.1,255.5 287.1,240.7 279.5,229.4 287.5,221.7 292.7,210.0 298.5,202.0 305.9,192.1 312.3,183.0 323.3,186.0 336.6,181.9 345.1,174.3 354.0,167.8 360.8,160.5 367.9,153.3 376.8,148.2 385.5,139.6 380.8,130.7 376.1,119.8 362.8,114.4 353.2,107.2 360.9,95.0 359.1,83.0 360.9,95.0 355.1,104.5 348.3,111.3 340.8,120.2 339.1,133.4 334.2,142.1 329.3,151.3 324.4,161.1 318.8,169.2 314.6,180.4 305.9,192.1 299.8,200.7 292.7,210.0 287.5,221.7 280.1,229.3 271.9,234.8 259.7,233.3 255.1,242.4 246.7,249.6 236.5,255.2 231.5,265.1 225.6,273.5 221.4,283.4 218.3,294.1 213.6,304.0 208.2,314.6 197.7,324.0 190.6,331.0 185.8,340.7 181.0,349.8 185.4,359.0 186.1,372.3 189.6,382.5 190.4,395.3 185.8,404.2 184.6,417.2 185.7,404.7 190.4,395.7 189.6,382.5 186.1,372.3 185.6,359.3 181.0,349.8 169.8,352.7 160.0,356.7 152.1,362.8 146.9,371.3 140.9,379.0 133.1,385.2 123.3,391.5 113.2,399.2 104.2,406.9 99.4,416.0 86.7,419.9 77.2,426.3 71.9,436.3 77.2,426.3 86.1,420.2 99.4,416.0 104.2,406.9 113.2,399.2 121.7,392.9 129.6,387.1 138.4,381.2 145.7,372.9 151.6,363.7 158.6,356.7 168.6,353.0 178.5,348.8 185.3,341.3 190.2,331.7 197.7,324.0 206.0,317.7 212.3,306.9 217.3,296.4 221.3,285.7 224.7,274.7 230.4,266.2 234.8,256.9 242.2,250.7 253.7,248.6 256.0,235.9 268.1,234.2 279.2,231.6 287.1,240.7 297.1,255.5 302.8,263.8 308.4,272.2 315.4,279.7 327.5,291.4 319.6,300.2 316.9,299.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Massapê</title></polyline>
+<polyline points="385.9,321.4 371.8,314.4 359.8,308.5 349.6,303.4 351.8,291.6 355.2,281.0 369.5,280.6 381.6,282.2 393.8,283.8 402.9,278.9 393.8,283.8 381.6,282.2 369.5,280.6 355.9,280.1 350.9,288.8 355.5,300.8 363.7,310.4 378.0,317.4 385.9,321.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 01</title></polyline>
+<polyline points="161.1,514.0 151.1,519.1 141.3,524.1 130.8,528.5 117.7,529.1 130.8,528.5 141.3,524.1 151.1,519.1 161.1,514.0 161.1,514.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 05</title></polyline>
+<circle cx="162.6" cy="516.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="483.2" cy="421.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="221.5" cy="628.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="235.8" cy="272.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="384.0" cy="381.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="252.2" cy="252.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="273.6" cy="230.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="585.8" cy="479.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="369.5" cy="337.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="640.6" cy="443.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="374.7" cy="679.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="371.2" cy="283.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="269.7" cy="303.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="365.0" cy="305.0" r="2.2" fill="#b9b9b2"/>
+<polygon points="678.5,516.1 668.3,534.9 688.7,534.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="679.0,509.0 674.1,518.1 683.9,518.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="690.7,487.7 680.6,506.4 700.8,506.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="357.7,625.7 349.5,640.7 365.8,640.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="681.2,504.8 671.9,522.0 690.6,522.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="665.9,531.1 655.4,550.5 676.4,550.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="317.0,290.8 308.9,305.8 325.2,305.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="666.8,491.8 657.6,508.8 676.0,508.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="669.9,497.4 659.1,517.3 680.7,517.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="679.0,504.9 670.6,520.4 687.4,520.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="675.8,507.6 667.4,523.1 684.3,523.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="66.8" cy="434.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="73.8" y="429.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Massapê 10,3 km</text>
+<circle cx="108.6" cy="531.6" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="115.6" y="526.6" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Alto Vistoso 9,1 km</text>
+<circle cx="355.3" cy="80.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="362.3" y="75.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Noite Escura 6,8 km</text>
+<circle cx="380.9" cy="138.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="387.9" y="133.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pai Boi 6,3 km</text>
+<circle cx="189.6" cy="425.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="196.6" y="420.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Alto Bonito 5,3 km</text>
+<circle cx="407.2" cy="272.7" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="414.2" y="267.7" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Deserto 3,0 km</text>
+<rect x="662.2" y="501.2" width="10" height="10" fill="#1d1d1b"/><text x="676.2" y="524.2" font-weight="600" fill="#1d1d1b">Sede de Marcolândia</text>
+<line x1="35" x2="238.3" y1="733.7" y2="733.7" stroke="#8a8a84" stroke-width="2"/><text x="35" y="747.7" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="724.730215827331" y2="724.730215827331" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="728.730215827331" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,717.7 421.4,730.0 434.6,730.0" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="728.730215827331" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="742.730215827331" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="751.730215827331" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="747.730215827331" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="751.730215827331" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="770.730215827331" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="774.730215827331" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="770.730215827331" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="774.730215827331" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="793.730215827331" y2="793.730215827331" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="797.730215827331" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="816.730215827331" y2="816.730215827331" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="820.730215827331" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 40/2026 - TRE/68ª ZONA · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (7):</strong> Massapê, Alto Vistoso, Socorro, Noite Escura, Pai Boi, Cabeça da Ladeira e Alto Bonito.</li>
+<li><strong>De 3 a 5 km (5):</strong> Serra de Sebastião Silvestre, Aldeia de Cima, Alvorada, Vera Cruz e Deserto.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (9):</strong> Alagoinha, Aldeia, Morada Nova, Riacho Fundo, Serra da Fábrica de Gesso, Serra de Cícero Mundinho, Serra de João Tomás, Serra do Olegário Pio e Tamboril.</li>
+</ul><h2>Rotas do Edital nº 40/2026 - TRE/68ª ZONA</h2>
+<p>O edital tem 9 rotas para Marcolândia. Horários: partida inicial da sede às 07h00 (Praça da Matriz/São Cristóvão); encerramento após as 17h, dependendo do encerramento de cada local de votação. Veículos: não informados.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Marcolândia – Morada Nova – Tamboril – BR-316 – Marcolândia</td></tr><tr><td>02</td><td>Marcolândia – Serra de Marcolândia – Cícero Mundinho</td></tr><tr><td>03</td><td>Marcolândia – Serra do Gesso – Serra dos Barreiros Dois Irmãos – Serra de Seu Dé – Marcolândia</td></tr><tr><td>04</td><td>Massapê I e II – Aldeia de Cima – Sítio Vera Cruz – BR-316 – Marcolândia</td></tr><tr><td>05</td><td>Marcolândia – Serra de Sebastião Silvestre – Socorro – João Tomas – Serra Cícero Mundinho</td></tr><tr><td>06</td><td>Marcolândia – Alvorada – Morada Nova – Tamboril – Vera Cruz – Aldeia de Cima – Marcolândia</td></tr><tr><td>07</td><td>Marcolândia – Serra de Caçulo – Serra do Gesso – Serra da Jitirana – Barreiros Dois Irmãos – Marcolândia</td></tr><tr><td>08</td><td>Marcolândia – Serra do Gesso – Serra de Marcolândia – Serra do Zé Elias – Marcolândia</td></tr><tr><td>09</td><td>Marcolândia – Serra do Bom Jardim – Serra do Elias Tomás – PI-142 – Marcolândia</td></tr></tbody></table></div>
+<p>Fonte: Edital nº 40/2026 - TRE/68ª ZONA, DJE/TRE-PI nº 191/2026 (disp. 18/09/2026), PDF da edição; fonte complementar: INFO ROTAS – sistema oficial do TRE-PI (inforotas.tre-pi.jus.br), consulta em 2026-10-16 (rotas do INFO ROTAS preservadas em &quot;rotas_inforotas&quot;).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 6 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Massapê</strong></td><td>Tamboril – Pai Boi – Noite Escura – Alto Bonito – Massapê – Tamboril</td><td>Pai Boi, Noite Escura, Alto Bonito, Massapê</td><td>34,8 km (ida e volta)</td><td>~1h03</td></tr><tr><td><strong>Parada extra na Rota 01</strong></td><td>desvio pelo caminho atual: Deserto</td><td>Deserto</td><td>+6,0 km</td><td>+11 min</td></tr><tr><td><strong>Parada extra na Rota 05</strong></td><td>desvio pelo caminho atual: Alto Vistoso</td><td>Alto Vistoso</td><td>+2,8 km</td><td>+7 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMM</strong></p><p>Marcolândia/PI, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Dra. Tallita Cruz Sampaio</strong><br>Juíza Eleitoral da 68ª Zona Eleitoral – Padre Marcos/PI</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 40/2026 - TRE/68ª ZONA) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de Marcolândia, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 40/2026 - TRE/68ª ZONA: Massapê, Noite Escura, Pai Boi, Alto Bonito, Alto Vistoso e Deserto.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Massapê (Tamboril – Pai Boi – Noite Escura – Alto Bonito – Massapê – Tamboril);</li><li>a inclusão de parada em Deserto na Rota 01, mantido todo o percurso atual;</li><li>a inclusão de parada em Alto Vistoso na Rota 05, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 40/2026 - TRE/68ª ZONA deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Marcolândia</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Marcolândia; Edital nº 40/2026 - TRE/68ª ZONA, DJE/TRE-PI nº 191/2026 (disp. 18/09/2026), PDF da edição; fonte complementar: INFO ROTAS – sistema oficial do TRE-PI (inforotas.tre-pi.jus.br), consulta em 2026-10-16 (rotas do INFO ROTAS preservadas em &quot;rotas_inforotas&quot;); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

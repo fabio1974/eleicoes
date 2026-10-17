@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Touros</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Touros</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/touros.pdf?v=1792185461" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Touros (14ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 14ª Zona Eleitoral <strong>3 rotas novas</strong> no transporte gratuito de Touros.
+Traçamos pelas estradas o percurso das 4 rotas do Edital nº 026/2026. 4 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>Touros tem 28.142 eleitores aptos em 30 locais de votação e 93 seções. São 22 locais rurais, com 18.325 eleitores (65% do total).</li>
+<li>19 locais rurais ficam a 10 km ou mais da sede, com 16.213 eleitores. Os mais distantes: Agrovila do PA Chico Mendes (48,4 km), Cajá (44,5 km) e Santo Antônio (41,9 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Tubibas (6,4 km do local de votação), Golandim (5,1 km do local de votação), Agrovila do PA Chico Mendes (3,9 km do local de votação) e Cana-Brava (3,4 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 27 localidades rurais de Touros que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Tubibas</td><td>6,4</td><td>Rota 04</td><td>4,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Golandim</td><td>5,1</td><td>Rota 01</td><td>8,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Agrovila do PA Chico Mendes</td><td>3,9</td><td>Rota 04</td><td>2,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Monte Alegre</td><td>3,8</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Carnaubal</td><td>3,6</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Cana-Brava</td><td>3,4</td><td>Rota 01</td><td>2,4</td><td>Sem rota (mais de 2 km)</td></tr></tbody></table></div>
+<p>3 das 12 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Ubaeira (Rota 04), Lagoa de Serra Verde (Rota 04) e Chico Mendes 1 e 2 (Rota 04). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 27 localidades rurais de Touros, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 750" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Touros: 4 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas do Edital nº 026/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="725.0,319.5 712.7,294.1 696.9,277.7 672.3,244.2 642.3,230.4 607.6,207.4 593.9,179.9 574.6,156.8 560.6,146.0 517.3,136.9 501.0,128.2 471.4,117.9 434.0,111.2 383.6,90.9 364.7,80.0 345.5,210.6 309.6,250.8 263.7,330.8 243.5,321.6 229.2,356.5 142.5,355.7 35.0,374.9 62.2,618.5 80.3,616.6 89.5,611.1 119.0,584.7 128.2,585.5 138.6,598.2 179.0,545.3 183.7,532.4 208.5,502.4 263.1,465.6 267.7,459.5 327.0,418.5 412.6,381.0 420.8,366.0 491.7,425.1 527.9,419.2 541.9,423.4 559.2,414.2 570.9,415.9 581.9,407.6 609.3,402.2 615.4,395.1 632.7,392.2 635.4,405.6 669.6,415.9 720.9,317.9 725.0,319.5 725.0,319.5" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="318.3,296.1 322.4,293.2 326.9,294.4 329.8,296.2 333.3,300.2 335.4,302.8 345.0,306.4 350.3,307.8 354.9,309.1 359.5,310.2 364.6,311.6 366.6,309.0 367.8,312.5 365.6,317.3 377.3,323.6 384.6,326.9 391.8,330.2 400.0,333.9 403.6,335.5 408.0,337.5 415.0,340.6 419.9,338.7 423.1,335.7 425.8,333.0 432.9,333.0 438.1,334.4 442.3,335.5 445.1,337.8 445.8,338.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="462.4,301.1 463.2,297.0 464.7,291.9 466.5,289.0 466.8,284.2 466.6,279.2 468.7,276.2 470.9,271.7 471.4,267.4 471.0,262.8 472.4,259.4 475.9,258.2 478.6,256.1 481.4,254.3 484.1,252.3 487.0,252.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="378.4,101.9 382.2,102.9 386.1,103.6 388.2,106.2 390.7,108.5 394.5,109.3 398.7,108.9 402.6,110.0 406.7,111.6 410.4,113.5 413.9,115.2 422.5,113.9 425.2,112.0 428.1,114.0 430.1,115.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="106.8,396.3 108.4,391.2 112.2,390.3 114.3,387.6 116.0,384.6 120.0,380.6 124.2,376.3 126.8,372.3 127.6,371.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="114.4,408.5 112.3,405.9 107.7,404.5 104.8,402.7 95.9,401.9 91.9,400.5 86.9,400.4 82.3,398.9 79.1,397.3 70.9,396.3 66.3,397.3 62.2,398.0 57.2,400.3 54.3,402.8 51.6,404.8 49.7,408.0 48.0,413.4 46.3,418.2 48.0,413.4 49.3,409.1 51.6,404.8 54.3,402.8 57.2,400.3 61.1,398.8 65.0,397.4 69.8,396.5 76.3,396.3 80.4,398.2 84.5,399.6 88.4,400.7 92.7,400.9 101.7,401.9 106.7,403.9 110.4,405.4 114.4,408.5 114.4,408.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Tubibas</title></polyline>
+<polyline points="584.2,383.7 580.9,385.1 579.6,388.7 577.1,390.9 573.7,394.9 570.8,396.7 566.9,395.7 563.5,397.2 562.5,401.3 560.5,404.3 555.5,405.3 551.8,406.9 548.7,408.4 543.7,408.5 539.0,408.7 533.4,408.5 538.0,408.5 543.7,408.5 548.4,408.5 551.8,406.9 555.5,405.3 559.8,404.3 562.3,402.0 563.5,397.2 566.9,395.7 570.8,396.7 573.7,394.9 576.8,391.2 579.4,388.8 580.8,385.5 583.6,383.4 584.2,383.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Golandim</title></polyline>
+<polyline points="441.2,339.4 439.2,343.3 437.3,346.2 434.2,347.8 431.4,349.9 428.9,352.9 427.6,356.8 424.8,359.1 422.2,361.9 420.4,364.8 420.3,369.6 418.7,372.6 416.4,375.1 418.7,372.6 420.3,369.6 420.4,364.8 422.2,361.9 424.5,359.4 427.2,357.3 428.5,353.7 430.9,350.8 433.4,348.1 436.6,346.7 439.2,343.3 441.0,339.8 441.2,339.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Cana-Brava</title></polyline>
+<circle cx="378.5" cy="101.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="461.7" cy="301.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="190.3" cy="450.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="537.6" cy="240.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="489.4" cy="251.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="485.2" cy="251.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="582.5" cy="382.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="519.8" cy="232.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="181.0" cy="473.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="430.1" cy="115.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="179.1" cy="479.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="292.5" cy="382.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="483.5" cy="136.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="413.0" cy="271.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="412.3" cy="271.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="460.3" cy="216.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="399.0" cy="193.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="202.6" cy="420.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="397.0" cy="193.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="461.9" cy="216.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="364.0" cy="239.2" r="2.2" fill="#b9b9b2"/>
+<polygon points="602.2,193.7 593.1,210.5 611.3,210.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="610.0,203.4 600.4,221.1 619.6,221.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="597.6,200.7 591.6,211.7 603.6,211.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="441.2,329.0 431.3,347.3 451.1,347.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="441.2" y="360.9" text-anchor="middle" fill="#5c5c57">Boa Cica</text>
+<polygon points="445.6,328.8 436.8,345.0 454.4,345.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="518.2,129.6 509.4,145.9 527.1,145.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="584.4,371.2 572.6,392.9 596.2,392.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="584.4" y="407.1" text-anchor="middle" fill="#5c5c57">Santa Luzia</text>
+<polygon points="643.2,222.7 632.9,241.6 653.5,241.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="643.2" y="255.3" text-anchor="middle" fill="#5c5c57">Carnaubinha</text>
+<polygon points="484.0,126.5 474.5,144.0 493.5,144.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="484.0" y="157.5" text-anchor="middle" fill="#5c5c57">Lagoa do Sal</text>
+<polygon points="707.3,284.9 699.1,300.0 715.6,300.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="425.8,102.5 416.3,120.0 435.3,120.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="425.8" y="133.5" text-anchor="middle" fill="#5c5c57">São José</text>
+<polygon points="476.8,246.5 466.2,266.0 487.4,266.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="476.8" y="279.8" text-anchor="middle" fill="#5c5c57">Boqueirão</text>
+<polygon points="365.2,231.3 356.5,247.3 373.9,247.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="414.0,261.6 403.7,280.7 424.3,280.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="414.0" y="294.4" text-anchor="middle" fill="#5c5c57">Vila Assis</text>
+<polygon points="144.9,514.2 136.9,529.1 153.0,529.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="463.0,207.5 454.7,222.7 471.2,222.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="397.4,184.2 389.3,199.3 405.6,199.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="519.0,221.6 511.0,236.3 527.0,236.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="599.4,191.0 586.4,215.1 612.5,215.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="292.6,370.8 284.9,385.0 300.3,385.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="202.2,410.5 193.7,426.1 210.6,426.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="181.6,468.8 172.4,485.7 190.8,485.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="181.6" y="499.2" text-anchor="middle" fill="#5c5c57">Zona Rural</text>
+<polygon points="515.6,130.4 504.6,150.7 526.7,150.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="515.6" y="164.6" text-anchor="middle" fill="#5c5c57">Cajueiro</text>
+<polygon points="606.6,201.3 595.9,221.1 617.4,221.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="583.6,189.1 574.4,206.1 592.9,206.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="561.5,354.8 553.0,370.6 570.1,370.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="114.4,398.4 104.8,416.1 124.0,416.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="114.4" y="429.6" text-anchor="middle" fill="#5c5c57">Agrovila do PA Chico Mendes</text>
+<polygon points="584.9,367.8 576.0,384.0 593.7,384.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="609.0,203.0 600.3,219.0 617.6,219.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="591.6,188.5 579.0,211.6 604.2,211.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="44.5" cy="419.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="51.5" y="414.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Tubibas 6,4 km</text>
+<circle cx="530.3" cy="408.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="537.3" y="403.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Golandim 5,1 km</text>
+<circle cx="66.9" cy="399.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="73.9" y="394.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Agrovila do PA Chico Mendes 3,9 km</text>
+<circle cx="416.5" cy="374.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="423.5" y="369.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Cana-Brava 3,4 km</text>
+<rect x="601.6" y="206.8" width="10" height="10" fill="#1d1d1b"/><text x="615.6" y="229.8" font-weight="600" fill="#1d1d1b">Sede de Touros</text>
+<line x1="35" x2="104.1" y1="648.5" y2="648.5" stroke="#8a8a84" stroke-width="2"/><text x="35" y="662.5" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="639.491657397108" y2="639.491657397108" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="643.491657397108" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,632.5 421.4,644.7 434.6,644.7" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="643.491657397108" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="657.491657397108" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="666.491657397108" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="662.491657397108" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="666.491657397108" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="685.491657397108" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="689.491657397108" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="685.491657397108" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="689.491657397108" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="708.491657397108" y2="708.491657397108" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="712.491657397108" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="731.491657397108" y2="731.491657397108" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="735.491657397108" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 026/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (2):</strong> Tubibas e Golandim.</li>
+<li><strong>De 3 a 5 km (4):</strong> Agrovila do PA Chico Mendes, Monte Alegre, Carnaubal e Cana-Brava.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (21):</strong> Agrovila do PA Quilombo dos Palmares, Aracati, As Cem, Boa Cica, Boqueirão, Boqueirão Vila 1, Boqueirão Vila 3, Cajueiro, Comunidade Quilombola Baixa do Quim-Quim, Comunidade Quilombola Boqueirão, Comunidade Quilombola Geral, Comunidade Quilombola Souza 1, Lagoa do Sal, Santa Luzia, Santo Antônio, São José, Vila Assis, Vila Israel, Vila Maine, Vila Mayne e Zabelê.</li>
+</ul><h2>Rotas do Edital nº 026/2026</h2>
+<p>O edital tem 4 rotas para Touros. Horários: Rota 1: 1ª viagem 7h45, última 15h30, a cada 1h; Rota 2: 1ª viagem 8h, última 15h30, a cada 1h30; Rota 3: 1ª viagem 8h, última 15h30, a cada 1h; Rota 4: 1ª viagem 7h40, última 15h30, a cada 1h30; retorno pela rota invertida. Veículos: Rota 1: micro-ônibus; Rota 2: Doblô; Rota 3: Doblô; Rota 4: micro-ônibus.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Planalto do Retiro – Canudos – Boa Cica</td></tr><tr><td>02</td><td>Carnaubal – Boqueirão</td></tr><tr><td>03</td><td>Monte Alegre – São José</td></tr><tr><td>04</td><td>Baixa Funda – Ubaeira – Lagoa de Serra Verde – Arribão – Chico Mendes 1 e 2</td></tr></tbody></table></div>
+<p>Fonte: Edital nº 026/2026 da 14ª ZE (Anexo II), DJE/TRE-RN nº 191/2026 (disp. 17/09/2026), PDF da edição; idMateria 6116790.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 4 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Tubibas</strong></td><td>Escola Municipal Chico Mendes (local de votação) – Agrovila do PA Chico Mendes – Tubibas – Escola Municipal Chico Mendes (local de votação)</td><td>Agrovila do PA Chico Mendes, Tubibas</td><td>13,0 km (ida e volta)</td><td>~32 min</td></tr><tr><td><strong>Rota nova – Golandim</strong></td><td>Santa Luzia – Golandim – Santa Luzia</td><td>Golandim</td><td>10,2 km (ida e volta)</td><td>~16 min</td></tr><tr><td><strong>Rota nova – Cana-Brava</strong></td><td>Boa Cica – Cana-Brava – Boa Cica</td><td>Cana-Brava</td><td>6,7 km (ida e volta)</td><td>~7 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMT</strong></p><p>Touros/RN, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Pablo de Oliveira Santos</strong><br>Juiz Eleitoral da 14ª Zona Eleitoral – Touros/RN</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 026/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Touros, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 026/2026: Tubibas, Golandim, Agrovila do PA Chico Mendes e Cana-Brava.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Tubibas (Escola Municipal Chico Mendes (local de votação) – Agrovila do PA Chico Mendes – Tubibas – Escola Municipal Chico Mendes (local de votação));</li><li>a criação da Rota nova – Golandim (Santa Luzia – Golandim – Santa Luzia);</li><li>a criação da Rota nova – Cana-Brava (Boa Cica – Cana-Brava – Boa Cica).</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 026/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Touros</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Touros; Edital nº 026/2026 da 14ª ZE (Anexo II), DJE/TRE-RN nº 191/2026 (disp. 17/09/2026), PDF da edição; idMateria 6116790; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Ielmo Marinho</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Ielmo Marinho</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/ielmo-marinho.pdf?v=1792185627" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Ielmo Marinho (46ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 46ª Zona Eleitoral <strong>3 rotas novas</strong> no transporte gratuito de Ielmo Marinho.
+Traçamos pelas estradas o percurso das 5 rotas do Edital nº 26/2026/ZE046. 3 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>Ielmo Marinho tem 11.539 eleitores aptos em 17 locais de votação e 50 seções. São 13 locais rurais, com 7.413 eleitores (64% do total).</li>
+<li>7 locais rurais ficam a 10 km ou mais da sede, com 4.054 eleitores. Os mais distantes: Agrovila do PA São Sebastião (16,9 km), Canto de Moça (15,8 km) e Agrovila do PA Lagoa Nova (14,3 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Lagoa dos Currais (6,3 km do local de votação), Ladeira Grande (4,0 km do local de votação) e Lagoa Redonda (3,7 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 15 localidades rurais de Ielmo Marinho que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Lagoa dos Currais</td><td>6,3</td><td>Rota 04</td><td>2,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Telha</td><td>5,0</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Comunidade Quilombola Serrote</td><td>4,1</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Ladeira Grande</td><td>4,0</td><td>Rota 03</td><td>2,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Lagoa Redonda</td><td>3,7</td><td>Rota 03</td><td>2,6</td><td>Sem rota (mais de 2 km)</td></tr></tbody></table></div>
+<p>3 das 38 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Queimadas (Rota 01), Boa Esperança (Jurema) (Rota 01) e Espinheiro (Rota 04). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 15 localidades rurais de Ielmo Marinho, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 798" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Ielmo Marinho: 3 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 26/2026/ZE046 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="636.9,508.5 717.4,178.1 700.8,165.7 680.6,127.3 607.2,117.8 587.7,139.3 544.7,124.6 389.9,100.5 375.2,80.0 356.3,138.0 114.8,116.2 35.0,127.9 92.0,362.5 103.1,406.5 236.4,615.1 449.8,661.7 580.2,496.8 593.2,492.6 636.9,508.5 636.9,508.5" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="242.6,160.3 236.0,166.2 222.5,172.0 214.1,175.0 206.1,177.7 197.8,180.2 188.5,179.4 181.3,176.2 174.4,173.0 166.8,169.5 158.6,167.4 150.0,165.7 141.9,163.5 133.2,162.2 141.9,163.5 150.0,165.7 158.6,167.4 166.8,169.5 174.4,173.0 181.3,176.2 188.5,179.4 193.7,187.9 198.5,206.6 195.7,215.1 191.7,221.2 203.3,226.4 208.9,231.0 217.4,234.4 220.3,241.4 224.7,247.3 235.4,252.2 241.6,259.4 239.5,269.0 241.8,259.7 249.0,262.4 257.8,263.9 266.3,265.9 272.6,270.2 280.1,267.7 288.4,265.2 298.3,266.1 308.0,267.1 314.5,270.7 322.7,273.2 323.9,282.0 324.6,291.3 328.4,297.4 333.4,302.4 338.2,307.4 343.3,312.6 349.6,316.9 356.0,320.9 362.4,324.6 368.7,328.5 378.0,334.2 385.7,337.1 393.2,340.3 399.6,343.8 405.2,348.5 402.1,355.4 395.1,359.2 388.3,363.3 381.8,369.0 374.1,375.7 367.3,381.8 363.1,389.7 364.9,400.7 366.5,409.3 364.9,421.1 366.6,430.3 368.4,438.5 370.1,446.8 372.2,457.4 373.9,465.6 371.8,468.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="616.1,181.2 625.5,182.5 630.5,188.1 635.9,193.9 639.8,202.5 643.8,209.4 654.5,215.7 660.4,222.2 665.6,230.3 673.4,239.4 671.6,248.6 673.4,239.4 681.2,243.3 689.2,245.4 700.2,241.8 706.6,235.4 712.2,227.2 718.5,222.4 723.9,218.0 721.4,204.5 719.4,196.6 711.0,198.4 702.6,203.1 693.8,204.8 687.0,201.8 681.2,197.4 671.8,199.2 666.7,204.0 657.0,201.6 647.1,199.3 637.9,197.2 630.5,188.1 625.5,182.5 616.1,181.2 608.7,183.6 599.8,184.7 591.3,179.1 582.2,171.5 586.6,166.1 581.1,161.6 575.6,157.1 569.7,152.2 563.7,156.1 553.3,153.4 558.9,158.6 567.0,152.2 574.1,155.7 579.7,160.4 574.1,155.7 568.6,151.3 561.9,158.3 556.6,164.6 551.9,170.1 544.7,178.6 539.8,184.2 534.5,189.2 527.2,197.5 522.0,203.6 514.6,212.3 510.1,218.5 506.1,224.5 501.4,231.3 497.4,237.4 490.7,241.9 486.1,249.0 482.4,256.1 478.7,263.2 472.4,269.4 466.2,273.6 461.6,280.1 457.3,287.3 453.5,293.8 449.7,300.3 445.8,306.8 441.7,313.8 438.8,320.9 444.8,325.0 448.7,332.4 454.6,337.3 458.1,344.8 461.7,351.8 458.1,344.8 455.4,337.6 449.0,333.7 447.2,325.1 437.4,325.1 434.8,332.7 418.0,339.7 409.3,342.5 405.2,348.5 402.1,355.4 395.1,359.2 388.3,363.3 381.8,369.0 374.1,375.7 367.3,381.8 363.1,389.7 364.9,400.7 366.5,409.3 364.9,421.1 366.6,430.3 368.4,438.5 370.1,446.8 372.2,457.4 373.9,465.6 371.8,468.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="371.8,468.7 372.3,458.0 370.7,449.8 369.0,441.0 366.6,430.3 364.9,421.7 383.8,422.3 393.3,424.1 405.7,427.6 421.4,427.1 433.3,426.4 448.3,425.7 458.2,423.9 471.4,423.9 480.3,425.1 489.1,424.0 524.1,432.3 533.1,434.7 542.8,436.1 553.6,427.7 563.8,423.4 574.2,423.0 585.6,422.8 597.0,421.8 606.6,420.9 616.4,418.1 627.5,417.3 637.3,417.6 642.7,423.1 650.2,428.2 659.5,433.3 652.5,429.7 644.7,424.6 638.8,418.5 627.5,417.3 618.1,417.6 608.3,420.4 597.0,421.8 585.6,422.8 575.9,423.0 566.0,422.4 556.1,426.5 547.1,433.3 553.8,445.9 555.6,454.2 557.4,462.8 560.4,476.6 562.6,485.6 551.3,486.7 543.7,487.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="371.8,468.7 370.1,476.9 375.5,514.3 377.8,536.6 378.3,546.0 372.6,550.4 372.1,569.9 376.4,576.9 380.1,585.1 382.1,600.0 385.6,608.3 395.0,621.4 390.0,649.2 344.3,639.8 298.1,630.4 249.2,620.3 243.9,618.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="371.8,468.7 372.3,458.0 370.7,449.8 369.0,441.0 366.6,430.3 364.9,421.7 344.4,424.3 322.0,427.0 312.1,423.0 297.2,426.9 284.0,430.3 274.8,432.8 259.8,436.6 251.3,438.8 236.3,442.8 223.9,446.0 214.6,448.4 197.1,453.0 195.1,444.2 191.9,433.7 189.2,426.7 181.9,424.0 181.9,422.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="331.1,591.1 329.9,600.1 334.1,618.1 339.0,638.7 390.0,649.2 424.6,656.1 434.5,658.1 446.4,660.5 456.5,662.5 471.1,665.5 456.5,662.5 446.4,660.5 438.0,658.8 427.2,656.6 390.0,649.2 344.3,639.8 334.7,621.6 329.9,600.1 331.1,591.1 331.1,591.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Lagoa dos Currais</title></polyline>
+<polyline points="632.8,417.3 640.6,419.9 647.7,426.5 653.6,430.8 653.9,442.1 653.8,454.7 656.2,473.5 657.4,483.8 661.2,492.3 662.4,503.5 663.6,513.4 662.4,503.5 661.2,492.3 657.4,483.8 656.2,473.5 653.8,454.7 654.9,445.9 653.1,434.9 647.7,426.5 642.1,422.1 636.7,417.4 632.8,417.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Ladeira Grande</title></polyline>
+<polyline points="542.9,487.5 555.9,487.9 564.9,501.0 567.2,509.3 572.0,534.4 561.8,539.4 566.2,562.7 561.8,539.4 570.4,534.9 567.2,509.3 564.9,501.0 562.6,489.2 551.3,486.7 542.9,487.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Lagoa Redonda</title></polyline>
+<circle cx="243.4" cy="619.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="128.9" cy="160.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="534.1" cy="356.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="682.4" cy="241.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="669.7" cy="247.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="538.5" cy="431.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="580.2" cy="159.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="671.3" cy="198.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="660.7" cy="433.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="472.7" cy="421.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="185.6" cy="223.7" r="2.2" fill="#b9b9b2"/>
+<polygon points="371.6,462.1 361.3,481.2 382.0,481.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="543.0,480.3 536.0,493.2 550.1,493.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="541.7,478.8 533.6,493.8 549.9,493.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="186.2,219.0 178.3,233.6 194.1,233.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="437.1,316.1 427.7,333.5 446.6,333.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="437.1" y="347.0" text-anchor="middle" fill="#5c5c57">Umari</text>
+<polygon points="372.9,451.6 364.0,468.0 381.8,468.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="478.2,415.7 469.6,431.6 486.8,431.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="632.7,409.3 625.1,423.3 640.2,423.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="255.0,428.9 246.5,444.5 263.5,444.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="302.5,253.7 293.6,270.2 311.5,270.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="302.5" y="283.6" text-anchor="middle" fill="#5c5c57">Pacavira</text>
+<polygon points="461.6,344.1 454.0,358.1 469.1,358.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="234.8,261.3 224.6,279.9 244.9,279.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="234.8" y="293.6" text-anchor="middle" fill="#5c5c57">Alegria</text>
+<polygon points="474.6,92.4 466.9,106.7 482.4,106.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="636.2,185.3 625.5,205.2 647.0,205.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="330.2,582.7 322.7,596.6 337.8,596.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="441.0,305.7 432.0,322.5 450.1,322.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="616.0,170.0 605.9,188.7 626.2,188.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="616.0" y="202.4" text-anchor="middle" fill="#5c5c57">Canto de Moça</text>
+<circle cx="473.1" cy="664.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="480.1" y="659.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Lagoa dos Currais 6,3 km</text>
+<circle cx="658.4" cy="512.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="521.2" y="507.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Ladeira Grande 4,0 km</text>
+<circle cx="562.8" cy="565.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="431.8" y="560.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Lagoa Redonda 3,7 km</text>
+<rect x="367.4" y="464.5" width="10" height="10" fill="#1d1d1b"/><text x="381.4" y="487.5" font-weight="600" fill="#1d1d1b">Sede de Ielmo Marinho</text>
+<line x1="35" x2="181.8" y1="695.5" y2="695.5" stroke="#8a8a84" stroke-width="2"/><text x="35" y="709.5" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="686.5334473117418" y2="686.5334473117418" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="690.5334473117418" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,679.5 421.4,691.8 434.6,691.8" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="690.5334473117418" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="704.5334473117418" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="713.5334473117418" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="709.5334473117418" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="713.5334473117418" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="732.5334473117418" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="736.5334473117418" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="732.5334473117418" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="736.5334473117418" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="755.5334473117418" y2="755.5334473117418" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="759.5334473117418" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="778.5334473117418" y2="778.5334473117418" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="782.5334473117418" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 26/2026/ZE046 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (1):</strong> Lagoa dos Currais.</li>
+<li><strong>De 3 a 5 km (4):</strong> Telha, Comunidade Quilombola Serrote, Ladeira Grande e Lagoa Redonda.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (10):</strong> Agrovila do PA Lagoa Nova, Agrovila do PA São Sebastião, Boa Vista, Chã do Moreno, Comunidade Quilombola Lagoa de Dentro, Comunidade Quilombola Nova Descoberta, Papagaio, Quermisol, Tamoatá e Trapiá.</li>
+</ul><h2>Rotas do Edital nº 26/2026/ZE046</h2>
+<p>O edital tem 5 rotas para Ielmo Marinho. Horários: Início às 7h00 e última viagem às 16h00; todas as rotas saem às 07:00h (recolhimento das urnas ao ponto de apoio do Município às 17h00). Veículos: Rota 1: ônibus NOE-8588; Rota 2: ônibus NOE-8558 e RQA-8I73; Rota 3: ônibus OWE-9395; Rota 4: ônibus RQB-7E23; Rota 5: ônibus RQB-1J37.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Queimadas – Lajinha – Pororoca – Serrote Coberto – Boa Esperança (Jurema) – Pororoca – Lagoa Nova II – Alegria – Pacavira – Centro</td></tr><tr><td>02</td><td>Canto de Moça – Tamoatá – Quermissol – Riacho do Meio – Papagaio – Canto de Moça – São Sebastião III – Marcoalhada – São Sebastião II – Ramadas – Umari – Vila Marina – Umari – Centro</td></tr><tr><td>03</td><td>Centro – Nova Descoberta – Lagoa de Dentro – Chã do Moreno – Jacaré – Saúna – Boa Vista</td></tr><tr><td>04</td><td>Centro – Oiticica – Telha – Espinheiro</td></tr><tr><td>05</td><td>Centro – Fazenda Nova – Roseli Nunes</td></tr></tbody></table></div>
+<p>Fonte: Edital nº 26/2026/ZE046 da 46ª ZE (Juiz Cleudson de Araújo Vale), DJE/TRE-RN nº 209/2026 (disp. 30/09/2026, publ. 01/10/2026), idMateria 6146957, anexo &quot;QUADRO DE TRANSPORTE DE ELEITORES_IELMO MARINHO.pdf&quot;.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 3 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Lagoa dos Currais</strong></td><td>Telha – Lagoa dos Currais – Telha</td><td>Lagoa dos Currais</td><td>12,6 km (ida e volta)</td><td>~17 min</td></tr><tr><td><strong>Rota nova – Ladeira Grande</strong></td><td>Chã do Moreno – Ladeira Grande – Chã do Moreno</td><td>Ladeira Grande</td><td>8,0 km (ida e volta)</td><td>~18 min</td></tr><tr><td><strong>Rota nova – Lagoa Redonda</strong></td><td>Boa Vista – Lagoa Redonda – Boa Vista</td><td>Lagoa Redonda</td><td>7,3 km (ida e volta)</td><td>~16 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMIM</strong></p><p>Ielmo Marinho/RN, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Cleudson de Araújo Vale</strong><br>Juiz Eleitoral da 46ª Zona Eleitoral – Ceará-Mirim/RN</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 26/2026/ZE046) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Ielmo Marinho, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 26/2026/ZE046: Lagoa dos Currais, Ladeira Grande e Lagoa Redonda.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Lagoa dos Currais (Telha – Lagoa dos Currais – Telha);</li><li>a criação da Rota nova – Ladeira Grande (Chã do Moreno – Ladeira Grande – Chã do Moreno);</li><li>a criação da Rota nova – Lagoa Redonda (Boa Vista – Lagoa Redonda – Boa Vista).</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 26/2026/ZE046 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Ielmo Marinho</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Ielmo Marinho; Edital nº 26/2026/ZE046 da 46ª ZE (Juiz Cleudson de Araújo Vale), DJE/TRE-RN nº 209/2026 (disp. 30/09/2026, publ. 01/10/2026), idMateria 6146957, anexo &quot;QUADRO DE TRANSPORTE DE ELEITORES_IELMO MARINHO.pdf&quot;; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

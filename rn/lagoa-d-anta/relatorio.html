@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Lagoa d&#x27;Anta</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Lagoa d&#x27;Anta</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/lagoa-d-anta.pdf?v=1792185528" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Lagoa d&#x27;Anta (15ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 15ª Zona Eleitoral <strong>1 rota nova</strong> no transporte gratuito de Lagoa d&#x27;Anta.
+Traçamos pelas estradas o percurso das 4 rotas do Edital nº 0015/2026. 1 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>Lagoa d&#x27;Anta tem 6.405 eleitores aptos em 4 locais de votação e 19 seções. São 0 locais rurais, com 0 eleitores (0% do total).</li>
+
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Loteamento Nova Passa e Fica (9,9 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 3 localidades rurais de Lagoa d&#x27;Anta que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Loteamento Nova Passa e Fica</td><td>9,9</td><td>Rota 03</td><td>4,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Lagoa do Chico</td><td>4,3</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>4 das 11 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Baixio (Rota 01), Vitor (Rota 01), Umbuzeiro (Rota 03) e Serrote da Macambira (Rota 04). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 3 localidades rurais de Lagoa d&#x27;Anta, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 820" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Lagoa d&#x27;Anta: 1 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas do Edital nº 0015/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="91.7,609.9 365.6,669.1 652.9,688.0 653.4,645.7 687.2,651.2 725.0,620.9 671.3,489.6 462.5,463.8 370.6,285.3 267.2,209.3 232.9,165.5 201.0,134.2 169.7,131.7 112.6,80.0 92.7,109.8 100.1,279.3 38.5,298.7 35.0,326.1 65.8,433.5 44.4,490.1 87.2,575.6 91.7,609.9 91.7,609.9" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="551.5,515.4 541.9,509.4 534.3,517.8 525.4,527.6 517.4,536.9 504.1,534.3 489.8,527.5 481.3,517.2 473.4,508.5 472.8,509.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="536.5,615.8 541.3,629.4 553.1,626.1 564.7,622.4 574.1,614.9 576.6,602.1 591.4,605.5 602.0,612.6 613.4,620.7 624.6,628.5 636.4,634.0 648.8,640.2 659.5,647.4 669.6,653.0 682.0,657.1 697.0,657.8 707.7,653.4 710.9,639.9 715.7,627.5 719.2,622.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="408.1,528.7 397.2,523.2 384.7,518.8 371.0,513.8 359.0,509.4 352.2,499.5 355.1,484.2 357.8,471.7 359.2,468.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="366.6,389.5 358.0,399.0 366.1,407.1 360.9,421.0 353.2,433.3 359.2,451.8 371.9,456.2 389.0,459.9 402.4,461.9 414.4,466.0 427.9,469.2 438.0,475.0 448.4,479.8 455.9,488.9 464.5,499.8 473.1,508.7 472.8,509.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="458.2,489.2 450.6,481.8 441.0,476.1 429.2,470.0 417.1,466.6 404.5,462.4 390.3,460.3 379.5,455.8 365.5,456.8 351.8,454.7 332.3,451.2 317.3,451.2 293.5,447.1 280.3,444.8 267.8,440.3 255.1,443.2 256.5,457.1 258.0,471.9 260.3,484.5 260.0,500.4 257.4,512.8 252.4,523.2 251.0,538.8 249.8,553.0 248.6,567.1 242.8,577.3 238.4,588.0 231.2,596.7 224.8,605.8 217.3,614.0 206.9,618.8 217.3,614.0 224.6,606.0 231.2,596.7 238.4,588.5 242.8,577.3 248.6,567.7 249.8,553.5 250.9,539.6 252.2,525.7 256.5,514.6 260.0,501.4 260.8,487.2 258.8,474.2 255.7,461.8 255.7,446.7 265.3,439.7 276.2,443.9 293.5,447.1 312.2,450.4 328.8,451.1 346.9,452.9 358.0,457.2 378.7,455.8 389.5,460.1 403.3,462.1 414.4,466.0 427.9,469.2 438.0,475.0 448.4,479.8 455.9,488.9 458.2,489.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Loteamento Nova Passa e Fica</title></polyline>
+<circle cx="366.6" cy="390.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="472.9" cy="509.1" r="2.2" fill="#b9b9b2"/>
+<polygon points="458.0,478.0 447.0,498.4 469.1,498.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="475.9,501.7 464.8,522.3 487.1,522.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="478.4,502.0 465.6,525.6 491.2,525.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="478.4,509.4 469.9,525.2 487.0,525.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="211.0" cy="629.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="218.0" y="624.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Loteamento Nova Passa e Fica 9,9 km</text>
+<rect x="467.9" y="504.1" width="10" height="10" fill="#1d1d1b"/><text x="481.9" y="527.1" font-weight="600" fill="#1d1d1b">Sede de Lagoa d&#x27;Anta</text>
+<line x1="35" x2="258.9" y1="718.0" y2="718.0" stroke="#8a8a84" stroke-width="2"/><text x="35" y="732.0" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="708.9755043227522" y2="708.9755043227522" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="712.9755043227522" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,702.0 421.4,714.2 434.6,714.2" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="712.9755043227522" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="726.9755043227522" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="735.9755043227522" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="731.9755043227522" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="735.9755043227522" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="754.9755043227522" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="758.9755043227522" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="754.9755043227522" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="758.9755043227522" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="777.9755043227522" y2="777.9755043227522" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="781.9755043227522" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="800.9755043227522" y2="800.9755043227522" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="804.9755043227522" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 0015/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (1):</strong> Loteamento Nova Passa e Fica.</li>
+<li><strong>De 3 a 5 km (1):</strong> Lagoa do Chico.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (1):</strong> Lagoa d&#x27;Anta.</li>
+</ul><h2>Rotas do Edital nº 0015/2026</h2>
+<p>O edital tem 4 rotas para Lagoa d&#x27;Anta. Horários: Não informados no edital; embarque/desembarque em frente à Praça Santa Terezinha e à Loja Claudino Móveis. Veículos: não informados no edital (credenciamento de veículos até 18/09/2026; entrega das credenciais em 01/10/2026).</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Lameiro – Baixio – Vitor</td></tr><tr><td>02</td><td>Pau Queimado – João Gomes – Juriti</td></tr><tr><td>03</td><td>Lagoa Queimada – Umbuzeiro – Lagoa da Carnaúba</td></tr><tr><td>04</td><td>Lagoa do Chico – Serrote da Macambira</td></tr></tbody></table></div>
+<p>Fonte: Edital nº 0015/2026 da 15ª ZE, DJE/TRE-RN nº 194 (disp. 18/09/2026), idMateria 6121733.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 1 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Loteamento Nova Passa e Fica</strong></td><td>Sede – Loteamento Nova Passa e Fica – Sede</td><td>Loteamento Nova Passa e Fica</td><td>19,7 km (ida e volta)</td><td>~35 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMLA</strong></p><p>Lagoa d&#x27;Anta/RN, ___ de outubro de 2026.</p><p>Ao(À) Excelentíssimo(a) Senhor(a)<br><strong>[nome do(a) Juiz(a) Eleitoral]</strong><br>Juiz(a) Eleitoral da 15ª Zona Eleitoral – São José do Campestre/RN</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 0015/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo(a) Senhor(a) Juiz(a),</p><p>O Município de Lagoa d&#x27;Anta, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 0015/2026: Loteamento Nova Passa e Fica.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Loteamento Nova Passa e Fica (Sede – Loteamento Nova Passa e Fica – Sede).</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 0015/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Lagoa d&#x27;Anta</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Lagoa d&#x27;Anta; Edital nº 0015/2026 da 15ª ZE, DJE/TRE-RN nº 194 (disp. 18/09/2026), idMateria 6121733; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

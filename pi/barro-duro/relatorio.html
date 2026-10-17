@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Barro Duro</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Barro Duro</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/barro-duro.pdf?v=1792185091" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Barro Duro (74ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 74ª Zona Eleitoral <strong>2 rotas novas e 1 parada extra em rotas do edital</strong> no transporte gratuito de Barro Duro.
+Traçamos pelas estradas o percurso das 6 rotas do Edital nº 23/2026 - TRE/74ª ZONA. 6 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 1 ficam a 1–2 km.</p>
+<ul>
+<li>Barro Duro tem 6.432 eleitores aptos em 7 locais de votação e 31 seções. São 1 locais rurais, com 662 eleitores (10% do total).</li>
+
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Roçado (12,7 km do local de votação), Faveira (10,6 km do local de votação), Alto Alegre (9,3 km do local de votação), Tamboril (6,8 km do local de votação), Matinha (4,4 km do local de votação) e Boca do Brejo (4,0 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Mandacaru.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 16 localidades rurais de Barro Duro que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Roçado</td><td>12,7</td><td>Rota 04</td><td>4,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Faveira</td><td>10,6</td><td>Rota 04</td><td>3,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Novo Oriente</td><td>10,3</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Alto Alegre</td><td>9,3</td><td>Rota 04</td><td>2,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Mandacaru</td><td>8,9</td><td>Rota 04</td><td>1,4</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Serra da Sussuarana</td><td>7,5</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Tamboril</td><td>6,8</td><td>Rota 05</td><td>4,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Malhada dos Bois</td><td>6,3</td><td>Rota 04</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Pedra Branca</td><td>5,3</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Poção</td><td>5,1</td><td>Rota 04</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Matinha</td><td>4,4</td><td>Rota 06</td><td>2,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Boca do Brejo</td><td>4,0</td><td>Rota 01</td><td>3,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Areial</td><td>3,9</td><td>Rota 05</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sagui</td><td>3,0</td><td>Rota 06</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>10 das 23 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Pedra Preta (Rota 01), Brejo de Baixo (Rota 01), Sede de Barro Duro (Rota 01, Rota 02, Rota 03, Rota 04, Rota 05 e Rota 06), Buritizinho (Rota 02) e Paio (Rota 05). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 16 localidades rurais de Barro Duro, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1084" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Barro Duro: 7 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 23/2026 - TRE/74ª ZONA e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="52.9,138.4 35.0,295.8 109.3,328.1 109.3,383.5 142.1,414.7 221.6,461.9 177.5,548.0 190.8,682.3 359.5,791.0 495.3,831.5 537.4,886.9 573.8,914.0 594.8,952.0 669.6,831.5 725.0,819.2 655.8,764.4 642.5,617.7 718.3,466.5 717.3,316.3 682.5,260.4 397.4,218.9 295.9,137.4 311.8,88.7 198.5,80.0 115.5,158.9 52.9,138.4 52.9,138.4" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="187.1,299.0 199.8,302.0 213.3,304.1 226.2,306.9 239.3,303.2 255.0,303.9 265.6,309.4 276.5,314.8 285.8,321.1 285.5,336.4 284.1,350.5 282.9,365.2 286.5,377.5 290.9,391.6 294.4,403.9 300.0,415.6 309.8,422.5 318.0,433.7 327.6,443.7 334.6,454.4 342.3,463.3 347.2,462.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="665.9,322.4 676.7,327.7 686.8,333.6 672.9,351.7 661.3,358.5 646.6,366.9 638.9,374.6 637.5,389.4 633.1,403.4 626.7,413.1 623.4,426.2 611.9,432.7 600.1,438.1 587.7,444.9 572.0,447.1 559.7,452.2 549.3,457.3 546.9,458.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="483.4,273.8 472.4,279.3 471.7,295.3 463.1,305.5 457.8,321.4 448.7,332.7 441.3,342.9 439.3,357.3 436.0,373.0 430.4,384.9 422.9,392.8 414.5,401.5 407.8,410.4 402.8,423.4 394.9,432.5 387.4,442.0 376.3,447.5 376.3,447.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="618.6,699.1 609.7,690.9 579.7,667.4 509.2,659.2 472.9,656.0 462.1,649.2 438.8,605.7 425.1,600.0 406.6,600.1 395.0,594.0 389.6,582.9 381.6,574.9 371.9,565.6 368.7,559.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="219.4,305.5 221.3,320.6 217.2,332.3 218.7,346.7 209.3,353.2 197.3,357.5 186.2,362.8 176.9,368.9 166.2,375.6 157.4,382.5 152.6,393.2 160.2,402.1 167.7,411.8 174.3,421.2 183.1,433.7 190.7,443.1 199.8,449.7 210.9,457.2 220.1,464.6 228.2,472.4 245.0,478.5 276.0,493.0 278.0,493.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="257.2,291.3 264.7,299.4 274.6,305.0 279.7,293.9 276.6,281.1 279.4,267.6 280.7,252.8 295.8,252.4 282.1,250.4 279.6,266.2 276.4,279.2 279.4,292.3 276.4,305.2 281.2,317.7 286.5,328.1 283.2,340.3 273.9,347.3 264.5,354.4 257.5,356.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="382.6,577.6 372.6,583.8 371.0,598.8 373.2,612.6 374.8,627.9 368.4,637.3 358.8,651.0 346.9,663.9 335.2,673.8 315.4,672.7 293.7,668.1 277.3,664.7 248.0,668.3 234.9,671.4 220.4,675.0 205.6,678.5 186.5,683.1 172.3,661.1 166.4,651.3 172.3,661.1 185.2,683.4 205.6,678.5 220.4,675.0 234.9,671.4 248.0,668.3 263.6,664.4 283.8,666.0 305.9,670.6 327.3,675.0 341.2,669.5 354.6,656.2 363.2,645.1 370.7,635.5 375.3,624.5 371.7,602.9 372.0,586.9 382.7,577.7 392.4,589.0 400.1,598.5 425.1,600.0 437.9,604.4 462.1,649.2 471.3,655.7 509.2,659.2 570.1,664.5 605.9,687.7 624.6,704.7 636.1,715.4 643.6,723.4 640.0,741.1 626.3,744.3 610.2,747.2 593.9,748.0 581.1,752.3 571.5,758.9 581.1,752.3 592.0,747.8 607.4,747.3 623.8,744.5 636.4,749.4 632.3,761.9 632.7,777.3 636.9,788.7 639.8,801.3 647.1,810.0 653.6,819.0 651.9,833.9 642.6,840.4 633.9,847.2 625.8,855.6 603.3,900.8 559.2,921.8 541.7,901.4 530.1,886.7 507.0,883.0 496.6,875.7 477.6,877.2 460.2,875.0 446.5,867.8 435.4,859.5 426.8,847.2 415.3,827.6 418.2,810.8 422.4,796.1 434.6,790.4 447.0,784.9 463.4,789.1 483.3,777.4 492.6,764.8 498.7,749.0 499.0,728.5 507.3,712.0 510.4,694.0 509.2,659.2 472.9,656.0 462.1,649.2 438.8,605.7 425.1,600.0 406.6,600.1 395.0,594.0 389.6,582.9 382.6,577.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Roçado</title></polyline>
+<polyline points="223.1,306.7 209.9,303.9 196.4,301.4 185.3,296.6 175.4,291.0 164.5,295.8 149.9,296.7 136.2,294.8 123.3,292.0 112.6,285.7 101.9,280.3 86.9,279.7 72.0,280.3 59.0,277.5 72.0,280.3 86.9,279.7 101.9,280.3 112.6,285.7 122.2,291.6 135.0,294.6 148.8,296.7 164.5,295.8 175.4,291.0 185.3,296.6 196.4,301.4 209.3,304.0 222.4,306.7 224.9,293.7 235.7,288.1 237.7,274.5 236.7,259.6 235.7,244.8 242.2,233.7 237.4,223.1 234.0,211.0 232.9,195.4 229.1,183.8 232.0,166.9 233.8,152.6 237.9,133.3 232.5,144.7 235.9,160.0 230.7,170.4 229.2,187.7 233.7,199.1 235.3,213.4 239.0,226.1 237.3,241.3 235.2,255.0 240.7,265.6 237.1,277.5 233.7,289.7 223.7,295.6 223.1,306.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Matinha</title></polyline>
+<polyline points="618.6,699.1 629.5,709.3 640.1,719.1 641.1,734.7 637.6,750.0 626.3,744.3 610.2,747.2 593.9,748.0 581.7,751.2 593.9,748.0 610.2,747.2 623.8,744.5 636.4,749.4 641.1,734.7 644.1,721.9 629.5,709.3 618.6,699.1 618.6,699.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 04</title></polyline>
+<circle cx="666.3" cy="321.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="485.1" cy="274.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="620.5" cy="697.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="546.3" cy="457.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="579.2" cy="657.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="197.7" cy="446.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="302.6" cy="250.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="257.5" cy="356.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="217.8" cy="309.0" r="2.2" fill="#b9b9b2"/>
+<polygon points="352.8,545.6 344.2,561.5 361.4,561.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="382.6,567.9 373.2,585.1 391.9,585.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="373.3,541.4 362.1,562.0 384.5,562.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="346.2,532.6 335.4,552.4 356.9,552.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="223.1,298.8 214.3,315.1 232.0,315.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="350.3,531.3 343.6,543.5 356.9,543.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="352.3,562.7 342.4,581.0 362.3,581.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="603.3" cy="900.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="509.5" y="895.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Roçado 12,7 km</text>
+<circle cx="617.7" cy="856.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="517.7" y="851.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Faveira 10,6 km</text>
+<circle cx="537.0" cy="782.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="544.0" y="777.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Alto Alegre 9,3 km</text>
+<circle cx="581.9" cy="751.4" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="475.7" y="746.4" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Mandacaru 8,9 km</text>
+<circle cx="167.4" cy="650.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="174.4" y="645.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Tamboril 6,8 km</text>
+<circle cx="236.4" cy="126.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="243.4" y="121.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Matinha 4,4 km</text>
+<circle cx="53.3" cy="270.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="60.3" y="265.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Boca do Brejo 4,0 km</text>
+<rect x="362.9" y="553.4" width="10" height="10" fill="#1d1d1b"/><text x="376.9" y="576.4" font-weight="600" fill="#1d1d1b">Sede de Barro Duro</text>
+<line x1="35" x2="265.9" y1="982.0" y2="982.0" stroke="#8a8a84" stroke-width="2"/><text x="35" y="996.0" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="972.9836552748939" y2="972.9836552748939" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="976.9836552748939" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,966.0 421.4,978.2 434.6,978.2" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="976.9836552748939" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="990.9836552748939" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="999.9836552748939" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="995.9836552748939" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="999.9836552748939" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1018.9836552748939" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1022.9836552748939" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1018.9836552748939" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1022.9836552748939" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1041.9836552748939" y2="1041.9836552748939" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1045.9836552748939" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1064.9836552748939" y2="1064.9836552748939" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1068.9836552748939" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 23/2026 - TRE/74ª ZONA · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (10):</strong> Roçado, Faveira, Novo Oriente, Alto Alegre, Mandacaru, Serra da Sussuarana, Tamboril, Malhada dos Bois, Pedra Branca e Poção.</li>
+<li><strong>De 3 a 5 km (4):</strong> Matinha, Boca do Brejo, Areial e Sagui.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (2):</strong> Brejão e Mocambo.</li>
+</ul><h2>Rotas do Edital nº 23/2026 - TRE/74ª ZONA</h2>
+<p>O edital tem 6 rotas para Barro Duro. Horários: a partir das 07:30h; os veículos percorrerão as rotas indicadas, uma após a outra.. Veículos: Quantidade de veículos previstos: 03 (três); placas não informadas..</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Pedra Preta – Brejo de Cima – Brejo de Baixo – Riacho Seco – Sede de Barro Duro</td></tr><tr><td>02</td><td>Novo Oriente – Pedra Branca – Buritizinho – Sede de Barro Duro</td></tr><tr><td>03</td><td>Serra da Sussuarana – Tome – Macauba – Sede de Barro Duro</td></tr><tr><td>04</td><td>Malhada dos Bois – Sede de Barro Duro</td></tr><tr><td>05</td><td>Brejao – Paio – Desejado – Sede de Barro Duro</td></tr><tr><td>06</td><td>Brejo do Meio – Saguim – Mocambo – Sede de Barro Duro</td></tr></tbody></table></div>
+<p>Fonte: Edital nº 23/2026 - TRE/74ª ZONA, DJE/TRE-PI nº 191/2026 (disp. 18/09/2026), PDF da edição; fonte complementar: INFO ROTAS – sistema oficial do TRE-PI (inforotas.tre-pi.jus.br), consulta em 2026-10-16 (rotas do INFO ROTAS preservadas em &quot;rotas_inforotas&quot;).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 7 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Roçado</strong></td><td>Sede – Tamboril – Alto Alegre – Faveira – Roçado – Sede</td><td>Tamboril, Alto Alegre, Faveira, Roçado</td><td>41,6 km (ida e volta)</td><td>~1h02</td></tr><tr><td><strong>Rota nova – Matinha</strong></td><td>Sede – Boca do Brejo – Matinha – Sede</td><td>Boca do Brejo, Matinha</td><td>16,7 km (ida e volta)</td><td>~40 min</td></tr><tr><td><strong>Parada extra na Rota 04</strong></td><td>desvio pelo caminho atual: Mandacaru</td><td>Mandacaru</td><td>+5,3 km</td><td>+10 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMBD</strong></p><p>Barro Duro/PI, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. José Sodré Ferreira Neto</strong><br>Juiz Eleitoral da 74ª Zona Eleitoral – Barro Duro/PI</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 23/2026 - TRE/74ª ZONA) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Barro Duro, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 23/2026 - TRE/74ª ZONA: Roçado, Faveira, Alto Alegre, Tamboril, Matinha, Boca do Brejo e Mandacaru.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Roçado (Sede – Tamboril – Alto Alegre – Faveira – Roçado – Sede);</li><li>a criação da Rota nova – Matinha (Sede – Boca do Brejo – Matinha – Sede);</li><li>a inclusão de parada em Mandacaru na Rota 04, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 23/2026 - TRE/74ª ZONA deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Barro Duro</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Barro Duro; Edital nº 23/2026 - TRE/74ª ZONA, DJE/TRE-PI nº 191/2026 (disp. 18/09/2026), PDF da edição; fonte complementar: INFO ROTAS – sistema oficial do TRE-PI (inforotas.tre-pi.jus.br), consulta em 2026-10-16 (rotas do INFO ROTAS preservadas em &quot;rotas_inforotas&quot;); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

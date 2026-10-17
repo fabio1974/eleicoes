@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Cariús</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Cariús</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/carius.pdf?v=1792186913" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Cariús (43ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 43ª Zona Eleitoral <strong>10 rotas novas</strong> no transporte gratuito de Cariús.
+<strong>A Justiça Eleitoral dispensou o transporte gratuito de eleitores neste município nas Eleições 2026</strong> (A Portaria nº 5/2026 da 43ª ZE (DJE/TRE-CE nº 201, disp. 14/09/2026, publ. 15/09/2026, p. 414–415), considerando a ausência de indicação de membros para a Comissão Especial de Transporte e a existência de seções nos bairros, distritos e principais localidades, determinou que &quot;não haverá transporte gratuito de eleitoras e eleitores em veículos disponibilizados pela Justiça Eleitoral no 1º Turno das Eleições Gerais de 2026, nem no 2º turno, caso haja&quot; em Jucás, Cariús e Saboeiro: não há rotas da Justiça Eleitoral no 1º nem no 2º turno. Nenhum ato posterior da 43ª ZE revogando a portaria foi publicado no DJE até a edição 237.). As 12 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Cariús tem 15.961 eleitores aptos em 29 locais de votação e 65 seções. São 25 locais rurais, com 10.546 eleitores (66% do total).</li>
+<li>22 locais rurais ficam a 10 km ou mais da sede, com 9.552 eleitores. Os mais distantes: Riacho do Meio (35,7 km), Sitio Parade (31,4 km) e Caipu (29,5 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Serra da Brígida (9,7 km do local de votação), Flor da América (8,3 km do local de votação), Charnecas (7,0 km do local de votação), Unha de Gato (5,2 km do local de votação), Segredo (4,8 km do local de votação), Xiquenique (4,1 km do local de votação), Encantada (4,0 km do local de votação), Cachoeira dos Pintos (3,6 km do local de votação), Malhada Grande (3,3 km do local de votação), Angelim (3,2 km do local de votação), Canavieira (3,2 km do local de votação) e Canto (3,1 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 45 localidades rurais de Cariús que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista do TRE-CE e a posição de cada local publicada pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Serra da Brígida</td><td>9,7</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Flor da América</td><td>8,3</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Charnecas</td><td>7,0</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Unha de Gato</td><td>5,2</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Segredo</td><td>4,8</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Xiquenique</td><td>4,1</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Encantada</td><td>4,0</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Cachoeira dos Pintos</td><td>3,6</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Malhada Grande</td><td>3,3</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Angelim</td><td>3,2</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Canavieira</td><td>3,2</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Canto</td><td>3,1</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 45 localidades rurais de Cariús, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 707" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Cariús: 12 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="377.1,554.5 387.2,527.5 399.8,516.5 425.6,522.7 433.9,538.7 448.6,556.3 464.5,556.5 470.5,569.6 479.7,574.9 515.4,563.3 517.5,549.5 536.5,537.3 547.2,522.7 570.5,543.8 593.0,533.7 604.8,545.9 636.5,537.8 652.1,544.9 674.2,526.3 693.4,519.6 698.0,507.0 690.8,498.9 651.6,492.0 639.4,476.3 665.9,443.0 664.6,428.8 708.4,400.5 709.9,372.9 723.2,357.6 719.0,338.7 725.0,332.3 707.8,315.2 701.2,301.1 685.5,303.8 678.3,297.6 674.8,264.9 694.0,250.7 701.8,238.7 696.5,230.5 703.2,210.8 709.8,207.9 712.0,188.8 722.3,176.4 715.5,174.9 690.6,181.3 665.6,182.9 633.1,190.3 625.8,174.5 605.5,150.8 614.1,140.7 615.3,126.0 621.6,115.4 612.9,86.6 605.1,87.4 581.1,99.6 567.1,93.4 564.7,84.1 546.1,84.7 541.0,80.0 526.1,83.8 512.2,81.4 499.4,89.0 494.9,111.2 481.6,118.3 478.5,127.6 461.0,128.4 450.1,152.8 440.7,155.0 411.0,152.6 398.6,165.7 375.0,175.5 366.7,190.0 365.3,201.2 343.6,215.6 338.0,224.4 266.5,255.1 262.5,248.3 244.2,256.3 237.8,267.2 207.7,281.0 197.3,290.4 171.4,303.8 136.9,316.1 124.8,322.6 102.8,316.3 75.1,322.8 69.2,321.6 43.0,331.3 35.0,338.3 38.5,346.7 77.5,342.6 86.7,350.5 96.9,351.2 115.6,344.3 127.8,350.5 142.9,344.5 146.1,356.1 156.6,368.6 160.2,384.4 158.3,398.9 167.9,403.1 171.1,416.2 172.9,462.7 183.6,475.4 176.6,482.6 179.7,497.7 192.3,497.0 216.7,502.8 233.2,497.9 226.8,512.6 244.5,513.2 243.1,527.2 218.2,572.3 307.6,554.4 317.1,555.9 326.4,541.6 377.1,554.5 377.1,554.5" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="230.9,372.4 228.8,374.8 225.5,376.7 223.4,379.2 221.3,381.7 219.4,384.4 217.5,387.7 217.8,391.9 215.9,394.7 215.5,399.3 213.5,401.8 210.3,403.8 208.6,406.8 208.9,411.2 209.8,414.8 208.3,418.2 207.6,422.3 208.9,425.9 212.7,428.5 215.6,430.4 219.2,432.7 222.7,434.4 226.0,435.8 229.6,437.3 234.1,436.8 237.7,438.0 240.4,439.9 242.4,442.5 245.7,444.0 250.0,444.3 254.5,445.7 255.8,449.0 256.9,452.4 255.8,449.0 254.5,445.7 250.6,444.6 246.0,444.1 242.4,442.5 240.4,439.9 237.7,438.0 234.3,436.7 230.4,437.7 227.1,436.2 222.8,434.7 219.9,433.1 217.2,430.7 213.6,429.0 210.4,427.1 207.9,424.9 208.5,420.9 208.2,416.0 209.1,412.4 209.9,408.5 210.2,403.9 212.9,401.9 215.5,399.3 215.9,394.7 217.8,391.9 217.5,387.7 219.4,384.4 221.3,381.7 223.4,379.2 225.5,376.7 228.8,374.8 231.1,372.4 230.9,372.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Serra da Brígida</title></polyline>
+<polyline points="358.5,481.1 359.8,486.3 358.4,490.0 356.7,493.1 357.2,497.4 356.5,502.0 356.5,507.0 356.6,511.7 353.0,512.7 349.1,511.9 344.6,511.7 340.1,511.4 335.7,511.3 333.4,513.6 328.9,514.2 325.3,513.2 323.0,510.8 319.0,510.1 314.9,510.9 311.5,512.0 308.6,514.7 305.2,516.4 302.5,519.2 300.3,521.6 299.1,525.1 297.7,528.3 296.4,531.6 297.7,528.3 299.1,525.1 300.3,521.6 302.5,519.2 305.0,516.6 308.4,515.1 311.0,512.2 314.9,510.9 319.0,510.1 323.0,510.8 325.3,513.2 328.9,514.2 332.9,513.6 335.3,511.5 339.2,510.8 343.7,511.2 348.7,511.8 352.5,512.5 356.6,511.7 356.5,507.0 356.5,502.4 357.1,498.1 356.7,493.3 358.4,490.0 359.7,486.7 358.4,482.0 358.5,481.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Flor da América</title></polyline>
+<polyline points="577.2,483.7 578.5,487.1 580.5,489.7 578.5,492.8 579.1,496.7 580.7,499.8 584.1,501.5 588.0,500.8 592.4,499.5 596.0,497.4 597.4,494.3 600.2,492.3 605.9,491.4 607.9,493.9 611.2,496.0 616.0,497.0 619.5,498.1 622.6,499.6 627.4,500.8 631.8,501.3 636.3,501.3 636.6,496.5 638.4,493.7 636.6,496.5 636.3,501.0 632.0,501.2 627.4,500.8 623.2,500.3 620.1,498.5 616.5,497.2 612.7,496.2 608.1,494.0 606.2,491.4 601.9,492.0 597.8,493.4 596.0,497.4 592.4,499.5 588.6,500.6 584.7,501.6 581.1,500.7 579.3,497.5 578.5,493.6 580.5,490.9 579.0,487.7 577.5,484.5 577.2,483.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Charnecas</title></polyline>
+<polyline points="458.9,472.3 461.3,468.4 464.8,466.8 468.3,464.8 469.9,460.3 468.4,456.6 467.8,451.4 470.1,448.6 470.4,444.1 472.5,440.9 473.3,436.5 474.1,432.3 472.2,429.2 474.1,432.1 473.4,436.2 472.8,440.4 470.8,443.4 470.4,448.1 467.9,450.8 468.2,455.3 469.4,458.8 469.5,463.3 467.6,466.0 463.5,466.6 460.3,469.3 460.7,473.7 463.3,476.9 465.3,479.9 469.6,479.6 473.8,478.2 477.9,477.5 480.2,479.9 484.3,479.5 488.6,481.1 492.4,483.0 497.3,482.8 501.0,483.8 505.0,485.0 509.6,485.1 512.8,487.0 509.6,485.1 505.0,485.0 501.2,483.8 497.6,482.7 492.9,483.0 489.2,481.4 485.5,479.9 481.3,480.4 478.9,477.9 474.8,478.3 471.3,480.0 466.8,480.2 464.4,478.0 461.5,474.8 458.9,472.8 458.9,472.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Segredo</title></polyline>
+<polyline points="668.4,230.2 669.2,225.2 670.5,220.8 670.6,215.8 672.6,211.3 668.2,211.1 664.3,209.7 659.1,210.2 655.3,211.5 650.4,212.4 645.4,213.1 641.8,211.8 645.4,213.1 649.9,212.5 655.3,211.5 659.1,210.2 663.6,209.4 667.6,210.9 672.0,211.1 670.7,214.7 670.6,219.6 669.2,225.2 668.4,229.9 668.4,230.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Encantada</title></polyline>
+<polyline points="652.0,336.1 652.1,331.6 652.0,327.0 651.9,315.4 651.9,309.5 651.7,304.2 650.0,295.8 650.4,291.6 650.0,295.8 651.3,302.2 651.9,309.5 651.9,314.8 652.0,327.0 652.1,331.6 653.0,335.3 652.0,336.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Cachoeira dos Pintos</title></polyline>
+<polyline points="318.9,249.5 322.0,247.4 324.8,245.6 328.1,244.3 331.4,242.9 335.1,241.7 338.2,240.2 342.9,240.7 346.6,239.7 350.5,240.4 354.3,239.6 357.6,238.1 354.4,239.6 350.6,240.4 346.6,239.7 342.9,240.7 338.8,240.3 335.5,241.6 331.9,242.9 328.6,244.1 325.2,245.2 322.5,247.2 318.9,249.5 318.9,249.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Malhada Grande</title></polyline>
+<polyline points="130.3,331.0 127.5,333.1 124.6,334.9 121.6,337.0 118.9,338.9 119.6,342.8 121.0,346.4 123.6,348.4 126.8,346.9 130.3,345.8 134.3,345.1 137.3,343.2 134.6,345.1 130.5,345.8 127.0,346.9 123.8,348.3 121.0,346.4 119.7,343.1 118.1,339.5 120.9,337.5 123.7,335.5 126.2,333.4 129.7,331.5 130.3,331.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Angelim</title></polyline>
+<polyline points="382.7,325.9 380.6,328.8 376.1,328.7 373.1,330.6 370.8,333.4 370.0,337.3 368.7,342.6 370.8,345.9 372.5,349.5 374.1,353.0 372.6,349.7 371.0,346.5 368.7,343.0 370.5,339.8 370.1,335.2 372.0,332.1 374.7,330.2 377.5,328.6 382.7,328.4 382.7,325.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Canavieira</title></polyline>
+<polyline points="188.9,307.4 195.3,319.0 194.6,323.5 196.2,326.8 191.6,329.9 187.1,331.6 182.2,333.1 185.8,332.1 189.5,330.5 195.0,328.2 194.6,323.5 195.3,319.0 189.8,307.7 188.9,307.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Canto</title></polyline>
+<circle cx="693.0" cy="220.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="98.0" cy="346.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="208.6" cy="321.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="155.9" cy="335.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="106.7" cy="344.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="373.3" cy="387.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="370.1" cy="339.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="516.3" cy="321.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="389.4" cy="305.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="358.1" cy="429.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="604.0" cy="228.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="419.2" cy="302.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="410.7" cy="263.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="389.5" cy="310.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="459.9" cy="148.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="201.6" cy="288.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="399.9" cy="304.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="666.1" cy="239.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="582.0" cy="167.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="377.2" cy="329.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="385.3" cy="320.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="551.3" cy="225.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="580.5" cy="489.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="360.4" cy="477.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="132.8" cy="330.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="464.0" cy="137.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="650.6" cy="337.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="406.9" cy="299.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="358.7" cy="480.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="230.9" cy="373.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="498.7" cy="334.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="424.8" cy="269.1" r="2.2" fill="#b9b9b2"/>
+<polygon points="394.4,180.8 383.1,201.6 405.7,201.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="397.3,185.6 387.8,203.0 406.7,203.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="399.4,173.4 388.7,193.0 410.0,193.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="466.7,126.5 458.1,142.4 475.4,142.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="576.6,151.9 569.0,165.8 584.1,165.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="193.2,295.9 184.3,312.3 202.1,312.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="189.0,298.1 180.2,314.3 197.8,314.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="130.4,322.6 122.2,337.6 138.5,337.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="196.4,295.0 187.5,311.4 205.3,311.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="358.5,471.3 349.2,488.5 367.8,488.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="358.5" y="501.9" text-anchor="middle" fill="#5c5c57">Bela Vista</text>
+<polygon points="382.6,315.2 372.8,333.4 392.5,333.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="382.6" y="347.0" text-anchor="middle" fill="#5c5c57">sao bartolomeu</text>
+<polygon points="499.4,326.7 492.4,339.6 506.4,339.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="652.1,326.1 642.5,343.7 661.7,343.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="652.1" y="357.3" text-anchor="middle" fill="#5c5c57">Caipu</text>
+<polygon points="538.6,399.2 531.1,413.1 546.1,413.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="649.8,327.5 642.7,340.6 656.9,340.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="398.9,185.4 388.1,205.3 409.7,205.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="231.0,364.7 223.9,377.8 238.2,377.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="610.9,238.1 603.9,251.0 617.9,251.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="546.7,218.0 539.3,231.8 554.2,231.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="424.8,263.4 418.2,275.5 431.4,275.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="461.9,283.2 455.1,295.7 468.7,295.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="577.3,476.2 570.3,489.1 584.3,489.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="668.3,221.2 659.8,237.0 676.9,237.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="318.7,241.7 311.5,255.1 326.0,255.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="363.8,402.6 356.1,416.9 371.5,416.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="458.7,465.5 452.3,477.3 465.2,477.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="651.9,327.2 643.2,343.2 660.6,343.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="517.2,85.7 510.2,98.6 524.2,98.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="405.5,292.3 398.5,305.3 412.6,305.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="255.3" cy="454.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="262.3" y="449.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Serra da Brígida 9,7 km</text>
+<circle cx="296.1" cy="533.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="303.1" y="528.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Flor da América 8,3 km</text>
+<circle cx="636.4" cy="492.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="530.2" y="487.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Charnecas 7,0 km</text>
+<circle cx="625.2" cy="500.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="500.4" y="515.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Unha de Gato 5,2 km</text>
+<circle cx="514.3" cy="487.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="521.3" y="502.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Segredo 4,8 km</text>
+<circle cx="468.0" cy="430.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="475.0" y="425.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Xiquenique 4,1 km</text>
+<circle cx="640.0" cy="210.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="533.8" y="205.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Encantada 4,0 km</text>
+<circle cx="651.5" cy="288.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="477.1" y="283.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Cachoeira dos Pintos 3,6 km</text>
+<circle cx="358.5" cy="237.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="365.5" y="232.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Malhada Grande 3,3 km</text>
+<circle cx="138.4" cy="341.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="145.4" y="336.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Angelim 3,2 km</text>
+<circle cx="374.6" cy="354.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="381.6" y="349.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Canavieira 3,2 km</text>
+<circle cx="180.0" cy="334.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="187.0" y="349.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Canto 3,1 km</text>
+<rect x="392.8" y="185.1" width="10" height="10" fill="#1d1d1b"/><text x="406.8" y="208.1" font-weight="600" fill="#1d1d1b">Sede de Cariús</text>
+<line x1="35" x2="102.9" y1="604.9" y2="604.9" stroke="#8a8a84" stroke-width="2"/><text x="35" y="618.9" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="595.8591395501169" y2="595.8591395501169" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="599.8591395501169" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,588.9 421.4,601.1 434.6,601.1" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="599.8591395501169" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="613.8591395501169" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="622.8591395501169" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="618.8591395501169" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="622.8591395501169" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="641.8591395501169" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="645.8591395501169" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="641.8591395501169" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="645.8591395501169" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="664.8591395501169" y2="664.8591395501169" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="668.8591395501169" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="687.8591395501169" y2="687.8591395501169" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="691.8591395501169" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TRE-CE e TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Portaria nº 5/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (4):</strong> Serra da Brígida, Flor da América, Charnecas e Unha de Gato.</li>
+<li><strong>De 3 a 5 km (8):</strong> Segredo, Xiquenique, Encantada, Cachoeira dos Pintos, Malhada Grande, Angelim, Canavieira e Canto.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (33):</strong> Barra de Bravas, Barra do Felipe, Barra do Felipe V, Bela Vista, Boa Vista, Bravas, Cachoeirinha, Cacimbas, Caipu, Canastras, Canga, Dois Riachos, Extrema, Malhada do Barro, Mamoeiro, Manguinha, Monte Verde, Riacho do Meio, Santo André, São Sebastião, Sítio Cana Brava, Sítio Junco, Sítio Várzea Grande, Umarizeira, Varzante, Xixá, alto dos Abílio, comunidade, sao bartolomeu, sitio agrovila, sitio camara, sitio muquem e várzea redonda.</li>
+</ul><h2>Rotas do Portaria nº 5/2026</h2>
+<p>O edital tem 0 rotas para Cariús. Horários: não informados. Veículos: não informados.</p>
+<p><strong>A Justiça Eleitoral dispensou o transporte gratuito de eleitores neste município nas Eleições 2026.</strong> A Portaria nº 5/2026 da 43ª ZE (DJE/TRE-CE nº 201, disp. 14/09/2026, publ. 15/09/2026, p. 414–415), considerando a ausência de indicação de membros para a Comissão Especial de Transporte e a existência de seções nos bairros, distritos e principais localidades, determinou que &quot;não haverá transporte gratuito de eleitoras e eleitores em veículos disponibilizados pela Justiça Eleitoral no 1º Turno das Eleições Gerais de 2026, nem no 2º turno, caso haja&quot; em Jucás, Cariús e Saboeiro: não há rotas da Justiça Eleitoral no 1º nem no 2º turno. Nenhum ato posterior da 43ª ZE revogando a portaria foi publicado no DJE até a edição 237.</p>
+
+<p>Fonte: Portaria nº 5/2026 da 43ª ZE, DJE/TRE-CE nº 201 (disp. 14/09/2026), p. 414–415; https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=CE&amp;numDiario=201&amp;anoDiario=2026.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 12 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Serra da Brígida</strong></td><td>Xixá – Serra da Brígida – Xixá</td><td>Serra da Brígida</td><td>19,3 km (ida e volta)</td><td>~47 min</td></tr><tr><td><strong>Rota nova – Flor da América</strong></td><td>Bela Vista – Flor da América – Bela Vista</td><td>Flor da América</td><td>16,6 km (ida e volta)</td><td>~36 min</td></tr><tr><td><strong>Rota nova – Charnecas</strong></td><td>Riacho do Meio – Unha de Gato – Charnecas – Riacho do Meio</td><td>Unha de Gato, Charnecas</td><td>13,9 km (ida e volta)</td><td>~34 min</td></tr><tr><td><strong>Rota nova – Segredo</strong></td><td>Sede – Xiquenique – Segredo – Sede</td><td>Xiquenique, Segredo</td><td>17,8 km (ida e volta)</td><td>~43 min</td></tr><tr><td><strong>Rota nova – Encantada</strong></td><td>Umarizeira – Encantada – Umarizeira</td><td>Encantada</td><td>8,1 km (ida e volta)</td><td>~16 min</td></tr><tr><td><strong>Rota nova – Cachoeira dos Pintos</strong></td><td>Caipu – Cachoeira dos Pintos – Caipu</td><td>Cachoeira dos Pintos</td><td>7,3 km (ida e volta)</td><td>~9 min</td></tr><tr><td><strong>Rota nova – Malhada Grande</strong></td><td>Sede – Malhada Grande – Sede</td><td>Malhada Grande</td><td>6,5 km (ida e volta)</td><td>~9 min</td></tr><tr><td><strong>Rota nova – Angelim</strong></td><td>Barra do Felipe – Angelim – Barra do Felipe</td><td>Angelim</td><td>6,5 km (ida e volta)</td><td>~13 min</td></tr><tr><td><strong>Rota nova – Canavieira</strong></td><td>sao bartolomeu – Canavieira – sao bartolomeu</td><td>Canavieira</td><td>6,4 km (ida e volta)</td><td>~10 min</td></tr><tr><td><strong>Rota nova – Canto</strong></td><td>São Sebastião – Canto – São Sebastião</td><td>Canto</td><td>6,2 km (ida e volta)</td><td>~15 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMC</strong></p><p>Cariús/CE, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Paulo Lacerda de Oliveira Júnior</strong><br>Juiz Eleitoral da 43ª Zona Eleitoral – Jucás/CE</p><p><strong>Assunto:</strong> Pedido de reconsideração da dispensa do transporte gratuito de eleitores (Portaria nº 5/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Cariús, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação que, com a dispensa do transporte gratuito determinada pela Portaria nº 5/2026, ficam sem nenhum meio de transporte da Justiça Eleitoral para votar: Serra da Brígida, Flor da América, Charnecas, Unha de Gato, Segredo, Xiquenique, Encantada, Cachoeira dos Pintos, Malhada Grande, Angelim, Canavieira e Canto.</p><p>Sugerimos, respeitosamente, que Vossa Excelência reconsidere a dispensa ao menos para essas localidades, com a criação das seguintes rotas:</p><ol><li>a criação da Rota nova – Serra da Brígida (Xixá – Serra da Brígida – Xixá);</li><li>a criação da Rota nova – Flor da América (Bela Vista – Flor da América – Bela Vista);</li><li>a criação da Rota nova – Charnecas (Riacho do Meio – Unha de Gato – Charnecas – Riacho do Meio);</li><li>a criação da Rota nova – Segredo (Sede – Xiquenique – Segredo – Sede);</li><li>a criação da Rota nova – Encantada (Umarizeira – Encantada – Umarizeira);</li><li>a criação da Rota nova – Cachoeira dos Pintos (Caipu – Cachoeira dos Pintos – Caipu);</li><li>a criação da Rota nova – Malhada Grande (Sede – Malhada Grande – Sede);</li><li>a criação da Rota nova – Angelim (Barra do Felipe – Angelim – Barra do Felipe);</li><li>a criação da Rota nova – Canavieira (sao bartolomeu – Canavieira – sao bartolomeu);</li><li>a criação da Rota nova – Canto (São Sebastião – Canto – São Sebastião).</li></ol><p>As rotas sugeridas atendem só as localidades mais distantes, que hoje não têm como chegar ao local de votação.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Cariús</p></blockquote>
+<p class="fontes">Fontes: TRE-CE e TSE, Locais de Votação de Cariús; Portaria nº 5/2026 da 43ª ZE, DJE/TRE-CE nº 201 (disp. 14/09/2026), p. 414–415; https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=CE&amp;numDiario=201&amp;anoDiario=2026; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

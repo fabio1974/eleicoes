@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Jussari</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Jussari</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/jussari.pdf?v=1792239180" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Jussari (28ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 28ª Zona Eleitoral <strong>5 rotas novas e 1 parada extra em rotas do edital</strong> no transporte gratuito de Jussari.
+Traçamos pelas estradas o percurso das 5 rotas do Edital ZE-028 nº 13, de 29/08/2026 (Quadro Geral de Percursos e Horários – Transporte de Eleitores – Jussari/BA – Eleições 2026). 34 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 2 ficam a 1–2 km.</p>
+<ul>
+<li>Jussari tem 4.662 eleitores aptos em 4 locais de votação e 23 seções. São 1 locais rurais, com 536 eleitores (11% do total).</li>
+<li>1 locais rurais ficam a 10 km ou mais da sede, com 536 eleitores. Os mais distantes: Areia Branca (11,3 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Conquista (28,7 km do local de votação), Nivanda (27,2 km do local de votação), Fazenda Probidade (26,0 km do local de votação), Fazenda Altamira (25,5 km do local de votação), Indepedência (25,3 km do local de votação), Vitória (24,4 km do local de votação), Fazenda Vitória 2 (24,4 km do local de votação), Reserva (23,8 km do local de votação), Terezinha (23,7 km do local de votação), São Lourenço (23,3 km do local de votação), São João (20,9 km do local de votação), São Judas Tadeu (20,7 km do local de votação), Santa Rosa (19,1 km do local de votação), Porto Alegre (18,7 km do local de votação), Recreio (18,0 km do local de votação), São José (17,5 km do local de votação), Palmira (16,5 km do local de votação), Nobreza (15,3 km do local de votação), Eldorado (14,9 km do local de votação), Gruta Encantada (14,8 km do local de votação), Cinco Porcos (13,3 km do local de votação), Jandaíra (13,1 km do local de votação), Piabanha (10,3 km do local de votação), Santo Antônio de Baixo (9,5 km do local de votação), Santa Luzia (8,9 km do local de votação), Santa Joana (8,1 km do local de votação), Santo Antônio de Cima (5,5 km do local de votação), Botafogo (5,5 km do local de votação), Santo Antônio (5,2 km do local de votação), Olimpo (5,2 km do local de votação), João Dantas (4,7 km do local de votação), Candeias (4,7 km do local de votação), Putumutu (3,6 km do local de votação) e São Felix (3,0 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Fazenda Monte Alto e Abelha.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 44 localidades rurais de Jussari que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Conquista</td><td>28,7</td><td>Rota 01</td><td>10,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Nivanda</td><td>27,2</td><td>Rota 01</td><td>10,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Probidade</td><td>26,0</td><td>Rota 02</td><td>8,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Altamira</td><td>25,5</td><td>Rota 02</td><td>8,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Indepedência</td><td>25,3</td><td>Rota 01</td><td>9,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Vitória</td><td>24,4</td><td>Rota 01</td><td>8,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Vitória 2</td><td>24,4</td><td>Rota 01</td><td>8,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Reserva</td><td>23,8</td><td>Rota 02</td><td>7,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Terezinha</td><td>23,7</td><td>Rota 01</td><td>8,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>São Lourenço</td><td>23,3</td><td>Rota 01</td><td>5,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>São João</td><td>20,9</td><td>Rota 01</td><td>9,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>São Judas Tadeu</td><td>20,7</td><td>Rota 02</td><td>5,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Santa Rosa</td><td>19,1</td><td>Rota 02</td><td>5,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Porto Alegre</td><td>18,7</td><td>Rota 01</td><td>9,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Recreio</td><td>18,0</td><td>Rota 02</td><td>5,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>São José</td><td>17,5</td><td>Rota 02</td><td>5,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Palmira</td><td>16,5</td><td>Rota 02</td><td>6,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Nobreza</td><td>15,3</td><td>Rota 01</td><td>7,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Eldorado</td><td>14,9</td><td>Rota 02</td><td>7,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Gruta Encantada</td><td>14,8</td><td>Rota 03</td><td>5,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Cinco Porcos</td><td>13,3</td><td>Rota 01</td><td>5,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Jandaíra</td><td>13,1</td><td>Rota 01</td><td>10,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Piabanha</td><td>10,3</td><td>Rota 01</td><td>8,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Santo Antônio de Baixo</td><td>9,5</td><td>Rota 01</td><td>4,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Santa Luzia</td><td>8,9</td><td>Rota 01</td><td>3,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Santa Joana</td><td>8,1</td><td>Rota 01</td><td>2,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Santa Isabel</td><td>5,8</td><td>Rota 01</td><td>0,6</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Serra Verde</td><td>5,7</td><td>Rota 02</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Santo Antônio de Cima</td><td>5,5</td><td>Rota 02</td><td>2,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Botafogo</td><td>5,5</td><td>Rota 02</td><td>2,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Santo Antônio</td><td>5,2</td><td>Rota 01</td><td>4,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Olimpo</td><td>5,2</td><td>Rota 02</td><td>2,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>João Dantas</td><td>4,7</td><td>Rota 01</td><td>3,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Candeias</td><td>4,7</td><td>Rota 02</td><td>2,2</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Bom Sossego</td><td>4,5</td><td>Rota 01</td><td>0,6</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fazenda Monte Alto</td><td>4,4</td><td>Rota 02</td><td>2,0</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Putumutu</td><td>3,6</td><td>Rota 01</td><td>3,2</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Abelha</td><td>3,5</td><td>Rota 02</td><td>1,2</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>São Felix</td><td>3,0</td><td>Rota 01</td><td>2,7</td><td>Sem rota (mais de 2 km)</td></tr></tbody></table></div>
+<p>2 das 5 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Pratas (Rota 04) e Assentamento Diolinda (Rota 05). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 44 localidades rurais de Jussari, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1135" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Jussari: 36 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital ZE-028 nº 13, de 29/08/2026 (Quadro Geral de Percursos e Horários – Transporte de Eleitores – Jussari/BA – Eleições 2026) e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="634.3,80.0 560.6,126.5 539.2,156.7 503.7,156.7 476.2,167.4 438.7,211.9 372.4,256.1 333.3,263.5 296.1,294.6 244.5,232.3 220.8,258.8 202.4,293.9 176.6,297.3 161.8,216.9 129.4,198.5 126.3,223.6 134.0,283.2 132.4,319.4 113.0,393.7 117.0,414.5 96.5,428.9 99.9,454.3 71.8,487.8 76.8,513.3 134.7,535.7 114.3,619.4 125.3,631.8 123.0,663.9 138.7,684.7 122.3,710.8 107.6,756.3 75.1,782.8 55.4,829.3 54.4,872.5 62.1,945.8 49.3,954.5 85.8,976.3 98.9,1003.1 119.7,986.0 119.7,850.4 124.3,815.9 168.5,783.1 183.3,786.1 191.6,824.0 219.8,849.7 313.8,847.4 332.3,873.9 363.7,875.2 398.9,864.1 409.9,829.3 412.6,775.1 424.0,742.9 443.8,750.6 482.6,744.6 496.3,728.9 498.7,647.5 516.4,624.1 511.7,593.3 491.6,580.2 496.3,558.8 523.8,532.7 548.9,532.3 555.9,570.5 596.8,575.9 614.8,541.4 646.0,503.2 676.1,486.5 694.2,435.6 680.1,417.5 687.2,363.6 725.0,305.3 718.0,287.3 686.8,289.3 668.8,248.7 686.8,211.2 665.7,191.2 680.1,160.4 656.0,151.3 641.3,129.2 644.6,99.8 634.3,80.0 634.3,80.0" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="409.4,375.4 407.1,385.2 407.1,397.9 409.0,406.6 412.0,414.1 411.9,425.1 414.3,436.4 413.2,447.0 410.9,456.1 408.8,467.4 410.5,482.2 414.7,493.5 413.8,503.5 410.0,513.4 412.6,526.6 406.5,530.9 399.8,535.2 390.1,536.8 382.4,539.2 371.0,541.2 359.3,543.6 360.1,553.1 361.1,562.2 363.0,572.7 364.5,582.5 365.0,593.8 366.5,602.6 366.6,614.0 366.6,627.3 369.9,634.5 373.7,641.5 376.8,649.1 379.0,657.3 381.6,666.7 383.4,670.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="276.0,773.5 281.8,767.3 287.2,762.5 295.7,758.1 305.1,754.5 314.4,755.4 323.0,757.3 329.8,753.8 333.3,745.1 338.6,739.3 344.4,733.6 349.7,724.9 354.7,718.1 356.6,708.6 362.4,704.0 363.8,695.2 368.0,689.0 373.7,684.6 381.1,679.5 382.3,670.4 383.4,670.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="494.9,498.6 491.5,490.4 484.0,485.5 477.9,479.6 472.3,474.4 466.5,470.1 459.6,464.6 457.8,455.0 451.3,448.9 444.8,445.0 436.5,442.3 425.0,443.3 418.6,447.4 412.7,452.4 409.2,461.2 410.5,482.2 414.7,493.5 413.8,503.5 410.0,513.4 412.6,526.6 406.5,530.9 399.8,535.2 390.1,536.8 382.4,539.2 371.0,541.2 359.3,543.6 360.1,553.1 361.1,562.2 363.0,572.7 364.5,582.5 365.0,593.8 366.5,602.6 366.6,614.0 366.6,627.3 369.9,634.5 373.7,641.5 376.8,649.1 379.0,657.3 381.6,666.7 383.4,670.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="374.6,675.6 376.9,667.8 379.8,659.9 376.8,649.1 373.7,641.5 369.9,634.5 366.6,627.3 366.6,614.0 366.7,603.9 365.0,593.8 364.5,583.1 363.0,572.7 361.1,562.2 360.1,553.1 359.3,543.6 358.4,533.7 357.4,523.4 352.0,518.2 298.8,512.3 285.1,513.2 280.8,521.3 284.6,514.5 274.2,513.7 266.6,510.3 264.3,500.6 266.6,510.3 231.5,504.0 222.7,501.9 212.2,496.3 204.6,500.1 198.8,506.7 195.9,514.6 191.7,522.5 186.5,528.6 173.2,534.1 164.1,541.2 153.9,547.4 146.2,552.1 137.7,558.1 132.8,564.3 125.1,574.9 120.7,581.1 123.2,567.2 121.8,558.0 123.2,567.2 120.1,579.4 119.3,589.6 117.9,604.2 115.3,613.1 114.1,622.2 116.8,629.6 119.6,637.0 121.8,645.1 125.1,651.9 127.8,660.1 125.0,652.7 121.8,645.1 116.1,651.8 118.8,659.2 119.4,669.2 116.4,682.1 115.3,692.4 113.2,708.9 111.5,719.1 109.9,730.0 109.9,741.5 102.6,751.8 96.2,756.2 102.6,751.8 108.6,744.0 110.0,733.1 113.2,708.9 114.7,700.0 115.2,689.5 117.6,677.1 120.1,666.4 117.9,658.1 116.8,648.8 118.7,640.4 117.3,631.1 114.1,622.2 115.3,613.1 117.9,604.2 119.3,590.9 119.8,581.1 121.9,572.7 122.9,561.8 120.5,552.5 117.5,544.5 113.0,538.7 107.8,533.7 101.5,527.9 97.6,520.9 93.5,514.8 92.0,505.7 90.6,496.7 93.0,488.5 90.0,480.6 87.2,473.3 92.7,465.5 98.1,460.3 102.7,454.9 108.8,447.8 113.2,441.9 118.1,435.0 121.9,428.1 121.4,418.4 126.1,408.7 131.5,403.2 136.3,394.8 139.9,386.8 143.6,378.4 149.0,370.4 153.5,364.4 153.6,354.3 151.9,345.2 149.8,336.6 145.3,325.3 139.6,310.8 135.4,300.4 136.5,286.1 136.8,273.0 136.0,260.5 132.7,247.0 130.7,236.3 130.0,219.6 131.5,209.8 135.4,201.7 132.2,193.2 135.7,200.3 132.1,207.3 130.0,217.4 130.6,234.8 132.7,247.0 134.9,255.3 136.3,264.9 137.1,277.8 135.9,291.4 136.9,304.0 142.5,318.1 147.9,331.9 150.5,340.5 153.0,350.5 154.4,359.2 149.0,370.4 144.4,376.5 140.7,385.1 136.9,393.5 132.9,401.1 127.2,407.9 121.8,413.0 123.2,422.2 120.4,430.8 116.2,437.8 110.8,445.2 105.0,451.9 99.3,459.2 93.1,465.0 87.9,472.1 90.0,480.6 93.0,488.5 90.6,496.7 92.0,505.7 93.5,514.8 97.6,520.9 101.5,527.9 107.8,533.7 113.0,538.7 117.5,544.5 120.5,552.5 122.9,561.8 121.9,572.7 119.8,581.1 125.1,574.9 131.0,566.9 135.2,560.9 141.6,555.3 153.9,547.4 161.8,542.8 168.3,536.9 179.7,531.3 187.9,527.7 195.5,515.6 198.1,507.4 204.6,500.1 210.5,496.0 219.3,500.4 267.2,512.4 278.6,513.5 291.0,512.8 349.3,517.8 356.3,521.2 358.4,533.7 359.3,543.6 360.1,553.1 361.1,562.2 363.0,572.7 364.5,582.5 365.0,593.8 366.5,602.6 366.6,614.0 366.6,627.3 369.9,634.5 373.7,641.5 376.8,649.1 379.0,657.3 381.6,666.7 376.7,675.9 374.6,675.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Conquista</title></polyline>
+<polyline points="374.6,675.6 376.9,667.8 379.8,659.9 376.8,649.1 373.7,641.5 369.9,634.5 366.6,627.3 366.6,614.0 366.7,603.9 365.0,593.8 364.5,583.1 363.0,572.7 361.1,562.2 360.1,553.1 359.3,543.6 358.4,533.7 357.4,523.4 352.0,518.2 298.8,512.3 285.1,513.2 274.2,513.7 222.7,501.9 212.2,496.3 204.6,500.1 198.8,506.7 195.9,514.6 191.7,522.5 186.5,528.6 173.2,534.1 164.1,541.2 153.9,547.4 146.2,552.1 137.7,558.1 132.8,564.3 125.1,574.9 120.7,581.1 119.3,590.9 117.9,604.2 115.3,613.1 114.1,622.2 116.8,629.6 119.6,637.0 117.2,647.1 117.9,658.1 120.1,666.4 117.6,677.1 115.7,685.5 115.3,696.0 113.2,708.9 110.2,727.0 110.3,739.3 102.6,751.8 96.2,756.2 87.6,763.0 79.9,774.4 75.4,783.0 70.6,793.7 57.7,821.7 42.9,839.3 37.5,844.7 37.7,854.9 43.1,862.4 44.9,871.7 48.5,879.4 55.0,884.4 57.5,893.0 55.0,884.4 48.5,879.4 44.9,871.7 43.1,862.4 37.7,854.9 37.5,844.7 54.8,825.6 68.3,800.1 75.4,783.0 79.9,774.4 83.6,767.4 96.2,756.2 102.6,751.8 108.6,744.0 110.0,733.1 113.2,708.9 114.7,700.0 115.2,689.5 117.6,677.1 120.1,666.4 117.9,658.1 116.8,648.8 118.7,640.4 117.3,631.1 114.1,622.2 115.3,613.1 117.9,604.2 119.3,590.9 120.3,581.5 125.1,574.9 131.0,566.9 135.2,560.9 141.6,555.3 153.9,547.4 161.8,542.8 168.3,536.9 179.7,531.3 187.9,527.7 195.5,515.6 198.1,507.4 204.6,500.1 210.5,496.0 219.3,500.4 267.2,512.4 278.6,513.5 291.0,512.8 349.3,517.8 356.3,521.2 358.4,533.7 359.3,543.6 360.1,553.1 361.1,562.2 363.0,572.7 364.5,582.5 365.0,593.8 366.5,602.6 366.6,614.0 366.6,627.3 369.9,634.5 373.7,641.5 376.8,649.1 379.0,657.3 381.6,666.7 376.7,675.9 374.6,675.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fazenda Probidade</title></polyline>
+<polyline points="389.4,677.2 395.6,673.3 402.5,669.1 413.3,665.7 431.3,657.6 446.3,662.8 452.5,672.7 459.7,676.1 471.9,684.5 477.0,689.7 481.3,695.5 484.4,703.7 487.4,711.4 490.7,718.7 501.9,721.1 510.1,716.8 511.3,707.9 516.0,701.3 520.2,694.9 526.3,690.8 535.4,689.6 546.8,693.5 554.5,696.1 555.3,686.4 561.3,679.3 580.7,658.0 585.5,648.9 595.5,642.4 600.7,633.3 611.3,609.9 612.2,600.0 617.9,587.6 628.3,583.3 648.1,570.1 659.6,568.9 668.5,560.2 679.9,557.6 687.8,554.4 697.1,548.5 687.8,554.4 679.9,557.6 670.4,558.9 665.2,565.5 655.3,568.7 631.5,581.7 622.3,584.3 613.3,595.7 612.0,605.8 600.7,633.3 597.6,640.3 588.7,645.6 582.7,655.4 561.3,679.3 555.9,685.6 554.5,695.7 540.6,691.4 531.0,689.7 524.1,693.0 517.9,698.4 513.8,704.4 509.6,711.3 506.3,718.4 492.8,719.6 487.4,711.4 484.4,703.7 481.3,695.5 477.0,689.7 471.9,684.5 465.1,678.4 456.5,675.5 450.4,668.4 440.1,656.6 420.3,665.2 407.9,667.2 399.3,671.0 392.8,675.0 389.4,677.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Gruta Encantada</title></polyline>
+<polyline points="407.9,380.4 409.6,371.9 422.6,363.6 428.2,357.8 432.6,349.3 434.3,340.3 437.8,333.6 446.6,335.3 453.8,332.1 464.2,325.1 472.1,321.2 477.9,304.5 475.9,288.5 473.6,280.3 478.0,274.2 493.4,269.5 500.4,265.2 503.9,250.3 506.8,238.6 508.2,228.9 532.1,202.6 544.0,178.7 548.6,173.0 551.6,164.5 543.8,160.4 534.1,159.0 527.1,155.4 511.7,155.6 504.2,158.3 498.0,163.6 491.1,170.2 482.3,173.2 475.0,177.2 468.3,181.8 462.7,187.2 456.3,191.7 462.7,187.2 468.3,181.8 475.0,177.2 482.3,173.2 490.0,170.8 496.4,164.9 503.2,159.6 509.9,155.8 519.9,155.9 530.1,156.4 536.3,160.4 546.8,162.6 556.0,161.6 571.4,163.0 580.9,163.9 587.3,167.8 594.3,171.3 601.1,175.5 613.1,178.7 622.3,180.5 632.6,179.2 643.0,177.2 633.6,178.1 625.9,180.6 617.1,178.5 605.9,178.4 594.3,171.3 587.3,167.8 580.9,163.9 571.4,163.0 562.5,161.4 553.2,162.3 549.8,171.2 544.7,177.2 535.5,199.2 511.4,223.9 507.7,231.4 503.9,250.3 500.8,264.0 493.4,269.5 478.8,274.0 473.6,279.7 475.9,288.5 478.4,303.4 472.5,314.3 470.2,322.8 453.8,332.1 446.6,335.3 437.8,333.6 434.3,340.3 432.6,349.3 430.9,340.7 422.0,333.0 417.8,325.2 407.5,316.1 402.3,311.2 397.1,306.4 388.1,301.9 378.9,300.3 369.7,297.5 359.8,295.0 349.2,292.4 356.2,296.4 369.0,297.1 377.2,299.6 388.1,301.9 397.1,306.4 402.3,311.2 407.5,316.1 415.7,320.9 419.8,328.5 429.4,336.2 428.5,345.4 428.2,357.8 422.6,363.6 415.8,368.3 409.2,372.4 407.9,380.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Cinco Porcos</title></polyline>
+<polyline points="376.3,678.7 371.9,684.4 367.0,691.2 363.0,698.3 355.1,700.8 346.6,703.9 338.8,700.1 331.1,703.3 322.1,707.0 312.3,710.3 305.0,707.5 298.4,711.3 292.7,718.1 285.5,721.3 276.0,718.8 266.5,718.2 260.7,712.7 256.5,704.8 260.5,694.6 256.6,702.6 259.9,709.5 262.5,717.2 273.2,718.1 280.8,720.5 292.7,718.1 298.4,711.3 305.0,707.5 312.3,710.3 321.2,707.4 330.3,703.7 337.7,699.8 346.6,703.9 355.1,700.8 363.0,698.3 367.0,691.2 370.6,684.0 376.9,688.4 384.4,690.9 381.8,699.4 379.7,707.9 377.8,716.6 378.9,725.7 384.8,730.8 387.6,739.8 386.5,756.8 383.8,767.4 380.3,780.4 380.3,791.2 375.0,799.6 379.4,792.6 380.3,780.4 383.3,769.0 386.5,756.8 387.6,739.8 384.8,730.8 378.9,725.7 377.1,717.4 379.5,709.0 381.7,700.8 384.2,692.0 382.4,682.9 376.3,678.7 376.3,678.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Santo Antônio de Cima</title></polyline>
+<polyline points="328.3,757.5 331.8,750.6 334.8,743.4 340.0,738.4 346.9,732.6 349.7,724.9 354.7,718.1 356.6,708.6 362.4,704.0 357.7,698.3 351.9,704.0 341.9,702.0 331.8,703.1 322.1,707.0 312.3,710.3 313.0,722.6 311.9,712.8 318.8,708.4 326.8,706.0 333.6,702.6 346.6,703.9 355.1,700.8 363.0,698.3 367.0,691.2 370.6,684.0 376.9,688.4 384.4,690.9 381.8,699.4 379.7,707.9 377.8,716.6 378.9,725.7 384.8,730.8 387.6,739.8 386.5,756.8 383.8,767.4 380.3,780.4 380.3,791.2 375.4,797.7 380.3,791.2 380.3,780.4 383.3,769.0 386.5,756.8 387.6,739.8 384.8,730.8 378.9,725.7 377.1,717.4 379.5,709.0 381.7,700.8 384.2,692.0 377.6,688.5 371.4,683.9 367.0,691.2 363.0,698.3 357.9,706.1 356.1,714.6 353.5,722.9 346.2,726.3 343.8,734.6 337.1,739.9 332.5,747.7 329.5,754.8 328.3,757.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 02</title></polyline>
+<circle cx="418.4" cy="548.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="275.8" cy="776.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="341.3" cy="549.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="447.1" cy="666.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="429.4" cy="330.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="375.7" cy="708.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="383.3" cy="671.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="409.5" cy="374.9" r="2.2" fill="#b9b9b2"/>
+<polygon points="407.9,371.5 399.5,387.0 416.3,387.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="389.2,667.6 380.2,684.0 398.1,684.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="376.1,667.3 365.4,687.1 386.9,687.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="374.8,662.5 363.0,684.3 386.6,684.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="134.7" cy="189.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="141.7" y="184.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Conquista 28,7 km</text>
+<circle cx="120.9" cy="236.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="127.9" y="231.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Nivanda 27,2 km</text>
+<circle cx="68.4" cy="929.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="75.4" y="924.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Probidade 26,0 km</text>
+<circle cx="51.8" cy="879.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="58.8" y="874.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Altamira 25,5 km</text>
+<circle cx="128.8" cy="291.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="135.8" y="286.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Indepedência 25,3 km</text>
+<circle cx="140.5" cy="319.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="147.5" y="314.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Vitória 24,4 km</text>
+<circle cx="139.7" cy="320.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="146.7" y="335.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Vitória 2 24,4 km</text>
+<circle cx="40.0" cy="837.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="47.0" y="832.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Reserva 23,8 km</text>
+<circle cx="152.9" cy="339.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="159.9" y="354.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Terezinha 23,7 km</text>
+<circle cx="249.6" cy="334.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="113.8" cy="404.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="120.8" y="399.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">São João 20,9 km</text>
+<circle cx="91.5" cy="756.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="98.5" y="751.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">São Judas Tadeu 20,7 km</text>
+<circle cx="117.0" cy="719.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="124.0" y="714.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santa Rosa 19,1 km</text>
+<circle cx="82.5" cy="461.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="89.5" y="456.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Porto Alegre 18,7 km</text>
+<circle cx="122.7" cy="686.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="129.7" y="681.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Recreio 18,0 km</text>
+<circle cx="141.4" cy="662.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="148.4" y="657.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">São José 17,5 km</text>
+<circle cx="122.0" cy="641.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="129.0" y="636.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Palmira 16,5 km</text>
+<circle cx="115.8" cy="557.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="122.8" y="552.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Nobreza 15,3 km</text>
+<circle cx="114.6" cy="596.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="121.6" y="591.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Eldorado 14,9 km</text>
+<circle cx="655.7" cy="461.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="506.1" y="456.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Gruta Encantada 14,8 km</text>
+<circle cx="459.4" cy="204.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="466.4" y="199.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Cinco Porcos 13,3 km</text>
+<circle cx="661.4" cy="161.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="555.2" y="156.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Jandaíra 13,1 km</text>
+<circle cx="528.4" cy="162.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="535.4" y="177.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Piabanha 10,3 km</text>
+<circle cx="236.7" cy="483.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="243.7" y="478.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santo Antônio de Baixo 9,5 km</text>
+<circle cx="265.1" cy="497.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="272.1" y="492.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santa Luzia 8,9 km</text>
+<circle cx="273.2" cy="523.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="280.2" y="518.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santa Joana 8,1 km</text>
+<circle cx="267.1" cy="693.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="274.1" y="688.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santo Antônio de Cima 5,5 km</text>
+<circle cx="260.6" cy="694.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="267.6" y="709.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Botafogo 5,5 km</text>
+<circle cx="276.6" cy="312.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="283.6" y="307.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santo Antônio 5,2 km</text>
+<circle cx="233.8" cy="707.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="240.8" y="722.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Olimpo 5,2 km</text>
+<circle cx="471.3" cy="276.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="478.3" y="271.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">João Dantas 4,7 km</text>
+<circle cx="372.9" cy="805.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="379.9" y="800.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Candeias 4,7 km</text>
+<circle cx="374.5" cy="797.5" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<circle cx="480.3" cy="689.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="487.3" y="684.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Putumutu 3,6 km</text>
+<circle cx="306.6" cy="717.7" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<circle cx="466.6" cy="675.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="473.6" y="670.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">São Felix 3,0 km</text>
+<rect x="378.3" y="666.1" width="10" height="10" fill="#1d1d1b"/><text x="392.3" y="689.1" font-weight="600" fill="#1d1d1b">Sede de Jussari</text>
+<line x1="35" x2="185.8" y1="1033.1" y2="1033.1" stroke="#8a8a84" stroke-width="2"/><text x="35" y="1047.1" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="1024.089240742805" y2="1024.089240742805" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="1028.089240742805" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,1017.1 421.4,1029.3 434.6,1029.3" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="1028.089240742805" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="1042.089240742805" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="1051.089240742805" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="1047.089240742805" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="1051.089240742805" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1070.089240742805" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1074.089240742805" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1070.089240742805" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1074.089240742805" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1093.089240742805" y2="1093.089240742805" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1097.089240742805" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1116.089240742805" y2="1116.089240742805" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1120.089240742805" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital ZE-028 nº 13, de 29/08/2026 (Quadro Geral de Percursos e Horários – Transporte de Eleitores – Jussari/BA – Eleições 2026) · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (32):</strong> Conquista, Nivanda, Fazenda Probidade, Fazenda Altamira, Indepedência, Vitória, Fazenda Vitória 2, Reserva, Terezinha, São Lourenço, São João, São Judas Tadeu, Santa Rosa, Porto Alegre, Recreio, São José, Palmira, Nobreza, Eldorado, Gruta Encantada, Cinco Porcos, Jandaíra, Piabanha, Santo Antônio de Baixo, Santa Luzia, Santa Joana, Santa Isabel, Serra Verde, Santo Antônio de Cima, Botafogo, Santo Antônio e Olimpo.</li>
+<li><strong>De 3 a 5 km (7):</strong> João Dantas, Candeias, Bom Sossego, Fazenda Monte Alto, Putumutu, Abelha e São Felix.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (5):</strong> Areia Branca, Boa Vista, Jussari, Minas Gerais e Nova America.</li>
+</ul><h2>Rotas do Edital ZE-028 nº 13, de 29/08/2026 (Quadro Geral de Percursos e Horários – Transporte de Eleitores – Jussari/BA – Eleições 2026)</h2>
+<p>O edital tem 5 rotas para Jussari. Horários: Todas as rotas: saída 07:00, retorno 12:00.. Veículos: Rota 01: Ônibus Marcopolo PLG 0286, Antonio Fernando Batista; Rota 02: Ônibus Marcopolo RPE 1F91, Edson Rosa; Rota 03: Micro-ônibus Marcopolo SKQ2E38, Miguel Renan da Silva; Rota 04: Ônibus Marcopolo PLX5D67, Leandro Maciel; Rota 05: Ônibus Marcopolo TGV 8F17, Melquisedeque Farias.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Areia Branca</td></tr><tr><td>02</td><td>Serra Verde</td></tr><tr><td>03</td><td>Olímpio</td></tr><tr><td>04</td><td>Pratas</td></tr><tr><td>05</td><td>Assentamento Diolinda</td></tr></tbody></table></div>
+
+<p>Fonte: Edital ZE-028 nº 13/2026 da 28ª ZE/BA (Itabuna), Quadro Geral de Percursos e Horários de Jussari; DJE/TRE-BA nº 181, disp. 01/09/2026 (https://dje.tse.jus.br/dje/pdf/v1/edicao/129089).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 36 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Conquista</strong></td><td>Sede – Santa Joana – Santa Luzia – Santo Antônio de Baixo – Nobreza – Eldorado – Palmira – São José – Recreio – Santa Rosa – São Judas Tadeu – Porto Alegre – São João – Terezinha – Fazenda Vitória 2 – Vitória – Indepedência – Nivanda – Conquista – São Lourenço – Sede</td><td>Santa Joana, Santa Luzia, Santo Antônio de Baixo, Nobreza, Eldorado, Palmira, São José, Recreio, Santa Rosa, São Judas Tadeu, Porto Alegre, São João, Terezinha, Fazenda Vitória 2, Vitória, Indepedência, Nivanda, Conquista, São Lourenço</td><td>75,4 km (ida e volta)</td><td>~2h22</td></tr><tr><td><strong>Rota nova – Fazenda Probidade</strong></td><td>Sede – Reserva – Fazenda Altamira – Fazenda Probidade – Sede</td><td>Reserva, Fazenda Altamira, Fazenda Probidade</td><td>51,9 km (ida e volta)</td><td>~1h16</td></tr><tr><td><strong>Rota nova – Gruta Encantada</strong></td><td>Sede – São Felix – Putumutu – Gruta Encantada – Sede</td><td>São Felix, Putumutu, Gruta Encantada</td><td>29,6 km (ida e volta)</td><td>~31 min</td></tr><tr><td><strong>Rota nova – Cinco Porcos</strong></td><td>Areia Branca – João Dantas – Cinco Porcos – Piabanha – Jandaíra – Santo Antônio – Areia Branca</td><td>João Dantas, Cinco Porcos, Piabanha, Jandaíra, Santo Antônio</td><td>41,8 km (ida e volta)</td><td>~1h16</td></tr><tr><td><strong>Rota nova – Santo Antônio de Cima</strong></td><td>Sede – Santo Antônio de Cima – Botafogo – Olimpo – Candeias – Sede</td><td>Santo Antônio de Cima, Botafogo, Olimpo, Candeias</td><td>20,2 km (ida e volta)</td><td>~49 min</td></tr><tr><td><strong>Parada extra na Rota 02</strong></td><td>desvio pelo caminho atual: Abelha – Fazenda Monte Alto</td><td>Abelha, Fazenda Monte Alto</td><td>+20,5 km</td><td>+52 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMJ</strong></p><p>Jussari/BA, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Eros Cavalcanti</strong><br>Juiz Eleitoral da 28ª Zona Eleitoral – Itabuna/BA</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital ZE-028 nº 13, de 29/08/2026 (Quadro Geral de Percursos e Horários – Transporte de Eleitores – Jussari/BA – Eleições 2026)) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Jussari, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital ZE-028 nº 13, de 29/08/2026 (Quadro Geral de Percursos e Horários – Transporte de Eleitores – Jussari/BA – Eleições 2026): Conquista, Nivanda, Fazenda Probidade, Fazenda Altamira, Indepedência, Vitória, Fazenda Vitória 2, Reserva, Terezinha, São Lourenço, São João, São Judas Tadeu, Santa Rosa, Porto Alegre, Recreio, São José, Palmira, Nobreza, Eldorado, Gruta Encantada, Cinco Porcos, Jandaíra, Piabanha, Santo Antônio de Baixo, Santa Luzia, Santa Joana, Santo Antônio de Cima, Botafogo, Santo Antônio, Olimpo, João Dantas, Candeias, Putumutu, São Felix, Fazenda Monte Alto e Abelha.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Conquista (Sede – Santa Joana – Santa Luzia – Santo Antônio de Baixo – Nobreza – Eldorado – Palmira – São José – Recreio – Santa Rosa – São Judas Tadeu – Porto Alegre – São João – Terezinha – Fazenda Vitória 2 – Vitória – Indepedência – Nivanda – Conquista – São Lourenço – Sede);</li><li>a criação da Rota nova – Fazenda Probidade (Sede – Reserva – Fazenda Altamira – Fazenda Probidade – Sede);</li><li>a criação da Rota nova – Gruta Encantada (Sede – São Felix – Putumutu – Gruta Encantada – Sede);</li><li>a criação da Rota nova – Cinco Porcos (Areia Branca – João Dantas – Cinco Porcos – Piabanha – Jandaíra – Santo Antônio – Areia Branca);</li><li>a criação da Rota nova – Santo Antônio de Cima (Sede – Santo Antônio de Cima – Botafogo – Olimpo – Candeias – Sede);</li><li>a inclusão de paradas em Abelha e Fazenda Monte Alto na Rota 02, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital ZE-028 nº 13, de 29/08/2026 (Quadro Geral de Percursos e Horários – Transporte de Eleitores – Jussari/BA – Eleições 2026) deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Jussari</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Jussari; Edital ZE-028 nº 13/2026 da 28ª ZE/BA (Itabuna), Quadro Geral de Percursos e Horários de Jussari; DJE/TRE-BA nº 181, disp. 01/09/2026 (https://dje.tse.jus.br/dje/pdf/v1/edicao/129089); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

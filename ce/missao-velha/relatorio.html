@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Missão Velha</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Missão Velha</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/missao-velha.pdf?v=1792186852" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Missão Velha (16ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 16ª Zona Eleitoral <strong>10 rotas novas e 1 parada extra em rotas do edital</strong> no transporte gratuito de Missão Velha.
+Traçamos pelas estradas o percurso das 5 rotas do Edital nº 27/2026. 15 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 1 ficam a 1–2 km.</p>
+<ul>
+<li>Missão Velha tem 31.030 eleitores aptos em 35 locais de votação e 120 seções. São 25 locais rurais, com 17.271 eleitores (56% do total).</li>
+<li>21 locais rurais ficam a 10 km ou mais da sede, com 15.286 eleitores. Os mais distantes: Jamacaru (35,2 km), Aleixo (34,1 km) e Banco de Areia (33,6 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Quimami (7,8 km do local de votação), Comunidade Quilombola Souza (6,2 km do local de votação), Sítio Duas Passagens (4,8 km do local de votação), Sítio Jerimum (4,6 km do local de votação), Gaviãozinho (4,5 km do local de votação), Sítio Grossos (4,4 km do local de votação), Quaresma (3,8 km do local de votação), Baixa do Quaresma (3,7 km do local de votação), Madeira Cortada (3,6 km do local de votação), Saco do Barbosa (3,6 km do local de votação), Aleixo (3,5 km do local de votação), Sítio Coqueiro (3,5 km do local de votação), Tapera (3,5 km do local de votação), Chiqueiro das Cabras (3,2 km do local de votação) e Sítio Boa Vista (3,0 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Cajazeira.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 52 localidades rurais de Missão Velha que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista do TRE-CE e a posição de cada local publicada pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Quimami</td><td>7,8</td><td>Rota 05</td><td>3,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Comunidade Quilombola Souza</td><td>6,2</td><td>Rota 01</td><td>10,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Coité</td><td>4,8</td><td>Rota 03</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Duas Passagens</td><td>4,8</td><td>Rota 02</td><td>6,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Sítio Jerimum</td><td>4,6</td><td>Rota 03</td><td>2,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Gameleira de São Sebastião</td><td>4,5</td><td>Rota 01</td><td>1,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Gaviãozinho</td><td>4,5</td><td>Rota 03</td><td>8,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Sítio Grossos</td><td>4,4</td><td>Rota 02</td><td>7,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Cajazeira</td><td>3,9</td><td>Rota 01</td><td>1,5</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Quaresma</td><td>3,8</td><td>Rota 03</td><td>3,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Baixa do Quaresma</td><td>3,7</td><td>Rota 03</td><td>3,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Madeira Cortada</td><td>3,6</td><td>Rota 03</td><td>5,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Saco do Barbosa</td><td>3,6</td><td>Rota 03</td><td>4,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Aleixo</td><td>3,5</td><td>Rota 01</td><td>5,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Sítio Coqueiro</td><td>3,5</td><td>Rota 03</td><td>2,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Tapera</td><td>3,5</td><td>Rota 03</td><td>2,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Chiqueiro das Cabras</td><td>3,2</td><td>Rota 03</td><td>5,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Valentim</td><td>3,2</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Boa Vista</td><td>3,0</td><td>Rota 03</td><td>3,4</td><td>Sem rota (mais de 2 km)</td></tr></tbody></table></div>
+<p>1 das 10 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: BARRA DA CAIÇARA (Rota 05). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 52 localidades rurais de Missão Velha, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1319" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Missão Velha: 16 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas do Edital nº 27/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="225.9,139.4 194.1,180.9 211.7,238.5 186.1,251.9 167.1,281.6 159.4,349.6 106.3,361.8 95.6,385.5 103.0,427.1 61.7,420.0 49.8,432.1 35.0,473.4 97.9,514.7 105.1,526.5 186.4,587.7 172.2,644.4 131.8,668.2 84.9,769.7 111.3,782.8 121.7,799.1 111.6,824.9 138.3,871.8 126.4,919.9 44.8,1021.5 45.7,1140.2 221.5,1187.4 244.3,1099.3 344.4,1031.0 362.5,1039.6 402.9,1041.1 451.6,1062.2 470.3,1059.5 521.3,1069.6 558.1,1052.1 574.2,972.2 567.9,945.2 545.7,892.3 549.8,875.7 536.5,852.5 497.0,702.9 505.6,646.8 545.1,613.2 559.0,586.5 554.9,556.8 530.8,526.8 549.2,522.4 556.7,490.3 533.5,480.2 527.6,463.3 524.6,443.4 552.8,401.5 544.2,388.5 725.0,269.4 724.4,137.9 687.0,136.1 677.8,116.8 651.4,102.9 618.1,109.4 599.4,129.0 575.1,133.1 567.6,156.3 533.5,159.6 511.8,149.8 458.4,153.3 436.7,115.3 416.2,119.8 396.9,80.6 356.0,80.0 317.4,85.9 278.5,121.6 225.9,139.4 225.9,139.4" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="290.0,827.8 293.2,833.8 295.9,841.2 299.4,847.5 302.0,857.2 304.7,863.8 305.2,872.2 307.0,881.4 315.9,879.0 326.0,877.9 337.2,877.1 345.7,878.4 353.9,879.6 362.8,878.8 369.6,876.5 379.0,877.3 386.9,879.7 395.0,880.5 401.4,883.3 404.2,889.9 407.4,896.1 409.9,902.8 413.4,906.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="431.0,123.1 435.1,129.2 439.8,141.4 438.0,148.6 435.2,155.7 443.8,156.4 448.3,163.3 455.2,161.2 461.8,164.9 470.6,165.2 470.6,165.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="413.4,906.3 408.6,900.9 406.5,893.8 403.3,887.9 398.0,881.1 392.2,877.6 388.2,871.9 383.0,865.9 383.9,855.1 385.3,846.1 386.5,837.3 390.2,831.0 399.4,828.9 404.9,825.1 409.5,817.8 406.2,812.0 401.3,802.7 401.6,793.6 400.5,785.7 392.0,776.7 385.4,769.6 379.8,764.0 375.4,759.2 374.9,750.3 374.4,735.4 374.0,725.6 371.0,715.2 369.8,705.1 367.8,698.0 364.5,691.6 359.8,686.3 356.3,675.5 355.3,666.5 352.7,657.1 350.0,650.0 347.1,644.0 345.3,635.6 343.4,626.0 344.9,617.2 345.4,607.8 346.4,598.2 345.6,589.6 343.8,581.7 341.2,566.6 338.5,557.3 337.0,547.7 336.2,537.3 335.2,528.3 337.4,519.7 340.2,512.8 341.6,505.1 342.0,494.9 341.7,486.2 344.5,476.6 352.1,464.0 356.9,457.1 360.9,451.3 365.4,444.8 367.8,437.5 372.7,433.5 374.8,429.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="489.4,741.8 486.1,735.4 483.8,728.1 480.2,721.1 476.3,715.0 475.8,705.1 478.5,698.4 476.6,690.3 473.8,683.2 473.5,674.1 474.4,663.8 472.4,656.6 465.1,654.6 456.6,653.2 448.8,652.0 441.0,645.6 431.0,640.4 424.9,637.4 418.8,633.6 414.5,628.7 407.2,626.7 398.1,627.1 391.3,624.7 383.4,626.5 371.2,629.4 363.9,631.1 356.2,632.9 347.7,635.0 343.4,626.0 344.9,617.2 345.4,607.8 346.4,598.2 345.6,589.6 343.8,581.7 341.2,566.6 338.5,557.3 337.0,547.7 336.2,537.3 335.2,528.3 337.4,519.7 340.2,512.8 341.6,505.1 342.0,494.9 341.7,486.2 344.5,476.6 352.1,464.0 356.9,457.1 360.9,451.3 365.4,444.8 367.8,437.5 372.7,433.5 374.8,429.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="585.1,349.0 580.6,354.6 573.5,357.9 564.4,359.8 557.5,362.6 549.4,364.7 542.5,368.2 537.6,376.3 533.2,386.7 525.3,398.9 521.8,406.4 519.6,413.6 524.7,425.8 524.9,435.7 523.0,445.8 521.3,453.1 516.1,457.0 509.7,453.6 495.7,451.8 487.7,449.7 479.1,446.7 463.0,440.9 456.2,438.6 441.4,442.2 434.9,444.7 451.1,439.3 459.8,440.1 476.6,446.1 486.2,449.7 493.9,452.0 504.7,452.9 516.0,457.3 522.3,460.6 526.6,465.3 525.2,467.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="546.4,249.5 538.9,247.9 528.6,254.5 523.3,259.3 519.0,264.3 516.1,270.5 528.0,269.5 536.3,271.4 544.9,285.5 556.2,283.9 560.3,290.4 564.5,295.5 572.1,296.8 578.0,300.2 586.9,301.1 591.7,296.2 593.8,289.2 596.9,282.7 602.1,277.5 606.2,271.7 612.9,269.3 621.6,268.0 627.2,262.3 633.8,259.1 634.7,172.6 629.9,176.9 623.7,181.3 618.1,185.0 612.6,190.6 609.6,196.9 605.3,202.1 599.0,205.1 593.1,208.1 589.2,213.6 586.3,219.9 580.9,223.6 575.2,228.1 567.6,233.0 558.9,236.3 553.0,239.7 547.9,244.2 546.4,249.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Quimami</title></polyline>
+<polyline points="172.1,997.9 176.7,1002.8 178.6,1010.4 180.6,1017.4 183.1,1023.9 185.8,1031.1 188.9,1038.1 189.8,1047.7 194.0,1059.2 196.0,1067.5 199.0,1075.3 202.0,1082.0 203.7,1089.7 205.5,1097.5 209.7,1103.8 214.1,1108.5 216.6,1115.1 219.3,1121.7 220.5,1129.5 218.3,1136.5 220.7,1143.7 218.3,1136.9 220.5,1129.5 219.3,1121.7 216.6,1115.1 214.1,1108.5 209.7,1103.8 205.5,1097.5 203.7,1089.7 202.0,1082.0 199.3,1075.8 196.0,1067.5 194.4,1060.2 191.1,1053.4 189.8,1044.0 188.2,1035.9 184.7,1029.4 182.1,1022.4 179.2,1012.8 176.7,1002.8 172.1,997.9 172.1,997.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Souza</title></polyline>
+<polyline points="364.7,433.4 353.8,432.7 350.4,438.4 340.3,439.7 331.8,440.9 321.6,441.5 312.9,440.5 301.6,438.2 287.5,435.8 277.9,436.3 268.4,442.1 274.4,438.3 282.2,435.8 301.5,438.4 311.4,440.4 319.9,441.8 329.3,441.3 322.2,445.8 315.8,448.3 307.5,449.3 303.2,455.1 299.9,462.4 294.5,466.2 291.6,472.9 288.6,479.3 284.6,484.3 281.3,490.2 284.6,484.3 288.6,479.3 291.6,472.9 294.5,466.2 299.9,462.4 302.8,455.9 306.7,449.9 314.4,448.3 321.7,446.2 327.3,442.4 335.8,440.9 343.3,438.9 352.4,438.8 356.5,433.0 364.7,433.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Sítio Jerimum</title></polyline>
+<polyline points="107.3,468.6 104.0,462.9 107.4,456.7 113.2,452.7 120.1,447.0 123.5,441.4 126.7,435.0 129.8,428.0 132.1,420.4 135.4,412.5 138.3,404.3 141.2,396.9 140.7,388.5 135.7,383.4 130.9,379.1 135.7,383.4 140.3,388.0 141.2,396.9 138.3,403.3 136.7,410.6 133.2,416.3 131.2,424.0 128.3,431.9 125.2,437.9 122.8,444.8 118.6,450.0 111.1,454.0 106.0,457.8 103.4,464.4 107.3,468.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Gaviãozinho</title></polyline>
+<polyline points="257.0,340.5 263.6,343.4 254.7,344.5 248.1,347.9 241.5,351.7 235.5,354.8 231.5,360.9 232.5,370.4 231.1,379.2 221.6,378.6 218.4,384.5 221.6,378.6 231.1,379.2 232.5,370.4 231.5,360.9 235.1,354.9 241.5,351.7 247.6,348.2 253.7,344.9 262.5,345.2 263.3,332.5 262.3,323.7 261.4,315.2 262.4,307.3 256.5,303.6 252.5,291.0 250.8,280.3 248.2,265.0 245.7,250.7 248.2,265.0 250.8,280.3 252.5,291.0 254.7,304.1 262.3,302.5 261.9,310.9 261.9,320.0 263.1,330.1 264.1,339.8 257.0,340.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Sítio Grossos</title></polyline>
+<polyline points="317.1,428.1 308.3,427.5 296.2,426.1 286.5,424.9 278.5,423.8 271.7,430.6 268.2,436.5 264.6,442.5 258.8,449.0 260.6,439.6 258.1,448.5 248.2,456.6 236.8,464.8 231.0,469.1 223.3,474.6 217.7,477.9 223.8,474.7 233.6,467.6 241.0,464.6 248.4,456.9 255.1,452.1 260.4,448.2 265.7,444.4 258.8,449.0 248.2,456.6 236.8,464.8 231.0,469.1 223.3,474.6 217.7,477.9 223.8,474.7 233.6,467.6 241.2,462.0 248.4,456.9 255.1,452.1 260.4,448.2 265.7,444.4 268.2,436.5 271.7,430.6 275.5,425.2 285.2,424.8 296.2,426.1 304.3,427.0 313.5,428.1 317.1,428.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Quaresma</title></polyline>
+<polyline points="220.5,633.8 219.8,644.4 224.9,652.6 229.9,656.6 237.0,658.8 243.4,664.6 250.0,669.4 245.0,677.4 241.6,683.3 243.3,691.1 243.8,700.8 243.4,692.1 241.9,684.0 244.8,677.6 250.0,669.4 243.4,664.6 238.6,660.3 231.8,657.6 225.7,654.1 221.9,649.0 222.7,636.6 227.9,627.0 232.3,622.1 237.8,616.8 242.6,612.4 247.4,608.3 251.6,603.2 256.3,596.2 259.3,589.9 261.5,580.8 265.1,569.8 266.3,561.5 265.1,569.8 262.3,578.3 260.0,587.3 257.5,594.1 253.7,599.8 249.8,605.8 243.0,612.1 237.8,616.8 232.3,622.1 227.9,627.0 223.4,631.6 220.5,633.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Saco do Barbosa</title></polyline>
+<polyline points="384.6,986.6 374.2,986.3 367.5,988.9 359.9,991.1 352.9,993.3 342.7,992.2 331.6,991.2 320.8,991.5 305.0,997.7 295.8,997.6 305.0,997.7 314.8,993.4 324.7,991.2 337.1,991.8 346.7,992.7 355.7,993.1 362.6,990.3 370.0,987.7 380.2,986.1 384.6,986.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Aleixo</title></polyline>
+<polyline points="341.7,504.6 340.3,512.2 338.0,518.9 335.4,526.3 329.0,529.3 323.3,532.7 315.6,534.4 308.6,536.9 304.1,541.4 295.9,538.8 292.4,545.0 289.0,551.7 283.8,556.5 288.6,552.3 291.9,546.5 293.9,539.5 302.0,540.7 307.7,537.5 314.4,534.7 322.0,533.2 327.8,529.8 335.3,527.7 337.4,519.7 340.2,512.8 341.6,505.1 341.7,504.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Tapera</title></polyline>
+<polyline points="133.0,694.5 138.0,690.4 141.9,685.2 146.7,680.7 154.4,677.3 164.3,679.4 172.0,681.6 179.1,683.6 186.1,685.7 193.1,687.8 201.4,690.0 208.9,691.8 201.4,690.0 193.1,687.8 186.1,685.7 179.1,683.6 172.0,681.6 164.3,679.4 156.4,677.0 148.2,679.9 142.8,684.1 139.0,689.5 133.8,693.6 133.0,694.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Chiqueiro das Cabras</title></polyline>
+<polyline points="305.5,876.8 305.4,885.8 297.3,887.6 290.3,889.7 281.6,892.8 272.4,890.5 280.4,893.1 286.1,889.6 294.6,889.1 302.6,886.7 307.0,881.4 305.5,876.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 01</title></polyline>
+<circle cx="406.5" cy="796.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="264.5" cy="836.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="303.4" cy="857.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="179.9" cy="346.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="347.3" cy="1028.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="40.6" cy="471.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="380.0" cy="935.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="166.8" cy="453.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="210.2" cy="736.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="172.7" cy="676.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="226.2" cy="773.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="138.0" cy="976.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="246.1" cy="658.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="346.4" cy="636.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="329.4" cy="446.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="418.9" cy="951.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="392.8" cy="929.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="416.2" cy="973.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="554.8" cy="921.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="519.2" cy="263.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="485.1" cy="809.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="165.6" cy="338.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="104.6" cy="479.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="323.0" cy="502.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="548.6" cy="935.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="260.6" cy="347.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="347.9" cy="881.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="358.3" cy="321.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="142.1" cy="503.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="357.1" cy="665.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="184.6" cy="772.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="524.0" cy="466.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="217.7" cy="632.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="129.9" cy="694.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="190.9" cy="315.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="364.0" cy="877.8" r="2.2" fill="#b9b9b2"/>
+<polygon points="376.7,403.5 367.3,420.9 386.2,420.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="379.4,417.3 369.0,436.5 389.8,436.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="489.6,733.1 481.3,748.3 497.8,748.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="375.0,419.9 363.1,441.8 386.8,441.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="106.6,460.4 98.7,474.8 114.4,474.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="186.1,306.7 177.6,322.5 194.7,322.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="257.1,331.7 248.5,347.4 265.7,347.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="546.6,240.4 537.3,257.4 555.8,257.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="546.6" y="270.9" text-anchor="middle" fill="#5c5c57">Quimami</text>
+<polygon points="413.5,892.7 400.6,916.5 426.5,916.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="413.5" y="930.9" text-anchor="middle" fill="#5c5c57">Jamacaru</text>
+<polygon points="220.6,622.0 209.4,642.5 231.7,642.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="220.6" y="656.4" text-anchor="middle" fill="#5c5c57">Missão Nova</text>
+<polygon points="364.9,424.1 355.8,440.8 373.9,440.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="541.8,968.4 532.0,986.5 551.6,986.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="541.8" y="1000.1" text-anchor="middle" fill="#5c5c57">Aleixo</text>
+<polygon points="372.9,421.0 360.9,443.0 384.8,443.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="379.1,420.9 369.3,439.0 389.0,439.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="414.4,898.5 404.3,917.3 424.6,917.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="165.0,899.6 156.5,915.4 173.6,915.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="431.1,115.1 423.5,129.0 438.6,129.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="357.7,670.3 348.8,686.8 366.7,686.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="341.4,496.5 333.7,510.6 349.1,510.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="390.7,414.9 378.3,437.8 403.1,437.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="379.4,413.3 371.1,428.6 387.7,428.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="180.2,770.3 170.6,788.0 189.8,788.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="180.2" y="801.5" text-anchor="middle" fill="#5c5c57">Barreiras</text>
+<polygon points="365.5,869.7 357.7,883.9 373.2,883.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="354.5,327.3 346.5,341.9 362.4,341.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="133.0,686.1 124.9,701.0 141.1,701.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="505.6,795.9 497.5,810.8 513.7,810.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="470.6,158.2 463.6,171.0 477.5,171.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="358.6,444.8 348.7,463.1 368.6,463.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="79.5,456.7 71.0,472.4 88.0,472.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="521.6,451.7 512.8,467.9 530.4,467.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="171.9,990.0 164.0,1004.5 179.7,1004.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="384.8,978.1 377.1,992.2 392.4,992.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="141.3,482.8 131.7,500.6 150.9,500.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="141.3" y="514.1" text-anchor="middle" fill="#5c5c57">Passagem de Pedra</text>
+<polygon points="317.1,415.9 305.6,437.0 328.5,437.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="543.9,943.0 536.2,957.2 551.6,957.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="633.1" cy="257.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="539.3" y="252.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Quimami 7,8 km</text>
+<circle cx="223.5" cy="1146.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="230.5" y="1141.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Souza 6,2 km</text>
+<circle cx="634.7" cy="172.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="460.3" y="167.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Duas Passagens 4,8 km</text>
+<circle cx="280.2" cy="495.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="287.2" y="490.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Jerimum 4,6 km</text>
+<circle cx="126.5" cy="378.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="133.5" y="373.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Gaviãozinho 4,5 km</text>
+<circle cx="245.5" cy="249.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="252.5" y="244.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Grossos 4,4 km</text>
+<circle cx="267.2" cy="888.5" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="274.2" y="883.5" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Cajazeira 3,9 km</text>
+<circle cx="237.7" cy="465.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="244.7" y="460.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Quaresma 3,8 km</text>
+<circle cx="240.2" cy="465.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="217.6" cy="387.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="224.6" y="402.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Madeira Cortada 3,6 km</text>
+<circle cx="240.8" cy="704.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="247.8" y="699.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Saco do Barbosa 3,6 km</text>
+<circle cx="288.4" cy="1012.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="295.4" y="1007.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Aleixo 3,5 km</text>
+<circle cx="266.3" cy="557.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="273.3" y="552.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Coqueiro 3,5 km</text>
+<circle cx="283.8" cy="557.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="290.8" y="572.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Tapera 3,5 km</text>
+<circle cx="209.9" cy="692.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="261.5" cy="438.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="268.5" y="433.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Boa Vista 3,0 km</text>
+<rect x="369.1" y="425.0" width="10" height="10" fill="#1d1d1b"/><text x="383.1" y="448.0" font-weight="600" fill="#1d1d1b">Sede de Missão Velha</text>
+<line x1="35" x2="168.7" y1="1217.4" y2="1217.4" stroke="#8a8a84" stroke-width="2"/><text x="35" y="1231.4" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="1208.4440619621398" y2="1208.4440619621398" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="1212.4440619621398" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,1201.4 421.4,1213.7 434.6,1213.7" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="1212.4440619621398" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="1226.4440619621398" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="1235.4440619621398" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="1231.4440619621398" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="1235.4440619621398" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1254.4440619621398" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1258.4440619621398" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1254.4440619621398" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1258.4440619621398" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1277.4440619621398" y2="1277.4440619621398" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1281.4440619621398" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1300.4440619621398" y2="1300.4440619621398" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1304.4440619621398" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TRE-CE e TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 27/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (2):</strong> Quimami e Comunidade Quilombola Souza.</li>
+<li><strong>De 3 a 5 km (17):</strong> Coité, Sítio Duas Passagens, Sítio Jerimum, Gameleira de São Sebastião, Gaviãozinho, Sítio Grossos, Cajazeira, Quaresma, Baixa do Quaresma, Madeira Cortada, Saco do Barbosa, Aleixo, Sítio Coqueiro, Tapera, Chiqueiro das Cabras, Valentim e Sítio Boa Vista.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (33):</strong> Areia de Cima, Arraial do Meio, Banco de Areia, Barreiras, Canabrava, Espalhador, Extrema, Forquilha, Gameleira dos Machado, Gameleira dos Machados, Joaca Rolim, Malhada Funda, Missão Nova, Morros, Olho d&#x27;Água Comprido, Olho d&#x27;Água de Fora, Passagem de Pedra, Pinheira, Pontal da Serra, Riacho Seco, Riacho das Palmeiras, Santa Maria, Santa Teresa, São João, Sítio Arraial Velame, Sítio Arraial de Cima, Sítio Cachoeira, Sítio Carnaúba, Sítio Escondido, Sítio Lagoa da Pedra, Sítio Pintado, Sítio Terra Dura e Tabuleiro.</li>
+</ul><h2>Rotas do Edital nº 27/2026</h2>
+<p>O edital tem 5 rotas para Missão Velha. Horários: não informados no quadro; motoristas convocados ao cartório em 03/10/2026, 12:00–18:00, e para o dia 04/10/2026 (idem eventual 2º turno em 25/10/2026). Veículos: Rota 01 (seq. 14 do edital): Ônibus PNK2217 (José Leonardo Ferreira); Rota 02 (seq. 15 do edital): Ônibus SAX-0F63 (Rogério de Araújo Brandão); Rota 03 (seq. 16 do edital): Ônibus RIB-2C56 (Davi Alves de Sousa); Rota 04 (seq. 17 do edital): Ônibus PNC-3208 (Marcos Antonio Simplicio da Silva); Rota 05 (seq. 18 do edital): Ônibus JOZ-4H44 (Cícero Soares da Silva). Seq. 1–13 do quadro são carros de apoio ao Cartório Eleitoral (não incluídos)..</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>GAMELEIRA DE SÃO SEBASTIÃO – JAMACARU</td></tr><tr><td>02</td><td>AROEIRA – MALHADA DA AREIA</td></tr><tr><td>03</td><td>JAMACARU – Sede</td></tr><tr><td>04</td><td>SERRA DO MÃOZINHA</td></tr><tr><td>05</td><td>BARRA DA CAIÇARA – CAIÇARA – OLHO D&#x27;ÁGUA CUMPRIDO</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 27/2026 da 16ª ZE, DJE/TRE-CE nº 194 (disp. 08/09/2026, publ. 09/09/2026), p. 367–369.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 16 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Quimami</strong></td><td>Eef Sebastiao Pedro de Araujo (local de votação) – Quimami – Sítio Duas Passagens – Eef Sebastiao Pedro de Araujo (local de votação)</td><td>Quimami, Sítio Duas Passagens</td><td>16,8 km (ida e volta)</td><td>~32 min</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Souza</strong></td><td>Banco de Areia – Comunidade Quilombola Souza – Banco de Areia</td><td>Comunidade Quilombola Souza</td><td>12,4 km (ida e volta)</td><td>~30 min</td></tr><tr><td><strong>Rota nova – Sítio Jerimum</strong></td><td>Sede – Sítio Jerimum – Sede</td><td>Sítio Jerimum</td><td>14,2 km (ida e volta)</td><td>~21 min</td></tr><tr><td><strong>Rota nova – Gaviãozinho</strong></td><td>Sede – Gaviãozinho – Sede</td><td>Gaviãozinho</td><td>8,9 km (ida e volta)</td><td>~22 min</td></tr><tr><td><strong>Rota nova – Sítio Grossos</strong></td><td>Arraial do Meio – Madeira Cortada – Sítio Grossos – Arraial do Meio</td><td>Madeira Cortada, Sítio Grossos</td><td>15,3 km (ida e volta)</td><td>~37 min</td></tr><tr><td><strong>Rota nova – Quaresma</strong></td><td>Sede – Sítio Boa Vista – Baixa do Quaresma – Quaresma – Sede</td><td>Sítio Boa Vista, Baixa do Quaresma, Quaresma</td><td>15,3 km (ida e volta)</td><td>~16 min</td></tr><tr><td><strong>Rota nova – Saco do Barbosa</strong></td><td>Missão Nova – Saco do Barbosa – Sítio Coqueiro – Missão Nova</td><td>Saco do Barbosa, Sítio Coqueiro</td><td>14,1 km (ida e volta)</td><td>~33 min</td></tr><tr><td><strong>Rota nova – Aleixo</strong></td><td>Sede – Aleixo – Sede</td><td>Aleixo</td><td>6,9 km (ida e volta)</td><td>~17 min</td></tr><tr><td><strong>Rota nova – Tapera</strong></td><td>Sítio Escondido – Tapera – Sítio Escondido</td><td>Tapera</td><td>6,9 km (ida e volta)</td><td>~14 min</td></tr><tr><td><strong>Rota nova – Chiqueiro das Cabras</strong></td><td>Riacho das Palmeiras – Chiqueiro das Cabras – Riacho das Palmeiras</td><td>Chiqueiro das Cabras</td><td>6,4 km (ida e volta)</td><td>~15 min</td></tr><tr><td><strong>Parada extra na Rota 01</strong></td><td>desvio pelo caminho atual: Cajazeira</td><td>Cajazeira</td><td>+3,7 km</td><td>+6 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMMV</strong></p><p>Missão Velha/CE, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Paulo Augusto Gadelha de Abrantes</strong><br>Juiz Eleitoral da 16ª Zona Eleitoral – Missão Velha/CE</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 27/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Missão Velha, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 27/2026: Quimami, Comunidade Quilombola Souza, Sítio Duas Passagens, Sítio Jerimum, Gaviãozinho, Sítio Grossos, Quaresma, Baixa do Quaresma, Madeira Cortada, Saco do Barbosa, Aleixo, Sítio Coqueiro, Tapera, Chiqueiro das Cabras, Sítio Boa Vista e Cajazeira.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Quimami (Eef Sebastiao Pedro de Araujo (local de votação) – Quimami – Sítio Duas Passagens – Eef Sebastiao Pedro de Araujo (local de votação));</li><li>a criação da Rota nova – Comunidade Quilombola Souza (Banco de Areia – Comunidade Quilombola Souza – Banco de Areia);</li><li>a criação da Rota nova – Sítio Jerimum (Sede – Sítio Jerimum – Sede);</li><li>a criação da Rota nova – Gaviãozinho (Sede – Gaviãozinho – Sede);</li><li>a criação da Rota nova – Sítio Grossos (Arraial do Meio – Madeira Cortada – Sítio Grossos – Arraial do Meio);</li><li>a criação da Rota nova – Quaresma (Sede – Sítio Boa Vista – Baixa do Quaresma – Quaresma – Sede);</li><li>a criação da Rota nova – Saco do Barbosa (Missão Nova – Saco do Barbosa – Sítio Coqueiro – Missão Nova);</li><li>a criação da Rota nova – Aleixo (Sede – Aleixo – Sede);</li><li>a criação da Rota nova – Tapera (Sítio Escondido – Tapera – Sítio Escondido);</li><li>a criação da Rota nova – Chiqueiro das Cabras (Riacho das Palmeiras – Chiqueiro das Cabras – Riacho das Palmeiras);</li><li>a inclusão de parada em Cajazeira na Rota 01, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 27/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Missão Velha</p></blockquote>
+<p class="fontes">Fontes: TRE-CE e TSE, Locais de Votação de Missão Velha; Edital nº 27/2026 da 16ª ZE, DJE/TRE-CE nº 194 (disp. 08/09/2026, publ. 09/09/2026), p. 367–369; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

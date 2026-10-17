@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Floresta do Piauí</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Floresta do Piauí</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/floresta-do-piaui.pdf?v=1792185146" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Floresta do Piauí (90ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 90ª Zona Eleitoral <strong>4 rotas novas e 2 paradas extras em rotas do edital</strong> no transporte gratuito de Floresta do Piauí.
+Traçamos pelas estradas o percurso das 4 rotas do Edital nº 31/2026 - TRE/90ª ZONA. 6 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 2 ficam a 1–2 km.</p>
+<ul>
+<li>Floresta do Piauí tem 2.609 eleitores aptos em 4 locais de votação e 12 seções. São 2 locais rurais, com 718 eleitores (28% do total).</li>
+<li>1 locais rurais ficam a 10 km ou mais da sede, com 275 eleitores. Os mais distantes: Povoado Caiçara (12,2 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Caída (13,5 km do local de votação), Jurema (8,5 km do local de votação), Tapagem (7,2 km do local de votação), Tataira (5,5 km do local de votação), Queimada Grande (5,4 km do local de votação) e Saco Grande (3,3 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Cristóvão e Jatobá.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 30 localidades rurais de Floresta do Piauí que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Cristóvão</td><td>15,4</td><td>Rota 04</td><td>1,2</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Gameleira</td><td>14,6</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Caída</td><td>13,5</td><td>Rota 04</td><td>3,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Baixa do Marmeleiro</td><td>12,0</td><td>Rota 04</td><td>0,3</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Esquerda</td><td>9,4</td><td>Rota 04</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Jurema</td><td>8,5</td><td>Rota 03</td><td>2,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Tapagem</td><td>7,2</td><td>Rota 03</td><td>2,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Baixas</td><td>7,1</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio do Bento</td><td>6,9</td><td>Rota 04</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Tamboril</td><td>6,3</td><td>Rota 02</td><td>1,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Jatobá</td><td>6,0</td><td>Rota 02</td><td>1,7</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Pedra Preta</td><td>5,6</td><td>Rota 03</td><td>0,5</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Mangar</td><td>5,6</td><td>Rota 03</td><td>0,4</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Tataira</td><td>5,5</td><td>Rota 02</td><td>3,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Vigia</td><td>5,4</td><td>Rota 03</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Queimada Grande</td><td>5,4</td><td>Rota 01</td><td>2,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Volta</td><td>4,2</td><td>Rota 04</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Machado</td><td>4,1</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Malhada da Areia</td><td>3,5</td><td>Rota 03</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Saco Grande</td><td>3,3</td><td>Rota 03</td><td>2,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Pinhões</td><td>3,2</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>4 das 19 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Floresta (Sede) (Rota 01, Rota 02, Rota 03 e Rota 04). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 30 localidades rurais de Floresta do Piauí, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1277" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Floresta do Piauí: 8 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 31/2026 - TRE/90ª ZONA e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="215.0,80.0 61.0,441.0 99.6,507.3 72.9,676.7 48.1,795.0 80.3,861.8 38.7,960.9 67.9,1030.2 153.1,1039.6 224.4,1111.4 486.3,1113.4 600.7,1145.1 706.7,1005.9 725.0,970.8 656.7,660.8 464.5,479.1 270.4,148.3 215.0,80.0 215.0,80.0" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="428.5,710.6 439.6,716.0 452.7,722.7 460.6,732.3 469.9,739.9 482.1,750.1 487.9,760.7 496.1,773.3 505.5,779.9 510.4,791.4 514.4,802.3 521.7,819.7 530.3,834.9 537.9,842.2 550.5,846.7 564.4,849.6 569.8,849.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="609.9,638.9 597.4,641.3 590.6,650.6 589.5,665.8 577.5,670.3 563.8,671.6 551.3,675.8 539.0,679.2 527.5,682.8 516.6,687.3 509.8,698.4 502.7,706.6 496.0,715.3 490.7,725.5 484.1,734.3 477.9,743.2 485.0,753.3 491.7,765.7 498.1,774.7 508.6,781.6 510.7,794.6 515.5,805.5 521.7,819.7 530.3,834.9 537.9,842.2 550.5,846.7 564.4,849.6 584.6,849.3 598.4,851.9 614.5,855.3 634.4,856.4 647.2,858.7 634.4,856.4 619.9,854.8 605.5,854.3 593.6,850.1 578.0,848.7 569.8,849.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="259.4,639.7 247.6,643.0 242.9,653.3 231.4,657.3 217.9,655.8 208.5,649.9 193.6,648.0 176.7,649.3 166.1,655.8 162.4,668.7 158.9,681.3 162.2,693.7 165.5,706.5 165.4,721.6 146.9,745.8 141.3,757.0 137.4,781.9 133.6,796.8 137.3,811.5 139.4,826.1 134.1,837.4 126.2,847.9 119.9,856.5 117.0,869.6 110.6,879.9 102.6,886.9 95.0,894.3 91.5,906.4 87.6,924.6 88.6,929.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="259.4,639.7 260.3,624.2 267.1,614.1 272.4,603.3 274.8,589.8 281.8,580.3 289.6,572.3 286.0,559.5 281.8,545.7 274.6,534.8 271.0,520.1 264.8,509.4 261.9,496.1 255.7,486.7 259.7,474.3 264.9,462.9 263.7,447.5 259.9,435.5 257.4,420.9 254.7,407.0 246.1,399.6 254.7,407.0 257.4,420.9 259.9,433.4 263.3,446.2 264.7,460.3 261.2,472.1 254.5,480.9 259.4,492.2 254.5,480.9 261.2,472.1 264.7,460.3 263.3,446.2 259.9,433.4 257.4,420.9 254.7,407.0 254.8,392.0 252.0,378.0 248.6,366.1 253.4,355.1 258.9,343.9 262.3,330.3 270.3,321.3 267.5,306.0 262.6,293.5 258.9,280.2 258.5,263.2 256.7,248.1 257.1,233.5 252.9,222.2 249.9,209.2 249.4,193.2 242.1,184.9 234.3,179.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="370.7,690.0 358.5,684.9 352.2,674.2 346.2,665.3 332.4,657.5 317.8,656.1 303.7,659.1 292.6,663.0 275.2,661.4 267.8,653.6 260.3,640.5 249.8,635.5 237.7,632.1 224.0,634.7 214.0,641.5 203.6,646.7 188.3,648.8 167.7,649.5 152.9,650.3 132.9,652.2 117.5,653.0 102.2,659.7 89.3,657.2 78.7,651.4 70.1,644.8 64.2,635.6 54.0,630.7 64.2,635.6 70.1,644.8 78.7,651.4 89.3,657.2 102.2,659.7 114.0,654.2 128.6,652.1 142.4,653.3 154.3,649.9 176.7,649.3 193.6,648.0 207.0,645.3 219.2,637.9 229.7,632.2 249.8,635.5 260.5,630.3 265.8,616.2 271.0,606.3 274.2,593.8 280.1,584.7 289.0,575.9 286.3,561.6 283.3,547.6 276.8,539.1 273.0,525.6 268.4,515.3 263.0,504.8 259.6,492.4 254.5,480.9 261.2,472.1 264.7,460.3 263.3,446.2 259.9,433.4 257.4,420.9 254.7,407.0 246.1,399.6 231.6,398.8 220.4,390.7 205.7,387.9 189.8,390.3 179.0,395.4 166.1,399.0 155.9,403.8 139.6,403.3 128.0,399.1 115.6,401.7 103.9,397.7 94.9,391.2 82.4,388.8 94.9,391.2 103.9,397.7 110.8,406.2 121.4,400.2 135.3,402.2 148.7,405.2 161.1,401.7 171.5,396.8 184.7,393.7 194.6,386.6 208.8,388.1 225.0,392.5 233.6,399.9 248.5,399.5 255.2,410.0 258.0,422.7 260.6,437.6 264.5,450.9 263.5,467.6 257.3,477.6 259.6,492.4 263.0,504.8 268.4,515.3 273.0,525.6 276.8,539.1 283.3,547.6 286.3,561.6 290.1,573.9 281.1,581.7 274.4,592.5 271.2,605.8 265.8,616.2 260.3,627.4 264.4,641.4 267.8,653.6 275.2,661.4 289.8,663.4 301.9,659.7 315.0,656.9 327.7,654.5 339.8,662.3 350.0,671.0 357.4,683.6 364.0,694.1 370.7,690.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Caída</title></polyline>
+<polyline points="88.7,931.7 96.0,940.8 100.9,951.1 103.0,964.8 108.4,974.6 121.6,970.9 133.3,965.7 150.7,965.1 163.6,962.7 172.7,969.9 184.5,982.9 177.3,975.1 169.5,965.8 154.0,964.6 137.3,965.6 122.6,969.1 111.6,974.5 101.8,969.1 101.6,954.3 97.5,942.9 87.5,930.2 89.7,914.7 92.9,899.6 99.4,889.9 108.1,881.7 116.0,874.6 118.3,860.6 124.0,850.7 131.9,839.8 138.1,831.2 137.3,811.5 133.3,799.5 133.9,784.1 127.1,774.7 119.8,764.9 110.4,756.4 104.7,745.7 99.8,734.5 91.9,726.8 81.1,722.2 75.9,711.8 65.2,706.9 56.9,700.2 52.4,689.5 43.0,694.9 50.4,686.9 55.1,697.1 63.6,705.9 75.2,710.7 80.3,720.9 90.0,726.3 99.3,733.4 104.0,744.0 109.0,754.4 117.8,763.1 125.6,771.9 132.9,782.3 133.6,796.8 137.3,811.5 139.4,826.1 134.1,837.4 126.2,847.9 119.9,856.5 117.0,869.6 110.6,879.9 102.6,886.9 95.0,894.3 91.5,906.4 87.6,924.6 88.7,931.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Tapagem</title></polyline>
+<polyline points="382.7,691.5 372.8,682.8 365.8,674.5 356.0,667.6 358.5,654.1 368.1,647.8 376.4,639.9 370.5,625.7 372.2,610.4 377.2,597.4 381.4,586.0 381.8,570.8 393.2,567.0 411.5,560.7 435.0,556.4 452.8,555.9 435.0,556.4 422.0,559.7 403.4,562.7 391.3,567.5 379.0,574.1 381.4,588.1 374.2,603.6 372.2,621.7 379.6,632.9 370.2,645.9 359.2,650.5 356.7,664.8 365.8,674.5 372.8,682.8 382.3,689.8 382.7,691.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Tataira</title></polyline>
+<polyline points="576.1,848.5 559.0,848.3 546.2,845.2 533.7,839.2 521.7,819.7 517.2,808.7 510.4,800.4 501.0,806.1 491.4,800.8 478.2,805.1 472.2,814.5 460.2,819.8 446.9,828.1 440.8,839.7 439.4,855.4 437.9,870.5 440.4,857.9 438.8,843.6 445.7,829.8 456.9,821.7 468.6,816.2 477.2,807.3 482.5,797.7 491.6,804.1 505.3,801.0 516.8,807.6 521.7,819.7 530.3,834.9 537.9,842.2 550.5,846.7 564.4,849.6 576.1,848.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Queimada Grande</title></polyline>
+<polyline points="634.4,856.4 619.9,854.8 605.5,854.3 593.6,850.1 578.0,848.7 559.0,848.3 546.2,845.2 533.7,839.2 521.7,819.7 517.2,808.7 510.4,800.4 508.6,783.0 522.9,775.0 533.6,766.0 549.9,770.0 561.6,776.0 576.4,779.6 593.5,783.4 612.5,785.4 625.1,789.0 642.5,783.9 630.4,787.4 615.4,787.2 604.3,783.2 586.6,782.8 569.2,780.6 560.9,773.0 537.4,767.0 527.3,773.0 517.6,781.0 510.4,791.4 514.4,802.3 521.7,819.7 530.3,834.9 537.9,842.2 550.5,846.7 564.4,849.6 584.6,849.3 598.4,851.9 614.5,855.3 634.4,856.4 634.4,856.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 02</title></polyline>
+<polyline points="241.8,183.6 254.5,180.0 258.5,168.3 264.1,157.6 258.5,168.3 254.5,180.0 241.9,183.1 241.8,183.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 04</title></polyline>
+<circle cx="234.7" cy="178.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="256.3" cy="316.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="246.3" cy="403.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="604.1" cy="634.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="255.0" cy="495.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="552.3" cy="627.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="238.5" cy="621.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="179.6" cy="732.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="165.9" cy="648.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="277.8" cy="600.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="233.6" cy="655.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="131.3" cy="796.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="260.0" cy="639.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="524.4" cy="783.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="663.0" cy="862.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="78.2" cy="1003.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="121.8" cy="862.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="367.7" cy="650.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="429.0" cy="707.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="363.7" cy="660.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="569.5" cy="847.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="89.2" cy="930.2" r="2.2" fill="#b9b9b2"/>
+<polygon points="370.5,679.0 360.4,697.5 380.5,697.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="576.0,839.5 567.9,854.4 584.0,854.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="87.7,924.9 80.4,938.5 95.1,938.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="383.3,683.4 374.2,700.2 392.5,700.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="285.8" cy="150.3" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="292.8" y="145.3" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Cristóvão 15,4 km</text>
+<circle cx="79.6" cy="367.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="86.6" y="362.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Caída 13,5 km</text>
+<circle cx="45.6" cy="616.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="52.6" y="611.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Jurema 8,5 km</text>
+<circle cx="35.0" cy="696.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="42.0" y="691.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Tapagem 7,2 km</text>
+<circle cx="651.5" cy="783.9" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="563.9" y="778.9" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Jatobá 6,0 km</text>
+<circle cx="462.4" cy="547.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="469.4" y="542.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Tataira 5,5 km</text>
+<circle cx="422.4" cy="903.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="429.4" y="898.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Queimada Grande 5,4 km</text>
+<circle cx="185.1" cy="986.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="192.1" y="981.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Saco Grande 3,3 km</text>
+<rect x="359.9" y="689.7" width="10" height="10" fill="#1d1d1b"/><text x="373.9" y="712.7" font-weight="600" fill="#1d1d1b">Sede de Floresta do Piauí</text>
+<line x1="35" x2="258.0" y1="1175.1" y2="1175.1" stroke="#8a8a84" stroke-width="2"/><text x="35" y="1189.1" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="1166.075381752649" y2="1166.075381752649" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="1170.075381752649" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,1159.1 421.4,1171.3 434.6,1171.3" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="1170.075381752649" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="1184.075381752649" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="1193.075381752649" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="1189.075381752649" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="1193.075381752649" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1212.075381752649" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1216.075381752649" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1212.075381752649" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1216.075381752649" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1235.075381752649" y2="1235.075381752649" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1239.075381752649" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1258.075381752649" y2="1258.075381752649" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1262.075381752649" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 31/2026 - TRE/90ª ZONA · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (16):</strong> Cristóvão, Gameleira, Caída, Baixa do Marmeleiro, Esquerda, Jurema, Tapagem, Baixas, Sítio do Bento, Tamboril, Jatobá, Pedra Preta, Mangar, Tataira, Vigia e Queimada Grande.</li>
+<li><strong>De 3 a 5 km (5):</strong> Volta, Machado, Malhada da Areia, Saco Grande e Pinhões.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (9):</strong> Alegre, Caiçara, Cerca Velha, Jardim Alto, Lagoa do Gado, Macambira, Olho d&#x27;Água, Patos e Riacho.</li>
+</ul><h2>Rotas do Edital nº 31/2026 - TRE/90ª ZONA</h2>
+<p>O edital tem 4 rotas para Floresta do Piauí. Horários: não informados. Veículos: não informados.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Floresta (Sede) – Cerca Velha – Riacho – Patos</td></tr><tr><td>02</td><td>Floresta (Sede) – Baixas do Tamboril – Olho D&#x27;Água Falso – Patos</td></tr><tr><td>03</td><td>Floresta (Sede) – Pinhões – Machado – Lagoa de Gato – Caiçara</td></tr><tr><td>04</td><td>Floresta (Sede) – Pinhões – Volta – Esquerda – Sítio do Bento – Gameleira</td></tr></tbody></table></div>
+<p>Fonte: Edital nº 31/2026 - TRE/90ª ZONA, DJE/TRE-PI nº 191/2026, disponibilizado em 18/09/2026 (publicação 19/09/2026), ID_MATERIA 6111629; fonte complementar: INFO ROTAS – sistema oficial do TRE-PI (inforotas.tre-pi.jus.br), consulta em 2026-10-16 (rotas do INFO ROTAS preservadas em &quot;rotas_inforotas&quot;).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 8 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Caída</strong></td><td>Sede – Jurema – Caída – Sede</td><td>Jurema, Caída</td><td>37,7 km (ida e volta)</td><td>~1h14</td></tr><tr><td><strong>Rota nova – Tapagem</strong></td><td>Sede – Saco Grande – Tapagem – Sede</td><td>Saco Grande, Tapagem</td><td>20,9 km (ida e volta)</td><td>~32 min</td></tr><tr><td><strong>Rota nova – Tataira</strong></td><td>Sede – Tataira – Sede</td><td>Tataira</td><td>11,0 km (ida e volta)</td><td>~27 min</td></tr><tr><td><strong>Rota nova – Queimada Grande</strong></td><td>Sede – Queimada Grande – Sede</td><td>Queimada Grande</td><td>10,8 km (ida e volta)</td><td>~26 min</td></tr><tr><td><strong>Parada extra na Rota 02</strong></td><td>desvio pelo caminho atual: Jatobá</td><td>Jatobá</td><td>+14,7 km</td><td>+36 min</td></tr><tr><td><strong>Parada extra na Rota 04</strong></td><td>desvio pelo caminho atual: Cristóvão</td><td>Cristóvão</td><td>+2,2 km</td><td>+5 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMFP</strong></p><p>Floresta do Piauí/PI, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Samuel Roberto Carvalho Lima</strong><br>Juiz Eleitoral da 90ª Zona Eleitoral – Simplício Mendes/PI</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 31/2026 - TRE/90ª ZONA) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Floresta do Piauí, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 31/2026 - TRE/90ª ZONA: Caída, Jurema, Tapagem, Tataira, Queimada Grande, Saco Grande, Cristóvão e Jatobá.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Caída (Sede – Jurema – Caída – Sede);</li><li>a criação da Rota nova – Tapagem (Sede – Saco Grande – Tapagem – Sede);</li><li>a criação da Rota nova – Tataira (Sede – Tataira – Sede);</li><li>a criação da Rota nova – Queimada Grande (Sede – Queimada Grande – Sede);</li><li>a inclusão de parada em Jatobá na Rota 02, mantido todo o percurso atual;</li><li>a inclusão de parada em Cristóvão na Rota 04, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 31/2026 - TRE/90ª ZONA deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Floresta do Piauí</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Floresta do Piauí; Edital nº 31/2026 - TRE/90ª ZONA, DJE/TRE-PI nº 191/2026, disponibilizado em 18/09/2026 (publicação 19/09/2026), ID_MATERIA 6111629; fonte complementar: INFO ROTAS – sistema oficial do TRE-PI (inforotas.tre-pi.jus.br), consulta em 2026-10-16 (rotas do INFO ROTAS preservadas em &quot;rotas_inforotas&quot;); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

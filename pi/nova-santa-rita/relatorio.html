@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Nova Santa Rita</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Nova Santa Rita</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/nova-santa-rita.pdf?v=1792185136" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Nova Santa Rita (69ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 69ª Zona Eleitoral <strong>1 rota nova</strong> no transporte gratuito de Nova Santa Rita.
+Traçamos pelas estradas o percurso das 18 rotas do Edital nº 4/2026 - TRE/69ª ZONA. 1 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>Nova Santa Rita tem 4.158 eleitores aptos em 5 locais de votação e 19 seções. São 3 locais rurais, com 1.531 eleitores (37% do total).</li>
+<li>3 locais rurais ficam a 10 km ou mais da sede, com 1.531 eleitores. Os mais distantes: Povoado Tanque Novo (Uc- 15866640) (15,2 km), Povoado Tanque Novo S/N (Uc- A2134439) (14,9 km) e Povoado Tanque Novo (Uc- 3501-004127-7) (14,8 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Assentamento Zumbi dos Palmares (9,8 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 16 localidades rurais de Nova Santa Rita que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Comunidade Quilombola Caboclo</td><td>66,8</td><td>Rota 12</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Bornel Fazenda Cantinho</td><td>50,5</td><td>Rota 13</td><td>1,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Maravilha</td><td>19,0</td><td>Rota 04</td><td>0,3</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Guarani</td><td>17,9</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sobradinho</td><td>14,7</td><td>Rota 05</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fazenda Nova</td><td>14,0</td><td>Rota 13</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Alto Belo</td><td>12,5</td><td>Rota 04</td><td>0,3</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Palmeira</td><td>11,1</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Viramão</td><td>10,9</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Assentamento Zumbi dos Palmares</td><td>9,8</td><td>Rota 05</td><td>3,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Herdeiros do Chê</td><td>7,5</td><td>Rota 01</td><td>0,6</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Belamento</td><td>5,3</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Jatobazeiro</td><td>5,0</td><td>Rota 08</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Assentamento Bugio</td><td>4,8</td><td>Rota 17</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Baixão</td><td>3,1</td><td>Rota 15</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>11 das 71 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Tchê (Rota 01), Baixão da Rosa (Rota 02), Pipiri (Rota 05), Várzea Grande de Baixo (Rota 08), Bucana (Rota 10), Assentamento Tamburiu (Rota 11), Alguduero (Rota 12), Santo Antonio (Rota 14), Vereda de Dentro (Rota 17), Belamento de Baixo (Rota 18) e Alto Formoso (Rota 18). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 16 localidades rurais de Nova Santa Rita, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 929" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Nova Santa Rita: 1 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 4/2026 - TRE/69ª ZONA e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="131.4,617.5 299.9,751.6 310.2,758.4 404.1,790.0 430.6,796.5 557.1,719.1 621.8,475.0 725.0,443.9 704.8,446.5 685.7,433.9 692.1,337.5 657.9,308.3 600.3,233.9 509.0,232.9 417.2,180.0 342.0,157.6 363.1,93.4 362.1,80.0 293.1,155.6 214.4,106.7 184.5,149.7 149.6,123.9 138.8,183.8 112.2,199.4 102.9,211.9 78.5,220.5 74.7,240.3 84.7,260.2 111.6,275.2 116.0,304.7 110.4,326.3 94.3,342.1 76.3,398.0 79.5,427.5 88.3,433.9 87.7,477.0 76.9,497.6 51.2,530.7 49.2,551.6 35.0,585.2 49.2,602.1 100.7,603.9 120.8,596.6 131.4,617.5 131.4,617.5" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="228.2,281.0 235.1,282.3 237.7,286.0 243.8,289.0 249.1,286.6 255.3,286.6 259.1,291.6 262.0,296.7 265.1,302.3 267.6,306.7 271.8,309.3 275.4,315.3 277.7,319.3 281.9,322.9 283.9,327.0 292.6,326.9 293.7,339.4 292.4,345.1 297.4,349.5 302.4,352.0 305.1,354.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="542.8,709.8 542.0,702.1 536.6,701.4 531.8,699.2 525.7,697.3 520.5,696.3 511.8,688.7 502.3,682.9 498.1,680.3 494.2,678.0 492.2,672.3 490.8,665.5 487.7,652.7 486.6,647.3 487.2,639.9 487.7,634.3 487.5,628.3 486.2,622.9 484.0,615.5 484.2,609.4 481.7,605.1 477.3,603.0 472.9,598.8 469.4,595.7 463.1,596.0 456.4,592.4 452.1,589.7 448.3,587.3 443.3,583.3 438.7,579.5 434.9,577.1 431.1,574.9 424.5,578.4 421.1,581.0 417.2,576.8 411.2,571.5 405.7,566.9 402.2,564.0 398.6,561.0 393.3,559.3 389.6,556.4 385.3,554.4 381.2,553.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="223.9,124.8 226.1,128.8 227.9,134.3 228.1,140.8 228.6,146.5 223.3,151.7 220.9,155.6 220.0,160.9 220.5,167.1 221.2,172.7 221.6,178.4 222.5,184.8 225.5,189.1 229.9,193.2 232.3,196.8 232.4,202.7 234.1,207.8 240.3,209.5 245.2,213.3 248.7,216.2 244.7,225.0 247.6,228.4 253.4,227.7 258.8,228.3 264.0,229.7 268.9,233.8 273.8,239.1 281.9,245.5 289.8,251.8 293.8,255.0 298.3,258.5 306.2,264.9 317.0,273.3 324.9,279.7 331.8,285.1 337.1,289.2 351.1,275.2 341.0,290.6 335.2,299.7 330.0,307.6 327.3,312.1 307.4,349.3 305.1,353.5 305.1,354.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="135.2,505.2 138.6,500.9 140.0,496.3 146.2,492.7 150.4,490.8 155.2,493.2 159.1,495.8 162.3,498.9 166.5,501.7 169.8,504.4 173.1,508.0 171.1,513.2 168.8,524.1 168.3,529.7 171.5,539.1 175.2,542.8 181.8,547.8 188.4,552.9 195.6,558.0 199.4,560.6 207.2,569.5 202.9,580.1 200.3,583.7 178.8,627.3 176.3,631.9 178.8,627.3 199.0,586.1 201.4,582.1 208.5,573.3 211.8,569.4 219.6,559.9 234.8,541.6 255.9,516.3 258.4,512.6 279.6,447.1 281.2,442.1 290.6,425.0 296.7,414.1 298.5,409.0 299.8,387.2 300.3,377.5 300.8,368.4 301.7,361.9 303.7,356.2 305.1,354.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="141.4,504.8 138.6,500.9 140.0,496.3 146.2,492.7 150.4,490.8 153.8,488.2 155.7,482.6 157.2,478.0 160.5,472.7 164.4,469.2 167.4,465.4 169.3,460.2 171.2,455.0 174.6,449.7 177.3,446.0 180.5,443.0 193.1,444.1 199.2,436.5 205.2,435.9 207.6,428.1 208.6,423.1 211.7,419.9 217.5,420.7 222.9,422.6 228.4,423.1 234.4,423.5 240.1,422.8 246.4,424.5 251.4,425.8 258.1,428.5 262.9,425.7 268.0,422.3 272.0,424.8 279.4,424.8 285.8,424.9 296.7,414.1 298.5,409.0 299.8,387.2 300.3,377.5 300.8,368.4 301.7,361.9 303.7,356.2 305.1,354.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="388.7,627.6 384.3,624.7 379.5,623.3 374.7,621.2 370.1,617.9 366.6,615.3 361.0,614.8 358.9,610.9 355.6,608.2 352.5,604.4 347.7,603.0 347.0,597.4 336.7,592.2 331.7,589.9 324.1,587.4 319.7,585.6 314.9,582.6 320.3,579.5 328.5,574.9 338.0,569.7 344.3,571.9 350.8,575.4 354.1,572.7 358.0,570.2 362.9,568.8 367.4,567.2 373.0,565.2 376.6,562.4 378.5,557.2 381.2,553.4 381.2,553.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="305.1,354.5 302.8,358.5 301.4,363.3 300.3,377.5 299.8,387.2 298.8,406.4 297.7,412.0 290.6,425.0 296.6,425.3 300.4,428.3 304.6,430.0 309.0,432.3 313.2,434.5 318.2,436.3 324.6,437.2 328.9,439.7 334.8,440.3 339.8,442.1 341.2,447.2 341.4,453.4 344.3,456.7 348.9,459.4 350.7,463.6 350.4,471.1 352.8,475.7 355.4,479.1 357.1,483.9 361.7,486.2 367.6,487.6 368.8,492.9 368.2,499.5 370.6,503.7 374.7,505.8 378.5,508.4 381.5,512.3 383.7,516.2 386.3,520.2 386.0,527.0 383.6,531.6 381.2,536.8 383.0,541.6 385.4,545.6 382.4,549.9 385.6,546.0 383.0,541.6 381.0,537.6 382.9,532.9 386.0,527.0 386.9,521.7 384.4,517.4 381.5,512.3 378.5,508.4 374.7,505.8 370.6,503.7 368.2,499.5 368.8,492.9 367.6,487.6 363.0,486.3 357.7,484.7 355.9,480.5 353.4,477.0 351.2,472.8 350.2,466.8 349.8,460.8 346.4,457.5 342.0,455.3 341.2,449.9 340.8,443.6 337.3,440.9 330.9,440.1 326.2,437.5 320.7,436.6 315.8,435.4 311.4,433.5 307.1,431.3 302.2,429.6 298.6,426.3 293.1,425.2 296.7,414.1 298.5,409.0 299.8,387.2 300.3,377.5 300.8,368.4 301.7,361.9 303.7,356.2 305.1,354.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="389.9,383.8 386.0,381.7 378.1,380.9 370.1,380.2 365.3,382.0 359.7,381.4 353.6,380.0 347.0,377.9 343.5,374.3 339.1,372.5 326.4,366.6 321.4,364.4 315.6,363.0 311.1,360.8 306.6,358.4 304.9,353.9 305.1,354.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="270.3,476.3 279.6,447.1 281.2,442.1 290.6,425.0 296.7,414.1 298.5,409.0 299.8,387.2 300.3,377.5 300.8,368.4 301.7,361.9 303.7,356.2 305.1,354.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 09</title></polyline>
+<polyline points="328.6,200.7 321.8,227.9 298.3,258.5 306.2,264.9 317.0,273.3 324.9,279.7 331.8,285.1 337.1,289.2 335.2,299.7 330.0,307.6 327.3,312.1 307.4,349.3 305.1,353.5 305.1,354.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 10</title></polyline>
+<polyline points="495.9,523.0 451.2,498.9 445.9,493.3 441.8,484.1 438.2,481.1 433.4,479.9 427.8,478.6 426.3,486.8 425.1,491.7 420.8,488.6 415.3,491.3 412.4,495.1 409.7,500.4 406.5,504.8 401.6,506.5 401.1,512.3 400.8,518.7 397.0,522.4 390.3,523.6 386.0,527.0 383.6,531.6 381.2,536.8 383.0,541.6 385.4,545.6 382.4,549.9 381.2,553.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 11</title></polyline>
+<polyline points="592.5,499.1 510.0,479.3 506.7,503.3 496.3,521.4 497.4,529.2 498.9,537.9 497.7,545.6 496.3,550.2 493.9,555.6 489.7,562.5 483.9,571.0 480.4,576.4 473.9,583.7 469.2,587.8 466.9,593.3 463.1,596.0 456.4,592.4 452.1,589.7 448.3,587.3 443.3,583.3 438.7,579.5 434.9,577.1 431.1,574.9 424.5,578.4 421.1,581.0 417.2,576.8 411.2,571.5 405.7,566.9 402.2,564.0 398.6,561.0 393.3,559.3 389.6,556.4 385.3,554.4 381.2,553.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 12</title></polyline>
+<polyline points="631.5,324.3 641.3,316.2 652.0,320.5 655.6,316.6 658.4,312.1 662.6,308.0 666.8,304.9 666.7,296.5 666.8,290.1 667.4,284.2 669.4,276.5 671.6,271.7 668.3,268.5 666.0,261.2 663.3,257.7 660.4,254.6 656.0,251.6 654.1,256.0 650.5,258.5 644.7,259.3 637.2,259.7 632.6,257.8 627.4,259.3 621.0,263.7 563.1,301.1 586.8,239.1 585.8,233.5 583.6,229.6 580.0,227.0 577.3,223.6 574.6,219.8 573.4,214.8 570.8,211.0 568.6,206.5 565.7,202.8 562.9,199.0 558.7,197.1 554.5,195.0 550.7,191.8 547.3,189.2 543.7,186.2 537.8,186.0 534.3,188.5 529.1,189.5 523.4,189.2 517.7,188.4 515.3,182.6 510.9,180.7 508.9,176.5 506.2,172.5 502.7,169.9 500.0,165.4 496.6,161.7 493.2,157.7 490.8,152.4 487.9,148.8 485.6,145.1 481.3,141.3 476.9,139.2 477.0,131.7 477.8,126.0 473.5,121.9 465.9,113.4 463.0,117.1 459.0,121.5 444.8,130.3 440.8,132.8 435.9,135.9 431.9,139.7 418.4,170.1 417.1,175.6 413.2,179.0 404.3,178.6 394.8,177.0 388.9,176.0 394.8,177.0 400.3,178.0 409.8,179.3 416.1,178.3 415.8,192.5 413.8,198.6 400.6,219.4 392.8,231.7 388.1,238.3 357.5,266.3 354.5,269.9 341.0,290.6 335.2,299.7 330.0,307.6 327.3,312.1 307.4,349.3 305.1,353.5 305.1,354.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 13</title></polyline>
+<polyline points="341.2,448.7 340.4,442.7 335.9,440.3 329.6,439.8 325.6,437.3 319.5,436.4 314.6,435.1 310.7,432.7 306.4,430.9 301.5,429.2 298.3,425.8 292.0,425.2 296.7,414.1 298.5,409.0 299.8,387.2 300.3,377.5 300.8,368.4 301.7,361.9 303.7,356.2 305.1,354.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 14</title></polyline>
+<polyline points="298.9,405.6 299.8,387.2 300.3,377.5 300.8,368.4 301.7,361.9 295.2,359.8 301.2,359.7 303.7,356.2 305.1,354.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 15</title></polyline>
+<polyline points="349.1,459.8 345.4,457.0 341.8,454.6 341.2,448.9 340.4,442.7 335.9,440.3 329.6,439.8 325.6,437.3 319.5,436.4 314.6,435.1 310.7,432.7 306.4,430.9 301.5,429.2 298.3,425.8 292.0,425.2 296.7,414.1 298.5,409.0 299.8,387.2 300.3,377.5 300.8,368.4 301.7,361.9 303.7,356.2 305.1,354.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 16</title></polyline>
+<polyline points="614.8,605.5 570.6,623.3 380.9,553.1 380.9,553.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 17</title></polyline>
+<polyline points="309.1,359.2 304.0,357.0 301.9,361.2 300.9,367.0 300.3,377.5 299.8,387.2 298.8,406.4 297.7,412.0 290.6,425.0 280.7,425.2 274.9,424.8 269.1,422.5 264.3,424.8 259.0,428.5 252.2,426.2 247.4,424.6 241.3,423.0 236.1,424.0 231.1,422.9 225.7,423.6 221.1,422.0 215.9,420.0 209.6,419.8 208.5,414.6 202.6,415.8 208.5,414.6 209.6,419.8 215.9,420.0 220.4,421.9 225.4,423.4 231.1,422.9 236.1,424.0 241.3,423.0 246.4,424.5 251.4,425.8 258.1,428.5 262.9,425.7 268.0,422.3 272.0,424.8 279.4,424.8 285.8,424.9 296.7,414.1 298.5,409.0 299.8,387.2 300.3,377.5 300.8,368.4 301.7,361.9 303.6,357.8 308.8,359.7 309.1,359.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Assentamento Zumbi dos Palmares</title></polyline>
+<circle cx="592.5" cy="499.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="660.8" cy="336.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="130.4" cy="502.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="223.8" cy="125.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="158.6" cy="480.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="384.5" cy="175.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="194.7" cy="584.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="244.6" cy="229.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="222.8" cy="561.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="238.0" cy="271.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="263.7" cy="299.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="389.9" cy="383.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="451.0" cy="582.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="301.3" cy="405.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="380.9" cy="553.1" r="2.2" fill="#b9b9b2"/>
+<polygon points="309.0,348.9 299.2,367.0 318.9,367.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="382.9,543.5 375.6,557.0 390.2,557.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="379.3,546.3 370.5,562.6 388.1,562.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="383.1,541.2 374.5,557.0 391.7,557.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="314.4,345.8 303.4,366.2 325.5,366.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="192.5" cy="362.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="199.5" y="357.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Assentamento Zumbi dos Palmares 9,8 km</text>
+<rect x="299.9" y="349.4" width="10" height="10" fill="#1d1d1b"/><text x="313.9" y="372.4" font-weight="600" fill="#1d1d1b">Sede de Nova Santa Rita</text>
+<line x1="35" x2="124.9" y1="826.5" y2="826.5" stroke="#8a8a84" stroke-width="2"/><text x="35" y="840.5" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="817.5461382701912" y2="817.5461382701912" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="821.5461382701912" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,810.5 421.4,822.8 434.6,822.8" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="821.5461382701912" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="835.5461382701912" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="844.5461382701912" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="840.5461382701912" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="844.5461382701912" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="863.5461382701912" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="867.5461382701912" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="863.5461382701912" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="867.5461382701912" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="886.5461382701912" y2="886.5461382701912" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="890.5461382701912" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="909.5461382701912" y2="909.5461382701912" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="913.5461382701912" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 4/2026 - TRE/69ª ZONA · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (12):</strong> Comunidade Quilombola Caboclo, Bornel Fazenda Cantinho, Maravilha, Guarani, Sobradinho, Fazenda Nova, Alto Belo, Palmeira, Viramão, Assentamento Zumbi dos Palmares, Herdeiros do Chê e Belamento.</li>
+<li><strong>De 3 a 5 km (3):</strong> Jatobazeiro, Assentamento Bugio e Baixão.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (1):</strong> Tanque Novo.</li>
+</ul><h2>Rotas do Edital nº 4/2026 - TRE/69ª ZONA</h2>
+<p>O edital tem 18 rotas para Nova Santa Rita. Horários: Todos os roteiros: &quot;A partir das 06 h da manhã, disponível o dia todo.&quot;. Veículos: R1 Ônibus OUA-0980; R2 Ônibus QRV-3A66; R3 Ônibus NIV-6138; R4 Micro-ônibus PIV-2269; R5 Ônibus OVX-8907; R6 Ônibus QRU-1531; R7 Fiat/Mobi Like RSN-9E40; R8 Fiat/Palio Fire PIO-3910; R9 Fiat/Palio Fire PIN-7220; R10 D20 KBP-8553; R11 F1000 LVG-8315; R12 GM/Chevrolet LVK-8942; R13 Ford/F1000 JLH-0909; R14 D20 Custom BJF-2304; R15 VW/Gol 1.0 LVU-4938; R16 VW/Gol 1.0 DWP-9352; R17 F1000/Ford HOQ-1466; R18 Fiat/Strada Fire EGF-6689.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Saquarema – Tchê – Belamento – Nova Santa Rita</td></tr><tr><td>02</td><td>Lagoa da Onça – Grotão – Baixão da Rosa – Bugio – Assentamento Bugio – Tanque Novo</td></tr><tr><td>03</td><td>Guarani – Palmeiras – Ouro Verde – Nova Santa Rita</td></tr><tr><td>04</td><td>Maravilha – Condave – Assentamento Alto Belo – Assentamento Vira Mão – Nova Santa Rita</td></tr><tr><td>05</td><td>Santa Maria – Assentamento Sobradinho – Sobradinho – Pipiri – Nova Santa Rita</td></tr><tr><td>06</td><td>Cabaceira – Banguês – Tanque Novo</td></tr><tr><td>07</td><td>Nova Santa Rita – Tanque Novo – Nova Santa Rita</td></tr><tr><td>08</td><td>Várzea Grande de Baixo – Assentamento Jatobazeiro – Nova Santa Rita</td></tr><tr><td>09</td><td>Baixa da Esquerda – Nova Santa Rita</td></tr><tr><td>10</td><td>Bucana – Angico de Bezerro – Pedra D&#x27;Água – Nova Santa Rita</td></tr><tr><td>11</td><td>Pé da Ladeira – Lagamar – Assentamento Tamburiu – Varzea Grande – Cavada – Tanque Novo</td></tr><tr><td>12</td><td>Caboclo – Alguduero – Sacos – Quintas – Tanque Novo</td></tr><tr><td>13</td><td>Baixão da Cruz – Palestina – Poços – Fazenda Nova – Nova Santa Rita</td></tr><tr><td>14</td><td>Santo Antonio – Lagoa do Boi – Nova Santa Rita</td></tr><tr><td>15</td><td>Baixão – Comprida – Nova Santa Rita</td></tr><tr><td>16</td><td>Claros – Mangueira – Nova Santa Rita</td></tr><tr><td>17</td><td>Vereda de Dentro – Barrocas – Sol Quente – Tanque Novo</td></tr><tr><td>18</td><td>Belamento de Baixo – Alto Formoso – Nova Santa Rita</td></tr></tbody></table></div>
+<p>Fonte: Edital nº 4/2026 - TRE/69ª ZONA, DJE/TRE-PI nº 191/2026 (disp. 18/09/2026), PDF da edição.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 1 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Assentamento Zumbi dos Palmares</strong></td><td>Sede – Assentamento Zumbi dos Palmares – Sede</td><td>Assentamento Zumbi dos Palmares</td><td>19,6 km (ida e volta)</td><td>~36 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMNSR</strong></p><p>Nova Santa Rita/PI, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Dra. Carmelita Angélica Lacerda Brito de Oliveira</strong><br>Juíza Eleitoral da 69ª Zona Eleitoral – São João do Piauí/PI</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 4/2026 - TRE/69ª ZONA) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de Nova Santa Rita, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 4/2026 - TRE/69ª ZONA: Assentamento Zumbi dos Palmares.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Assentamento Zumbi dos Palmares (Sede – Assentamento Zumbi dos Palmares – Sede).</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 4/2026 - TRE/69ª ZONA deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Nova Santa Rita</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Nova Santa Rita; Edital nº 4/2026 - TRE/69ª ZONA, DJE/TRE-PI nº 191/2026 (disp. 18/09/2026), PDF da edição; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

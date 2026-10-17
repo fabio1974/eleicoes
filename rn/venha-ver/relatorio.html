@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Venha-Ver</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Venha-Ver</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/venha-ver.pdf?v=1792185627" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Venha-Ver (43ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 43ª Zona Eleitoral <strong>2 rotas novas e 2 paradas extras em rotas do edital</strong> no transporte gratuito de Venha-Ver.
+Traçamos pelas estradas o percurso das 5 rotas da Portaria nº 06/2026. 5 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 2 ficam a 1–2 km.</p>
+<ul>
+<li>Venha-Ver tem 3.945 eleitores aptos em 4 locais de votação e 12 seções. São 0 locais rurais, com 0 eleitores (0% do total).</li>
+
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Santa Cruz (13,0 km do local de votação), Lagoa (10,9 km do local de votação), Rufinos (6,1 km do local de votação), Cajé (5,6 km do local de votação) e Boa Vista (5,3 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Serra do Jucá e Barro.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 9 localidades rurais de Venha-Ver que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Santa Cruz</td><td>13,0</td><td>Rota 01</td><td>3,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Serra do Jucá</td><td>11,2</td><td>Rota 01</td><td>1,9</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Lagoa</td><td>10,9</td><td>Rota 01</td><td>2,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Rufinos</td><td>6,1</td><td>Rota 01</td><td>2,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Cajé</td><td>5,6</td><td>Rota 05</td><td>2,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Boa Vista</td><td>5,3</td><td>Rota 03</td><td>2,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Barro</td><td>3,6</td><td>Rota 03</td><td>2,0</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Minhuins</td><td>3,3</td><td>Rota 05</td><td>0,9</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>7 das 25 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Formoso dos Justinos (Rota 01 e Rota 02), Cabo (Rota 02), Barrinha (Rota 02 e Rota 04), Mata Rufino (Rota 03) e Salgada (Rota 05). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 9 localidades rurais de Venha-Ver, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 630" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Venha-Ver: 7 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas do Edital nº 06/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="142.6,461.5 212.3,434.1 238.7,400.6 306.7,384.7 402.2,414.8 462.1,463.7 517.5,401.7 614.7,341.3 714.0,321.5 725.0,294.1 587.8,179.9 527.9,130.0 252.4,80.0 99.2,117.3 119.5,179.9 72.3,203.0 35.0,261.7 38.3,325.9 62.4,415.9 138.7,445.0 142.6,461.5 142.6,461.5" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="161.6,322.8 177.4,323.4 189.4,329.7 198.6,322.4 212.8,319.8 228.6,320.9 235.8,330.6 243.5,341.6 247.7,355.5 244.1,342.6 237.3,332.2 230.5,322.3 222.4,313.0 214.5,303.5 207.7,293.1 211.5,279.3 208.5,265.5 200.6,255.6 194.0,245.7 194.5,229.7 208.6,233.4 222.3,225.8 237.3,224.3 249.4,219.6 257.1,210.9 265.0,202.0 277.8,196.8 282.4,210.0 281.1,194.4 289.0,184.8 298.8,176.3 310.1,169.6 321.4,163.6 334.3,159.1 344.5,165.7 356.0,172.6 365.8,179.3 380.6,177.6 384.7,190.4 392.6,200.3 402.1,207.4 411.9,214.4 424.0,219.3 435.0,225.1 444.7,232.5 453.1,241.5 464.3,247.5 478.8,249.7 490.4,256.3 502.2,261.0 516.7,258.4 533.4,258.7 541.9,266.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="242.1,98.1 229.8,102.9 240.4,108.8 243.8,122.2 252.6,130.7 261.0,138.8 270.5,146.5 272.2,161.5 279.6,170.6 283.7,183.0 296.2,178.3 306.9,171.1 318.7,166.0 332.5,159.5 346.2,154.6 348.3,169.0 360.1,174.5 372.7,178.8 384.3,184.1 390.8,198.5 401.3,207.1 411.0,213.9 424.0,219.3 435.0,225.1 444.7,232.5 453.1,241.5 464.3,247.5 478.8,249.7 490.4,256.3 502.2,261.0 516.7,258.4 533.4,258.7 541.9,266.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="441.3,307.3 449.6,298.5 458.3,289.9 463.6,277.8 470.9,268.0 474.9,254.3 490.4,256.3 502.2,261.0 516.7,258.4 533.4,258.7 541.9,266.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="242.1,98.1 229.8,102.9 240.4,108.8 243.8,122.2 252.6,130.7 261.0,138.8 270.5,146.5 272.2,161.5 279.6,170.6 283.7,183.0 296.2,178.3 306.9,171.1 318.7,166.0 332.5,159.5 346.6,154.4 355.5,146.4 359.3,133.1 371.4,127.7 387.7,128.1 403.3,129.2 417.2,131.8 432.6,126.7 446.6,129.4 453.8,140.0 468.1,142.4 480.3,147.3 483.4,161.6 492.1,169.8 504.6,174.4 515.2,181.3 525.0,188.0 535.1,195.0 535.7,212.0 531.6,227.2 528.4,240.7 532.3,255.0 539.0,265.2 541.9,266.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="583.4,352.8 575.8,342.9 574.9,326.8 567.6,317.3 562.9,305.3 559.0,292.6 551.3,283.5 545.1,270.3 541.9,266.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="528.2,269.3 516.7,258.4 502.2,261.0 490.4,256.3 478.8,249.7 473.3,261.4 467.2,272.8 460.9,283.2 455.5,295.4 445.3,302.2 437.4,311.4 429.5,320.1 422.2,329.8 410.1,335.8 402.6,344.8 395.3,354.4 386.9,362.6 381.2,374.8 374.0,384.7 375.3,400.1 381.6,410.5 378.0,426.0 364.3,429.4 347.8,430.2 333.0,428.3 317.7,429.9 302.2,431.6 297.6,443.6 295.8,459.8 298.8,473.2 293.8,484.8 280.8,488.5 266.6,491.1 250.5,491.6 237.0,488.4 220.9,491.6 210.3,498.2 193.8,497.9 184.3,490.6 174.5,482.7 165.8,473.7 152.6,470.2 135.9,470.0 123.3,466.0 106.1,464.0 91.5,467.7 74.3,465.4 58.6,462.3 50.3,453.4 45.6,438.1 48.7,424.3 56.9,414.6 72.4,407.4 85.2,403.2 98.8,406.6 111.0,411.0 125.8,408.8 135.4,401.4 145.1,391.2 154.1,382.9 164.3,376.3 177.2,372.6 187.7,366.6 200.1,361.5 215.5,362.8 232.4,363.6 246.5,366.0 257.8,360.3 274.0,358.1 284.4,365.2 298.5,367.6 315.3,370.3 326.3,376.0 343.4,374.0 358.0,378.3 369.4,372.2 378.2,364.3 391.2,359.2 399.2,349.7 406.2,339.9 416.3,332.5 425.3,324.8 433.5,315.4 442.3,306.0 451.2,297.4 458.5,288.1 464.1,277.0 471.2,267.3 474.9,254.3 490.4,256.3 502.2,261.0 516.7,258.4 529.0,268.4 528.2,269.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Santa Cruz</title></polyline>
+<polyline points="549.2,280.8 556.9,290.4 560.3,304.7 568.6,313.4 573.8,324.8 574.7,340.5 581.3,350.5 589.3,359.3 582.6,369.4 574.8,378.2 585.8,384.2 595.1,392.0 587.5,401.2 581.0,411.5 574.4,422.0 565.5,429.6 557.8,439.5 546.6,446.2 533.1,450.2 524.7,460.7 518.6,471.3 524.7,460.7 531.6,451.0 545.0,447.2 555.5,440.7 563.5,432.3 571.9,423.8 578.8,414.2 586.1,404.0 594.0,395.4 589.3,383.3 576.0,379.5 582.6,369.4 589.8,359.9 581.3,350.5 574.7,340.5 573.8,324.8 568.6,313.4 560.3,304.7 557.5,290.8 549.5,280.4 549.2,280.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Cajé</title></polyline>
+<polyline points="249.6,360.2 234.9,363.8 218.4,362.9 202.7,358.7 195.9,368.5 190.7,380.9 186.5,393.4 179.1,402.6 180.9,417.7 197.6,420.6 208.1,427.1 208.3,443.4 208.1,427.2 197.6,420.6 181.7,418.7 176.9,406.6 182.5,395.3 190.3,386.6 192.2,372.0 199.6,363.0 216.3,363.0 232.4,363.6 246.5,366.0 249.6,360.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 01</title></polyline>
+<polyline points="441.3,307.3 433.0,316.0 424.9,325.4 415.1,332.9 404.1,342.2 417.7,347.8 431.2,351.4 441.0,359.2 449.6,367.2 456.1,377.5 453.3,392.7 445.1,402.3 453.0,393.0 461.7,384.9 454.0,375.6 448.0,364.9 438.3,357.0 426.8,350.2 412.8,346.6 416.3,332.5 425.3,324.8 433.5,315.4 441.3,307.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 03</title></polyline>
+<circle cx="596.9" cy="394.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="541.1" cy="268.5" r="2.2" fill="#b9b9b2"/>
+<polygon points="548.8,269.5 538.0,289.4 559.6,289.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="534.5,250.9 524.8,268.8 544.2,268.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="547.7,241.2 538.6,257.9 556.8,257.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="527.4,259.3 518.3,276.0 536.5,276.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="41.7" cy="452.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="48.7" y="447.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santa Cruz 13,0 km</text>
+<circle cx="217.8" cy="448.6" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="224.8" y="443.6" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Serra do Jucá 11,2 km</text>
+<circle cx="192.4" cy="491.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="199.4" y="486.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Lagoa 10,9 km</text>
+<circle cx="355.4" cy="429.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="362.4" y="424.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Rufinos 6,1 km</text>
+<circle cx="516.5" cy="470.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="523.5" y="465.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Cajé 5,6 km</text>
+<circle cx="376.1" cy="404.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="383.1" y="399.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Boa Vista 5,3 km</text>
+<circle cx="447.3" cy="404.1" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="454.3" y="419.1" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Barro 3,6 km</text>
+<rect x="536.1" y="263.5" width="10" height="10" fill="#1d1d1b"/><text x="550.1" y="286.5" font-weight="600" fill="#1d1d1b">Sede de Venha-Ver</text>
+<line x1="35" x2="282.3" y1="528.3" y2="528.3" stroke="#8a8a84" stroke-width="2"/><text x="35" y="542.3" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="519.2541766109971" y2="519.2541766109971" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="523.2541766109971" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,512.3 421.4,524.5 434.6,524.5" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="523.2541766109971" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="537.2541766109971" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="546.2541766109971" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="542.2541766109971" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="546.2541766109971" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="565.2541766109971" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="569.2541766109971" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="565.2541766109971" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="569.2541766109971" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="588.2541766109971" y2="588.2541766109971" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="592.2541766109971" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="611.2541766109971" y2="611.2541766109971" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="615.2541766109971" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Portaria nº 06/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (6):</strong> Santa Cruz, Serra do Jucá, Lagoa, Rufinos, Cajé e Boa Vista.</li>
+<li><strong>De 3 a 5 km (2):</strong> Barro e Minhuins.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (1):</strong> Venha-Ver.</li>
+</ul><h2>Rotas do Portaria nº 06/2026</h2>
+<p>O edital tem 5 rotas para Venha-Ver. Horários: Embarque a partir das 06h30 (ou conforme a distância até a sede); retorno conforme a demanda, até as 17h ou até atender todos os eleitores. Veículos: Rota 01: Neobus oficial (renavam 400376, em emplacamento); Rota 02: Neobus oficial RQJ1E54; Rota 03: Volare V8L oficial QGV6E35; Rota 04: Neobus 8 oficial TSP4151; Rota 05: Volare W7 oficial GHE3I70.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Taboca I – Bezerra – Abraão – Riachão dos Jocas – Chapada do Formoso – Formoso dos Cristinos – Formoso dos Justinos – Formoso dos Robertos – Sede</td></tr><tr><td>02</td><td>Cabo – Barrinha – Riachão dos Pereiras – Formoso dos Cristinos – Formoso dos Justinos – Formoso dos Robertos – Sede</td></tr><tr><td>03</td><td>Samanau – Mata Rufino – Sede</td></tr><tr><td>04</td><td>Riachão dos Pereiras – Barrinha – Sede</td></tr><tr><td>05</td><td>Bandeiras – Salgada – Sede</td></tr></tbody></table></div>
+<p>Fonte: Portaria nº 06/2026 da 43ª ZE, DJE/TRE-RN nº 196 (disp. 21/09/2026), idMateria 6122776.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 7 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Santa Cruz</strong></td><td>Sede – Boa Vista – Rufinos – Lagoa – Santa Cruz – Sede</td><td>Boa Vista, Rufinos, Lagoa, Santa Cruz</td><td>27,6 km (ida e volta)</td><td>~1h07</td></tr><tr><td><strong>Rota nova – Cajé</strong></td><td>Sede – Cajé – Sede</td><td>Cajé</td><td>11,1 km (ida e volta)</td><td>~18 min</td></tr><tr><td><strong>Parada extra na Rota 01</strong></td><td>desvio pelo caminho atual: Serra do Jucá</td><td>Serra do Jucá</td><td>+7,3 km</td><td>+17 min</td></tr><tr><td><strong>Parada extra na Rota 03</strong></td><td>desvio pelo caminho atual: Barro</td><td>Barro</td><td>+6,2 km</td><td>+15 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMVV</strong></p><p>Venha-Ver/RN, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Marco Antônio Mendes Ribeiro</strong><br>Juiz Eleitoral da 43ª Zona Eleitoral – São Miguel/RN</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Portaria nº 06/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Venha-Ver, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Portaria nº 06/2026: Santa Cruz, Lagoa, Rufinos, Cajé, Boa Vista, Serra do Jucá e Barro.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Santa Cruz (Sede – Boa Vista – Rufinos – Lagoa – Santa Cruz – Sede);</li><li>a criação da Rota nova – Cajé (Sede – Cajé – Sede);</li><li>a inclusão de parada em Serra do Jucá na Rota 01, mantido todo o percurso atual;</li><li>a inclusão de parada em Barro na Rota 03, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Portaria nº 06/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Venha-Ver</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Venha-Ver; Portaria nº 06/2026 da 43ª ZE, DJE/TRE-RN nº 196 (disp. 21/09/2026), idMateria 6122776; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

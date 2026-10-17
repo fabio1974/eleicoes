@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Ibititá</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Ibititá</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/ibitita.pdf?v=1792240310" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Ibititá (104ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 104ª Zona Eleitoral <strong>9 rotas novas e 2 paradas extras em rotas do edital</strong> no transporte gratuito de Ibititá.
+Traçamos pelas estradas o percurso das 9 rotas do Edital ZE-104 nº 54, de 25/09/2026 (Rotas definitivas – Quadro Geral de Percursos de Ibititá; confirma o Edital ZE-104 nº 39/2026). 12 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 2 ficam a 1–2 km.</p>
+<ul>
+<li>Ibititá tem 15.745 eleitores aptos em 30 locais de votação e 68 seções. São 25 locais rurais, com 10.081 eleitores (64% do total).</li>
+<li>19 locais rurais ficam a 10 km ou mais da sede, com 7.116 eleitores. Os mais distantes: Povoado Alto Da Cruz - Zona Rural (34,5 km), Povoado Pau Darco - Zona Rural (27,8 km) e Feira Nova (27,3 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Licuri do Sertão (6,1 km do local de votação), Deserto (5,6 km do local de votação), Santana do Jacaré (5,4 km do local de votação), 1 Conjunto (5,4 km do local de votação), Muribeca (5,2 km do local de votação), Licori do Mulatinhos de Ibititá (4,5 km do local de votação), Irecezinho (4,5 km do local de votação), Fazenda do Lambedor (3,6 km do local de votação), Segredo (3,5 km do local de votação), Corta Facão (3,5 km do local de votação), Boa Esperança (3,4 km do local de votação) e Santana do Meio (3,2 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Muquém do Peixe e Umbuzeirão.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 73 localidades rurais de Ibititá que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Licuri do Sertão</td><td>6,1</td><td>Rota 04</td><td>4,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Deserto</td><td>5,6</td><td>Rota 06</td><td>2,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Santana do Jacaré</td><td>5,4</td><td>Rota 04</td><td>3,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>1 Conjunto</td><td>5,4</td><td>Rota 05</td><td>2,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Muribeca</td><td>5,2</td><td>Rota 04</td><td>4,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Muquém do Peixe</td><td>4,8</td><td>Rota 04</td><td>1,9</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Umbuzeirão</td><td>4,6</td><td>Rota 08</td><td>1,2</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Licori do Mulatinhos de Ibititá</td><td>4,5</td><td>Rota 07</td><td>3,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Irecezinho</td><td>4,5</td><td>Rota 07</td><td>5,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Lagoa de Pedras</td><td>4,0</td><td>Rota 05</td><td>1,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Alfredo Redondo</td><td>4,0</td><td>Rota 02</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Serafim</td><td>3,8</td><td>Rota 07</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fazenda do Lambedor</td><td>3,6</td><td>Rota 01</td><td>3,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Marciano</td><td>3,6</td><td>Rota 09</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Vila Nova</td><td>3,5</td><td>Rota 09</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Segredo</td><td>3,5</td><td>Rota 04</td><td>7,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Corta Facão</td><td>3,5</td><td>Rota 03</td><td>3,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Boa Esperança</td><td>3,4</td><td>Rota 08</td><td>3,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Santana do Meio</td><td>3,2</td><td>Rota 04</td><td>5,7</td><td>Sem rota (mais de 2 km)</td></tr></tbody></table></div>
+<p>3 das 31 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Pedras (Rota 05), Zé Lucas (Rota 05) e Corredor (Rota 08). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 73 localidades rurais de Ibititá, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1172" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Ibititá: 14 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital ZE-104 nº 54, de 25/09/2026 (Rotas definitivas – Quadro Geral de Percursos de Ibititá; confirma o Edital ZE-104 nº 39/2026) e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="35.0,503.3 37.0,551.4 198.3,684.7 308.3,787.3 320.5,802.9 334.6,966.0 364.6,1018.0 380.2,1005.9 401.5,1011.6 406.7,993.0 427.1,982.6 431.5,963.5 462.0,943.4 476.9,894.1 489.5,894.1 503.9,869.1 531.1,860.9 554.4,862.6 584.4,849.5 608.7,826.4 626.3,829.7 650.3,849.0 701.4,826.9 711.6,781.6 672.4,683.2 536.6,484.2 460.3,356.1 339.1,246.8 290.0,164.5 287.3,80.0 224.6,171.2 199.1,195.2 125.7,268.1 123.2,297.1 90.0,341.7 55.3,417.8 35.0,503.3 35.0,503.3" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="123.1,369.2 128.6,372.2 133.8,376.3 137.6,380.0 141.8,383.7 146.5,386.7 150.7,389.9 162.0,400.5 165.7,404.8 169.5,409.7 172.4,414.3 176.9,418.8 181.3,423.8 184.4,429.1 187.1,434.1 188.1,440.8 189.4,448.1 191.0,454.2 189.8,460.8 189.8,468.9 190.9,475.6 194.4,480.1 197.0,485.7 198.8,488.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="521.9,483.2 514.5,483.0 509.5,486.5 504.7,489.5 501.5,494.5 503.1,500.3 504.3,507.3 507.2,512.0 507.0,521.5 504.5,528.7 502.4,534.4 501.2,541.8 506.0,545.0 511.2,547.4 519.9,547.1 526.5,546.0 519.9,547.1 513.0,547.7 506.0,545.0 501.2,541.8 496.8,538.7 488.4,535.3 476.0,532.5 468.5,530.7 463.3,527.4 457.6,524.9 451.1,522.4 445.7,519.7 441.8,515.6 435.4,512.2 428.4,509.3 420.2,507.7 414.6,505.8 407.7,503.1 400.1,502.2 397.8,507.6 390.3,510.7 391.6,518.4 390.3,510.7 388.2,503.6 384.0,499.0 379.5,495.9 374.5,490.8 369.1,488.4 364.2,485.1 357.1,481.6 352.1,477.5 343.7,477.3 336.2,477.3 323.1,476.3 315.5,475.6 304.1,474.9 296.4,473.8 292.2,469.3 284.9,471.1 277.1,471.1 268.7,474.2 262.1,475.6 250.2,478.9 244.3,481.6 237.5,482.3 229.9,480.1 223.3,478.7 216.8,479.8 214.7,485.6 210.0,490.6 202.8,491.8 197.1,489.8 198.8,488.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="182.9,278.3 181.2,272.3 182.3,265.9 184.3,257.7 187.4,252.4 190.9,248.4 193.5,242.8 199.1,240.6 206.1,240.1 212.3,238.3 217.6,235.0 221.3,229.3 222.9,221.6 227.2,214.1 230.7,208.8 234.1,203.0 235.9,194.7 236.1,187.4 235.6,178.6 236.6,170.6 235.5,177.4 235.9,184.7 236.1,192.8 235.5,200.2 231.6,207.3 227.2,214.1 223.6,220.3 221.8,226.4 219.6,231.7 218.0,238.0 220.7,246.5 227.1,256.0 231.7,260.8 234.6,268.1 237.6,274.1 240.1,279.7 242.7,286.7 244.1,293.7 244.6,301.1 246.8,306.5 254.9,306.4 261.8,305.7 269.6,305.5 276.6,304.6 283.9,305.4 296.4,306.6 294.1,316.9 290.6,322.7 286.5,329.0 283.5,333.7 280.5,338.6 276.8,344.2 273.6,349.3 270.6,353.9 266.3,360.7 256.2,376.4 240.7,400.4 237.7,405.2 231.2,415.3 227.3,421.7 224.0,426.7 217.9,436.3 212.2,445.3 207.2,453.2 203.9,458.3 200.9,463.0 198.0,468.2 196.6,474.5 196.8,482.2 197.1,489.5 198.8,488.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="467.2,889.9 468.1,882.8 477.1,882.2 484.1,878.5 488.5,873.7 491.5,867.8 493.8,861.1 501.2,855.9 506.7,852.5 509.6,847.8 512.5,839.2 514.4,832.7 513.5,824.3 510.1,816.4 506.1,803.0 506.4,795.8 508.9,790.7 507.1,778.0 503.4,769.8 501.8,763.0 500.2,757.1 497.0,752.9 492.2,747.0 489.8,741.9 491.0,733.6 492.4,724.6 493.3,717.9 493.9,710.7 490.8,704.9 488.3,699.7 485.3,691.1 479.9,683.3 471.1,673.4 461.5,658.6 459.0,652.4 454.9,644.2 451.3,638.8 448.7,633.4 444.8,624.4 438.5,616.6 433.5,609.3 427.3,605.8 409.1,602.6 402.2,601.0 387.3,596.4 379.7,594.5 371.5,588.9 366.5,585.3 359.8,580.1 354.4,577.2 345.4,570.7 337.5,566.4 330.6,561.8 321.0,556.4 310.2,549.4 306.2,545.6 299.0,543.0 292.1,542.5 285.3,541.7 281.9,545.8 280.6,552.1 274.3,558.0 264.5,558.2 256.7,558.8 250.5,557.0 235.7,542.3 230.7,538.3 219.7,523.6 215.1,519.7 211.4,514.9 209.3,508.4 204.7,504.5 202.1,498.4 198.6,494.4 198.8,488.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="452.0,377.8 445.8,376.3 437.8,376.1 433.1,371.6 430.6,364.3 427.8,358.6 420.4,359.2 412.9,358.2 406.8,354.4 401.7,351.3 395.3,352.8 392.2,347.2 386.0,341.1 379.3,337.1 373.4,334.3 367.6,332.1 362.3,329.9 357.8,326.2 352.6,323.9 347.0,321.7 341.6,319.6 336.7,316.9 332.6,312.9 326.9,310.7 321.4,308.2 314.9,306.9 307.6,307.3 297.8,311.2 294.1,316.9 290.6,322.7 286.5,329.0 283.5,333.7 280.5,338.6 276.8,344.2 273.6,349.3 270.6,353.9 266.3,360.7 256.2,376.4 240.7,400.4 237.7,405.2 231.2,415.3 227.3,421.7 224.0,426.7 217.9,436.3 212.2,445.3 207.2,453.2 203.9,458.3 200.9,463.0 198.0,468.2 196.6,474.5 196.8,482.2 197.1,489.5 198.8,488.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="375.3,630.1 381.7,628.8 381.7,618.5 381.5,609.8 384.3,604.3 390.8,600.9 397.3,599.5 397.7,599.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="647.1,698.4 643.4,702.7 637.1,707.1 631.4,710.1 623.5,710.7 615.8,710.3 609.7,712.5 606.6,718.0 605.1,724.5 603.4,730.5 602.9,739.0 602.9,746.7 603.6,753.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="198.8,488.6 199.7,495.7 203.3,500.4 204.9,506.5 203.5,514.1 201.4,520.0 198.9,526.9 196.6,533.7 194.6,539.2 192.5,545.4 190.2,552.0 188.2,557.9 185.9,564.4 183.9,570.2 181.9,576.0 179.9,581.8 177.5,588.7 175.5,594.3 173.4,600.5 174.1,607.9 178.7,612.2 185.0,613.5 189.9,616.2 194.9,619.2 199.9,621.8 207.3,623.9 212.2,626.5 218.6,628.1 228.2,632.0 235.9,634.2 236.3,634.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="541.0,785.1 533.5,786.7 526.8,786.0 520.3,784.8 513.5,784.0 507.1,778.0 503.4,769.8 501.8,763.0 500.2,757.1 497.0,752.9 492.2,747.0 489.8,741.9 491.0,733.6 492.4,724.6 493.3,717.9 493.9,710.7 494.9,710.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 09</title></polyline>
+<polyline points="460.2,884.5 464.4,888.1 461.2,894.3 453.6,894.2 442.4,884.3 435.9,885.2 428.2,885.4 420.8,884.7 413.4,885.3 406.2,886.5 399.1,887.3 390.5,887.4 383.8,886.5 376.2,886.5 366.4,889.7 358.4,891.8 359.9,885.5 361.9,878.8 360.2,884.6 358.4,891.8 371.3,888.6 382.0,886.5 390.5,887.4 398.0,887.5 404.7,886.6 411.6,885.9 418.0,884.4 424.7,885.2 432.1,884.8 439.7,884.4 452.1,894.4 458.7,898.2 462.9,892.5 461.1,885.3 460.2,884.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Licuri do Sertão</title></polyline>
+<polyline points="236.6,635.2 234.6,643.1 229.8,647.9 225.2,653.5 220.2,662.7 215.8,670.5 210.4,672.6 205.8,675.8 200.4,678.4 198.7,684.3 196.5,689.6 198.7,684.3 200.4,678.4 205.8,675.8 213.4,675.4 220.2,677.3 229.9,680.9 240.2,681.4 248.4,681.4 260.8,687.5 269.2,691.4 274.4,693.8 279.6,698.5 290.9,699.6 299.4,699.9 310.1,699.4 315.0,693.7 316.5,686.8 317.0,677.9 317.7,669.5 318.7,661.5 317.9,654.6 313.7,648.2 309.8,644.1 304.8,638.9 296.7,640.0 290.1,644.9 285.4,648.6 279.9,651.0 274.3,656.6 270.4,661.3 261.5,658.2 257.8,653.3 254.3,649.2 251.2,644.2 246.1,640.9 241.2,638.4 236.7,635.3 236.6,635.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Deserto</title></polyline>
+<polyline points="366.9,1009.3 371.1,1005.9 373.9,1001.0 381.3,1001.5 385.0,1005.4 382.2,1011.7 385.4,1016.0 392.7,1016.7 399.6,1017.4 404.8,1015.2 409.7,1011.7 414.3,1008.3 416.9,1003.4 420.2,999.0 422.4,992.5 426.2,986.9 431.8,984.8 434.5,979.9 436.1,973.8 428.7,973.6 424.7,970.2 425.3,960.8 421.9,954.3 416.9,951.0 411.0,952.8 407.9,957.9 403.7,962.0 399.5,965.7 396.2,970.4 394.1,976.1 392.3,981.8 388.8,987.1 384.9,990.9 380.9,995.2 377.2,999.2 373.1,1002.6 369.2,1006.9 366.9,1009.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Santana do Jacaré</title></polyline>
+<polyline points="266.2,305.6 273.2,305.0 280.7,305.0 288.9,306.0 296.4,306.6 309.7,292.5 325.9,267.2 331.7,258.1 335.7,251.9 340.0,255.5 343.9,260.0 339.5,256.8 335.9,251.6 331.7,258.1 327.8,264.3 309.7,292.5 300.4,307.1 288.9,306.0 280.7,305.0 273.5,304.7 266.2,305.6 266.2,305.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – 1 Conjunto</title></polyline>
+<polyline points="515.1,614.1 516.7,620.4 520.7,623.9 526.6,625.8 534.4,628.6 542.3,628.8 548.2,626.8 555.6,626.0 562.7,624.4 569.9,623.8 576.9,622.4 583.4,620.9 590.6,621.3 594.5,625.6 599.4,628.6 594.5,625.6 590.6,621.3 583.4,620.9 576.9,622.4 570.7,623.9 562.7,624.4 556.2,626.0 549.1,626.6 542.2,627.4 536.6,629.2 528.7,626.9 522.4,624.6 517.9,621.1 513.6,617.8 515.1,614.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Licori do Mulatinhos de Ibititá</title></polyline>
+<polyline points="650.0,820.9 658.0,821.8 665.2,822.9 672.6,823.5 678.3,825.4 684.3,823.6 691.6,823.7 695.7,827.9 700.5,831.1 703.1,837.0 710.4,834.1 715.9,831.7 721.7,830.1 724.5,824.7 721.7,815.6 724.4,820.4 722.7,828.3 717.7,830.8 712.0,833.1 706.9,835.6 701.5,833.4 697.1,830.1 693.4,824.8 688.6,822.2 683.0,824.0 676.0,824.6 669.7,823.0 661.5,822.2 653.9,821.6 650.0,820.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Irecezinho</title></polyline>
+<polyline points="185.2,484.8 178.6,485.8 172.9,484.0 162.9,481.8 155.8,480.4 120.6,478.6 109.1,478.1 120.6,478.6 154.8,480.3 162.9,481.8 171.9,483.7 177.1,486.1 183.9,484.9 185.2,484.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fazenda do Lambedor</title></polyline>
+<polyline points="375.6,843.0 372.8,835.8 359.5,826.7 354.9,823.0 349.4,820.2 342.2,817.9 335.5,813.6 330.3,810.9 324.1,805.6 319.2,801.7 314.1,797.4 319.2,801.7 323.2,805.3 329.5,810.3 335.0,813.1 342.2,817.9 349.4,820.2 354.9,823.0 359.5,826.7 371.6,834.4 375.7,839.3 375.6,843.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Segredo</title></polyline>
+<polyline points="237.7,169.3 242.0,165.8 245.6,161.8 251.8,159.5 258.7,158.8 266.2,159.2 272.2,160.9 275.4,165.1 282.6,164.4 291.3,164.2 298.1,163.5 302.7,160.6 298.1,163.5 291.3,164.2 283.6,164.4 275.8,165.1 272.3,161.0 266.5,159.2 259.1,158.8 251.8,159.5 245.6,161.8 242.0,165.8 238.2,169.6 237.7,169.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Corta Facão</title></polyline>
+<polyline points="514.9,849.4 508.7,850.9 501.2,855.9 496.0,859.2 491.5,867.8 488.5,873.7 484.7,877.8 478.2,881.9 469.2,882.1 465.2,886.5 468.4,892.8 471.5,897.8 480.1,898.8 487.2,899.2 495.0,896.9 499.3,891.5 504.1,887.9 510.0,883.6 514.6,880.3 519.7,877.5 528.3,877.8 536.5,875.2 541.6,872.2 546.7,869.5 541.6,872.2 536.5,875.2 529.7,877.8 522.6,877.1 516.9,879.0 511.8,882.4 506.9,886.0 501.8,889.1 497.6,893.3 493.9,898.5 487.1,899.1 477.7,899.0 471.1,896.4 466.6,891.4 468.1,882.8 477.1,882.2 484.1,878.5 488.5,873.7 491.5,867.8 493.8,861.1 501.2,855.9 506.7,852.5 509.6,847.8 514.9,849.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 04</title></polyline>
+<polyline points="177.5,588.7 175.5,594.3 173.4,600.5 168.1,602.8 163.5,598.2 160.1,594.0 156.6,589.7 152.2,585.3 156.6,589.7 160.1,594.0 163.5,598.2 168.1,602.8 173.4,600.5 175.5,594.3 177.5,588.7 177.5,588.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 08</title></polyline>
+<circle cx="390.6" cy="374.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="520.7" cy="482.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="647.9" cy="698.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="541.3" cy="785.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="540.2" cy="782.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="348.8" cy="425.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="344.7" cy="615.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="559.5" cy="625.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="296.7" cy="542.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="211.0" cy="670.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="401.7" cy="992.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="529.4" cy="675.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="363.6" cy="427.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="375.3" cy="629.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="392.1" cy="1015.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="289.4" cy="540.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="468.4" cy="350.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="363.1" cy="1040.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="409.5" cy="846.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="451.4" cy="374.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="188.7" cy="241.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="391.6" cy="524.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="60.8" cy="528.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="371.8" cy="995.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="123.4" cy="368.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="211.9" cy="487.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="467.4" cy="890.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="388.1" cy="602.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="518.0" cy="621.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="531.1" cy="546.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="223.7" cy="238.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="274.6" cy="424.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="389.1" cy="600.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="274.6" cy="305.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="390.4" cy="390.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="176.5" cy="486.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="190.4" cy="494.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="249.3" cy="562.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="259.5" cy="309.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="515.2" cy="848.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="263.0" cy="558.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="494.7" cy="710.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="389.6" cy="502.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="341.5" cy="317.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="185.9" cy="278.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="240.2" cy="167.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="603.8" cy="754.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="271.4" cy="470.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="204.3" cy="485.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="184.2" cy="276.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="604.7" cy="754.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="201.0" cy="491.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="123.2" cy="360.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="424.8" cy="365.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="65.0" cy="542.4" r="2.2" fill="#b9b9b2"/>
+<polygon points="201.8,474.5 192.6,491.4 211.0,491.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="200.5,481.2 189.2,502.1 211.9,502.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="432.0,354.3 423.3,370.4 440.8,370.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="393.1,375.5 384.0,392.3 402.2,392.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="393.1" y="405.7" text-anchor="middle" fill="#5c5c57">Povoado Lagoa Da Pedra</text>
+<polygon points="121.5,346.7 110.5,367.0 132.5,367.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="121.5" y="380.9" text-anchor="middle" fill="#5c5c57">Canoão</text>
+<polygon points="460.0,875.2 451.0,891.8 469.0,891.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="460.0" y="905.1" text-anchor="middle" fill="#5c5c57">Feira Nova</text>
+<polygon points="237.7,160.0 229.0,176.1 246.5,176.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="498.2,699.4 488.9,716.6 507.5,716.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="498.2" y="730.0" text-anchor="middle" fill="#5c5c57">Povoado Lagoa Do Leite</text>
+<polygon points="393.6,496.3 384.9,512.4 402.3,512.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="366.8,1002.6 360.7,1014.0 373.0,1014.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="184.2,266.3 176.6,280.3 191.8,280.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="336.8,311.2 330.2,323.4 343.5,323.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="537.8,537.8 529.9,552.5 545.8,552.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="397.8,590.5 390.5,604.0 405.2,604.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="605.5,743.6 597.9,757.6 613.1,757.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="515.3,607.3 508.8,619.2 521.7,619.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="256.1,550.8 247.9,565.7 264.2,565.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="269.7,458.5 261.8,473.1 277.6,473.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="266.2,298.4 259.0,311.8 273.5,311.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="376.0,836.0 369.3,848.3 382.7,848.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="188.9,479.0 181.4,492.9 196.4,492.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="650.1,814.6 644.0,825.8 656.2,825.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="397.8,591.7 390.3,605.7 405.4,605.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="67.5,537.5 61.1,549.2 73.8,549.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="198.8,463.0 187.3,484.1 210.3,484.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="236.5,627.8 229.6,640.6 243.4,640.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="276.6,421.5 269.4,434.9 283.9,434.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="515.5,844.5 509.2,856.2 521.9,856.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="217.4,231.0 209.7,245.1 225.1,245.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="185.2,474.3 175.3,492.5 195.0,492.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="354.6" cy="874.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="361.6" y="869.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Licuri do Sertão 6,1 km</text>
+<circle cx="325.4" cy="667.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="332.4" y="662.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Deserto 5,6 km</text>
+<circle cx="435.1" cy="971.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="442.1" y="966.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santana do Jacaré 5,4 km</text>
+<circle cx="346.0" cy="262.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="353.0" y="257.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">1 Conjunto 5,4 km</text>
+<circle cx="365.7" cy="886.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="372.7" y="881.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Muribeca 5,2 km</text>
+<circle cx="552.2" cy="870.5" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="559.2" y="865.5" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Muquém do Peixe 4,8 km</text>
+<circle cx="151.2" cy="580.1" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="158.2" y="575.1" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Umbuzeirão 4,6 km</text>
+<circle cx="600.0" cy="629.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="357.4" y="624.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Licori do Mulatinhos de Ibititá 4,5 km</text>
+<circle cx="719.1" cy="813.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="606.7" y="808.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Irecezinho 4,5 km</text>
+<circle cx="106.5" cy="483.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="113.5" y="478.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda do Lambedor 3,6 km</text>
+<circle cx="316.7" cy="793.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="323.7" y="788.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Segredo 3,5 km</text>
+<circle cx="308.5" cy="158.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="315.5" y="153.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Corta Facão 3,5 km</text>
+<circle cx="195.1" cy="692.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="202.1" y="687.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Boa Esperança 3,4 km</text>
+<circle cx="413.6" cy="1005.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="420.6" y="1000.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santana do Meio 3,2 km</text>
+<rect x="194.1" y="483.7" width="10" height="10" fill="#1d1d1b"/><text x="208.1" y="506.7" font-weight="600" fill="#1d1d1b">Sede de Ibititá</text>
+<line x1="35" x2="146.6" y1="1070.1" y2="1070.1" stroke="#8a8a84" stroke-width="2"/><text x="35" y="1084.1" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="1061.1092362727309" y2="1061.1092362727309" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="1065.1092362727309" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,1054.1 421.4,1066.4 434.6,1066.4" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="1065.1092362727309" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="1079.1092362727309" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="1088.1092362727309" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="1084.1092362727309" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="1088.1092362727309" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1107.1092362727309" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1111.1092362727309" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1107.1092362727309" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1111.1092362727309" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1130.1092362727309" y2="1130.1092362727309" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1134.1092362727309" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1153.1092362727309" y2="1153.1092362727309" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1157.1092362727309" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital ZE-104 nº 54, de 25/09/2026 (Rotas definitivas – Quadro Geral de Percursos de Ibititá; confirma o Edital ZE-104 nº 39/2026) · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (5):</strong> Licuri do Sertão, Deserto, Santana do Jacaré, 1 Conjunto e Muribeca.</li>
+<li><strong>De 3 a 5 km (14):</strong> Muquém do Peixe, Umbuzeirão, Licori do Mulatinhos de Ibititá, Irecezinho, Lagoa de Pedras, Alfredo Redondo, Serafim, Fazenda do Lambedor, Marciano, Vila Nova, Segredo, Corta Facão, Boa Esperança e Santana do Meio.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (54):</strong> Alto da Boa Vista, Alto da Cruz, Batatas, Boa Vista, Brejeiro, Caldeirão da Gia, Caldeirão das Pedras, Canoão, Cearense, Circo, Comunidade Quilombola Bairro da Mata, Comunidade Quilombola Barro Duro, Comunidade Quilombola Canoão, Comunidade Quilombola Faveleira, Comunidade Quilombola Gino, Comunidade Quilombola Jesus, Comunidade Quilombola Lagoa da Pedra, Comunidade Quilombola Lagoa da Pedra 2, Comunidade Quilombola Lagoa dos Batatas, Comunidade Quilombola Lajedão, Comunidade Quilombola Pedra Lisa, Comunidade Quilombola Riacho, Comunidade Quilombola Rua da Mata, Córrego, Faveleira, Fazenda Lucas, Feira Nova, Gunabara, Jia, Lagoa de Ze Mendes, Lagoa do Estevão, Lagoa do Leite, Lagoa do Pote, Lagoa dos Porcos, Lajedão, Licuri Belo, Licuri de Feira Nova, Licuri de João de Deus, Licuri de João de Honório, Maniçoba, Mata Verde, Meios, Nuca, Pedra Lisa, Pedra Lisa 1, Porteira Nova, Recife, Recife Grande, Recife do Lino, Recife dos Cardoso, Recreio, Santana de Ibititá, Santana do Ibititá e Urandi.</li>
+</ul><h2>Rotas do Edital ZE-104 nº 54, de 25/09/2026 (Rotas definitivas – Quadro Geral de Percursos de Ibititá; confirma o Edital ZE-104 nº 39/2026)</h2>
+<p>O edital tem 9 rotas para Ibititá. Horários: Idas entre 08:00 e 16:00 e voltas entre 09:30 e 17:00, por rota (ex.: Rota 01 ida 08:00/10:00/14:00/16:00, volta 09:30/11:30/15:30/17:00). Veículos: Rota 01 ônibus NZG7323 (Robério Marques Santos); 02 NZI0760 (Alisson Oliveira Carvalho); 03 NZG7332 (Neilton Pereira da Silva); 04 micro PJL0385 (Paulo Rodrigues Dourado Junior); 05 OUK8474 (Orlan Francisco da Silva); 06 OKL1069 (Reinaldo Cardoso Viana); 07 OUK (placa incompleta; Amarildo Alves Barreto); 08 OZN3312 (Ailson Vilela de Castro); 09 micro RPH3E91 (Pedro Pereira da Silva Filho).</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Canoão – Sede</td></tr><tr><td>02</td><td>Alfredo Redondo – Recife do Lino – Lajedão – Boa Vista – Sede</td></tr><tr><td>03</td><td>Gia – Circo – Mato Verde – Faveleira – Sede</td></tr><tr><td>04</td><td>Feira Nova – Porteira Nova – Lagoa do Leite – Recife dos Cardosos – Pedra Lisa I – Sede</td></tr><tr><td>05</td><td>Brejeiros – Pedras – Zé Lucas – Sede</td></tr><tr><td>06</td><td>Maniçoba – Recife dos Cardosos</td></tr><tr><td>07</td><td>Serafim – Batatas</td></tr><tr><td>08</td><td>Sede – Corredor – Cearense</td></tr><tr><td>09</td><td>Marciano – Lagoa do Leite</td></tr></tbody></table></div>
+
+<p>Fonte: Edital ZE-104 nº 54, de 25/09/2026 (Rotas definitivas – Quadro Geral de Percursos de Ibititá; confirma o Edital ZE-104 nº 39/2026), 104ª ZE/BA (Lapão); DJE/TRE-BA nº 208, disp. 26/09/2026 (https://dje.tse.jus.br/dje/pdf/v1/edicao/129981).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 14 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Licuri do Sertão</strong></td><td>Feira Nova – Muribeca – Licuri do Sertão – Feira Nova</td><td>Muribeca, Licuri do Sertão</td><td>12,3 km (ida e volta)</td><td>~28 min</td></tr><tr><td><strong>Rota nova – Deserto</strong></td><td>Sede – Boa Esperança – Deserto – Sede</td><td>Boa Esperança, Deserto</td><td>16,6 km (ida e volta)</td><td>~40 min</td></tr><tr><td><strong>Rota nova – Santana do Jacaré</strong></td><td>Sede – Santana do Meio – Santana do Jacaré – Sede</td><td>Santana do Meio, Santana do Jacaré</td><td>10,8 km (ida e volta)</td><td>~21 min</td></tr><tr><td><strong>Rota nova – 1 Conjunto</strong></td><td>Sede – 1 Conjunto – Sede</td><td>1 Conjunto</td><td>10,7 km (ida e volta)</td><td>~15 min</td></tr><tr><td><strong>Rota nova – Licori do Mulatinhos de Ibititá</strong></td><td>Sede – Licori do Mulatinhos de Ibititá – Sede</td><td>Licori do Mulatinhos de Ibititá</td><td>9,0 km (ida e volta)</td><td>~22 min</td></tr><tr><td><strong>Rota nova – Irecezinho</strong></td><td>Sede – Irecezinho – Sede</td><td>Irecezinho</td><td>9,0 km (ida e volta)</td><td>~20 min</td></tr><tr><td><strong>Rota nova – Fazenda do Lambedor</strong></td><td>Sede – Fazenda do Lambedor – Sede</td><td>Fazenda do Lambedor</td><td>7,1 km (ida e volta)</td><td>~9 min</td></tr><tr><td><strong>Rota nova – Segredo</strong></td><td>Sede – Segredo – Sede</td><td>Segredo</td><td>7,1 km (ida e volta)</td><td>~11 min</td></tr><tr><td><strong>Rota nova – Corta Facão</strong></td><td>Sede – Corta Facão – Sede</td><td>Corta Facão</td><td>7,1 km (ida e volta)</td><td>~11 min</td></tr><tr><td><strong>Parada extra na Rota 04</strong></td><td>desvio pelo caminho atual: Muquém do Peixe</td><td>Muquém do Peixe</td><td>+15,6 km</td><td>+30 min</td></tr><tr><td><strong>Parada extra na Rota 08</strong></td><td>desvio pelo caminho atual: Umbuzeirão</td><td>Umbuzeirão</td><td>+4,7 km</td><td>+9 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMI</strong></p><p>Ibititá/BA, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Diego Serejo Ribeiro</strong><br>Juiz Eleitoral da 104ª Zona Eleitoral – Lapão/BA</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital ZE-104 nº 54, de 25/09/2026 (Rotas definitivas – Quadro Geral de Percursos de Ibititá; confirma o Edital ZE-104 nº 39/2026)) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Ibititá, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital ZE-104 nº 54, de 25/09/2026 (Rotas definitivas – Quadro Geral de Percursos de Ibititá; confirma o Edital ZE-104 nº 39/2026): Licuri do Sertão, Deserto, Santana do Jacaré, 1 Conjunto, Muribeca, Licori do Mulatinhos de Ibititá, Irecezinho, Fazenda do Lambedor, Segredo, Corta Facão, Boa Esperança, Santana do Meio, Muquém do Peixe e Umbuzeirão.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Licuri do Sertão (Feira Nova – Muribeca – Licuri do Sertão – Feira Nova);</li><li>a criação da Rota nova – Deserto (Sede – Boa Esperança – Deserto – Sede);</li><li>a criação da Rota nova – Santana do Jacaré (Sede – Santana do Meio – Santana do Jacaré – Sede);</li><li>a criação da Rota nova – 1 Conjunto (Sede – 1 Conjunto – Sede);</li><li>a criação da Rota nova – Licori do Mulatinhos de Ibititá (Sede – Licori do Mulatinhos de Ibititá – Sede);</li><li>a criação da Rota nova – Irecezinho (Sede – Irecezinho – Sede);</li><li>a criação da Rota nova – Fazenda do Lambedor (Sede – Fazenda do Lambedor – Sede);</li><li>a criação da Rota nova – Segredo (Sede – Segredo – Sede);</li><li>a criação da Rota nova – Corta Facão (Sede – Corta Facão – Sede);</li><li>a inclusão de parada em Muquém do Peixe na Rota 04, mantido todo o percurso atual;</li><li>a inclusão de parada em Umbuzeirão na Rota 08, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital ZE-104 nº 54, de 25/09/2026 (Rotas definitivas – Quadro Geral de Percursos de Ibititá; confirma o Edital ZE-104 nº 39/2026) deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Ibititá</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Ibititá; Edital ZE-104 nº 54, de 25/09/2026 (Rotas definitivas – Quadro Geral de Percursos de Ibititá; confirma o Edital ZE-104 nº 39/2026), 104ª ZE/BA (Lapão); DJE/TRE-BA nº 208, disp. 26/09/2026 (https://dje.tse.jus.br/dje/pdf/v1/edicao/129981); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

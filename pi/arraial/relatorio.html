@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Arraial</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Arraial</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/arraial.pdf?v=1792184953" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Arraial (61ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 61ª Zona Eleitoral <strong>4 rotas novas</strong> no transporte gratuito de Arraial.
+Traçamos pelas estradas o percurso das 6 rotas do Edital nº 33/2026 - TRE/61ª ZONA. 4 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>Arraial tem 4.390 eleitores aptos em 11 locais de votação e 23 seções. São 6 locais rurais, com 1.338 eleitores (30% do total).</li>
+<li>3 locais rurais ficam a 10 km ou mais da sede, com 706 eleitores. Os mais distantes: Povoado Cocos (17,0 km), Pov. Chapadinha S/N (15,2 km) e Pov. Capivara (12,8 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Bom Princípio (26,7 km do local de votação), Campinas (10,0 km do local de votação), Malhada Bonita (8,3 km do local de votação) e Bananeira (7,7 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 17 localidades rurais de Arraial que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Bom Princípio</td><td>26,7</td><td>Rota 06</td><td>19,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Campinas</td><td>10,0</td><td>Rota 04</td><td>2,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Malhada Bonita</td><td>8,3</td><td>Rota 03</td><td>3,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Bananeira</td><td>7,7</td><td>Rota 06</td><td>6,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Bom Jesus</td><td>4,2</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Cocos</td><td>3,6</td><td>Rota 02</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 17 localidades rurais de Arraial, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 851" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Arraial: 4 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 33/2026 - TRE/61ª ZONA e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="645.7,112.9 634.2,135.6 323.0,136.4 177.2,137.4 155.1,80.0 35.0,108.7 51.7,318.0 64.1,323.4 116.7,428.6 45.8,623.8 94.6,697.1 128.6,718.6 146.9,699.3 201.9,677.4 201.9,666.2 215.5,645.1 209.7,632.6 215.3,610.0 243.4,583.6 225.2,546.7 235.8,548.7 256.7,535.4 264.9,521.4 282.4,512.4 317.1,540.1 330.4,527.4 364.3,517.0 398.3,463.0 384.2,455.5 387.6,435.2 412.5,426.4 420.2,437.9 472.6,436.2 489.6,425.4 506.9,442.9 526.0,424.4 554.9,430.6 565.6,442.7 577.6,442.5 592.7,453.7 630.6,156.1 725.0,127.0 724.4,113.3 645.7,112.9 645.7,112.9" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="220.4,522.1 221.4,514.9 225.1,510.7 228.0,506.7 230.8,501.4 237.3,499.9 240.9,496.6 242.4,491.9 244.4,487.3 243.5,481.9 245.1,477.0 246.0,471.7 243.6,467.2 241.3,462.2 240.6,456.6 236.2,451.5 233.4,447.6 239.0,446.3 240.9,441.9 243.4,437.7 245.8,433.8 249.2,431.2 252.9,427.0 258.4,425.9 262.9,423.7 265.9,418.9 269.6,415.3 274.8,412.0 275.6,407.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="121.7,523.0 127.2,524.3 134.6,524.6 140.4,525.0 145.3,526.1 150.4,528.8 153.2,532.5 156.1,535.8 160.5,533.7 164.1,531.2 169.9,531.9 174.9,530.9 179.5,529.1 186.0,527.8 191.1,529.1 196.3,532.3 199.3,535.4 201.1,540.7 200.2,546.7 201.5,551.8 206.3,553.2 212.4,552.9 219.4,553.3 224.3,554.5 229.8,552.9 234.9,554.4 240.2,555.6 244.5,558.5 249.0,556.5 253.8,554.3 259.4,555.6 261.1,550.9 259.2,546.4 258.8,540.4 261.2,536.0 266.4,535.0 271.5,533.0 273.9,526.4 279.3,525.6 283.9,523.3 290.0,522.3 293.5,519.1 295.3,513.7 295.9,508.0 296.5,501.8 296.0,495.5 296.9,486.6 298.4,473.1 297.2,458.1 298.2,452.1 298.2,443.6 288.9,420.1 287.0,412.3 283.2,409.8 276.5,408.7 275.6,407.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="109.7,466.0 115.3,465.5 120.9,466.6 126.4,468.1 130.1,470.8 135.9,471.5 141.3,472.2 146.8,471.1 152.0,469.0 156.1,466.8 159.7,458.0 162.0,452.7 164.7,447.8 168.1,445.2 174.0,443.1 178.3,440.5 180.8,435.5 182.8,429.9 185.2,425.3 187.6,420.9 190.7,415.6 193.6,411.3 196.2,407.0 198.3,401.9 198.5,394.7 198.1,388.1 203.6,386.3 216.2,389.6 225.0,391.8 234.0,394.2 243.2,396.5 250.7,398.5 255.5,399.8 260.8,401.2 265.1,404.5 269.8,406.8 273.8,409.0 275.6,407.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="324.0,155.6 321.5,159.7 319.3,166.4 317.9,171.3 317.2,178.2 319.3,187.7 317.6,193.9 315.3,199.8 312.9,204.7 308.9,208.9 309.0,218.4 311.1,224.8 308.2,230.1 302.0,235.4 298.7,242.1 295.7,248.8 292.7,255.4 290.7,259.7 287.5,264.4 284.5,268.7 281.2,278.6 279.3,284.1 276.7,291.6 275.3,297.2 276.0,302.8 274.9,308.9 274.7,315.1 279.0,319.5 282.2,322.8 280.7,354.4 277.7,361.7 274.6,368.7 272.7,373.2 269.3,376.6 269.6,386.4 269.9,393.5 273.1,398.0 275.5,403.5 275.6,407.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="298.1,465.0 297.2,458.1 298.2,452.1 298.2,443.6 288.9,420.1 287.0,412.3 283.2,409.8 276.5,408.7 275.6,407.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="399.7,327.0 396.7,330.3 392.7,333.8 387.6,337.9 382.0,342.3 379.3,346.5 375.4,349.2 371.5,354.2 369.9,359.7 366.2,362.2 359.4,360.7 355.6,357.7 350.9,355.9 343.3,356.6 340.4,360.7 339.2,366.0 336.0,370.6 331.9,374.2 328.5,377.8 325.2,383.9 321.9,386.9 318.3,390.5 310.9,396.2 306.6,399.6 300.0,401.8 293.5,401.7 288.6,405.8 285.3,409.1 279.9,410.1 275.6,407.9 275.6,407.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="401.7,324.8 403.8,319.0 406.5,315.3 410.5,313.1 412.1,307.8 416.1,305.8 421.4,307.2 426.4,304.7 432.4,303.4 435.8,299.8 438.6,296.3 443.1,294.8 446.9,291.5 451.5,289.4 457.8,290.2 462.7,287.7 468.3,285.4 473.5,283.7 482.2,284.3 488.3,283.6 492.6,281.2 495.2,276.4 499.7,272.4 503.5,269.6 507.9,267.6 514.0,268.3 519.7,266.2 523.1,263.1 525.9,259.6 530.2,256.9 535.3,258.0 536.7,252.9 539.4,249.5 543.4,247.3 548.0,245.9 552.6,247.6 558.5,248.1 563.6,246.9 567.9,249.3 574.7,249.9 578.9,246.9 584.5,248.9 589.0,250.8 595.0,251.1 603.3,250.1 609.1,248.7 614.9,248.5 620.2,247.4 624.9,249.1 632.4,250.6 639.0,250.8 649.6,252.8 653.5,255.4 658.2,258.7 663.8,259.4 668.6,257.2 672.4,253.6 676.2,251.0 680.6,249.4 682.9,244.4 685.4,240.5 687.9,236.6 691.2,233.4 695.8,235.1 701.2,235.9 708.7,236.7 714.0,235.9 719.2,235.0 719.7,221.9 713.1,199.5 708.3,183.5 707.4,177.8 707.6,171.7 707.8,164.3 708.0,155.8 708.1,149.7 708.0,155.8 707.8,162.4 707.6,171.2 707.4,177.8 708.3,183.5 713.0,199.3 719.7,221.9 723.4,234.3 715.0,235.6 709.4,236.7 703.7,238.1 699.5,235.9 694.3,235.0 688.2,235.4 686.5,239.9 683.6,243.2 681.6,247.6 678.0,250.3 674.1,252.6 670.9,255.4 666.9,258.5 661.8,259.5 656.7,257.6 651.2,253.7 642.2,250.9 635.5,250.8 630.6,249.2 623.8,248.5 618.4,247.8 612.5,248.7 604.8,249.6 598.5,250.5 592.3,251.6 586.6,249.5 580.9,246.9 575.6,248.7 569.4,248.9 563.6,246.9 558.5,248.1 552.6,247.6 548.0,245.9 543.4,247.3 539.4,249.5 536.7,252.9 535.3,258.0 530.2,256.9 526.2,259.4 523.1,263.1 519.7,266.2 514.0,268.3 507.9,267.6 503.5,269.6 499.7,272.4 496.0,275.8 493.0,280.9 488.7,283.0 482.2,284.3 475.4,284.0 468.8,284.9 464.4,287.0 460.2,289.8 451.5,289.4 446.9,291.5 443.1,294.8 438.6,296.3 435.8,299.8 432.9,303.0 427.5,304.1 423.9,307.0 417.2,305.7 412.3,307.4 411.1,312.7 406.5,315.3 403.8,319.0 402.6,323.8 401.7,324.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Bom Princípio</title></polyline>
+<polyline points="401.7,324.8 403.8,319.0 406.5,315.3 410.5,313.1 412.1,307.8 416.1,305.8 421.4,307.2 426.4,304.7 432.4,303.4 435.8,299.8 438.6,296.3 443.1,294.8 446.9,291.5 451.5,289.4 457.8,290.2 462.7,287.7 468.3,285.4 473.5,283.7 482.2,284.3 488.3,283.6 492.6,281.2 495.2,276.4 499.7,272.4 503.5,269.6 507.9,267.6 503.5,269.6 499.7,272.4 496.0,275.8 493.0,280.9 488.7,283.0 482.2,284.3 475.4,284.0 468.8,284.9 464.4,287.0 460.2,289.8 451.5,289.4 446.9,291.5 443.1,294.8 438.6,296.3 435.8,299.8 432.9,303.0 427.5,304.1 423.9,307.0 417.2,305.7 412.3,307.4 411.1,312.7 406.5,315.3 403.8,319.0 402.6,323.8 401.7,324.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Bananeira</title></polyline>
+<polyline points="322.7,156.4 320.5,162.1 317.9,171.3 317.2,178.2 319.3,187.7 317.6,193.9 315.3,199.8 312.9,204.7 308.9,208.9 309.0,218.4 311.1,224.8 308.2,230.1 302.0,235.4 298.7,242.1 295.7,248.8 292.7,255.4 290.7,259.7 287.5,264.4 284.5,268.7 281.2,278.6 292.1,283.5 294.0,287.7 297.6,291.8 305.3,293.5 314.8,294.9 319.5,297.2 314.8,294.9 305.3,293.5 299.1,292.4 295.0,289.4 293.2,285.0 283.4,280.2 284.5,268.7 287.5,264.4 290.7,259.7 292.7,255.4 295.7,248.8 298.7,242.1 301.6,235.9 305.9,232.6 310.7,227.4 309.4,221.1 308.4,213.3 312.3,205.6 315.3,199.8 317.6,193.9 319.2,189.3 317.8,181.2 317.6,172.6 319.3,166.4 321.5,159.7 322.7,156.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Campinas</title></polyline>
+<polyline points="270.4,407.1 266.2,405.3 261.9,401.7 255.5,399.8 250.7,398.5 243.2,396.5 234.0,394.2 225.0,391.8 216.2,389.6 203.6,386.3 196.8,384.2 191.3,382.1 186.7,384.1 182.8,386.8 177.3,383.7 173.2,379.5 165.8,377.4 160.8,376.1 152.6,374.1 144.5,367.9 140.6,364.3 134.1,360.7 139.3,363.5 144.5,367.9 148.9,371.9 156.6,375.1 163.0,376.7 169.4,378.2 177.3,383.7 180.9,387.0 186.7,384.1 191.3,382.1 196.8,384.2 203.6,386.3 216.2,389.6 225.0,391.8 234.0,394.2 243.2,396.5 250.7,398.5 255.5,399.8 260.8,401.2 265.1,404.5 269.8,406.8 270.4,407.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Malhada Bonita</title></polyline>
+<circle cx="278.2" cy="526.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="122.3" cy="524.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="377.6" cy="356.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="133.6" cy="525.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="311.7" cy="204.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="312.3" cy="204.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="298.7" cy="445.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="222.2" cy="520.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="399.7" cy="327.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="323.8" cy="155.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="324.2" cy="155.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="109.7" cy="465.2" r="2.2" fill="#b9b9b2"/>
+<polygon points="278.2,403.5 271.0,416.9 285.4,416.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="270.4,407.1 262.5,421.6 278.2,421.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="270.4,395.0 258.8,416.2 281.9,416.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="215.9,519.1 209.2,531.6 222.7,531.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="107.3,457.8 100.5,470.4 114.1,470.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="322.8,148.5 315.4,162.2 330.2,162.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="272.2,402.4 265.0,415.6 279.3,415.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="290.0,400.9 282.4,415.0 297.7,415.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="401.9,317.5 394.7,330.6 409.1,330.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="297.5,457.0 290.3,470.2 304.7,470.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="176.8,523.0 169.5,536.4 184.0,536.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="707.9" cy="149.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="570.7" y="144.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Bom Princípio 26,7 km</text>
+<circle cx="319.8" cy="297.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="326.8" y="292.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Campinas 10,0 km</text>
+<circle cx="133.6" cy="360.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="140.6" y="355.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Malhada Bonita 8,3 km</text>
+<circle cx="509.0" cy="279.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="516.0" y="274.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Bananeira 7,7 km</text>
+<rect x="270.1" y="403.5" width="10" height="10" fill="#1d1d1b"/><text x="284.1" y="426.5" font-weight="600" fill="#1d1d1b">Sede de Arraial</text>
+<line x1="35" x2="125.5" y1="748.6" y2="748.6" stroke="#8a8a84" stroke-width="2"/><text x="35" y="762.6" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="739.5913853317782" y2="739.5913853317782" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="743.5913853317782" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,732.6 421.4,744.8 434.6,744.8" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="743.5913853317782" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="757.5913853317782" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="766.5913853317782" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="762.5913853317782" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="766.5913853317782" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="785.5913853317782" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="789.5913853317782" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="785.5913853317782" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="789.5913853317782" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="808.5913853317782" y2="808.5913853317782" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="812.5913853317782" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="831.5913853317782" y2="831.5913853317782" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="835.5913853317782" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 33/2026 - TRE/61ª ZONA · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (4):</strong> Bom Princípio, Campinas, Malhada Bonita e Bananeira.</li>
+<li><strong>De 3 a 5 km (2):</strong> Bom Jesus e Cocos.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (11):</strong> Alto Alegre, Baixa, Baixas, Buzu, Capa, Capitão de Campos, Capivara, Chapadinha, Malhada das Candeias, Malhadinha e Parudo.</li>
+</ul><h2>Rotas do Edital nº 33/2026 - TRE/61ª ZONA</h2>
+<p>O edital tem 6 rotas para Arraial. Horários: não informados. Veículos: não informados.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Capa</td></tr><tr><td>02</td><td>Cocos</td></tr><tr><td>03</td><td>Capivara</td></tr><tr><td>04</td><td>Chapadinha</td></tr><tr><td>05</td><td>Malhada das Caandeias</td></tr><tr><td>06</td><td>Alto Alegre</td></tr></tbody></table></div>
+<p>Fonte: Edital nº 33/2026 - TRE/61ª ZONA, DJE/TRE-PI nº 185/2026, disponibilizado em 13/09/2026 (publicação 14/09/2026), ID_MATERIA 6106439; fonte complementar: INFO ROTAS – sistema oficial do TRE-PI (inforotas.tre-pi.jus.br), consulta em 2026-10-16 (rotas do INFO ROTAS preservadas em &quot;rotas_inforotas&quot;).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 4 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Bom Princípio</strong></td><td>Sede – Bom Princípio – Sede</td><td>Bom Princípio</td><td>53,4 km (ida e volta)</td><td>~1h15</td></tr><tr><td><strong>Rota nova – Bananeira</strong></td><td>Sede – Bananeira – Sede</td><td>Bananeira</td><td>15,5 km (ida e volta)</td><td>~23 min</td></tr><tr><td><strong>Rota nova – Campinas</strong></td><td>Sede – Campinas – Sede</td><td>Campinas</td><td>20,0 km (ida e volta)</td><td>~35 min</td></tr><tr><td><strong>Rota nova – Malhada Bonita</strong></td><td>Sede – Malhada Bonita – Sede</td><td>Malhada Bonita</td><td>16,7 km (ida e volta)</td><td>~18 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMA</strong></p><p>Arraial/PI, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Dra. Melissa de Vasconcelos Lima Pessoa</strong><br>Juíza Eleitoral da 61ª Zona Eleitoral – Floriano/PI</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 33/2026 - TRE/61ª ZONA) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de Arraial, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 33/2026 - TRE/61ª ZONA: Bom Princípio, Campinas, Malhada Bonita e Bananeira.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Bom Princípio (Sede – Bom Princípio – Sede);</li><li>a criação da Rota nova – Bananeira (Sede – Bananeira – Sede);</li><li>a criação da Rota nova – Campinas (Sede – Campinas – Sede);</li><li>a criação da Rota nova – Malhada Bonita (Sede – Malhada Bonita – Sede).</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 33/2026 - TRE/61ª ZONA deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Arraial</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Arraial; Edital nº 33/2026 - TRE/61ª ZONA, DJE/TRE-PI nº 185/2026, disponibilizado em 13/09/2026 (publicação 14/09/2026), ID_MATERIA 6106439; fonte complementar: INFO ROTAS – sistema oficial do TRE-PI (inforotas.tre-pi.jus.br), consulta em 2026-10-16 (rotas do INFO ROTAS preservadas em &quot;rotas_inforotas&quot;); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

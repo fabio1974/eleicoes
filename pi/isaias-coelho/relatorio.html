@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Isaías Coelho</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Isaías Coelho</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/isaias-coelho.pdf?v=1792184977" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Isaías Coelho (57ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 57ª Zona Eleitoral <strong>5 rotas novas e 1 parada extra em rotas do edital</strong> no transporte gratuito de Isaías Coelho.
+Traçamos pelas estradas o percurso das 10 rotas do Edital nº 29/2026 - TRE/57ª ZONA. 11 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 2 ficam a 1–2 km.</p>
+<ul>
+<li>Isaías Coelho tem 6.485 eleitores aptos em 13 locais de votação e 28 seções. São 9 locais rurais, com 3.139 eleitores (48% do total).</li>
+<li>5 locais rurais ficam a 10 km ou mais da sede, com 2.531 eleitores. Os mais distantes: Povoado Recreio S/N (30,1 km), Povoado São Domingos (17,3 km) e Povoado Canabrava (17,2 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Catuaba (20,6 km do local de votação), Baixas (16,2 km do local de votação), Condado (13,2 km do local de votação), Lagoa do Mel (12,7 km do local de votação), Limoeiro (11,0 km do local de votação), Comunidade Quilombola Sabonete (10,5 km do local de votação), Socorro (7,9 km do local de votação), Tanque (6,4 km do local de votação), Angical (6,4 km do local de votação), CHAPADA DO RIACHO FUNDO (5,8 km do local de votação) e Lagoa do Daniel (5,3 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Assentamento Recreio e Jatobá.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 33 localidades rurais de Isaías Coelho que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço. 2 locais não foram encontrados nas duas bases: Povoado Queimada Grande e Povoado Olho D&#x27;Agua Pequeno, com 19 eleitores.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Assentamento Recreio</td><td>23,4</td><td>Rota 02</td><td>1,3</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Olho d&#x27;Água</td><td>21,9</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Catuaba</td><td>20,6</td><td>Rota 01</td><td>5,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Baixas</td><td>16,2</td><td>Rota 02</td><td>5,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Jatobá</td><td>13,9</td><td>Rota 02</td><td>1,8</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Condado</td><td>13,2</td><td>Rota 05</td><td>10,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Lagoa do Mel</td><td>12,7</td><td>Rota 06</td><td>2,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Limoeiro</td><td>11,0</td><td>Rota 02</td><td>3,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Comunidade Quilombola Sabonete</td><td>10,5</td><td>Rota 01</td><td>3,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Comunidade Quilombola Queimada Grande</td><td>9,5</td><td>Rota 06</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Queimada Grande</td><td>8,2</td><td>Rota 06</td><td>0,6</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Socorro</td><td>7,9</td><td>Rota 02</td><td>5,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Tanque</td><td>6,4</td><td>Rota 02</td><td>6,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Angical</td><td>6,4</td><td>Rota 02</td><td>5,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>CHAPADA DO RIACHO FUNDO</td><td>5,8</td><td>Rota 01</td><td>5,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Lagoa do Daniel</td><td>5,3</td><td>Rota 06</td><td>2,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Comunidade Quilombola Volta do Riacho</td><td>4,3</td><td>Rota 02</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Comunidade Quilombola Caraíbas 1</td><td>3,4</td><td>Rota 02</td><td>0,6</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Comunidade Quilombola Umburana</td><td>3,3</td><td>Rota 08</td><td>1,7</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>4 das 53 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Barreiro do Porto (Rota 05), Corredor de São Domingos (Rota 06), Varzea (Rota 09) e Chapadas (Rota 10). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 33 localidades rurais de Isaías Coelho, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1100" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Isaías Coelho: 13 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 29/2026 - TRE/57ª ZONA e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="300.0,968.2 327.2,952.3 354.7,920.8 403.3,887.6 418.1,829.8 449.0,811.7 533.6,813.1 563.3,848.6 626.7,903.4 725.0,858.9 686.1,794.5 702.1,689.6 616.3,640.0 600.6,633.4 347.1,538.3 378.6,389.5 384.4,387.5 383.0,282.6 369.0,237.9 361.5,133.8 352.1,111.9 381.6,80.0 78.5,141.2 156.3,214.8 184.0,340.4 176.6,354.6 133.7,411.0 179.6,480.2 181.6,574.4 172.4,614.4 185.0,628.8 187.4,679.5 154.3,728.3 124.2,750.0 116.6,785.3 127.3,840.6 126.7,927.5 92.4,927.9 90.8,937.3 265.3,964.4 300.0,968.2 300.0,968.2" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="286.8,766.2 284.2,769.7 279.6,768.3 275.7,765.8 271.7,763.4 264.4,763.5 257.0,767.7 252.7,772.8 250.5,777.8 246.3,782.4 242.2,784.9 239.5,790.2 237.0,794.9 234.5,799.9 230.2,802.7 222.5,807.7 219.7,811.0 213.6,812.8 207.7,815.3 204.4,818.2 200.7,821.5 198.6,825.7 195.7,832.4 189.0,842.4 185.5,849.3 183.9,854.7 178.6,857.0 175.8,860.7 176.7,866.2 176.6,866.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="286.9,766.0 158.9,296.5 280.9,765.6 274.1,764.6 268.8,763.6 260.7,763.3 252.4,764.4 242.8,766.3 229.7,759.3 216.1,755.1 211.9,752.4 210.4,747.9 208.7,743.5 209.5,737.9 207.3,733.9 204.8,729.6 200.9,727.2 197.0,724.7 200.9,727.2 206.5,724.8 212.6,724.5 219.2,724.5 225.5,724.7 231.5,724.6 229.9,719.8 228.2,714.6 226.7,709.8 224.7,705.5 223.2,699.5 221.0,690.5 216.4,685.1 213.4,678.8 210.6,674.2 208.4,667.3 201.9,664.6 198.4,660.9 200.8,654.4 201.6,645.1 204.9,641.7 201.8,644.8 201.5,653.2 198.2,657.3 199.5,662.3 208.4,667.3 211.9,670.4 210.6,676.2 215.7,682.6 221.0,690.5 222.8,696.0 224.6,700.6 224.9,706.6 227.9,711.7 229.0,717.7 221.4,715.8 218.0,712.5 213.4,710.0 209.3,708.1 202.2,707.9 195.7,707.9 190.9,705.8 187.8,702.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="286.8,766.2 292.2,767.0 298.8,767.2 321.3,758.8 335.5,756.8 341.9,757.7 345.7,760.5 351.9,766.8 352.6,773.1 357.7,777.0 363.1,780.6 367.7,782.2 368.8,787.7 371.1,793.0 372.8,797.4 364.0,802.2 356.5,805.3 353.9,811.4 352.1,816.2 346.1,816.5 341.7,813.7 336.1,815.0 334.3,819.8 334.5,825.8 332.3,830.2 328.4,832.3 324.2,829.8 319.1,828.7 313.8,830.5 308.6,832.2 304.1,830.0 299.4,828.5 289.0,829.7 282.5,829.0 284.2,824.1 282.1,815.6 284.8,820.1 283.6,825.7 283.9,831.9 282.4,836.7 284.0,841.1 284.3,847.3 286.0,851.9 287.1,858.0 284.9,863.4 282.6,868.2 280.6,872.8 283.2,878.2 283.3,886.5 283.1,893.8 284.4,898.6 284.9,901.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="286.8,766.2 292.2,767.0 298.8,767.2 321.3,758.8 335.5,756.8 342.5,746.6 347.2,738.9 355.0,735.6 366.1,738.0 373.3,739.7 387.9,737.0 396.7,737.5 403.8,734.5 407.7,736.6 410.6,739.9 412.7,745.4 414.2,750.0 410.9,753.3 408.6,757.4 404.7,760.5 401.9,766.4 400.5,771.6 400.0,777.7 396.6,781.7 394.0,786.9 393.6,794.7 392.9,800.3 391.4,805.1 386.5,803.2 391.4,805.1 395.3,802.8 399.7,804.6 406.3,806.5 401.8,804.9 396.9,802.9 392.2,804.9 387.3,803.7 382.4,802.3 376.2,800.8 372.8,797.4 371.1,793.0 368.9,788.0 367.9,782.7 372.8,781.1 366.8,781.3 368.6,785.6 369.8,791.1 372.1,795.3 375.0,799.1 379.8,801.1 384.7,802.7 389.5,804.9 393.4,802.6 393.6,794.7 393.8,787.6 396.6,781.7 400.0,777.7 400.5,771.6 401.9,766.4 403.2,762.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="286.8,766.2 292.2,767.0 298.8,767.2 321.3,758.8 335.5,756.8 342.5,746.6 347.2,738.9 355.0,735.6 366.1,738.0 373.3,739.7 387.9,737.0 396.7,737.5 403.8,734.5 407.7,736.6 409.4,731.2 415.7,727.6 428.6,712.3 446.7,689.9 448.1,684.2 449.1,677.8 446.3,673.3 440.4,671.3 435.6,668.4 433.2,663.8 428.8,659.3 425.4,655.5 422.1,650.3 416.0,644.6 412.7,639.3 408.4,632.7 403.0,631.5 398.6,629.7 396.4,624.9 394.4,619.0 391.6,613.8 389.1,609.1 384.7,607.0 378.7,605.2 370.4,603.1 364.6,599.8 355.0,587.1 349.4,584.5 341.5,576.5 335.0,576.2 329.9,579.5 332.4,583.9 329.9,579.5 327.0,574.1 322.6,570.0 317.6,566.5 311.6,566.3 304.8,564.5 311.6,566.3 317.6,566.5 322.6,570.0 327.0,574.1 329.9,579.5 332.4,583.9 334.4,589.3 336.1,597.4 335.4,605.9 333.2,616.4 333.2,616.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="541.6,653.5 543.5,649.2 552.2,651.0 575.4,661.7 584.7,663.8 591.6,663.4 597.8,664.8 601.3,668.3 603.0,673.5 604.0,679.9 606.5,684.9 610.6,688.0 621.3,688.5 628.4,689.4 635.3,688.1 639.6,685.9 645.4,688.1 650.4,689.2 654.6,693.6 660.5,694.6 665.9,696.6 669.3,700.4 671.0,709.1 670.0,714.2 671.4,718.8 673.2,723.3 676.6,726.4 679.7,731.1 677.0,737.3 676.6,743.9 677.8,749.8 680.6,754.8 684.7,758.6 686.7,761.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="541.6,653.5 540.7,659.7 542.5,664.2 547.4,666.6 551.4,668.6 554.8,672.7 559.6,676.7 601.4,767.6 601.4,767.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="541.6,653.5 540.1,658.8 536.8,664.9 535.4,672.2 533.5,678.8 530.5,682.4 526.3,684.6 518.5,685.2 512.7,685.0 505.1,683.2 498.8,685.1 503.3,683.2 512.7,685.0 518.5,685.2 524.8,685.0 518.5,685.2 512.7,685.0 505.1,683.2 498.8,685.1 497.7,685.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="541.6,653.5 540.1,658.8 536.8,664.9 535.4,672.2 533.5,678.8 530.5,682.4 526.3,684.6 518.5,685.2 512.7,685.0 505.1,683.2 498.8,685.1 497.2,685.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 09</title></polyline>
+<polyline points="541.6,653.5 542.8,648.7 545.2,643.0 543.5,649.2 540.7,652.6 535.6,650.7 530.4,647.6 528.2,641.7 528.5,635.7 531.6,632.3 531.0,626.1 527.7,623.2 524.6,618.6 525.0,615.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 10</title></polyline>
+<polyline points="280.7,763.7 274.7,763.7 268.8,763.6 260.7,763.3 252.4,764.4 242.8,766.3 229.7,759.3 216.1,755.1 203.3,757.2 199.9,760.4 195.4,762.3 190.4,760.9 183.6,758.9 176.5,755.1 170.3,751.9 161.5,747.5 155.7,747.2 153.2,750.7 151.1,754.8 147.6,758.4 147.0,764.0 142.9,767.7 144.2,775.0 146.8,778.8 152.0,780.8 158.6,780.9 101.8,787.1 98.2,789.7 93.3,791.6 88.9,793.7 85.9,797.1 82.9,800.3 77.6,799.4 72.7,800.6 68.0,799.3 65.5,795.7 63.2,791.9 59.8,789.0 55.3,787.3 50.5,785.0 46.2,783.0 42.3,780.3 37.5,778.6 39.8,773.9 45.4,771.2 49.8,769.1 60.9,765.2 65.1,762.6 71.8,753.4 83.3,741.2 90.8,733.2 95.9,727.9 99.0,724.8 104.7,720.5 110.5,721.4 115.5,723.3 123.2,723.6 128.8,724.2 135.1,727.3 138.4,730.2 141.5,737.4 143.4,741.7 148.7,743.9 158.3,746.4 167.4,750.5 172.8,753.2 180.9,757.8 190.4,760.9 195.4,762.3 199.9,760.4 203.3,757.2 211.9,755.4 227.6,758.3 240.8,765.9 252.4,764.4 258.7,763.4 266.1,763.6 271.7,763.0 276.8,764.3 280.7,763.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Catuaba</title></polyline>
+<polyline points="211.2,352.9 212.6,347.0 215.5,341.7 219.6,338.8 223.0,336.0 227.2,332.6 230.4,329.6 235.3,327.5 243.2,326.9 248.3,327.9 252.7,330.2 257.6,332.2 262.9,333.4 267.6,336.2 273.6,338.8 277.6,343.2 282.8,345.5 285.6,351.8 288.1,355.3 291.8,350.4 290.6,357.4 289.9,364.1 292.6,369.3 294.6,374.5 299.2,378.8 299.0,386.3 299.5,393.2 300.5,400.8 296.2,404.4 300.9,401.8 299.4,395.1 299.4,388.8 299.1,380.5 295.0,375.1 292.6,369.3 290.2,365.2 290.4,357.9 287.0,354.5 284.6,349.4 281.7,344.4 274.2,339.3 267.6,336.2 263.5,333.8 257.6,332.2 252.7,330.2 248.3,327.9 250.5,324.0 249.4,319.1 249.0,312.9 251.0,308.2 254.1,304.8 251.8,300.8 254.4,293.7 258.2,289.5 261.3,285.9 263.2,281.7 264.1,276.0 263.5,270.5 259.8,266.4 253.8,268.7 245.1,267.0 240.1,264.6 235.4,261.7 231.6,259.1 227.0,256.0 222.0,254.4 210.2,248.9 206.4,246.3 200.1,244.2 193.9,243.7 188.9,245.2 184.5,243.0 179.3,241.7 173.3,240.6 169.1,242.8 165.7,248.1 159.7,229.2 156.6,219.8 155.0,215.3 148.3,215.8 143.8,212.9 141.9,208.2 137.9,206.1 141.9,208.2 143.8,212.9 148.3,215.8 153.6,214.8 156.6,219.8 159.7,229.2 165.7,248.1 168.6,243.2 173.1,240.6 179.3,241.7 184.5,242.6 188.3,245.0 193.9,243.7 200.1,244.2 205.3,245.8 210.2,248.9 218.2,252.2 222.6,254.6 228.3,256.6 235.4,261.7 240.1,264.6 244.7,266.9 251.9,268.5 259.8,266.4 263.0,269.6 264.1,276.0 263.2,281.7 261.3,285.9 258.5,289.3 255.1,292.1 252.6,297.5 253.6,304.3 251.0,308.2 249.0,312.9 249.3,319.0 250.5,324.0 248.3,327.9 243.2,326.9 235.3,327.5 230.8,329.4 227.4,332.2 224.2,335.1 220.1,338.3 216.3,341.0 212.6,347.0 210.5,351.5 211.2,352.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Baixas</title></polyline>
+<polyline points="211.2,352.9 212.6,347.0 219.8,350.1 227.2,357.3 232.9,362.7 241.9,370.8 249.4,377.6 254.4,380.2 260.4,384.1 265.5,386.1 271.8,386.9 278.8,389.7 282.0,392.7 285.0,398.8 290.1,400.1 296.0,400.5 300.9,401.8 300.8,409.4 301.6,414.7 305.7,421.2 308.2,425.7 313.0,436.3 315.8,432.6 363.2,371.5 315.8,432.6 313.0,436.3 309.0,430.8 305.7,421.2 302.1,417.0 300.8,409.4 300.9,401.8 296.0,400.5 290.1,400.1 285.0,398.8 282.4,393.6 278.8,389.7 274.5,387.3 265.5,386.1 260.4,384.1 254.4,380.2 249.4,377.6 241.9,370.8 232.9,362.7 227.2,357.3 220.9,351.2 214.3,344.9 211.6,348.6 211.2,352.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Condado</title></polyline>
+<polyline points="543.1,650.6 547.8,649.0 552.2,651.0 575.4,661.7 584.7,663.8 591.6,663.4 598.4,657.4 606.6,651.5 611.4,647.9 615.7,644.8 620.7,642.5 625.8,638.0 629.8,635.2 636.3,632.6 643.6,632.1 644.7,637.8 647.1,642.9 654.3,648.9 660.7,648.0 667.8,648.4 671.6,653.0 680.6,651.4 684.7,648.8 688.7,650.9 693.5,653.9 696.8,656.9 699.6,661.0 700.8,666.0 702.1,672.3 702.1,681.0 704.3,687.3 712.0,687.3 706.6,687.9 703.2,685.1 702.0,677.9 701.9,670.6 700.8,665.6 698.1,658.9 693.5,653.9 688.7,650.9 684.7,648.8 680.6,651.4 674.8,654.3 670.4,651.7 661.2,647.9 654.8,649.0 648.6,647.0 647.6,640.0 644.2,636.8 639.2,632.0 632.8,633.6 627.1,637.0 623.9,639.9 618.6,643.4 614.0,646.0 606.6,651.5 598.4,657.4 593.1,662.2 589.0,664.3 578.4,662.6 552.2,651.0 547.8,649.0 543.4,650.6 543.1,650.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Lagoa do Mel</title></polyline>
+<polyline points="165.2,867.1 158.9,873.0 150.9,883.1 148.8,890.5 144.2,900.8 141.8,904.5 140.4,909.2 137.4,914.6 134.2,919.9 129.5,921.2 123.9,920.5 119.4,918.4 114.6,916.3 110.3,914.5 105.9,912.5 101.8,910.6 97.4,908.7 101.8,910.6 105.9,912.5 110.3,914.5 114.6,916.3 118.9,918.2 123.1,920.1 127.9,921.4 133.4,920.2 135.6,915.9 138.2,911.8 141.2,906.2 144.2,900.8 148.0,892.8 149.3,886.2 156.6,876.4 162.2,869.1 165.2,867.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – CHAPADA DO RIACHO FUNDO</title></polyline>
+<polyline points="158.7,295.7 163.7,294.4 166.9,291.5 172.1,290.7 175.6,293.4 174.2,298.3 175.6,293.4 172.1,290.7 166.9,291.5 163.7,294.4 158.0,295.8 152.7,295.0 147.5,294.1 141.5,293.4 135.6,293.2 130.8,291.5 124.5,290.9 116.8,290.7 111.6,289.5 106.5,287.1 101.7,279.2 99.8,274.7 97.1,271.3 96.4,264.3 102.2,261.0 106.5,257.4 113.1,259.0 117.8,261.5 123.8,262.9 130.8,264.4 138.5,265.3 143.5,266.7 150.6,264.7 145.7,266.1 139.6,266.0 135.1,264.4 128.0,264.2 120.9,263.3 117.5,260.2 108.0,257.8 103.9,260.2 100.0,263.5 97.1,267.7 98.7,272.1 101.7,279.2 105.1,285.3 108.2,288.3 113.3,290.1 119.0,291.2 127.1,291.1 132.7,292.2 139.3,293.6 147.3,294.0 152.5,295.0 158.0,295.8 158.7,295.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 02</title></polyline>
+<circle cx="158.9" cy="296.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="666.6" cy="718.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="673.8" cy="690.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="212.7" cy="750.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="236.2" cy="734.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="502.8" cy="714.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="281.5" cy="812.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="141.5" cy="904.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="341.6" cy="754.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="573.8" cy="720.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="572.0" cy="724.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="398.5" cy="781.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="542.1" cy="771.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="540.1" cy="732.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="534.6" cy="679.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="176.8" cy="866.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="541.8" cy="653.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="383.0" cy="802.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="280.9" cy="765.6" r="2.2" fill="#b9b9b2"/>
+<polygon points="279.3,757.7 270.3,774.3 288.4,774.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="280.7,753.3 270.6,772.0 290.8,772.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="285.1,756.0 275.8,773.2 294.5,773.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="285.1,893.5 277.6,907.3 292.6,907.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="211.3,344.8 203.7,358.8 218.9,358.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="539.7,649.2 530.5,666.2 548.9,666.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="539.7" y="679.6" text-anchor="middle" fill="#5c5c57">Zona Rural</text>
+<polygon points="543.1,641.5 534.1,657.9 552.0,657.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="165.0,858.8 157.5,872.6 172.5,872.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="384.6,598.6 376.7,613.2 392.6,613.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="385.6,795.3 378.2,809.0 393.0,809.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="299.4,756.7 290.7,772.6 308.0,772.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="185.6" cy="307.7" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="192.6" y="302.7" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Assentamento Recreio 23,4 km</text>
+<circle cx="101.8" cy="787.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="108.8" y="782.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Catuaba 20,6 km</text>
+<circle cx="135.1" cy="204.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="142.1" y="199.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Baixas 16,2 km</text>
+<circle cx="154.3" cy="264.7" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="161.3" y="259.7" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Jatobá 13,9 km</text>
+<circle cx="394.4" cy="395.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="401.4" y="390.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Condado 13,2 km</text>
+<circle cx="713.8" cy="686.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="582.8" y="681.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Lagoa do Mel 12,7 km</text>
+<circle cx="189.6" cy="243.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="196.6" y="238.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Limoeiro 11,0 km</text>
+<circle cx="160.4" cy="785.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="167.4" y="800.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Sabonete 10,5 km</text>
+<circle cx="249.4" cy="255.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="256.4" y="270.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Socorro 7,9 km</text>
+<circle cx="294.7" cy="349.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="301.7" y="344.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Tanque 6,4 km</text>
+<circle cx="296.1" cy="404.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="303.1" y="399.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Angical 6,4 km</text>
+<circle cx="90.9" cy="918.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="97.9" y="913.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">CHAPADA DO RIACHO FUNDO 5,8 km</text>
+<circle cx="621.3" cy="630.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="477.9" y="625.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Lagoa do Daniel 5,3 km</text>
+<rect x="281.9" y="761.0" width="10" height="10" fill="#1d1d1b"/><text x="295.9" y="784.0" font-weight="600" fill="#1d1d1b">Sede de Isaías Coelho</text>
+<line x1="35" x2="125.4" y1="998.2" y2="998.2" stroke="#8a8a84" stroke-width="2"/><text x="35" y="1012.2" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="989.1873283041916" y2="989.1873283041916" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="993.1873283041916" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,982.2 421.4,994.4 434.6,994.4" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="993.1873283041916" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="1007.1873283041916" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="1016.1873283041916" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="1012.1873283041916" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="1016.1873283041916" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1035.1873283041916" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1039.1873283041916" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1035.1873283041916" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1039.1873283041916" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1058.1873283041916" y2="1058.1873283041916" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1062.1873283041916" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1081.1873283041916" y2="1081.1873283041916" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1085.1873283041916" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 29/2026 - TRE/57ª ZONA · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (16):</strong> Assentamento Recreio, Olho d&#x27;Água, Catuaba, Baixas, Jatobá, Condado, Lagoa do Mel, Limoeiro, Comunidade Quilombola Sabonete, Comunidade Quilombola Queimada Grande, Queimada Grande, Socorro, Tanque, Angical, CHAPADA DO RIACHO FUNDO e Lagoa do Daniel.</li>
+<li><strong>De 3 a 5 km (3):</strong> Comunidade Quilombola Volta do Riacho, Comunidade Quilombola Caraíbas 1 e Comunidade Quilombola Umburana.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (14):</strong> Comunidade Quilombola Caraíbas, Comunidade Quilombola Carreira Vaca, Comunidade Quilombola Carreira da Vaca, Comunidade Quilombola Fazenda, Comunidade Quilombola Fazenda Nova, Comunidade Quilombola Lagoa do Venancio, Comunidade Quilombola Morrinhos, Comunidade Quilombola Riacho Fundo, Comunidade Quilombola Sapê, Conjunto Habitacional São Domingos, Fazenda Carreiras, Recreio, São Domingos e Taboleirinho.</li>
+</ul><h2>Rotas do Edital nº 29/2026 - TRE/57ª ZONA</h2>
+<p>O edital tem 10 rotas para Isaías Coelho. Horários: não informados. Veículos: não informados.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Isaías Coelho – Pedra Miúda – Xique-xique – Riacho Fundo</td></tr><tr><td>02</td><td>Isaías Coelho – Olho d&#x27;Água – Caraíbas – Limpos – Olho D&#x27;Água Pequeno – Baixão da Gamelera</td></tr><tr><td>03</td><td>Isaías Coelho – Goiabeira – Tabolerinho – Atrás da Serra – Malhada</td></tr><tr><td>04</td><td>Isaías Coelho – Corredor – Mucambo – Morrinhos – Sapé – Cipual – Cabeça da Vaca – Lingua da Vaca</td></tr><tr><td>05</td><td>Isaías Coelho – Corredor – Mucambo – Taboleiro – Canabrava – Lagoa da Forquilha – Barreiro do Porto – Lagoa do Jatobá – Abelha Branca</td></tr><tr><td>06</td><td>São Domingos – Pé do Morro – Feijão – Queimada Grande – Cacimba – Corredor de São Domingos</td></tr><tr><td>07</td><td>São Domingos – Saco dos Bois – Carreira da Vaca – Santa Inês</td></tr><tr><td>08</td><td>São Domingos – Mumbaça II – Fazenda Nova – Umburana</td></tr><tr><td>09</td><td>São Domingos – Varzea – Mumbaça I</td></tr><tr><td>10</td><td>São Domingos – Tanque do Padre – Chapadas – Lagoa de Dentos</td></tr></tbody></table></div>
+<p>Fonte: Edital nº 29/2026 - TRE/57ª ZONA, DJE/TRE-PI nº 171/2026, disponibilizado em 01/09/2026 (publicação 02/09/2026), ID_MATERIA 6081266; fonte complementar: INFO ROTAS – sistema oficial do TRE-PI (inforotas.tre-pi.jus.br), consulta em 2026-10-16 (rotas do INFO ROTAS preservadas em &quot;rotas_inforotas&quot;).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 13 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Catuaba</strong></td><td>Sede – Comunidade Quilombola Sabonete – Catuaba – Sede</td><td>Comunidade Quilombola Sabonete, Catuaba</td><td>35,3 km (ida e volta)</td><td>~49 min</td></tr><tr><td><strong>Rota nova – Baixas</strong></td><td>Sede – Tanque – Angical – Socorro – Limoeiro – Baixas – Sede</td><td>Tanque, Angical, Socorro, Limoeiro, Baixas</td><td>45,9 km (ida e volta)</td><td>~1h51</td></tr><tr><td><strong>Rota nova – Condado</strong></td><td>Sede – Condado – Sede</td><td>Condado</td><td>26,4 km (ida e volta)</td><td>~1h04</td></tr><tr><td><strong>Rota nova – Lagoa do Mel</strong></td><td>Sede – Lagoa do Daniel – Lagoa do Mel – Sede</td><td>Lagoa do Daniel, Lagoa do Mel</td><td>25,5 km (ida e volta)</td><td>~43 min</td></tr><tr><td><strong>Rota nova – CHAPADA DO RIACHO FUNDO</strong></td><td>Sede – CHAPADA DO RIACHO FUNDO – Sede</td><td>CHAPADA DO RIACHO FUNDO</td><td>11,5 km (ida e volta)</td><td>~32 min</td></tr><tr><td><strong>Parada extra na Rota 02</strong></td><td>desvio pelo caminho atual: Assentamento Recreio – Jatobá</td><td>Assentamento Recreio, Jatobá</td><td>+19,1 km</td><td>+46 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMIC</strong></p><p>Isaías Coelho/PI, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Rodolfo Ferreira Lavor Rodrigues da Cruz</strong><br>Juiz Eleitoral da 57ª Zona Eleitoral – Itainópolis/PI</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 29/2026 - TRE/57ª ZONA) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Isaías Coelho, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 29/2026 - TRE/57ª ZONA: Catuaba, Baixas, Condado, Lagoa do Mel, Limoeiro, Comunidade Quilombola Sabonete, Socorro, Tanque, Angical, CHAPADA DO RIACHO FUNDO, Lagoa do Daniel, Assentamento Recreio e Jatobá.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Catuaba (Sede – Comunidade Quilombola Sabonete – Catuaba – Sede);</li><li>a criação da Rota nova – Baixas (Sede – Tanque – Angical – Socorro – Limoeiro – Baixas – Sede);</li><li>a criação da Rota nova – Condado (Sede – Condado – Sede);</li><li>a criação da Rota nova – Lagoa do Mel (Sede – Lagoa do Daniel – Lagoa do Mel – Sede);</li><li>a criação da Rota nova – CHAPADA DO RIACHO FUNDO (Sede – CHAPADA DO RIACHO FUNDO – Sede);</li><li>a inclusão de paradas em Assentamento Recreio e Jatobá na Rota 02, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 29/2026 - TRE/57ª ZONA deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Isaías Coelho</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Isaías Coelho; Edital nº 29/2026 - TRE/57ª ZONA, DJE/TRE-PI nº 171/2026, disponibilizado em 01/09/2026 (publicação 02/09/2026), ID_MATERIA 6081266; fonte complementar: INFO ROTAS – sistema oficial do TRE-PI (inforotas.tre-pi.jus.br), consulta em 2026-10-16 (rotas do INFO ROTAS preservadas em &quot;rotas_inforotas&quot;); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

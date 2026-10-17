@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Landri Sales</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Landri Sales</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/landri-sales.pdf?v=1792184846" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Landri Sales (46ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 46ª Zona Eleitoral <strong>3 rotas novas</strong> no transporte gratuito de Landri Sales.
+Traçamos pelas estradas o percurso das 3 rotas do Edital nº 51/2026 - TRE/46ª ZONA. 4 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>Landri Sales tem 5.137 eleitores aptos em 9 locais de votação e 24 seções. São 3 locais rurais, com 881 eleitores (17% do total).</li>
+<li>3 locais rurais ficam a 10 km ou mais da sede, com 881 eleitores. Os mais distantes: Agrovila do PA Vereda (21,2 km), Agrovila do PA Vereda (21,2 km) e Av. Landri Sales Sn Pov.Joshulda Neiva S/N (16,0 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Salina (23,4 km do local de votação), Sítio Barra do Brejo (12,5 km do local de votação), Várzea Comprida (11,7 km do local de votação) e Água-branca (9,7 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 12 localidades rurais de Landri Sales que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Salina</td><td>23,4</td><td>Rota 002</td><td>16,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Sítio Barra do Brejo</td><td>12,5</td><td>Rota 001</td><td>3,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Várzea Comprida</td><td>11,7</td><td>Rota 001</td><td>5,2</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Água-branca</td><td>9,7</td><td>Rota 001</td><td>7,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Regalo</td><td>7,2</td><td>Rota 003</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Buritizinho</td><td>6,0</td><td>Rota 003</td><td>0,3</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>São Bento</td><td>5,3</td><td>Rota 001</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Agrovila do PA São Benedito</td><td>5,3</td><td>Rota 001</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Agrovila Vereda I</td><td>3,1</td><td>Rota 001</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>3 das 8 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Fórum da Comarca (Rota 001, Rota 002 e Rota 003). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 12 localidades rurais de Landri Sales, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 820" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Landri Sales: 4 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 51/2026 - TRE/46ª ZONA e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="587.1,455.5 658.5,365.4 678.7,314.2 725.0,134.4 647.5,106.8 646.6,99.5 620.4,80.0 602.0,97.0 594.0,108.4 602.0,123.6 601.4,142.8 508.2,137.1 453.9,224.2 237.2,269.4 222.9,254.8 194.3,225.7 164.1,252.6 191.0,321.5 35.0,527.1 104.1,687.5 119.6,641.2 239.3,534.9 520.4,437.6 587.1,455.5 587.1,455.5" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="261.5,508.6 265.5,505.5 269.8,506.2 277.3,501.5 278.7,498.0 279.4,494.5 279.8,490.4 282.6,488.1 283.9,482.6 284.8,477.5 284.8,473.2 287.9,469.7 290.4,464.8 289.7,460.6 291.3,454.7 294.1,447.5 295.0,443.7 297.6,440.2 304.0,432.7 306.7,430.8 308.4,427.8 309.7,424.9 312.1,415.5 315.4,410.0 317.9,407.2 319.7,396.9 319.7,390.7 322.5,382.5 324.5,378.9 325.6,375.8 330.2,369.8 335.9,362.2 338.4,358.3 340.2,354.8 343.3,352.1 346.7,349.4 350.4,351.3 354.1,350.2 356.8,346.8 358.9,344.2 361.3,341.9 362.4,337.6 365.0,335.0 368.8,332.0 372.1,330.5 375.1,328.3 378.4,325.1 381.1,323.5 384.2,321.7 387.0,318.7 386.2,313.4 384.6,310.5 384.5,310.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 001</title></polyline>
+<polyline points="524.3,225.0 517.6,226.4 513.8,227.9 509.0,229.3 504.4,229.3 500.2,228.6 495.9,229.0 493.7,232.2 492.1,236.7 489.2,239.1 486.1,240.7 483.8,243.0 481.5,245.4 479.8,248.2 478.1,251.0 476.4,254.0 474.7,257.8 473.7,261.3 472.8,264.6 471.3,268.0 467.5,269.7 463.9,272.0 463.5,275.8 461.1,278.3 459.1,280.9 455.5,281.6 457.2,287.6 453.7,293.5 450.9,296.8 447.1,299.3 444.1,300.8 441.8,303.1 436.9,305.2 432.7,306.4 429.4,308.4 424.2,310.2 421.7,312.2 419.0,313.9 414.4,314.1 411.4,315.4 408.5,312.8 406.5,309.7 403.0,308.7 397.2,311.6 392.7,314.1 389.9,315.6 386.2,313.4 384.6,310.5 384.5,310.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 002</title></polyline>
+<polyline points="312.4,306.4 315.8,303.0 319.2,301.8 322.4,299.9 325.1,298.3 327.2,295.7 330.0,294.1 333.9,294.7 337.0,296.8 338.9,299.4 341.9,301.0 344.6,305.0 349.1,307.2 353.5,308.0 363.6,306.4 366.1,308.4 369.6,309.7 374.1,309.6 377.6,310.4 379.4,313.1 381.2,316.3 382.9,319.5 381.7,323.1 379.0,324.6 376.3,327.5 373.1,329.3 370.3,331.2 367.3,333.5 362.4,337.6 361.2,340.6 358.9,344.2 356.8,346.8 354.1,350.2 350.4,351.3 347.2,349.3 344.4,351.2 342.0,353.2 342.0,353.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 003</title></polyline>
+<polyline points="385.1,318.3 388.0,316.7 390.7,315.2 397.2,311.6 401.6,309.2 406.1,309.3 408.5,312.8 412.3,317.9 415.0,319.8 424.7,324.0 445.7,331.7 449.7,334.3 452.9,336.5 459.2,341.5 470.0,350.4 472.7,352.6 485.4,359.0 489.8,361.1 495.5,362.7 499.8,363.8 503.5,364.5 508.4,364.2 512.3,362.1 516.6,359.3 519.6,357.3 523.0,356.4 528.4,356.4 536.6,356.4 542.0,356.2 559.3,363.9 572.8,367.4 582.0,369.6 591.2,367.9 598.6,370.3 606.7,371.6 610.6,372.0 618.6,374.3 622.4,375.3 626.6,376.2 630.6,377.0 637.6,378.4 644.9,380.1 651.1,381.4 646.5,380.4 640.7,379.0 630.6,377.0 626.6,376.2 622.4,375.3 618.6,374.3 612.0,372.3 606.7,371.6 599.1,370.4 592.5,368.1 582.4,369.6 572.8,367.4 560.0,364.0 542.9,356.4 536.6,356.4 528.4,356.4 523.0,356.4 519.6,357.3 516.6,359.3 512.3,362.1 509.1,364.0 505.3,364.5 500.5,364.0 495.5,362.7 490.6,361.4 485.4,359.0 473.2,353.0 470.0,350.4 459.2,341.5 454.7,337.9 449.7,334.3 446.1,331.9 424.7,324.0 417.0,321.3 412.7,318.2 409.9,314.8 406.5,309.7 403.0,308.7 397.2,311.6 392.7,314.1 389.9,315.6 387.0,317.3 385.1,318.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Salina</title></polyline>
+<polyline points="385.1,318.3 386.1,321.9 387.0,326.9 390.2,328.7 390.6,334.3 390.9,339.0 390.9,345.2 392.1,349.1 394.7,351.3 397.6,354.6 400.2,356.4 397.6,363.1 400.3,369.6 402.2,374.1 403.2,377.2 402.2,381.5 404.1,387.0 407.7,388.7 405.6,392.3 407.3,395.9 407.1,400.8 410.8,404.8 412.6,407.5 415.7,410.5 417.8,414.2 420.8,417.2 417.8,414.2 415.7,410.5 412.6,407.5 410.8,404.8 407.5,402.0 407.3,395.9 405.6,392.3 407.1,389.2 404.1,387.0 402.2,381.5 403.2,377.2 402.2,374.1 400.3,369.6 397.3,366.3 399.4,359.3 397.6,354.6 394.7,351.3 392.1,349.1 390.9,345.2 390.9,340.8 390.6,334.3 390.2,328.7 387.0,326.9 386.3,322.5 384.9,319.7 385.1,318.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Água-branca</title></polyline>
+<polyline points="261.1,508.6 235.4,539.7 229.9,542.3 229.4,546.0 229.1,550.4 228.7,554.2 229.0,558.2 229.0,562.5 229.2,566.7 230.6,570.3 232.1,573.4 232.5,577.4 233.3,581.0 232.5,584.8 235.1,586.9 239.0,587.4 241.0,584.7 243.5,582.0 245.8,577.9 246.7,574.3 245.0,571.2 243.4,568.5 243.3,564.1 243.4,559.2 244.4,555.7 243.8,551.5 244.9,547.6 246.7,545.2 249.4,543.1 251.9,540.9 254.3,538.9 258.0,536.4 260.5,532.1 262.2,528.7 264.0,524.8 269.3,523.6 272.1,520.8 274.5,517.7 278.2,517.0 282.2,512.9 284.8,510.9 287.1,509.0 288.1,505.7 290.0,502.7 293.8,501.2 298.7,499.9 302.4,499.1 306.1,498.2 309.8,496.6 313.8,494.3 315.7,492.1 318.2,490.2 320.5,487.4 323.4,488.6 324.8,485.7 325.9,482.4 328.2,480.5 331.7,479.2 335.9,478.2 340.5,477.2 344.0,478.0 349.0,478.1 353.0,479.7 349.2,478.2 345.2,478.4 341.3,477.2 336.3,478.0 332.4,479.1 328.5,480.3 325.9,482.4 324.8,485.7 323.4,488.6 320.5,487.4 318.2,490.2 315.7,492.1 313.8,494.3 310.9,496.0 308.4,497.7 304.3,498.7 300.5,499.3 296.5,501.1 291.1,501.9 288.5,505.2 287.3,508.3 284.8,510.9 282.2,512.9 279.6,515.9 276.1,517.1 273.2,518.8 270.7,523.1 267.3,524.3 263.5,525.9 259.1,525.9 256.7,523.8 257.2,517.4 259.4,513.3 263.1,511.3 261.2,507.8 261.4,508.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Sítio Barra do Brejo</title></polyline>
+<circle cx="312.4" cy="306.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="321.1" cy="296.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="342.3" cy="353.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="342.1" cy="353.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="282.9" cy="485.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="524.4" cy="225.1" r="2.2" fill="#b9b9b2"/>
+<polygon points="383.7,307.7 374.2,325.2 393.2,325.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="383.2,306.2 373.5,324.1 392.9,324.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="385.4,303.0 376.3,319.8 394.5,319.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="521.7,216.7 514.2,230.5 529.1,230.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="261.4,499.9 253.1,515.1 269.6,515.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="385.1,310.4 377.7,324.1 392.5,324.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="384.0,309.7 376.5,323.4 391.5,323.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="261.1,502.0 254.8,513.6 267.4,513.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="384.6,300.2 374.7,318.4 394.4,318.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="650.5" cy="383.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="556.7" y="378.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Salina 23,4 km</text>
+<circle cx="235.4" cy="539.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="242.4" y="534.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Barra do Brejo 12,5 km</text>
+<circle cx="354.9" cy="479.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="361.9" y="474.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Várzea Comprida 11,7 km</text>
+<circle cx="417.1" cy="426.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="424.1" y="421.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Água-branca 9,7 km</text>
+<rect x="379.5" y="305.7" width="10" height="10" fill="#1d1d1b"/><text x="393.5" y="328.7" font-weight="600" fill="#1d1d1b">Sede de Landri Sales</text>
+<line x1="35" x2="97.1" y1="717.5" y2="717.5" stroke="#8a8a84" stroke-width="2"/><text x="35" y="731.5" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="708.5089964014393" y2="708.5089964014393" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="712.5089964014393" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,701.5 421.4,713.8 434.6,713.8" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="712.5089964014393" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="726.5089964014393" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="735.5089964014393" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="731.5089964014393" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="735.5089964014393" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="754.5089964014393" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="758.5089964014393" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="754.5089964014393" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="758.5089964014393" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="777.5089964014393" y2="777.5089964014393" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="781.5089964014393" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="800.5089964014393" y2="800.5089964014393" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="804.5089964014393" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 51/2026 - TRE/46ª ZONA · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (8):</strong> Salina, Sítio Barra do Brejo, Várzea Comprida, Água-branca, Regalo, Buritizinho, São Bento e Agrovila do PA São Benedito.</li>
+<li><strong>De 3 a 5 km (1):</strong> Agrovila Vereda I.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (3):</strong> Agrovila Vereda II, Agrovila do PA Vereda e Joshuda Neiva.</li>
+</ul><h2>Rotas do Edital nº 51/2026 - TRE/46ª ZONA</h2>
+<p>O edital tem 3 rotas para Landri Sales. Horários: Todas as rotas: Manhã 08:00h e 10:00h; Tarde 13:00h e 15:00h. Veículos: não informados.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Fórum da Comarca – Assentamento Veredas I – Assentamento Veredas II</td></tr><tr><td>02</td><td>Fórum da Comarca – Povoado Joshulda Neiva</td></tr><tr><td>03</td><td>Fórum da Comarca – Assentamento Regalo – Assentamento São Benedito</td></tr></tbody></table></div>
+<p>Fonte: Edital nº 51/2026 - TRE/46ª ZONA, DJE/TRE-PI nº 191/2026 (disp. 18/09/2026), PDF da edição; fonte complementar: INFO ROTAS – sistema oficial do TRE-PI (inforotas.tre-pi.jus.br), consulta em 2026-10-16 (rotas do INFO ROTAS preservadas em &quot;rotas_inforotas&quot;).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 4 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Salina</strong></td><td>Sede – Salina – Sede</td><td>Salina</td><td>46,7 km (ida e volta)</td><td>~52 min</td></tr><tr><td><strong>Rota nova – Água-branca</strong></td><td>Sede – Água-branca – Sede</td><td>Água-branca</td><td>19,3 km (ida e volta)</td><td>~46 min</td></tr><tr><td><strong>Rota nova – Sítio Barra do Brejo</strong></td><td>Agrovila do PA Vereda – Sítio Barra do Brejo – Várzea Comprida – Agrovila do PA Vereda</td><td>Sítio Barra do Brejo, Várzea Comprida</td><td>35,6 km (ida e volta)</td><td>~1h15</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMLS</strong></p><p>Landri Sales/PI, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Breno Borges Brasil</strong><br>Juiz Eleitoral da 46ª Zona Eleitoral – Guadalupe/PI</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 51/2026 - TRE/46ª ZONA) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Landri Sales, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 51/2026 - TRE/46ª ZONA: Salina, Sítio Barra do Brejo, Várzea Comprida e Água-branca.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Salina (Sede – Salina – Sede);</li><li>a criação da Rota nova – Água-branca (Sede – Água-branca – Sede);</li><li>a criação da Rota nova – Sítio Barra do Brejo (Agrovila do PA Vereda – Sítio Barra do Brejo – Várzea Comprida – Agrovila do PA Vereda).</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 51/2026 - TRE/46ª ZONA deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Landri Sales</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Landri Sales; Edital nº 51/2026 - TRE/46ª ZONA, DJE/TRE-PI nº 191/2026 (disp. 18/09/2026), PDF da edição; fonte complementar: INFO ROTAS – sistema oficial do TRE-PI (inforotas.tre-pi.jus.br), consulta em 2026-10-16 (rotas do INFO ROTAS preservadas em &quot;rotas_inforotas&quot;); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

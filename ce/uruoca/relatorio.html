@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Uruoca</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Uruoca</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/uruoca.pdf?v=1792186913" download>Baixar em PDF</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Uruoca (25ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 25ª Zona Eleitoral <strong>nenhuma proposta necessária</strong> no transporte gratuito de Uruoca.
+Traçamos pelas estradas o percurso das 11 rotas do Edital nº 57/2026. 0 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>Uruoca tem 11.370 eleitores aptos em 13 locais de votação e 43 seções. São 4 locais rurais, com 1.121 eleitores (10% do total).</li>
+<li>3 locais rurais ficam a 10 km ou mais da sede, com 1.080 eleitores. Os mais distantes: Fazenda Baliza (40,7 km), Canta Galo (35,4 km) e Bom Sucesso (11,6 km).</li>
+
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 14 localidades rurais de Uruoca que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista do TRE-CE e a posição de cada local publicada pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Barra do Mel</td><td>7,4</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Pedra Preta</td><td>6,2</td><td>Rota 05</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Jenipapeiro</td><td>6,1</td><td>Rota 10</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sairi</td><td>4,8</td><td>Rota 10</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sununga</td><td>3,2</td><td>Rota 09</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Tapera</td><td>3,1</td><td>Rota 09</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Contorno do Açude</td><td>3,1</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>2 das 66 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Bandeira dos Oliveiras (Rota 06) e Malhada Grande (Rota 06). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 14 localidades rurais de Uruoca, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 701" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b">Uruoca: nenhuma localidade rural fica a 3 km ou mais do local de votação</text>
+<text x="20" y="46" fill="#5c5c57">Rotas do Edital nº 57/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="584.8,514.7 620.5,520.7 613.2,490.5 636.5,485.7 652.9,466.5 680.8,449.6 688.6,416.3 702.9,393.4 714.6,391.5 715.2,364.4 721.2,357.4 725.0,330.4 713.8,317.3 710.9,293.4 722.8,263.7 702.7,262.0 672.7,242.5 663.8,244.0 651.0,227.8 635.1,228.1 623.2,233.7 399.5,240.6 298.1,216.9 114.5,173.1 118.8,181.6 106.9,199.9 113.8,211.4 128.0,218.5 113.1,233.7 131.1,249.7 123.8,258.3 105.4,266.6 109.2,275.1 128.7,286.5 150.9,279.9 136.4,324.4 123.0,328.7 105.4,346.3 91.2,343.4 82.6,358.6 89.3,382.5 78.5,402.9 53.8,420.1 35.0,442.6 39.8,452.4 108.3,432.7 123.5,447.9 123.5,459.8 110.2,473.4 99.2,496.0 89.0,533.1 120.0,543.1 149.4,548.3 174.6,534.7 210.3,545.0 222.7,542.3 282.0,569.2 282.5,556.4 310.1,544.3 312.2,521.6 306.7,511.0 309.8,475.0 325.7,487.9 324.6,496.6 354.5,505.9 364.0,488.6 377.2,486.6 389.1,455.2 407.6,436.9 440.4,436.7 454.5,429.8 479.4,435.0 514.7,448.4 512.7,454.6 480.2,481.6 467.6,488.6 484.9,499.7 487.3,512.9 509.9,523.1 533.7,521.6 569.8,523.5 584.8,514.7 584.8,514.7" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="592.2,454.4 593.3,450.3 595.2,446.7 596.4,442.6 597.2,438.1 599.3,434.8 601.4,431.4 601.1,426.4 599.3,422.8 598.9,417.8 598.7,412.8 598.8,407.5 600.3,403.9 601.7,399.0 605.7,400.8 609.7,402.5 613.5,404.2 617.3,405.8 622.2,405.5 625.6,407.4 629.7,408.5 632.6,410.8 637.2,411.5 641.1,412.8 645.0,414.6 643.8,419.3 645.2,423.2 643.5,427.7 640.9,434.9 645.9,435.7 651.8,436.7 653.8,440.0 653.9,445.1 655.4,449.3 657.6,452.5 657.8,458.1 657.6,452.5 655.4,449.3 654.0,445.5 653.8,440.3 651.8,436.7 647.3,435.9 642.8,435.2 639.7,433.0 637.3,430.2 637.4,424.9 637.2,419.7 637.5,414.7 635.5,411.4 631.5,410.3 628.5,408.1 624.2,406.9 622.0,403.6 620.7,399.6 619.0,395.6 616.8,391.7 615.0,388.1 613.3,384.4 612.5,379.5 611.1,375.4 608.0,371.5 605.0,368.4 602.6,365.4 603.6,361.1 602.6,355.0 596.6,355.3 592.9,357.1 589.5,356.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="543.1,427.0 537.5,428.1 542.1,427.2 546.9,426.8 550.9,425.5 555.6,425.0 564.0,427.2 561.8,432.3 560.0,437.2 557.9,442.7 556.6,446.6 554.7,450.2 556.6,446.6 557.9,442.7 560.0,437.2 561.8,432.3 563.4,428.2 566.2,425.2 568.6,422.0 570.2,416.9 571.9,411.9 573.3,407.4 573.7,402.6 576.3,399.7 578.9,396.9 576.3,399.7 573.7,402.6 573.3,407.4 571.9,411.9 570.3,416.1 569.5,421.1 566.9,424.1 564.0,427.2 561.8,432.3 560.0,437.2 557.9,442.7 556.6,446.6 554.5,450.5 553.3,454.6 549.9,458.1 546.7,461.0 541.6,462.3 538.2,467.8 534.8,470.1 530.9,472.8 529.9,478.6 530.2,473.8 533.9,471.0 536.9,468.6 539.6,465.0 543.2,461.6 547.6,460.7 550.9,457.2 554.1,452.1 555.9,448.6 557.9,442.7 560.0,437.2 561.8,432.3 563.4,428.2 566.2,425.2 568.6,422.0 570.2,416.9 571.9,411.9 573.3,407.4 573.7,402.6 576.3,399.7 578.9,396.9 580.7,393.2 584.7,384.2 586.6,380.9 588.6,377.6 586.5,374.5 587.7,370.5 589.4,366.9 592.8,364.8 589.1,361.1 589.5,356.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="408.4,405.1 413.1,406.6 421.7,405.8 425.9,404.8 431.4,405.3 436.5,404.7 440.1,402.6 443.1,398.6 445.6,394.3 449.4,390.9 453.5,388.9 457.1,384.0 458.3,379.9 451.4,371.9 434.3,361.9 430.3,359.6 425.8,356.9 418.7,352.8 419.4,348.3 420.2,343.2 423.1,340.7 423.9,336.1 429.0,333.1 427.0,329.8 421.9,329.7 427.0,329.8 429.7,332.4 426.2,334.4 423.0,336.4 422.7,341.4 419.4,343.6 419.3,349.0 425.8,356.9 430.3,359.6 442.1,360.0 447.5,359.9 452.6,360.0 452.2,365.1 451.4,371.9 457.7,375.6 465.1,380.0 476.5,383.1 466.4,380.5 459.2,376.5 451.4,371.9 434.3,361.9 430.3,359.6 425.8,356.9 418.7,352.8 408.1,346.5 404.2,345.2 401.2,342.2 397.3,329.3 396.0,323.7 392.6,310.1 391.2,304.3 389.7,297.9 388.1,291.6 385.0,279.1 383.8,274.1 382.7,269.5 381.4,264.6 379.9,260.3 379.4,255.4 379.8,247.7 378.7,237.7 376.3,231.7 373.4,225.0 371.1,220.0 368.5,214.1 364.4,208.1 361.7,205.2 357.8,203.1 353.9,200.9 350.7,198.5 347.2,195.5 344.1,192.7 341.3,190.2 337.8,187.1 333.7,183.3 330.5,180.3 324.9,175.1 321.5,172.4 318.0,170.3 314.2,168.3 309.9,165.8 305.8,163.5 300.4,160.5 295.5,157.7 291.7,155.5 285.0,150.2 281.9,147.8 279.0,145.5 275.1,142.5 271.8,140.0 268.1,137.1 264.4,134.3 259.1,130.2 255.7,127.5 251.2,124.1 246.7,120.6 243.7,118.3 239.7,115.2 234.7,111.4 230.2,108.0 226.4,105.0 221.8,101.5 218.9,99.2 215.5,96.6 208.2,91.0 203.5,87.3 198.7,83.7 194.0,80.0 194.9,84.5 193.7,89.8 195.2,93.7 194.5,99.2 193.5,103.3 194.0,108.6 191.6,111.8 188.8,114.3 188.4,119.8 186.0,122.9 184.7,128.3 182.8,131.8 179.3,135.7 175.4,139.6 174.3,143.9 175.9,148.8 177.8,154.3 179.1,159.0 180.3,164.0 181.1,169.1 182.6,172.9 184.3,177.4 183.9,182.6 180.7,185.4 181.8,190.2 183.2,194.2 185.5,197.5 183.2,194.2 181.8,190.2 180.7,185.4 183.9,182.6 184.3,177.5 182.6,172.9 181.1,169.1 180.3,164.0 179.1,159.4 177.8,154.3 176.1,149.9 174.7,144.7 175.4,139.6 178.4,136.4 181.2,133.5 183.4,130.4 185.1,126.5 186.2,122.3 189.4,118.5 188.6,113.7 192.0,111.6 193.9,107.5 193.9,101.3 195.1,95.9 193.9,91.2 194.4,86.1 194.0,80.0 198.7,83.7 203.5,87.3 207.6,90.5 213.1,94.7 218.9,99.2 221.8,101.5 224.8,103.7 230.2,108.0 234.7,111.4 237.6,113.7 243.7,118.3 246.7,120.6 251.2,124.1 254.6,126.7 259.1,130.2 262.6,132.8 265.9,135.4 269.1,137.9 272.9,140.8 276.2,143.4 279.2,145.7 282.6,148.3 289.6,153.7 293.1,156.3 297.8,159.0 303.9,162.4 307.7,164.6 312.1,167.0 315.9,169.2 320.3,171.7 324.0,174.1 328.7,178.7 332.4,182.1 335.3,184.7 339.6,188.7 342.6,191.4 345.5,194.0 349.3,197.3 352.4,199.8 356.9,202.7 360.9,204.7 363.7,207.2 366.8,210.9 371.1,219.9 372.7,223.6 374.9,228.5 377.3,234.1 379.7,245.4 379.6,251.4 379.4,256.5 380.2,261.3 381.8,266.0 383.4,272.5 384.6,277.1 387.5,289.1 389.7,297.9 391.2,304.3 392.6,310.1 396.0,323.7 397.2,328.8 400.1,340.4 402.5,344.0 406.4,345.9 416.3,351.4 425.8,356.9 430.3,359.6 434.3,361.9 451.4,371.9 457.7,375.6 465.1,380.0 462.1,383.1 463.7,387.6 464.9,391.8 465.1,397.0 464.3,402.4 463.6,407.0 465.0,411.1 470.9,410.9 477.0,410.8 486.1,410.5 490.7,408.1 490.3,402.4 492.8,396.4 495.5,392.3 498.0,389.2 494.9,386.8 498.6,388.5 507.3,392.4 520.3,390.1 526.2,388.6 533.4,384.1 537.2,378.3 539.4,374.9 553.6,369.4 567.5,364.5 574.1,362.1 578.3,360.6 583.0,359.5 588.5,359.3 589.5,356.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="662.7,246.0 665.0,249.1 669.4,248.1 672.1,252.9 672.4,258.5 671.6,263.2 674.3,268.0 673.4,273.7 670.8,276.8 668.5,279.8 666.1,282.6 662.3,284.1 660.7,288.0 659.0,291.6 656.3,294.6 654.0,297.5 652.0,301.9 650.8,306.1 648.7,309.4 645.3,312.0 641.7,313.9 638.0,315.3 634.6,317.7 631.0,320.3 634.2,317.9 637.6,315.5 641.4,314.0 645.3,312.0 648.3,309.8 650.7,306.5 648.5,309.6 645.3,312.0 641.7,313.9 638.0,315.3 634.6,317.7 631.0,320.3 627.2,323.1 622.6,326.4 619.1,329.1 616.1,331.7 613.0,334.1 609.9,336.6 606.2,339.8 602.6,343.0 598.3,342.0 594.4,338.0 594.8,332.7 595.3,327.2 591.2,322.9 588.5,320.4 585.1,318.5 579.9,317.5 577.7,314.3 574.9,311.5 575.3,306.4 574.6,301.6 573.1,297.8 573.7,293.2 570.1,290.4 568.7,285.6 568.2,279.7 563.0,278.0 560.4,275.2 556.6,272.8 552.3,271.6 550.3,268.4 546.9,265.7 544.6,262.1 545.1,257.2 548.4,254.1 551.5,251.7 556.2,249.3 559.6,247.4 563.9,245.7 566.2,248.6 568.5,251.8 567.8,256.8 565.0,260.5 565.6,265.5 567.7,268.7 569.3,272.4 570.1,277.2 568.8,281.3 568.9,286.6 572.2,291.1 576.1,292.6 578.4,289.6 583.0,287.5 586.8,284.8 588.1,280.5 589.3,275.2 591.8,272.5 594.0,269.1 595.9,265.6 598.1,262.2 600.2,258.4 603.7,255.5 607.4,253.3 610.8,251.4 614.4,249.3 611.0,251.3 607.4,253.3 603.9,255.3 600.5,258.1 598.6,261.4 596.6,264.8 594.5,267.9 592.8,271.5 589.6,273.6 588.7,278.6 587.6,282.8 584.9,285.6 582.1,288.3 578.2,289.8 575.8,292.7 572.8,295.1 573.5,300.0 575.5,303.9 574.5,308.8 577.2,313.0 579.1,316.8 583.0,318.5 588.0,319.1 591.2,322.9 595.2,326.9 594.8,332.7 594.4,338.0 593.5,342.6 592.9,347.6 592.0,351.9 590.9,356.0 589.5,356.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="519.9,269.3 517.2,272.5 516.1,276.6 514.7,280.5 511.0,282.8 507.3,284.7 503.4,286.3 500.1,288.7 498.5,292.9 494.9,296.7 493.3,300.5 492.8,306.8 493.2,311.7 497.6,313.8 493.7,311.9 490.1,314.1 487.3,316.9 484.8,320.7 484.7,326.0 483.6,330.6 482.4,334.9 480.4,340.3 476.6,341.8 471.7,341.2 466.3,341.0 460.9,341.0 455.5,341.0 451.3,339.4 449.1,336.4 451.3,339.4 455.5,341.0 460.9,341.0 466.3,341.0 471.4,341.1 475.9,342.0 480.9,342.5 484.2,344.3 487.5,347.0 489.6,351.0 494.4,351.5 499.9,352.2 504.4,353.3 507.3,350.5 506.6,345.9 504.2,340.9 499.5,341.5 494.6,340.8 495.7,336.7 497.6,333.4 500.2,330.7 502.9,327.8 505.5,324.9 508.3,328.5 510.9,331.9 514.1,334.0 516.4,337.7 517.5,341.9 520.4,345.0 526.2,347.2 529.1,350.8 529.2,355.9 531.9,358.6 534.8,361.3 537.2,364.8 540.9,367.6 545.6,368.4 550.9,369.6 567.5,364.5 574.1,362.1 578.3,360.6 583.0,359.5 588.5,359.3 589.5,356.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="344.7,346.5 343.5,351.0 344.1,355.9 345.3,360.0 346.3,364.4 345.1,368.6 342.2,371.7 335.3,378.1 333.1,381.6 335.3,378.1 338.5,372.8 343.3,371.4 347.4,375.5 351.6,378.0 356.3,379.6 362.1,379.5 365.7,381.9 373.0,387.0 376.5,390.1 379.9,392.3 390.3,392.0 397.4,392.0 402.3,393.3 404.8,396.7 406.7,400.9 408.8,405.3 413.1,406.6 414.2,411.1 414.5,416.4 412.2,419.5 408.5,421.2 406.9,425.5 405.1,429.2 403.9,433.3 401.7,437.1 399.4,441.5 397.2,444.6 395.7,448.4 392.2,454.4 390.6,458.2 387.3,460.3 383.2,462.4 376.5,463.3 369.6,462.6 364.9,460.4 360.2,459.7 354.9,459.1 349.7,459.1 340.9,460.2 333.4,462.0 328.8,462.8 325.4,465.2 317.2,461.2 310.5,456.0 304.7,451.6 301.0,448.8 297.8,446.4 294.4,444.6 287.9,445.5 282.9,446.2 281.5,448.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="285.4,372.4 280.7,370.3 279.0,366.4 273.9,365.5 268.6,367.3 265.4,369.6 260.6,369.1 259.6,373.4 262.2,386.2 263.4,390.6 260.8,393.3 261.1,398.2 264.7,399.9 269.1,402.2 272.9,404.2 277.1,405.3 281.2,406.9 283.6,409.7 287.5,412.3 285.4,415.5 286.4,428.0 288.3,436.5 290.7,440.7 294.1,443.5 287.9,445.5 282.9,446.2 281.5,448.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="364.7,442.5 361.2,444.5 358.7,441.5 356.4,437.7 350.4,437.6 344.3,437.5 339.8,436.3 337.0,433.9 338.8,429.8 337.0,433.9 332.0,436.8 319.0,437.1 313.1,438.5 309.6,441.3 306.1,443.1 303.5,446.1 301.0,448.8 297.8,446.4 294.4,444.6 287.9,445.5 282.9,446.2 281.5,448.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="91.8,386.7 93.8,383.6 96.4,380.3 101.7,380.5 106.1,381.4 110.6,382.3 116.7,383.6 136.9,388.0 149.9,390.8 157.2,392.3 174.9,396.0 179.9,397.0 184.8,398.7 192.2,403.2 198.4,407.0 206.0,411.6 209.6,413.7 217.3,418.4 226.7,424.1 232.1,427.3 239.3,431.7 245.2,434.2 253.4,437.8 257.7,439.6 261.9,441.5 264.2,445.1 270.2,447.0 276.3,447.2 281.0,446.4 281.5,448.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 09</title></polyline>
+<polyline points="124.4,237.7 127.0,240.7 130.2,243.0 133.7,244.9 136.3,247.8 138.3,251.3 140.1,255.5 140.6,260.3 138.3,263.1 138.9,268.9 140.6,273.0 145.4,273.6 150.6,273.7 154.6,275.2 159.4,274.3 161.3,278.9 160.7,283.5 159.7,288.5 161.1,292.6 159.5,288.9 160.6,284.1 161.2,279.1 162.5,274.1 164.9,270.6 167.8,268.2 173.0,267.1 175.0,263.2 176.3,258.3 178.3,254.4 178.7,249.3 179.6,244.5 179.0,239.7 178.5,234.5 179.6,229.7 181.1,225.6 187.4,224.2 186.2,219.3 187.0,214.9 192.3,215.1 197.1,216.5 202.1,217.7 205.7,220.6 209.5,222.1 212.4,224.9 215.5,227.3 218.7,229.4 221.7,232.0 225.3,233.7 229.0,235.1 232.6,237.0 235.5,239.7 238.7,241.8 235.7,244.6 235.0,250.1 231.6,254.5 229.5,257.6 226.1,260.7 222.2,262.4 217.7,263.7 214.3,265.9 211.2,268.2 208.4,270.5 204.6,272.9 200.4,273.9 197.2,276.1 196.5,271.3 195.8,266.5 195.9,261.4 196.2,256.4 196.9,251.5 197.9,246.3 196.4,241.1 194.3,237.0 192.1,232.3 188.1,223.5 186.2,219.3 184.4,215.5 184.9,215.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 10</title></polyline>
+<polyline points="667.6,385.0 669.3,381.1 671.2,377.4 673.1,370.4 675.4,362.3 682.4,366.9 686.9,370.3 688.1,365.5 689.1,360.7 690.2,355.3 691.9,351.7 695.2,349.8 697.8,346.7 695.2,349.8 691.9,351.7 690.2,355.3 689.2,359.6 688.1,365.5 687.1,370.1 682.4,366.9 675.6,361.7 671.0,358.2 666.7,354.9 662.8,353.1 656.8,351.7 650.9,350.3 645.2,348.9 640.5,347.8 635.6,346.7 630.9,345.6 625.4,344.3 620.0,345.7 614.6,349.2 610.1,351.3 605.0,352.6 600.3,354.1 596.3,355.4 591.9,357.7 589.5,356.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 11</title></polyline>
+<circle cx="643.1" cy="428.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="479.9" cy="340.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="148.5" cy="273.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="123.8" cy="235.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="92.1" cy="386.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="96.4" cy="384.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="613.2" cy="384.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="177.8" cy="395.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="115.4" cy="383.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="281.8" cy="448.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="575.6" cy="499.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="139.0" cy="385.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="184.9" cy="215.1" r="2.2" fill="#b9b9b2"/>
+<polygon points="590.3,342.2 578.6,363.6 601.9,363.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="589.4,346.9 578.5,367.0 600.3,367.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="183.0,203.1 172.8,221.9 193.2,221.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="284.1,438.2 274.5,455.8 293.7,455.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="285.3,441.6 277.0,456.8 293.6,456.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="583.4,345.5 574.2,362.3 592.5,362.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="174.0,311.5 165.7,326.8 182.4,326.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="134.5,380.8 126.5,395.6 142.6,395.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="592.9,339.7 581.9,360.0 603.9,360.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="277.5,439.6 269.5,454.4 285.6,454.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="293.9,437.7 283.1,457.7 304.7,457.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="493.3,380.3 487.6,390.9 499.1,390.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="578.4,490.0 571.8,502.1 585.0,502.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<rect x="584.5" y="351.4" width="10" height="10" fill="#1d1d1b"/><text x="598.5" y="374.4" font-weight="600" fill="#1d1d1b">Sede de Uruoca</text>
+<line x1="35" x2="112.7" y1="599.2" y2="599.2" stroke="#8a8a84" stroke-width="2"/><text x="35" y="613.2" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="590.180675000002" y2="590.180675000002" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="594.180675000002" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,583.2 421.4,595.4 434.6,595.4" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="594.180675000002" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="608.180675000002" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="617.180675000002" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="613.180675000002" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="617.180675000002" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="636.180675000002" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="640.180675000002" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="636.180675000002" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="640.180675000002" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="659.180675000002" y2="659.180675000002" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="663.180675000002" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="682.180675000002" y2="682.180675000002" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="686.180675000002" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TRE-CE e TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 57/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (3):</strong> Barra do Mel, Pedra Preta e Jenipapeiro.</li>
+<li><strong>De 3 a 5 km (4):</strong> Sairi, Sununga, Tapera e Contorno do Açude.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (7):</strong> Barreiros, Bom Sucesso, Campanário, Canta Galo, Casinhas, Paracuá e Sítio Boa Vista.</li>
+</ul><h2>Rotas do Edital nº 57/2026</h2>
+<p>O edital tem 11 rotas para Uruoca. Horários: não informados. Veículos: Rota 01 Microônibus/Volare MMW3F53; 02 Citroen/Jumper HLA6G52; 03 Fiat/Ducato HYW0367; 04 Citroen/Jumper NQG8C65; 05 Iveco/Bus15-210E-C THX1H45; 06 Microônibus POE5634; 07 Microônibus/Volare HYC8G71; 08 Topic/Ducato MVX7J15; 09 Ônibus/VW HFD3533; 10 Iveco/Bus 15-210E-C THT9D41; 11 Microônibus IAM6F16 (Edital nº 57/2026).</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>São Francisco – Mel – Barra do Mel – Penedo – Sede</td></tr><tr><td>02</td><td>Almas – São Domingos – São Joaquim – Queimadas – São Miguel – Flores – Sede</td></tr><tr><td>03</td><td>Cocó – Cotovelo – Caldeirão – Pau D&#x27;Arco – Pedra Branca – São Paulo – Santo Antônio – Barreiros – Sede</td></tr><tr><td>04</td><td>Jurema – Carnaúba Amarela – Carvalho – Baixo – Floresta – Morrinho – Pedra da Onça – Sede</td></tr><tr><td>05</td><td>Cerca de Pedra – Conserva – Pedra Preta – Farinha Seca – Seco – Arisco – Sede</td></tr><tr><td>06</td><td>Carrapicho – Paus Branco – Bandeira dos Oliveiras – Gameleira – Malhada Grande – Campanário</td></tr><tr><td>07</td><td>Poço dos Angicos – Estreito – Alto – Saco – Campanário</td></tr><tr><td>08</td><td>Tucuns – Jurumenha – Campanário</td></tr><tr><td>09</td><td>Sununga – Tapera – Canto Galo – Casinha – Taboleirinho – Campanário</td></tr><tr><td>10</td><td>Batatão – Canto das Pedras – Água Suja – Paulista – Bracoatiara – Paracuá</td></tr><tr><td>11</td><td>Tatus – Lagoa de Dentro – Assentamento dos Torrões – Sede</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 57/2026 da 25ª ZE, DJE/TRE-CE nº 232 (disp. 12/10/2026), p. 6–7; https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=CE&amp;numDiario=232&amp;anoDiario=2026 | 1º turno: Edital nº 35/2026 da 25ª ZE, DJE/TRE-CE nº 198 (disp. 11/09/2026), p. 302–303; https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=CE&amp;numDiario=198&amp;anoDiario=2026; Edital nº 37/2026 da 25ª ZE, DJE/TRE-CE nº 201 (disp. 14/09/2026), p. 326–328; https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=CE&amp;numDiario=201&amp;anoDiario=2026.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 0 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<p>Nenhuma localidade precisa de rota nova.</p>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMU</strong></p><p>Uruoca/CE, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. André Aziz Ferrareto Neme</strong><br>Juiz Eleitoral da 25ª Zona Eleitoral – Granja/CE</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 57/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Uruoca, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 57/2026: .</p><p>Sugerimos, respeitosamente:</p><p></p><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 57/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Uruoca</p></blockquote>
+<p class="fontes">Fontes: TRE-CE e TSE, Locais de Votação de Uruoca; Edital nº 57/2026 da 25ª ZE, DJE/TRE-CE nº 232 (disp. 12/10/2026), p. 6–7; https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=CE&amp;numDiario=232&amp;anoDiario=2026 | 1º turno: Edital nº 35/2026 da 25ª ZE, DJE/TRE-CE nº 198 (disp. 11/09/2026), p. 302–303; https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=CE&amp;numDiario=198&amp;anoDiario=2026; Edital nº 37/2026 da 25ª ZE, DJE/TRE-CE nº 201 (disp. 14/09/2026), p. 326–328; https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=CE&amp;numDiario=201&amp;anoDiario=2026; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

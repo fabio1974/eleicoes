@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Francisco Macedo</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Francisco Macedo</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/francisco-macedo.pdf?v=1792185085" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Francisco Macedo (68ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 68ª Zona Eleitoral <strong>5 rotas novas e 3 paradas extras em rotas do edital</strong> no transporte gratuito de Francisco Macedo.
+Traçamos pelas estradas o percurso das 6 rotas do Edital nº 40/2026 - TRE/68ª ZONA. 13 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 3 ficam a 1–2 km.</p>
+<ul>
+<li>Francisco Macedo tem 2.845 eleitores aptos em 10 locais de votação e 14 seções. São 4 locais rurais, com 1.091 eleitores (38% do total).</li>
+
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Campo Verde (11,8 km do local de votação), Casa de Pedra (11,1 km do local de votação), Massapê (10,7 km do local de votação), Ruestão (9,6 km do local de votação), Minador (8,8 km do local de votação), Feijão Bravo (8,7 km do local de votação), Noite Escura (5,3 km do local de votação), Pai Boi (4,7 km do local de votação), Lagoa do Aguapé (4,6 km do local de votação), Baixa do Cavaco (4,2 km do local de votação), Barriguda (3,1 km do local de votação), Carnaubal (3,0 km do local de votação) e Retiro do Jovino (3,0 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Rodrigo, Realeza e Barragem da Volta.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 40 localidades rurais de Francisco Macedo que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Campo Verde</td><td>11,8</td><td>Rota 03</td><td>4,2</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Casa de Pedra</td><td>11,1</td><td>Rota 03</td><td>3,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Massapê</td><td>10,7</td><td>Rota 06</td><td>5,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Ruestão</td><td>9,6</td><td>Rota 03</td><td>4,2</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Minador</td><td>8,8</td><td>Rota 03</td><td>2,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Feijão Bravo</td><td>8,7</td><td>Rota 06</td><td>3,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Rodrigo</td><td>7,7</td><td>Rota 03</td><td>1,7</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Saco Fechado</td><td>5,9</td><td>Rota 03</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Noite Escura</td><td>5,3</td><td>Rota 05</td><td>2,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Pedra Pintada</td><td>5,2</td><td>Rota 06</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Aldeia de Cima</td><td>5,0</td><td>Rota 06</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Pai Boi</td><td>4,7</td><td>Rota 05</td><td>3,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Lagoa do Aguapé</td><td>4,6</td><td>Rota 03</td><td>4,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Lajedo</td><td>4,5</td><td>Rota 05</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Baixa do Cavaco</td><td>4,2</td><td>Rota 06</td><td>2,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Vera Cruz</td><td>4,0</td><td>Rota 06</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Realeza</td><td>3,8</td><td>Rota 01</td><td>1,5</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Passagem Funda</td><td>3,7</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Polo Verde</td><td>3,6</td><td>Rota 04</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Bocadinho</td><td>3,3</td><td>Rota 05</td><td>1,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Aldeia</td><td>3,1</td><td>Rota 06</td><td>0,4</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Barriguda</td><td>3,1</td><td>Rota 03</td><td>5,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Divisão</td><td>3,0</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Carnaubal</td><td>3,0</td><td>Rota 01</td><td>2,2</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Barragem da Volta</td><td>3,0</td><td>Rota 06</td><td>1,8</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Retiro do Jovino</td><td>3,0</td><td>Rota 03</td><td>3,1</td><td>Sem rota (mais de 2 km)</td></tr></tbody></table></div>
+<p>1 das 14 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Comboeiro de Cima (Rota 05). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 40 localidades rurais de Francisco Macedo, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1121" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Francisco Macedo: 16 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 40/2026 - TRE/68ª ZONA e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="659.5,613.9 646.4,466.8 646.9,315.2 725.0,94.0 647.4,87.5 557.4,80.0 530.9,137.5 300.7,169.1 167.6,216.6 55.5,290.7 35.0,501.8 66.0,525.8 56.5,597.9 111.1,662.9 314.2,820.5 325.7,972.1 428.3,894.6 462.3,857.1 493.8,790.0 541.4,765.5 585.9,700.4 609.9,638.9 659.5,613.9 659.5,613.9" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="108.3,614.7 100.8,601.9 93.8,590.1 88.6,579.5 81.1,568.7 74.6,557.6 69.4,547.5 65.5,531.6 62.1,513.0 59.6,499.7 73.9,486.6 94.2,479.2 106.9,476.8 147.1,480.2 166.6,481.8 190.6,483.9 207.1,485.2 223.3,486.5 241.4,487.9 262.7,489.7 276.8,494.4 290.8,501.4 314.5,505.7 329.8,507.4 340.1,502.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="59.6,491.7 73.9,486.6 94.2,479.2 106.9,476.8 147.1,480.2 166.6,481.8 190.6,483.9 207.1,485.2 223.3,486.5 241.4,487.9 262.7,489.7 273.4,492.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="485.1,301.8 479.3,311.5 469.3,316.9 457.1,320.0 448.7,326.8 441.5,335.0 430.2,339.4 420.4,345.4 411.2,352.3 401.5,357.8 386.8,359.7 376.1,364.8 378.8,378.0 375.0,389.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="592.0,454.9 581.0,450.6 569.5,447.1 555.9,445.3 543.9,442.0 532.5,438.1 518.9,435.9 505.1,438.3 492.9,441.3 481.3,445.6 472.2,451.7 462.1,457.0 456.0,447.8 448.0,440.3 447.2,439.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="596.1,502.3 586.6,508.0 574.6,511.2 561.6,509.0 550.2,504.7 539.4,500.1 529.7,494.3 516.0,492.8 505.7,487.6 490.2,488.4 479.1,493.0 474.8,503.9 464.6,514.1 448.4,523.3 436.4,527.4 426.8,532.8 411.0,534.0 392.0,535.1 374.7,535.5 362.6,525.3 353.9,517.2 345.2,507.9 340.1,502.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="493.4,806.8 491.6,793.1 499.2,785.4 511.7,781.9 516.3,771.1 507.8,764.2 498.9,757.1 491.0,749.2 483.6,741.5 476.1,732.0 465.8,726.8 454.0,731.4 448.4,729.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="447.2,439.6 435.7,436.0 425.1,431.5 411.4,429.3 400.8,424.2 389.4,419.2 377.6,415.4 368.1,407.8 372.0,396.7 378.9,379.1 375.8,367.1 386.8,359.7 400.9,357.7 411.2,352.3 419.9,345.8 428.9,339.6 440.8,336.1 448.0,327.8 456.1,320.5 468.6,317.3 479.3,311.5 488.2,305.1 496.6,297.4 504.2,288.7 510.7,279.9 518.7,272.4 528.2,266.9 539.4,262.0 548.9,256.3 554.2,246.1 554.9,231.6 555.9,216.2 567.9,191.7 560.3,207.5 554.7,217.5 548.2,208.4 543.8,197.6 535.7,189.7 527.1,182.0 520.8,168.3 510.3,161.6 500.2,154.5 492.3,146.9 484.8,139.3 474.6,132.9 469.4,122.4 474.6,132.9 484.8,139.3 492.3,146.9 500.2,154.5 510.3,161.6 520.8,168.3 526.2,181.3 535.7,189.7 543.8,197.6 548.2,208.4 554.7,217.5 554.8,232.6 553.8,246.8 548.9,257.0 538.5,262.4 528.0,267.1 518.0,272.9 509.4,281.3 503.1,290.2 495.3,299.1 486.4,306.3 477.1,312.8 466.7,317.8 454.8,321.8 446.5,329.2 439.4,338.1 425.9,340.3 417.8,347.4 408.9,354.9 395.9,357.1 384.2,360.6 375.9,367.4 375.7,387.3 370.5,400.5 373.8,414.3 385.9,418.1 397.9,422.6 408.6,427.0 418.3,433.4 433.1,434.9 445.1,438.1 447.2,439.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Campo Verde</title></polyline>
+<polyline points="511.7,637.3 517.0,650.3 524.0,658.7 530.9,667.5 540.7,673.8 547.1,682.6 554.7,690.5 564.7,697.3 574.4,703.2 586.2,699.8 589.0,687.2 596.7,677.0 601.0,666.2 607.4,655.6 610.1,642.7 616.2,633.7 624.0,624.5 632.6,610.9 630.5,597.7 632.6,610.9 626.1,621.4 632.9,630.3 646.9,632.8 651.9,643.6 656.8,655.0 653.1,668.8 642.8,674.4 633.8,680.9 626.1,690.1 615.1,698.9 606.9,706.3 598.2,713.7 584.9,710.1 571.6,718.6 564.8,728.1 556.9,738.4 551.2,751.4 542.9,759.8 533.8,765.9 520.3,764.3 515.2,774.4 505.9,782.3 494.5,788.6 489.1,799.5 482.5,808.9 477.1,818.9 467.7,825.2 454.9,830.1 440.0,829.9 425.7,830.7 410.1,830.9 397.3,835.1 385.0,832.3 369.3,830.9 355.8,828.9 343.9,825.0 329.1,824.2 343.9,825.0 355.8,828.9 369.3,830.9 383.7,831.9 396.3,835.4 407.9,830.6 421.6,832.1 435.8,830.6 448.0,827.6 464.1,826.0 475.3,821.4 471.3,838.2 465.5,849.9 459.0,858.5 450.0,866.3 442.5,874.9 437.2,885.2 428.7,893.9 416.5,898.2 405.1,902.4 396.6,913.3 390.8,923.5 383.1,930.9 372.7,936.0 364.3,943.2 355.5,949.8 344.8,963.3 331.8,970.1 320.7,974.6 314.5,984.7 320.7,974.6 331.8,970.1 343.2,966.3 349.4,953.9 362.9,944.5 372.1,936.5 383.1,930.9 390.8,923.5 396.6,913.3 402.7,903.9 413.4,899.1 425.2,895.7 434.7,888.2 442.5,874.9 450.0,866.3 458.5,858.8 465.5,849.9 471.3,838.2 476.4,827.4 479.6,814.6 485.7,803.7 491.3,794.0 499.2,785.4 511.7,781.9 516.3,771.1 526.6,765.6 541.6,765.3 535.3,749.6 528.3,739.0 523.7,728.0 520.6,712.3 516.1,688.9 513.0,672.6 510.7,659.9 511.0,644.1 511.7,637.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Massapê</title></polyline>
+<polyline points="206.8,331.3 220.0,329.2 236.0,330.2 244.4,322.5 253.9,316.7 270.3,311.2 281.4,306.3 282.6,291.8 284.4,278.3 286.4,264.9 293.1,254.6 297.9,244.3 305.1,236.4 309.3,225.4 305.6,213.8 307.9,200.3 297.0,204.9 282.1,206.1 262.9,209.0 249.7,214.9 243.1,224.9 232.8,230.8 220.6,227.3 209.7,232.2 197.4,235.2 183.1,232.5 179.1,243.8 174.1,254.5 161.0,263.2 151.3,268.9 160.8,285.1 171.7,298.2 182.9,311.9 192.7,323.7 200.5,333.1 206.8,331.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Lagoa do Aguapé</title></polyline>
+<polyline points="340.1,502.7 349.9,513.1 358.0,521.4 367.8,531.4 376.7,541.3 382.1,551.8 374.9,561.4 367.0,568.7 359.7,577.8 351.6,592.7 346.0,602.8 337.7,618.3 331.2,630.1 325.0,641.5 317.6,654.9 325.0,641.5 331.2,630.1 337.7,618.3 343.1,608.1 351.6,592.7 359.7,577.8 367.0,568.7 374.9,561.4 383.4,554.5 379.2,543.6 370.9,535.1 361.7,525.2 353.9,517.2 345.2,507.9 340.1,502.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Baixa do Cavaco</title></polyline>
+<polyline points="108.3,614.7 114.2,624.6 121.9,637.1 143.8,641.2 153.3,648.2 166.1,645.6 177.5,649.3 174.2,661.2 188.9,666.0 176.9,662.3 177.7,647.6 160.7,645.7 147.0,650.6 125.6,643.1 118.4,631.3 112.5,621.9 108.3,614.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Carnaubal</title></polyline>
+<polyline points="302.5,504.7 321.1,506.4 336.0,506.1 347.3,510.3 358.0,521.4 367.8,531.4 376.7,541.3 382.1,551.8 374.9,561.4 367.0,568.7 355.1,573.2 340.4,574.4 324.9,574.2 313.7,569.5 301.5,572.9 313.7,569.5 324.9,574.2 340.4,574.4 355.1,573.2 367.0,568.7 374.9,561.4 383.4,554.5 379.2,543.6 370.9,535.1 361.7,525.2 353.9,517.2 345.2,507.9 329.8,507.4 314.5,505.7 302.5,504.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 01</title></polyline>
+<polyline points="487.5,305.6 500.7,307.6 510.2,313.1 518.9,319.9 527.1,327.1 540.1,329.3 550.6,333.8 540.1,329.3 527.1,327.1 518.9,319.9 510.5,313.2 500.7,307.6 487.2,305.7 487.5,305.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 03</title></polyline>
+<polyline points="448.4,729.3 435.7,732.8 432.3,720.5 435.4,708.2 429.8,698.7 435.4,708.2 432.3,720.5 428.7,732.7 442.2,734.7 448.4,729.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 06</title></polyline>
+<circle cx="483.6" cy="305.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="446.2" cy="727.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="493.9" cy="807.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="598.2" cy="500.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="512.0" cy="785.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="167.8" cy="482.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="590.9" cy="449.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="531.4" cy="546.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="535.7" cy="761.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="59.0" cy="490.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="82.2" cy="331.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="255.1" cy="540.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="472.6" cy="496.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="373.5" cy="388.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="62.4" cy="526.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="272.3" cy="495.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="379.4" cy="539.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="231.5" cy="365.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="253.8" cy="333.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="486.6" cy="590.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="500.3" cy="610.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="181.0" cy="328.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="510.3" cy="630.9" r="2.2" fill="#b9b9b2"/>
+<polygon points="339.2,496.0 330.9,511.4 347.6,511.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="334.7,500.2 327.5,513.5 341.9,513.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="336.7,499.3 329.6,512.5 343.9,512.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="207.1,323.9 198.8,339.3 215.5,339.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="511.3,629.0 503.9,642.8 518.8,642.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="108.6,607.8 102.3,619.3 114.8,619.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="334.7,502.1 328.8,512.9 340.6,512.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="446.8,432.5 439.9,445.2 453.7,445.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="339.2,516.2 331.0,531.3 347.5,531.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="340.2,495.3 333.0,508.5 347.4,508.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="459.3" cy="116.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="466.3" y="111.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Campo Verde 11,8 km</text>
+<circle cx="480.1" cy="151.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="487.1" y="146.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Casa de Pedra 11,1 km</text>
+<circle cx="306.4" cy="987.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="313.4" y="982.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Massapê 10,7 km</text>
+<circle cx="567.7" cy="133.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="473.9" y="128.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Ruestão 9,6 km</text>
+<circle cx="556.1" cy="214.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="563.1" y="209.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Minador 8,8 km</text>
+<circle cx="326.4" cy="862.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="333.4" y="857.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Feijão Bravo 8,7 km</text>
+<circle cx="559.4" cy="335.1" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="566.4" y="330.1" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Rodrigo 7,7 km</text>
+<circle cx="626.4" cy="595.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="501.6" y="590.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Noite Escura 5,3 km</text>
+<circle cx="654.7" cy="658.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="560.9" y="653.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pai Boi 4,7 km</text>
+<circle cx="305.7" cy="198.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="312.7" y="193.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Lagoa do Aguapé 4,6 km</text>
+<circle cx="343.6" cy="668.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="350.6" y="663.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Baixa do Cavaco 4,2 km</text>
+<circle cx="294.8" cy="571.3" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="301.8" y="566.3" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Realeza 3,8 km</text>
+<circle cx="174.6" cy="233.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="181.6" y="228.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Barriguda 3,1 km</text>
+<circle cx="195.1" cy="664.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="202.1" y="659.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Carnaubal 3,0 km</text>
+<circle cx="284.1" cy="261.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="291.1" y="256.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Retiro do Jovino 3,0 km</text>
+<circle cx="373.8" cy="693.2" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="380.8" y="688.2" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Barragem da Volta 3,0 km</text>
+<rect x="335.1" y="497.7" width="10" height="10" fill="#1d1d1b"/><text x="349.1" y="520.7" font-weight="600" fill="#1d1d1b">Sede de Francisco Macedo</text>
+<line x1="35" x2="260.4" y1="1019.4" y2="1019.4" stroke="#8a8a84" stroke-width="2"/><text x="35" y="1033.4" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="1010.3639593908489" y2="1010.3639593908489" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="1014.3639593908489" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,1003.4 421.4,1015.6 434.6,1015.6" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="1014.3639593908489" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="1028.3639593908488" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="1037.3639593908488" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="1033.3639593908488" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="1037.3639593908488" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1056.3639593908488" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1060.3639593908488" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1056.3639593908488" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1060.3639593908488" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1079.3639593908488" y2="1079.3639593908488" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1083.3639593908488" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1102.3639593908488" y2="1102.3639593908488" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1106.3639593908488" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 40/2026 - TRE/68ª ZONA · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (10):</strong> Campo Verde, Casa de Pedra, Massapê, Ruestão, Minador, Feijão Bravo, Rodrigo, Saco Fechado, Noite Escura e Pedra Pintada.</li>
+<li><strong>De 3 a 5 km (16):</strong> Aldeia de Cima, Pai Boi, Lagoa do Aguapé, Lajedo, Baixa do Cavaco, Vera Cruz, Realeza, Passagem Funda, Polo Verde, Bocadinho, Aldeia, Barriguda, Divisão, Carnaubal, Barragem da Volta e Retiro do Jovino.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (14):</strong> Agreste, Alto, Arapuá, Cabaceira, Cabeceira, Café da Pedra, Comboieiro, Comboieiro II, Fazenda Manga, Poço Comprido, Retiro, Retiro de Baixo, Retiro de Cima e Santo Antônio.</li>
+</ul><h2>Rotas do Edital nº 40/2026 - TRE/68ª ZONA</h2>
+<p>O edital tem 6 rotas para Francisco Macedo. Horários: Rota 1 (Estreito): viagens 6h30 Estreito-Francisco Macedo, 9h30 Estreito-F. Macedo, 12h00 F. Macedo-Estreito, 15h00 Estreito-F. Macedo, retorno final após encerramento da votação no CRAS; demais rotas partida às 7:00; saída da sede às 6h30; encerramento após as 17h00. Veículos: não informados.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Estreito – Francisco Macedo</td></tr><tr><td>02</td><td>Divisão – Passagem Funda – Arapuá</td></tr><tr><td>03</td><td>Saco Grande – Saco Fechado – Agreste</td></tr><tr><td>04</td><td>Poço Verde – Comboeiro de Baixo</td></tr><tr><td>05</td><td>Lajedo – Comboeiro de Cima</td></tr><tr><td>06</td><td>Aldeia de Cima – Pedra Pintada</td></tr></tbody></table></div>
+<p>Fonte: Edital nº 40/2026 - TRE/68ª ZONA, DJE/TRE-PI nº 191/2026 (disp. 18/09/2026), PDF da edição; fonte complementar: INFO ROTAS – sistema oficial do TRE-PI (inforotas.tre-pi.jus.br), consulta em 2026-10-16 (rotas do INFO ROTAS preservadas em &quot;rotas_inforotas&quot;).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 16 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Campo Verde</strong></td><td>Sede – Minador – Ruestão – Casa de Pedra – Campo Verde – Sede</td><td>Minador, Ruestão, Casa de Pedra, Campo Verde</td><td>25,3 km (ida e volta)</td><td>~1h01</td></tr><tr><td><strong>Rota nova – Massapê</strong></td><td>Sede – Noite Escura – Pai Boi – Feijão Bravo – Massapê – Sede</td><td>Noite Escura, Pai Boi, Feijão Bravo, Massapê</td><td>36,8 km (ida e volta)</td><td>~1h11</td></tr><tr><td><strong>Rota nova – Lagoa do Aguapé</strong></td><td>Retiro – Retiro do Jovino – Lagoa do Aguapé – Barriguda – Retiro</td><td>Retiro do Jovino, Lagoa do Aguapé, Barriguda</td><td>11,0 km (ida e volta)</td><td>~24 min</td></tr><tr><td><strong>Rota nova – Baixa do Cavaco</strong></td><td>Sede – Baixa do Cavaco – Sede</td><td>Baixa do Cavaco</td><td>8,5 km (ida e volta)</td><td>~17 min</td></tr><tr><td><strong>Rota nova – Carnaubal</strong></td><td>Sede – Carnaubal – Sede</td><td>Carnaubal</td><td>6,0 km (ida e volta)</td><td>~15 min</td></tr><tr><td><strong>Parada extra na Rota 01</strong></td><td>desvio pelo caminho atual: Realeza</td><td>Realeza</td><td>+9,4 km</td><td>+17 min</td></tr><tr><td><strong>Parada extra na Rota 03</strong></td><td>desvio pelo caminho atual: Rodrigo</td><td>Rodrigo</td><td>+3,6 km</td><td>+9 min</td></tr><tr><td><strong>Parada extra na Rota 06</strong></td><td>desvio pelo caminho atual: Barragem da Volta</td><td>Barragem da Volta</td><td>+3,8 km</td><td>+9 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMFM</strong></p><p>Francisco Macedo/PI, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Dra. Tallita Cruz Sampaio</strong><br>Juíza Eleitoral da 68ª Zona Eleitoral – Padre Marcos/PI</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 40/2026 - TRE/68ª ZONA) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de Francisco Macedo, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 40/2026 - TRE/68ª ZONA: Campo Verde, Casa de Pedra, Massapê, Ruestão, Minador, Feijão Bravo, Noite Escura, Pai Boi, Lagoa do Aguapé, Baixa do Cavaco, Barriguda, Carnaubal, Retiro do Jovino, Rodrigo, Realeza e Barragem da Volta.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Campo Verde (Sede – Minador – Ruestão – Casa de Pedra – Campo Verde – Sede);</li><li>a criação da Rota nova – Massapê (Sede – Noite Escura – Pai Boi – Feijão Bravo – Massapê – Sede);</li><li>a criação da Rota nova – Lagoa do Aguapé (Retiro – Retiro do Jovino – Lagoa do Aguapé – Barriguda – Retiro);</li><li>a criação da Rota nova – Baixa do Cavaco (Sede – Baixa do Cavaco – Sede);</li><li>a criação da Rota nova – Carnaubal (Sede – Carnaubal – Sede);</li><li>a inclusão de parada em Realeza na Rota 01, mantido todo o percurso atual;</li><li>a inclusão de parada em Rodrigo na Rota 03, mantido todo o percurso atual;</li><li>a inclusão de parada em Barragem da Volta na Rota 06, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 40/2026 - TRE/68ª ZONA deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Francisco Macedo</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Francisco Macedo; Edital nº 40/2026 - TRE/68ª ZONA, DJE/TRE-PI nº 191/2026 (disp. 18/09/2026), PDF da edição; fonte complementar: INFO ROTAS – sistema oficial do TRE-PI (inforotas.tre-pi.jus.br), consulta em 2026-10-16 (rotas do INFO ROTAS preservadas em &quot;rotas_inforotas&quot;); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

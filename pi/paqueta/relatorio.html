@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Paquetá</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Paquetá</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/paqueta.pdf?v=1792184488" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Paquetá (10ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 10ª Zona Eleitoral <strong>4 rotas novas e 2 paradas extras em rotas do edital</strong> no transporte gratuito de Paquetá.
+Traçamos pelas estradas o percurso das 5 rotas do Edital nº 38/2026 - TRE/10ª ZONA. 6 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 4 ficam a 1–2 km.</p>
+<ul>
+<li>Paquetá tem 4.182 eleitores aptos em 12 locais de votação e 21 seções. São 10 locais rurais, com 3.233 eleitores (77% do total).</li>
+<li>6 locais rurais ficam a 10 km ou mais da sede, com 2.206 eleitores. Os mais distantes: Povoado Mutamba (59,4 km), Povoado Retiro Da Conceicao S/N (34,6 km) e Povoado Tiradentes S/N (29,0 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Morro da Talha (20,9 km do local de votação), Gentil (14,2 km do local de votação), Ponta do Morro (11,1 km do local de votação), Mari (9,9 km do local de votação), Cedro (4,9 km do local de votação) e Ponta d&#x27;Água (3,1 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Comunidade Quilombola Mutamba 2., Veneza, Buritizinho e Tabatinga.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 48 localidades rurais de Paquetá que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Comunidade Quilombola Mutamba 2.</td><td>35,2</td><td>Rota 05</td><td>1,5</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Morro da Talha</td><td>20,9</td><td>Rota 02</td><td>6,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Jenipapeiro</td><td>18,9</td><td>Rota 01</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Veneza</td><td>17,0</td><td>Rota 01</td><td>1,1</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Buritizinho</td><td>15,4</td><td>Rota 01</td><td>1,8</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Tabatinga</td><td>14,3</td><td>Rota 01</td><td>1,9</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Gentil</td><td>14,2</td><td>Rota 05</td><td>2,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Ponta do Morro</td><td>11,1</td><td>Rota 05</td><td>4,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Mari</td><td>9,9</td><td>Rota 02</td><td>4,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Tabuleiro</td><td>7,6</td><td>Rota 02</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Chapada do Frio</td><td>6,5</td><td>Rota 01</td><td>0,3</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Onça</td><td>6,0</td><td>Rota 02</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sapê</td><td>5,0</td><td>Rota 02</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Cedro</td><td>4,9</td><td>Rota 01</td><td>2,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Portelândia</td><td>3,7</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Campestre</td><td>3,1</td><td>Rota 01</td><td>0,9</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Ponta d&#x27;Água</td><td>3,1</td><td>Rota 02</td><td>2,7</td><td>Sem rota (mais de 2 km)</td></tr></tbody></table></div>
+<p>3 das 25 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Prensa (Rota 02), Baixão (Rota 02) e Tucuns (Rota 02). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 48 localidades rurais de Paquetá, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 879" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Paquetá: 10 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 38/2026 - TRE/10ª ZONA e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="46.5,223.7 148.4,306.1 182.6,386.8 180.0,398.5 225.5,424.9 220.3,473.0 282.5,508.1 236.2,693.3 259.2,746.7 300.8,711.6 321.6,702.4 383.6,680.8 379.6,662.1 365.5,649.0 372.9,624.0 375.3,580.7 383.4,569.9 456.1,561.0 461.1,541.7 449.2,502.0 410.6,439.0 447.4,344.5 482.3,294.2 490.9,299.2 520.7,288.6 504.2,268.4 497.8,242.4 505.6,213.4 498.4,192.1 511.1,157.5 449.4,158.5 398.1,158.9 356.4,153.4 247.3,90.4 228.1,118.4 215.9,124.6 121.2,164.7 46.5,223.7 46.5,223.7" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="502.6,160.9 503.9,155.8 505.1,149.7 506.2,143.4 508.9,138.4 512.0,134.6 514.9,130.2 517.4,126.2 522.5,128.1 526.7,130.4 531.5,133.0 535.8,134.9 542.1,135.5 548.0,135.8 553.2,134.8 556.7,138.1 559.8,141.2 563.3,144.4 566.5,147.3 568.7,151.6 569.0,157.7 571.0,161.7 574.3,164.8 578.0,167.5 583.0,171.1 588.2,174.9 594.8,179.8 599.6,183.3 604.4,186.7 608.6,189.9 613.0,193.1 616.5,195.7 622.7,200.2 627.1,203.4 632.0,206.9 640.6,213.3 644.7,216.3 648.9,219.3 653.3,222.6 658.1,226.1 661.9,228.9 664.5,232.5 662.6,242.8 663.5,247.9 667.5,250.6 677.1,248.7 682.1,247.5 688.1,247.3 697.0,247.5 703.6,247.5 709.9,247.6 713.7,252.2 715.5,257.2 718.4,261.9 720.6,266.5 722.1,271.3 724.3,275.8 721.0,279.0 717.2,281.7 717.4,287.5 716.0,292.2 716.8,297.5 718.0,303.5 715.7,309.9 718.4,316.5 722.2,318.8 725.0,322.4 723.3,327.4 718.8,330.7 716.1,340.5 714.2,344.7 708.8,349.3 702.7,349.5 698.7,352.1 699.5,359.0 702.3,365.3 703.1,370.8 703.8,377.6 701.9,382.1 698.5,386.3 696.2,392.9 693.4,397.0 688.6,400.2 684.5,402.6 682.0,407.6 678.0,411.2 671.3,414.5 671.3,420.8 672.3,426.6 669.6,434.9 667.4,439.8 666.0,444.7 666.6,450.2 668.8,454.9 667.4,463.3 669.0,473.0 665.4,482.7 662.2,488.3 659.8,492.8 657.6,497.2 651.8,500.9 646.9,506.1 647.5,515.4 645.9,520.1 641.4,525.7 638.1,529.9 636.7,537.4 634.1,543.3 633.2,548.9 632.7,556.7 632.8,562.8 630.8,570.3 629.2,574.8 625.8,582.0 623.5,585.9 618.7,590.4 617.9,597.0 615.5,604.3 610.5,608.3 609.3,614.6 607.5,619.0 598.5,620.5 591.4,620.3 585.6,622.0 580.9,623.4 572.0,630.7 563.3,638.3 561.6,643.3 558.7,648.3 556.3,652.4 550.8,655.2 552.2,661.2 551.4,667.7 551.8,674.7 552.4,680.2 550.7,688.5 548.4,693.0 542.5,692.4 540.8,687.2 536.9,684.7 531.1,687.6 526.4,689.8 520.4,691.7 514.8,692.6 507.5,692.4 501.9,691.3 495.3,690.7 487.7,690.0 480.8,689.9 474.6,690.2 468.8,690.5 463.4,691.5 459.6,693.9 453.9,695.3 448.4,698.7 443.1,703.4 438.1,707.6 432.0,708.5 427.2,707.1 420.6,706.0 413.2,703.9 407.6,701.4 402.4,699.3 397.3,697.9 386.8,696.8 378.7,695.5 371.9,693.8 366.2,692.5 359.2,692.4 354.7,690.4 350.6,688.2 344.9,685.3 341.2,682.9 337.0,680.8 335.8,674.9 335.8,668.7 335.1,662.8 334.8,656.7 331.9,652.7 331.1,647.1 332.2,641.9 330.7,635.7 329.6,630.6 433.1,213.8 324.2,182.8 358.9,218.6 361.0,223.5 363.4,227.4 364.1,233.3 361.3,246.7 358.4,250.1 352.6,255.4 347.4,258.9 342.9,260.5 337.6,265.5 331.4,269.3 325.4,271.8 319.9,273.3 315.2,276.6 307.1,279.3 302.9,282.1 296.1,284.5 288.5,289.3 284.5,293.9 279.1,296.5 275.2,298.8 272.6,300.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="216.2,126.5 212.2,135.7 207.1,143.9 199.9,151.0 193.3,154.8 189.5,158.3 185.4,161.2 181.8,165.9 176.2,173.7 171.8,178.5 166.1,184.7 166.2,217.5 160.2,255.4 156.3,296.1 155.5,303.0 154.8,310.3 154.0,318.6 153.1,327.0 152.3,335.5 151.8,342.0 151.4,351.8 151.2,359.8 150.9,366.7 150.5,378.9 150.2,385.3 147.4,392.8 144.6,400.0 146.0,408.0 147.7,414.6 149.3,419.3 150.6,424.6 160.4,418.1 167.8,412.4 174.9,406.8 177.3,402.8 180.9,399.2 182.4,392.7 183.1,385.8 186.4,382.7 188.8,378.6 192.4,375.6 198.1,374.0 201.5,369.1 203.7,364.6 206.8,361.6 210.7,359.3 218.2,358.5 224.1,357.7 230.7,358.0 239.5,362.1 249.2,360.7 252.0,355.6 253.5,350.5 253.9,343.8 255.1,338.7 258.2,335.1 261.1,327.4 269.6,302.6 272.9,299.6 272.6,300.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="221.3,357.1 218.8,353.2 217.6,347.4 213.3,345.6 209.6,341.9 208.3,336.9 206.2,332.8 207.2,327.4 206.3,322.2 207.8,316.1 210.2,312.3 212.8,308.5 216.2,305.2 213.1,308.3 210.2,312.3 207.8,316.1 205.6,320.1 206.8,325.7 206.5,331.7 208.0,336.7 209.6,341.9 212.4,345.3 217.2,347.2 218.4,352.2 221.0,356.4 226.9,357.3 233.4,358.8 239.5,362.1 249.2,360.7 252.0,355.6 253.5,350.5 253.9,343.8 255.1,338.7 258.2,335.1 261.1,327.4 269.6,302.6 272.9,299.6 272.6,300.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="374.4,307.2 370.3,304.6 365.0,303.4 363.1,298.5 364.9,292.4 366.6,284.1 368.1,279.2 370.5,274.8 367.3,271.2 364.1,268.1 364.5,262.1 365.4,256.0 365.6,250.2 368.0,245.7 373.1,244.1 379.8,245.3 387.1,247.4 391.0,249.9 394.7,252.4 400.8,252.2 396.6,254.3 392.6,250.3 388.0,247.8 382.6,246.1 376.0,244.1 372.1,241.2 369.3,237.1 366.4,233.2 364.3,229.1 361.7,225.1 358.7,219.9 361.7,225.1 364.3,229.1 364.0,236.0 361.3,246.7 358.4,250.1 352.6,255.4 347.4,258.9 342.9,260.5 337.6,265.5 331.4,269.3 325.8,271.6 319.9,273.3 315.2,276.6 307.1,279.3 302.9,282.1 296.1,284.5 288.5,289.3 284.5,293.9 279.1,296.5 275.2,298.8 272.6,300.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="414.2,539.7 281.6,409.4 273.8,407.6 273.5,401.8 274.7,396.2 273.9,390.7 272.6,385.6 269.5,381.7 265.0,378.6 257.1,371.2 253.0,368.4 251.5,363.0 252.0,355.6 253.5,350.5 253.9,343.8 255.1,338.7 258.2,335.1 261.1,327.4 269.6,302.6 272.9,299.6 272.6,300.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="169.9,180.6 166.1,184.7 166.2,217.5 160.2,255.4 156.3,296.1 155.5,303.0 154.8,310.3 154.0,318.6 153.1,327.0 152.3,335.5 151.8,342.0 146.7,341.0 144.5,344.9 140.2,347.9 136.8,350.6 133.0,347.9 128.5,343.7 123.8,345.2 116.9,345.8 111.7,344.0 107.6,342.1 96.9,335.6 91.7,334.3 85.9,330.8 77.6,331.1 77.9,324.8 78.5,319.0 80.1,314.1 81.8,307.5 83.2,302.8 85.0,298.2 86.4,292.9 84.1,288.0 81.4,283.6 77.6,278.4 74.4,275.0 70.3,271.3 66.0,269.5 59.6,267.6 53.3,264.6 49.0,262.2 45.5,258.3 42.5,254.7 40.0,251.1 38.3,245.8 35.7,240.6 37.4,235.3 35.7,240.6 38.3,245.8 39.9,250.8 42.5,254.7 45.5,258.3 48.5,261.9 53.3,264.6 57.4,266.9 63.4,268.7 69.0,270.7 73.4,273.8 76.6,277.1 79.5,281.2 82.6,285.2 85.0,289.7 85.9,295.2 84.1,300.9 82.0,305.9 80.8,311.0 79.5,315.7 78.2,320.7 77.1,325.7 81.1,330.0 88.4,332.5 94.0,334.7 106.1,340.8 110.0,343.6 115.0,345.5 122.0,345.3 126.7,342.9 130.0,346.3 133.8,348.8 140.2,347.9 144.1,345.5 146.3,341.2 151.8,342.0 152.3,335.5 153.1,327.0 154.0,318.6 154.8,310.3 155.5,303.0 156.3,296.1 160.0,256.7 166.1,218.5 165.7,186.6 169.5,181.1 169.9,180.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Morro da Talha</title></polyline>
+<polyline points="284.7,411.1 290.9,485.8 287.5,491.1 280.5,490.3 276.7,492.8 270.7,493.0 264.4,492.4 258.8,491.3 253.1,490.7 249.6,487.8 245.6,485.6 241.6,483.0 230.8,482.8 226.0,481.4 219.5,481.0 213.3,481.9 207.8,482.5 202.0,483.2 196.4,482.2 190.6,480.9 185.3,479.7 181.4,477.5 182.1,472.0 181.2,465.8 181.6,460.1 185.2,456.2 187.8,452.2 188.8,446.9 192.3,444.1 196.4,441.8 200.6,439.8 206.0,438.8 208.0,434.2 213.8,430.2 217.4,426.8 223.4,427.2 226.9,424.5 231.6,423.1 236.7,422.0 242.4,421.3 248.3,419.5 253.7,417.8 259.7,416.8 263.8,419.2 271.1,420.5 276.8,419.7 279.4,416.0 283.6,414.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Gentil</title></polyline>
+<polyline points="358.2,218.9 355.7,214.7 352.1,208.2 348.5,201.9 348.7,195.5 350.3,190.8 343.9,186.7 341.6,182.0 346.2,175.0 350.1,170.4 352.6,165.4 355.2,161.2 356.4,156.0 356.9,150.2 359.6,146.2 357.0,149.8 356.0,155.0 355.2,161.2 352.8,165.1 350.1,170.4 346.2,175.0 341.7,180.9 343.3,186.2 348.4,189.1 348.7,195.5 348.5,201.9 352.1,208.2 354.5,213.0 357.3,216.4 358.2,218.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Cedro</title></polyline>
+<polyline points="218.0,124.8 229.0,113.7 232.3,110.3 243.0,82.8 234.3,106.7 229.0,113.7 218.0,124.8 218.0,124.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Ponta d&#x27;Água</title></polyline>
+<polyline points="329.5,628.3 338.5,508.5 332.0,480.9 336.6,478.8 341.7,474.5 345.7,471.9 349.9,467.7 353.5,461.6 355.7,453.9 357.9,447.7 363.0,446.7 370.3,446.6 378.6,447.7 395.5,445.3 399.8,442.6 402.3,438.7 405.5,434.9 404.0,428.9 403.0,422.1 405.3,417.9 408.7,413.1 410.2,407.5 416.4,405.7 421.0,404.0 425.6,405.5 431.2,403.8 428.2,400.3 425.5,395.9 334.4,267.7 334.4,267.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 01</title></polyline>
+<polyline points="414.2,539.7 441.4,544.7 414.2,539.7 414.2,539.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 05</title></polyline>
+<circle cx="372.5" cy="438.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="153.0" cy="314.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="508.3" cy="158.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="179.6" cy="403.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="186.8" cy="387.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="324.2" cy="182.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="349.5" cy="173.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="369.0" cy="275.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="401.9" cy="252.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="361.1" cy="190.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="253.1" cy="124.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="358.2" cy="187.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="222.1" cy="356.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="250.7" cy="419.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="449.0" cy="241.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="279.0" cy="393.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="230.9" cy="100.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="184.1" cy="161.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="350.3" cy="201.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="476.9" cy="530.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="323.6" cy="422.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="197.8" cy="124.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="215.9" cy="304.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="375.3" cy="307.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="427.1" cy="225.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="281.6" cy="409.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="176.8" cy="173.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="283.3" cy="410.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="359.4" cy="218.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="433.1" cy="213.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="325.5" cy="270.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="307.8" cy="117.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="173.2" cy="179.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="253.7" cy="351.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="216.6" cy="126.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="254.7" cy="352.0" r="2.2" fill="#b9b9b2"/>
+<polygon points="423.9,536.5 417.4,548.4 430.4,548.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="431.7,207.3 422.5,224.4 441.0,224.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="431.7" y="237.8" text-anchor="middle" fill="#5c5c57">Povoado Modesto Lopes</text>
+<polygon points="283.3,284.9 274.3,301.5 292.4,301.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="218.3,116.3 210.0,131.6 226.5,131.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="358.4,210.4 350.4,225.2 366.5,225.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="225.5,291.6 218.5,304.6 232.6,304.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="304.7,115.2 298.0,127.5 311.3,127.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="252.9,344.2 245.9,357.1 259.9,357.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="321.8,265.4 314.5,278.8 329.1,278.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="379.0,307.3 371.5,321.0 386.5,321.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="284.7,404.0 278.1,416.2 291.3,416.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="170.1,172.8 162.5,186.9 177.8,186.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="441.4" cy="544.7" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="448.4" y="539.7" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Comunidade Quilombola Mutamba 2. 35,2 km</text>
+<circle cx="38.2" cy="228.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="45.2" y="223.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Morro da Talha 20,9 km</text>
+<circle cx="338.5" cy="508.5" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="345.5" y="503.5" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Veneza 17,0 km</text>
+<circle cx="415.7" cy="418.3" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="422.7" y="413.3" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Buritizinho 15,4 km</text>
+<circle cx="424.3" cy="395.3" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="431.3" y="390.3" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Tabatinga 14,3 km</text>
+<circle cx="290.9" cy="485.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="297.9" y="480.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Gentil 14,2 km</text>
+<circle cx="236.0" cy="486.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="215.7" cy="482.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="222.7" y="477.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Mari 9,9 km</text>
+<circle cx="364.2" cy="144.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="371.2" y="139.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Cedro 4,9 km</text>
+<circle cx="239.2" cy="83.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="246.2" y="78.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Ponta d&#x27;Água 3,1 km</text>
+<rect x="268.0" y="295.5" width="10" height="10" fill="#1d1d1b"/><text x="282.0" y="318.5" font-weight="600" fill="#1d1d1b">Sede de Paquetá</text>
+<line x1="35" x2="125.7" y1="776.7" y2="776.7" stroke="#8a8a84" stroke-width="2"/><text x="35" y="790.7" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="767.6790116971273" y2="767.6790116971273" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="771.6790116971273" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,760.7 421.4,772.9 434.6,772.9" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="771.6790116971273" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="785.6790116971273" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="794.6790116971273" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="790.6790116971273" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="794.6790116971273" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="813.6790116971273" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="817.6790116971273" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="813.6790116971273" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="817.6790116971273" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="836.6790116971273" y2="836.6790116971273" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="840.6790116971273" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="859.6790116971273" y2="859.6790116971273" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="863.6790116971273" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 38/2026 - TRE/10ª ZONA · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (12):</strong> Comunidade Quilombola Mutamba 2., Morro da Talha, Jenipapeiro, Veneza, Buritizinho, Tabatinga, Gentil, Ponta do Morro, Mari, Tabuleiro, Chapada do Frio e Onça.</li>
+<li><strong>De 3 a 5 km (5):</strong> Sapê, Cedro, Portelândia, Campestre e Ponta d&#x27;Água.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (31):</strong> Alecrim, Angical, Angical dos Marotos, Baixio, Barrocão, Brejo do Tucano, Campastre, Cana Brava dos Amaros, Canto, Comunidade Quilombola Canabrava dos Amaros, Comunidade Quilombola Custaneira, Comunidade Quilombola Mutamba, Comunidade Quilombola Troncos, Gameleira, Jacus, Lagoa, Lagoa do Tucano, Malhada Vermelha, Modesto Lopes, Pai Amaro, Ponta da Serra, Povoado os Cardosos, Retiro da Conceição, Ruivo, Sobrado Grande, São Rafael, Tanque, Tiradentes, Tronco, Várzea e Várzea dos Marotos.</li>
+</ul><h2>Rotas do Edital nº 38/2026 - TRE/10ª ZONA</h2>
+<p>O edital tem 5 rotas para Paquetá. Horários: não informados no edital. Veículos: não informados no edital.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Chapada do Fio – Pereiros – Pai Amaro – Portelândia – Angical – Paquetá</td></tr><tr><td>02</td><td>Tiradentes – Prensa – Lagoa do Tucano – Baixão – Tucuns – Paquetá</td></tr><tr><td>03</td><td>Alecrim – Barrocão – Canabrava – Paquetá</td></tr><tr><td>04</td><td>São Rafael – Canto – Angical – Ponta da Serra – Paquetá</td></tr><tr><td>05</td><td>Mutamba – Tronco – Canabrava – Paquetá</td></tr></tbody></table></div>
+<p>Fonte: Edital nº 38/2026 - TRE/10ª ZONA (rotas definidas após alteração sugerida pela Comissão de Transportes de Paquetá), DJE/TRE-PI nº 203/2026, disponibilizado em 28/09/2026 (publicação 29/09/2026), ID_MATERIA 6139499.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 10 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Morro da Talha</strong></td><td>Sede – Morro da Talha – Sede</td><td>Morro da Talha</td><td>41,8 km (ida e volta)</td><td>~1h15</td></tr><tr><td><strong>Rota nova – Gentil</strong></td><td>Sede – Gentil – Ponta do Morro – Mari – Sede</td><td>Gentil, Ponta do Morro, Mari</td><td>19,6 km (ida e volta)</td><td>~46 min</td></tr><tr><td><strong>Rota nova – Cedro</strong></td><td>Sede – Cedro – Sede</td><td>Cedro</td><td>9,9 km (ida e volta)</td><td>~10 min</td></tr><tr><td><strong>Rota nova – Ponta d&#x27;Água</strong></td><td>Sede – Ponta d&#x27;Água – Sede</td><td>Ponta d&#x27;Água</td><td>6,2 km (ida e volta)</td><td>~7 min</td></tr><tr><td><strong>Parada extra na Rota 01</strong></td><td>desvio pelo caminho atual: Veneza – Buritizinho – Tabatinga</td><td>Veneza, Buritizinho, Tabatinga</td><td>+28,9 km</td><td>+51 min</td></tr><tr><td><strong>Parada extra na Rota 05</strong></td><td>desvio pelo caminho atual: Comunidade Quilombola Mutamba 2.</td><td>Comunidade Quilombola Mutamba 2.</td><td>+3,9 km</td><td>+6 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMP</strong></p><p>Paquetá/PI, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Expedito Costa Júnior</strong><br>Juiz Eleitoral da 10ª Zona Eleitoral – Picos/PI</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 38/2026 - TRE/10ª ZONA) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Paquetá, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 38/2026 - TRE/10ª ZONA: Morro da Talha, Gentil, Ponta do Morro, Mari, Cedro, Ponta d&#x27;Água, Comunidade Quilombola Mutamba 2., Veneza, Buritizinho e Tabatinga.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Morro da Talha (Sede – Morro da Talha – Sede);</li><li>a criação da Rota nova – Gentil (Sede – Gentil – Ponta do Morro – Mari – Sede);</li><li>a criação da Rota nova – Cedro (Sede – Cedro – Sede);</li><li>a criação da Rota nova – Ponta d&#x27;Água (Sede – Ponta d&#x27;Água – Sede);</li><li>a inclusão de paradas em Veneza, Buritizinho e Tabatinga na Rota 01, mantido todo o percurso atual;</li><li>a inclusão de parada em Comunidade Quilombola Mutamba 2. na Rota 05, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 38/2026 - TRE/10ª ZONA deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Paquetá</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Paquetá; Edital nº 38/2026 - TRE/10ª ZONA (rotas definidas após alteração sugerida pela Comissão de Transportes de Paquetá), DJE/TRE-PI nº 203/2026, disponibilizado em 28/09/2026 (publicação 29/09/2026), ID_MATERIA 6139499; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

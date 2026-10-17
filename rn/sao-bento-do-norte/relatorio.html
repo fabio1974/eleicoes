@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – São Bento do Norte</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← São Bento do Norte</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/sao-bento-do-norte.pdf?v=1792185684" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – São Bento do Norte (52ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 52ª Zona Eleitoral <strong>1 rota nova</strong> no transporte gratuito de São Bento do Norte.
+Traçamos pelas estradas o percurso das 5 rotas do Edital nº 16/2026 – 52ª ZE. 1 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>São Bento do Norte tem 4.267 eleitores aptos em 5 locais de votação e 16 seções. São 4 locais rurais, com 1.963 eleitores (46% do total).</li>
+<li>3 locais rurais ficam a 10 km ou mais da sede, com 1.400 eleitores. Os mais distantes: Proj. De Ass. Sta. Vitoria De S.B.Norte (23,0 km), Pov De Sao Miguel, S/N (16,3 km) e Avenida Severiano Correia Da Silva, S/N, Guagiru (13,2 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Agrovila do PA Baixa da Quixaba (6,1 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 11 localidades rurais de São Bento do Norte que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Agrovila do PA Alto do Oriente</td><td>19,9</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Novo Oriente</td><td>19,3</td><td>Rota 03</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Agrovila do PA Baixa da Quixaba</td><td>6,1</td><td>Rota 01</td><td>2,4</td><td>Sem rota (mais de 2 km)</td></tr></tbody></table></div>
+<p>6 das 25 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: São Francisco (Rota 01), B. da Quixaba I (Rota 01), B. Quixaba II (Rota 02), Jicuri (Rota 02 e Rota 04) e B. Quixaba I (Rota 05). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 11 localidades rurais de São Bento do Norte, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1068" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">São Bento do Norte: 1 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital nº 16/2026 – 52ª ZE e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="487.9,861.5 663.2,151.1 553.0,115.5 503.4,90.8 437.6,90.0 372.9,80.0 359.7,95.6 281.8,94.4 243.1,110.8 147.2,119.1 123.3,169.9 162.8,208.2 128.8,248.1 127.3,347.2 102.1,535.7 77.3,633.9 81.3,723.4 53.4,826.8 35.0,850.8 126.5,868.7 146.0,888.7 205.1,901.1 239.5,923.4 289.4,936.2 487.9,861.5 487.9,861.5" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="545.8,601.0 541.5,591.8 546.2,578.6 541.5,561.7 545.2,550.5 549.7,540.8 567.4,530.1 575.3,524.8 580.7,517.3 587.9,511.7 590.7,501.6 594.0,490.7 597.5,478.9 600.3,468.7 597.6,457.4 593.9,443.0 591.2,433.1 588.5,423.1 586.4,412.5 589.6,401.2 593.5,388.1 596.4,378.9 600.7,370.4 596.4,378.9 588.4,374.2 580.4,369.6 571.3,365.7 561.3,368.1 552.9,372.3 539.5,379.8 515.0,375.9 499.4,373.8 482.5,372.1 471.3,369.1 453.5,363.3 442.3,359.6 432.7,356.4 422.1,352.8 412.9,349.6 403.7,346.6 393.6,344.1 383.5,346.1 371.8,342.9 351.5,341.8 331.0,340.4 320.9,337.5 313.6,330.5 302.7,320.1 294.8,312.5 283.6,301.8 272.0,290.5 263.8,282.5 255.2,274.5 246.2,267.5 232.6,257.3 221.1,248.6 196.7,230.8 188.3,224.7 178.7,217.6 171.5,211.7 165.1,205.2 158.1,197.6 151.3,191.1 144.3,186.0 138.0,179.0 132.3,171.8 131.1,170.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="545.8,601.0 541.5,591.8 546.2,578.6 541.5,561.7 545.2,550.5 549.7,540.8 567.4,530.1 575.3,524.8 580.7,517.3 587.9,511.7 590.7,501.6 599.8,497.5 609.1,494.1 617.9,488.8 626.6,483.4 639.4,481.4 652.6,481.1 661.7,477.9 676.4,480.2 690.6,482.6 704.3,482.3 721.1,483.3 711.8,467.0 701.4,459.6 688.3,449.9 678.4,442.4 668.5,434.9 658.8,427.7 647.1,416.5 633.2,402.7 626.9,396.7 617.7,391.3 607.5,385.4 598.6,380.2 588.4,374.2 580.4,369.6 571.3,365.7 561.3,368.1 552.9,372.3 539.5,379.8 515.0,375.9 499.4,373.8 482.5,372.1 471.3,369.1 453.5,363.3 442.3,359.6 432.7,356.4 422.1,352.8 412.9,349.6 403.7,346.6 393.6,344.1 383.5,346.1 371.8,342.9 351.5,341.8 331.0,340.4 320.9,337.5 313.6,330.5 302.7,320.1 294.8,312.5 283.6,301.8 272.0,290.5 263.8,282.5 255.2,274.5 246.2,267.5 232.6,257.3 221.1,248.6 196.7,230.8 188.3,224.7 178.7,217.6 171.5,211.7 165.1,205.2 158.1,197.6 151.3,191.1 144.3,186.0 138.0,179.0 132.3,171.8 131.1,170.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="70.6,821.2 67.7,830.4 54.3,829.1 75.4,765.8 80.7,746.0 85.4,713.7 83.6,695.4 81.9,677.7 80.5,643.5 91.9,587.0 94.7,572.8 102.6,546.8 104.7,536.4 106.5,525.6 108.9,509.3 110.8,497.6 112.6,485.3 114.4,474.9 117.5,455.8 119.7,445.1 122.6,429.9 124.4,419.0 126.7,398.4 128.0,383.9 129.1,360.1 129.6,347.9 130.3,330.1 131.6,306.4 132.7,294.8 132.2,282.2 131.7,269.6 129.8,257.6 136.5,244.7 146.1,233.6 151.6,227.0 157.6,219.8 163.9,212.2 161.2,200.9 155.2,194.5 148.5,189.0 141.6,183.7 136.5,176.6 141.6,183.7 148.5,189.0 155.2,194.5 161.2,200.9 165.2,209.4 157.6,219.8 151.6,227.0 146.1,233.6 136.5,244.7 131.0,251.5 131.2,263.7 132.1,275.7 132.6,291.8 131.8,303.8 130.3,330.1 129.6,347.9 129.1,360.1 128.0,383.9 126.7,398.4 125.5,409.6 123.8,423.4 119.7,445.1 117.5,455.8 114.4,474.9 112.6,485.3 110.8,497.6 108.9,509.3 106.9,522.4 104.7,536.4 102.6,546.8 94.7,572.8 91.9,587.0 80.7,641.8 81.9,677.7 83.6,695.4 85.4,713.7 81.1,744.0 75.4,765.8 55.4,825.1 61.5,831.1 69.0,826.2 70.6,821.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="342.8,814.0 341.5,802.0 353.4,797.8 349.5,770.5 338.4,756.4 333.2,747.5 330.7,729.0 327.7,716.1 341.7,691.5 375.1,639.9 371.0,625.2 366.9,612.9 360.2,593.2 358.0,580.9 358.2,568.4 358.2,548.0 358.3,532.6 356.3,521.7 362.3,512.7 370.3,505.3 378.0,500.2 389.2,501.0 393.0,490.7 395.0,478.5 398.4,464.8 395.1,456.0 395.9,444.7 405.7,447.6 413.6,455.6 421.3,463.5 429.7,470.9 439.1,478.3 447.0,484.2 455.1,490.2 464.4,497.1 472.3,503.0 479.0,509.0 485.8,515.0 497.7,521.7 508.0,527.6 516.1,531.9 526.5,541.3 533.6,547.6 540.4,560.6 544.8,568.4 544.9,584.9 539.9,597.1 544.9,584.9 544.8,568.4 540.4,560.6 535.3,551.0 526.5,541.3 516.1,531.9 508.0,527.6 497.7,521.7 488.3,516.5 479.0,509.0 472.3,503.0 464.4,497.1 455.1,490.2 447.0,484.2 439.1,478.3 429.7,470.9 422.9,465.1 416.2,458.3 408.3,450.3 398.4,440.3 390.3,432.1 376.8,418.7 370.1,412.0 361.9,403.3 354.9,396.2 348.0,390.5 335.3,378.2 329.4,371.8 329.1,356.0 326.1,346.4 320.9,337.5 313.6,330.5 302.7,320.1 294.8,312.5 283.6,301.8 272.0,290.5 263.8,282.5 255.2,274.5 246.2,267.5 232.6,257.3 221.1,248.6 196.7,230.8 188.3,224.7 178.7,217.6 171.5,211.7 165.1,205.2 158.1,197.6 151.3,191.1 144.3,186.0 138.0,179.0 132.3,171.8 131.1,170.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="383.4,352.0 387.9,343.8 399.4,345.2 412.9,349.6 422.1,352.8 432.7,356.4 436.5,364.5 432.7,356.4 422.1,352.8 412.9,349.6 403.7,346.6 393.6,344.1 379.6,343.3 361.8,342.4 346.9,341.5 331.0,340.4 320.9,337.5 313.6,330.5 302.7,320.1 294.8,312.5 283.6,301.8 272.0,290.5 263.8,282.5 255.2,274.5 246.2,267.5 232.6,257.3 221.1,248.6 196.7,230.8 188.3,224.7 178.7,217.6 171.5,211.7 165.1,205.2 158.1,197.6 151.3,191.1 144.3,186.0 138.0,179.0 132.3,171.8 131.1,170.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="130.6,179.4 140.2,182.2 148.5,189.0 155.2,194.5 161.2,200.9 168.1,208.3 174.7,214.6 182.8,220.6 190.1,226.0 221.1,248.6 240.5,219.7 305.4,203.1 241.7,218.6 221.1,248.6 196.7,230.8 188.3,224.7 178.7,217.6 171.5,211.7 165.1,205.2 158.1,197.6 151.3,191.1 144.3,186.0 138.0,179.0 130.6,179.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Agrovila do PA Baixa da Quixaba</title></polyline>
+<circle cx="70.5" cy="821.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="45.1" cy="826.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="438.4" cy="365.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="492.9" cy="194.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="545.7" cy="600.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="131.5" cy="170.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="547.0" cy="571.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="547.0" cy="571.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="342.5" cy="812.8" r="2.2" fill="#b9b9b2"/>
+<polygon points="130.4,166.0 118.1,188.8 142.8,188.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="542.2,210.9 533.4,227.1 551.0,227.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="545.4,560.0 537.0,575.4 553.8,575.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="340.9,807.0 333.8,820.0 348.0,820.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="383.2,341.4 374.7,357.1 391.7,357.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="305.4" cy="203.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="312.4" y="198.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Agrovila do PA Baixa da Quixaba 6,1 km</text>
+<rect x="126.5" y="165.4" width="10" height="10" fill="#1d1d1b"/><text x="140.5" y="188.4" font-weight="600" fill="#1d1d1b">Sede de São Bento do Norte</text>
+<line x1="35" x2="214.9" y1="966.2" y2="966.2" stroke="#8a8a84" stroke-width="2"/><text x="35" y="980.2" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="957.2250762543466" y2="957.2250762543466" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="961.2250762543466" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,950.2 421.4,962.5 434.6,962.5" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="961.2250762543466" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="975.2250762543466" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="984.2250762543466" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="980.2250762543466" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="984.2250762543466" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1003.2250762543466" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1007.2250762543466" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1003.2250762543466" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1007.2250762543466" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1026.2250762543467" y2="1026.2250762543467" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1030.2250762543467" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1049.2250762543467" y2="1049.2250762543467" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1053.2250762543467" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 16/2026 – 52ª ZE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (3):</strong> Agrovila do PA Alto do Oriente, Novo Oriente e Agrovila do PA Baixa da Quixaba.</li>
+<li><strong>De 3 a 5 km (0):</strong> nenhuma.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (8):</strong> Agrovila do PA 25 de Julho, Agrovila do PA Cajú Nordeste, Agrovila do PA Santa Vitória, Assentamento São Miguel, Guajiru, Povoado São Miguel, São Bento do Norte e São Miguel.</li>
+</ul><h2>Rotas do Edital nº 16/2026 – 52ª ZE</h2>
+<p>O edital tem 5 rotas para São Bento do Norte. Horários: Rota 01: SAÍDA: 7:00hs, 11:00hs e 14:00hs RETORNOS: 09:30hs, 13:30hs, 17:00hs; Rota 02: SAÍDAS: 7:00hs, 11:00hs e 14:00hs RETORNOS: 7:00hs, 11:00hs e 14:00hs; Rota 03: SAÍDAS E RETORNOS DE HORA EM HORA A PARTIR DAS 7:30hs; Rota 04: SAÍDAS: 7:00hs, 11:00hs e 14:00hs RETORNOS: 7:00hs, 11:00hs e 14:00hs; Rota 05: SAÍDA: 7:00hs, 11:00hs e 14:00hs RETORNO: 7:00hs, 11:00hs e 14:00hs. Veículos: Rota 01: ÔNIBUS (NNW 1041); Rota 02: ÔNIBUS (OVZ 6096); Rota 03: DOBLÔ (QND 9D47); Rota 04: VAN (QGY 5F72); Rota 05: VAN (QGV 6C94).</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>São Miguel – São Francisco – Carnaubas – Juremal – Caju Nordeste – 25 de Julho – B. da Quixaba I – Centro</td></tr><tr><td>02</td><td>B. Quixaba II – Jicuri – São Miguel – Juremal – 25 de Julho – Centro</td></tr><tr><td>03</td><td>Alto do Oriente – Centro – Alto do Oriente</td></tr><tr><td>04</td><td>Santa Vitória – São Miguel – Jicuri – Centro</td></tr><tr><td>05</td><td>B. Quixaba I – 25 de Julho – Caju Nordeste – Centro</td></tr></tbody></table></div>
+<p>Fonte: Edital nº 16/2026 – 52ª ZE (Quadro Geral de Percursos e Horários), DJE/TRE-RN nº 182 (disp. 11/09/2026), idMateria 6102558.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 1 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Agrovila do PA Baixa da Quixaba</strong></td><td>Sede – Agrovila do PA Baixa da Quixaba – Sede</td><td>Agrovila do PA Baixa da Quixaba</td><td>12,4 km (ida e volta)</td><td>~22 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMSBN</strong></p><p>São Bento do Norte/RN, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Bruno Montenegro Ribeiro Dantas</strong><br>Juiz Eleitoral da 52ª Zona Eleitoral – São Bento do Norte/RN</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 16/2026 – 52ª ZE) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de São Bento do Norte, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 16/2026 – 52ª ZE: Agrovila do PA Baixa da Quixaba.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Agrovila do PA Baixa da Quixaba (Sede – Agrovila do PA Baixa da Quixaba – Sede).</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 16/2026 – 52ª ZE deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de São Bento do Norte</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de São Bento do Norte; Edital nº 16/2026 – 52ª ZE (Quadro Geral de Percursos e Horários), DJE/TRE-RN nº 182 (disp. 11/09/2026), idMateria 6102558; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

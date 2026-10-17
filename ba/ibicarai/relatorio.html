@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Ibicaraí</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Ibicaraí</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/ibicarai.pdf?v=1792239226" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Ibicaraí (29ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 29ª Zona Eleitoral <strong>4 rotas novas e 1 parada extra em rotas do edital</strong> no transporte gratuito de Ibicaraí.
+Traçamos pelas estradas o percurso das 8 rotas do Edital ZE-029 nº 36, de 26/09/2026 (quadro geral de percursos da zona rural da 29ª ZE, após deliberação das sugestões ao Edital ZE-029 nº 27/2026). 13 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 1 ficam a 1–2 km.</p>
+<ul>
+<li>Ibicaraí tem 17.916 eleitores aptos em 19 locais de votação e 89 seções. São 5 locais rurais, com 3.685 eleitores (21% do total).</li>
+<li>2 locais rurais ficam a 10 km ou mais da sede, com 1.115 eleitores. Os mais distantes: Cajueiro Velho (14,1 km) e Cajueiro Novo (12,8 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Santo Antônio (14,8 km do local de votação), Santa Helena (13,1 km do local de votação), Fazenda Pyranava - Estrada de Floresta Azul a Almadina (12,2 km do local de votação), Pyra-Nava (12,1 km do local de votação), Milton (8,7 km do local de votação), Santa Adélia (6,7 km do local de votação), São José (6,6 km do local de votação), Cruzeiro do Sul (6,3 km do local de votação), Lumega (5,8 km do local de votação), Fazenda São Joaquim (5,5 km do local de votação), Guanabara (4,9 km do local de votação), Juçara (4,9 km do local de votação) e Conjunto Santa Maria (3,2 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Fazenda Rota da Luz 2.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 38 localidades rurais de Ibicaraí que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Santo Antônio</td><td>14,8</td><td>Rota 04</td><td>6,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Santa Helena</td><td>13,1</td><td>Rota 04</td><td>6,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Pyranava - Estrada de Floresta Azul a Almadina</td><td>12,2</td><td>Rota 04</td><td>6,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Pyra-Nava</td><td>12,1</td><td>Rota 04</td><td>6,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Jacaranda</td><td>10,5</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Gr Chaves Ibicaraí</td><td>10,2</td><td>Rota 04</td><td>0,7</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Boa Sorte</td><td>10,0</td><td>Rota 04</td><td>0,8</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fazenda Fraternidade</td><td>9,1</td><td>Rota 04</td><td>0,5</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Milton</td><td>8,7</td><td>Rota 01</td><td>6,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Serra Negra</td><td>6,9</td><td>Rota 04</td><td>0,3</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fazenda Nossa Senhora Aparecida - Estrada para o Jacarandá</td><td>6,8</td><td>Rota 04</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Santa Adélia</td><td>6,7</td><td>Rota 04</td><td>4,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>São José</td><td>6,6</td><td>Rota 01</td><td>4,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Cruzeiro do Sul</td><td>6,3</td><td>Rota 02</td><td>4,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Lumega</td><td>5,8</td><td>Rota 07</td><td>4,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Três Pancadas</td><td>5,8</td><td>Rota 06</td><td>0,7</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Abadiva</td><td>5,5</td><td>Rota 04</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fazenda São Joaquim</td><td>5,5</td><td>Rota 01</td><td>4,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Rota da Luz 2</td><td>5,2</td><td>Rota 01</td><td>1,3</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Guanabara</td><td>4,9</td><td>Rota 06</td><td>3,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Juçara</td><td>4,9</td><td>Rota 01</td><td>3,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>São Jo]</td><td>4,1</td><td>Rota 04</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Cajueiro Novo</td><td>4,1</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Liberdade</td><td>3,6</td><td>Rota 01</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Conjunto Santa Maria</td><td>3,2</td><td>Rota 01</td><td>2,1</td><td>Sem rota (mais de 2 km)</td></tr></tbody></table></div>
+<p>7 das 29 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Região da Jussara (Rota 03), Região da Banha (Rota 03), Região das Iscas (Betoldo) (Rota 05), Região das Alagoas (Rota 05), Miúdos (Rota 05), Dedé Patrício (Rota 06) e Região dos Pintos (Rota 08). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 38 localidades rurais de Ibicaraí, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 824" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Ibicaraí: 14 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital ZE-029 nº 36, de 26/09/2026 (quadro geral de percursos da zona rural da 29ª ZE, após deliberação das sugestões ao Edital ZE-029 nº 27/2026) e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="705.3,371.5 713.2,309.6 683.5,258.5 657.4,273.5 585.9,242.8 575.1,217.0 587.6,189.5 500.0,168.4 431.3,179.4 418.5,153.0 430.6,111.1 323.7,132.6 290.4,139.4 240.3,124.4 204.5,148.0 151.6,131.5 59.0,80.0 47.5,136.9 35.0,155.8 84.7,225.2 105.8,315.4 108.3,360.1 131.9,362.6 127.6,392.6 128.0,608.0 158.0,610.8 170.6,648.0 187.7,645.2 205.3,588.3 240.0,580.1 253.6,560.4 324.4,558.2 389.1,574.3 386.3,606.2 405.6,614.8 479.3,596.9 524.0,570.8 523.6,540.4 548.7,524.3 601.6,549.3 605.5,581.5 638.1,577.6 666.0,540.0 725.0,513.9 722.5,451.3 705.3,371.5 705.3,371.5" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="676.3,337.1 678.6,346.5 680.1,356.1 678.7,366.3 684.4,371.9 691.4,376.7 695.6,383.5 702.8,387.7 704.2,397.8 702.3,407.0 699.4,414.9 695.8,422.7 689.3,428.8 683.5,434.0 678.0,439.9 677.2,451.5 678.2,461.3 687.5,462.9 696.6,467.0 703.3,471.3 696.6,467.0 689.2,463.2 678.6,461.4 670.1,458.9 661.6,456.0 654.0,451.3 648.7,443.0 645.4,434.5 632.6,430.0 621.7,424.5 612.8,421.2 607.3,414.4 601.4,409.0 591.4,407.0 582.6,403.1 574.9,399.3 566.9,396.0 555.7,396.8 547.7,399.7 530.5,397.2 521.0,395.8 510.2,397.9 497.5,400.9 487.3,402.4 478.5,400.1 464.9,400.4 454.0,400.9 447.9,394.1 448.8,383.3 447.9,394.1 441.5,399.2 432.1,397.1 417.3,400.2 406.3,400.2 395.9,396.1 388.1,392.5 378.3,390.2 362.8,387.5 351.9,386.2 341.9,387.9 333.9,390.9 322.5,394.1 313.2,396.4 303.3,397.3 303.1,408.0 304.5,411.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="699.9,411.1 696.3,418.7 691.9,425.6 686.8,433.1 678.5,437.9 677.6,449.7 676.0,460.7 687.5,462.9 696.6,467.0 705.4,472.4 698.4,468.3 691.1,463.7 680.5,461.8 670.1,458.9 661.6,456.0 654.0,451.3 648.7,443.0 645.4,434.5 632.6,430.0 621.7,424.5 612.8,421.2 607.3,414.4 601.4,409.0 591.4,407.0 582.6,403.1 574.9,399.3 566.9,396.0 555.7,396.8 547.7,399.7 530.5,397.2 521.0,395.8 510.2,397.9 497.5,400.9 487.3,402.4 478.5,400.1 464.9,400.4 454.0,400.9 447.9,394.1 448.8,383.3 447.9,394.1 441.5,399.2 432.1,397.1 417.3,400.2 406.3,400.2 395.9,396.1 388.1,392.5 378.3,390.2 362.8,387.5 351.9,386.2 341.9,387.9 333.9,390.9 322.5,394.1 313.2,396.4 303.3,397.3 303.1,408.0 304.5,411.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="450.4,380.4 448.0,392.7 444.4,400.3 435.8,397.4 417.3,400.2 406.3,400.2 395.9,396.1 388.1,392.5 378.3,390.2 362.8,387.5 351.9,386.2 341.9,387.9 333.9,390.9 322.5,394.1 313.2,396.4 303.3,397.3 303.1,408.0 304.5,411.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="257.9,266.0 258.9,256.2 260.8,246.7 263.9,238.2 266.2,229.5 271.3,219.3 275.0,212.1 277.1,203.1 280.5,193.9 287.2,178.6 291.6,170.6 298.6,175.2 299.8,188.2 301.4,199.1 306.5,206.8 304.9,216.8 307.3,208.1 302.4,201.1 299.6,189.4 298.6,175.2 292.6,169.4 288.4,176.7 283.7,188.6 279.1,197.7 276.8,206.9 273.5,215.1 268.8,224.7 264.8,231.7 263.3,242.2 259.3,250.9 256.7,259.6 253.3,267.2 250.9,275.7 252.3,285.5 250.7,295.0 244.9,300.8 242.7,309.9 242.3,320.3 245.4,328.0 252.3,332.0 262.0,334.7 271.9,333.4 275.3,340.9 277.1,350.4 279.6,358.7 278.0,368.7 278.6,379.5 284.6,384.9 288.0,393.1 297.1,395.3 304.1,400.0 303.2,410.1 304.5,411.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="160.5,691.9 162.4,682.2 153.6,678.8 150.7,670.8 153.9,662.6 154.6,652.5 157.2,643.6 156.6,632.8 166.0,631.2 171.7,622.7 168.9,611.4 166.9,602.4 160.9,595.0 155.0,590.0 159.7,582.9 158.4,572.2 156.0,562.5 145.5,563.0 137.1,557.9 128.2,555.5 117.4,557.2 119.8,548.0 116.2,537.9 119.7,527.8 126.0,518.6 129.8,510.3 134.5,503.6 136.3,492.8 143.3,486.8 149.0,480.5 154.5,474.3 159.9,469.0 164.7,462.3 164.1,451.3 161.9,442.5 165.8,435.6 172.1,440.2 178.3,444.8 184.4,449.7 196.3,447.5 205.3,444.5 213.2,440.9 228.0,433.6 234.2,428.6 240.4,423.9 249.0,420.9 257.5,424.3 269.6,428.8 279.0,430.4 290.6,428.1 299.2,424.1 306.5,419.8 304.5,411.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="361.3,299.8 356.2,305.6 351.7,312.1 350.1,321.6 348.6,331.3 346.9,341.2 345.5,351.4 339.4,356.2 333.0,362.8 334.1,374.4 331.7,383.6 329.2,392.3 320.3,394.6 310.8,396.8 304.4,401.6 304.5,411.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="162.1,413.6 153.4,409.8 147.0,404.5 141.2,399.1 134.7,394.8 134.3,384.2 129.8,376.2 111.8,376.3 96.9,376.2 94.4,367.4 97.9,359.7 104.1,355.1 105.6,345.8 105.0,335.2 104.4,324.9 109.7,319.3 108.5,309.1 108.6,298.2 105.9,289.9 104.5,280.2 55.7,173.4 64.6,170.7 65.8,159.3 63.6,149.3 66.9,140.5 70.5,133.1 74.7,126.4 74.0,116.2 75.5,103.0 76.9,92.8 83.4,86.8 77.3,92.0 75.5,103.0 74.5,112.9 71.0,120.3 74.8,128.1 69.0,136.7 64.4,143.9 65.0,154.1 65.9,165.0 63.1,174.9 60.9,183.5 66.8,192.9 70.7,208.5 73.6,216.4 73.5,230.1 72.8,252.0 72.5,263.5 73.0,273.8 72.9,284.8 64.2,290.4 53.4,293.5 44.8,295.6 39.4,301.4 39.7,313.4 40.6,323.2 41.9,333.8 43.2,343.4 44.6,353.2 46.2,364.5 47.2,376.6 50.0,385.0 61.3,383.9 70.8,382.5 78.8,379.0 87.9,376.3 102.1,376.2 121.5,376.2 133.0,376.2 131.9,388.0 134.7,396.4 145.5,403.3 151.6,408.0 157.4,413.5 162.1,413.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Santo Antônio</title></polyline>
+<polyline points="447.4,399.6 448.1,388.0 445.6,378.4 449.1,369.6 448.6,359.2 450.9,349.4 458.7,345.9 468.6,344.7 478.7,340.6 486.6,336.7 489.6,325.9 487.3,335.3 495.5,332.6 501.6,324.9 505.4,317.3 509.1,308.5 511.0,299.5 512.7,289.8 515.5,281.9 512.7,289.8 511.0,299.2 509.1,308.5 505.5,316.7 502.1,324.4 496.8,331.1 488.5,336.5 489.6,325.9 490.5,315.7 492.8,305.5 491.9,295.1 487.7,287.3 487.4,276.1 485.0,267.1 488.4,258.6 494.7,251.9 488.4,258.6 485.0,265.9 487.2,275.0 487.8,285.9 491.2,293.6 492.8,303.0 490.5,311.6 490.7,323.3 487.3,335.3 495.5,332.6 501.6,324.9 505.4,317.3 509.1,308.5 511.0,299.5 512.7,289.8 515.5,281.9 517.9,271.8 519.9,263.0 517.9,251.4 516.5,241.6 518.6,232.8 524.5,225.7 527.3,217.2 532.4,204.6 540.4,198.1 548.5,192.8 550.4,183.4 545.8,174.7 550.4,182.6 548.5,192.8 540.4,198.1 534.0,202.5 529.3,210.8 525.8,223.1 519.7,231.4 516.8,239.7 517.9,251.4 519.5,261.0 518.1,271.4 515.7,281.5 512.7,289.8 511.0,299.2 509.1,308.5 505.5,316.7 502.1,324.4 496.8,331.1 488.5,336.5 478.7,340.6 468.6,344.7 459.1,345.9 450.8,348.8 448.7,357.6 450.6,366.5 446.5,373.9 446.9,384.7 447.7,396.9 447.4,399.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Milton</title></polyline>
+<polyline points="330.1,433.4 334.8,441.4 333.5,455.3 333.7,467.8 328.8,475.2 323.7,481.4 322.0,490.7 322.2,502.3 322.0,514.6 320.7,524.4 320.4,535.3 321.4,545.3 325.3,556.7 343.8,555.9 332.9,556.9 324.6,552.5 321.1,544.6 320.3,533.5 320.9,522.7 322.7,510.3 322.1,499.6 322.7,489.4 324.3,479.9 330.3,474.5 333.7,465.3 334.8,451.6 334.4,438.7 327.9,431.3 332.0,424.5 345.0,425.6 349.5,432.4 355.3,439.5 357.9,447.9 363.5,453.1 377.5,451.1 385.3,454.6 393.9,459.4 397.8,469.4 402.6,477.4 405.2,485.9 409.1,493.7 416.4,497.2 419.0,505.5 425.4,511.7 426.8,521.6 432.3,527.1 435.0,536.8 438.8,544.5 448.4,547.3 438.8,544.5 435.0,536.8 433.0,527.9 426.9,522.8 425.9,512.1 419.4,507.2 417.3,498.0 409.1,493.7 405.2,485.9 402.6,477.4 397.8,469.4 394.0,459.5 385.3,454.6 377.5,451.1 363.5,453.1 357.9,447.9 355.3,439.5 350.1,432.9 346.1,426.2 337.1,423.7 331.5,429.8 330.1,433.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – São José</title></polyline>
+<polyline points="678.0,459.3 670.5,462.9 669.7,473.5 665.3,481.0 660.9,488.3 655.3,494.9 648.8,502.5 643.8,508.3 641.1,517.0 641.2,528.1 642.7,537.4 639.0,545.9 636.0,554.4 632.4,562.0 630.3,571.2 631.5,582.6 629.3,594.1 633.3,601.5 635.3,610.6 640.9,604.1 652.5,603.6 661.4,600.7 652.5,603.6 641.7,603.9 636.0,611.8 633.3,601.5 629.3,594.1 631.3,585.3 629.8,575.7 630.9,565.9 636.0,554.4 639.0,545.9 642.7,537.4 641.2,528.1 641.1,517.0 643.8,508.3 648.8,502.5 654.2,496.5 660.0,490.6 664.5,482.7 668.8,475.4 670.0,465.5 676.0,460.7 678.0,459.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Cruzeiro do Sul</title></polyline>
+<polyline points="502.3,399.8 517.2,396.2 530.5,397.2 543.4,399.2 548.8,404.6 539.0,406.1 528.4,406.7 521.7,411.1 517.7,419.4 514.3,427.8 511.5,436.3 514.3,427.8 517.5,420.0 520.7,412.0 528.4,406.7 539.0,406.1 548.6,404.7 543.4,399.2 530.5,397.2 521.0,395.8 510.2,397.9 502.3,399.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 01</title></polyline>
+<circle cx="303.6" cy="218.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="321.2" cy="169.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="324.2" cy="166.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="284.0" cy="156.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="256.1" cy="224.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="260.0" cy="231.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="121.1" cy="578.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="261.1" cy="267.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="245.1" cy="305.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="573.7" cy="404.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="561.9" cy="390.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="501.1" cy="411.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="388.9" cy="402.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="626.6" cy="423.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="508.5" cy="394.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="509.3" cy="398.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="419.6" cy="392.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="236.1" cy="409.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="234.0" cy="430.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="702.9" cy="472.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="444.6" cy="396.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="164.6" cy="414.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="163.0" cy="414.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="677.1" cy="457.0" r="2.2" fill="#b9b9b2"/>
+<polygon points="301.8,405.2 290.6,425.8 313.1,425.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="285.0,430.4 273.7,451.3 296.4,451.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="286.8,415.7 275.5,436.7 298.2,436.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="279.0,423.3 270.0,439.8 287.9,439.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="162.0,403.5 152.6,420.8 171.4,420.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="162.0" y="434.2" text-anchor="middle" fill="#5c5c57">Povoado Salomea</text>
+<polygon points="441.7,387.4 432.3,404.7 451.1,404.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="441.7" y="418.2" text-anchor="middle" fill="#5c5c57">Povoado Vila Santa Isabel</text>
+<polygon points="292.9,388.9 282.2,408.6 303.6,408.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="329.7,422.5 319.8,440.9 339.7,440.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="247.8,410.8 239.3,426.5 256.4,426.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="331.5,388.0 322.3,404.9 340.7,404.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="302.2,408.1 292.0,426.8 312.4,426.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="328.0,417.6 319.7,432.8 336.2,432.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="294.3,379.4 283.8,398.8 304.8,398.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="447.4,389.9 438.1,407.2 456.8,407.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="713.6,470.2 704.3,487.2 722.8,487.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="713.6" y="500.6" text-anchor="middle" fill="#5c5c57">Cajueiro Velho</text>
+<polygon points="679.2,451.9 671.6,465.9 686.8,465.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="322.2,408.7 314.4,423.2 330.1,423.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="323.3,408.5 315.3,423.3 331.3,423.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="291.8,421.7 282.7,438.4 300.9,438.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="87.0" cy="89.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="94.0" y="84.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santo Antônio 14,8 km</text>
+<circle cx="65.1" cy="129.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="72.1" y="124.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santa Helena 13,1 km</text>
+<circle cx="55.7" cy="173.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="62.7" y="168.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Pyranava - Estrada de Floresta Azul a Almadina 12,2 km</text>
+<circle cx="58.3" cy="172.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="65.3" y="187.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pyra-Nava 12,1 km</text>
+<circle cx="537.6" cy="175.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="544.6" y="170.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Milton 8,7 km</text>
+<circle cx="102.3" cy="271.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="109.3" y="266.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santa Adélia 6,7 km</text>
+<circle cx="450.7" cy="539.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="457.7" y="534.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">São José 6,6 km</text>
+<circle cx="659.6" cy="596.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="516.2" y="591.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Cruzeiro do Sul 6,3 km</text>
+<circle cx="496.9" cy="231.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="503.9" y="226.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Lumega 5,8 km</text>
+<circle cx="431.8" cy="529.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="511.8" cy="439.1" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="518.8" y="434.1" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Fazenda Rota da Luz 2 5,2 km</text>
+<circle cx="337.3" cy="542.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="344.3" y="537.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Guanabara 4,9 km</text>
+<circle cx="513.8" cy="280.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="520.8" y="275.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Juçara 4,9 km</text>
+<circle cx="493.4" cy="325.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="500.4" y="320.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Conjunto Santa Maria 3,2 km</text>
+<rect x="299.0" y="407.1" width="10" height="10" fill="#1d1d1b"/><text x="313.0" y="430.1" font-weight="600" fill="#1d1d1b">Sede de Ibicaraí</text>
+<line x1="35" x2="196.1" y1="721.9" y2="721.9" stroke="#8a8a84" stroke-width="2"/><text x="35" y="735.9" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="712.8536547434097" y2="712.8536547434097" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="716.8536547434097" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,705.9 421.4,718.1 434.6,718.1" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="716.8536547434097" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="730.8536547434097" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="739.8536547434097" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="735.8536547434097" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="739.8536547434097" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="758.8536547434097" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="762.8536547434097" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="758.8536547434097" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="762.8536547434097" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="781.8536547434097" y2="781.8536547434097" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="785.8536547434097" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="804.8536547434097" y2="804.8536547434097" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="808.8536547434097" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital ZE-029 nº 36, de 26/09/2026 (quadro geral de percursos da zona rural da 29ª ZE, após deliberação das sugestões ao Edital ZE-029 nº 27/2026) · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (19):</strong> Santo Antônio, Santa Helena, Fazenda Pyranava - Estrada de Floresta Azul a Almadina, Pyra-Nava, Jacaranda, Gr Chaves Ibicaraí, Boa Sorte, Fazenda Fraternidade, Milton, Serra Negra, Fazenda Nossa Senhora Aparecida - Estrada para o Jacarandá, Santa Adélia, São José, Cruzeiro do Sul, Lumega, Três Pancadas, Abadiva, Fazenda São Joaquim e Fazenda Rota da Luz 2.</li>
+<li><strong>De 3 a 5 km (6):</strong> Guanabara, Juçara, São Jo], Cajueiro Novo, Liberdade e Conjunto Santa Maria.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (13):</strong> Bela Arte, Cajueiro Velho, Entre Rios, Novo Cajueiro, Olaria, Ordem e Progresso, Pancada Formosa, Predileta, Salomé, Saloméa, São Marcos, Vila Santa Isabel e Vila Santa Isabel - BR 415.</li>
+</ul><h2>Rotas do Edital ZE-029 nº 36, de 26/09/2026 (quadro geral de percursos da zona rural da 29ª ZE, após deliberação das sugestões ao Edital ZE-029 nº 27/2026)</h2>
+<p>O edital tem 8 rotas para Ibicaraí. Horários: Saídas de Ibicaraí 07:00/07:30; retornos 10:30, 15:00, 17:30 (Rotas 01–04) ou 14:00 (Rotas 05–08).. Veículos: Rota 01: Kombi JOT 8253, Alex Dias da Silva; Rota 02: Kombi NYS 3A19, Mauricio Santos Ramos; Rota 03: Kombi PGD 8D67, José Mario Aurelino dos Santos; Kombi IAJ 9D69, Samuel Raimundo Nunes da Silva; Rota 04: Kombi JSC 3B98, Gilmar dos Santos; Rota 05: Microônibus TGS 0H74, Jinaldo Araujo dos Santos; Rota 06: Van tipo microônibus CZC 8268, Thallis Dani da Cruz Melo; Rota 07: Kombi OUO 4D90, Jackson Santos Lima; Rota 08: Kombi HZL 0645, Kleber dos Santos.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Assentamento Novo Horizonte – Cajueiro Velho – Cajueiro Novo – Vila Santa Izabel – Sede</td></tr><tr><td>02</td><td>Assentamento Vila Izabel – Assentamento Santana – Cajueiro Velho – Cajueiro Novo – Vila Santa Izabel – Sede</td></tr><tr><td>03</td><td>Região da Jussara – Região da Banha – Vila Santa Izabel – Sede</td></tr><tr><td>04</td><td>Abadiva – Jacarandá – Sede</td></tr><tr><td>05</td><td>Região das Iscas (Betoldo) – Região das Alagoas – Miúdos – Sede</td></tr><tr><td>06</td><td>Dedé Patrício – Faz. Nova Esperança – Sede</td></tr><tr><td>07</td><td>Córrego Grande – Sede</td></tr><tr><td>08</td><td>Região dos Pintos – Sede</td></tr></tbody></table></div>
+
+<p>Fonte: Edital ZE-029 nº 36/2026 da 29ª ZE/BA (Ibicaraí), Anexo III – Município de Ibicaraí; DJE/TRE-BA nº 210, disp. 28/09/2026 (https://dje.tse.jus.br/dje/pdf/v1/edicao/130029).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 14 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Santo Antônio</strong></td><td>Sede – Santa Adélia – Fazenda Pyranava - Estrada de Floresta Azul a Almadina – Pyra-Nava – Santa Helena – Santo Antônio – Sede</td><td>Santa Adélia, Fazenda Pyranava - Estrada de Floresta Azul a Almadina, Pyra-Nava, Santa Helena, Santo Antônio</td><td>29,1 km (ida e volta)</td><td>~40 min</td></tr><tr><td><strong>Rota nova – Milton</strong></td><td>Sede – Conjunto Santa Maria – Juçara – Lumega – Milton – Sede</td><td>Conjunto Santa Maria, Juçara, Lumega, Milton</td><td>28,5 km (ida e volta)</td><td>~52 min</td></tr><tr><td><strong>Rota nova – São José</strong></td><td>Sede – Guanabara – Fazenda São Joaquim – São José – Sede</td><td>Guanabara, Fazenda São Joaquim, São José</td><td>22,9 km (ida e volta)</td><td>~49 min</td></tr><tr><td><strong>Rota nova – Cruzeiro do Sul</strong></td><td>Cajueiro Novo – Cruzeiro do Sul – Cajueiro Novo</td><td>Cruzeiro do Sul</td><td>12,7 km (ida e volta)</td><td>~29 min</td></tr><tr><td><strong>Parada extra na Rota 01</strong></td><td>desvio pelo caminho atual: Fazenda Rota da Luz 2</td><td>Fazenda Rota da Luz 2</td><td>+7,0 km</td><td>+13 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMI</strong></p><p>Ibicaraí/BA, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Bruna Montoro de Souza</strong><br>Juíza Eleitoral da 29ª Zona Eleitoral – Ibicaraí/BA</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital ZE-029 nº 36, de 26/09/2026 (quadro geral de percursos da zona rural da 29ª ZE, após deliberação das sugestões ao Edital ZE-029 nº 27/2026)) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de Ibicaraí, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital ZE-029 nº 36, de 26/09/2026 (quadro geral de percursos da zona rural da 29ª ZE, após deliberação das sugestões ao Edital ZE-029 nº 27/2026): Santo Antônio, Santa Helena, Fazenda Pyranava - Estrada de Floresta Azul a Almadina, Pyra-Nava, Milton, Santa Adélia, São José, Cruzeiro do Sul, Lumega, Fazenda São Joaquim, Guanabara, Juçara, Conjunto Santa Maria e Fazenda Rota da Luz 2.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Santo Antônio (Sede – Santa Adélia – Fazenda Pyranava - Estrada de Floresta Azul a Almadina – Pyra-Nava – Santa Helena – Santo Antônio – Sede);</li><li>a criação da Rota nova – Milton (Sede – Conjunto Santa Maria – Juçara – Lumega – Milton – Sede);</li><li>a criação da Rota nova – São José (Sede – Guanabara – Fazenda São Joaquim – São José – Sede);</li><li>a criação da Rota nova – Cruzeiro do Sul (Cajueiro Novo – Cruzeiro do Sul – Cajueiro Novo);</li><li>a inclusão de parada em Fazenda Rota da Luz 2 na Rota 01, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital ZE-029 nº 36, de 26/09/2026 (quadro geral de percursos da zona rural da 29ª ZE, após deliberação das sugestões ao Edital ZE-029 nº 27/2026) deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Ibicaraí</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Ibicaraí; Edital ZE-029 nº 36/2026 da 29ª ZE/BA (Ibicaraí), Anexo III – Município de Ibicaraí; DJE/TRE-BA nº 210, disp. 28/09/2026 (https://dje.tse.jus.br/dje/pdf/v1/edicao/130029); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

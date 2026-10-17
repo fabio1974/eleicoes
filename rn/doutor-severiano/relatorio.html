@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Doutor Severiano</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Doutor Severiano</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/doutor-severiano.pdf?v=1792185583" download>Baixar em PDF</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Doutor Severiano (43ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 43ª Zona Eleitoral <strong>nenhuma proposta necessária</strong> no transporte gratuito de Doutor Severiano.
+Traçamos pelas estradas o percurso das 6 rotas da Portaria nº 06/2026. 0 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>Doutor Severiano tem 6.355 eleitores aptos em 6 locais de votação e 27 seções. São 4 locais rurais, com 2.459 eleitores (39% do total).</li>
+<li>2 locais rurais ficam a 10 km ou mais da sede, com 1.405 eleitores. Os mais distantes: Sitio Chapada, Sn (14,0 km) e Sitio Lagoa De Dentro, S/N (12,2 km).</li>
+
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 3 localidades rurais de Doutor Severiano que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody></tbody></table></div>
+<p>3 das 30 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Pé de Serra (Rota 01 e Rota 05) e Catingueira (Rota 06). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 3 localidades rurais de Doutor Severiano, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 891" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b">Doutor Severiano: nenhuma localidade rural fica a 3 km ou mais do local de votação</text>
+<text x="20" y="46" fill="#5c5c57">Rotas do Edital nº 06/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="35.0,450.7 139.8,556.6 263.2,705.6 315.6,706.7 315.6,746.5 347.2,759.1 414.4,736.7 456.4,677.7 537.2,700.7 546.5,657.5 603.8,596.4 615.3,554.4 673.1,462.1 693.9,317.5 690.6,274.3 725.0,212.1 571.1,266.1 520.8,221.4 513.2,152.6 474.4,128.6 494.6,80.0 369.1,100.7 323.2,106.2 245.7,166.8 214.6,214.3 137.1,253.6 172.6,316.9 114.2,370.4 56.3,401.0 35.0,450.7 35.0,450.7" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="438.9,452.5 427.5,458.3 416.8,468.9 405.4,474.6 396.4,482.4 389.4,492.5 386.6,506.5 382.7,519.4 376.5,532.4 375.4,548.9 376.3,533.0 382.3,520.0 386.5,507.2 389.1,493.2 395.8,482.8 404.6,474.7 416.8,468.9 425.7,460.5 438.6,452.6 449.5,446.1 456.6,436.5 464.9,427.5 476.2,420.0 485.8,413.0 497.0,407.7 500.4,392.1 510.3,380.4 516.5,369.4 518.5,353.5 523.8,339.6 524.2,322.7 527.1,307.9 532.9,305.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="449.4,379.5 433.4,380.6 448.9,379.5 465.0,378.8 478.1,375.4 495.2,374.9 510.3,377.5 516.8,387.7 522.3,400.5 528.5,412.7 522.8,401.2 517.5,390.0 510.3,380.4 516.5,369.4 518.5,353.5 523.8,339.6 524.2,322.7 527.1,307.9 532.9,305.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="304.0,285.5 318.6,287.4 335.3,288.2 346.5,282.2 361.8,280.7 375.9,275.8 374.1,258.6 365.2,251.0 374.7,239.3 368.6,226.9 367.2,211.8 361.1,198.8 347.0,194.8 330.9,192.9 318.0,185.1 303.9,189.2 315.7,184.4 329.1,188.3 338.5,195.5 354.7,197.4 364.1,204.5 369.7,216.0 375.2,232.6 370.1,244.3 373.7,258.3 376.8,272.1 377.8,287.7 380.8,301.4 378.5,316.2 387.5,324.5 397.6,333.9 403.9,344.6 405.8,359.2 407.0,374.4 420.8,377.2 437.2,377.2 452.0,379.3 468.0,378.6 482.2,376.0 497.9,374.4 514.6,371.9 518.2,356.0 523.8,339.6 524.2,322.7 527.1,307.9 532.9,305.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="152.3,456.2 141.9,449.8 125.0,448.6 105.1,445.9 94.0,439.3 96.9,425.3 98.0,407.3 91.3,396.2 92.6,379.1 94.9,364.3 107.7,358.2 118.7,350.5 132.8,348.0 149.2,346.3 160.4,339.2 174.1,342.0 182.7,349.9 196.1,362.0 208.4,373.0 223.5,369.8 236.5,364.7 251.2,362.4 260.9,354.7 277.6,341.9 287.4,335.0 297.8,327.4 301.0,314.1 308.8,302.8 320.3,296.9 312.1,287.9 327.0,290.7 341.0,283.4 358.1,283.1 372.6,280.1 377.8,291.3 380.0,308.4 381.5,323.4 392.2,329.1 400.4,339.0 403.4,354.2 406.6,369.6 415.6,377.1 429.0,380.8 440.9,376.1 456.5,377.6 472.6,376.5 489.0,376.1 503.8,374.4 516.1,370.0 518.5,353.5 523.8,339.6 524.2,322.7 527.1,307.9 532.9,305.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="184.0,551.7 187.8,538.9 190.0,523.7 203.3,515.3 209.5,504.9 215.0,491.9 226.4,482.5 239.3,472.7 245.3,461.9 259.7,466.0 269.5,473.5 280.2,486.9 282.7,500.8 296.7,496.6 309.3,491.9 320.2,499.3 331.6,493.4 345.2,486.6 370.7,496.2 383.9,499.8 383.2,517.2 378.0,528.7 372.8,544.6 378.0,528.7 383.2,517.2 386.7,503.4 391.4,489.6 398.0,479.0 409.8,474.4 420.0,466.8 428.4,456.8 440.5,451.9 451.1,444.5 458.2,434.7 467.2,426.6 477.0,419.5 488.2,408.2 499.8,403.0 503.9,389.3 510.1,378.1 516.9,368.1 518.6,352.5 523.8,339.6 524.2,322.7 527.1,307.9 532.9,305.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="554.0,263.4 545.3,271.7 544.0,288.2 540.2,301.1 532.9,305.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<circle cx="239.7" cy="515.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="532.8" cy="305.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="98.3" cy="447.4" r="2.2" fill="#b9b9b2"/>
+<polygon points="535.0,301.6 525.1,319.8 544.9,319.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="184.6,542.1 175.5,558.8 193.7,558.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="184.6" y="572.2" text-anchor="middle" fill="#5c5c57">Zona Rural</text>
+<polygon points="93.4,424.0 84.6,440.1 102.2,440.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="304.1,276.3 296.2,291.0 312.1,291.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="538.9,283.9 525.7,308.2 552.0,308.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="375.1,539.2 366.3,555.3 383.8,555.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<rect x="527.8" y="300.6" width="10" height="10" fill="#1d1d1b"/><text x="541.8" y="323.6" font-weight="600" fill="#1d1d1b">Sede de Doutor Severiano</text>
+<line x1="35" x2="280.9" y1="789.1" y2="789.1" stroke="#8a8a84" stroke-width="2"/><text x="35" y="803.1" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="780.0822784809948" y2="780.0822784809948" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="784.0822784809948" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,773.1 421.4,785.3 434.6,785.3" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="784.0822784809948" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="798.0822784809948" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="807.0822784809948" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="803.0822784809948" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="807.0822784809948" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="826.0822784809948" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="830.0822784809948" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="826.0822784809948" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="830.0822784809948" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="849.0822784809948" y2="849.0822784809948" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="853.0822784809948" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="872.0822784809948" y2="872.0822784809948" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="876.0822784809948" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Portaria nº 06/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (0):</strong> nenhuma.</li>
+<li><strong>De 3 a 5 km (0):</strong> nenhuma.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (3):</strong> Doutor Severiano, Fazenda de Baixo e Sítio Olho D&#x27;Água.</li>
+</ul><h2>Rotas do Portaria nº 06/2026</h2>
+<p>O edital tem 6 rotas para Doutor Severiano. Horários: Embarque a partir das 06h30 (ou conforme a distância até a sede); retorno conforme a demanda, até as 17h ou até atender todos os eleitores. Veículos: Rota 01: ônibus oficial NOG 6584; Rota 02: micro-ônibus oficial MYS 0893; Rota 03: ônibus oficial OJX 5116; Rota 04: ônibus oficiais OJX 8058 e QGP 4305; Rota 05: ônibus oficial NOG 8214; Rota 06: ônibus oficial OJX 6147.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Merejo de Baixo – Merejo de Cima – Vila Nogueira – Pé de Serra – Sede</td></tr><tr><td>02</td><td>Mendes – Trapiá – Vila Nogueira – Pedra do Caboclo – Sede</td></tr><tr><td>03</td><td>Frade – Bom Sucesso – Santa Luzia – Lagoa do Arroz – Vila Nogueira – Sede</td></tr><tr><td>04</td><td>Jardim – Chapada – Conceição – Junco – Frade – Vila Nogueira – Sede</td></tr><tr><td>05</td><td>Lagoa de Dentro – Pé de Serra – Merejo – Sede</td></tr><tr><td>06</td><td>Macaúba – Catingueira – Sede</td></tr></tbody></table></div>
+<p>Fonte: Portaria nº 06/2026 da 43ª ZE, DJE/TRE-RN nº 196 (disp. 21/09/2026), idMateria 6122776.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 0 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<p>Nenhuma localidade precisa de rota nova.</p>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMDS</strong></p><p>Doutor Severiano/RN, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Marco Antônio Mendes Ribeiro</strong><br>Juiz Eleitoral da 43ª Zona Eleitoral – São Miguel/RN</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Portaria nº 06/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Doutor Severiano, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Portaria nº 06/2026: .</p><p>Sugerimos, respeitosamente:</p><p></p><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Portaria nº 06/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Doutor Severiano</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Doutor Severiano; Portaria nº 06/2026 da 43ª ZE, DJE/TRE-RN nº 196 (disp. 21/09/2026), idMateria 6122776; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

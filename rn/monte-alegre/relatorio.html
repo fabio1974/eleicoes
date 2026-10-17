@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Monte Alegre</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Monte Alegre</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/monte-alegre.pdf?v=1792185621" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Monte Alegre (44ª ZE): proposta de novas rotas</h1><p class="data">16/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 44ª Zona Eleitoral <strong>1 rota nova</strong> no transporte gratuito de Monte Alegre.
+Traçamos pelas estradas o percurso das 3 rotas da Portaria nº 5/2026/ZE044. 1 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>Monte Alegre tem 17.276 eleitores aptos em 15 locais de votação e 59 seções. São 10 locais rurais, com 7.764 eleitores (45% do total).</li>
+<li>4 locais rurais ficam a 10 km ou mais da sede, com 3.091 eleitores. Os mais distantes: Sobrado I (15,6 km), Sitio Pajussara Ii, S/N (13,6 km) e Comum (13,5 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Encruzilhada dos Pagãos (5,8 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 15 localidades rurais de Monte Alegre que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Encruzilhada dos Pagãos</td><td>5,8</td><td>Rota 02</td><td>2,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Lagoa Salgada</td><td>5,1</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>13 das 49 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Centro (Igreja Matriz) (Rota 01, Rota 01, Rota 02, Rota 02, Rota 03 e Rota 03), Fontes I e II (Rota 01 e Rota 01), Lagoa do Cajueiro (Rota 01 e Rota 01), Badu (Rota 01 e Rota 01) e Sítio Olho d´água (Rota 03). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 15 localidades rurais de Monte Alegre, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 595" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Monte Alegre: 1 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Portaria nº 5/2026/ZE044 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="574.1,454.6 635.3,346.8 647.6,339.5 657.4,252.1 677.5,244.8 724.2,147.6 725.0,131.7 692.3,119.1 666.1,99.3 655.4,80.8 571.4,85.6 551.2,105.4 538.7,101.2 535.3,110.4 498.4,116.3 476.9,110.2 465.5,90.9 443.4,88.9 408.8,96.5 384.7,80.0 359.0,87.3 351.2,129.2 322.2,119.1 317.1,142.9 283.1,165.5 228.6,147.3 182.5,154.3 194.2,121.9 161.8,101.0 126.6,88.9 102.0,96.2 57.6,93.4 35.0,101.5 59.6,156.8 60.1,189.2 73.3,202.1 87.8,199.0 125.2,233.1 161.3,259.3 225.5,270.2 235.3,285.0 257.9,285.9 319.1,339.0 341.2,337.8 350.7,324.4 403.5,316.1 493.1,389.0 574.1,454.6 574.1,454.6" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="586.6,166.7 581.2,169.7 573.8,179.0 566.8,183.0 560.9,185.8 552.6,188.7 546.8,192.0 540.1,193.8 533.4,196.0 525.3,197.0 517.8,195.7 510.3,194.2 498.4,191.1 489.4,187.1 480.9,182.5 473.9,186.0 469.0,191.5 462.6,199.3 454.1,200.0 443.3,202.3 433.8,204.1 425.3,205.0 418.3,206.6 412.3,210.7 407.5,214.8 398.5,224.0 392.4,229.5 387.2,235.1 383.1,240.4 376.1,257.1 372.0,263.2 369.2,271.6 366.8,281.1 363.1,287.8 358.6,292.6 367.8,292.5 375.4,291.7 382.1,289.7 388.3,293.2 392.4,299.7 396.0,305.9 389.2,307.6 382.1,305.1 376.4,302.0 370.3,299.3 365.7,295.2 359.9,292.2 355.0,295.9 351.0,300.6 344.8,298.1 339.6,293.7 334.5,290.1 327.4,286.9 329.7,280.4 337.9,280.8 341.8,285.4 344.8,292.6 346.0,300.0 353.1,298.7 358.6,292.6 365.3,294.7 369.8,299.0 376.4,302.0 382.1,305.1 388.3,307.5 396.0,305.9 392.4,299.7 388.3,293.2 384.7,288.3 379.1,291.1 371.0,292.0 362.7,292.3 365.3,284.8 367.7,277.7 370.5,266.5 374.3,260.9 381.7,243.8 387.2,235.1 391.2,230.6 396.1,226.3 403.9,218.4 400.0,213.8 374.1,204.3 367.3,201.8 360.0,200.3 353.0,202.8 343.8,201.6 335.2,198.9 327.8,196.3 321.8,193.8 315.8,190.8 310.2,187.9 302.6,185.1 294.4,184.0 285.8,183.9 277.0,183.9 269.4,183.2 270.3,175.2 272.0,167.9 269.6,161.3 263.8,157.9 257.2,155.3 248.9,152.3 242.8,149.9 233.9,149.8 227.8,147.5 220.8,149.2 227.8,147.5 233.9,149.8 242.4,149.9 248.9,152.3 255.0,154.8 261.9,157.2 267.7,159.9 271.8,165.9 270.8,174.0 268.9,180.9 269.3,191.0 270.6,199.0 270.4,208.6 269.1,215.9 266.6,221.9 269.1,215.9 270.4,208.6 259.9,205.7 252.2,203.6 244.9,201.6 238.0,199.8 229.1,201.3 225.1,205.7 224.3,213.8 221.1,220.2 218.8,226.6 219.0,235.0 220.0,243.3 208.7,242.0 203.2,238.9 199.5,232.6 202.8,238.1 208.7,242.0 215.1,245.5 220.4,249.1 223.1,254.8 224.4,262.0 226.4,269.8 225.5,277.5 226.8,285.2 234.8,286.7 243.6,286.4 253.1,286.2 266.3,286.9 273.6,288.5 281.8,290.0 292.9,291.5 304.2,294.4 311.1,297.2 318.6,298.4 326.6,299.6 334.8,300.6 342.1,302.0 351.0,300.6 355.0,295.9 360.5,290.9 365.3,284.8 367.7,277.7 370.5,266.5 374.3,260.9 381.7,243.8 387.2,235.1 391.2,230.6 396.1,226.3 403.9,218.4 408.1,214.1 414.9,208.7 423.1,205.4 431.0,204.5 443.3,202.3 451.9,200.4 461.5,199.6 466.8,194.1 472.1,188.0 477.7,182.1 487.1,185.9 494.5,190.0 505.2,192.2 512.8,195.2 521.0,196.3 531.0,196.5 538.8,194.2 545.9,192.3 552.6,188.7 560.3,185.9 566.1,183.3 572.3,180.8 578.0,173.7 581.8,169.0 586.6,166.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="580.0,228.6 578.3,236.8 574.4,244.6 570.7,250.9 566.3,258.2 562.2,265.0 558.8,270.5 554.4,277.9 549.7,285.4 544.8,293.3 540.6,300.6 533.4,299.2 526.0,297.1 518.4,293.5 512.6,290.4 509.8,284.7 505.3,280.2 499.6,276.4 504.8,280.0 509.6,284.3 512.3,290.0 518.4,293.5 524.4,296.6 533.4,299.2 540.4,301.0 548.7,300.8 556.7,302.4 561.5,307.5 567.9,309.6 573.6,312.4 579.4,315.1 583.4,319.8 581.4,326.7 579.0,333.1 574.4,337.3 571.2,343.4 567.7,348.5 563.6,353.0 557.5,355.3 551.9,352.4 546.6,348.7 540.5,345.4 538.7,352.4 537.0,359.1 536.4,367.4 535.1,375.9 533.7,383.1 533.5,391.8 533.5,400.7 533.6,392.3 533.5,383.9 534.9,376.8 536.4,369.6 536.6,361.2 538.1,354.1 540.6,348.0 532.7,347.6 523.8,347.1 514.2,346.9 505.4,346.7 500.5,343.2 494.9,340.1 488.5,336.5 481.2,334.5 474.8,332.2 466.7,333.0 459.3,336.0 454.8,340.1 448.7,336.7 445.2,330.9 439.8,327.6 433.0,325.8 424.5,325.1 418.0,323.0 411.6,320.1 406.3,316.9 402.3,312.5 398.0,308.0 392.4,299.7 388.3,293.2 384.7,288.3 388.3,293.2 392.4,299.7 396.0,305.9 400.7,309.6 404.2,314.6 408.9,319.1 415.4,321.6 422.8,324.4 429.7,326.0 438.2,326.7 444.2,330.0 448.5,336.8 452.9,342.1 456.9,337.2 462.7,334.5 468.5,331.8 478.1,333.5 485.7,335.8 492.5,338.4 498.6,342.1 504.3,345.9 511.7,347.2 520.0,346.5 527.8,347.9 535.4,346.2 543.0,347.1 549.0,350.3 553.3,354.4 561.8,353.9 566.7,349.7 570.4,345.0 573.2,339.1 577.3,334.7 580.5,329.2 583.3,322.6 581.0,316.5 575.6,313.4 570.0,310.6 561.5,307.5 556.3,304.1 550.7,301.3 542.5,300.9 535.0,300.0 528.6,296.9 518.4,293.5 512.6,290.4 509.8,284.7 505.3,280.2 499.6,276.4 504.8,280.0 509.6,284.3 512.3,290.0 518.4,293.5 524.4,296.6 533.4,299.2 540.4,301.0 544.6,293.7 549.7,285.4 554.4,277.9 557.6,272.7 562.2,265.0 566.3,258.2 569.5,252.8 574.4,244.6 577.6,239.1 579.3,232.3 580.0,228.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="544.0,347.3 538.9,351.9 537.1,358.6 536.3,366.8 535.1,375.9 533.7,383.1 533.5,391.8 533.5,400.7 534.2,409.2 538.8,421.1 542.2,427.7 545.3,433.2 551.4,437.8 556.3,441.4 560.3,446.7 564.1,452.0 568.1,456.6 571.9,461.9 574.6,455.7 572.6,462.3 568.9,457.5 564.2,452.1 560.7,447.2 556.9,442.0 551.4,437.8 546.5,434.2 542.2,427.7 538.8,421.1 535.6,415.4 534.0,407.9 533.5,399.2 533.5,390.5 533.9,382.0 535.5,373.9 536.3,366.1 537.3,357.6 539.8,349.8 544.0,347.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Encruzilhada dos Pagãos</title></polyline>
+<circle cx="238.9" cy="289.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="713.6" cy="126.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="550.1" cy="302.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="577.2" cy="330.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="536.4" cy="299.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="692.3" cy="233.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="323.0" cy="298.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="326.6" cy="280.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="666.9" cy="241.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="473.3" cy="183.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="381.1" cy="283.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="336.9" cy="289.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="539.2" cy="344.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="540.1" cy="193.6" r="2.2" fill="#b9b9b2"/>
+<polygon points="631.7,124.7 618.5,149.1 644.9,149.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="482.2,166.6 473.4,182.8 491.0,182.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="446.5,321.2 437.0,338.6 456.0,338.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="446.5" y="352.1" text-anchor="middle" fill="#5c5c57">Comum</text>
+<polygon points="536.4,334.9 526.4,353.3 546.4,353.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="536.4" y="366.9" text-anchor="middle" fill="#5c5c57">Lagoa do Mato</text>
+<polygon points="541.7,184.1 533.1,199.9 550.4,199.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="404.3,208.2 395.3,224.8 413.3,224.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="404.3" y="238.2" text-anchor="middle" fill="#5c5c57">Quatro Bocas</text>
+<polygon points="384.5,280.4 376.6,294.9 392.3,294.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="339.2,275.1 329.2,293.5 349.2,293.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="339.2" y="307.1" text-anchor="middle" fill="#5c5c57">Sobrado I</text>
+<polygon points="664.1,80.0 656.4,94.2 671.8,94.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="659.6,241.2 650.4,258.3 668.9,258.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="659.6" y="271.7" text-anchor="middle" fill="#5c5c57">Zona Rural</text>
+<polygon points="544.0,336.3 533.8,355.1 554.2,355.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="630.9,127.8 618.7,150.2 643.0,150.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="598.7,155.6 588.0,175.3 609.5,175.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="618.8,130.5 607.1,152.1 630.6,152.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="639.0,129.3 629.0,147.7 648.9,147.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="580.7" cy="452.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="387.7" y="447.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Encruzilhada dos Pagãos 5,8 km</text>
+<rect x="621.6" y="136.5" width="10" height="10" fill="#1d1d1b"/><text x="635.6" y="159.5" font-weight="600" fill="#1d1d1b">Sede de Monte Alegre</text>
+<line x1="35" x2="160.8" y1="492.6" y2="492.6" stroke="#8a8a84" stroke-width="2"/><text x="35" y="506.6" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="483.62036437246815" y2="483.62036437246815" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="487.62036437246815" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,476.6 421.4,488.9 434.6,488.9" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="487.62036437246815" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="501.62036437246815" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="510.62036437246815" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="506.62036437246815" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="510.62036437246815" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="529.6203643724682" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="533.6203643724682" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="529.6203643724682" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="533.6203643724682" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="552.6203643724682" y2="552.6203643724682" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="556.6203643724682" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="575.6203643724682" y2="575.6203643724682" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="579.6203643724682" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Portaria nº 5/2026/ZE044 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (2):</strong> Encruzilhada dos Pagãos e Lagoa Salgada.</li>
+<li><strong>De 3 a 5 km (0):</strong> nenhuma.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (13):</strong> Bom Sucesso, Buraco, Cabeceira, Fontes, Lagoa do Mato, Parelhas, Patrimônio, Saué, Sobrado I, Sobrado II, Terra Preta, Timbaúba e Turara.</li>
+</ul><h2>Rotas do Portaria nº 5/2026/ZE044</h2>
+<p>O edital tem 3 rotas para Monte Alegre. Horários: Saídas às 7h, 09h, 11h, 13h e 15h. Veículos: Rota I: ônibus VW 15.190 OJZ1378; Rota II: ônibus VW 15.190 OJZ2218; Rota III: VW Gol RGE6A29.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Centro (Igreja Matriz) – Cacimbinha – Timbauba – Fontes I e II – Lagoa do Cajueiro – Quatro Bocas – Badu – Pajussara II – Alto da Pajussara – Pagões – Sobrado I – Sobrado II – Sobrado I – Pagões – Alto da Pajussara – Pajussara II – Badu – Quatro Bocas – Pitombeira – Areia Branca – Mata – Lameiro – Lagoa do Cajueiro – Fontes I e II – Timbauba – Cacimbinha – Centro (Igreja Matriz)</td></tr><tr><td>02</td><td>Centro (Igreja Matriz) – Castanha – Carnauba – Carrasco – Tremendais – Riacho do Brejo – Lagoa do Mato – Xique Xique – Lagoa do Mato – Comum – Pajussara I – Comum – Lagoa do Mato – Riacho do Brejo – Tremendais – Carrasco – Carnauba – Castanha – Centro (Igreja Matriz)</td></tr><tr><td>03</td><td>Centro (Igreja Matriz) – Sítio Olho d´água – Centro (Igreja Matriz)</td></tr></tbody></table></div>
+<p>Fonte: Portaria nº 5/2026/ZE044 (Quadro Geral de Percursos e Horários), DJE/TRE-RN nº 182 (disp. 11/09/2026), idMateria 6103653.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 1 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Encruzilhada dos Pagãos</strong></td><td>Lagoa do Mato – Encruzilhada dos Pagãos – Lagoa do Mato</td><td>Encruzilhada dos Pagãos</td><td>11,6 km (ida e volta)</td><td>~15 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMMA</strong></p><p>Monte Alegre/RN, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. José Ronivon Beija-Mim de Lima</strong><br>Juiz Eleitoral da 44ª Zona Eleitoral – Monte Alegre/RN</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Portaria nº 5/2026/ZE044) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Monte Alegre, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Portaria nº 5/2026/ZE044: Encruzilhada dos Pagãos.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Encruzilhada dos Pagãos (Lagoa do Mato – Encruzilhada dos Pagãos – Lagoa do Mato).</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Portaria nº 5/2026/ZE044 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Monte Alegre</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Monte Alegre; Portaria nº 5/2026/ZE044 (Quadro Geral de Percursos e Horários), DJE/TRE-RN nº 182 (disp. 11/09/2026), idMateria 6103653; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

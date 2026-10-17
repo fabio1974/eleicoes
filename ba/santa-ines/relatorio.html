@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Santa Inês</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Santa Inês</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/santa-ines.pdf?v=1792239673" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Santa Inês (38ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 38ª Zona Eleitoral <strong>4 rotas novas</strong> no transporte gratuito de Santa Inês.
+Traçamos pelas estradas o percurso das 6 rotas do Edital ZE-038 nº 68/2026, de 01/10/2026 (Rotas definitivas – Anexo I, igual ao quadro do Edital nº 52/2026 – e veículos incluídos no Anexo II). 20 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>Santa Inês tem 8.265 eleitores aptos em 9 locais de votação e 36 seções. São 2 locais rurais, com 486 eleitores (6% do total).</li>
+<li>2 locais rurais ficam a 10 km ou mais da sede, com 486 eleitores. Os mais distantes: Programa De Assentamento Marisa Lula Da Silva, Agrovila I (20,8 km) e Pov. Lagoa Queimada - Zona Rural (11,6 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Bonita (26,6 km do local de votação), Buriu (25,5 km do local de votação), Retiro (21,9 km do local de votação), Barriguda (21,0 km do local de votação), Fazenda Conceição do Lucas (19,8 km do local de votação), Conceição (19,6 km do local de votação), Adealiana (19,0 km do local de votação), Bom Jesus (17,2 km do local de votação), Granito (16,7 km do local de votação), Santa Cruz (15,2 km do local de votação), Rancho Verde (14,6 km do local de votação), Santo Antônio (12,1 km do local de votação), Ponto Salgado (11,2 km do local de votação), Califórnia (10,3 km do local de votação), Engenheiro Franca (10,2 km do local de votação), Riacho da Conceição (9,6 km do local de votação), Santa Maria (9,6 km do local de votação), Boa Vista (8,5 km do local de votação), Floresta Verde (6,7 km do local de votação) e As Panelas (5,0 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 40 localidades rurais de Santa Inês que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Bonita</td><td>26,6</td><td>Rota 04</td><td>4,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Buriu</td><td>25,5</td><td>Rota 03</td><td>8,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Retiro</td><td>21,9</td><td>Rota 03</td><td>8,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Barriguda</td><td>21,0</td><td>Rota 04</td><td>2,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Conceição do Lucas</td><td>19,8</td><td>Rota 04</td><td>4,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Conceição</td><td>19,6</td><td>Rota 04</td><td>4,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Adealiana</td><td>19,0</td><td>Rota 03</td><td>5,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Bom Jesus</td><td>17,2</td><td>Rota 03</td><td>6,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Morro Bonito</td><td>16,9</td><td>Rota 04</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Granito</td><td>16,7</td><td>Rota 03</td><td>4,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Santa Cruz</td><td>15,2</td><td>Rota 04</td><td>4,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Rancho Verde</td><td>14,6</td><td>Rota 05</td><td>4,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Montes Claros</td><td>13,1</td><td>Rota 04</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Santo Antônio</td><td>12,1</td><td>Rota 05</td><td>3,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Ponto Salgado</td><td>11,2</td><td>Rota 03</td><td>3,2</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Lagoinha</td><td>11,0</td><td>Rota 04</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Imbe</td><td>11,0</td><td>Rota 03</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Califórnia</td><td>10,3</td><td>Rota 02</td><td>3,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Engenheiro Franca</td><td>10,2</td><td>Rota 02</td><td>2,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Santa Helena</td><td>10,0</td><td>Rota 03</td><td>0,7</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Riacho da Conceição</td><td>9,6</td><td>Rota 05</td><td>2,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Santa Maria</td><td>9,6</td><td>Rota 02</td><td>2,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Boa Vista</td><td>8,5</td><td>Rota 04</td><td>2,2</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Corante</td><td>8,1</td><td>Rota 02</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Natur de Assis</td><td>8,0</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>São Paulino</td><td>7,9</td><td>Rota 01</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>São Paulo</td><td>7,6</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Rancho Alegre</td><td>7,3</td><td>Rota 09</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Jequiriça</td><td>7,2</td><td>Rota 02</td><td>0,9</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Floresta Verde</td><td>6,7</td><td>Rota 01</td><td>3,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Bela Mira</td><td>5,9</td><td>Rota 09</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>As Panelas</td><td>5,0</td><td>Rota 09</td><td>7,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>São José</td><td>5,0</td><td>Rota 09</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Boa Fé</td><td>3,7</td><td>Rota 01</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 40 localidades rurais de Santa Inês, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 836" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Santa Inês: 20 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital ZE-038 nº 68/2026, de 01/10/2026 (Rotas definitivas – Anexo I, igual ao quadro do Edital nº 52/2026 – e veículos incluídos no Anexo II) e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="636.0,646.0 705.4,644.9 707.8,599.1 720.4,578.2 712.4,561.8 699.8,493.2 676.2,471.2 674.3,451.9 658.0,441.4 655.5,401.5 624.5,375.2 619.6,317.9 605.4,317.9 584.8,299.6 570.8,300.7 511.1,288.1 477.0,255.7 461.2,250.9 433.6,223.5 425.3,205.3 411.1,196.7 383.2,199.9 336.3,167.5 325.6,135.6 283.2,116.8 271.7,102.3 242.7,95.1 214.3,104.0 180.5,87.9 130.4,84.7 117.3,100.2 127.5,147.9 137.9,154.6 148.1,188.9 132.8,201.0 122.6,231.0 156.1,261.8 181.9,291.9 199.3,294.5 204.9,348.7 190.7,362.1 183.8,396.7 150.8,437.7 132.0,436.1 106.6,448.4 91.8,469.1 73.3,466.4 39.0,498.5 93.7,503.6 103.6,527.8 302.2,703.3 475.9,557.8 564.9,658.6 593.6,642.8 636.0,646.0 636.0,646.0" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="283.7,355.9 299.1,359.1 307.9,364.0 323.1,369.2 331.1,371.8 343.8,372.5 361.0,374.8 369.2,374.8 384.3,380.3 394.5,380.9 404.0,383.7 412.9,383.5 425.3,387.3 430.8,390.0 434.9,394.4 440.7,398.3 444.7,402.4 445.9,409.3 447.1,416.2 448.2,423.4 451.9,431.4 461.0,430.7 461.4,430.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="579.4,337.6 576.8,332.0 569.8,329.8 560.9,330.7 555.1,333.3 553.3,339.7 554.6,347.2 553.6,355.5 551.2,361.4 539.5,363.6 530.8,365.1 523.9,367.8 518.2,372.5 513.1,376.2 507.5,379.5 499.2,383.0 492.7,386.1 487.1,389.7 481.7,393.1 476.2,396.7 470.2,399.0 459.1,403.1 447.2,407.5 447.1,416.2 448.2,423.4 451.9,431.4 461.0,430.7 461.4,430.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="310.2,254.9 311.1,245.8 313.3,239.7 314.0,230.7 311.6,224.1 307.8,219.7 304.9,214.4 296.9,214.2 291.0,212.0 286.5,206.8 282.2,200.3 277.7,195.5 273.2,182.9 267.4,179.9 261.6,177.0 254.5,179.8 250.3,175.6 251.7,167.8 253.8,163.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="539.8,459.8 539.3,452.3 537.1,446.2 537.8,438.9 538.8,431.6 537.7,424.4 536.2,417.5 532.6,412.8 527.5,409.6 518.7,410.9 512.2,412.9 507.4,416.5 502.3,419.6 495.2,422.4 489.4,426.4 483.6,430.9 476.9,433.5 470.4,435.2 463.8,433.6 461.4,430.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="41.5,479.5 39.8,472.0 36.2,466.4 35.0,458.4 36.4,450.9 38.4,443.0 38.4,432.7 40.6,425.4 47.6,427.9 54.7,429.4 60.6,431.5 66.2,441.6 68.9,447.5 73.9,452.0 76.4,457.7 74.1,463.5 79.2,467.5 82.0,473.6 86.8,476.8 93.9,479.2 98.9,485.1 105.1,483.2 113.0,484.0 120.5,482.9 126.1,479.5 132.7,477.2 141.0,477.4 148.2,479.0 153.0,482.4 161.4,483.3 169.5,482.4 176.0,484.0 178.9,489.3 186.2,490.6 197.0,490.0 207.4,488.4 215.5,487.1 223.6,485.7 227.1,480.4 232.3,477.4 239.9,478.4 246.2,475.8 252.3,473.5 260.3,473.1 269.5,473.9 277.6,474.6 282.1,479.0 285.8,484.1 289.7,491.5 293.1,496.7 294.4,503.6 300.3,506.0 305.8,508.9 311.9,511.0 315.7,515.6 318.5,521.1 325.1,523.1 332.4,521.1 337.3,517.3 343.5,513.8 347.6,509.8 352.5,506.5 359.6,504.9 367.9,506.4 375.9,507.9 383.2,507.0 389.2,502.7 395.1,498.3 400.1,493.9 402.6,488.3 405.8,482.4 410.4,477.6 414.2,472.6 416.9,467.2 420.7,459.4 424.5,451.5 427.4,445.6 429.3,438.2 431.8,427.0 434.2,420.7 437.8,415.6 441.8,410.4 447.1,416.2 448.2,423.4 451.9,431.4 461.0,430.7 461.4,430.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 09</title></polyline>
+<polyline points="453.0,417.6 446.5,412.6 459.1,403.1 465.3,400.8 473.6,397.8 478.9,395.0 484.4,391.4 490.0,387.9 495.1,384.7 504.1,380.9 509.9,378.4 515.2,374.7 521.0,370.4 525.6,366.7 539.5,363.6 549.9,361.8 553.5,357.1 554.5,348.6 553.4,340.6 546.1,338.0 539.4,335.9 531.4,335.3 524.1,326.9 520.4,322.2 517.4,316.8 511.9,314.2 509.8,307.9 512.0,300.3 511.1,292.2 509.9,285.0 502.3,283.6 495.6,280.3 486.3,271.6 482.0,264.2 478.0,259.0 471.0,256.9 462.2,256.1 457.7,251.9 454.0,247.5 450.2,240.5 447.8,234.3 440.0,232.3 434.9,226.4 431.3,221.8 421.7,226.1 413.1,231.3 407.2,236.1 395.5,238.0 381.8,236.9 378.0,243.0 371.6,245.0 366.1,248.2 359.2,251.0 357.2,258.7 359.0,265.8 363.1,275.0 365.0,281.3 366.9,290.2 369.1,297.6 375.8,299.0 369.1,297.6 366.9,290.2 365.0,281.3 363.1,275.0 360.3,269.6 357.2,264.7 348.2,266.3 337.9,265.8 330.6,265.0 321.6,264.8 314.9,263.3 311.2,257.4 310.2,248.3 313.1,240.4 313.3,232.0 316.3,226.9 310.7,223.2 307.5,217.9 301.3,214.8 293.2,214.8 289.8,209.4 284.6,204.0 281.2,198.8 276.7,194.5 273.2,182.9 267.4,179.9 261.6,177.0 254.5,179.8 250.3,175.6 251.7,167.8 249.0,161.1 252.3,155.6 255.9,150.9 261.0,147.9 265.0,142.6 266.9,136.5 268.3,129.7 270.8,123.2 275.2,119.4 279.0,114.8 276.7,108.8 273.8,103.4 268.7,100.2 262.3,98.4 255.1,97.4 250.9,92.1 242.5,89.0 235.3,86.3 230.1,83.0 220.5,80.8 212.3,80.4 204.1,83.6 196.7,86.5 190.2,89.0 182.1,88.0 174.7,86.8 169.0,83.5 161.4,85.1 130.3,84.6 125.8,89.1 120.9,92.4 117.5,97.7 118.6,105.3 121.1,111.1 123.4,117.0 124.6,124.5 125.2,132.3 128.1,137.5 126.0,143.5 128.9,149.5 134.2,152.4 138.5,156.3 140.7,163.4 144.1,168.3 145.9,175.1 148.4,180.9 148.0,188.7 143.8,192.6 138.7,195.7 134.4,199.6 132.6,206.9 134.1,213.5 133.1,220.8 129.3,225.1 125.2,229.2 128.9,234.8 132.1,241.3 136.2,245.9 142.3,252.2 150.0,254.0 154.2,257.9 159.6,261.4 163.3,267.5 168.2,271.7 176.0,277.5 181.3,282.7 193.1,285.2 200.9,285.5 202.3,295.9 203.8,305.9 206.9,311.4 208.0,327.2 212.9,333.2 219.5,336.4 229.5,342.5 235.9,344.9 241.9,350.4 247.0,353.8 254.8,355.9 267.7,352.9 276.3,354.9 287.0,356.6 299.1,359.1 307.9,364.0 323.1,369.2 331.1,371.8 343.8,372.5 361.0,374.8 369.2,374.8 384.3,380.3 394.5,380.9 404.0,383.7 412.9,383.5 425.3,387.3 430.8,390.0 434.9,394.4 440.7,398.3 444.7,402.4 459.1,403.1 465.3,400.8 473.6,397.8 478.9,395.0 484.4,391.4 490.0,387.9 495.1,384.7 504.1,380.9 509.9,378.4 515.2,374.7 521.0,370.4 525.6,366.7 539.5,363.6 549.9,361.8 553.5,357.1 554.5,348.6 553.4,340.6 555.1,333.3 560.9,330.7 569.8,329.8 593.9,327.0 601.2,325.1 607.7,318.5 611.5,308.8 616.6,305.1 622.8,303.1 616.6,305.1 611.7,308.3 609.3,315.9 602.1,324.5 593.9,327.0 569.8,329.8 560.9,330.7 555.1,333.3 553.3,339.7 554.6,347.2 553.6,355.5 556.0,361.4 563.1,360.5 570.3,359.6 575.8,364.9 580.2,368.6 581.9,375.2 584.8,381.2 588.0,391.3 593.1,395.0 595.2,402.0 597.8,409.5 600.1,415.3 602.4,421.3 600.1,415.3 597.8,409.5 595.3,402.6 593.1,395.0 588.0,391.3 585.5,382.3 581.7,376.5 580.2,368.6 575.8,364.9 572.1,360.6 564.0,360.4 557.5,362.0 545.4,362.6 530.8,365.1 523.9,367.8 518.2,372.5 513.1,376.2 507.5,379.5 499.2,383.0 492.7,386.1 487.1,389.7 481.7,393.1 476.2,396.7 470.2,399.0 459.1,403.1 447.2,407.5 447.1,416.2 453.0,417.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Bonita</title></polyline>
+<polyline points="453.0,417.6 446.5,412.6 459.1,403.1 465.3,400.8 473.6,397.8 478.9,395.0 484.4,391.4 490.0,387.9 495.1,384.7 504.1,380.9 509.9,378.4 515.2,374.7 521.0,370.4 525.6,366.7 539.5,363.6 549.9,361.8 558.0,361.9 565.5,360.0 573.0,361.4 577.1,365.6 580.2,370.6 582.7,379.8 586.2,385.7 589.5,392.7 594.3,396.3 596.3,405.3 598.7,412.3 602.2,416.9 602.2,424.9 604.3,430.9 605.8,437.6 610.2,443.6 611.7,450.5 615.1,456.5 615.2,465.3 618.5,470.4 618.9,478.2 622.2,484.5 624.8,492.3 627.6,498.2 629.3,504.5 631.5,510.6 633.0,517.3 638.9,519.9 647.6,518.7 640.1,520.0 632.7,522.1 631.3,531.0 632.1,538.6 630.7,546.0 631.5,554.3 632.9,562.3 632.8,571.2 635.7,577.6 632.8,571.2 633.0,563.1 631.7,554.8 629.9,547.6 632.6,541.8 630.1,536.1 631.9,529.2 633.5,519.2 631.1,513.0 629.3,504.5 627.6,498.2 625.1,492.6 623.4,485.8 618.0,479.5 619.1,471.9 615.8,466.7 615.3,458.9 613.2,452.1 610.6,446.5 607.3,439.8 605.5,433.1 603.1,427.3 603.1,418.4 599.2,414.0 596.8,407.2 594.3,396.3 589.5,392.7 586.2,385.7 582.7,379.8 580.2,370.6 577.1,365.6 573.2,361.5 565.7,360.0 559.0,361.4 550.8,361.6 539.5,363.6 530.8,365.1 523.9,367.8 518.2,372.5 513.1,376.2 507.5,379.5 499.2,383.0 492.7,386.1 487.1,389.7 481.7,393.1 476.2,396.7 470.2,399.0 459.1,403.1 447.2,407.5 447.1,416.2 453.0,417.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Granito</title></polyline>
+<polyline points="455.9,436.2 457.1,443.2 459.2,449.4 455.9,455.0 452.0,460.7 450.1,468.1 453.4,476.0 458.9,480.9 463.0,493.1 468.5,520.2 471.9,537.4 474.9,552.0 477.3,564.4 482.2,589.3 482.6,600.4 482.2,609.1 483.3,616.9 491.8,619.3 498.7,622.0 508.0,620.4 516.4,616.7 526.4,611.4 533.5,609.6 541.4,609.2 547.5,612.7 552.8,609.9 549.6,615.0 553.0,620.0 555.5,625.8 557.6,631.9 561.7,636.3 564.3,642.6 561.1,648.1 562.5,654.8 566.9,659.9 572.3,665.0 576.1,670.4 579.7,676.6 583.2,681.2 589.3,684.3 595.5,686.9 601.8,689.5 609.4,689.9 612.9,685.2 618.1,681.4 620.8,675.8 625.4,671.4 632.7,668.4 631.3,661.6 633.3,651.0 636.9,644.7 639.4,637.4 637.0,631.4 639.4,637.4 637.5,643.6 632.8,647.4 633.8,657.8 634.7,666.7 643.6,667.7 649.5,671.1 653.3,675.8 662.3,677.7 668.7,676.0 673.1,671.8 665.6,661.5 660.7,656.7 665.3,650.6 673.0,649.9 680.0,648.3 686.4,645.5 696.5,641.1 702.5,638.4 707.9,635.4 705.1,629.7 700.5,625.2 699.3,617.7 701.1,610.3 702.2,600.6 704.0,590.8 709.3,587.6 713.1,582.9 715.4,575.3 719.5,569.0 721.6,562.9 719.5,569.0 715.7,574.8 713.1,582.9 709.3,587.6 704.0,590.8 702.2,600.6 701.4,607.9 699.3,617.7 700.5,625.2 704.6,629.2 707.8,634.6 702.5,638.4 696.5,641.1 686.4,645.5 680.0,648.3 673.0,649.9 665.3,650.6 659.7,653.4 665.6,661.5 670.3,667.7 673.1,673.0 667.1,676.7 656.9,676.8 650.8,672.7 646.3,668.5 639.8,666.7 632.7,668.4 626.9,670.9 621.4,675.1 618.4,680.9 612.9,685.2 609.4,689.9 601.8,689.5 595.5,686.9 589.3,684.3 583.9,681.6 579.7,676.6 576.1,670.4 572.3,665.0 566.9,659.9 563.0,655.0 561.1,648.1 564.3,642.6 561.7,636.3 557.6,631.9 555.5,625.8 553.0,620.0 549.6,615.0 544.8,610.3 533.5,609.6 526.4,611.4 520.6,614.8 512.0,618.5 503.7,622.1 496.5,620.7 487.8,618.1 481.6,616.3 482.3,607.5 482.7,596.0 477.3,564.4 474.9,552.0 471.9,537.4 468.5,520.2 463.0,493.1 461.5,485.6 457.1,478.9 451.9,474.1 450.3,466.8 452.5,459.6 458.9,451.0 457.8,444.0 456.1,436.6 455.9,436.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Buriu</title></polyline>
+<polyline points="307.2,587.4 305.8,596.4 301.7,601.3 288.8,622.5 286.9,637.5 281.3,645.7 276.9,654.1 269.3,673.1 264.1,686.2 269.3,673.1 276.9,654.1 279.6,647.9 286.0,640.6 287.6,625.4 298.0,605.5 303.1,599.8 306.8,595.0 309.9,590.1 307.2,587.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – As Panelas</title></polyline>
+<circle cx="255.0" cy="164.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="302.5" cy="218.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="311.9" cy="254.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="524.2" cy="550.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="513.3" cy="560.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="577.8" cy="338.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="579.4" cy="337.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="284.6" cy="351.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="292.2" cy="355.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="232.6" cy="475.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="583.2" cy="359.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="43.2" cy="478.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="296.2" cy="499.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="381.8" cy="385.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="452.2" cy="484.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="118.1" cy="490.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="74.4" cy="499.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="308.7" cy="584.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="310.0" cy="585.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="81.4" cy="474.4" r="2.2" fill="#b9b9b2"/>
+<polygon points="455.6,424.7 444.5,445.1 466.7,445.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="81.4,465.4 74.6,477.9 88.1,477.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="307.6,579.5 300.0,593.6 315.2,593.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="453.2,408.1 444.4,424.2 461.9,424.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="455.6,426.1 446.1,443.6 465.0,443.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="452.9,414.3 442.2,434.1 463.6,434.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="455.3,423.7 443.3,445.8 467.3,445.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="455.8,425.8 445.8,444.3 465.9,444.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="175.8" cy="84.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="182.8" y="79.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Bonita 26,6 km</text>
+<circle cx="722.9" cy="557.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="635.3" y="552.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Buriu 25,5 km</text>
+<circle cx="724.3" cy="622.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="630.5" y="617.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Retiro 21,9 km</text>
+<circle cx="264.4" cy="94.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="271.4" y="89.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Barriguda 21,0 km</text>
+<circle cx="148.1" cy="179.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="155.1" y="174.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Conceição do Lucas 19,8 km</text>
+<circle cx="148.8" cy="186.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="155.8" y="201.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Conceição 19,6 km</text>
+<circle cx="634.9" cy="627.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="522.5" y="622.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Adealiana 19,0 km</text>
+<circle cx="630.5" cy="663.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="518.1" y="658.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Bom Jesus 17,2 km</text>
+<circle cx="638.2" cy="576.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="538.2" y="571.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Granito 16,7 km</text>
+<circle cx="417.8" cy="219.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="424.8" y="214.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santa Cruz 15,2 km</text>
+<circle cx="644.7" cy="512.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="513.7" y="507.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Rancho Verde 14,6 km</text>
+<circle cx="613.6" cy="481.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="476.4" y="476.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santo Antônio 12,1 km</text>
+<circle cx="580.5" cy="603.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="443.3" y="598.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Ponto Salgado 11,2 km</text>
+<circle cx="511.5" cy="263.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="518.5" y="258.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Califórnia 10,3 km</text>
+<circle cx="630.0" cy="302.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="468.0" y="297.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Engenheiro Franca 10,2 km</text>
+<circle cx="606.8" cy="425.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="438.6" y="420.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Riacho da Conceição 9,6 km</text>
+<circle cx="510.0" cy="294.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="361.2" cy="269.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="368.2" y="264.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Boa Vista 8,5 km</text>
+<circle cx="380.7" cy="300.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="387.7" y="315.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Floresta Verde 6,7 km</text>
+<circle cx="309.2" cy="703.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="316.2" y="698.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">As Panelas 5,0 km</text>
+<rect x="456.6" y="426.2" width="10" height="10" fill="#1d1d1b"/><text x="470.6" y="449.2" font-weight="600" fill="#1d1d1b">Sede de Santa Inês</text>
+<line x1="35" x2="155.8" y1="733.5" y2="733.5" stroke="#8a8a84" stroke-width="2"/><text x="35" y="747.5" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="724.5439393939469" y2="724.5439393939469" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="728.5439393939469" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,717.5 421.4,729.8 434.6,729.8" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="728.5439393939469" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="742.5439393939469" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="751.5439393939469" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="747.5439393939469" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="751.5439393939469" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="770.5439393939469" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="774.5439393939469" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="770.5439393939469" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="774.5439393939469" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="793.5439393939469" y2="793.5439393939469" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="797.5439393939469" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="816.5439393939469" y2="816.5439393939469" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="820.5439393939469" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital ZE-038 nº 68/2026, de 01/10/2026 (Rotas definitivas – Anexo I, igual ao quadro do Edital nº 52/2026 – e veículos incluídos no Anexo II) · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (31):</strong> Bonita, Buriu, Retiro, Barriguda, Fazenda Conceição do Lucas, Conceição, Adealiana, Bom Jesus, Morro Bonito, Granito, Santa Cruz, Rancho Verde, Montes Claros, Santo Antônio, Ponto Salgado, Lagoinha, Imbe, Califórnia, Engenheiro Franca, Santa Helena, Riacho da Conceição, Santa Maria, Boa Vista, Corante, Natur de Assis, São Paulino, São Paulo, Rancho Alegre, Jequiriça, Floresta Verde e Bela Mira.</li>
+<li><strong>De 3 a 5 km (3):</strong> As Panelas, São José e Boa Fé.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (6):</strong> Agrovila do PA Marisa Lula da Silva 1, Caldeirão, Lagoa Queimada, Projeto de Assentamento Rancho Alegre, Vila Lagoa Jequitibá e Átila Menezes.</li>
+</ul><h2>Rotas do Edital ZE-038 nº 68/2026, de 01/10/2026 (Rotas definitivas – Anexo I, igual ao quadro do Edital nº 52/2026 – e veículos incluídos no Anexo II)</h2>
+<p>O edital tem 6 rotas para Santa Inês. Horários: Saída 08:00, retorno 12:00.. Veículos: Rota 01: Ônibus Mec QTX-4B13 (40); Rota 02: Ônibus Mec TGW-6I90 (50); Rota 03: Micro Mec RDI-7A75 (25); Rota 04: Micro Mec RPB-5J28 (25); Rota 05: Master TFD RCO-6G69 (15); Item 06 (destino &quot;Cartório Eleitor&quot;): Doblo Social RDJ-7E04 (6); Itens 07 e 08 (reserva): Polo 01 TMU-9G77 (4); Micro Mec RCU-7C13 (25); Rota 09: Ônibus Mec SKP0H81, condutor Edivaldo Júnior (Anexo II).</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Hermes de Caires</td></tr><tr><td>02</td><td>Natur de Assis</td></tr><tr><td>03</td><td>Itatiaia – Imbé</td></tr><tr><td>04</td><td>Lagoinha – Morro Bonito</td></tr><tr><td>05</td><td>Salgado</td></tr><tr><td>09</td><td>Bela Mira</td></tr></tbody></table></div>
+
+<p>Fonte: Edital ZE-038 nº 68/2026 da 38ª ZE/BA (Ubaíra), rotas definitivas do transporte de eleitores – Santa Inês (quadro original no Edital nº 52/2026, DJE nº 195, disp. 15/09/2026, p. 200–203); DJE/TRE-BA nº 216, disp. 02/10/2026 (https://dje.tse.jus.br/dje/pdf/v1/edicao/130212).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 20 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Bonita</strong></td><td>Sede – Santa Maria – Califórnia – Santa Cruz – Boa Vista – Floresta Verde – Barriguda – Bonita – Fazenda Conceição do Lucas – Conceição – Engenheiro Franca – Riacho da Conceição – Sede</td><td>Santa Maria, Califórnia, Santa Cruz, Boa Vista, Floresta Verde, Barriguda, Bonita, Fazenda Conceição do Lucas, Conceição, Engenheiro Franca, Riacho da Conceição</td><td>92,8 km (ida e volta)</td><td>~2h51</td></tr><tr><td><strong>Rota nova – Granito</strong></td><td>Sede – Santo Antônio – Rancho Verde – Granito – Sede</td><td>Santo Antônio, Rancho Verde, Granito</td><td>34,4 km (ida e volta)</td><td>~1h08</td></tr><tr><td><strong>Rota nova – Buriu</strong></td><td>Sede – Ponto Salgado – Adealiana – Bom Jesus – Retiro – Buriu – Sede</td><td>Ponto Salgado, Adealiana, Bom Jesus, Retiro, Buriu</td><td>56,0 km (ida e volta)</td><td>~1h19</td></tr><tr><td><strong>Rota nova – As Panelas</strong></td><td>Sede – As Panelas – Sede</td><td>As Panelas</td><td>9,9 km (ida e volta)</td><td>~10 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMSI</strong></p><p>Santa Inês/BA, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Melissa Mayoral Pedroso Coelho Lukine Martins</strong><br>Juíza Eleitoral da 38ª Zona Eleitoral – Ubaíra/BA</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital ZE-038 nº 68/2026, de 01/10/2026 (Rotas definitivas – Anexo I, igual ao quadro do Edital nº 52/2026 – e veículos incluídos no Anexo II)) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de Santa Inês, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital ZE-038 nº 68/2026, de 01/10/2026 (Rotas definitivas – Anexo I, igual ao quadro do Edital nº 52/2026 – e veículos incluídos no Anexo II): Bonita, Buriu, Retiro, Barriguda, Fazenda Conceição do Lucas, Conceição, Adealiana, Bom Jesus, Granito, Santa Cruz, Rancho Verde, Santo Antônio, Ponto Salgado, Califórnia, Engenheiro Franca, Riacho da Conceição, Santa Maria, Boa Vista, Floresta Verde e As Panelas.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Bonita (Sede – Santa Maria – Califórnia – Santa Cruz – Boa Vista – Floresta Verde – Barriguda – Bonita – Fazenda Conceição do Lucas – Conceição – Engenheiro Franca – Riacho da Conceição – Sede);</li><li>a criação da Rota nova – Granito (Sede – Santo Antônio – Rancho Verde – Granito – Sede);</li><li>a criação da Rota nova – Buriu (Sede – Ponto Salgado – Adealiana – Bom Jesus – Retiro – Buriu – Sede);</li><li>a criação da Rota nova – As Panelas (Sede – As Panelas – Sede).</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital ZE-038 nº 68/2026, de 01/10/2026 (Rotas definitivas – Anexo I, igual ao quadro do Edital nº 52/2026 – e veículos incluídos no Anexo II) deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Santa Inês</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Santa Inês; Edital ZE-038 nº 68/2026 da 38ª ZE/BA (Ubaíra), rotas definitivas do transporte de eleitores – Santa Inês (quadro original no Edital nº 52/2026, DJE nº 195, disp. 15/09/2026, p. 200–203); DJE/TRE-BA nº 216, disp. 02/10/2026 (https://dje.tse.jus.br/dje/pdf/v1/edicao/130212); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>
