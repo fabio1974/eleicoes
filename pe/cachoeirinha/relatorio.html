@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Cachoeirinha</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Cachoeirinha</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/cachoeirinha.pdf?v=1792245531" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Cachoeirinha (44ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 44ª Zona Eleitoral <strong>2 paradas extras em rotas do edital</strong> no transporte gratuito de Cachoeirinha.
+Traçamos pelas estradas o percurso das 19 rotas do Edital nº 15 - TRE-PE/PRES/DG/ZE044. 0 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 2 ficam a 1–2 km.</p>
+<ul>
+<li>Cachoeirinha tem 16.106 eleitores aptos em 7 locais de votação e 52 seções. São 1 locais rurais, com 1.452 eleitores (9% do total).</li>
+<li>1 locais rurais ficam a 10 km ou mais da sede, com 1.452 eleitores. Os mais distantes: Cabanas (16,4 km).</li>
+
+<li><strong>Rota passa perto</strong> (1–2 km): Fazenda João Alfredo e Sítio Riacho Doce 2.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 13 localidades rurais de Cachoeirinha que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Bonito</td><td>16,2</td><td>Rota 09</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Borrachinha</td><td>8,4</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Caldeirão de Cima</td><td>7,6</td><td>Rota 02</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Caldeirão de Baixo</td><td>7,2</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fazenda João Alfredo</td><td>6,8</td><td>Rota 12</td><td>1,4</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Sítio José Gerônimo</td><td>6,7</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Riacho Doce 2</td><td>5,8</td><td>Rota 06</td><td>1,2</td><td>Rota passa perto (1–2 km)</td></tr></tbody></table></div>
+<p>36 das 70 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Craíbas (Rota 01 e Rota 08), Assentamento Sem Terra (Rota 02 e Rota 18), Conceição de Cima (Zé de Agripa) (Rota 03), Conceição de Baixo (Rota 03, Rota 04 e Rota 06), Caracol (Rota 04), Queimada de Cima (Rota 04), Lagoa das Piabas (Rota 05), Tapuio (Rota 06), Fronteira com Espírito Santo (Rota 07 e Rota 08), Salgadinho (Entrando em João de Nana) (Rota 07), Salgadinho (Rota 08), Quatis (Rota 09), Imbé (Rota 09), Impoeira (Rota 10), Terezinha (Rota 10), Pedras Altas (Rota 10), Moita do Meio (Rota 12), Lagoa do Queijo (Rota 13), Cantinho (Rota 13), Caldeirão (Igrejinha) (Rota 14), Barreiras (Rota 15), Poço de Sombra (Rota 15), Mocambo (Rota 15), Gonçalo Antunes (Rota 16), Serrote de João Pedro (Rota 16), Cupira (Rota 16), Bravos (Rota 16), Morcego (Rota 16), Serrote Redondo (Rota 16), Açude Novo (Rota 16) e Retiro (Rota 17). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 13 localidades rurais de Cachoeirinha, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1332" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Cachoeirinha: 2 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 15 - TRE-PE/PRES/DG/ZE044 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="693.3,427.2 153.8,143.5 171.6,80.0 35.0,116.1 61.0,291.6 229.7,591.1 295.6,800.3 234.5,887.3 195.1,990.2 191.3,1073.9 203.3,1102.7 171.1,1160.0 175.4,1200.3 448.5,946.9 487.0,948.9 507.2,901.7 601.9,737.3 725.0,591.1 693.3,427.2 693.3,427.2" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="147.6,220.2 160.0,222.7 166.7,234.6 167.9,248.7 173.3,258.9 178.1,269.2 180.2,282.0 182.7,294.2 188.9,302.8 195.2,312.2 205.3,322.7 214.3,329.0 220.8,337.0 224.8,347.7 229.9,357.4 231.2,372.8 232.8,388.0 236.6,398.7 245.7,404.2 260.2,405.8 271.7,409.4 282.7,415.6 295.6,420.7 307.0,424.7 321.7,425.2 336.5,426.1 347.9,431.7 359.3,436.3 369.0,442.0 377.5,449.4 384.6,456.9 394.0,462.9 403.9,469.5 417.3,471.0 426.6,463.5 433.5,455.5 432.2,440.9 429.5,428.9 440.9,423.3 449.6,415.0 442.1,422.5 431.5,426.5 432.2,440.9 436.9,451.2 443.1,460.5 449.9,470.4 455.8,479.0 461.6,488.3 471.9,493.9 481.9,498.4 496.6,499.3 509.7,501.3 515.3,495.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="386.4,305.8 379.3,314.6 377.0,327.0 366.1,331.4 358.1,341.0 344.9,337.5 358.1,341.0 365.2,333.5 369.6,327.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="551.9,632.0 556.4,642.2 567.7,637.6 574.1,629.4 580.1,619.9 589.7,614.6 600.4,606.9 610.4,600.1 619.2,593.9 633.0,592.8 644.0,600.4 646.9,604.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="551.9,632.0 556.4,642.2 567.7,637.6 574.1,629.4 580.1,619.9 589.7,614.6 600.4,606.9 610.4,600.1 619.2,593.9 633.0,592.8 644.0,600.4 646.9,604.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="449.7,414.9 442.5,422.2 432.7,427.1 432.9,442.1 437.8,453.5 443.9,462.3 450.7,470.9 456.2,480.1 464.4,490.1 474.9,496.4 488.5,498.2 501.4,500.4 514.3,498.5 515.3,495.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="265.6,590.7 307.0,589.3 337.7,588.2 356.1,587.6 337.7,588.2 340.2,603.8 336.5,621.9 327.4,629.4 314.9,633.1 327.4,629.4 336.1,638.1 345.1,644.7 354.6,652.4 370.6,661.2 382.5,663.8 399.3,662.3 414.2,662.1 421.7,669.4 426.6,680.4 440.9,678.0 455.1,679.1 470.2,678.9 484.2,674.9 493.3,669.4 503.9,664.7 516.5,662.6 529.2,660.4 540.4,655.1 549.0,649.2 556.0,641.7 551.9,632.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="423.4,595.5 425.6,580.9 430.8,570.0 437.0,558.3 448.5,555.1 464.2,556.0 477.9,554.6 486.1,547.6 491.1,537.2 489.6,550.7 498.4,558.7 508.7,562.9 518.1,569.5 528.1,574.0 537.8,579.1 545.3,586.4 556.1,590.6 559.0,603.3 553.6,612.7 552.3,627.1 551.9,632.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="449.7,414.9 442.5,422.2 432.7,427.1 432.9,442.1 437.8,453.5 443.9,462.3 450.7,470.9 456.2,480.1 464.4,490.1 474.9,496.4 488.5,498.2 501.4,500.4 514.3,498.5 515.3,495.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="287.2,1094.5 293.0,1103.5 303.6,1112.1 317.2,1120.3 326.8,1125.2 335.7,1131.1 348.7,1134.8 358.4,1140.9 372.4,1102.8 375.3,1090.3 382.0,1061.6 385.7,1045.8 388.8,1033.8 394.7,1022.9 400.2,1013.6 406.3,1003.4 419.3,981.3 429.8,963.4 437.7,950.2 448.1,925.1 458.9,897.7 464.2,884.5 469.3,871.5 462.9,867.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 09</title></polyline>
+<polyline points="695.6,558.5 698.7,541.8 703.8,530.0 711.5,512.5 717.9,498.1 707.4,490.1 693.5,490.8 686.0,498.9 680.0,508.9 669.1,512.8 663.6,522.8 663.3,538.4 668.6,548.9 668.9,563.3 670.2,579.3 662.4,590.7 653.5,598.4 646.9,604.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 10</title></polyline>
+<polyline points="462.9,867.8 479.1,846.6 483.3,835.9 488.1,825.2 493.7,815.4 501.2,802.5 506.6,792.9 512.4,782.6 519.2,770.6 526.1,758.6 533.3,745.9 543.1,728.7 551.2,714.5 557.0,704.2 562.6,694.5 567.9,685.4 573.2,676.0 579.2,665.4 585.8,656.5 594.8,648.8 604.1,640.7 613.9,632.5 623.5,624.2 632.2,616.6 640.1,610.0 646.9,604.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 11</title></polyline>
+<polyline points="577.1,402.9 566.8,397.5 562.0,410.0 557.4,422.2 560.6,436.2 568.0,445.7 573.0,456.2 578.8,473.3 586.5,480.5 587.7,494.3 593.7,505.4 598.7,514.9 608.2,509.5 608.4,508.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 12</title></polyline>
+<polyline points="648.6,628.4 651.5,616.7 656.0,606.7 646.9,604.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 13</title></polyline>
+<polyline points="150.2,416.5 135.9,414.8 118.9,414.9 106.0,412.5 102.1,399.2 104.3,386.2 101.9,370.5 108.7,361.3 114.1,351.9 114.0,337.3 110.3,326.3 109.0,312.8 107.5,296.8 103.5,285.7 112.4,279.7 115.1,266.4 120.1,255.3 125.1,245.7 134.1,238.5 140.8,230.3 148.9,222.9 147.6,220.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 17</title></polyline>
+<polyline points="147.6,220.2 160.0,222.7 166.7,234.6 167.9,248.7 173.3,258.9 178.1,269.2 180.2,282.0 182.7,294.2 188.9,302.8 195.2,312.2 205.3,322.7 214.3,329.0 220.8,337.0 224.8,347.7 229.9,357.4 231.2,372.8 232.8,388.0 236.6,398.7 245.7,404.2 260.2,405.8 271.7,409.4 282.7,415.6 295.6,420.7 307.0,424.7 321.7,425.2 336.5,426.1 347.9,431.7 359.3,436.3 369.0,442.0 377.5,449.4 384.6,456.9 394.0,462.9 403.9,469.5 417.3,471.0 429.3,482.8 438.3,489.8 448.4,496.3 461.6,498.9 476.4,498.1 491.0,498.3 503.4,500.8 517.5,499.3 529.8,503.8 544.3,506.3 557.1,508.6 566.6,515.6 575.0,522.6 583.5,530.2 590.2,539.0 599.0,546.1 607.8,551.8 616.4,557.8 622.9,566.4 630.6,575.0 635.3,585.2 642.8,594.0 650.4,601.1 646.9,604.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 18</title></polyline>
+<polyline points="267.4,110.1 259.9,121.9 254.4,133.8 244.7,152.3 241.0,163.1 233.8,173.0 228.9,183.5 222.3,191.5 188.8,204.8 175.2,210.1 164.9,214.7 154.8,219.9 145.2,224.7 139.1,233.4 133.8,224.1 128.3,214.2 120.5,207.0 113.6,198.0 107.3,188.8 102.5,179.1 104.9,167.1 97.2,160.3 88.7,154.3 78.6,148.4 67.7,144.7 78.6,148.4 87.9,154.0 96.6,159.8 104.9,166.6 102.3,178.9 107.3,188.8 112.6,198.1 119.6,205.9 127.8,214.0 133.8,224.1 137.3,236.3 142.7,227.0 147.6,220.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 19</title></polyline>
+<polyline points="424.4,680.3 421.1,695.3 412.5,701.6 405.5,709.4 398.3,720.3 404.3,711.0 412.5,701.6 421.1,695.3 433.6,683.0 424.4,680.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 06</title></polyline>
+<polyline points="577.1,402.9 589.7,405.4 601.6,402.7 612.8,394.8 625.0,388.3 635.6,383.3 625.0,388.3 614.3,392.9 605.9,401.4 595.7,405.7 579.2,403.7 577.1,402.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 12</title></polyline>
+<circle cx="288.7" cy="1093.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="386.0" cy="305.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="372.1" cy="330.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="449.5" cy="414.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="341.3" cy="338.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="579.8" cy="697.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="563.4" cy="507.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="605.3" cy="507.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="525.9" cy="607.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="565.8" cy="641.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="141.3" cy="217.2" r="2.2" fill="#b9b9b2"/>
+<polygon points="601.4,588.4 586.5,615.9 616.4,615.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="631.7,587.2 617.5,613.4 646.0,613.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="165.3,203.3 154.5,223.1 176.1,223.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="165.3" y="237.0" text-anchor="middle" fill="#5c5c57">Cabanas</text>
+<polygon points="633.2,591.6 619.9,616.0 646.4,616.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="637.5,551.6 627.8,569.4 647.2,569.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="659.1,594.4 650.4,610.5 667.9,610.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="635.6,587.6 623.1,610.6 648.1,610.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="636.4" cy="382.4" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="462.0" y="377.4" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Fazenda João Alfredo 6,8 km</text>
+<circle cx="395.1" cy="723.8" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="402.1" y="718.8" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Sítio Riacho Doce 2 5,8 km</text>
+<rect x="641.6" y="598.8" width="10" height="10" fill="#1d1d1b"/><text x="655.6" y="621.8" font-weight="600" fill="#1d1d1b">Sede de Cachoeirinha</text>
+<line x1="35" x2="251.6" y1="1230.3" y2="1230.3" stroke="#8a8a84" stroke-width="2"/><text x="35" y="1244.3" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="1221.348432055719" y2="1221.348432055719" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="1225.348432055719" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,1214.3 421.4,1226.6 434.6,1226.6" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="1225.348432055719" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="1239.348432055719" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="1248.348432055719" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="1244.348432055719" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="1248.348432055719" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1267.348432055719" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1271.348432055719" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1267.348432055719" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1271.348432055719" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1290.348432055719" y2="1290.348432055719" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1294.348432055719" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1313.348432055719" y2="1313.348432055719" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1317.348432055719" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 15 - TRE-PE/PRES/DG/ZE044 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (7):</strong> Bonito, Sítio Borrachinha, Sítio Caldeirão de Cima, Caldeirão de Baixo, Fazenda João Alfredo, Sítio José Gerônimo e Sítio Riacho Doce 2.</li>
+<li><strong>De 3 a 5 km (0):</strong> nenhuma.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (6):</strong> Cabanas, Sítio Limãozinho, Sítio Riacho Doce 1, Sítio Riacho Doce 3, Sítio Riachão e Sítio Samambaia.</li>
+</ul><h2>Rotas do Edital nº 15 - TRE-PE/PRES/DG/ZE044</h2>
+<p>O edital tem 19 rotas para Cachoeirinha. Horários: não informados. Veículos: Rota 01: RZR9G39 RZR9E49; Rota 02: SOB5I65 SOC9C22; Rota 03: SNM6G65 SOG2I79; Rota 04: SOF1D19 SOG1C79; Rota 05: QYI5G32; Rota 06: UHM7E71; Rota 07: SOZ1H37; Rota 08: SOR2G75; Rota 09: UHL0B64; Rota 10: PEB-7791; Rota 11: PDT0123; Rota 12: QYI5G42; Rota 13: RZV9B40; Rota 14: SNW0A40 PEB-4749; Rota 15: UHL4F47; Rota 16: RZW6A89 UHK9A45; Rota 17: SOM8E91; Rota 18: RZM5E61; Rota 19: PDT-0123.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Cabanas – Camará – Craíbas – Caldeirão de Baixo – Neto</td></tr><tr><td>02</td><td>Borrachinha – Assentamento Sem Terra – José Jerônimo – Caldeirão de Cima</td></tr><tr><td>03</td><td>Conceição de Cima (Zé de Agripa) – Conceição de Baixo – Riacho Doce</td></tr><tr><td>04</td><td>Caracol – Queimada de Cima – Conceição de Baixo – Riacho Doce</td></tr><tr><td>05</td><td>Lagoa das Piabas – Caldeirão de Baixo – Neto</td></tr><tr><td>06</td><td>Tapuio – Lavras – Lagoa Fechada – Laginha – Conceição de Baixo – Riacho Doce</td></tr><tr><td>07</td><td>Fronteira com Espírito Santo – Salgadinho (Entrando em João de Nana) – Jupi – Lages – Riacho Doce</td></tr><tr><td>08</td><td>Fronteira com Espírito Santo – Salgadinho – Craíbas – Caldeirão de Baixo – Neto</td></tr><tr><td>09</td><td>Bonito – Quatis – Ouricuri – Imbé</td></tr><tr><td>10</td><td>Impoeira – Terezinha – Mumbuca – Pedras Altas</td></tr><tr><td>11</td><td>Ouricuri</td></tr><tr><td>12</td><td>Moita do Meio – Lagoa de Lage – Samambaia</td></tr><tr><td>13</td><td>Lagoa do Queijo – Massapê – Cantinho</td></tr><tr><td>14</td><td>Caldeirão (Igrejinha)</td></tr><tr><td>15</td><td>Barreiras – Poço de Sombra – Mocambo</td></tr><tr><td>16</td><td>Gonçalo Antunes – Serrote de João Pedro – Cupira – Bravos – Morcego – Serrote Redondo – Açude Novo</td></tr><tr><td>17</td><td>Capim de Planta – Retiro – Alto do Ponto – Cabanas</td></tr><tr><td>18</td><td>Assentamento Sem Terra – Cabanas</td></tr><tr><td>19</td><td>Igrejinha – Cajueiro – Cabanas</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 15 - TRE-PE/PRES/DG/ZE044 (Publicação das rotas do transporte de eleitores de São Caitano, Tacaimbó e Cachoeirinha), DJE/TRE-PE nº 232, disponibilizado em 24/09/2026, publicação em 25/09/2026 (https://dje.tse.jus.br/dje/pdf/v1/edicao/129893).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 2 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Parada extra na Rota 06</strong></td><td>desvio pelo caminho atual: Sítio Riacho Doce 2</td><td>Sítio Riacho Doce 2</td><td>+3,3 km</td><td>+6 min</td></tr><tr><td><strong>Parada extra na Rota 12</strong></td><td>desvio pelo caminho atual: Fazenda João Alfredo</td><td>Fazenda João Alfredo</td><td>+3,1 km</td><td>+8 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMC</strong></p><p>Cachoeirinha/PE, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Thiago Pacheco Cavalcanti</strong><br>Juiz Eleitoral da 44ª Zona Eleitoral – São Caitano/PE</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 15 - TRE-PE/PRES/DG/ZE044) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Cachoeirinha, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 15 - TRE-PE/PRES/DG/ZE044: Fazenda João Alfredo e Sítio Riacho Doce 2.</p><p>Sugerimos, respeitosamente:</p><ol><li>a inclusão de parada em Sítio Riacho Doce 2 na Rota 06, mantido todo o percurso atual;</li><li>a inclusão de parada em Fazenda João Alfredo na Rota 12, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 15 - TRE-PE/PRES/DG/ZE044 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Cachoeirinha</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Cachoeirinha; Edital nº 15 - TRE-PE/PRES/DG/ZE044 (Publicação das rotas do transporte de eleitores de São Caitano, Tacaimbó e Cachoeirinha), DJE/TRE-PE nº 232, disponibilizado em 24/09/2026, publicação em 25/09/2026 (https://dje.tse.jus.br/dje/pdf/v1/edicao/129893); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

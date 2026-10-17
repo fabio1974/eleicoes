@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Lagoa do Ouro</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Lagoa do Ouro</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/lagoa-do-ouro.pdf?v=1792245826" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Lagoa do Ouro (59ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 59ª Zona Eleitoral <strong>1 parada extra em rotas do edital</strong> no transporte gratuito de Lagoa do Ouro.
+Traçamos pelas estradas o percurso das 18 rotas do Edital nº 18/2026 - 59ª ZE (Quadro geral de percursos de Lagoa do Ouro). 0 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 1 ficam a 1–2 km.</p>
+<ul>
+<li>Lagoa do Ouro tem 12.060 eleitores aptos em 5 locais de votação e 35 seções. São 3 locais rurais, com 2.983 eleitores (25% do total).</li>
+<li>2 locais rurais ficam a 10 km ou mais da sede, com 1.969 eleitores. Os mais distantes: Vila De Igapó, S/N (10,8 km) e Vila De Igapó , S/N (10,8 km).</li>
+
+<li><strong>Rota passa perto</strong> (1–2 km): Serra dos Carneiros.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 7 localidades rurais de Lagoa do Ouro que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Caboclo</td><td>5,8</td><td>Rota 15</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Riacho do Mel</td><td>5,3</td><td>Rota 18</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Serra dos Carneiros</td><td>3,8</td><td>Rota 09</td><td>1,4</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Sítio Jurema</td><td>3,5</td><td>Rota 18</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>22 das 84 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Sítio Cova Triste (Rota 01), Timbó (Rota 01), Brejo do Fogo (Rota 01), Riacho da Palha (Rota 01), Zé Carlos (Rota 02), Zé Novo (Rota 03), Alto Limpo (Rota 04), Lagoa do Boi (Rota 04), Serrinha de Rildo (Rota 05), Sítio Serra Grande 1 e 2 (Rota 06), Palmeiras até a Rádio (Rota 06), Sítio Cocal de Dentro, Fora e Meio (Rota 07), Sítio Serra dos Carneiros (de Baixo e de Cima) (Rota 09), Sítio Caibros (Rota 11), Mandacaru (Rota 11), Água Branca Rossine (Rota 11), Labirinto (Rota 11), Marcação (Rota 13), Os Bino (Rota 13), Sítio Corintias (Rota 14), Zé Feijão (Rota 15) e Lavras (sentido Caboclo) (Rota 15). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 7 localidades rurais de Lagoa do Ouro, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1245" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Lagoa do Ouro: 1 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 18/2026 - 59ª ZE (Quadro geral de percursos de Lagoa do Ouro) e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="725.0,900.0 719.0,804.7 658.9,163.9 601.5,179.1 543.0,147.7 512.7,80.0 453.1,84.9 387.6,113.0 316.6,155.8 293.3,169.4 35.0,250.6 76.2,339.4 113.0,355.1 137.4,437.5 122.2,555.5 181.2,585.9 162.3,634.6 115.7,676.8 60.5,689.8 90.8,770.0 67.5,805.2 87.0,901.1 125.4,947.1 159.6,959.0 137.4,1054.3 156.9,1101.5 196.9,1113.4 242.4,1092.8 238.6,1066.8 268.4,991.0 328.5,1010.5 402.2,986.1 441.2,922.2 568.5,838.8 614.5,864.2 608.6,914.1 657.8,934.1 703.3,885.4 725.0,900.0 725.0,900.0" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="563.2,540.1 548.0,543.1 541.8,532.9 534.5,524.0 521.2,515.1 510.3,507.3 500.4,499.5 490.3,491.1 479.6,478.3 467.6,466.2 457.1,455.5 446.2,448.4 438.6,437.3 433.0,425.4 430.3,411.3 435.3,399.0 442.5,385.8 434.8,377.1 427.0,365.1 419.6,365.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="568.9,245.3 552.2,245.2 539.7,240.9 527.1,236.4 511.4,235.8 497.0,238.1 496.4,255.7 492.8,269.2 485.1,278.7 481.5,292.1 472.4,306.3 463.9,319.6 466.0,338.8 457.0,349.0 441.8,353.8 430.3,360.6 419.6,365.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="647.0,403.5 633.3,406.1 618.7,404.2 622.1,390.4 610.7,398.9 596.9,395.9 580.9,396.3 568.5,391.6 564.1,379.6 559.1,367.2 548.5,359.3 537.6,352.7 526.9,344.1 535.9,334.6 548.6,323.0 560.7,318.3 585.7,314.8 601.9,313.6 617.5,302.6 628.7,296.5 617.5,302.6 606.5,311.6 585.7,314.8 567.4,317.7 552.3,320.0 542.9,328.4 531.9,337.9 514.5,335.5 496.5,337.1 474.6,342.4 457.0,349.0 441.8,353.8 430.3,360.6 419.6,365.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="353.1,252.0 357.8,239.6 366.9,230.8 373.5,219.3 378.9,207.3 383.9,194.6 391.6,185.2 410.1,184.8 423.3,174.0 424.4,157.8 433.6,165.7 449.1,160.8 461.2,155.3 473.1,148.2 484.0,139.9 474.1,147.5 463.3,154.6 450.7,160.2 435.6,165.1 425.1,171.3 417.0,181.5 401.2,184.8 387.1,187.9 382.4,199.7 377.0,211.3 369.9,225.9 359.9,237.1 354.0,248.3 351.2,262.0 351.1,278.9 349.1,296.5 349.6,312.7 350.0,330.3 350.9,353.8 351.2,370.5 368.3,371.5 386.7,370.0 402.3,368.6 417.7,366.0 419.6,365.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="518.9,778.9 639.4,512.2 624.1,506.5 609.6,495.9 588.9,477.9 557.5,463.6 547.8,455.0 536.7,447.8 521.3,436.5 523.6,421.4 532.1,408.4 541.2,401.3 557.9,401.5 541.2,401.3 532.1,408.4 523.6,421.4 516.5,431.0 505.1,422.6 491.9,417.4 468.7,400.2 456.2,396.1 445.7,384.1 434.8,377.1 427.0,365.1 419.6,365.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="490.6,621.4 499.9,628.7 517.7,629.4 527.8,635.6 540.9,638.7 547.4,626.4 549.7,611.3 540.7,603.4 535.3,590.4 539.3,576.3 551.5,568.5 560.7,553.6 555.8,541.3 541.8,532.9 534.5,524.0 521.2,515.1 510.3,507.3 500.4,499.5 490.3,491.1 479.6,478.3 467.6,466.2 457.1,455.5 446.2,448.4 438.6,437.3 433.0,425.4 430.3,411.3 435.3,399.0 442.5,385.8 434.8,377.1 427.0,365.1 419.6,365.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="399.1,621.0 413.4,619.0 429.3,615.9 434.8,603.1 441.7,592.5 441.3,574.6 437.2,562.2 449.2,550.6 465.3,549.0 480.1,547.1 494.7,544.7 507.8,540.8 523.2,531.4 531.4,522.8 541.3,529.5 544.7,543.0 558.7,540.5 544.7,543.0 541.3,529.5 531.4,522.8 523.2,531.4 511.0,539.4 498.3,543.8 483.5,546.9 468.3,548.6 449.2,550.6 435.7,554.1 418.7,555.5 402.7,557.2 385.6,555.2 372.9,550.7 357.4,553.7 342.9,557.9 330.2,562.7 314.7,559.9 299.1,557.0 284.1,554.3 272.1,564.6 258.2,572.5 251.4,582.7 248.1,597.6 245.8,619.3 243.0,636.4 246.1,655.4 249.8,673.2 266.5,692.7 284.0,707.3 289.2,719.0 296.7,735.0 301.1,746.9 306.0,758.9 315.9,767.0 321.5,778.6 315.9,767.0 306.5,759.2 301.1,747.6 296.7,735.0 291.0,722.2 284.9,708.5 266.5,692.7 254.1,682.0 247.4,663.3 245.2,644.5 243.1,630.2 245.6,609.8 246.3,591.7 252.6,581.7 265.4,568.1 276.2,561.9 278.5,546.2 276.8,529.0 282.4,514.0 296.9,489.8 304.2,479.6 311.5,466.6 317.2,454.6 328.7,423.6 335.8,410.6 345.1,386.0 349.7,373.8 368.3,371.5 386.7,370.0 402.3,368.6 417.7,366.0 419.6,365.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="382.2,943.5 369.2,939.5 362.6,929.7 370.9,920.7 364.7,910.2 353.2,904.8 340.8,900.4 329.5,894.6 313.9,893.3 308.9,881.7 299.2,874.3 289.2,864.4 286.2,878.3 288.4,892.7 277.8,899.2 271.3,910.4 264.4,922.8 261.4,938.0 263.8,924.0 270.3,912.9 276.9,899.8 288.2,894.4 286.2,878.3 287.6,863.4 297.5,873.0 308.2,879.2 313.0,891.2 326.4,895.1 340.8,900.4 352.9,904.6 364.2,910.0 372.0,918.8 364.2,910.0 352.9,904.6 340.8,900.4 329.5,894.6 313.9,893.3 308.9,881.7 299.2,874.3 289.2,864.4 289.8,847.2 294.3,835.1 296.2,820.1 303.0,810.3 309.0,799.1 320.7,787.8 327.5,783.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="243.1,832.2 257.4,834.6 273.5,834.2 288.1,830.7 295.6,821.9 302.2,811.2 307.2,799.5 317.9,793.2 323.6,782.4 327.5,783.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 09</title></polyline>
+<polyline points="130.8,747.9 144.6,752.7 158.6,755.9 165.8,741.7 174.9,727.6 186.8,720.3 197.3,708.5 184.8,703.7 174.8,696.7 159.0,695.4 144.0,697.1 136.3,686.9 122.4,692.2 106.7,689.8 92.1,693.1 77.1,691.7 92.1,693.1 106.7,689.8 122.4,692.2 134.8,686.9 142.3,695.8 159.0,695.4 174.8,696.7 184.8,703.7 205.0,705.5 225.9,703.4 237.5,698.4 248.2,689.0 249.8,673.2 246.1,655.4 243.0,636.4 245.9,621.7 246.8,603.4 247.6,586.6 246.8,603.4 237.2,611.1 227.6,618.8 212.3,609.7 225.8,617.4 231.4,629.5 238.8,639.4 246.1,655.4 249.8,673.2 266.5,692.7 284.0,707.3 289.2,719.0 296.7,735.0 301.1,746.9 306.0,758.9 315.9,767.0 321.5,778.6 327.5,783.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 10</title></polyline>
+<polyline points="266.1,381.0 240.0,383.7 232.7,395.3 225.9,425.7 224.6,444.5 230.0,461.2 232.0,478.2 230.0,461.2 224.8,445.6 225.4,428.4 231.1,403.7 235.3,384.2 268.7,380.8 295.5,378.1 313.8,376.5 333.3,374.7 349.8,373.0 368.3,371.5 386.7,370.0 402.3,368.6 417.7,366.0 419.6,365.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 11</title></polyline>
+<polyline points="116.0,549.3 109.1,538.3 102.4,525.1 94.0,507.9 87.2,497.0 80.8,486.3 78.0,464.9 76.0,447.7 72.3,433.5 57.0,410.0 72.5,394.0 87.8,396.0 102.4,387.5 112.5,380.2 128.2,379.7 145.2,382.7 166.4,387.6 185.1,389.0 214.4,386.3 235.3,384.2 268.7,380.8 295.5,378.1 313.8,376.5 342.7,373.6 362.9,372.1 378.4,370.7 394.9,369.3 410.6,367.5 419.6,365.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 12</title></polyline>
+<polyline points="44.5,275.2 58.5,281.1 68.1,290.1 79.5,283.0 90.8,277.7 98.3,263.4 106.0,273.7 118.7,280.9 132.6,286.6 136.1,299.7 145.5,307.4 162.9,312.9 180.5,314.7 193.7,318.8 205.4,324.1 219.5,326.3 233.9,331.4 248.6,344.6 257.5,358.4 265.8,368.2 275.8,378.6 295.5,378.1 313.8,376.5 342.7,373.6 362.9,372.1 378.4,370.7 394.9,369.3 410.6,367.5 419.6,365.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 13</title></polyline>
+<polyline points="150.3,254.5 133.6,255.5 121.3,249.8 110.0,254.8 99.1,264.6 108.9,275.4 122.2,283.0 134.2,287.5 137.5,301.2 146.8,308.6 162.9,312.9 180.5,314.7 188.6,330.7 194.7,342.4 192.3,358.0 189.2,372.7 184.3,384.6 214.4,386.3 235.3,384.2 268.7,380.8 295.5,378.1 313.8,376.5 342.7,373.6 362.9,372.1 378.4,370.7 394.9,369.3 410.6,367.5 419.6,365.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 14</title></polyline>
+<polyline points="226.7,279.6 232.0,290.7 237.7,301.7 235.7,317.4 237.8,333.5 248.6,344.6 257.5,358.4 265.8,368.2 275.8,378.6 295.5,378.1 313.8,376.5 342.7,373.6 362.9,372.1 378.4,370.7 394.9,369.3 410.6,367.5 419.6,365.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 15</title></polyline>
+<polyline points="419.6,365.4 403.7,368.0 386.7,370.0 369.6,371.1 352.3,372.7 345.1,386.0 337.2,407.1 328.7,423.6 318.3,442.5 315.8,463.2 305.8,475.6 296.9,489.8 284.0,510.8 276.8,529.0 278.5,546.2 276.2,561.9 265.4,568.1 255.4,577.2 247.6,586.6 246.8,603.4 245.8,619.3 243.0,636.4 246.1,655.4 249.8,673.2 266.5,692.7 284.0,707.3 289.2,719.0 296.7,735.0 301.1,746.9 306.0,758.9 315.9,767.0 321.5,778.6 327.5,783.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 16</title></polyline>
+<polyline points="419.6,365.4 433.3,376.7 443.8,382.4 435.3,399.0 430.3,411.3 433.0,425.4 438.6,437.3 445.0,447.6 457.1,455.5 467.6,466.2 477.9,476.6 485.7,485.3 494.5,495.3 505.3,503.2 515.2,510.0 524.7,518.6 539.8,527.2 543.1,541.4 558.7,540.5 563.2,540.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 17</title></polyline>
+<polyline points="358.6,516.1 362.7,531.2 370.1,540.5 375.8,551.3 388.1,556.8 407.9,556.5 425.4,554.6 440.7,552.1 446.1,536.8 439.6,526.1 437.9,510.7 434.4,496.4 439.3,479.9 450.5,462.8 467.6,466.2 477.9,476.6 485.7,485.3 494.5,495.3 485.7,485.3 477.9,476.6 467.6,466.2 457.1,455.5 444.8,472.2 432.3,466.8 421.0,460.4 410.8,450.6 401.6,441.7 392.2,434.6 383.8,424.8 389.4,413.7 396.2,401.6 400.3,389.2 402.1,373.3 413.0,367.3 419.6,365.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 18</title></polyline>
+<polyline points="243.1,832.2 235.3,823.2 227.8,834.2 216.5,845.0 211.5,856.9 203.8,867.2 188.8,869.1 203.8,867.2 211.5,856.9 216.5,845.0 226.1,836.2 234.2,827.7 243.1,832.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 09</title></polyline>
+<circle cx="227.3" cy="279.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="356.7" cy="516.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="440.1" cy="530.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="639.4" cy="512.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="326.2" cy="784.2" r="2.2" fill="#b9b9b2"/>
+<polygon points="565.8,529.5 556.0,547.5 575.6,547.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="565.8" y="561.1" text-anchor="middle" fill="#5c5c57">Segundo Distrito</text>
+<polygon points="316.6,756.5 305.8,776.4 327.4,776.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="318.3,760.7 309.9,776.0 326.6,776.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="430.4,356.2 416.9,380.9 443.8,380.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="422.2,361.0 405.2,392.5 439.3,392.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="187.7" cy="872.4" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="194.7" y="867.4" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Serra dos Carneiros 3,8 km</text>
+<rect x="414.8" y="360.8" width="10" height="10" fill="#1d1d1b"/><text x="428.8" y="383.8" font-weight="600" fill="#1d1d1b">Sede de Lagoa do Ouro</text>
+<line x1="35" x2="279.0" y1="1143.4" y2="1143.4" stroke="#8a8a84" stroke-width="2"/><text x="35" y="1157.4" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="1134.3751962323909" y2="1134.3751962323909" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="1138.3751962323909" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,1127.4 421.4,1139.6 434.6,1139.6" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="1138.3751962323909" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="1152.3751962323909" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="1161.3751962323909" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="1157.3751962323909" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="1161.3751962323909" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1180.3751962323909" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1184.3751962323909" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1180.3751962323909" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1184.3751962323909" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1203.3751962323909" y2="1203.3751962323909" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1207.3751962323909" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1226.3751962323909" y2="1226.3751962323909" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1230.3751962323909" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 18/2026 - 59ª ZE (Quadro geral de percursos de Lagoa do Ouro) · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (2):</strong> Caboclo e Riacho do Mel.</li>
+<li><strong>De 3 a 5 km (2):</strong> Serra dos Carneiros e Sítio Jurema.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (3):</strong> Campo Alegre, Igapó e Sítio Salgado.</li>
+</ul><h2>Rotas do Edital nº 18/2026 - 59ª ZE (Quadro geral de percursos de Lagoa do Ouro)</h2>
+<p>O edital tem 18 rotas para Lagoa do Ouro. Horários: não informados no quadro. Veículos: Placas: Rota 01: SOB 5A95; Rota 02: RZL 7H03 / NMN2D72; Rota 03: SOE 1F61 / LPY4039; Rota 04: SOH 6B12 / PEN 5497; Rota 05: SOS1859 / NMM1J65; Rota 06: OYU5218 / JQZ0139; Rota 07: KHX2988 / PDL5B12 / MVH4118; Rota 08: SNL4E13 / LOD6478; Rota 09: PFS9148 / MUM0028 / JMZ9552; Rota 10: PFS8598 / CPR7165 / CBS9I43; Rota 11: SOC0627 / PEL8E60; Rota 12: SOT5F64 / CRY4A87; Rota 13: PDP8433 / NLV0193; Rota 14: SPA0H65 / CUC9224; Rota 15: UHQ8E02; Rota 16: SOI9B42 / LKH1G30; Rota 17: QYW1G10 / PDY8B72; Rota 18: SOE4A59 / KZT6E02 / GAS9629 / BBQ6A10.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Sítio Cova Triste – Timbó – Brejo do Fogo – Riacho da Palha – Campo Alegre – Sede</td></tr><tr><td>02</td><td>Sítio Maia – Serra do Maia – Zé Carlos – Sede</td></tr><tr><td>03</td><td>Sítio Flexeiras – Água Branca – Lagoa Comprida – Zé Novo – Riachão – Sede</td></tr><tr><td>04</td><td>Sítio Lavras – Cacimba dos Góis – Alto Limpo – Lagoa do Boi – Poço Dantas – Sede</td></tr><tr><td>05</td><td>Sítio Cavaleiro – Salgado – Serrinha de Rildo – Gravatá – Riacho do Barro – Sede</td></tr><tr><td>06</td><td>Sítio Serra Grande 1 e 2 – Monte Alegre – Palmeiras até a Rádio – Campo Alegre – Sede</td></tr><tr><td>07</td><td>Sítio Cocal de Dentro, Fora e Meio – Serra do Pedro – Campo Alegre – Igapó – Sede</td></tr><tr><td>08</td><td>Sítio Liberata – Risada – Quati – Pau Amarelo – Igapó</td></tr><tr><td>09</td><td>Sítio Serra dos Carneiros (de Baixo e de Cima) – Peri Peri – Igapó</td></tr><tr><td>10</td><td>Sítio Lage dos Mocós – Mocós – Piabas – Poço do Pinto – Igapó</td></tr><tr><td>11</td><td>Sítio Caibros – Mandacaru – Água Branca Rossine – Labirinto – Queimada – Serrinha – Chiqueiro – Sede</td></tr><tr><td>12</td><td>Sítio Riacho Seco de Dentro – Riacho Seco – Sede</td></tr><tr><td>13</td><td>Sítio Poços – Marcação – Os Bino – Sede</td></tr><tr><td>14</td><td>Sítio Corintias – Massaranduba – Corcunda – Sede</td></tr><tr><td>15</td><td>Sítio Caboclo – Zé Feijão – Lavras (sentido Caboclo) – Sede</td></tr><tr><td>16</td><td>Sede – Igapó</td></tr><tr><td>17</td><td>Sede – Campo Alegre</td></tr><tr><td>18</td><td>Sítio Riacho do Mel – Jurema – Tanquinho – Ambrósio – Alecrim – Sede</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 18/2026 da 59ª ZE (Transporte de eleitores - roteiros Lagoa do Ouro), de 29/09/2026, DJE/TRE-PE nº 244 (Edição Eleitoral), disponibilizado em 30/09/2026, publicação em 01/10/2026 (https://dje.tse.jus.br/dje/pdf/v1/edicao/130113).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 1 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Parada extra na Rota 09</strong></td><td>desvio pelo caminho atual: Serra dos Carneiros</td><td>Serra dos Carneiros</td><td>+3,8 km</td><td>+9 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMLO</strong></p><p>Lagoa do Ouro/PE, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Dra. Olívia Zanon Dall&#x27;orto Leão</strong><br>Juíza Eleitoral da 59ª Zona Eleitoral – Correntes/PE</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 18/2026 - 59ª ZE (Quadro geral de percursos de Lagoa do Ouro)) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de Lagoa do Ouro, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 18/2026 - 59ª ZE (Quadro geral de percursos de Lagoa do Ouro): Serra dos Carneiros.</p><p>Sugerimos, respeitosamente:</p><ol><li>a inclusão de parada em Serra dos Carneiros na Rota 09, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 18/2026 - 59ª ZE (Quadro geral de percursos de Lagoa do Ouro) deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Lagoa do Ouro</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Lagoa do Ouro; Edital nº 18/2026 da 59ª ZE (Transporte de eleitores - roteiros Lagoa do Ouro), de 29/09/2026, DJE/TRE-PE nº 244 (Edição Eleitoral), disponibilizado em 30/09/2026, publicação em 01/10/2026 (https://dje.tse.jus.br/dje/pdf/v1/edicao/130113); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

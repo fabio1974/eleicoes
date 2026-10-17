@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Goiana</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Goiana</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/goiana.pdf?v=1792245284" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Goiana (25ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 25ª Zona Eleitoral <strong>4 rotas novas e 1 parada extra em rotas do edital</strong> no transporte gratuito de Goiana.
+Traçamos pelas estradas o percurso das 8 rotas do Edital nº 46 - TRE-PE/PRES/DG/ZE025. 12 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 2 ficam a 1–2 km.</p>
+<ul>
+<li>Goiana tem 67.159 eleitores aptos em 37 locais de votação e 211 seções. São 7 locais rurais, com 8.700 eleitores (13% do total).</li>
+<li>6 locais rurais ficam a 10 km ou mais da sede, com 8.180 eleitores. Os mais distantes: Rua Santo Amaro, S/N, Lot. N. S. Da Conceição (Sítio Cocota) (29,7 km), Carne de Vaca (25,2 km) e Carrapicho (23,2 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Engenho Camorim (19,1 km do local de votação), Engenho Itapirema do Meio (13,6 km do local de votação), Mansão  de João Santos (12,4 km do local de votação), Carobé de Baixo (11,0 km do local de votação), Vila Maravilha (6,9 km do local de votação), Vila Operária Itapessoca (5,3 km do local de votação), Ilha de Itapessoca (5,1 km do local de votação), Divisa (5,0 km do local de votação), Alecrim 2 (4,1 km do local de votação), Alecrim 1 (3,9 km do local de votação), Usina Santa Tereza (3,7 km do local de votação) e Usina Santa Teresa (3,6 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Polo Farmacoquímico e de Biotecnologia e Engenho Novo 2.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 37 localidades rurais de Goiana que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Engenho Camorim</td><td>19,1</td><td>Rota 05</td><td>4,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Engenho Itapirema do Meio</td><td>13,6</td><td>Rota 05</td><td>8,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Mansão  de João Santos</td><td>12,4</td><td>Rota 08</td><td>7,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Carobé de Baixo</td><td>11,0</td><td>Rota 05</td><td>6,2</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Vila Maravilha</td><td>6,9</td><td>Rota 03</td><td>3,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Vila Operária Itapessoca</td><td>5,3</td><td>Rota 08</td><td>3,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Lugarejo Florestal Fernando Mussumbú</td><td>5,3</td><td>Rota 05</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Polo Farmacoquímico e de Biotecnologia</td><td>5,1</td><td>Rota 03</td><td>1,9</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Ilha de Itapessoca</td><td>5,1</td><td>Rota 08</td><td>3,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Divisa</td><td>5,0</td><td>Rota 03</td><td>3,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Engenho Pedra</td><td>4,6</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Alecrim 2</td><td>4,1</td><td>Rota 07</td><td>2,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Alecrim 1</td><td>3,9</td><td>Rota 07</td><td>2,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Engenho Novo 1</td><td>3,9</td><td>Rota 03</td><td>0,5</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Usina Santa Tereza</td><td>3,7</td><td>Rota 05</td><td>2,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Usina Santa Teresa</td><td>3,6</td><td>Rota 05</td><td>2,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Comunidade Quilombola Tejucupapo</td><td>3,5</td><td>Rota 08</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Engenho Novo 2</td><td>3,2</td><td>Rota 03</td><td>1,2</td><td>Rota passa perto (1–2 km)</td></tr></tbody></table></div>
+<p>27 das 37 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Eng. Jacaré (Rota 01), Macota (Rota 01), Barreirinha (Rota 01), Usina (Adubeira) (Rota 01), Rodoviária Velha (Centro) (Rota 01, Rota 02, Rota 03, Rota 04, Rota 05 e Rota 06), Rodoviária Nova (Vila Castelo Branco) (Rota 01, Rota 02, Rota 03, Rota 04, Rota 05 e Rota 06), Dois Rios (Assembleia de Deus) (Rota 02), Terra Nova (Sede da Associação/Calado) (Rota 02), Eng. São Bento (Rota 02), Chã do Eng. Novo (Rota 02), Folguedo (Sede do Engenho) (Rota 03), Eng. Novo (Rota 03), Engenho Diamante (em frente ao Colégio) (Rota 04), Engenho Jatobá (em frente ao Colégio) (Rota 05), Usina Sta. Teresa (parada de ônibus) (Rota 06), Eng. Ubú (Rota 07) e Alecrim (Restaurante Capão) (Rota 07). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 37 localidades rurais de Goiana, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 839" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Goiana: 14 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 46 - TRE-PE/PRES/DG/ZE025 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="437.9,648.0 481.4,629.6 501.5,636.1 514.6,660.4 501.2,677.8 529.3,706.9 548.7,695.2 586.7,699.7 610.5,648.5 621.9,640.8 636.6,626.2 655.5,631.6 685.0,548.7 719.8,497.7 725.0,474.9 709.6,455.0 684.3,408.6 663.4,362.1 658.7,333.6 644.5,308.2 657.4,295.1 645.8,284.4 608.0,272.7 597.6,268.8 574.2,293.6 525.1,264.8 504.5,286.4 489.6,266.5 450.3,278.2 436.2,258.8 412.1,245.2 395.2,248.9 367.6,267.8 342.3,270.7 320.9,226.8 296.8,198.5 284.2,194.0 281.9,174.4 269.3,146.8 274.0,115.3 284.2,98.1 281.2,80.0 51.7,208.7 92.7,276.7 129.9,264.0 147.8,268.3 154.0,282.4 129.9,295.3 127.9,331.8 111.5,357.2 71.6,376.5 56.4,397.2 87.2,408.3 94.9,448.6 64.9,468.2 433.2,651.0 437.9,648.0 437.9,648.0" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="255.0,257.4 260.4,260.0 265.9,262.2 266.2,270.6 266.2,281.5 266.2,289.8 266.2,297.7 266.3,305.6 266.6,313.1 267.4,319.9 266.2,326.3 260.8,324.1 255.5,325.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="173.5,222.0 175.5,216.1 180.5,218.6 187.3,219.4 191.5,223.2 197.8,225.0 202.5,228.6 206.8,232.6 210.9,236.1 219.5,237.3 224.5,239.9 227.6,244.6 231.0,248.8 235.7,251.6 241.7,254.2 247.3,256.6 254.1,257.4 259.9,259.6 265.9,262.2 266.2,270.6 266.2,281.5 266.2,289.8 266.2,297.7 266.3,305.6 266.6,313.1 267.4,319.9 268.3,327.0 269.4,335.7 270.8,346.4 270.3,339.4 269.3,331.5 272.2,326.8 268.7,322.5 267.9,315.0 267.0,307.8 266.6,297.4 266.7,289.8 267.4,283.0 266.6,276.2 266.5,266.4 267.2,259.6 259.3,259.2 255.0,257.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="119.7,411.5 113.7,409.8 113.0,402.6 108.8,397.7 103.2,395.5 107.9,391.9 112.6,384.8 116.0,380.1 120.7,375.9 127.9,372.5 144.6,364.4 156.2,358.8 167.4,353.5 174.8,349.9 180.1,347.3 186.7,344.1 192.5,341.3 199.9,337.6 205.0,335.1 210.2,332.6 217.7,334.1 222.8,336.8 228.1,339.2 235.9,340.2 242.8,340.9 249.8,340.1 249.8,331.6 254.0,327.3 255.5,325.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="425.7,618.6 423.0,613.9 426.4,618.8 429.3,623.6 432.3,628.7 435.4,634.0 437.3,641.0 437.9,648.7 438.5,655.6 439.2,663.4 438.0,670.5 434.4,676.2 438.7,672.7 439.7,664.0 439.0,657.0 438.4,649.8 437.7,642.5 440.8,637.4 447.3,636.2 455.4,635.6 463.6,635.4 468.9,633.0 473.1,629.5 467.0,627.8 460.2,627.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="506.1,532.8 502.7,528.0 503.1,520.6 504.3,514.2 504.6,505.2 501.3,498.6 497.4,492.8 494.0,487.7 490.6,482.7 491.2,475.6 493.9,470.0 496.8,464.1 499.3,458.9 503.4,450.7 506.7,444.0 510.0,437.2 512.8,432.0 516.7,427.4 520.6,423.0 524.7,418.4 529.0,413.6 535.1,409.6 542.2,405.8 547.3,403.0 553.6,400.5 560.9,398.1 568.4,395.5 579.8,391.8 588.9,391.6 598.2,392.4 605.6,393.1 605.4,403.5 606.7,412.3 608.9,418.6 615.2,420.1 617.4,426.8 615.8,432.6 615.8,437.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="248.7,332.6 250.9,338.0 245.8,340.7 243.8,346.7 245.7,352.5 248.3,358.3 252.2,367.4 252.2,375.2 252.2,383.5 249.9,390.1 243.6,392.2 238.5,394.8 232.6,398.5 231.1,404.7 225.0,406.6 220.2,409.8 216.9,414.7 214.1,420.0 210.8,426.5 208.2,432.2 207.8,442.3 208.4,451.9 206.6,457.8 204.0,463.5 200.8,470.0 196.8,474.9 191.2,478.8 183.2,489.8 179.8,496.4 179.2,505.4 179.2,512.9 180.8,523.5 179.9,531.5 176.2,537.0 179.0,542.8 187.2,553.6 194.8,554.8 200.2,557.2 207.1,555.4 214.8,553.9 221.7,555.8 228.2,554.5 221.7,555.8 215.8,554.0 208.2,554.1 204.3,558.3 198.6,556.4 192.4,554.3 182.0,547.0 178.4,541.9 174.5,537.4 164.9,537.6 158.4,536.1 153.1,533.5 145.8,533.7 141.0,530.1 133.9,523.3 130.7,528.3 127.6,534.1 124.3,540.2 121.2,545.8 115.6,555.6 112.3,561.3 109.3,566.5 102.8,565.5 96.4,563.4 91.0,561.0 84.7,559.5 77.9,560.4 71.0,557.2 65.3,549.8 59.6,543.6 51.7,541.2 46.2,536.1 39.6,530.9 37.1,526.0 42.3,523.6 46.8,526.6 53.7,526.0 57.3,521.7 54.0,526.0 46.8,526.6 42.3,523.6 37.1,526.0 39.6,530.9 44.5,534.4 48.6,538.2 58.7,543.1 65.3,549.8 69.7,555.4 73.6,559.6 80.6,558.9 86.9,560.1 94.0,562.2 99.0,564.8 105.4,566.3 110.9,563.7 113.7,558.9 119.4,549.0 124.3,540.2 127.6,534.1 130.7,528.3 133.5,522.9 136.6,517.6 140.5,513.3 145.7,508.4 152.4,504.1 159.6,499.5 167.8,494.1 173.5,490.4 182.0,484.7 187.7,481.0 192.6,477.9 198.1,473.6 201.8,468.3 204.5,462.4 208.2,454.5 207.7,447.1 207.9,438.8 208.5,431.2 212.3,423.3 215.1,418.0 218.7,412.1 221.7,407.6 228.3,406.4 231.3,401.4 234.5,397.1 240.5,393.7 246.5,391.1 251.3,387.8 251.8,380.4 252.6,373.4 248.7,359.4 246.3,353.9 244.0,348.0 244.6,340.8 247.1,335.4 248.7,332.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Engenho Camorim</title></polyline>
+<polyline points="509.6,533.3 513.1,538.2 518.6,542.7 525.6,544.6 532.7,545.2 538.7,543.5 542.4,539.6 543.4,532.5 547.5,529.2 552.3,526.1 559.4,521.6 567.2,517.0 572.2,514.1 579.6,508.8 584.6,506.1 589.8,503.6 592.1,508.8 594.8,514.3 598.5,518.3 605.9,518.1 611.2,515.9 610.6,524.4 610.7,533.3 611.9,540.3 611.3,548.2 609.3,555.2 607.5,562.2 605.7,568.5 604.0,575.4 605.0,582.3 607.2,588.3 606.5,600.6 610.2,605.3 616.1,609.7 616.4,617.6 619.3,622.3 624.1,625.3 627.2,620.7 631.8,616.9 634.8,623.3 633.5,616.8 627.7,618.9 628.1,626.3 622.9,623.6 617.0,620.0 616.9,611.4 612.7,606.4 607.1,604.2 608.3,594.2 605.5,584.1 604.0,577.3 605.2,570.5 606.7,564.5 608.5,558.3 610.1,552.5 612.0,546.0 611.5,538.9 610.8,531.4 609.8,524.6 602.2,525.9 597.0,530.1 592.2,533.1 585.3,533.8 578.3,534.3 573.4,537.0 567.2,535.4 563.4,531.4 561.0,526.0 553.1,525.6 547.5,529.2 543.4,532.5 541.5,538.3 538.7,543.5 532.7,545.2 525.6,544.6 518.6,542.7 513.7,539.7 510.1,533.8 509.6,533.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Mansão  de João Santos</title></polyline>
+<polyline points="255.1,255.4 259.3,259.2 263.9,262.4 269.1,265.2 267.2,259.6 266.6,252.1 265.9,244.9 263.5,239.1 261.5,233.3 257.2,229.5 263.5,217.9 266.8,213.8 272.6,206.9 275.5,201.9 277.5,192.4 279.0,186.5 280.9,180.8 282.2,174.6 284.5,163.4 286.8,157.8 284.2,163.6 282.5,169.8 280.8,176.4 279.1,184.4 276.9,193.0 275.1,199.4 277.5,192.4 279.0,186.5 280.9,180.8 283.0,175.5 288.5,173.2 286.1,167.0 286.4,159.1 283.7,165.4 282.1,171.4 280.9,179.5 279.0,185.4 276.9,193.0 275.1,199.4 273.0,205.3 268.9,210.9 264.1,216.6 260.5,221.0 256.9,225.5 258.5,231.6 262.4,235.3 264.4,241.5 265.7,248.1 266.1,255.8 262.8,260.4 257.3,257.8 255.1,255.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Vila Maravilha</title></polyline>
+<polyline points="462.2,631.9 460.2,626.4 457.7,620.4 456.4,613.9 453.2,609.0 449.0,604.5 444.5,600.9 438.5,595.8 434.4,592.3 438.2,584.6 442.0,580.1 440.1,573.5 439.1,566.8 435.8,562.0 430.9,558.8 426.9,563.5 423.7,568.5 422.6,575.1 423.8,582.2 427.6,587.3 431.9,590.5 436.3,594.0 441.1,598.0 445.8,601.9 450.3,605.7 454.1,610.3 456.8,615.5 458.0,622.1 460.7,626.9 462.2,631.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Alecrim 2</title></polyline>
+<polyline points="266.6,253.6 266.2,262.3 267.2,255.4 266.2,248.6 265.1,242.0 263.0,236.2 259.3,231.7 257.0,226.4 263.5,217.9 266.8,213.8 273.7,212.7 278.4,216.0 285.6,216.7 278.4,216.0 274.0,212.7 273.4,205.7 268.9,210.9 264.1,216.6 260.5,221.0 256.9,225.5 258.5,231.6 262.4,235.3 264.4,241.5 265.7,248.1 266.1,255.8 262.8,260.4 255.6,259.6 249.3,257.9 243.9,255.1 238.4,252.7 233.0,250.3 227.0,252.0 222.5,255.4 215.2,258.6 204.7,257.1 198.6,255.1 200.6,247.9 201.4,240.5 202.1,233.6 209.7,235.1 210.4,235.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 03</title></polyline>
+<circle cx="120.0" cy="411.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="173.9" cy="222.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="189.5" cy="234.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="615.7" cy="437.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="117.7" cy="376.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="447.3" cy="420.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="495.8" cy="495.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="541.2" cy="535.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="441.6" cy="604.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="284.6" cy="276.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="493.5" cy="488.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="663.5" cy="612.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="615.1" cy="391.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="708.0" cy="496.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="587.7" cy="641.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="618.7" cy="389.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="505.1" cy="430.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="250.1" cy="255.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="659.7" cy="368.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="499.2" cy="432.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="460.2" cy="627.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="506.4" cy="532.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="425.3" cy="653.4" r="2.2" fill="#b9b9b2"/>
+<polygon points="214.9,323.1 203.7,343.6 226.0,343.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="245.4,316.3 231.8,341.3 259.0,341.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="273.0,321.1 263.5,338.6 282.5,338.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="255.6,310.0 242.2,334.7 269.0,334.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="214.4,309.1 198.2,338.9 230.5,338.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="255.6,313.7 245.2,332.9 266.0,332.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="199.5,329.9 188.4,350.2 210.5,350.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="229.0,302.8 217.3,324.5 240.8,324.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="248.6,318.1 234.7,343.9 262.6,343.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="252.1,316.3 243.0,333.1 261.2,333.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="247.4,316.7 236.5,336.7 258.2,336.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="246.2,303.2 234.8,324.2 257.5,324.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="232.5,309.0 220.5,331.1 244.5,331.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="262.8,313.6 250.7,336.0 274.9,336.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="180.8,332.4 169.8,352.7 191.9,352.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="251.1,310.4 241.4,328.4 260.9,328.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="213.9,312.7 200.2,337.9 227.5,337.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="244.4,317.7 231.0,342.5 257.9,342.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="219.8,318.4 208.0,340.2 231.7,340.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="253.6,313.5 245.4,328.6 261.8,328.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="716.8,483.8 705.0,505.6 728.7,505.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="716.8" y="519.7" text-anchor="middle" fill="#5c5c57">Pontas De Pedra</text>
+<polygon points="694.7,499.4 680.9,524.8 708.5,524.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="497.0,424.8 484.8,447.3 509.2,447.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="616.0,373.6 603.7,396.1 628.2,396.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="663.2,358.2 652.3,378.1 674.0,378.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="663.2" y="392.0" text-anchor="middle" fill="#5c5c57">Carne de Vaca</text>
+<polygon points="509.4,523.9 500.3,540.7 518.5,540.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="509.4" y="554.1" text-anchor="middle" fill="#5c5c57">Carrapicho</text>
+<polygon points="593.1,636.7 582.9,655.6 603.4,655.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="462.2,618.2 449.5,641.6 474.9,641.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="462.2" y="656.0" text-anchor="middle" fill="#5c5c57">Gamba</text>
+<polygon points="673.3,562.6 663.7,580.4 683.0,580.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="649.2,615.9 640.0,633.0 658.5,633.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="496.0,413.7 482.4,438.7 509.6,438.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="426.5,645.2 418.4,660.1 434.6,660.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="223.3,308.7 212.9,327.9 233.7,327.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="190.3,335.7 180.5,353.7 200.1,353.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="174.6,337.0 165.4,354.1 183.9,354.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="497.0,447.8 487.3,465.7 506.7,465.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="497.0" y="479.2" text-anchor="middle" fill="#5c5c57">Tejucupapo</text>
+<polygon points="255.1,246.5 246.7,261.9 263.5,261.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="88.9" cy="503.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="95.9" y="498.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Engenho Camorim 19,1 km</text>
+<circle cx="228.4" cy="555.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="235.4" y="550.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Engenho Itapirema do Meio 13,6 km</text>
+<circle cx="633.2" cy="626.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="440.2" y="621.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Mansão  de João Santos 12,4 km</text>
+<circle cx="172.3" cy="538.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="179.3" y="533.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Carobé de Baixo 11,0 km</text>
+<circle cx="285.8" cy="172.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="292.8" y="167.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Vila Maravilha 6,9 km</text>
+<circle cx="595.4" cy="513.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="396.2" y="508.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Vila Operária Itapessoca 5,3 km</text>
+<circle cx="591.6" cy="513.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="429.6" y="528.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Ilha de Itapessoca 5,1 km</text>
+<circle cx="285.7" cy="216.5" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="292.7" y="211.5" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Polo Farmacoquímico e de Biotecnologia 5,1 km</text>
+<circle cx="280.7" cy="174.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="287.7" y="189.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Divisa 5,0 km</text>
+<circle cx="435.9" cy="563.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="442.9" y="558.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Alecrim 2 4,1 km</text>
+<circle cx="425.7" cy="566.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="432.7" y="581.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Alecrim 1 3,9 km</text>
+<circle cx="231.9" cy="397.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="238.9" y="392.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Usina Santa Tereza 3,7 km</text>
+<circle cx="237.7" cy="400.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="244.7" y="415.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Usina Santa Teresa 3,6 km</text>
+<circle cx="193.5" cy="257.3" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="200.5" y="252.3" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Engenho Novo 2 3,2 km</text>
+<rect x="250.1" y="319.9" width="10" height="10" fill="#1d1d1b"/><text x="264.1" y="342.9" font-weight="600" fill="#1d1d1b">Sede de Goiana</text>
+<line x1="35" x2="146.9" y1="736.9" y2="736.9" stroke="#8a8a84" stroke-width="2"/><text x="35" y="750.9" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="727.8685727038103" y2="727.8685727038103" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="731.8685727038103" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,720.9 421.4,733.1 434.6,733.1" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="731.8685727038103" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="745.8685727038103" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="754.8685727038103" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="750.8685727038103" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="754.8685727038103" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="773.8685727038103" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="777.8685727038103" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="773.8685727038103" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="777.8685727038103" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="796.8685727038103" y2="796.8685727038103" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="800.8685727038103" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="819.8685727038103" y2="819.8685727038103" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="823.8685727038103" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 46 - TRE-PE/PRES/DG/ZE025 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (9):</strong> Engenho Camorim, Engenho Itapirema do Meio, Mansão  de João Santos, Carobé de Baixo, Vila Maravilha, Vila Operária Itapessoca, Lugarejo Florestal Fernando Mussumbú, Polo Farmacoquímico e de Biotecnologia e Ilha de Itapessoca.</li>
+<li><strong>De 3 a 5 km (9):</strong> Divisa, Engenho Pedra, Alecrim 2, Alecrim 1, Engenho Novo 1, Usina Santa Tereza, Usina Santa Teresa, Comunidade Quilombola Tejucupapo e Engenho Novo 2.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (19):</strong> Alecrim 3, Atapus, Carne de Vaca, Carrapicho, Comunidade Quilombola São Lourenço, Engenho Umbu, Fazenda Negaço, Gamba, Ibeapicu, Meia Légua, Ponta de Pedras, Ponta do Funil, Portal de Goiana Residence, Porto Carrapicho, São Lourenço, Tejucopapo, Tejucupapo, Usina Maravilhas e Usina Nossa Senhora das Maravilhas.</li>
+</ul><h2>Rotas do Edital nº 46 - TRE-PE/PRES/DG/ZE025</h2>
+<p>O edital tem 8 rotas para Goiana. Horários: Primeira saída às 08:00h e última saída às 15:00h, com tolerância de 30 minutos de espera, conforme a lotação do veículo. Veículos: não informados no quadro.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Eng. Jacaré – Macota – Barreirinha – Usina (Adubeira) – Rodoviária Velha (Centro) – Rodoviária Nova (Vila Castelo Branco)</td></tr><tr><td>02</td><td>Dois Rios (Assembleia de Deus) – Terra Nova (Sede da Associação/Calado) – Eng. São Bento – Chã do Eng. Novo – Usina – Rodoviária Velha (Centro) – Rodoviária Nova (Vila Castelo Branco)</td></tr><tr><td>03</td><td>Folguedo (Sede do Engenho) – Engenho Pedra – Goiana Grande – Eng. Novo – Usina – Rodoviária Nova (Vila Castelo Branco) – Rodoviária Velha (Centro)</td></tr><tr><td>04</td><td>Engenho Diamante (em frente ao Colégio) – Rodoviária Nova (Vila Castelo Branco) – Rodoviária Velha (Centro)</td></tr><tr><td>05</td><td>Engenho Jatobá (em frente ao Colégio) – Engenho Mussumbu – Rodoviária Nova (Vila Castelo Branco) – Rodoviária Velha (Centro)</td></tr><tr><td>06</td><td>Usina Sta. Teresa (parada de ônibus) – Rodoviária Velha (Centro) – Rodoviária Nova (Vila Castelo Branco)</td></tr><tr><td>07</td><td>Itapirema – Eng. Ubú – Alecrim (Restaurante Capão) – Sítio Gambá</td></tr><tr><td>08</td><td>Sítio Carrapicho – Sítio Ibeapicu – Tejucupapo</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 46 - TRE-PE/PRES/DG/ZE025 (Quadro geral de percursos - transporte de eleitores, 2º turno), de 16/10/2026, DJE/TRE-PE nº 274 (Edição Eleitoral), disponibilizado em 16/10/2026, publicação em 17/10/2026, p. 76-77 (https://dje.tse.jus.br/dje/pdf/v1/edicao/130707).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 14 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Engenho Camorim</strong></td><td>Sede – Usina Santa Tereza – Usina Santa Teresa – Carobé de Baixo – Engenho Itapirema do Meio – Engenho Camorim – Sede</td><td>Usina Santa Tereza, Usina Santa Teresa, Carobé de Baixo, Engenho Itapirema do Meio, Engenho Camorim</td><td>46,9 km (ida e volta)</td><td>~1h39</td></tr><tr><td><strong>Rota nova – Mansão  de João Santos</strong></td><td>Carrapicho – Ilha de Itapessoca – Vila Operária Itapessoca – Mansão  de João Santos – Carrapicho</td><td>Ilha de Itapessoca, Vila Operária Itapessoca, Mansão  de João Santos</td><td>25,4 km (ida e volta)</td><td>~57 min</td></tr><tr><td><strong>Rota nova – Vila Maravilha</strong></td><td>Usina Maravilhas – Divisa – Vila Maravilha – Usina Maravilhas</td><td>Divisa, Vila Maravilha</td><td>17,3 km (ida e volta)</td><td>~23 min</td></tr><tr><td><strong>Rota nova – Alecrim 2</strong></td><td>Gamba – Alecrim 2 – Alecrim 1 – Gamba</td><td>Alecrim 2, Alecrim 1</td><td>8,8 km (ida e volta)</td><td>~16 min</td></tr><tr><td><strong>Parada extra na Rota 03</strong></td><td>desvio pelo caminho atual: Polo Farmacoquímico e de Biotecnologia – Engenho Novo 2</td><td>Polo Farmacoquímico e de Biotecnologia, Engenho Novo 2</td><td>+14,6 km</td><td>+27 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMG</strong></p><p>Goiana/PE, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Hildeberto Júnior da Rocha Silvestre</strong><br>Juiz Eleitoral da 25ª Zona Eleitoral – Goiana/PE</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 46 - TRE-PE/PRES/DG/ZE025) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Goiana, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 46 - TRE-PE/PRES/DG/ZE025: Engenho Camorim, Engenho Itapirema do Meio, Mansão  de João Santos, Carobé de Baixo, Vila Maravilha, Vila Operária Itapessoca, Ilha de Itapessoca, Divisa, Alecrim 2, Alecrim 1, Usina Santa Tereza, Usina Santa Teresa, Polo Farmacoquímico e de Biotecnologia e Engenho Novo 2.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Engenho Camorim (Sede – Usina Santa Tereza – Usina Santa Teresa – Carobé de Baixo – Engenho Itapirema do Meio – Engenho Camorim – Sede);</li><li>a criação da Rota nova – Mansão  de João Santos (Carrapicho – Ilha de Itapessoca – Vila Operária Itapessoca – Mansão  de João Santos – Carrapicho);</li><li>a criação da Rota nova – Vila Maravilha (Usina Maravilhas – Divisa – Vila Maravilha – Usina Maravilhas);</li><li>a criação da Rota nova – Alecrim 2 (Gamba – Alecrim 2 – Alecrim 1 – Gamba);</li><li>a inclusão de paradas em Polo Farmacoquímico e de Biotecnologia e Engenho Novo 2 na Rota 03, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 46 - TRE-PE/PRES/DG/ZE025 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Goiana</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Goiana; Edital nº 46 - TRE-PE/PRES/DG/ZE025 (Quadro geral de percursos - transporte de eleitores, 2º turno), de 16/10/2026, DJE/TRE-PE nº 274 (Edição Eleitoral), disponibilizado em 16/10/2026, publicação em 17/10/2026, p. 76-77 (https://dje.tse.jus.br/dje/pdf/v1/edicao/130707); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

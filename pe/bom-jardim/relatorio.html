@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Bom Jardim</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Bom Jardim</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/bom-jardim.pdf?v=1792245358" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Bom Jardim (33ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 33ª Zona Eleitoral <strong>1 rota nova e 1 parada extra em rotas do edital</strong> no transporte gratuito de Bom Jardim.
+Traçamos pelas estradas o percurso das 17 rotas do Edital nº 17/2026 - 33ª ZE (Quadro geral de percursos). 4 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 2 ficam a 1–2 km.</p>
+<ul>
+<li>Bom Jardim tem 30.691 eleitores aptos em 20 locais de votação e 117 seções. São 13 locais rurais, com 16.040 eleitores (52% do total).</li>
+<li>6 locais rurais ficam a 10 km ou mais da sede, com 9.209 eleitores. Os mais distantes: Bizarra (21,8 km), Lagoa Comprida (19,0 km) e Tamboatá (15,1 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Borracha (15,0 km do local de votação), Montevidéu 1 (13,9 km do local de votação), Montevidéu 2 (9,9 km do local de votação) e Montevidéu – Espada (8,6 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Sítio Junco e Caiaí.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 90 localidades rurais de Bom Jardim que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Borracha</td><td>15,0</td><td>Rota 10</td><td>7,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Montevidéu 1</td><td>13,9</td><td>Rota 10</td><td>7,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Montevidéu 2</td><td>9,9</td><td>Rota 10</td><td>6,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Montevidéu – Espada</td><td>8,6</td><td>Rota 10</td><td>5,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Sítio Junco</td><td>8,4</td><td>Rota 02</td><td>1,2</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Sítio Boca de Dois Rios 1</td><td>7,7</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Boca de Dois Rios</td><td>7,6</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Jurema</td><td>7,3</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Boca de Dois Rios 2</td><td>7,0</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Lagoa de Negro</td><td>6,7</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Varjão</td><td>6,4</td><td>Rota 06</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Lagoa Dantas</td><td>6,3</td><td>Rota 02</td><td>0,3</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Caiaí</td><td>6,2</td><td>Rota 02</td><td>1,0</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Sítio Caiana</td><td>5,9</td><td>Rota 02</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Belmonte 3</td><td>5,9</td><td>Rota 06</td><td>0,4</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Paquevira</td><td>5,9</td><td>Rota 07</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Belmonte - Varjão 2</td><td>5,6</td><td>Rota 06</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Belmonte - Varjão 1</td><td>5,4</td><td>Rota 06</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Lagoa de Cobra - Sítio Velho</td><td>5,2</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Santa Cruz</td><td>5,1</td><td>Rota 09</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Olhos d&#x27;Água</td><td>5,0</td><td>Rota 10</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Belmonte 1</td><td>4,8</td><td>Rota 06</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Ribeiro Seco</td><td>4,3</td><td>Rota 06</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Belmonte - Macambira</td><td>4,1</td><td>Rota 06</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Riacho do Tanque 1</td><td>4,1</td><td>Rota 02</td><td>0,3</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Camará de Baixo</td><td>3,8</td><td>Rota 08</td><td>0,8</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Mulungu</td><td>3,8</td><td>Rota 15</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Belmonte 2</td><td>3,7</td><td>Rota 06</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Laureano 2</td><td>3,7</td><td>Rota 07</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Mulungu - Sítio Oitero</td><td>3,7</td><td>Rota 15</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Riacho do Tanque 2</td><td>3,6</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Ribeiro Seco 2</td><td>3,6</td><td>Rota 05</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Bom Jardim - Centro</td><td>3,3</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Balança 1</td><td>3,3</td><td>Rota 14</td><td>0,5</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Gruta Chuva - Linha São Roque</td><td>3,2</td><td>Rota 10</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Pedra do Navio - Centro</td><td>3,2</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Laureano 1</td><td>3,1</td><td>Rota 07</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Correntes 1</td><td>3,1</td><td>Rota 08</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Correntes 2</td><td>3,1</td><td>Rota 08</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Torto 2</td><td>3,1</td><td>Rota 12</td><td>0,6</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Gado Bravo</td><td>3,0</td><td>Rota 05</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>7 das 123 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Sítio Botija (Rota 03), Salobro (Rota 05), Balança de Cana (Rota 09 e Rota 11), Sítio Engenho Palma (Rota 11), Derbi (Rota 12) e Sapocaia (Rota 14). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 90 localidades rurais de Bom Jardim, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 574" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Bom Jardim: 6 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 17/2026 - 33ª ZE (Quadro geral de percursos) e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="96.9,441.8 107.2,434.3 309.9,418.6 361.1,402.5 374.2,413.0 490.7,333.3 522.2,340.3 527.2,354.5 589.4,325.8 591.0,294.7 571.1,280.9 579.1,251.9 578.1,199.3 635.7,129.8 725.0,146.9 704.9,128.4 662.8,80.0 572.3,167.0 530.4,188.3 508.7,209.1 474.3,211.7 466.4,198.1 439.0,179.9 445.3,164.2 422.6,137.3 408.8,140.8 379.6,161.8 367.9,176.3 337.0,195.3 286.8,265.7 284.4,279.9 269.2,289.8 241.4,254.0 209.3,232.2 138.0,229.0 133.3,238.3 135.9,274.3 54.5,273.9 45.4,324.6 42.6,361.6 49.4,404.4 63.2,410.2 79.8,440.4 96.9,441.8 96.9,441.8" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="287.3,313.1 289.6,317.9 283.8,319.8 277.6,320.9 270.8,322.2 276.9,321.0 283.8,319.8 289.7,318.6 298.7,316.7 303.4,313.9 308.1,311.0 310.6,306.3 314.5,302.6 314.2,295.7 311.4,291.2 307.4,284.9 304.5,280.4 301.5,276.2 298.3,272.3 295.1,276.1 289.0,277.0 283.2,278.9 277.0,277.7 269.6,277.8 268.5,284.4 266.1,289.1 259.6,288.3 254.5,290.8 248.7,292.1 242.1,292.5 236.9,294.8 229.9,295.8 221.0,295.2 214.5,296.7 214.3,303.6 211.7,308.6 210.6,315.2 212.2,320.7 207.3,323.1 202.3,325.5 195.4,324.5 189.2,325.6 187.8,331.4 187.1,337.8 192.4,342.3 198.2,343.9 204.3,345.6 208.5,349.7 212.2,353.1 217.7,354.7 224.4,355.3 230.0,357.7 233.2,361.7 234.6,367.7 236.0,373.5 233.8,378.8 236.1,373.8 234.6,368.1 233.2,362.4 238.2,360.2 244.4,361.1 251.2,362.8 258.4,364.7 261.8,360.3 263.3,354.5 267.1,350.8 270.0,346.2 271.5,340.0 272.7,334.2 275.8,330.2 281.6,327.4 286.4,325.0 290.8,321.1 295.8,318.1 301.5,315.0 306.5,312.0 310.3,306.8 314.2,303.6 318.7,306.5 323.9,308.7 326.7,313.0 329.6,317.2 332.4,322.4 332.1,322.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="175.7,395.7 182.4,394.8 187.1,392.3 191.2,388.1 196.2,384.8 201.8,383.1 204.6,378.8 206.7,372.1 210.2,368.5 210.3,358.2 209.4,350.7 205.7,346.6 199.9,344.3 193.5,342.5 188.1,339.5 185.0,334.7 181.5,330.5 175.6,332.2 172.1,336.1 165.5,336.7 159.7,338.8 154.6,336.8 148.4,334.8 142.8,333.4 136.3,334.3 129.1,334.5 122.6,336.2 119.7,340.8 117.1,345.4 115.7,351.5 112.8,356.2 109.8,360.8 107.9,366.4 104.7,373.0 103.7,379.2 99.8,383.1 97.4,388.4 98.7,394.5 100.4,400.2 101.9,405.9 99.1,410.3 94.1,412.8 88.4,415.7 87.2,422.2 87.8,429.6 83.7,426.1 80.5,422.3 76.6,417.6 72.6,414.4 69.4,409.9 62.5,408.3 59.1,403.9 58.2,397.7 58.6,391.0 63.3,387.9 67.5,384.6 70.6,378.7 72.7,369.6 74.1,363.6 73.9,356.2 75.4,348.0 75.7,341.2 75.8,333.8 77.2,327.2 75.5,321.2 77.2,315.9 81.9,313.4 87.7,312.1 89.7,306.0 93.4,302.4 100.3,302.0 107.5,301.8 112.5,304.8 117.6,307.2 124.2,310.8 127.1,315.4 129.7,309.0 130.3,302.5 127.6,297.7 129.3,291.4 131.7,286.3 135.3,282.7 131.7,286.3 129.3,291.4 127.6,297.0 129.8,302.0 129.1,310.7 127.7,317.7 133.4,321.3 135.9,329.0 138.7,334.5 146.8,334.3 152.5,336.2 158.0,338.8 165.5,336.7 172.1,336.1 175.6,332.2 180.7,330.2 184.6,334.2 187.4,339.1 192.4,342.3 198.2,343.9 204.3,345.6 208.5,349.7 212.2,353.1 217.7,354.7 224.4,355.3 230.0,357.7 235.2,360.5 242.4,360.3 248.2,361.9 253.7,363.5 259.6,364.9 262.3,357.2 265.3,352.3 270.0,346.2 271.5,340.0 272.7,334.2 275.8,330.2 281.6,327.4 286.4,325.0 290.8,321.1 295.8,318.1 301.5,315.0 306.5,312.0 310.3,306.8 314.2,303.6 318.7,306.5 323.9,308.7 326.7,313.0 329.6,317.2 332.4,322.4 332.1,322.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="175.7,395.7 178.4,400.8 183.4,404.8 190.7,406.0 196.5,408.3 204.0,408.1 210.6,407.2 215.3,410.9 226.5,416.1 232.8,417.3 242.1,414.2 248.1,412.0 253.3,410.1 263.1,410.1 264.1,404.2 265.1,397.7 271.5,396.0 276.0,399.4 281.0,403.0 285.8,406.4 290.5,409.8 296.2,408.1 302.0,406.7 300.8,399.5 306.5,397.5 313.1,396.8 306.5,397.5 300.9,399.0 302.0,405.4 305.0,409.5 297.7,412.5 290.5,409.8 285.8,406.4 281.0,403.0 276.6,399.9 272.0,396.5 268.8,391.1 266.4,384.8 263.9,377.6 261.9,371.9 261.2,365.3 255.5,364.0 249.0,362.2 242.8,360.5 238.1,357.7 235.3,352.8 235.0,345.5 235.0,352.6 237.5,357.2 241.9,360.2 247.4,361.9 253.7,363.5 259.6,364.9 262.3,357.2 265.3,352.3 270.0,346.2 271.5,340.0 272.7,334.2 275.8,330.2 281.6,327.4 286.4,325.0 290.8,321.1 295.8,318.1 301.5,315.0 306.5,312.0 310.3,306.8 314.2,303.6 318.7,306.5 323.9,308.7 326.7,313.0 329.6,317.2 332.4,322.4 332.1,322.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="102.4,406.3 99.1,410.3 94.1,412.8 88.4,415.7 87.2,422.2 87.8,429.6 83.7,426.1 80.5,422.3 76.6,417.6 72.6,414.4 69.4,409.9 62.5,408.3 59.1,403.9 58.2,397.7 58.6,391.0 63.3,387.9 67.5,384.6 70.6,378.7 72.7,369.6 74.1,363.6 73.9,356.2 75.4,348.0 75.7,341.2 75.8,333.8 77.2,327.2 75.5,321.2 77.2,315.9 81.9,313.4 87.7,312.1 89.7,306.0 93.4,302.4 100.3,302.0 107.5,301.8 112.5,304.8 117.6,307.2 124.2,310.8 127.1,315.4 129.7,309.0 130.3,302.5 127.6,297.7 129.3,291.4 131.7,286.3 135.3,282.7 131.7,286.3 129.3,291.4 127.6,297.0 129.8,302.0 129.1,310.7 127.7,317.7 133.4,321.3 135.9,329.0 138.7,334.5 146.8,334.3 152.5,336.2 158.0,338.8 165.5,336.7 172.1,336.1 175.6,332.2 180.7,330.2 184.6,334.2 187.4,339.1 192.4,342.3 198.2,343.9 204.3,345.6 208.5,349.7 212.2,353.1 217.7,354.7 224.4,355.3 230.0,357.7 235.2,360.5 242.4,360.3 248.2,361.9 253.7,363.5 259.6,364.9 262.3,357.2 265.3,352.3 270.0,346.2 271.5,340.0 272.7,334.2 275.8,330.2 281.6,327.4 286.4,325.0 290.8,321.1 295.8,318.1 301.5,315.0 306.5,312.0 310.3,306.8 314.2,303.6 318.7,306.5 323.9,308.7 326.7,313.0 329.6,317.2 332.4,322.4 332.1,322.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="147.1,238.1 146.6,245.0 142.4,249.5 140.8,256.9 144.3,260.8 145.6,270.1 142.5,274.2 140.0,280.8 141.0,287.9 145.4,291.4 152.4,289.2 157.8,290.9 163.2,293.9 169.4,295.4 175.3,297.5 182.0,294.9 188.5,294.2 194.6,292.9 193.3,286.8 197.1,281.0 193.5,286.5 195.7,292.2 200.8,289.7 207.4,288.3 213.1,283.9 218.7,280.7 221.1,287.6 220.7,294.3 226.6,295.6 233.9,294.8 239.3,293.1 246.5,292.1 253.8,291.2 258.6,289.0 265.6,288.9 268.5,284.4 270.7,278.5 277.0,277.7 282.9,278.9 288.7,277.0 295.0,276.2 298.3,272.3 301.5,276.2 304.5,280.4 307.3,284.8 311.4,291.2 314.2,295.7 314.5,302.6 318.7,306.5 323.9,308.7 326.7,313.0 329.6,317.2 332.4,322.4 332.1,322.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="217.6,239.3 212.6,241.5 213.2,248.0 213.8,254.8 209.8,258.2 203.9,259.3 197.3,260.0 191.7,262.5 190.0,268.2 194.6,271.2 199.6,273.4 198.0,279.8 194.5,283.4 193.1,289.1 190.1,294.2 182.9,294.3 177.3,297.2 171.2,296.1 164.9,294.5 160.6,291.8 154.8,289.3 150.4,292.0 143.5,290.3 139.5,286.4 136.0,282.7 131.7,286.3 129.3,291.4 127.6,297.0 129.8,302.0 129.1,310.7 127.7,317.7 133.4,321.3 135.9,329.0 138.7,334.5 146.8,334.3 152.5,336.2 158.0,338.8 165.5,336.7 172.1,336.1 175.6,332.2 180.7,330.2 184.6,334.2 187.4,339.1 192.4,342.3 198.2,343.9 204.3,345.6 208.5,349.7 212.2,353.1 217.7,354.7 224.4,355.3 230.0,357.7 235.2,360.5 242.4,360.3 248.2,361.9 253.7,363.5 259.6,364.9 262.3,357.2 265.3,352.3 270.0,346.2 271.5,340.0 272.7,334.2 275.8,330.2 281.6,327.4 286.4,325.0 290.8,321.1 295.8,318.1 301.5,315.0 306.5,312.0 310.3,306.8 314.2,303.6 318.7,306.5 323.9,308.7 326.7,313.0 329.6,317.2 332.4,322.4 332.1,322.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="382.7,174.6 384.5,179.8 390.8,180.8 397.6,179.5 404.0,180.6 410.6,181.2 417.5,182.4 422.4,185.3 429.1,186.1 434.7,187.7 433.5,193.5 428.6,195.8 424.0,199.1 428.3,195.9 433.6,194.1 437.0,197.8 433.0,200.8 430.9,206.1 432.6,212.0 430.5,219.3 428.3,225.2 423.9,228.9 418.0,227.6 411.4,226.6 406.1,224.7 402.9,228.8 397.2,226.8 392.2,230.6 386.7,229.0 380.3,228.1 376.9,233.3 366.5,232.0 359.2,231.8 353.8,230.0 350.9,225.8 346.1,222.6 341.9,219.4 338.1,216.2 332.8,218.4 328.5,222.2 331.3,226.5 332.3,232.7 335.6,236.6 339.7,239.9 341.3,245.5 345.3,249.7 339.9,251.7 333.3,251.1 329.9,247.3 321.4,248.7 315.1,247.7 309.8,245.4 303.7,244.5 300.7,249.2 298.1,253.7 296.4,260.9 296.6,268.5 300.2,274.3 304.5,280.4 307.3,284.8 311.4,291.2 314.2,295.7 314.5,302.6 318.7,306.5 323.9,308.7 326.7,313.0 329.6,317.2 332.4,322.4 332.1,322.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="492.4,236.5 497.1,239.2 502.7,237.8 505.9,233.6 507.2,227.8 508.0,221.3 511.0,216.6 507.3,213.1 508.8,207.5 515.9,207.4 518.8,203.2 522.9,200.1 526.8,196.7 528.9,191.4 531.8,186.6 536.2,189.7 541.9,191.0 547.1,193.5 550.7,198.0 554.6,201.2 560.8,203.0 565.5,206.1 560.8,203.0 554.6,201.2 550.7,198.0 547.7,194.0 543.0,191.5 537.0,190.3 533.9,186.3 529.6,189.8 527.3,194.6 524.7,199.1 520.3,202.0 517.4,206.2 511.6,207.5 506.8,210.3 510.3,213.9 508.8,219.7 508.1,226.1 506.3,232.2 506.0,238.9 508.5,243.4 510.4,249.2 512.3,254.6 510.4,249.2 504.2,250.1 499.6,252.8 496.1,256.6 491.8,259.7 488.3,264.7 482.2,262.6 479.2,258.1 478.1,250.7 471.8,251.9 468.3,256.1 464.8,260.8 468.3,256.1 471.8,251.9 476.0,248.4 479.1,252.8 478.5,259.7 483.8,263.7 490.3,261.3 485.2,264.3 479.1,260.5 470.9,262.4 468.3,267.0 465.6,279.5 463.4,285.2 460.4,280.4 455.0,278.3 447.2,277.2 440.7,275.2 437.4,271.0 434.1,267.0 437.4,271.0 440.7,275.2 447.2,277.2 454.3,277.8 460.1,280.1 462.8,286.2 465.1,280.7 468.1,272.8 469.0,264.7 474.5,261.0 479.2,258.1 478.7,251.3 479.2,258.1 474.5,261.0 469.2,264.0 467.8,270.2 465.6,279.5 463.4,285.2 459.6,292.1 456.7,296.6 454.8,302.1 449.2,304.8 443.2,306.2 437.4,304.5 433.0,307.5 430.3,312.8 424.8,314.4 419.7,316.6 413.5,317.5 409.0,321.1 413.5,317.5 419.7,316.6 424.8,314.4 430.3,312.8 432.6,307.8 437.4,304.5 443.2,306.2 449.2,304.8 454.8,302.1 456.7,296.6 459.6,292.1 462.6,287.7 464.9,281.5 460.5,278.7 462.9,273.4 464.6,267.9 462.9,273.4 460.5,278.1 465.1,280.7 462.8,286.2 459.6,292.1 456.7,296.6 454.8,302.1 449.2,304.8 450.3,314.5 448.5,319.8 441.5,323.7 437.2,327.1 431.8,330.7 424.6,335.2 419.1,338.7 409.1,345.0 404.5,347.7 400.0,345.0 394.5,343.2 390.5,340.0 383.8,339.4 379.5,336.5 375.5,333.3 370.4,331.0 363.6,329.7 357.6,331.8 351.0,330.5 345.4,328.8 340.7,331.4 335.9,328.7 333.6,323.3 332.1,322.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="517.1,323.8 514.2,328.4 512.7,336.8 520.9,338.5 525.3,343.8 528.7,349.4 526.9,354.7 520.9,352.5 514.5,350.3 508.6,348.2 503.1,346.2 498.9,343.4 495.2,338.9 490.6,336.1 484.9,339.0 472.4,347.0 462.2,344.9 454.9,344.4 450.6,341.1 451.7,333.7 451.6,323.3 447.5,319.6 441.5,323.7 437.2,327.1 431.8,330.7 424.6,335.2 419.1,338.7 412.5,337.9 405.8,339.4 399.4,341.6 393.8,343.3 389.8,340.0 383.1,339.3 376.0,333.7 370.4,331.0 363.6,329.7 357.6,331.8 351.0,330.5 345.4,328.8 340.7,331.4 335.9,328.7 333.6,323.3 330.4,318.4 327.1,314.5 323.6,310.9 320.0,306.8 315.2,303.8 314.6,296.8 311.8,291.7 307.4,284.9 304.5,280.4 301.5,276.2 298.3,272.3 295.1,276.1 289.0,277.0 283.2,278.9 277.0,277.7 269.6,277.8 268.5,284.4 270.7,278.5 277.0,277.7 282.9,278.9 288.7,277.0 295.0,276.2 298.3,272.3 301.5,276.2 304.5,280.4 307.3,284.8 311.4,291.2 314.2,295.7 314.5,302.6 318.7,306.5 323.9,308.7 326.7,313.0 329.6,317.2 332.4,322.4 335.5,326.8 338.6,330.8 344.1,329.1 350.7,329.8 354.3,333.2 360.4,330.6 367.2,331.0 372.9,332.4 379.5,336.5 383.8,339.4 390.5,340.2 395.9,342.7 405.8,339.4 412.5,337.9 418.2,339.3 423.4,336.0 430.1,331.7 437.2,327.1 441.5,323.7 445.7,319.8 451.1,322.0 452.3,327.9 451.0,334.7 451.1,342.0 456.0,344.6 468.3,347.1 480.8,341.5 487.7,337.2 494.3,337.6 498.3,342.8 502.5,346.0 508.6,348.2 514.5,350.3 520.9,352.5 526.9,354.7 532.9,356.7 540.4,359.4 545.9,361.4 550.4,363.9 555.9,367.7 560.4,370.9 565.2,374.3 570.7,372.5 573.0,366.5 575.8,362.0 581.3,359.0 587.1,355.4 590.4,351.4 593.4,346.3 595.4,341.2 597.6,335.5 599.5,329.0 598.2,322.4 592.6,318.7 588.9,313.8 586.1,308.8 584.6,300.0 581.1,294.8 576.5,290.8 572.6,286.0 569.9,281.3 569.7,274.0 570.5,267.8 569.8,261.4 567.9,254.0 565.7,248.6 567.5,243.3 573.0,240.9 574.7,234.4 573.1,240.7 567.5,243.3 565.7,248.6 567.8,253.7 569.8,259.7 570.2,266.7 569.7,274.0 569.9,281.3 572.6,286.0 576.5,290.8 580.0,294.4 584.2,297.4 585.6,306.0 587.5,311.4 591.7,317.9 596.0,320.7 599.5,329.0 597.6,335.5 595.4,341.2 593.4,346.3 590.6,351.2 587.1,355.4 582.7,358.5 577.6,360.5 574.0,364.1 571.7,370.2 568.5,375.1 561.4,371.7 555.9,367.7 550.4,363.9 545.9,361.4 540.4,359.4 535.2,357.6 529.0,355.4 522.1,352.9 514.5,350.3 508.6,348.2 503.1,346.2 498.9,343.4 495.2,338.9 490.6,336.1 484.9,339.0 472.4,347.0 462.2,344.9 454.9,344.4 450.6,341.1 451.7,333.7 451.6,323.3 447.5,319.6 441.5,323.7 437.2,327.1 431.8,330.7 424.6,335.2 419.1,338.7 412.5,337.9 405.8,339.4 399.4,341.6 393.8,343.3 389.8,340.0 383.1,339.3 376.0,333.7 370.4,331.0 363.6,329.7 357.6,331.8 351.0,330.5 345.4,328.8 340.7,331.4 335.9,328.7 333.6,323.3 332.1,322.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 09</title></polyline>
+<polyline points="515.7,254.2 519.6,257.4 522.2,262.0 523.6,267.8 524.4,274.7 526.3,280.7 522.8,286.5 519.0,289.8 511.8,290.9 508.3,287.0 506.8,292.8 508.3,298.8 512.5,302.5 518.3,304.3 511.1,304.6 509.3,309.8 506.4,314.4 506.8,321.9 510.5,325.7 510.7,332.7 514.2,328.4 517.2,323.7 522.0,321.0 527.1,318.1 533.8,315.4 537.6,311.5 535.1,305.0 537.2,299.5 542.1,296.4 543.8,302.1 545.6,295.3 553.0,294.4 559.4,288.8 563.6,285.5 567.7,282.4 569.0,276.6 570.7,270.3 569.6,263.8 569.3,256.9 566.7,251.8 566.3,244.6 570.3,241.4 573.6,237.6 572.1,231.7 574.4,226.2 576.0,220.5 575.0,214.0 570.3,210.8 566.1,207.9 563.1,203.6 557.0,202.1 552.0,199.9 547.9,196.3 545.0,200.8 538.2,200.5 534.3,204.1 531.8,208.7 530.1,215.0 526.5,218.6 530.1,215.0 531.7,209.6 533.9,204.5 537.7,201.0 545.0,200.8 547.4,196.2 551.5,199.2 556.2,201.8 562.0,203.3 565.6,206.6 569.5,209.9 575.0,214.0 576.0,220.5 574.4,226.2 572.1,231.1 573.8,236.7 570.3,241.4 566.3,244.6 566.7,251.8 569.3,256.9 569.6,263.8 570.7,270.3 569.0,276.6 567.7,282.4 563.6,285.5 556.7,282.6 562.0,285.1 567.2,282.8 569.0,276.6 570.7,270.3 569.6,263.8 569.3,256.9 566.7,251.8 566.3,244.6 570.3,241.4 574.3,238.1 570.3,241.4 566.3,244.6 566.7,251.8 569.3,256.9 569.6,263.8 570.7,270.3 569.0,276.6 570.8,282.8 574.1,287.8 577.5,292.0 582.5,295.4 585.1,303.1 586.5,309.8 591.7,317.9 596.0,320.7 599.5,329.0 597.6,335.5 595.4,341.2 593.4,346.3 590.6,351.2 587.1,355.4 582.7,358.5 577.6,360.5 574.0,364.1 571.7,370.2 568.5,375.1 561.4,371.7 555.9,367.7 550.4,363.9 545.9,361.4 540.4,359.4 535.2,357.6 529.0,355.4 522.1,352.9 514.5,350.3 508.6,348.2 503.1,346.2 498.9,343.4 495.2,338.9 490.6,336.1 484.9,339.0 472.4,347.0 462.2,344.9 454.9,344.4 450.6,341.1 451.7,333.7 451.6,323.3 447.5,319.6 441.5,323.7 437.2,327.1 431.8,330.7 424.6,335.2 419.1,338.7 412.5,337.9 405.8,339.4 399.4,341.6 393.8,343.3 389.8,340.0 383.1,339.3 376.0,333.7 370.4,331.0 363.6,329.7 357.6,331.8 351.0,330.5 345.4,328.8 340.7,331.4 335.9,328.7 333.6,323.3 332.1,322.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 10</title></polyline>
+<polyline points="577.0,233.9 573.1,240.7 567.5,243.3 565.7,248.6 567.8,253.7 569.8,259.7 570.2,266.7 569.7,274.0 569.9,281.3 572.6,286.0 576.5,290.8 580.0,294.4 584.2,297.4 585.6,306.0 587.5,311.4 591.7,317.9 596.0,320.7 599.5,329.0 597.6,335.5 595.4,341.2 593.4,346.3 590.6,351.2 587.1,355.4 582.7,358.5 577.6,360.5 574.0,364.1 571.7,370.2 568.5,375.1 561.4,371.7 555.9,367.7 550.4,363.9 545.9,361.4 540.4,359.4 535.2,357.6 529.0,355.4 522.1,352.9 514.5,350.3 508.6,348.2 503.1,346.2 498.9,343.4 495.2,338.9 490.6,336.1 484.9,339.0 472.4,347.0 462.2,344.9 454.9,344.4 450.6,341.1 451.7,333.7 451.6,323.3 447.5,319.6 441.5,323.7 437.2,327.1 431.8,330.7 424.6,335.2 419.1,338.7 409.1,345.0 404.5,347.7 399.3,350.2 399.9,356.7 393.7,358.2 388.2,365.7 382.2,373.2 378.2,377.6 370.0,384.2 366.0,387.6 362.3,391.4 357.1,397.1 351.8,402.8 347.2,405.3 337.4,406.1 331.2,407.1 325.3,409.0 313.4,410.1 305.7,410.9 297.7,412.5 293.4,409.4 285.8,406.4 281.0,403.0 276.6,399.9 272.0,396.5 268.8,391.1 266.4,384.8 263.9,377.6 261.9,371.9 261.2,365.3 262.3,357.2 265.3,352.3 270.0,346.2 271.5,340.0 272.7,334.2 275.8,330.2 281.6,327.4 286.4,325.0 290.8,321.1 295.8,318.1 301.5,315.0 306.5,312.0 310.3,306.8 314.2,303.6 318.7,306.5 323.9,308.7 326.7,313.0 329.6,317.2 332.4,322.4 332.1,322.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 11</title></polyline>
+<polyline points="422.7,200.1 427.5,196.4 433.2,194.9 437.2,198.1 432.9,200.9 430.9,206.1 432.6,212.0 430.5,219.3 428.3,225.2 423.9,228.9 418.0,227.6 411.4,226.6 406.1,224.7 402.9,228.8 397.2,226.8 392.2,230.6 386.7,229.0 380.3,228.1 376.9,233.3 379.7,228.1 385.9,229.2 385.9,237.6 389.1,242.3 392.1,246.5 386.7,249.6 383.1,253.1 378.8,256.8 378.4,263.8 378.0,271.0 372.7,273.2 367.0,275.5 361.8,273.0 355.4,271.6 351.0,275.8 346.7,278.6 342.8,282.0 337.8,284.2 336.6,290.7 334.3,295.8 332.6,302.0 329.7,306.1 330.5,313.9 331.4,320.1 332.1,322.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 12</title></polyline>
+<polyline points="377.2,303.9 371.1,305.2 366.1,307.9 360.4,309.4 353.8,309.8 354.4,303.3 359.1,300.4 363.7,296.9 367.8,293.6 369.3,287.9 365.7,283.9 363.8,278.7 369.3,276.8 372.7,273.2 367.0,275.5 361.8,273.0 355.4,271.6 351.0,275.8 347.2,279.2 342.8,282.0 337.8,284.2 336.6,290.7 334.3,295.8 332.6,302.0 329.7,306.1 330.5,313.9 331.4,320.1 334.5,324.4 338.2,327.7 334.5,324.4 332.1,322.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 13</title></polyline>
+<polyline points="372.5,392.7 368.9,388.9 362.3,391.4 357.1,397.1 351.8,402.8 347.2,405.3 337.4,406.1 331.2,407.1 325.3,409.0 313.4,410.1 305.7,410.9 302.7,406.6 300.4,401.6 303.6,397.5 310.1,396.6 304.1,397.5 301.2,393.1 302.7,387.2 307.2,383.7 311.7,381.0 317.8,379.8 320.4,375.4 325.5,373.3 323.9,367.5 319.6,363.2 318.8,356.9 318.6,349.6 319.7,342.9 323.1,339.0 327.7,335.9 328.9,329.8 326.2,325.4 329.4,321.2 332.1,322.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 14</title></polyline>
+<polyline points="137.2,283.3 132.2,285.7 129.4,290.9 127.7,296.5 129.7,301.7 129.9,308.6 128.1,314.5 130.0,320.0 135.7,321.8 135.9,329.0 132.4,334.2 124.6,335.3 120.3,339.2 117.6,344.3 115.9,349.8 117.7,344.5 120.1,339.8 123.5,335.8 129.5,334.4 136.9,334.4 146.8,334.3 152.5,336.2 158.0,338.8 152.5,336.2 153.4,342.6 153.2,349.6 152.0,356.0 153.2,349.6 153.4,342.6 150.9,338.1 158.0,338.8 165.5,336.7 172.1,336.1 175.6,332.2 180.7,330.2 184.6,334.2 187.4,339.1 192.4,342.3 198.2,343.9 204.3,345.6 208.5,349.7 212.2,353.1 217.7,354.7 224.4,355.3 230.0,357.7 233.2,361.7 234.6,367.7 236.0,373.5 233.8,378.8 236.1,373.8 234.6,368.1 233.2,362.4 238.2,360.2 244.4,361.1 251.2,362.8 258.4,364.7 261.8,360.3 263.3,354.5 267.1,350.8 270.0,346.2 271.5,340.0 272.7,334.2 275.8,330.2 281.6,327.4 286.4,325.0 290.8,321.1 295.8,318.1 301.5,315.0 306.5,312.0 310.3,306.8 314.2,303.6 318.7,306.5 323.9,308.7 326.7,313.0 329.6,317.2 332.4,322.4 332.1,322.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 15</title></polyline>
+<polyline points="467.0,286.5 462.5,289.1 458.8,293.5 456.1,298.3 453.2,303.3 447.5,305.4 440.5,304.6 434.4,306.6 430.8,311.7 425.9,314.4 420.3,316.0 414.7,317.5 409.4,320.0 404.8,323.7 402.5,328.9 396.2,330.8 390.6,334.5 388.7,339.8 380.0,337.0 376.0,333.7 375.3,327.0 372.7,322.4 370.5,316.0 368.7,310.5 371.1,305.2 377.2,303.9 371.1,305.2 366.1,307.9 360.4,309.4 353.8,309.8 350.5,314.4 347.7,319.0 341.9,320.7 334.5,320.9 332.1,322.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 16</title></polyline>
+<polyline points="407.3,342.9 404.5,347.7 399.3,350.2 399.9,356.7 393.0,355.7 385.0,354.2 379.1,353.0 374.5,350.4 368.0,348.5 363.1,346.1 357.9,343.7 353.1,340.8 352.8,333.1 358.4,331.3 366.2,330.7 372.9,332.4 379.5,336.5 383.8,339.4 390.5,340.2 383.8,339.4 379.5,336.5 375.5,333.3 370.4,331.0 363.6,329.7 357.6,331.8 351.0,330.5 345.4,328.8 340.7,331.4 335.9,328.7 333.6,323.3 332.1,322.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 17</title></polyline>
+<polyline points="573.1,241.6 573.7,235.1 572.3,229.3 575.3,224.2 576.4,217.7 577.8,209.2 578.2,201.2 578.3,194.1 582.9,191.2 586.9,188.0 590.7,184.4 595.7,182.2 599.0,186.2 605.1,184.9 609.6,187.7 613.2,184.0 616.2,179.8 616.0,172.4 617.9,166.8 621.7,163.2 623.5,157.7 626.1,152.3 630.3,149.5 634.8,146.8 638.1,143.0 640.9,138.6 646.0,136.3 648.5,130.5 645.9,125.7 649.7,120.9 656.6,120.7 661.8,122.6 656.6,120.7 661.6,118.4 663.3,112.5 666.0,107.9 671.5,105.2 679.2,105.5 680.7,111.2 684.8,115.1 681.2,111.5 678.5,107.0 683.3,104.1 690.5,104.7 696.0,106.3 702.1,108.7 703.9,114.7 706.9,118.9 703.9,114.7 702.1,108.7 697.4,106.2 691.5,104.8 684.6,103.8 679.2,105.5 672.6,104.9 666.7,106.2 662.2,102.3 657.1,100.0 650.0,99.9 648.1,105.2 645.9,111.5 643.6,116.6 641.2,121.6 637.0,124.6 630.5,125.2 626.4,121.7 625.4,115.6 621.6,111.8 621.1,105.1 616.6,102.3 610.0,102.0 603.6,101.0 598.6,98.3 596.6,104.2 594.5,110.6 595.6,117.6 592.7,121.9 589.7,126.3 587.3,133.4 583.5,136.7 581.2,142.3 580.2,148.6 580.8,155.5 582.5,161.1 583.8,167.5 582.3,174.4 582.5,181.8 580.6,187.5 578.3,194.1 578.2,201.2 577.8,209.2 576.7,215.1 575.7,222.5 572.9,228.2 573.5,234.7 571.8,240.3 573.1,241.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Borracha</title></polyline>
+<polyline points="58.4,391.1 55.4,387.0 52.4,382.9 46.9,381.2 41.7,379.3 35.9,377.8 41.7,379.3 46.9,381.2 52.4,382.9 55.4,387.0 57.8,391.9 58.1,398.8 60.0,405.4 66.9,407.6 70.8,411.8 74.4,415.9 78.6,418.8 81.1,423.4 84.8,426.8 88.0,430.8 82.2,433.0 73.9,433.4 64.9,433.4 72.8,433.4 80.0,433.3 86.3,432.0 84.2,426.4 80.7,422.6 80.0,422.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 02</title></polyline>
+<circle cx="58.0" cy="391.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="57.7" cy="394.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="212.2" cy="305.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="60.6" cy="404.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="102.2" cy="406.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="217.9" cy="238.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="79.8" cy="365.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="77.5" cy="342.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="222.7" cy="253.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="419.6" cy="201.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="212.4" cy="247.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="213.6" cy="258.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="190.2" cy="327.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="495.6" cy="340.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="527.9" cy="225.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="203.5" cy="258.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="199.3" cy="279.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="193.4" cy="262.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="121.4" cy="349.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="425.4" cy="284.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="153.0" cy="357.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="190.6" cy="268.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="303.8" cy="244.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="146.7" cy="356.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="120.5" cy="341.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="193.7" cy="289.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="265.2" cy="355.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="379.4" cy="401.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="506.6" cy="285.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="270.1" cy="345.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="298.0" cy="256.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="408.1" cy="321.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="409.5" cy="324.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="336.6" cy="265.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="147.1" cy="237.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="325.8" cy="228.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="453.7" cy="346.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="326.3" cy="213.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="376.3" cy="208.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="374.0" cy="391.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="434.8" cy="266.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="232.7" cy="379.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="403.5" cy="326.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="319.7" cy="366.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="403.7" cy="329.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="458.6" cy="328.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="405.6" cy="339.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="416.5" cy="239.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="545.9" cy="282.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="237.9" cy="393.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="431.7" cy="311.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="447.6" cy="323.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="228.3" cy="395.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="391.3" cy="334.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="379.6" cy="338.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="397.6" cy="257.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="415.8" cy="341.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="491.4" cy="260.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="390.1" cy="378.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="360.2" cy="266.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="373.5" cy="272.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="557.3" cy="283.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="233.2" cy="398.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="388.3" cy="337.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="439.9" cy="305.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="461.4" cy="277.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="399.9" cy="370.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="392.0" cy="340.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="572.4" cy="283.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="569.0" cy="277.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="402.3" cy="363.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="464.5" cy="282.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="175.7" cy="396.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="405.8" cy="356.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="576.5" cy="233.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="514.8" cy="254.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="390.1" cy="250.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="216.8" cy="411.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="296.5" cy="408.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="368.4" cy="229.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="137.3" cy="283.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="400.1" cy="358.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="223.4" cy="419.6" r="2.2" fill="#b9b9b2"/>
+<polygon points="314.6,297.4 301.2,322.1 328.0,322.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="316.0,300.3 303.3,323.6 328.7,323.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="324.6,305.2 314.4,324.0 334.8,324.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="511.7,239.9 501.4,258.8 522.0,258.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="511.7" y="272.6" text-anchor="middle" fill="#5c5c57">Pindobinha</text>
+<polygon points="458.9,285.9 450.3,301.7 467.4,301.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="180.6,390.5 167.5,414.7 193.7,414.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="180.6" y="429.2" text-anchor="middle" fill="#5c5c57">Umary</text>
+<polygon points="572.8,229.6 561.3,250.6 584.2,250.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="572.8" y="264.6" text-anchor="middle" fill="#5c5c57">Bizarra</text>
+<polygon points="133.3,275.4 125.9,289.1 140.7,289.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="131.5,273.8 119.0,296.8 144.0,296.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="131.5" y="311.1" text-anchor="middle" fill="#5c5c57">Tamboatá</text>
+<polygon points="325.1,314.5 311.9,338.8 338.3,338.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="181.1,394.3 169.3,416.0 192.8,416.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="395.3,346.5 385.1,365.1 405.4,365.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="395.3" y="378.8" text-anchor="middle" fill="#5c5c57">Freitas</text>
+<polygon points="381.7,243.6 371.7,262.2 391.7,262.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="381.7" y="275.8" text-anchor="middle" fill="#5c5c57">Barroncos</text>
+<polygon points="226.2,407.0 217.2,423.6 235.2,423.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="226.2" y="437.0" text-anchor="middle" fill="#5c5c57">Aroeiras</text>
+<polygon points="576.3,281.0 567.2,297.6 585.3,297.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="576.3" y="311.0" text-anchor="middle" fill="#5c5c57">Lagoa Comprida</text>
+<polygon points="291.2,399.0 280.1,419.4 302.3,419.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="291.2" y="433.3" text-anchor="middle" fill="#5c5c57">Encruzilhada</text>
+<polygon points="373.7,226.0 365.1,241.9 382.4,241.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="322.8,300.9 309.6,325.2 336.0,325.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="302.7,401.6 292.7,419.9 312.6,419.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="323.9,308.1 316.4,321.9 331.4,321.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="708.5" cy="119.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="602.3" y="114.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Borracha 15,0 km</text>
+<circle cx="686.4" cy="116.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="555.4" y="131.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Montevidéu 1 13,9 km</text>
+<circle cx="664.2" cy="124.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="650.4" cy="131.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="482.2" y="146.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Montevidéu – Espada 8,6 km</text>
+<circle cx="35.0" cy="381.0" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="42.0" y="376.0" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Sítio Junco 8,4 km</text>
+<circle cx="63.2" cy="435.5" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="70.2" y="430.5" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Caiaí 6,2 km</text>
+<rect x="327.1" y="317.2" width="10" height="10" fill="#1d1d1b"/><text x="341.1" y="340.2" font-weight="600" fill="#1d1d1b">Sede de Bom Jardim</text>
+<line x1="35" x2="140.3" y1="471.8" y2="471.8" stroke="#8a8a84" stroke-width="2"/><text x="35" y="485.8" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="462.77445484555335" y2="462.77445484555335" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="466.77445484555335" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,455.8 421.4,468.0 434.6,468.0" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="466.77445484555335" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="480.77445484555335" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="489.77445484555335" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="485.77445484555335" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="489.77445484555335" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="508.77445484555335" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="512.7744548455534" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="508.77445484555335" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="512.7744548455534" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="531.7744548455534" y2="531.7744548455534" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="535.7744548455534" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="554.7744548455534" y2="554.7744548455534" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="558.7744548455534" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 17/2026 - 33ª ZE (Quadro geral de percursos) · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (20):</strong> Borracha, Montevidéu 1, Montevidéu 2, Montevidéu – Espada, Sítio Junco, Sítio Boca de Dois Rios 1, Sítio Boca de Dois Rios, Sítio Jurema, Sítio Boca de Dois Rios 2, Sítio Lagoa de Negro, Varjão, Sítio Lagoa Dantas, Caiaí, Sítio Caiana, Belmonte 3, Paquevira, Belmonte - Varjão 2, Belmonte - Varjão 1, Sítio Lagoa de Cobra - Sítio Velho e Santa Cruz.</li>
+<li><strong>De 3 a 5 km (21):</strong> Sítio Olhos d&#x27;Água, Belmonte 1, Sítio Ribeiro Seco, Belmonte - Macambira, Sítio Riacho do Tanque 1, Camará de Baixo, Mulungu, Belmonte 2, Laureano 2, Mulungu - Sítio Oitero, Sítio Riacho do Tanque 2, Sítio Ribeiro Seco 2, Bom Jardim - Centro, Balança 1, Gruta Chuva - Linha São Roque, Sítio Pedra do Navio - Centro, Laureano 1, Sítio Correntes 1, Sítio Correntes 2, Torto 2 e Gado Bravo.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (49):</strong> Balança 2, Barroncos 1, Barroncos 2, Barroncos 3, Barroncos 4, Bizarra, Buraco do Tatu - Sítio Campinas, Camará, Campeste, Chã de Caboclo, Córrego do Feijão - Linha São Roque 1, Córrego do Feijão - Linha São Roque 2, Encruzilhada, Feijão 1, Feijão 2, Freitas, Gruta Funda, Lagoa Comprida, Lagoa Comprida 2, Lagoa da Casa - Sítio Aroeiras 1, Lagoa da Casa - Sítio Aroeiras 2, Lagoa da Casa 1, Lagoa da Casa 2, Monte Alegre, Pindoba 1, Pindoba 2, Pindoba 3, Pindoba 4, Pindoba 5, Pindoba 6, Pindobinha, Sítio Alazão, Sítio Aroeiras, Sítio Aroeiras 2, Sítio Bela Vista 1, Sítio Bela Vista 2, Sítio Correntes 3, Sítio Espera 1, Sítio Espera 2, Sítio Espera 3, Sítio Freitas - Lagoa do Sapo, Sítio Lagoa do Sapo 1, Sítio Lagoa do Sapo 2, Sítio Pé de Serra, Sítio Remenda, Tamboatá, Torto 1, Umari e Várzea Alegre.</li>
+</ul><h2>Rotas do Edital nº 17/2026 - 33ª ZE (Quadro geral de percursos)</h2>
+<p>O edital tem 17 rotas para Bom Jardim. Horários: 07:30h às 17:00h. Veículos: não informados.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Sítio Quatis – Sítio Pau Santo – Sítio Pendência – Sítio Lagoa de Cobra – Sítio Jurema – Sítio Lagoa de Onça – Sítio Lagoa de Casa – Sede</td></tr><tr><td>02</td><td>Povoado de Umari – Sítio Lagoa de Onça – Sítio Riacho de Tanque – Sítio Lagoa do Negro – Sítio Caiana – Povoado de Tamboatá – Sede</td></tr><tr><td>03</td><td>Povoado de Umari – Sítio Botija – Sítio Aroeiras – Açudes – Encruzilhada – Altos – Pedra do Navio – Sede</td></tr><tr><td>04</td><td>Sítio Lagoa do Negro – Boca de Dois Rios – Lagoa Dantas – Caiana – Gameleira – Tamboatá – Sede</td></tr><tr><td>05</td><td>Sítio Gado Bravo – Tamboatá – Cipoais – Ribeiro Seco – Lagoa de Cobra – Salobro – Pendência – Sede</td></tr><tr><td>06</td><td>Sítio Varjão – Belmonte – Macambira – Cipoais – Tamboatá – Sede</td></tr><tr><td>07</td><td>Sítio Manibú – Paquevira – Feijão I – Feijão II – Campestre – Medo – Bonfim – Sede</td></tr><tr><td>08</td><td>Sítio Pedra Fina – Travessia – Pindobinha – Cacimbas – Várzea Alegre – Chã do Caboclo – Chã de Preguiça – Correntes – Espera – Buraco do Tatu – Pindoba – Sede</td></tr><tr><td>09</td><td>Sítio Independência – Balança de Cana – Oiteiro – Lagoa Comprida – Bizarra – Sede</td></tr><tr><td>10</td><td>Povoado de Pindobinha – Gruta de Chuva – São Roque – Macapá – Olhos Dágua – Córrego do Feijão – Lagoa Comprida – Bizarra – Sede</td></tr><tr><td>11</td><td>Sítio Engenho Palma – Bizarra – Lagoa Comprida – Balança de Cana – Freitas – Encruzilhada – Sede</td></tr><tr><td>12</td><td>Sítio Paquevira – Feijão I – Feijão II – Barroncos – Camará – Torto – Derbi – Sede</td></tr><tr><td>13</td><td>Sítio Chã do Arroz – Camará – Alto do Derbi – Alto do Paraíso – Sede</td></tr><tr><td>14</td><td>Sítio Balança – Lages – Sapocaia – Altos – Remenda – Sede</td></tr><tr><td>15</td><td>Povoado de Tamboatá – Riacho de Tanques – Jucá – Mulungú – Lagoa de Onça – Lagoa de Casa – Sede</td></tr><tr><td>16</td><td>Sítio Bela Vista – Correntes – Pindoba – Chã do Arroz – Sede</td></tr><tr><td>17</td><td>Buraco do Tatu – Lagoa de Sapo – Freitas – Melão – Pindoba – Sede</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 17/2026 da 33ª ZE (Transporte de eleitores - rotas e percursos), DJE/TRE-PE nº 240 (Edição Eleitoral), disponibilizado em 28/09/2026, publicação em 29/09/2026 (https://dje.tse.jus.br/dje/pdf/v1/edicao/130025).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 6 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Borracha</strong></td><td>Bizarra – Montevidéu – Espada – Montevidéu 2 – Montevidéu 1 – Borracha – Bizarra</td><td>Montevidéu – Espada, Montevidéu 2, Montevidéu 1, Borracha</td><td>29,9 km (ida e volta)</td><td>~58 min</td></tr><tr><td><strong>Parada extra na Rota 02</strong></td><td>desvio pelo caminho atual: Sítio Junco – Caiaí</td><td>Sítio Junco, Caiaí</td><td>+9,0 km</td><td>+19 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMBJ</strong></p><p>Bom Jardim/PE, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Dra. Mariana Flores Matos Paula</strong><br>Juíza Eleitoral da 33ª Zona Eleitoral – Bom Jardim/PE</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 17/2026 - 33ª ZE (Quadro geral de percursos)) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de Bom Jardim, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 17/2026 - 33ª ZE (Quadro geral de percursos): Borracha, Montevidéu 1, Montevidéu 2, Montevidéu – Espada, Sítio Junco e Caiaí.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Borracha (Bizarra – Montevidéu – Espada – Montevidéu 2 – Montevidéu 1 – Borracha – Bizarra);</li><li>a inclusão de paradas em Sítio Junco e Caiaí na Rota 02, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 17/2026 - 33ª ZE (Quadro geral de percursos) deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Bom Jardim</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Bom Jardim; Edital nº 17/2026 da 33ª ZE (Transporte de eleitores - rotas e percursos), DJE/TRE-PE nº 240 (Edição Eleitoral), disponibilizado em 28/09/2026, publicação em 29/09/2026 (https://dje.tse.jus.br/dje/pdf/v1/edicao/130025); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

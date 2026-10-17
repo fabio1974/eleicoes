@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Primavera</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Primavera</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/primavera.pdf?v=1792245304" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Primavera (31ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 31ª Zona Eleitoral <strong>2 rotas novas</strong> no transporte gratuito de Primavera.
+Traçamos pelas estradas o percurso das 10 rotas do Edital da 31ª ZE - Quadro geral de percursos para o transporte de eleitores (publicação 01/09/2026). 5 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>Primavera tem 11.012 eleitores aptos em 4 locais de votação e 32 seções. São 0 locais rurais, com 0 eleitores (0% do total).</li>
+
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Engenho Mombuca 1 (33,0 km do local de votação), Engenho Bom Conselho (32,4 km do local de votação), Engenho Mombuca 2 (32,3 km do local de votação), Demarcação (12,2 km do local de votação) e Vila Demarcação (12,1 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 12 localidades rurais de Primavera que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Engenho Maracujá</td><td>49,7</td><td>Rota 01</td><td>0,4</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Engenho Mombuca 1</td><td>33,0</td><td>Rota 05</td><td>4,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Engenho Bom Conselho</td><td>32,4</td><td>Rota 05</td><td>3,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Engenho Mombuca 2</td><td>32,3</td><td>Rota 05</td><td>5,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Demarcação</td><td>12,2</td><td>Rota 10</td><td>4,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Vila Demarcação</td><td>12,1</td><td>Rota 10</td><td>4,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Devaneio</td><td>12,0</td><td>Rota 09</td><td>1,5</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Visgueiro</td><td>7,1</td><td>Rota 10</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Engenho Rede Grande</td><td>5,3</td><td>Rota 09</td><td>1,4</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Pedra Branca</td><td>3,3</td><td>Rota 01</td><td>0,5</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>7 das 24 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Residencial Primavera (Rota 03), Engenho Cabeça de Negro (Rota 04), Tunel (Rota 04), Chã de Areia (Rota 05), Engenho Tolerância (Rota 06), Engenho Bonfim (Rota 07) e Usina União (Rota 08). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 12 localidades rurais de Primavera, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1033" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Primavera: 5 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital da 31ª ZE - Quadro geral de percursos para o transporte de eleitores (publicação 01/09/2026) e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="660.7,884.3 678.8,814.9 578.2,739.7 614.9,667.2 668.8,650.9 725.0,586.1 661.1,571.2 649.3,546.2 639.8,452.9 613.5,357.3 607.2,307.9 568.7,301.1 549.6,298.4 534.2,253.5 538.3,203.7 519.7,164.7 472.6,127.6 403.7,109.9 394.7,131.7 350.7,161.6 309.5,151.1 303.2,106.3 261.5,111.7 237.9,90.9 211.6,80.0 169.0,97.2 147.7,143.4 115.1,129.4 344.4,439.3 536.5,672.2 391.1,886.1 433.7,901.0 471.7,839.4 541.5,870.7 576.8,799.5 611.3,855.3 660.7,884.3 660.7,884.3" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="457.8,154.8 632.6,445.4 632.6,445.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="576.4,388.3 583.3,395.3 579.6,406.9 592.5,405.5 602.1,399.9 612.2,394.8 624.0,397.8 627.3,408.2 630.1,419.5 632.7,431.4 633.7,445.3 633.7,445.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="352.7,240.9 632.6,445.4 632.6,445.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="445.1,467.9 436.7,474.0 426.9,479.0 420.0,486.4 413.5,495.0 405.6,500.8 394.3,498.3 387.5,506.0 379.4,512.2 372.6,519.5 369.7,532.8 356.3,533.0 348.5,526.4 339.5,521.5 332.8,513.2 322.8,509.6 311.4,514.5 300.4,517.2 296.5,507.2 296.8,490.1 298.7,474.6 301.1,462.1 302.8,446.4 301.0,460.1 298.5,472.3 295.6,483.3 294.4,498.3 295.7,511.4 305.8,515.5 317.4,512.7 331.1,512.2 338.1,519.1 346.8,524.6 354.0,531.1 363.2,536.6 371.0,530.3 373.1,517.8 387.5,506.0 394.3,498.3 405.6,500.8 413.5,495.0 420.0,486.4 426.6,479.2 436.7,474.0 444.7,468.1 454.7,471.7 468.0,468.1 478.4,472.4 486.2,481.3 497.7,484.6 511.0,487.5 516.8,495.8 524.7,503.0 535.1,507.8 552.1,510.4 564.1,508.6 576.0,513.1 587.7,511.1 597.3,515.4 604.6,523.1 622.9,524.5 626.8,513.1 634.2,506.9 633.9,488.4 632.3,474.5 635.6,464.1 635.0,450.4 633.7,445.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 09</title></polyline>
+<polyline points="534.0,736.7 540.9,729.3 545.6,720.3 549.4,703.5 544.9,692.9 538.9,684.9 543.2,674.9 550.8,668.2 561.0,661.4 566.3,649.3 567.3,636.2 571.7,626.3 572.6,612.9 584.8,610.7 595.8,603.9 606.5,600.2 617.4,603.5 628.2,598.4 638.3,592.7 650.2,589.2 645.2,571.5 641.3,560.8 641.7,544.9 638.7,527.4 626.4,524.4 627.4,511.8 635.8,505.8 633.9,488.4 632.3,474.5 635.6,464.1 635.0,450.4 633.7,445.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 10</title></polyline>
+<polyline points="626.3,514.3 622.9,524.5 607.6,524.5 598.6,516.8 587.7,511.1 576.0,513.1 565.6,509.0 553.1,510.5 539.2,508.7 527.6,504.3 517.9,499.4 514.3,488.9 501.3,485.4 489.2,482.2 480.5,475.2 473.9,467.7 463.4,472.5 451.0,469.1 439.9,472.3 429.3,477.6 421.1,484.9 413.5,495.0 405.6,500.8 394.3,498.3 387.5,506.0 379.4,512.2 372.6,519.5 369.7,532.8 364.9,542.2 359.0,550.1 362.1,560.9 355.2,568.2 345.1,576.2 339.9,589.6 328.5,597.1 317.8,600.6 304.2,607.0 295.0,612.2 286.9,620.1 276.8,624.2 267.3,628.5 258.1,636.8 250.6,643.3 240.1,647.1 231.7,654.2 220.8,659.7 206.8,657.7 195.0,654.4 183.3,650.6 169.6,646.1 158.8,639.2 152.0,631.7 143.9,622.8 143.2,607.2 145.0,593.6 145.5,577.9 142.6,562.0 141.0,545.2 141.2,531.6 138.6,515.0 133.3,505.4 124.1,500.3 114.5,495.2 104.3,490.7 93.0,485.9 81.6,480.9 70.0,477.3 59.9,472.5 48.9,468.7 38.9,464.9 36.1,449.7 45.2,443.7 58.1,442.8 70.0,440.0 72.3,428.5 80.0,421.3 89.0,414.2 99.5,401.4 106.2,393.7 115.6,385.1 122.5,375.9 128.6,364.1 133.4,354.8 138.9,344.0 143.5,333.2 148.0,322.5 162.0,307.3 180.6,284.2 194.1,273.7 203.7,264.8 212.1,253.5 218.4,243.7 224.7,234.1 230.4,225.3 238.3,213.1 246.0,201.1 252.7,190.5 255.8,177.5 246.8,170.2 234.9,166.5 238.9,155.7 244.6,147.4 248.7,137.0 256.7,128.9 263.9,121.8 256.7,128.9 249.5,135.3 244.9,145.7 239.5,155.1 235.1,164.5 226.2,158.7 220.5,147.6 211.2,141.5 200.9,136.1 193.1,129.2 197.1,117.6 194.1,106.3 197.5,116.6 193.1,127.0 200.9,136.1 211.2,141.5 220.0,146.9 225.0,155.7 230.6,164.7 241.8,168.3 251.9,172.2 255.2,183.7 249.9,195.0 242.6,206.2 234.8,218.4 228.3,228.4 218.4,243.7 212.1,253.5 206.6,261.8 199.1,269.5 185.9,276.8 165.9,300.4 148.9,320.9 143.5,333.2 138.9,344.0 133.4,354.8 128.6,364.1 122.5,375.9 115.6,385.1 106.2,393.7 99.5,401.4 93.4,409.4 86.1,416.4 78.6,423.1 70.6,430.7 67.6,441.8 55.0,443.1 40.7,444.3 35.4,454.9 40.4,465.6 55.9,471.1 66.2,475.6 78.7,479.9 89.1,483.9 99.3,488.8 111.0,493.4 120.6,498.5 131.3,504.1 138.6,515.0 141.4,526.4 140.9,542.5 141.7,555.7 143.7,568.9 146.4,582.2 144.5,595.2 142.4,615.1 146.0,625.3 152.8,632.6 161.0,641.3 173.2,647.3 186.0,651.4 198.2,654.9 208.9,659.5 224.9,658.1 234.6,652.4 241.8,645.9 253.7,640.9 267.3,628.5 276.8,624.2 286.9,620.1 295.0,612.2 304.2,607.0 316.7,601.0 328.5,597.1 338.6,592.7 341.3,581.4 349.1,573.1 357.3,567.1 356.9,553.6 363.3,544.5 368.6,534.9 372.4,520.9 379.4,512.2 387.5,506.0 394.3,498.3 405.6,500.8 413.5,495.0 420.0,486.4 426.6,479.2 436.7,474.0 444.7,468.1 454.7,471.7 468.0,468.1 478.4,472.4 486.2,481.3 497.7,484.6 511.0,487.5 516.8,495.8 524.7,503.0 535.1,507.8 552.1,510.4 564.1,508.6 576.0,513.1 587.7,511.1 597.3,515.4 604.6,523.1 622.9,524.5 626.3,514.3 626.3,514.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Engenho Mombuca 1</title></polyline>
+<polyline points="648.2,555.6 643.5,564.9 647.2,581.7 641.6,591.5 631.9,596.5 622.5,601.1 609.0,600.2 597.9,602.8 589.6,608.9 579.7,612.6 570.4,617.5 569.8,632.4 566.9,643.1 562.6,653.4 558.9,666.5 546.9,670.2 539.8,678.2 543.2,689.6 549.6,698.5 547.2,710.0 544.2,721.0 540.6,731.1 526.7,742.2 518.4,748.9 513.2,757.9 508.7,767.6 501.1,773.7 491.8,779.2 482.4,784.0 476.6,792.4 470.7,801.5 463.2,808.4 457.5,817.0 450.0,828.4 441.3,834.6 435.9,843.2 433.1,854.3 427.0,862.8 421.0,870.7 413.4,877.2 404.4,871.5 409.1,862.1 417.8,853.4 426.8,847.2 434.4,840.6 443.8,832.7 454.7,825.0 459.1,814.6 464.8,806.3 472.3,799.1 477.9,790.4 484.0,782.4 494.0,778.0 502.8,773.1 510.3,765.7 515.1,755.3 522.5,745.3 536.9,734.4 543.0,725.0 547.0,714.4 549.8,701.8 544.9,692.9 538.9,684.9 543.2,674.9 550.8,668.2 561.0,661.4 566.3,649.3 567.3,636.2 571.7,626.3 572.6,612.9 584.8,610.7 595.8,603.9 606.5,600.2 617.4,603.5 628.2,598.4 638.3,592.7 650.2,589.2 645.2,571.5 641.3,560.8 648.2,555.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Demarcação</title></polyline>
+<circle cx="456.3" cy="137.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="354.4" cy="416.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="534.2" cy="737.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="400.6" cy="349.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="520.7" cy="299.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="573.2" cy="522.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="593.1" cy="306.1" r="2.2" fill="#b9b9b2"/>
+<polygon points="626.2,423.7 610.1,453.4 642.3,453.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="632.1,470.9 622.1,489.4 642.1,489.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="626.2,500.8 613.1,524.9 639.3,524.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="648.0,543.8 636.2,565.5 659.8,565.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="211.2" cy="98.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="218.2" y="93.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Engenho Mombuca 1 33,0 km</text>
+<circle cx="266.0" cy="114.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="273.0" y="109.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Engenho Bom Conselho 32,4 km</text>
+<circle cx="155.9" cy="145.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="162.9" y="140.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Engenho Mombuca 2 32,3 km</text>
+<circle cx="408.7" cy="884.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="415.7" y="879.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Demarcação 12,2 km</text>
+<circle cx="411.3" cy="884.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="418.3" y="899.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Vila Demarcação 12,1 km</text>
+<rect x="627.6" y="440.4" width="10" height="10" fill="#1d1d1b"/><text x="641.6" y="463.4" font-weight="600" fill="#1d1d1b">Sede de Primavera</text>
+<line x1="35" x2="239.1" y1="931.0" y2="931.0" stroke="#8a8a84" stroke-width="2"/><text x="35" y="945.0" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="922.0294059705066" y2="922.0294059705066" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="926.0294059705066" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,915.0 421.4,927.3 434.6,927.3" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="926.0294059705066" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="940.0294059705066" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="949.0294059705066" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="945.0294059705066" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="949.0294059705066" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="968.0294059705066" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="972.0294059705066" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="968.0294059705066" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="972.0294059705066" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="991.0294059705066" y2="991.0294059705066" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="995.0294059705066" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1014.0294059705066" y2="1014.0294059705066" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1018.0294059705066" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital da 31ª ZE - Quadro geral de percursos para o transporte de eleitores (publicação 01/09/2026) · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (9):</strong> Engenho Maracujá, Engenho Mombuca 1, Engenho Bom Conselho, Engenho Mombuca 2, Demarcação, Vila Demarcação, Devaneio, Visgueiro e Sítio Engenho Rede Grande.</li>
+<li><strong>De 3 a 5 km (1):</strong> Pedra Branca.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (2):</strong> Aurora e Sítio Cachoeira do Convento.</li>
+</ul><h2>Rotas do Edital da 31ª ZE - Quadro geral de percursos para o transporte de eleitores (publicação 01/09/2026)</h2>
+<p>O edital tem 10 rotas para Primavera. Horários: Das 7 às 18 horas. Veículos: 1 ônibus por rota (Chã Grande e Primavera); Amaraji não informado.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Sítio Maracujá – Sede</td></tr><tr><td>02</td><td>Engenho Pedra Branca – Sede</td></tr><tr><td>03</td><td>Residencial Primavera – Sede</td></tr><tr><td>04</td><td>Engenho Cabeça de Negro – Tunel – Sede</td></tr><tr><td>05</td><td>Fazenda Monte Alegre – Chã de Areia – Sede</td></tr><tr><td>06</td><td>Engenho Tolerância – Sede</td></tr><tr><td>07</td><td>Engenho Bonfim – Sede</td></tr><tr><td>08</td><td>Usina União – Sede</td></tr><tr><td>09</td><td>Engenho Rede Grande – Devaneio – Sede</td></tr><tr><td>10</td><td>Visgueiros – Preferência – Sede</td></tr></tbody></table></div>
+
+<p>Fonte: Edital da 31ª ZE &quot;Quadro geral de percursos para o transporte de eleitores&quot; (Amaraji, Chã Grande e Primavera), DJE/TRE-PE nº 191, disponibilizado em 31/08/2026, publicação em 01/09/2026 (https://dje.tse.jus.br/dje/pdf/v1/edicao/129005).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 5 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Engenho Mombuca 1</strong></td><td>Sede – Engenho Bom Conselho – Engenho Mombuca 1 – Engenho Mombuca 2 – Sede</td><td>Engenho Bom Conselho, Engenho Mombuca 1, Engenho Mombuca 2</td><td>69,2 km (ida e volta)</td><td>~1h06</td></tr><tr><td><strong>Rota nova – Demarcação</strong></td><td>Sede – Vila Demarcação – Demarcação – Sede</td><td>Vila Demarcação, Demarcação</td><td>24,4 km (ida e volta)</td><td>~57 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMP</strong></p><p>Primavera/PE, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Dra. Izabel de Souza Oliveira</strong><br>Juíza Eleitoral da 31ª Zona Eleitoral – Amaraji/PE</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital da 31ª ZE - Quadro geral de percursos para o transporte de eleitores (publicação 01/09/2026)) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de Primavera, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital da 31ª ZE - Quadro geral de percursos para o transporte de eleitores (publicação 01/09/2026): Engenho Mombuca 1, Engenho Bom Conselho, Engenho Mombuca 2, Demarcação e Vila Demarcação.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Engenho Mombuca 1 (Sede – Engenho Bom Conselho – Engenho Mombuca 1 – Engenho Mombuca 2 – Sede);</li><li>a criação da Rota nova – Demarcação (Sede – Vila Demarcação – Demarcação – Sede).</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital da 31ª ZE - Quadro geral de percursos para o transporte de eleitores (publicação 01/09/2026) deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Primavera</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Primavera; Edital da 31ª ZE &quot;Quadro geral de percursos para o transporte de eleitores&quot; (Amaraji, Chã Grande e Primavera), DJE/TRE-PE nº 191, disponibilizado em 31/08/2026, publicação em 01/09/2026 (https://dje.tse.jus.br/dje/pdf/v1/edicao/129005); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

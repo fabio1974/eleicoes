@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Vertentes</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Vertentes</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/vertentes.pdf?v=1792245599" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Vertentes (46ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 46ª Zona Eleitoral <strong>1 rota nova e 1 parada extra em rotas do edital</strong> no transporte gratuito de Vertentes.
+Traçamos pelas estradas o percurso das 9 rotas do Edital nº 27 - TRE-PE/PRES/DG/ZE046. 2 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 2 ficam a 1–2 km.</p>
+<ul>
+<li>Vertentes tem 16.735 eleitores aptos em 10 locais de votação e 54 seções. São 5 locais rurais, com 4.463 eleitores (27% do total).</li>
+<li>3 locais rurais ficam a 10 km ou mais da sede, com 2.216 eleitores. Os mais distantes: Povoado Serra Da Cachoeira, S/N (14,0 km), Povoado De Capela Nova, S/N (11,1 km) e Povoado De São João Do Ferraz, S/N (10,3 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Valdemar Lima (4,2 km do local de votação) e Sítio Pau Santo (3,7 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Jacu 3 e Jacu 4.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 31 localidades rurais de Vertentes que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Sítio Forno</td><td>11,8</td><td>Rota 08</td><td>0,3</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Morada Nova</td><td>9,1</td><td>Rota 06</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Jacu 3</td><td>4,7</td><td>Rota 09</td><td>1,2</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Sítio Porto Alegre</td><td>4,7</td><td>Rota 05</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Caroá</td><td>4,6</td><td>Rota 09</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Jacu 4</td><td>4,4</td><td>Rota 09</td><td>1,1</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Valdemar Lima</td><td>4,2</td><td>Rota 06</td><td>3,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Barreira Vermelha</td><td>4,2</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Jucuri</td><td>4,2</td><td>Rota 09</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Pau Santo</td><td>3,7</td><td>Rota 06</td><td>2,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Riacho Direito 1</td><td>3,3</td><td>Rota 02</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Cumaru</td><td>3,0</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Riacho Direito 3</td><td>3,0</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>6 das 44 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Ferraz (Rota 01), Sítio Tobibas (Rota 04), Gravatazinho I e II (Rota 05), Baixa Verde (Rota 06), Pe-90 (Rota 06) e Pe-130 (Rota 07). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 31 localidades rurais de Vertentes, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1087" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Vertentes: 4 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 27 - TRE-PE/PRES/DG/ZE046 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="521.0,954.6 518.9,902.0 476.6,883.8 494.3,858.0 490.4,804.9 501.2,767.4 529.2,758.4 464.5,711.3 488.7,696.7 484.8,599.7 527.9,559.5 725.0,545.3 723.3,475.9 712.5,448.3 677.6,423.7 708.2,334.9 584.8,91.6 517.6,80.0 452.9,100.3 421.0,148.6 379.6,134.3 357.1,151.6 348.5,194.3 326.5,190.0 314.0,212.0 276.5,196.0 237.7,220.2 234.7,246.0 269.6,296.9 257.5,331.0 283.0,365.9 298.1,467.3 283.4,550.5 264.0,580.7 225.2,597.5 207.1,630.3 242.0,661.3 179.5,700.1 122.1,793.7 120.0,815.3 35.0,914.0 100.5,909.3 122.5,940.3 170.8,949.0 180.8,931.7 227.3,927.4 289.9,943.8 293.3,910.2 317.5,895.1 370.5,920.5 439.1,930.0 521.0,954.6 521.0,954.6" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="338.0,430.3 332.8,422.1 328.0,413.5 325.5,402.8 325.8,389.3 323.1,373.5 317.6,365.7 311.2,357.7 310.1,344.7 310.4,330.5 312.7,319.8 310.3,305.5 314.8,292.9 326.2,278.6 335.2,272.4 342.4,266.4 346.2,255.2 349.8,244.2 358.8,236.1 364.1,228.2 372.4,215.3 371.1,200.7 368.4,214.4 365.7,225.6 360.6,234.5 352.5,241.7 348.8,252.3 345.0,261.8 338.5,268.5 331.0,276.2 319.4,287.3 311.6,295.0 312.6,313.5 310.6,328.1 309.8,341.8 311.4,353.6 322.8,358.4 335.3,349.9 346.4,345.1 353.7,338.6 364.6,330.4 378.1,331.3 376.0,342.9 375.4,348.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="530.9,126.5 528.4,138.0 523.4,148.1 518.9,162.1 520.0,174.6 526.6,186.5 531.1,195.9 538.9,202.0 546.2,208.2 553.1,215.2 558.7,223.8 562.9,233.1 563.2,245.8 566.9,255.4 570.4,264.9 573.4,275.4 578.9,284.1 581.3,294.9 582.5,307.8 583.7,320.3 584.8,332.1 586.1,344.2 573.7,343.4 563.1,341.0 573.7,343.4 581.5,348.7 588.4,354.9 588.4,368.0 588.8,381.4 584.7,390.4 583.2,402.5 585.1,416.0 584.3,430.2 580.6,440.0 574.4,447.1 565.9,451.8 567.3,465.3 568.7,478.1 570.3,491.1 572.4,509.4 569.2,520.9 558.6,527.8 568.1,522.1 576.3,517.3 586.3,512.8 615.8,508.7 625.9,505.0 634.1,500.0 644.0,495.7 653.6,492.0 664.0,489.3 677.8,486.2 688.2,483.3 690.4,477.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="692.2,478.3 685.2,484.6 669.7,488.1 657.8,490.7 656.3,502.6 653.6,514.6 648.2,523.1 653.6,514.6 656.3,502.6 653.6,492.0 644.0,495.7 634.1,500.0 625.9,505.0 615.8,508.7 592.3,511.9 580.3,515.0 570.2,520.1 558.6,527.8 568.1,522.1 576.3,517.3 586.3,512.8 615.8,508.7 625.9,505.0 634.1,500.0 644.0,495.7 653.6,492.0 664.0,489.3 677.8,486.2 688.2,483.3 690.4,477.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="551.6,531.9 566.2,523.3 573.3,517.2 571.3,500.4 569.8,487.9 568.5,475.7 566.7,460.1 569.0,448.9 576.0,446.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="352.2,635.5 347.1,644.5 339.3,650.2 330.8,655.1 321.2,659.5 312.8,664.9 305.2,671.3 290.1,675.8 281.0,682.6 277.8,682.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="408.7,923.9 398.0,920.7 385.7,918.5 375.7,915.3 367.0,910.8 358.4,905.5 349.3,899.1 338.8,891.3 328.1,888.6 318.3,884.6 311.3,878.0 302.5,861.5 295.5,853.7 291.0,836.1 290.3,819.0 284.7,804.7 272.7,805.8 212.1,868.6 196.9,884.4 190.2,891.4 182.7,899.2 174.3,904.5 165.0,908.4 157.3,914.9 147.3,910.7 151.4,920.2 158.4,913.8 166.0,907.8 175.9,903.8 186.7,894.9 194.2,887.2 205.8,875.1 272.7,805.8 281.2,796.8 292.6,789.6 297.2,785.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="381.5,565.4 380.6,578.9 374.1,585.3 372.0,598.0 359.9,597.2 347.6,597.9 334.7,601.8 322.2,602.2 316.9,593.9 319.1,582.7 327.2,573.3 331.3,564.1 326.0,555.7 314.7,553.5 318.2,541.0 323.7,530.7 312.2,526.8 302.6,523.4 312.2,526.8 324.3,527.9 320.1,537.0 316.3,546.3 322.5,554.5 330.2,561.0 327.2,573.3 320.6,579.9 316.3,588.9 320.3,600.2 330.5,603.1 345.4,598.6 357.4,597.0 370.7,598.7 367.9,587.2 364.2,588.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="310.3,731.0 302.1,736.2 289.9,737.5 278.6,739.7 266.3,738.9 253.2,742.6 244.6,750.1 237.5,757.6 231.2,765.8 220.3,771.4 205.6,773.2 218.1,771.7 228.2,767.8 233.4,759.7 240.7,753.9 250.2,746.8 241.4,752.4 250.2,746.8 258.5,737.4 268.5,740.4 281.2,739.8 292.0,736.3 305.8,734.5 317.8,736.5 326.6,732.3 333.7,725.7 348.9,722.9 357.4,714.5 367.1,702.6 386.4,678.7 392.3,669.9 395.8,660.0 399.2,649.9 395.9,659.6 392.3,669.9 386.4,678.7 372.6,695.8 357.4,714.5 351.3,722.1 345.1,729.8 334.7,749.6 330.2,759.0 316.9,772.8 306.6,782.0 297.1,787.6 285.7,792.9 278.8,799.4 212.1,868.6 196.9,884.4 190.2,891.4 182.7,899.2 174.3,904.5 165.0,908.4 157.3,914.9 147.3,910.7 143.6,900.4 139.4,891.6 133.3,883.4 137.3,874.4 134.1,864.2 131.0,853.7 136.2,844.5 140.4,834.5 146.6,827.6 147.1,824.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="645.5,353.7 637.1,348.7 635.9,336.4 634.6,324.2 633.4,311.7 623.7,308.4 615.7,313.5 607.6,308.1 600.4,302.1 586.9,302.7 582.8,312.2 584.1,325.3 585.4,338.0 586.7,350.4 587.8,362.4 588.8,374.4 588.6,387.2 593.5,395.2 603.5,398.6 593.5,395.2 588.6,387.2 588.8,374.4 587.8,362.4 586.7,350.4 585.4,338.0 584.1,325.3 583.0,313.2 581.9,301.0 580.6,288.1 575.8,279.3 571.9,269.6 568.6,259.1 564.5,249.4 562.9,236.6 559.7,225.3 554.0,216.6 547.8,209.8 540.6,203.3 532.0,196.6 526.6,186.5 524.4,175.6 519.1,167.0 500.0,167.0 488.0,165.2 482.7,157.4 473.3,162.0 464.1,156.1 454.1,159.3 448.4,158.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 09</title></polyline>
+<polyline points="370.6,912.5 381.0,917.3 393.6,918.9 403.7,922.6 415.4,925.2 426.7,927.1 440.6,928.6 453.1,930.5 465.7,933.9 477.0,937.3 487.9,941.4 499.1,944.0 509.7,946.9 520.6,949.9 505.7,945.6 492.9,942.8 480.6,938.6 465.7,933.9 453.1,930.5 440.6,928.6 428.9,927.3 417.1,925.2 406.0,923.2 396.3,919.3 384.0,918.2 372.8,913.6 370.6,912.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Valdemar Lima</title></polyline>
+<polyline points="645.5,353.7 648.6,342.7 652.8,333.2 665.1,332.4 675.9,330.1 687.3,332.2 689.0,343.5 689.9,330.8 677.9,329.5 666.7,332.1 654.5,333.2 649.6,341.7 646.1,351.3 645.5,353.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 09</title></polyline>
+<circle cx="157.0" cy="836.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="141.9" cy="906.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="277.8" cy="682.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="571.9" cy="264.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="338.2" cy="430.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="604.3" cy="303.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="558.1" cy="341.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="551.6" cy="531.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="583.6" cy="326.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="535.3" cy="364.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="610.3" cy="351.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="450.5" cy="94.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="587.0" cy="340.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="609.4" cy="364.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="303.7" cy="860.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="645.2" cy="525.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="257.5" cy="743.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="582.6" cy="84.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="404.9" cy="526.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="690.4" cy="477.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="531.7" cy="126.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="574.9" cy="444.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="692.2" cy="478.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="240.5" cy="236.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="241.1" cy="237.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="312.7" cy="732.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="373.5" cy="915.1" r="2.2" fill="#b9b9b2"/>
+<polygon points="408.5,567.2 394.0,593.8 422.9,593.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="582.3,425.4 571.2,445.8 593.3,445.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="582.3" y="459.7" text-anchor="middle" fill="#5c5c57">Zona Rural</text>
+<polygon points="370.5,902.9 361.6,919.4 379.4,919.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="700.4,467.3 688.1,489.9 712.7,489.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="539.6,104.0 529.6,122.4 549.5,122.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="539.6" y="136.0" text-anchor="middle" fill="#5c5c57">Centro</text>
+<polygon points="242.9,232.4 234.8,247.2 250.9,247.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="304.5,725.8 295.7,742.0 313.3,742.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="400.3,567.6 387.4,591.2 413.1,591.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="399.4,568.9 388.6,588.8 410.2,588.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="391.2,562.2 379.0,584.7 403.4,584.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="686.6" cy="330.1" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="599.0" y="325.1" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Jacu 3 4,7 km</text>
+<circle cx="687.9" cy="345.2" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="600.3" y="340.2" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Jacu 4 4,4 km</text>
+<circle cx="526.8" cy="948.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="533.8" y="943.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Valdemar Lima 4,2 km</text>
+<circle cx="509.8" cy="946.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="516.8" y="961.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Pau Santo 3,7 km</text>
+<rect x="381.0" y="587.3" width="10" height="10" fill="#1d1d1b"/><text x="395.0" y="610.3" font-weight="600" fill="#1d1d1b">Sede de Vertentes</text>
+<line x1="35" x2="229.3" y1="984.6" y2="984.6" stroke="#8a8a84" stroke-width="2"/><text x="35" y="998.6" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="975.5749999999794" y2="975.5749999999794" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="979.5749999999794" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,968.6 421.4,980.8 434.6,980.8" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="979.5749999999794" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="993.5749999999794" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="1002.5749999999794" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="998.5749999999794" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="1002.5749999999794" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1021.5749999999794" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1025.5749999999794" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1021.5749999999794" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1025.5749999999794" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1044.5749999999794" y2="1044.5749999999794" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1048.5749999999794" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1067.5749999999794" y2="1067.5749999999794" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1071.5749999999794" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 27 - TRE-PE/PRES/DG/ZE046 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (2):</strong> Sítio Forno e Morada Nova.</li>
+<li><strong>De 3 a 5 km (11):</strong> Jacu 3, Sítio Porto Alegre, Sítio Caroá, Jacu 4, Valdemar Lima, Barreira Vermelha, Jucuri, Sítio Pau Santo, Riacho Direito 1, Cumaru e Riacho Direito 3.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (18):</strong> Alto dos Capitães, Capela Nova, Chá do Junco, Fazenda Batatas, Jacu 1, Jacu 2, Lagoa Rasa, Livramento, Poavoado São João do Ferraz, Riacho Direito 2, Riacho Direito 4, Serra Seca, Serra da Cachoeira, São João do Ferraz, Sítio Cajá, Sítio Marinho, Sítio Mateus e Sítio Mondé.</li>
+</ul><h2>Rotas do Edital nº 27 - TRE-PE/PRES/DG/ZE046</h2>
+<p>O edital tem 9 rotas para Vertentes. Horários: Das 06h às 17h. Veículos: Rota 01: microônibus SOH-6E34; Rota 02: microônibus SON-7C54; Rota 03: microônibus SOD-9A53; Rota 04: microônibus SNL-5J49; Rota 05: microônibus SOD-5G60; Rota 06: microônibus SOI-9G82; Rota 07: van renault UHL-6B30; Rota 08: van renault UHL-6G48; Rota 09: microônibus SOB-5C05.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Ferraz – Barreira Vermelha – Moça Branca – Sansão – Contendas</td></tr><tr><td>02</td><td>Serra Cachoeira – Caroá – Riacho Direito – Chã do Junco – Alto do Fogo – Cumaru – Lagoa Rasa</td></tr><tr><td>03</td><td>Livramento – Sítio Marinho – Alto do Fogo – Cumaru – Lagoa Rasa</td></tr><tr><td>04</td><td>Sítio Tobibas – Cumaru – Chã do Junco</td></tr><tr><td>05</td><td>Sítio Poço do Juá – Porto Alegre – Gravatazinho I e II</td></tr><tr><td>06</td><td>Sítio Poço Verde – Baixa Verde – Capela Nova – Sítio Cajá – Pe-90 – Morada Nova – Barriguda</td></tr><tr><td>07</td><td>Sítio São José – Sítio Tomé – Goiabeira – Pe-130</td></tr><tr><td>08</td><td>Serra Seca – Pedra Rajada – Sítio Mateus – Sítio Pé de Serra – Pe- 90 – Sítio Mundo Novo</td></tr><tr><td>09</td><td>Sítio Jacú – Jucuri – Areias do Junco – Areias da Serra</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 27 - TRE-PE/PRES/DG/ZE046 (Quadro geral de percursos e horários - transporte de eleitores - Eleições Gerais 2026), de 04/09/2026, DJE/TRE-PE nº 200 (Edição Eleitoral), publicação em 05/09/2026, p. 14-15 (https://dje.tse.jus.br/dje/pdf/v1/edicao/129225); veículos de Frei Miguelinho retificados pelo edital publicado no DJE/TRE-PE nº 246 de 01/10/2026 (https://dje.tse.jus.br/dje/pdf/v1/edicao/130160).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 4 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Valdemar Lima</strong></td><td>Sede – Sítio Pau Santo – Valdemar Lima – Sede</td><td>Sítio Pau Santo, Valdemar Lima</td><td>8,4 km (ida e volta)</td><td>~20 min</td></tr><tr><td><strong>Parada extra na Rota 09</strong></td><td>desvio pelo caminho atual: Jacu 4 – Jacu 3</td><td>Jacu 4, Jacu 3</td><td>+4,0 km</td><td>+10 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMV</strong></p><p>Vertentes/PE, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Guilherme Alves Giangregório Rodrigues</strong><br>Juiz Eleitoral da 46ª Zona Eleitoral – Vertentes/PE</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 27 - TRE-PE/PRES/DG/ZE046) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Vertentes, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 27 - TRE-PE/PRES/DG/ZE046: Valdemar Lima, Sítio Pau Santo, Jacu 3 e Jacu 4.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Valdemar Lima (Sede – Sítio Pau Santo – Valdemar Lima – Sede);</li><li>a inclusão de paradas em Jacu 4 e Jacu 3 na Rota 09, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 27 - TRE-PE/PRES/DG/ZE046 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Vertentes</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Vertentes; Edital nº 27 - TRE-PE/PRES/DG/ZE046 (Quadro geral de percursos e horários - transporte de eleitores - Eleições Gerais 2026), de 04/09/2026, DJE/TRE-PE nº 200 (Edição Eleitoral), publicação em 05/09/2026, p. 14-15 (https://dje.tse.jus.br/dje/pdf/v1/edicao/129225); veículos de Frei Miguelinho retificados pelo edital publicado no DJE/TRE-PE nº 246 de 01/10/2026 (https://dje.tse.jus.br/dje/pdf/v1/edicao/130160); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>
