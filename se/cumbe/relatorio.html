@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Cumbe</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Cumbe</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/cumbe.pdf?v=1792246225" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Cumbe (16ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 16ª Zona Eleitoral <strong>1 rota nova e 1 parada extra em rotas do edital</strong> no transporte gratuito de Cumbe.
+Traçamos pelas estradas o percurso das 3 rotas do Edital nº 1053/2026. 2 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 1 ficam a 1–2 km.</p>
+<ul>
+<li>Cumbe tem 4.504 eleitores aptos em 6 locais de votação e 18 seções. São 3 locais rurais, com 1.044 eleitores (23% do total).</li>
+
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Fazenda Baixão (22,7 km do local de votação) e Medição (16,4 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Fazenda Coxo.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 18 localidades rurais de Cumbe que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Fazenda Baixão</td><td>22,7</td><td>Rota 02</td><td>4,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Medição</td><td>16,4</td><td>Rota 02</td><td>2,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Cascavel</td><td>11,1</td><td>Rota 02</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Tanque do Meio</td><td>9,0</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fazenda Sucupira</td><td>7,3</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sucupira</td><td>6,4</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fazenda Coxo</td><td>3,6</td><td>Rota 03</td><td>1,2</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Bravo Urubu</td><td>3,5</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 18 localidades rurais de Cumbe, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 889" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Cumbe: 3 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 1053/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="237.5,304.9 245.8,345.3 201.6,382.6 205.0,407.2 237.5,472.8 229.6,503.4 237.1,537.3 264.3,552.4 280.1,606.4 343.1,657.3 356.0,698.1 430.3,715.4 453.3,749.0 503.1,753.2 534.4,729.0 586.9,756.9 636.3,727.9 698.2,724.9 725.0,705.6 690.7,686.0 694.8,643.4 663.1,633.2 669.9,595.4 632.2,532.1 586.9,563.0 563.9,566.0 557.8,481.9 522.4,462.6 494.1,464.1 488.8,436.6 512.2,416.6 496.7,398.9 483.5,352.8 445.0,344.1 382.0,300.7 349.9,297.3 325.0,314.7 300.5,306.0 251.8,235.5 251.8,215.5 223.5,166.4 193.0,143.4 155.6,80.0 131.4,83.8 59.8,146.0 98.6,169.1 122.8,170.6 170.3,195.5 175.2,237.7 230.3,264.9 237.5,304.9 237.5,304.9" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="455.8,519.2 443.1,519.0 431.2,518.9 422.6,523.3 401.6,534.3 395.1,539.4 387.6,557.0 379.5,576.4 372.6,592.6 367.9,603.7 360.0,622.1 353.2,638.1 348.2,649.9 344.4,658.9 331.2,647.2 321.8,639.8 306.0,627.2 297.0,620.0 290.3,614.8 283.4,609.3 276.9,604.1 270.7,599.0 264.1,593.9 254.7,590.9 263.6,593.6 270.7,599.0 276.9,604.1 283.4,609.3 290.3,614.8 297.0,620.0 303.8,625.4 321.8,639.8 330.2,646.4 339.4,653.7 344.1,661.6 347.8,673.2 353.1,684.3 355.8,693.2 355.0,705.7 355.1,706.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="455.8,519.2 443.1,519.0 431.2,517.9 422.3,513.3 416.3,507.0 410.6,495.3 403.5,487.7 396.7,481.3 389.1,472.3 378.4,463.5 373.1,456.5 377.1,442.8 374.5,429.1 367.2,420.9 358.1,413.0 351.5,405.0 347.9,393.7 344.0,384.9 340.2,374.1 338.0,363.7 330.3,357.4 322.3,352.6 316.4,346.3 311.5,338.4 302.8,334.8 295.3,330.9 285.7,326.0 274.5,325.1 264.7,322.7 256.4,319.6 264.7,322.7 274.5,325.1 285.7,326.0 294.2,330.1 302.8,334.8 295.3,330.9 285.7,326.0 274.5,325.1 264.7,322.7 256.4,319.6 243.9,318.4 237.7,307.3 233.6,299.7 227.6,290.6 228.6,276.9 229.9,266.9 227.6,262.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="455.8,519.2 451.3,527.7 451.5,539.2 449.5,551.5 447.7,562.6 443.6,570.4 440.4,581.4 437.9,594.3 438.3,606.3 439.5,620.2 443.6,635.0 448.5,644.2 447.9,655.4 444.1,663.0 450.8,657.9 460.7,656.0 472.5,656.3 486.7,657.0 507.2,658.9 520.6,664.4 527.5,657.6 533.9,650.9 541.4,643.1 550.7,636.5 557.3,630.2 562.1,623.5 568.0,616.3 571.4,608.2 577.8,600.1 585.7,595.6 591.7,590.2 597.2,581.1 602.5,574.9 613.4,574.3 623.8,576.0 630.0,582.2 631.7,582.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="443.3,663.1 435.3,666.6 423.0,669.4 410.4,671.8 398.0,674.7 385.6,674.1 374.9,672.3 364.1,673.2 358.4,679.7 348.6,675.8 344.3,662.2 339.4,653.7 331.2,647.2 321.8,639.8 306.0,627.2 297.0,620.0 290.3,614.8 283.4,609.3 276.9,604.1 270.7,599.0 264.1,593.9 254.7,590.9 241.0,587.4 227.3,588.0 216.3,589.4 207.8,585.8 201.6,580.2 194.6,568.7 187.5,557.1 183.1,549.7 172.4,532.0 168.0,524.8 163.3,516.5 159.3,493.5 152.7,455.0 150.6,442.8 171.4,437.6 183.4,436.8 189.7,431.7 187.6,422.3 190.0,407.4 202.9,400.3 200.8,389.8 203.5,376.8 200.8,387.8 202.6,398.8 191.6,400.5 182.4,397.5 171.7,392.2 164.4,387.5 153.8,384.7 138.2,382.7 118.9,362.3 111.6,346.1 106.9,335.0 99.8,318.9 96.2,310.7 90.6,298.2 81.9,278.4 76.2,265.4 72.3,257.4 56.0,243.7 45.9,235.7 39.2,230.5 42.6,221.3 50.0,214.0 55.9,205.1 59.3,196.4 63.8,182.9 70.9,188.4 77.1,194.4 70.9,188.4 64.3,183.3 59.9,194.5 55.9,205.1 50.9,212.9 44.9,219.0 38.5,224.6 45.9,235.7 56.0,243.7 66.5,252.1 72.8,258.2 81.9,278.4 90.6,298.2 96.2,310.7 99.8,318.9 104.9,330.5 109.7,341.4 118.9,362.1 127.9,382.6 135.2,399.4 142.0,414.7 146.1,424.0 150.3,440.8 152.7,455.0 158.1,486.6 161.6,507.1 164.1,518.3 171.5,530.5 183.1,549.7 187.5,557.1 193.4,566.8 198.0,574.2 202.7,581.5 209.5,587.2 222.2,588.7 235.9,586.8 254.7,590.9 263.6,593.6 270.7,599.0 276.9,604.1 283.4,609.3 290.3,614.8 297.0,620.0 303.8,625.4 321.8,639.8 330.2,646.4 339.4,653.7 344.1,661.6 347.8,673.2 353.1,684.3 359.2,678.5 365.5,672.7 377.2,672.5 389.1,674.6 402.5,674.7 416.1,669.6 427.7,670.0 435.8,666.4 443.3,663.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fazenda Baixão</title></polyline>
+<polyline points="631.7,582.1 637.6,573.6 645.1,569.5 655.9,570.2 661.7,564.6 655.9,570.2 645.1,569.5 637.6,573.6 633.4,580.8 631.7,582.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 03</title></polyline>
+<circle cx="226.5" cy="264.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="252.2" cy="318.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="252.5" cy="597.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="276.4" cy="599.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="359.4" cy="706.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="622.7" cy="613.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="632.2" cy="582.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="378.2" cy="569.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="378.2" cy="571.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="379.0" cy="549.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="581.6" cy="610.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="455.8" cy="518.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="598.2" cy="684.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="568.1" cy="611.2" r="2.2" fill="#b9b9b2"/>
+<polygon points="450.3,507.4 438.8,528.7 461.8,528.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="571.0,599.2 563.2,613.7 578.9,613.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="443.1,654.5 434.8,670.0 451.5,670.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="588.0,675.4 581.5,687.4 594.6,687.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="451.1,522.5 441.2,540.6 460.9,540.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="423.1,514.3 414.5,530.2 431.7,530.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="82.8" cy="193.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="89.8" y="188.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Baixão 22,7 km</text>
+<circle cx="208.1" cy="379.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="215.1" y="374.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Medição 16,4 km</text>
+<circle cx="667.3" cy="562.5" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="542.5" y="557.5" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Fazenda Coxo 3,6 km</text>
+<rect x="450.8" y="513.8" width="10" height="10" fill="#1d1d1b"/><text x="464.8" y="536.8" font-weight="600" fill="#1d1d1b">Sede de Cumbe</text>
+<line x1="35" x2="205.0" y1="786.9" y2="786.9" stroke="#8a8a84" stroke-width="2"/><text x="35" y="800.9" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="777.9441102482822" y2="777.9441102482822" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="781.9441102482822" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,770.9 421.4,783.2 434.6,783.2" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="781.9441102482822" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="795.9441102482822" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="804.9441102482822" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="800.9441102482822" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="804.9441102482822" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="823.9441102482822" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="827.9441102482822" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="823.9441102482822" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="827.9441102482822" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="846.9441102482822" y2="846.9441102482822" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="850.9441102482822" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="869.9441102482822" y2="869.9441102482822" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="873.9441102482822" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 1053/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (6):</strong> Fazenda Baixão, Medição, Cascavel, Tanque do Meio, Fazenda Sucupira e Sucupira.</li>
+<li><strong>De 3 a 5 km (2):</strong> Fazenda Coxo e Bravo Urubu.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (10):</strong> Araçás, Campo Comunitário, Campo Novo, Coité, Comunidade Quilombola Forte, Comunidade Quilombola Povoado Forte, Conjunto Habitacional José Vieira Lima, Cumbe, Forte e Saco Grande.</li>
+</ul><h2>Rotas do Edital nº 1053/2026</h2>
+<p>O edital tem 3 rotas para Cumbe. Horários: Primeira saída às 7h do ponto de origem e novas saídas a cada 2h após cada percurso; término previsto às 17h. Veículos: não informados (veículos cedidos pelos órgãos públicos locais).</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Sede – Sucupira – Bravo Urubu</td></tr><tr><td>02</td><td>Sede – Sítio Tanque do Meio – Povoado Aroeira – Cascavel</td></tr><tr><td>03</td><td>Sede – Saco Grande – Forte – Sítio Coité</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 1053/2026 da 16ª ZE (Quadro Geral de Percursos e Horários), DJE/TRE-SE nº 164/2026 (disp. 17/09/2026) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=SE&amp;numDiario=164&amp;anoDiario=2026).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 3 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Fazenda Baixão</strong></td><td>Saco Grande – Medição – Fazenda Baixão – Saco Grande</td><td>Medição, Fazenda Baixão</td><td>49,8 km (ida e volta)</td><td>~1h06</td></tr><tr><td><strong>Parada extra na Rota 03</strong></td><td>desvio pelo caminho atual: Fazenda Coxo</td><td>Fazenda Coxo</td><td>+2,8 km</td><td>+7 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMC</strong></p><p>Cumbe/SE, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Dra. Maria Alice Alves Santos Melo Figueiredo</strong><br>Juíza Eleitoral da 16ª Zona Eleitoral – Nossa Senhora das Dores/SE</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 1053/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de Cumbe, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 1053/2026: Fazenda Baixão, Medição e Fazenda Coxo.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Fazenda Baixão (Saco Grande – Medição – Fazenda Baixão – Saco Grande);</li><li>a inclusão de parada em Fazenda Coxo na Rota 03, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 1053/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Cumbe</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Cumbe; Edital nº 1053/2026 da 16ª ZE (Quadro Geral de Percursos e Horários), DJE/TRE-SE nº 164/2026 (disp. 17/09/2026) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=SE&amp;numDiario=164&amp;anoDiario=2026); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

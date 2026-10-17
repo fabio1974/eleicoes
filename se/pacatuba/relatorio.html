@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Pacatuba</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Pacatuba</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/pacatuba.pdf?v=1792246394" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Pacatuba (15ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 15ª Zona Eleitoral <strong>2 rotas novas e 2 paradas extras em rotas do edital</strong> no transporte gratuito de Pacatuba.
+Traçamos pelas estradas o percurso das 12 rotas do Edital nº 05/2026. 2 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 2 ficam a 1–2 km.</p>
+<ul>
+<li>Pacatuba tem 11.851 eleitores aptos em 12 locais de votação e 39 seções. São 9 locais rurais, com 6.781 eleitores (57% do total).</li>
+<li>4 locais rurais ficam a 10 km ou mais da sede, com 3.500 eleitores. Os mais distantes: Pov. Aracaré (23,9 km), Pov. Ponta Dos Mangues (21,1 km) e Povoado Santana Dos Frades (17,2 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Alagamar (13,0 km do local de votação) e Carapitanga (4,1 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Agrovila do PA Boa Vista e Agrovila do PA Independência Nossa Senhora do Carmo.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 49 localidades rurais de Pacatuba que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Alagamar</td><td>13,0</td><td>Rota 06</td><td>5,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Paturi</td><td>9,7</td><td>Rota 02</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Brejão da Itioca</td><td>8,8</td><td>Rota 07</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Agrovila do PA Padre Nestor</td><td>8,1</td><td>Rota 11</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Lagoinha</td><td>7,3</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Atalho</td><td>6,7</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Piranhas</td><td>5,9</td><td>Rota 10</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Olhos d&#x27;Água</td><td>5,6</td><td>Rota 02</td><td>0,8</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Tabuleiro</td><td>5,5</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Agrovila do PA Boa Vista</td><td>5,3</td><td>Rota 01</td><td>1,8</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Ouricuri</td><td>5,2</td><td>Rota 11</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Lagoa das Flores</td><td>4,9</td><td>Rota 11</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Timbó</td><td>4,3</td><td>Rota 04</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Carapitanga</td><td>4,1</td><td>Rota 09</td><td>2,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Tijupari</td><td>3,8</td><td>Rota 02</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Lagoa do Junco</td><td>3,8</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Agrovila do PA Independência Nossa Senhora do Carmo</td><td>3,7</td><td>Rota 05</td><td>1,1</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Gravatá</td><td>3,4</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Maracujá</td><td>3,3</td><td>Rota 06</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Carro Quebrado</td><td>3,0</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>7 das 64 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Lagoa Grande (Rota 05), Assentamento Independência (Rota 05), Dendê (Rota 05), Tijupares (Rota 06), Brejão de Baixo (Rota 06), Brejão de Cima (Rota 07) e Trairas (Rota 10). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 49 localidades rurais de Pacatuba, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 796" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Pacatuba: 4 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 05/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="35.2,561.0 53.9,572.9 247.0,658.5 249.1,663.6 334.2,601.9 401.2,556.4 471.7,516.2 493.5,514.5 617.1,462.7 721.0,425.0 725.0,405.3 687.6,365.9 470.2,332.2 433.1,324.9 413.9,132.3 436.4,118.4 401.2,109.6 312.5,80.0 293.3,83.8 175.8,94.7 167.2,81.8 164.4,98.7 174.3,123.7 170.2,145.2 141.1,197.8 150.0,202.1 128.5,301.7 139.4,313.5 132.0,333.8 136.8,369.1 118.9,377.0 128.5,401.5 98.7,414.4 70.1,419.4 50.7,437.6 45.6,462.9 60.5,498.6 59.8,526.9 35.2,561.0 35.2,561.0" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="152.5,220.2 159.7,223.5 164.0,220.2 169.6,218.1 172.7,213.6 181.2,212.2 187.6,209.7 194.8,208.0 202.6,208.7 209.0,210.1 213.1,206.5 217.1,201.0 220.0,196.1 222.6,190.5 227.9,185.1 232.8,180.9 235.9,176.2 243.2,174.0 246.7,169.8 249.2,164.6 252.6,159.5 249.6,154.3 255.6,156.0 262.2,161.9 271.0,170.4 276.6,175.7 282.2,181.1 288.8,182.2 296.9,189.4 315.4,198.2 314.4,204.9 313.3,208.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="213.5,254.2 227.1,260.0 234.9,259.7 242.9,259.8 250.9,259.3 259.8,262.0 266.2,260.3 270.7,257.0 273.9,251.9 275.9,245.7 277.5,237.5 279.1,229.9 281.8,223.9 286.0,220.3 292.4,217.5 296.6,214.0 303.1,212.8 310.7,213.0 314.6,208.5 318.4,212.7 323.2,215.7 325.8,221.3 329.6,225.9 333.9,231.0 334.5,239.0 336.7,244.6 341.5,247.5 348.1,251.0 358.1,256.4 363.2,259.1 370.0,262.7 374.7,267.9 378.4,301.4 380.8,309.9 386.8,312.2 414.5,319.9 408.1,327.3 404.2,332.1 397.5,344.3 399.5,351.5 410.1,358.6 414.0,363.5 417.4,368.6 421.9,373.5 420.7,380.1 411.4,390.6 405.5,397.4 401.2,402.6 397.1,407.7 392.5,411.4 388.9,415.5 392.0,422.1 390.1,431.9 387.0,437.5 385.9,447.1 385.5,454.4 391.2,459.0 393.4,464.4 388.2,467.7 382.8,470.0 377.3,473.5 372.9,478.3 366.9,483.4 359.1,488.4 353.2,491.9 348.5,495.3 343.6,501.4 340.0,505.5 333.9,509.0 326.9,509.8 322.0,513.4 315.6,514.9 308.0,517.9 305.9,523.7 301.8,528.1 297.3,531.9 301.8,528.1 305.8,524.3 308.0,517.9 312.3,514.4 320.4,513.8 325.9,510.7 332.9,509.5 337.9,506.8 342.5,502.7 346.7,497.7 350.2,493.1 355.5,490.6 363.1,486.1 370.0,480.8 374.3,477.1 378.6,472.1 385.1,469.1 391.1,466.4 391.9,459.5 386.5,455.8 385.9,447.1 386.4,439.1 390.1,431.9 393.0,426.6 391.1,420.5 389.0,414.8 393.1,411.1 398.1,406.5 405.5,397.4 409.4,392.9 420.7,380.1 422.6,374.4 417.5,368.7 414.0,363.5 410.1,358.6 399.5,351.5 397.5,344.3 404.2,332.1 408.1,327.3 413.6,321.0 423.1,322.3 426.3,315.0 428.5,307.2 435.6,297.1 432.9,290.5 429.6,285.1 429.6,285.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="263.8,370.9 266.2,365.5 269.0,359.6 270.1,353.1 276.0,350.3 282.4,348.7 284.4,342.8 287.9,337.9 290.7,333.1 295.4,329.7 302.1,331.3 297.3,327.9 291.9,323.9 291.6,316.4 287.6,311.3 284.7,304.9 283.4,295.7 282.4,289.0 280.4,281.1 278.6,274.2 280.7,268.6 290.8,266.9 295.4,263.6 301.4,261.4 307.2,259.6 309.0,253.7 316.5,253.0 320.3,249.0 324.7,244.8 329.8,238.9 333.8,234.8 331.4,227.2 326.7,222.5 324.4,216.1 318.5,212.8 314.7,208.4 313.3,208.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="187.0,387.1 193.9,388.0 201.2,387.5 205.7,384.1 213.2,383.2 220.0,387.3 224.1,391.0 229.7,393.1 237.1,392.9 240.6,388.2 244.6,380.9 249.3,371.5 258.3,373.3 263.2,370.6 263.8,370.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="173.2,531.1 179.4,529.5 187.7,525.1 189.8,519.5 200.4,519.8 208.1,519.7 215.3,518.6 219.0,514.6 220.7,507.3 223.7,502.7 227.1,497.9 229.7,492.4 232.2,486.8 235.2,481.7 238.8,476.3 235.2,481.7 232.2,486.8 229.7,492.4 227.1,497.9 223.7,502.7 220.7,507.3 219.2,513.8 215.3,518.6 208.1,519.7 204.3,515.7 206.0,509.0 207.4,502.3 205.7,496.2 202.7,491.6 200.7,485.7 196.9,481.8 200.7,485.7 202.7,491.6 205.7,496.2 207.4,502.3 206.0,509.0 204.3,515.7 208.1,519.7 215.3,518.6 220.0,515.4 220.7,507.3 223.7,502.7 227.1,497.9 229.7,492.4 232.2,486.8 235.2,481.7 238.8,476.3 241.1,470.5 243.1,463.5 246.6,458.8 250.0,454.0 254.7,450.9 256.8,443.3 259.1,437.8 260.9,430.7 262.8,421.2 260.2,415.8 260.4,408.2 263.7,402.3 265.6,396.2 264.8,388.0 261.9,382.7 262.6,374.3 263.8,370.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="163.8,615.6 171.8,615.5 179.0,612.4 182.9,607.9 190.0,606.9 200.3,600.0 204.9,597.0 214.1,593.7 220.7,594.7 225.2,591.2 229.5,587.4 236.2,581.4 240.3,577.9 244.9,574.2 253.3,567.4 257.4,563.8 261.3,559.8 266.7,555.8 271.5,552.6 275.7,549.1 290.7,537.1 295.6,533.1 300.3,529.4 305.1,525.4 306.6,519.1 311.2,515.3 320.4,513.8 325.9,510.7 332.9,509.5 337.9,506.8 342.5,502.7 346.7,497.7 350.2,493.1 355.5,490.6 363.1,486.1 370.0,480.8 374.3,477.1 378.6,472.1 385.1,469.1 391.1,466.4 391.9,459.5 386.5,455.8 385.9,447.1 386.4,439.1 390.1,431.9 393.0,426.6 391.1,420.5 389.0,414.8 393.1,411.1 398.1,406.5 405.5,397.4 409.4,392.9 420.7,380.1 422.6,374.4 417.5,368.7 414.0,363.5 410.1,358.6 399.5,351.5 397.5,344.3 404.2,332.1 408.1,327.3 413.6,321.0 386.8,312.2 380.8,309.9 378.4,301.4 374.7,267.9 370.0,262.7 363.2,259.1 358.1,256.4 351.4,252.8 346.0,250.0 338.8,246.0 335.0,242.2 334.2,234.6 333.2,227.9 328.4,224.5 324.7,220.0 321.6,214.9 316.7,210.8 313.3,208.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="366.9,420.8 374.5,420.5 380.3,423.2 387.5,424.7 392.1,428.2 391.1,420.5 389.0,414.8 393.1,411.1 398.1,406.5 405.5,397.4 409.4,392.9 420.7,380.1 422.6,374.4 417.5,368.7 414.0,363.5 410.1,358.6 399.5,351.5 397.5,344.3 404.2,332.1 408.1,327.3 413.6,321.0 386.8,312.2 380.8,309.9 378.4,301.4 374.7,267.9 370.0,262.7 363.2,259.1 358.1,256.4 351.4,252.8 346.0,250.0 338.8,246.0 335.0,242.2 334.2,234.6 333.2,227.9 328.4,224.5 324.7,220.0 321.6,214.9 316.7,210.8 313.3,208.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="418.5,200.9 414.6,204.8 409.5,207.4 405.1,213.0 400.7,216.4 398.0,222.7 387.5,240.0 379.5,255.0 374.3,264.2 367.1,261.2 360.7,257.8 351.4,252.8 346.0,250.0 344.5,242.4 346.3,236.2 350.1,230.8 347.9,225.2 341.2,223.2 335.6,220.8 331.1,217.1 326.1,214.2 318.5,212.8 314.7,208.4 313.3,208.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="645.1,381.3 637.9,382.2 632.7,385.1 626.1,388.4 620.2,391.6 616.9,396.7 611.4,399.8 606.6,403.0 600.5,404.7 593.1,409.0 586.4,410.0 580.5,412.2 574.7,415.2 568.8,417.0 565.3,421.3 559.1,422.8 553.5,424.8 549.0,429.3 543.4,432.6 538.7,435.8 536.0,440.9 531.9,445.1 527.2,448.6 522.0,451.1 516.3,453.7 512.2,460.2 509.0,465.7 503.7,469.6 499.3,473.3 494.4,476.0 492.2,475.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 09</title></polyline>
+<polyline points="492.2,475.7 498.6,473.8 504.2,476.2 508.4,479.8 504.2,476.2 500.9,471.8 494.7,475.8 488.5,474.4 484.5,478.2 480.5,482.4 473.8,488.1 469.5,492.3 461.8,492.1 454.2,493.6 449.4,496.9 445.0,501.1 441.2,505.7 434.9,507.4 429.9,504.6 425.6,501.0 421.4,496.6 418.5,490.7 408.3,480.8 403.0,477.7 398.8,473.1 394.5,468.0 393.1,461.8 388.7,457.3 385.4,452.3 386.1,443.2 388.0,435.7 392.1,428.2 391.1,420.5 389.0,414.8 393.1,411.1 398.1,406.5 405.5,397.4 409.4,392.9 420.7,380.1 422.6,374.4 417.5,368.7 414.0,363.5 410.1,358.6 399.5,351.5 397.5,344.3 404.2,332.1 408.1,327.3 413.6,321.0 386.8,312.2 380.8,309.9 378.4,301.4 374.7,267.9 370.0,262.7 363.2,259.1 358.1,256.4 351.4,252.8 346.0,250.0 338.8,246.0 335.0,242.2 334.2,234.6 333.2,227.9 328.4,224.5 324.7,220.0 321.6,214.9 316.7,210.8 313.3,208.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 10</title></polyline>
+<polyline points="568.7,415.7 567.0,409.5 563.8,404.8 560.8,398.6 555.7,394.7 553.6,388.9 550.3,381.3 559.3,379.2 564.0,382.1 559.3,379.2 552.2,380.2 546.8,383.7 540.2,386.3 535.3,389.3 528.7,390.7 523.3,387.2 518.0,384.9 508.2,383.8 502.1,381.2 498.1,374.8 495.4,369.3 492.8,364.1 488.8,359.9 491.8,354.5 493.0,347.6 487.7,342.9 483.8,338.7 478.5,334.0 471.4,332.2 441.1,327.4 433.4,325.2 423.1,322.3 414.5,319.9 386.8,312.2 380.8,309.9 378.4,301.4 374.7,267.9 370.0,262.7 363.2,259.1 358.1,256.4 351.4,252.8 346.0,250.0 338.8,246.0 335.0,242.2 334.2,234.6 333.2,227.9 328.4,224.5 324.7,220.0 321.6,214.9 316.7,210.8 313.3,208.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 11</title></polyline>
+<polyline points="283.0,91.6 284.1,99.7 288.7,103.2 283.1,108.1 284.6,116.6 278.2,124.8 272.1,128.0 270.2,136.9 267.2,143.5 265.1,151.6 260.3,156.8 271.0,170.4 276.6,175.7 282.2,181.1 288.4,185.4 296.9,189.4 315.4,198.2 314.4,204.9 313.3,208.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 12</title></polyline>
+<polyline points="252.7,567.8 245.8,573.4 240.3,577.9 236.2,581.4 232.3,585.7 227.0,589.6 222.0,593.9 214.5,593.6 204.9,597.0 200.3,600.0 191.4,606.3 184.1,606.9 180.6,611.1 175.7,614.6 169.7,617.9 163.9,621.3 160.7,625.8 158.1,631.0 154.1,635.7 148.2,638.8 143.3,641.4 136.1,649.5 129.9,652.3 101.8,649.6 94.4,650.8 89.1,653.3 71.0,650.4 60.2,646.8 54.2,644.9 46.7,644.1 43.6,639.6 40.3,634.8 37.9,629.1 36.4,622.6 35.0,616.2 35.9,608.1 38.4,601.7 41.2,596.4 38.4,601.7 36.0,607.4 35.1,614.5 36.0,621.4 37.6,627.9 39.7,633.5 42.6,638.7 46.2,643.4 52.8,645.0 60.2,646.8 66.4,649.6 89.1,653.3 94.4,650.8 101.8,649.6 126.7,652.1 134.7,650.8 139.8,645.3 144.3,640.8 151.3,637.2 155.9,634.1 158.8,629.2 161.7,623.9 166.4,619.7 175.7,614.6 180.6,611.1 184.1,606.9 191.4,606.3 200.3,600.0 204.9,597.0 214.1,593.7 220.7,594.7 225.2,591.2 229.5,587.4 236.2,581.4 240.3,577.9 244.9,574.2 252.7,567.8 252.7,567.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Alagamar</title></polyline>
+<polyline points="617.4,395.9 622.0,390.5 628.9,387.0 635.0,383.7 641.6,382.1 649.4,382.2 656.4,380.8 662.0,378.1 666.5,375.0 672.5,372.7 679.5,370.1 684.1,366.9 689.4,364.3 694.4,361.1 699.8,358.3 694.4,361.1 689.4,364.3 684.1,366.9 679.5,370.1 672.5,372.7 667.0,374.8 662.0,378.1 656.4,380.8 651.0,383.0 644.2,381.6 636.8,382.8 631.1,385.9 623.8,389.5 619.0,392.6 617.4,395.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Carapitanga</title></polyline>
+<polyline points="159.7,223.5 154.8,220.5 148.7,218.1 148.0,225.5 144.8,232.2 141.5,237.3 139.2,245.6 137.8,252.7 135.9,258.6 137.8,252.7 139.2,246.0 140.3,239.1 144.8,232.2 147.7,226.8 147.0,219.6 154.8,220.5 159.7,223.5 159.7,223.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 01</title></polyline>
+<polyline points="173.2,531.1 165.9,530.6 159.4,535.1 151.6,534.8 145.2,535.9 148.3,542.1 145.2,535.9 151.6,534.8 159.4,535.1 164.6,531.0 172.2,531.3 173.2,531.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 05</title></polyline>
+<circle cx="415.1" cy="388.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="366.3" cy="420.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="494.7" cy="356.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="389.9" cy="431.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="413.1" cy="320.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="387.6" cy="466.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="201.8" cy="239.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="213.4" cy="253.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="531.1" cy="391.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="564.0" cy="381.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="187.4" cy="386.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="317.8" cy="513.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="375.4" cy="282.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="308.2" cy="258.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="304.2" cy="518.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="152.8" cy="219.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="672.7" cy="371.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="195.2" cy="476.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="257.7" cy="441.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="295.1" cy="532.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="567.8" cy="415.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="341.6" cy="248.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="238.7" cy="474.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="349.1" cy="232.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="246.4" cy="154.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="462.1" cy="486.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="186.1" cy="529.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="333.7" cy="232.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="645.1" cy="381.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="189.4" cy="519.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="509.9" cy="478.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="259.9" cy="414.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="237.9" cy="580.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="417.3" cy="200.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="311.2" cy="317.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="304.2" cy="331.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="222.0" cy="512.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="407.1" cy="211.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="415.1" cy="207.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="221.5" cy="513.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="288.9" cy="180.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="492.4" cy="475.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="212.4" cy="206.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="615.3" cy="396.4" r="2.2" fill="#b9b9b2"/>
+<polygon points="314.8,195.6 301.6,219.8 327.9,219.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="303.7,318.7 296.1,332.7 311.2,332.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="284.5,169.9 275.3,186.8 293.6,186.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="284.5" y="200.3" text-anchor="middle" fill="#5c5c57">Zona Rural</text>
+<polygon points="263.7,361.9 254.9,378.1 272.6,378.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="266.3,381.8 258.1,396.8 274.4,396.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="410.3,196.2 400.2,214.9 420.5,214.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="617.1,387.4 609.0,402.3 625.2,402.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="490.4,463.3 480.3,482.1 500.6,482.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="313.8,198.1 302.7,218.4 324.8,218.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="252.6,558.5 243.7,574.8 261.5,574.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="211.9,201.0 204.2,215.3 219.6,215.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="215.5,507.0 204.8,526.7 226.1,526.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="215.5" y="540.5" text-anchor="middle" fill="#5c5c57">Povoado Santana Dos Frades</text>
+<circle cx="44.2" cy="592.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="51.2" y="587.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Alagamar 13,0 km</text>
+<circle cx="140.4" cy="260.0" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="147.4" y="255.0" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Agrovila do PA Boa Vista 5,3 km</text>
+<circle cx="699.5" cy="357.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="580.9" y="352.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Carapitanga 4,1 km</text>
+<circle cx="149.5" cy="541.5" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="156.5" y="536.5" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Agrovila do PA Independência Nossa Senhora do Carmo 3,7 km</text>
+<rect x="308.7" y="203.3" width="10" height="10" fill="#1d1d1b"/><text x="322.7" y="226.3" font-weight="600" fill="#1d1d1b">Sede de Pacatuba</text>
+<line x1="35" x2="148.9" y1="693.6" y2="693.6" stroke="#8a8a84" stroke-width="2"/><text x="35" y="707.6" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="684.6040953130977" y2="684.6040953130977" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="688.6040953130977" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,677.6 421.4,689.9 434.6,689.9" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="688.6040953130977" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="702.6040953130977" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="711.6040953130977" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="707.6040953130977" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="711.6040953130977" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="730.6040953130977" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="734.6040953130977" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="730.6040953130977" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="734.6040953130977" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="753.6040953130977" y2="753.6040953130977" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="757.6040953130977" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="776.6040953130977" y2="776.6040953130977" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="780.6040953130977" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 05/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (11):</strong> Alagamar, Paturi, Brejão da Itioca, Agrovila do PA Padre Nestor, Lagoinha, Atalho, Piranhas, Olhos d&#x27;Água, Tabuleiro, Agrovila do PA Boa Vista e Ouricuri.</li>
+<li><strong>De 3 a 5 km (9):</strong> Lagoa das Flores, Timbó, Carapitanga, Tijupari, Lagoa do Junco, Agrovila do PA Independência Nossa Senhora do Carmo, Gravatá, Maracujá e Carro Quebrado.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (29):</strong> Agrovila do PA Cruiri, Agrovila do PA Nossa Senhora Santana, Agrovila do PA Santana dos Frades, Aracaré, Aragão, Areia Branca, Boca da Barra, Campinas, Cobra d&#x27;Água, Comunidade Quilombola Santa Cruz, Estiva Funda, Estiva do Raposo, Fazenda Nova, Garatuba, Geme, Junça, Lope, Mororó, Oitizeiro, Ponta d&#x27;Areia, Ponta de Areia, Ponta dos Mangues, Porto de Santana, Prata, Rancho, Requeijão, Santaninha, Siqueira e Tigre.</li>
+</ul><h2>Rotas do Edital nº 05/2026</h2>
+<p>O edital tem 12 rotas para Pacatuba. Horários: Das 7h às 18h nos dias 04/10 e 25/10/2026. Veículos: Veículos indicados por federações/partidos até 30/09/2026, vistoriados pelo Cartório em 03/10/2026 no Fórum de Neópolis.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Carro Quebrado – Rancho – Prata – Estiva do Raposo – Sede</td></tr><tr><td>02</td><td>Tabuleiro – Sede – Junça – Atalho – Poções</td></tr><tr><td>03</td><td>Campinas – Cobra D&#x27;Água – Gravatá – Sede</td></tr><tr><td>04</td><td>Timbó – Campinas</td></tr><tr><td>05</td><td>Lagoa Grande – Assentamento Independência – Golfo – Nossa Senhora Santana – Santaninha – Santana dos Frades – Cruri – Dendê – Geme – Aragão – Fazenda Nova – Campinas</td></tr><tr><td>06</td><td>Serigy – Tigre – Junça – Maracujá – Tijupares – Brejão de Baixo – Atalho – Sede</td></tr><tr><td>07</td><td>Brejão de Cima – Brejão da Itioca – Atalho – Sede</td></tr><tr><td>08</td><td>Ponta de Areia – Siqueira – Areia Branca – Mororó – Sede</td></tr><tr><td>09</td><td>Garatuba – Aracaré – Oitizeiro – Ponta dos Mangues</td></tr><tr><td>10</td><td>Ponta dos Mangues – Boca da Barra – Trairas – Alto da Boa Vista – Piranhas – Alagoinhas – Paturis – Atalho – Sede</td></tr><tr><td>11</td><td>Oitizeiro – Lagoa das Flores – Ouricuri – Sede</td></tr><tr><td>12</td><td>Cadoz – Sede</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 05/2026 da 15ª ZE (Roteiro Transporte de Eleitores – Eleições Gerais 2026), DJE/TRE-SE nº 155/2026 (disp. 03/09/2026), p. 23-24 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=SE&amp;numDiario=155&amp;anoDiario=2026).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 4 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Alagamar</strong></td><td>Sede – Alagamar – Sede</td><td>Alagamar</td><td>26,0 km (ida e volta)</td><td>~35 min</td></tr><tr><td><strong>Rota nova – Carapitanga</strong></td><td>Sede – Carapitanga – Sede</td><td>Carapitanga</td><td>8,2 km (ida e volta)</td><td>~12 min</td></tr><tr><td><strong>Parada extra na Rota 01</strong></td><td>desvio pelo caminho atual: Agrovila do PA Boa Vista</td><td>Agrovila do PA Boa Vista</td><td>+5,3 km</td><td>+13 min</td></tr><tr><td><strong>Parada extra na Rota 05</strong></td><td>desvio pelo caminho atual: Agrovila do PA Independência Nossa Senhora do Carmo</td><td>Agrovila do PA Independência Nossa Senhora do Carmo</td><td>+3,2 km</td><td>+9 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMP</strong></p><p>Pacatuba/SE, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Dra. Rosivan Machado da Silva</strong><br>Juíza Eleitoral da 15ª Zona Eleitoral – Neópolis/SE</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 05/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de Pacatuba, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 05/2026: Alagamar, Carapitanga, Agrovila do PA Boa Vista e Agrovila do PA Independência Nossa Senhora do Carmo.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Alagamar (Sede – Alagamar – Sede);</li><li>a criação da Rota nova – Carapitanga (Sede – Carapitanga – Sede);</li><li>a inclusão de parada em Agrovila do PA Boa Vista na Rota 01, mantido todo o percurso atual;</li><li>a inclusão de parada em Agrovila do PA Independência Nossa Senhora do Carmo na Rota 05, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 05/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Pacatuba</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Pacatuba; Edital nº 05/2026 da 15ª ZE (Roteiro Transporte de Eleitores – Eleições Gerais 2026), DJE/TRE-SE nº 155/2026 (disp. 03/09/2026), p. 23-24 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=SE&amp;numDiario=155&amp;anoDiario=2026); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

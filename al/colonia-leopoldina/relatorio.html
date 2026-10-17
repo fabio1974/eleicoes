@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Colônia Leopoldina</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Colônia Leopoldina</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/colonia-leopoldina.pdf?v=1792246200" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Colônia Leopoldina (16ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 16ª Zona Eleitoral <strong>3 rotas novas e 3 paradas extras em rotas do edital</strong> no transporte gratuito de Colônia Leopoldina.
+Traçamos pelas estradas o percurso das 8 rotas do Edital ZE nº 2/2026. 4 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 3 ficam a 1–2 km.</p>
+<ul>
+<li>Colônia Leopoldina tem 15.445 eleitores aptos em 8 locais de votação e 55 seções. São 0 locais rurais, com 0 eleitores (0% do total).</li>
+
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Sítio Beira de Rio (31,3 km do local de votação), Fazenda Maravilha (19,6 km do local de votação), Sítio Cabral (13,9 km do local de votação) e Fazenda Livramento (9,7 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Sítio Candio, Sítio Teimoso e Quebra do Corcunda.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 18 localidades rurais de Colônia Leopoldina que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Sítio Beira de Rio</td><td>31,3</td><td>Rota 05</td><td>7,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Maravilha</td><td>19,6</td><td>Rota 05</td><td>8,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Sítio Candio</td><td>14,7</td><td>Rota 06</td><td>1,3</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Monte Alegre</td><td>13,9</td><td>Rota 08</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Cabral</td><td>13,9</td><td>Rota 06</td><td>3,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Areinha</td><td>12,1</td><td>Rota 08</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Grota D&#x27;Água</td><td>11,4</td><td>Rota 06</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Manaia</td><td>10,6</td><td>Rota 08</td><td>0,7</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Catita</td><td>10,6</td><td>Rota 08</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fazenda Livramento</td><td>9,7</td><td>Rota 08</td><td>2,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Sítio Teimoso</td><td>8,4</td><td>Rota 08</td><td>1,0</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Fazenda Campo Novo</td><td>7,0</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Destilaria Porto Alegre</td><td>6,5</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Cerâmica</td><td>5,8</td><td>Rota 05</td><td>0,5</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Quebra do Corcunda</td><td>5,8</td><td>Rota 04</td><td>1,0</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Canto Escuro</td><td>5,6</td><td>Rota 06</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fazenda Mata Verde</td><td>5,2</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Usina Taquara</td><td>5,1</td><td>Rota 05</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>4 das 19 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Faz. Mamona (Rota 02), Faz. Porto Alegre (Rota 03), Sítio Riachão (Rota 07) e Faz. São Sebastião (Pé de Serra) (Rota 08). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 18 localidades rurais de Colônia Leopoldina, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1047" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Colônia Leopoldina: 7 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital ZE nº 2/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="37.6,749.0 320.9,840.9 596.6,914.6 597.0,894.2 609.4,841.7 466.4,862.1 478.8,716.9 607.9,603.5 597.4,565.9 725.0,429.6 703.5,377.0 671.0,379.2 663.0,404.0 633.5,429.2 598.1,430.6 557.2,444.5 527.3,465.7 478.5,459.1 443.5,476.2 395.7,485.0 351.9,504.3 306.3,471.1 261.5,463.8 225.7,432.5 240.0,400.0 223.2,375.9 252.0,308.8 231.9,299.4 209.0,263.3 181.6,250.9 134.9,297.2 79.9,286.2 66.7,333.6 35.0,604.6 37.6,749.0 37.6,749.0" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="644.5,433.8 650.4,439.0 654.0,449.4 640.3,451.3 630.4,452.6 616.0,453.7 604.8,454.8 592.6,456.1 580.5,457.4 568.3,458.7 556.6,460.1 543.2,465.4 533.7,471.2 526.1,476.3 518.6,480.3 505.1,486.1 496.1,488.9 483.6,489.3 471.7,489.8 460.9,490.2 451.1,492.6 447.9,493.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="693.4,447.2 683.1,446.3 669.9,447.7 659.2,448.8 656.4,457.1 659.0,468.9 663.5,475.6 658.5,483.1 649.9,487.6 649.4,491.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="530.0,574.3 536.4,568.6 543.0,563.4 548.2,557.3 554.3,551.6 562.6,547.2 569.1,542.1 572.3,533.4 579.8,529.5 577.6,519.7 565.9,520.1 555.4,516.6 544.6,516.9 534.2,516.3 532.7,506.2 530.3,497.5 519.8,496.9 510.1,494.3 505.7,487.3 496.1,488.9 483.6,489.3 471.7,489.8 460.9,490.2 451.1,492.6 447.9,493.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="404.4,589.9 409.4,582.3 413.9,575.2 416.2,565.6 422.3,558.2 427.5,552.0 422.1,546.1 424.4,537.3 429.1,530.5 433.3,523.5 438.4,516.6 448.9,515.6 455.5,509.7 461.1,503.5 458.5,493.2 447.9,493.6 447.9,493.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="310.3,497.0 318.2,501.1 321.8,511.3 327.9,517.5 334.6,522.2 340.6,530.1 353.7,534.3 364.4,533.2 381.7,517.2 387.6,511.6 394.4,506.5 417.5,502.0 426.7,500.2 439.2,496.4 447.9,493.6 447.9,493.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="328.9,584.4 327.1,593.9 324.5,603.2 326.3,612.4 321.8,619.2 314.2,623.2 309.8,630.5 304.5,636.8 292.5,638.9 288.3,646.7 283.5,653.0 278.5,659.1 272.3,663.8 269.4,672.6 260.9,669.9 258.3,661.2 255.3,653.0 258.3,661.2 260.9,669.9 264.1,678.0 268.0,685.6 274.8,690.0 284.1,687.0 290.8,681.6 295.6,674.6 300.2,667.7 306.2,662.2 309.6,670.3 305.9,677.6 300.4,683.4 295.9,690.0 294.0,700.9 290.8,709.8 285.1,715.8 295.9,717.2 293.2,728.9 288.1,734.9 282.8,741.1 288.1,734.9 293.2,728.9 302.1,735.0 311.0,737.3 322.0,735.5 332.3,732.2 322.0,735.5 311.0,737.3 302.1,735.0 297.1,729.1 289.3,733.4 282.8,741.1 272.8,739.4 265.1,734.5 255.2,732.2 245.4,730.1 236.5,727.3 226.4,730.0 217.2,732.0 207.7,729.7 205.3,720.7 213.0,717.4 218.8,711.9 218.8,711.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="117.4,695.5 127.9,696.2 133.2,690.2 137.9,683.8 144.2,677.5 150.9,672.0 159.0,668.0 169.6,666.1 170.7,654.6 169.3,641.4 167.3,632.5 173.1,627.2 171.0,615.7 176.0,609.6 187.3,608.7 195.5,602.3 200.8,596.6 208.0,591.1 213.6,585.4 220.1,580.7 214.4,570.9 201.0,568.7 192.1,571.0 183.7,575.1 172.8,575.1 160.4,573.5 149.0,573.4 146.7,583.1 142.0,591.0 135.3,595.8 132.3,604.0 126.9,597.8 130.9,605.3 134.9,598.1 139.4,592.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="439.7,481.0 438.4,469.7 432.2,463.7 427.5,457.5 423.6,449.6 421.7,440.2 413.0,429.5 407.0,424.0 401.8,415.7 387.5,410.9 374.7,410.7 365.8,406.8 360.3,401.3 354.0,396.3 351.5,386.9 348.3,378.0 343.3,371.8 337.4,366.4 333.7,359.1 333.4,348.3 333.1,337.0 328.7,329.2 322.8,324.1 315.2,320.7 310.3,314.7 306.6,307.4 302.4,299.9 298.6,292.3 294.5,285.3 285.7,282.9 285.0,271.4 284.3,260.5 283.9,248.1 287.7,240.5 284.6,232.6 279.1,226.8 269.8,224.9 263.6,229.7 254.7,227.5 243.1,228.3 232.6,229.0 224.6,223.7 222.9,212.7 223.1,201.7 217.9,193.9 214.3,184.2 209.4,176.7 205.4,169.5 194.5,169.2 194.3,180.0 187.4,184.2 194.6,188.4 199.6,195.4 201.9,204.6 202.6,215.1 204.7,224.5 211.3,230.1 140.0,300.5 132.1,297.5 125.7,292.7 116.9,290.4 121.8,284.0 118.2,274.7 115.8,283.7 108.2,279.4 104.5,271.7 102.0,261.9 106.2,255.0 101.3,247.6 97.3,239.7 91.6,233.8 83.9,230.4 79.4,220.6 78.8,210.0 84.5,202.7 89.9,195.9 95.2,187.0 100.2,178.3 104.2,169.4 100.2,159.8 93.8,155.3 96.6,140.3 105.3,133.8 99.8,124.6 97.1,113.1 103.0,107.9 107.4,101.2 111.4,92.9 123.1,93.0 131.3,89.8 137.2,84.3 144.4,80.4 149.0,88.5 153.6,95.4 157.7,103.7 168.9,104.4 173.9,110.7 172.9,121.4 169.4,130.4 166.3,138.6 173.0,143.5 182.4,148.6 186.1,156.2 188.1,165.5 195.9,168.7 205.9,170.6 210.9,177.6 215.1,186.6 219.8,196.4 221.8,206.4 224.2,215.1 226.4,224.4 228.5,233.9 233.7,227.8 244.7,227.3 255.3,228.4 266.1,228.1 273.0,224.1 280.7,228.2 286.5,234.0 286.2,244.8 283.4,253.0 284.3,263.9 284.1,274.7 279.0,280.9 288.6,283.5 297.3,285.8 300.1,295.8 304.7,302.5 307.8,310.5 311.3,318.1 318.5,322.0 326.2,325.4 331.9,331.1 333.9,340.6 334.8,351.0 334.7,362.1 340.0,367.9 344.1,375.3 350.3,380.2 351.1,390.5 357.1,395.8 361.8,402.3 367.5,408.0 377.4,410.4 397.4,412.5 403.4,418.7 408.1,425.2 417.9,433.8 421.3,442.7 424.6,451.1 429.0,458.4 434.2,465.7 440.4,473.2 439.7,481.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Sítio Beira de Rio</title></polyline>
+<polyline points="467.1,488.0 469.1,497.2 462.0,502.0 456.6,508.6 451.3,514.3 442.3,516.6 435.3,520.7 430.8,527.4 426.0,534.0 422.5,543.4 428.0,549.8 423.4,556.1 418.2,562.6 414.7,570.4 411.9,578.9 408.0,586.2 402.4,591.5 396.7,597.3 402.1,605.2 399.3,613.5 393.8,623.3 390.0,632.7 390.4,646.0 387.2,655.5 377.2,657.0 373.0,663.8 374.8,674.3 376.7,683.4 381.6,692.1 387.0,698.0 382.9,705.9 379.5,716.4 373.4,722.8 368.5,733.9 365.5,742.0 360.5,749.1 361.7,759.0 365.6,766.5 365.5,777.4 365.8,789.3 362.0,798.9 355.4,805.0 350.1,811.9 345.6,818.4 338.9,823.4 333.1,828.8 338.9,823.4 345.6,818.4 350.1,811.9 355.0,805.6 361.7,799.4 368.1,791.3 366.4,781.4 365.9,770.4 361.3,763.5 360.8,753.0 364.6,743.4 367.6,734.7 375.2,730.7 377.1,717.9 382.6,712.1 383.7,701.9 381.8,692.9 378.7,684.4 373.3,678.7 372.4,667.8 373.2,657.5 385.3,656.6 390.3,649.9 388.2,639.8 390.5,629.5 395.4,619.8 401.8,609.9 398.0,600.8 402.4,591.5 408.0,586.2 411.9,578.9 414.7,570.4 418.2,562.6 423.2,556.6 428.6,550.9 422.1,546.1 424.4,537.3 429.1,530.5 433.3,523.5 438.4,516.6 448.9,515.6 455.5,509.7 461.1,503.5 468.0,498.9 467.1,488.0 467.1,488.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Sítio Cabral</title></polyline>
+<polyline points="439.1,489.5 433.3,498.3 419.1,501.7 402.6,504.9 393.4,506.9 385.5,513.7 369.6,528.8 363.3,533.6 346.7,534.6 338.2,526.2 330.9,519.7 323.7,514.4 318.6,502.0 311.5,498.1 299.8,498.4 299.2,487.5 297.4,478.0 293.6,466.9 283.2,466.2 272.6,465.5 265.0,462.0 254.4,462.9 245.6,465.7 236.9,468.4 227.3,466.9 216.3,469.9 207.4,472.4 216.3,469.9 225.3,466.9 234.8,468.7 244.2,466.7 253.1,463.7 262.8,461.9 271.4,464.9 280.7,466.8 292.8,466.5 295.6,474.8 298.4,483.4 297.9,493.9 306.1,497.8 315.7,499.1 321.8,511.3 327.9,517.5 334.6,522.2 340.6,530.1 353.7,534.3 364.4,533.2 381.7,517.2 387.6,511.6 394.4,506.5 417.5,502.0 426.7,500.2 439.2,496.4 439.1,489.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fazenda Livramento</title></polyline>
+<polyline points="407.5,587.7 399.7,593.1 400.4,603.5 406.9,598.5 416.6,597.1 424.4,593.8 433.2,590.5 431.7,601.1 428.0,613.0 431.0,603.5 435.0,596.5 429.1,591.2 422.1,596.0 410.2,600.6 400.9,602.5 402.4,591.5 407.5,587.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 04</title></polyline>
+<polyline points="223.6,733.1 232.2,728.0 242.0,729.5 251.5,732.2 263.4,734.1 270.9,739.0 272.0,750.1 269.0,758.6 264.1,766.2 259.0,772.8 250.1,775.1 241.4,780.5 231.6,777.5 238.0,782.5 246.3,778.9 252.6,774.0 261.1,771.1 266.1,763.4 269.4,755.1 272.9,745.2 270.2,736.0 258.6,732.5 248.1,730.9 238.6,728.0 226.4,730.0 223.6,733.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 06</title></polyline>
+<polyline points="220.0,583.8 216.5,574.1 213.0,565.5 217.9,557.1 234.6,560.2 242.4,563.3 253.4,563.3 247.6,568.9 243.9,576.2 237.5,580.9 233.9,588.5 234.3,599.1 242.7,601.8 234.3,599.1 233.9,588.5 237.5,580.9 243.9,576.2 247.6,568.9 253.4,563.3 242.4,563.3 234.6,560.2 226.4,556.3 215.2,560.6 214.4,570.9 219.2,577.7 220.0,583.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 08</title></polyline>
+<circle cx="117.3" cy="694.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="169.6" cy="664.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="250.2" cy="652.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="193.3" cy="668.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="137.5" cy="589.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="693.3" cy="446.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="644.8" cy="433.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="319.5" cy="482.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="330.0" cy="583.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="626.9" cy="456.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="310.7" cy="496.7" r="2.2" fill="#b9b9b2"/>
+<polygon points="450.4,479.1 440.3,497.7 460.5,497.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="439.4,476.9 427.6,498.7 451.3,498.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="439.4,467.2 426.7,490.7 452.2,490.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="467.2,472.2 452.2,499.7 482.1,499.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="479.6,472.0 469.3,490.9 489.8,490.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="437.6,471.5 428.9,487.5 446.3,487.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="471.2,472.4 462.0,489.3 480.4,489.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="475.2,477.4 461.8,502.1 488.6,502.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="140.0" cy="300.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="147.0" y="295.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Beira de Rio 31,3 km</text>
+<circle cx="180.1" cy="252.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="187.1" y="247.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Maravilha 19,6 km</text>
+<circle cx="229.8" cy="776.4" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="236.8" y="771.4" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Sítio Candio 14,7 km</text>
+<circle cx="331.9" cy="832.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="338.9" y="827.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Cabral 13,9 km</text>
+<circle cx="199.8" cy="471.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="206.8" y="466.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Livramento 9,7 km</text>
+<circle cx="245.4" cy="605.0" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="252.4" y="600.0" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Sítio Teimoso 8,4 km</text>
+<circle cx="426.7" cy="614.8" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="433.7" y="609.8" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Quebra do Corcunda 5,8 km</text>
+<rect x="443.1" y="489.3" width="10" height="10" fill="#1d1d1b"/><text x="457.1" y="512.3" font-weight="600" fill="#1d1d1b">Sede de Colônia Leopoldina</text>
+<line x1="35" x2="199.3" y1="944.6" y2="944.6" stroke="#8a8a84" stroke-width="2"/><text x="35" y="958.6" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="935.5936575052846" y2="935.5936575052846" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="939.5936575052846" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,928.6 421.4,940.8 434.6,940.8" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="939.5936575052846" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="953.5936575052846" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="962.5936575052846" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="958.5936575052846" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="962.5936575052846" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="981.5936575052846" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="985.5936575052846" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="981.5936575052846" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="985.5936575052846" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1004.5936575052846" y2="1004.5936575052846" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1008.5936575052846" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1027.5936575052847" y2="1027.5936575052847" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1031.5936575052847" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital ZE nº 2/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (18):</strong> Sítio Beira de Rio, Fazenda Maravilha, Sítio Candio, Monte Alegre, Sítio Cabral, Fazenda Areinha, Sítio Grota D&#x27;Água, Sítio Manaia, Sítio Catita, Fazenda Livramento, Sítio Teimoso, Fazenda Campo Novo, Destilaria Porto Alegre, Cerâmica, Quebra do Corcunda, Canto Escuro, Fazenda Mata Verde e Usina Taquara.</li>
+<li><strong>De 3 a 5 km (0):</strong> nenhuma.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (0):</strong> .</li>
+</ul><h2>Rotas do Edital ZE nº 2/2026</h2>
+<p>O edital tem 8 rotas para Colônia Leopoldina. Horários: A partir das 7h até o final da votação. Veículos: não informados.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Destilaria Porto Alegre</td></tr><tr><td>02</td><td>Faz. Campo Novo – Faz. Papa Mel – Faz. Mamona</td></tr><tr><td>03</td><td>Faz. Estrela do Sul – Faz. Porto Alegre</td></tr><tr><td>04</td><td>Faz. Serra do Leite</td></tr><tr><td>05</td><td>Usina Taquara</td></tr><tr><td>06</td><td>Faz. Canto Escuro – Faz. Gruta D&#x27;Água – Faz. Marinheiro – Faz. Coirana – Faz. Formosa</td></tr><tr><td>07</td><td>Sítio Riachão</td></tr><tr><td>08</td><td>Faz. Monte Alegre – Faz. Areinha – Faz. Santa Fé – Faz. Catita – Faz. São Sebastião (Pé de Serra)</td></tr></tbody></table></div>
+
+<p>Fonte: Edital ZE nº 2/2026 da 16ª ZE, DJE/TRE-AL nº 181/2026 (disp. 14/09/2026) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=AL&amp;numDiario=181&amp;anoDiario=2026); Portaria nº 2/2026 (comissão), DJE/TRE-AL nº 172/2026 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=AL&amp;numDiario=172&amp;anoDiario=2026).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 7 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Sítio Beira de Rio</strong></td><td>Sede – Fazenda Maravilha – Sítio Beira de Rio – Sede</td><td>Fazenda Maravilha, Sítio Beira de Rio</td><td>53,4 km (ida e volta)</td><td>~1h37</td></tr><tr><td><strong>Rota nova – Sítio Cabral</strong></td><td>Sede – Sítio Cabral – Sede</td><td>Sítio Cabral</td><td>27,9 km (ida e volta)</td><td>~1h07</td></tr><tr><td><strong>Rota nova – Fazenda Livramento</strong></td><td>Sede – Fazenda Livramento – Sede</td><td>Fazenda Livramento</td><td>19,5 km (ida e volta)</td><td>~35 min</td></tr><tr><td><strong>Parada extra na Rota 04</strong></td><td>desvio pelo caminho atual: Quebra do Corcunda</td><td>Quebra do Corcunda</td><td>+5,6 km</td><td>+14 min</td></tr><tr><td><strong>Parada extra na Rota 06</strong></td><td>desvio pelo caminho atual: Sítio Candio</td><td>Sítio Candio</td><td>+7,7 km</td><td>+18 min</td></tr><tr><td><strong>Parada extra na Rota 08</strong></td><td>desvio pelo caminho atual: Sítio Teimoso</td><td>Sítio Teimoso</td><td>+8,1 km</td><td>+14 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMCL</strong></p><p>Colônia Leopoldina/AL, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. José Alberto Ramos</strong><br>Juiz Eleitoral da 16ª Zona Eleitoral – São José da Laje/AL</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital ZE nº 2/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Colônia Leopoldina, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital ZE nº 2/2026: Sítio Beira de Rio, Fazenda Maravilha, Sítio Cabral, Fazenda Livramento, Sítio Candio, Sítio Teimoso e Quebra do Corcunda.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Sítio Beira de Rio (Sede – Fazenda Maravilha – Sítio Beira de Rio – Sede);</li><li>a criação da Rota nova – Sítio Cabral (Sede – Sítio Cabral – Sede);</li><li>a criação da Rota nova – Fazenda Livramento (Sede – Fazenda Livramento – Sede);</li><li>a inclusão de parada em Quebra do Corcunda na Rota 04, mantido todo o percurso atual;</li><li>a inclusão de parada em Sítio Candio na Rota 06, mantido todo o percurso atual;</li><li>a inclusão de parada em Sítio Teimoso na Rota 08, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital ZE nº 2/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Colônia Leopoldina</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Colônia Leopoldina; Edital ZE nº 2/2026 da 16ª ZE, DJE/TRE-AL nº 181/2026 (disp. 14/09/2026) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=AL&amp;numDiario=181&amp;anoDiario=2026); Portaria nº 2/2026 (comissão), DJE/TRE-AL nº 172/2026 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=AL&amp;numDiario=172&amp;anoDiario=2026); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

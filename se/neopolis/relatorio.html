@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Neópolis</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Neópolis</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/neopolis.pdf?v=1792246256" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Neópolis (15ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 15ª Zona Eleitoral <strong>5 rotas novas</strong> no transporte gratuito de Neópolis.
+Traçamos pelas estradas o percurso das 7 rotas do Edital nº 05/2026. 9 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>Neópolis tem 14.414 eleitores aptos em 20 locais de votação e 56 seções. São 14 locais rurais, com 6.075 eleitores (42% do total).</li>
+<li>10 locais rurais ficam a 10 km ou mais da sede, com 4.319 eleitores. Os mais distantes: Povoado Cacimbas (38,6 km), Povoado Mussuípe (28,2 km) e Povoado Soldeiro (25,3 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Agrovila do PA Oito de Julho (28,0 km do local de votação), Poções (17,1 km do local de votação), Ponta Mofina (16,0 km do local de votação), Aldeia Indígena Fulkaxó (11,3 km do local de votação), Agrovila do PA N. S. da Conceição (11,0 km do local de votação), Siqueira (8,9 km do local de votação), Ponta de Areia (8,5 km do local de votação), Serrão (4,5 km do local de votação) e Agrovila do PA Maria Zenilde dos Santos (3,3 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 33 localidades rurais de Neópolis que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Agrovila do PA Oito de Julho</td><td>28,0</td><td>Rota 05</td><td>2,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Poções</td><td>17,1</td><td>Rota 06</td><td>8,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Ponta Mofina</td><td>16,0</td><td>Rota 01</td><td>2,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Aldeia Indígena Fulkaxó</td><td>11,3</td><td>Rota 02</td><td>3,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Agrovila do PA N. S. da Conceição</td><td>11,0</td><td>Rota 02</td><td>3,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Siqueira</td><td>8,9</td><td>Rota 06</td><td>4,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Ponta de Areia</td><td>8,5</td><td>Rota 06</td><td>4,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Boa Esperança</td><td>4,6</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Serrão</td><td>4,5</td><td>Rota 01</td><td>3,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Porteiras</td><td>3,6</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Agrovila do PA Maria Zenilde dos Santos</td><td>3,3</td><td>Rota 03</td><td>2,8</td><td>Sem rota (mais de 2 km)</td></tr></tbody></table></div>
+<p>8 das 32 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Mundeo (Rota 02), Pilicão (Rota 02), Sítio S. José (Rota 02), Alto S. Antônio (Rota 02), Passagem (Rota 03), 01 de Maio (Rota 04), 08 de Julho (Rota 05) e Santa Maria 7 Casas (Rota 07). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 33 localidades rurais de Neópolis, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 957" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Neópolis: 9 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 05/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="291.8,562.3 301.0,576.2 428.2,564.5 449.0,560.4 544.9,592.4 582.9,601.9 558.6,617.0 579.4,825.3 581.8,808.4 601.8,785.1 579.7,773.4 595.2,725.2 592.2,694.6 619.0,697.4 628.3,663.7 672.6,649.0 683.6,603.6 689.0,578.7 698.1,498.0 695.6,478.9 676.7,446.6 678.4,404.8 656.8,331.3 614.4,290.8 571.5,305.8 433.1,344.9 376.0,242.7 350.8,207.4 301.9,206.3 289.3,238.6 217.4,230.4 173.1,182.2 148.8,183.9 143.6,163.1 98.2,191.3 68.9,185.0 46.5,218.3 45.1,240.2 66.2,288.9 94.9,312.4 142.2,338.4 172.3,326.9 198.5,345.5 208.9,366.8 203.7,399.3 216.8,446.9 214.4,460.6 238.4,492.6 254.8,499.7 260.0,519.1 291.8,562.3 291.8,562.3" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="598.9,567.0 602.3,575.8 609.3,574.3 613.0,569.4 617.0,564.2 620.8,557.4 623.8,551.6 627.7,546.9 631.7,542.5 637.6,539.9 645.0,536.6 641.5,531.7 639.6,524.9 643.4,520.1 643.7,511.9 642.7,504.0 643.6,496.3 646.1,489.8 648.5,483.3 649.7,474.5 652.4,466.7 655.2,458.7 658.2,451.8 661.0,445.6 663.5,439.3 664.8,429.9 666.6,422.9 668.2,416.1 668.6,406.4 664.0,400.5 661.4,394.9 662.6,387.6 661.0,379.5 656.9,374.6 649.5,372.1 639.7,370.7 634.6,366.7 625.2,367.2 619.8,364.4 625.2,367.2 633.1,366.7 630.7,359.8 627.5,354.3 629.5,347.7 631.9,341.6 637.2,337.3 641.9,333.4 643.4,334.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="481.0,510.1 485.6,505.6 494.5,503.7 501.3,505.2 509.5,506.9 512.3,500.9 515.1,494.7 518.6,487.4 522.1,481.2 527.0,475.5 530.9,471.2 533.1,464.2 535.3,457.9 534.6,449.9 532.2,443.9 527.5,438.2 522.0,433.7 520.6,426.2 517.9,420.5 517.3,408.0 518.8,401.3 526.0,396.0 533.3,398.8 541.9,403.1 548.0,406.3 553.0,410.1 559.4,412.6 568.6,415.2 571.6,421.3 574.9,427.0 581.3,429.0 590.5,427.2 595.5,423.9 598.7,418.4 601.1,412.5 602.5,404.6 606.4,399.4 609.7,394.3 614.3,390.6 620.9,384.2 625.9,380.8 631.3,376.9 633.2,370.5 630.7,359.8 627.5,354.3 629.5,347.7 631.9,341.6 637.2,337.3 641.9,333.4 643.4,334.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="57.8,253.9 54.7,248.5 50.4,244.3 48.3,237.6 37.1,230.5 38.2,223.0 39.0,214.0 41.2,207.7 46.0,203.5 49.0,197.9 52.5,191.9 55.4,185.9 58.4,180.0 61.6,174.2 66.8,170.5 70.8,166.3 74.5,161.5 76.3,154.9 77.8,147.9 81.0,142.5 87.3,139.7 91.5,135.6 102.4,134.9 108.3,137.7 119.9,146.5 125.8,148.9 131.0,152.1 136.8,154.9 143.9,158.8 152.0,159.3 157.1,163.4 155.3,171.0 154.2,179.8 156.9,186.4 161.3,190.8 169.5,192.3 175.6,194.8 180.5,200.8 187.6,203.5 186.2,210.6 185.1,221.3 186.9,228.9 190.5,235.5 195.0,241.7 194.9,249.9 195.4,257.7 189.2,264.6 191.6,272.4 196.1,280.5 200.2,288.1 215.4,294.3 242.0,279.8 253.6,272.8 259.2,269.2 268.3,270.4 274.8,272.2 276.6,283.2 275.4,293.9 277.7,303.8 282.0,318.4 284.7,327.4 287.9,335.1 291.2,340.5 295.3,347.4 299.6,354.8 306.4,366.4 310.2,372.9 314.4,380.0 320.1,389.7 323.4,395.2 331.2,392.1 339.9,386.7 347.9,381.6 365.0,371.0 372.8,366.1 378.5,362.5 384.4,358.8 389.6,355.4 396.2,351.3 402.1,347.7 407.1,344.5 413.0,342.1 422.4,341.9 430.2,344.8 436.8,347.6 442.9,350.0 450.7,351.7 465.8,351.8 477.1,351.6 490.0,351.6 501.0,351.5 510.0,351.1 517.7,350.4 525.4,349.3 532.4,348.0 540.9,346.3 551.3,344.2 566.5,341.2 574.0,339.7 582.8,339.2 591.2,336.9 599.4,333.9 605.4,331.6 615.5,328.0 621.0,325.1 625.4,321.2 633.0,323.9 637.4,328.0 644.0,330.7 643.4,334.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="528.8,438.5 523.7,434.8 520.8,429.2 518.7,421.7 517.5,413.7 517.2,405.1 515.5,397.2 510.8,393.4 508.4,387.0 510.7,381.1 517.3,370.3 521.6,362.9 525.1,356.7 529.2,348.6 540.9,346.3 551.3,344.2 566.5,341.2 574.0,339.7 582.8,339.2 591.2,336.9 599.4,333.9 605.4,331.6 615.5,328.0 621.0,325.1 625.4,321.2 633.0,323.9 637.4,328.0 644.0,330.7 643.4,334.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="219.2,384.6 222.7,389.8 227.0,398.2 230.7,405.3 234.0,411.8 237.3,416.8 243.2,424.6 247.0,429.6 251.0,435.0 263.2,431.3 270.3,428.9 276.9,426.1 282.4,422.7 288.5,418.9 295.4,414.7 307.1,407.3 313.6,403.2 322.9,397.3 331.2,392.1 339.9,386.7 347.9,381.6 365.0,371.0 372.8,366.1 371.4,358.0 370.1,350.6 368.2,339.8 366.4,330.0 364.9,323.1 369.8,318.3 368.4,310.4 369.9,303.5 368.4,310.4 369.8,318.3 365.4,322.6 366.4,330.0 368.2,339.8 370.1,350.6 371.4,358.0 372.8,366.1 378.5,362.5 384.4,358.8 389.6,355.4 396.2,351.3 402.1,347.7 407.1,344.5 413.0,342.1 422.4,341.9 430.2,344.8 436.8,347.6 442.9,350.0 450.7,351.7 465.8,351.8 477.1,351.6 490.0,351.6 501.0,351.5 510.0,351.1 517.7,350.4 525.4,349.3 532.4,348.0 540.9,346.3 551.3,344.2 566.5,341.2 574.0,339.7 582.8,339.2 591.2,336.9 599.4,333.9 605.4,331.6 615.5,328.0 621.0,325.1 625.4,321.2 633.0,323.9 637.4,328.0 644.0,330.7 643.4,334.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="494.3,528.5 495.4,536.0 499.5,540.9 503.7,545.4 507.2,551.8 509.5,558.4 507.5,564.9 510.4,572.2 515.3,576.8 519.3,581.0 526.9,583.9 533.9,587.4 537.5,581.9 543.2,576.8 547.9,572.7 553.3,567.9 556.9,562.6 560.0,556.8 563.0,551.4 565.6,544.9 570.0,540.7 573.2,534.4 575.2,528.0 574.2,520.0 585.4,514.4 600.1,514.0 608.5,514.1 617.3,510.6 622.8,506.8 629.5,504.9 636.5,506.9 642.7,504.0 643.6,496.3 646.1,489.8 648.5,483.3 649.7,474.5 652.4,466.7 655.2,458.7 658.2,451.8 661.0,445.6 663.5,439.3 664.8,429.9 666.6,422.9 668.2,416.1 668.6,406.4 664.0,400.5 661.4,394.9 662.6,387.6 661.0,379.5 656.9,374.6 649.5,372.1 639.7,370.7 634.6,366.7 630.7,359.8 627.5,354.3 629.5,347.7 631.9,341.6 637.2,337.3 641.9,333.4 643.4,334.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="613.4,318.2 617.2,312.5 620.3,307.1 614.7,302.6 608.9,297.0 617.7,290.5 616.2,282.6 613.5,276.9 614.2,268.9 622.4,269.9 627.4,274.2 632.8,277.9 638.9,280.5 646.9,277.5 654.0,275.0 656.9,267.9 667.1,261.2 675.0,258.6 683.3,256.2 688.8,253.1 693.4,247.5 694.4,239.7 693.6,231.9 693.7,220.7 694.0,207.8 693.1,195.1 691.6,184.5 690.3,177.1 688.4,167.0 687.2,159.9 685.2,153.3 680.9,141.0 677.6,131.4 673.0,118.0 669.9,109.2 662.6,105.4 653.7,103.1 645.3,101.8 636.8,100.1 628.7,101.1 621.7,102.8 613.4,104.4 606.0,106.1 597.7,104.0 589.9,103.2 582.5,100.4 577.1,97.3 574.7,91.4 573.9,83.9 566.1,83.3 556.3,86.5 552.2,92.1 548.4,97.0 541.9,94.7 533.5,94.5 528.6,90.4 523.8,86.5 516.8,85.0 508.7,84.3 501.9,81.2 494.1,80.3 486.0,81.7 484.8,90.2 486.6,97.2 484.5,104.8 478.9,110.2 474.6,114.3 469.9,118.7 466.5,124.2 462.3,128.7 458.0,133.1 453.7,138.0 449.7,142.5 443.5,149.2 437.1,156.6 432.3,162.3 424.6,166.5 411.7,172.8 406.7,179.2 399.5,184.3 391.9,188.0 386.5,190.9 378.8,189.6 385.3,191.6 391.9,188.0 399.5,184.3 405.3,181.4 410.0,173.8 420.5,168.6 431.2,163.2 437.1,156.6 443.5,149.2 448.9,143.3 453.7,138.0 458.0,133.1 462.3,128.7 466.5,124.2 469.9,118.7 474.6,114.3 478.9,110.2 484.5,104.8 486.6,97.2 484.8,90.2 483.2,83.4 491.7,80.7 500.2,80.6 506.3,82.9 511.8,86.0 519.1,85.1 525.8,88.0 531.2,92.6 535.8,96.3 543.3,95.6 550.7,93.9 555.0,88.0 560.5,84.4 569.2,84.2 574.9,88.6 573.4,95.5 579.5,98.4 584.6,101.5 591.4,103.1 599.8,104.4 613.4,104.4 621.7,102.8 628.7,101.1 635.9,100.0 645.3,101.8 653.7,103.1 660.8,104.3 667.7,108.1 671.6,114.1 677.6,131.4 679.9,138.0 683.8,149.4 686.3,156.6 688.4,167.0 689.7,173.9 691.1,181.9 692.4,189.1 693.9,201.0 693.9,213.7 693.6,224.2 693.3,232.4 687.5,235.6 677.4,237.9 669.3,240.4 661.1,241.3 653.0,244.7 646.4,247.5 637.8,250.9 630.8,253.7 625.0,256.2 617.7,260.0 619.3,266.7 613.8,269.6 613.6,277.6 617.3,284.1 618.0,294.1 611.0,292.6 613.9,301.9 618.9,305.4 617.8,312.8 613.4,318.2 613.4,318.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Agrovila do PA Oito de Julho</title></polyline>
+<polyline points="613.4,318.2 617.2,312.5 620.3,307.1 614.7,302.6 608.9,297.0 617.7,290.5 616.2,282.6 613.5,276.9 614.2,268.9 622.4,269.9 627.4,274.2 632.8,277.9 638.9,280.5 646.6,281.9 657.2,284.6 665.5,286.8 673.2,289.6 680.0,293.4 684.8,299.0 688.5,303.6 697.0,308.7 702.3,312.9 707.0,317.8 710.9,322.4 714.0,327.9 716.8,333.7 714.9,340.9 712.6,347.5 712.6,355.8 715.2,364.6 717.6,371.1 719.3,377.6 722.4,384.0 724.8,390.5 724.4,398.7 721.3,404.2 718.2,412.0 716.4,419.4 713.9,430.6 714.5,438.8 716.3,445.7 718.1,453.0 719.8,459.7 720.3,469.2 718.0,476.8 716.4,483.8 713.8,489.9 710.9,495.7 711.0,503.9 710.9,495.7 713.8,489.9 716.4,483.8 718.0,476.8 720.3,469.2 719.9,460.6 718.1,453.0 716.3,445.7 714.5,438.8 713.9,430.6 715.8,422.1 717.5,415.1 719.2,408.1 722.1,402.8 724.9,395.1 723.6,387.0 719.6,379.0 717.8,371.7 715.2,364.6 712.9,358.1 712.6,349.4 714.1,342.7 717.1,336.8 714.8,330.6 712.3,324.7 707.8,318.7 702.3,312.9 697.0,308.7 691.9,304.9 685.9,300.9 682.4,295.1 674.0,290.0 668.2,287.5 660.2,285.6 652.9,283.2 643.3,280.3 636.4,278.6 629.6,274.7 625.0,270.8 620.0,266.2 614.2,268.9 613.5,276.9 616.2,282.6 619.3,288.2 611.0,292.6 613.9,301.9 618.9,305.4 617.8,312.8 613.4,318.2 613.4,318.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Ponta Mofina</title></polyline>
+<polyline points="642.3,531.5 645.4,537.9 648.3,543.8 652.9,547.7 657.1,553.5 658.8,560.0 660.5,568.1 662.2,575.3 665.1,581.7 667.6,588.1 669.9,594.2 673.4,600.6 676.5,607.3 679.6,613.8 685.0,620.3 681.0,615.8 676.5,607.3 673.4,600.6 670.4,594.9 667.6,588.1 665.1,581.7 662.5,575.9 660.5,568.1 658.9,561.1 657.1,553.5 653.7,548.6 648.8,544.2 643.5,540.5 635.7,544.0 630.8,547.5 626.3,553.3 622.2,561.3 620.0,568.2 619.0,576.2 616.6,582.8 610.1,588.1 604.3,594.7 599.6,601.5 584.9,609.9 576.4,613.8 574.7,620.5 571.1,626.4 566.4,634.4 561.9,641.8 563.7,648.4 568.5,652.8 567.6,660.4 563.0,669.0 559.2,676.3 562.7,682.4 564.0,689.6 559.5,695.4 553.9,698.2 549.2,704.2 544.3,707.9 541.4,714.7 530.0,733.4 521.4,749.7 515.8,759.6 520.2,799.8 522.9,809.0 529.3,811.6 559.3,819.9 568.6,822.5 572.1,814.6 574.5,806.1 582.1,795.2 576.7,800.2 572.1,814.6 568.6,822.5 559.3,819.9 529.3,811.6 522.9,809.0 520.2,799.8 516.2,763.7 521.4,749.7 527.6,738.4 539.6,717.0 542.9,712.1 546.6,706.3 552.0,700.5 555.7,695.8 556.6,681.6 561.2,672.5 566.3,662.8 569.5,657.6 567.2,651.7 562.3,645.6 566.4,634.4 569.5,629.1 573.3,622.9 575.5,614.8 584.9,609.9 596.5,604.6 600.6,598.8 606.8,591.9 612.8,586.6 618.0,580.0 619.0,572.4 620.6,565.1 624.0,557.5 627.5,551.7 631.4,546.9 638.3,542.8 645.9,539.4 642.1,534.7 642.3,531.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Poções</title></polyline>
+<polyline points="219.2,384.6 222.7,389.8 227.0,398.2 230.7,405.3 234.0,411.8 237.3,416.8 243.2,424.6 247.0,429.6 251.0,435.0 263.2,431.3 270.3,428.9 276.9,426.1 282.4,422.7 288.5,418.9 295.8,420.8 302.3,430.0 303.2,438.3 302.5,445.9 300.0,451.9 301.1,460.8 302.8,469.6 311.4,481.0 316.7,485.3 339.9,498.7 356.9,502.5 360.7,509.9 371.5,521.7 387.1,527.5 395.5,527.7 387.1,527.5 371.5,521.7 360.7,509.9 356.9,502.5 339.9,498.7 316.7,485.3 311.4,481.0 303.3,471.5 301.6,462.9 299.8,453.7 302.3,446.6 303.2,438.3 302.3,430.0 298.3,424.4 292.5,416.4 287.3,419.7 279.7,424.4 274.3,427.3 264.0,431.0 253.3,434.7 248.2,431.2 243.2,424.6 239.0,418.9 235.2,414.0 230.7,405.3 227.0,398.2 223.1,390.5 219.7,385.4 219.2,384.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Aldeia Indígena Fulkaxó</title></polyline>
+<polyline points="57.1,252.9 60.5,258.1 59.9,265.8 62.7,271.6 63.5,279.3 67.4,283.6 73.0,286.8 76.5,292.6 82.8,294.6 87.1,298.6 93.2,301.2 98.4,305.3 104.8,303.2 98.4,305.3 93.7,301.5 88.1,298.6 83.3,294.9 76.8,292.8 73.5,287.9 68.6,284.3 63.8,280.7 63.0,273.1 60.5,267.0 60.8,259.0 57.6,253.5 57.1,252.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Agrovila do PA Maria Zenilde dos Santos</title></polyline>
+<circle cx="72.5" cy="165.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="662.8" cy="438.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="516.8" cy="352.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="570.1" cy="420.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="570.4" cy="421.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="516.5" cy="353.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="536.2" cy="513.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="37.8" cy="218.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="490.2" cy="411.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="494.6" cy="528.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="269.9" cy="268.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="618.2" cy="500.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="641.9" cy="528.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="190.3" cy="232.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="481.0" cy="510.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="598.8" cy="566.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="164.1" cy="189.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="219.8" cy="387.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="513.5" cy="397.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="528.8" cy="438.4" r="2.2" fill="#b9b9b2"/>
+<polygon points="635.4,327.3 623.6,349.1 647.2,349.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="649.9,335.0 640.3,352.8 659.6,352.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="631.3,310.8 620.0,331.7 642.7,331.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="638.7,334.2 626.2,357.3 651.2,357.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="642.3,522.1 633.2,538.9 651.4,538.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="642.3" y="552.3" text-anchor="middle" fill="#5c5c57">Povoado Betume</text>
+<polygon points="192.8,233.3 185.7,246.3 199.8,246.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="160.0,180.6 150.4,198.3 169.5,198.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="160.0" y="211.8" text-anchor="middle" fill="#5c5c57">Povoado Mussuípe</text>
+<polygon points="612.7,309.6 604.4,325.0 621.1,325.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="263.9,254.4 254.2,272.2 273.5,272.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="263.9" y="285.7" text-anchor="middle" fill="#5c5c57">Povoado Pindoba</text>
+<polygon points="625.6,493.4 616.8,509.7 634.4,509.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="57.2,245.0 49.5,259.1 64.9,259.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="476.6,504.7 468.1,520.3 485.0,520.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="372.1,295.2 365.1,308.1 379.1,308.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="383.9,464.7 376.1,479.1 391.7,479.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="527.4,431.1 520.4,444.0 534.4,444.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="219.8,376.4 212.4,390.2 227.3,390.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="515.7,391.9 509.1,404.0 522.3,404.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="534.3,577.7 527.1,590.9 541.4,590.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="597.4,564.9 590.3,578.0 604.6,578.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="615.8,342.0 606.7,358.6 624.8,358.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="353.5" cy="242.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="360.5" y="237.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Agrovila do PA Oito de Julho 28,0 km</text>
+<circle cx="578.6" cy="791.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="484.8" y="786.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Poções 17,1 km</text>
+<circle cx="709.2" cy="509.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="578.2" y="504.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Ponta Mofina 16,0 km</text>
+<circle cx="397.6" cy="525.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="404.6" y="520.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Aldeia Indígena Fulkaxó 11,3 km</text>
+<circle cx="388.5" cy="528.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="395.5" y="543.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Agrovila do PA N. S. da Conceição 11,0 km</text>
+<circle cx="551.3" cy="703.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="558.3" y="698.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Siqueira 8,9 km</text>
+<circle cx="562.3" cy="690.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="425.1" y="685.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Ponta de Areia 8,5 km</text>
+<circle cx="685.4" cy="627.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="597.8" y="622.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Serrão 4,5 km</text>
+<circle cx="105.0" cy="303.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="112.0" y="298.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Agrovila do PA Maria Zenilde dos Santos 3,3 km</text>
+<rect x="637.8" y="328.6" width="10" height="10" fill="#1d1d1b"/><text x="651.8" y="351.6" font-weight="600" fill="#1d1d1b">Sede de Neópolis</text>
+<line x1="35" x2="158.2" y1="855.3" y2="855.3" stroke="#8a8a84" stroke-width="2"/><text x="35" y="869.3" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="846.3208511649949" y2="846.3208511649949" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="850.3208511649949" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,839.3 421.4,851.6 434.6,851.6" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="850.3208511649949" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="864.3208511649949" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="873.3208511649949" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="869.3208511649949" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="873.3208511649949" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="892.3208511649949" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="896.3208511649949" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="892.3208511649949" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="896.3208511649949" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="915.3208511649949" y2="915.3208511649949" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="919.3208511649949" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="938.3208511649949" y2="938.3208511649949" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="942.3208511649949" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 05/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (7):</strong> Agrovila do PA Oito de Julho, Poções, Ponta Mofina, Aldeia Indígena Fulkaxó, Agrovila do PA N. S. da Conceição, Siqueira e Ponta de Areia.</li>
+<li><strong>De 3 a 5 km (4):</strong> Boa Esperança, Serrão, Porteiras e Agrovila do PA Maria Zenilde dos Santos.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (22):</strong> Agrovila do PA Alto de Santo Antônio, Agrovila do PA Fazendinha, Agrovila do PA Flor do Brejo, Agrovila do PA Mata das Varas, Agrovila do PA Mundéu da Onça, Agrovila do PA Tapera, Agrovila do PA Tenórios, Agrovila do PA Águas Vermelhas, Agrovila do PA Águas Vermelhas 2, Betume, Brasília, Cacimbas, Colônia Maria, Mussuípe, Novo Horizonte, Pindoba, Primeiro de Maio, Santa Maria, Soldeiro, São José, São Miguel e Tiririca.</li>
+</ul><h2>Rotas do Edital nº 05/2026</h2>
+<p>O edital tem 7 rotas para Neópolis. Horários: Das 7h às 18h nos dias 04/10 e 25/10/2026. Veículos: Veículos indicados por federações/partidos até 30/09/2026, vistoriados pelo Cartório em 03/10/2026 no Fórum de Neópolis.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Tapera – Betume – Porteira – Cohab II – Sede</td></tr><tr><td>02</td><td>Mundeo – Flor do Brejo – Pilicão – Sítio S. José – Tiririca – Alto S. Antônio – Sede</td></tr><tr><td>03</td><td>Cacimbas – Mussuípe – Sodeiro – Pindoba – Passagem – Sede</td></tr><tr><td>04</td><td>Brasília – 01 de Maio – Sem Terra – Água Vermelha – Sede</td></tr><tr><td>05</td><td>Tenório – Novo Horizonte – 08 de Julho – Sede</td></tr><tr><td>06</td><td>Mata das Varas – Fazendinha – Sede</td></tr><tr><td>07</td><td>Santa Maria 7 Casas – Sede</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 05/2026 da 15ª ZE (Roteiro Transporte de Eleitores – Eleições Gerais 2026), DJE/TRE-SE nº 155/2026 (disp. 03/09/2026), p. 23-24 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=SE&amp;numDiario=155&amp;anoDiario=2026).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 9 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Agrovila do PA Oito de Julho</strong></td><td>Sede – Agrovila do PA Oito de Julho – Sede</td><td>Agrovila do PA Oito de Julho</td><td>56,7 km (ida e volta)</td><td>~2h11</td></tr><tr><td><strong>Rota nova – Ponta Mofina</strong></td><td>Sede – Ponta Mofina – Sede</td><td>Ponta Mofina</td><td>32,0 km (ida e volta)</td><td>~1h45</td></tr><tr><td><strong>Rota nova – Poções</strong></td><td>Sede – Serrão – Ponta de Areia – Siqueira – Poções – Sede</td><td>Serrão, Ponta de Areia, Siqueira, Poções</td><td>42,8 km (ida e volta)</td><td>~1h07</td></tr><tr><td><strong>Rota nova – Aldeia Indígena Fulkaxó</strong></td><td>Sede – Agrovila do PA N. S. da Conceição – Aldeia Indígena Fulkaxó – Sede</td><td>Agrovila do PA N. S. da Conceição, Aldeia Indígena Fulkaxó</td><td>22,5 km (ida e volta)</td><td>~49 min</td></tr><tr><td><strong>Rota nova – Agrovila do PA Maria Zenilde dos Santos</strong></td><td>Sede – Agrovila do PA Maria Zenilde dos Santos – Sede</td><td>Agrovila do PA Maria Zenilde dos Santos</td><td>6,6 km (ida e volta)</td><td>~16 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMN</strong></p><p>Neópolis/SE, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Dra. Rosivan Machado da Silva</strong><br>Juíza Eleitoral da 15ª Zona Eleitoral – Neópolis/SE</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 05/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de Neópolis, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 05/2026: Agrovila do PA Oito de Julho, Poções, Ponta Mofina, Aldeia Indígena Fulkaxó, Agrovila do PA N. S. da Conceição, Siqueira, Ponta de Areia, Serrão e Agrovila do PA Maria Zenilde dos Santos.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Agrovila do PA Oito de Julho (Sede – Agrovila do PA Oito de Julho – Sede);</li><li>a criação da Rota nova – Ponta Mofina (Sede – Ponta Mofina – Sede);</li><li>a criação da Rota nova – Poções (Sede – Serrão – Ponta de Areia – Siqueira – Poções – Sede);</li><li>a criação da Rota nova – Aldeia Indígena Fulkaxó (Sede – Agrovila do PA N. S. da Conceição – Aldeia Indígena Fulkaxó – Sede);</li><li>a criação da Rota nova – Agrovila do PA Maria Zenilde dos Santos (Sede – Agrovila do PA Maria Zenilde dos Santos – Sede).</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 05/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Neópolis</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Neópolis; Edital nº 05/2026 da 15ª ZE (Roteiro Transporte de Eleitores – Eleições Gerais 2026), DJE/TRE-SE nº 155/2026 (disp. 03/09/2026), p. 23-24 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=SE&amp;numDiario=155&amp;anoDiario=2026); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

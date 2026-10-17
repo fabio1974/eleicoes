@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Japaratuba</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Japaratuba</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/japaratuba.pdf?v=1792246254" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Japaratuba (11ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 11ª Zona Eleitoral <strong>2 rotas novas e 3 paradas extras em rotas do edital</strong> no transporte gratuito de Japaratuba.
+Traçamos pelas estradas o percurso das 13 rotas do Edital – Roteiro de Transporte de Eleitores da 11ª Zona Eleitoral – Eleições Gerais 2026. 2 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 4 ficam a 1–2 km.</p>
+<ul>
+<li>Japaratuba tem 14.946 eleitores aptos em 11 locais de votação e 56 seções. São 6 locais rurais, com 4.396 eleitores (29% do total).</li>
+<li>4 locais rurais ficam a 10 km ou mais da sede, com 1.762 eleitores. Os mais distantes: Povoado Badajós (19,3 km), Povoado Curral Dos Bois (16,6 km) e Povoado Várzea Verde (15,8 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Fazenda Alagamar (16,0 km do local de votação) e Terra Dura (6,5 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Usina Santa Clara, Palmeira, Estreito e Pai Inácio.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 39 localidades rurais de Japaratuba que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Fazenda Alagamar</td><td>16,0</td><td>Rota 01</td><td>3,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Camará</td><td>14,1</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Metade da Estrada</td><td>13,6</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Moitas</td><td>13,5</td><td>Rota 04</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Agrovila do PA Caraíbas</td><td>13,0</td><td>Rota 02</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Usina Santa Clara</td><td>12,7</td><td>Rota 12</td><td>1,7</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Sapucaia</td><td>10,3</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Porteira</td><td>9,2</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Mundo Novo</td><td>7,5</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Araticum</td><td>6,9</td><td>Rota 02</td><td>0,8</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Pirunga</td><td>6,8</td><td>Rota 12</td><td>1,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Timbó</td><td>6,7</td><td>Rota 04</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Terra Dura</td><td>6,5</td><td>Rota 09</td><td>2,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Baixa da Areia</td><td>6,2</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Mourão</td><td>5,8</td><td>Rota 12</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Rua Nova</td><td>5,6</td><td>Rota 07</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Travessão</td><td>5,5</td><td>Rota 12</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Riachão</td><td>5,3</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Encruzilhada</td><td>5,2</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Palmeira</td><td>5,1</td><td>Rota 06</td><td>1,7</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Sítio Gravatá</td><td>5,0</td><td>Rota 12</td><td>0,9</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Estreito</td><td>4,7</td><td>Rota 12</td><td>1,0</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Sibalde</td><td>4,7</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Pai Inácio</td><td>4,1</td><td>Rota 05</td><td>1,6</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Cajueiro</td><td>4,0</td><td>Rota 02</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Olhos d&#x27;Água</td><td>3,6</td><td>Rota 05</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Soledade</td><td>3,2</td><td>Rota 09</td><td>0,4</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Pé de Galinha</td><td>3,0</td><td>Rota 06</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>8 das 78 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Gobiraba (Rota 03), Maracujá (Rota 04), Flexas (Rota 07 e Rota 11), Várzea Comprida (Rota 07), Mourões (Rota 07), Tapera (Rota 08) e Niterói (Rota 08). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 39 localidades rurais de Japaratuba, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1073" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Japaratuba: 6 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital – Roteiro de Transporte de Eleitores da 11ª Zona Eleitoral – Eleições Gerais 2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="35.0,815.9 93.2,786.8 162.2,785.0 177.5,831.8 200.3,848.6 223.4,843.5 271.1,855.2 281.9,903.8 298.4,922.7 359.3,878.6 386.6,875.0 548.6,750.2 725.0,616.7 665.6,620.0 643.4,615.2 640.1,537.8 628.4,522.5 573.2,486.2 576.2,466.1 560.6,450.5 556.4,415.4 530.9,381.2 500.0,387.5 482.9,375.5 461.3,337.4 464.0,294.2 459.5,254.3 443.9,225.2 443.3,204.8 465.2,183.8 497.9,167.6 488.3,143.3 463.1,147.8 437.6,126.8 434.3,104.0 410.0,80.0 359.9,99.8 351.2,142.7 314.9,154.7 293.9,171.8 272.0,170.9 263.9,240.5 199.7,463.1 135.5,482.6 142.4,516.8 35.0,815.9 35.0,815.9" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="378.2,871.8 376.4,859.0 372.9,852.4 373.8,842.1 376.3,835.2 381.7,828.7 381.3,820.1 381.7,828.7 377.3,833.8 374.3,840.7 371.3,847.2 373.7,853.9 379.5,864.7 383.1,870.0 379.5,864.7 376.0,858.2 372.9,852.4 368.7,847.3 360.4,842.6 354.2,839.6 344.6,834.9 339.1,829.6 340.2,820.2 344.0,813.9 346.2,806.7 343.7,799.3 337.6,791.0 332.9,784.6 328.6,778.5 324.7,773.2 320.0,766.8 312.4,756.3 306.3,747.9 297.9,745.7 290.7,743.0 285.3,735.5 281.7,729.9 273.3,717.0 267.3,707.8 261.3,698.4 257.2,692.2 252.4,687.0 245.0,682.9 241.7,675.7 244.6,671.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="359.3,130.3 362.0,136.7 361.9,158.3 372.6,160.2 387.0,162.5 393.8,167.6 396.0,174.4 399.6,181.6 395.6,189.6 389.2,192.4 382.9,195.1 386.2,202.5 379.3,217.7 366.4,218.6 369.7,224.8 378.2,231.5 362.1,231.0 348.6,230.4 340.0,230.8 332.8,233.1 327.7,237.3 332.5,242.3 332.0,252.3 330.2,261.2 330.6,270.1 330.2,261.2 332.0,252.3 333.0,243.6 328.7,238.5 332.5,233.1 340.0,230.8 348.6,230.4 362.1,231.0 374.2,231.5 382.3,234.5 392.3,237.1 401.7,238.6 407.9,250.2 409.2,259.2 405.9,266.7 400.7,280.1 401.8,289.9 402.2,298.8 406.7,306.4 412.0,314.7 417.9,324.3 422.9,332.8 425.9,339.0 424.9,348.2 422.1,354.9 418.3,361.8 414.3,367.2 413.7,378.0 414.0,388.7 413.8,397.7 409.9,403.9 407.0,410.8 400.8,417.5 398.7,424.5 396.3,431.9 395.8,442.7 396.6,451.5 403.2,457.2 411.4,458.4 403.2,457.2 396.5,459.9 397.5,468.9 398.8,478.2 387.9,491.9 380.5,500.6 375.5,506.7 368.2,514.7 362.4,510.6 356.3,505.0 362.4,510.6 366.5,516.8 357.3,527.7 350.2,535.6 336.6,552.8 337.1,565.1 339.2,574.1 337.7,584.1 332.6,589.1 331.9,598.0 331.1,613.7 328.0,621.7 321.8,627.8 317.8,632.8 310.7,635.1 302.8,636.9 295.1,639.0 290.6,644.1 285.3,648.8 279.1,654.5 275.2,659.7 270.1,663.6 261.7,664.4 253.7,665.6 247.0,668.1 244.6,671.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="411.4,458.4 403.2,457.2 396.5,459.9 397.5,468.9 398.8,478.2 387.9,491.9 380.5,500.6 375.5,506.7 368.2,514.7 362.4,510.6 356.3,505.0 362.4,510.6 366.5,516.8 357.3,527.7 350.2,535.6 336.6,552.8 337.1,565.1 339.2,574.1 337.7,584.1 332.6,589.1 331.9,598.0 331.1,613.7 328.0,621.7 321.8,627.8 317.8,632.8 310.7,635.1 302.8,636.9 295.1,639.0 290.6,644.1 285.3,648.8 279.1,654.5 275.2,659.7 270.1,663.6 261.7,664.4 253.7,665.6 247.0,668.1 244.6,671.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="536.7,746.8 527.8,746.1 513.3,747.8 503.9,748.2 496.3,744.8 489.4,741.0 479.1,735.2 471.1,730.6 465.4,725.1 459.6,721.8 444.9,715.4 437.3,712.1 430.5,716.6 435.6,711.3 441.2,706.3 449.2,705.2 441.2,706.3 435.6,711.3 428.6,708.5 413.4,710.1 404.2,711.4 394.9,712.7 385.4,713.9 376.1,715.8 368.9,718.8 361.8,721.5 352.5,721.4 343.8,721.1 337.0,723.8 327.1,724.0 318.0,723.6 309.8,722.8 301.8,721.1 293.2,724.0 288.6,729.6 285.3,735.5 281.7,729.9 273.3,717.0 267.3,707.8 261.3,698.4 257.2,692.2 252.4,687.0 245.0,682.9 241.7,675.7 244.6,671.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="614.0,534.2 610.1,539.7 611.9,547.1 612.6,555.9 609.5,561.8 604.8,566.2 601.3,571.8 595.6,576.0 590.3,571.2 581.6,567.7 574.9,564.6 567.5,562.8 558.5,562.3 549.7,561.8 542.0,559.2 538.8,566.4 534.1,571.5 526.7,576.3 520.0,582.4 513.8,588.5 509.5,593.3 511.0,601.9 510.1,610.8 507.0,617.6 503.9,623.9 500.4,630.1 497.4,637.5 487.2,640.8 477.5,643.0 471.5,646.1 467.6,651.1 462.5,655.3 456.8,659.0 451.0,669.2 445.2,677.7 441.4,683.2 436.9,689.3 432.9,694.8 429.4,701.4 425.6,707.2 432.2,709.9 441.2,706.3 449.2,705.2 441.2,706.3 435.6,711.3 428.6,708.5 413.4,710.1 404.2,711.4 394.9,712.7 385.4,713.9 376.1,715.8 368.9,718.8 361.8,721.5 352.5,721.4 343.8,721.1 337.0,723.8 327.1,724.0 318.0,723.6 309.8,722.8 301.8,721.1 293.2,724.0 288.6,729.6 285.3,735.5 281.7,729.9 273.3,717.0 267.3,707.8 261.3,698.4 257.2,692.2 252.4,687.0 245.0,682.9 241.7,675.7 244.6,671.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="101.2,737.6 105.5,733.0 112.4,735.5 119.6,737.2 127.9,739.0 136.2,737.4 140.2,746.9 144.3,754.1 149.7,758.3 143.4,761.5 149.7,758.3 144.5,754.4 140.6,748.8 139.0,737.1 131.1,739.0 134.6,729.7 138.2,723.8 141.0,716.5 142.0,707.3 143.0,698.7 142.8,688.9 143.1,679.4 144.9,672.0 148.4,664.3 153.0,658.2 157.4,653.2 162.3,648.1 170.6,649.0 178.8,650.7 184.2,654.8 190.0,660.9 194.6,665.6 201.1,668.9 210.2,668.8 206.7,663.1 212.2,667.2 204.5,669.5 196.5,667.0 190.3,661.2 185.1,655.7 180.1,651.1 170.8,649.0 174.2,642.3 171.0,648.5 178.8,650.7 184.2,654.8 190.0,660.9 194.6,665.6 201.1,668.9 210.2,668.8 220.3,666.6 228.6,664.9 236.7,666.4 243.4,669.5 244.6,671.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="284.3,368.7 286.2,377.9 295.6,381.4 306.0,380.1 313.1,376.8 319.5,374.1 325.5,369.1 334.1,372.2 341.7,370.6 349.9,369.8 355.5,373.4 357.3,381.5 360.9,390.3 363.4,396.9 365.7,404.0 364.6,412.1 371.7,414.8 379.3,417.8 384.9,422.5 389.8,426.8 396.6,431.0 392.3,426.1 385.4,423.9 381.5,418.4 372.4,415.0 364.8,413.3 365.7,404.7 363.4,397.1 360.9,390.3 357.5,382.0 355.2,375.1 351.4,369.7 341.7,370.6 335.4,373.4 335.4,382.5 337.2,390.5 332.1,394.6 325.3,398.1 319.8,402.3 313.9,405.7 305.7,407.2 302.3,413.0 297.7,418.2 289.1,419.1 281.7,421.6 273.6,419.9 265.3,419.1 259.8,415.6 252.2,417.9 246.9,421.7 249.2,428.9 254.4,433.4 260.7,436.9 263.9,442.9 263.4,452.0 264.3,460.9 265.2,469.3 268.6,477.1 277.0,479.6 289.4,483.8 296.9,486.7 304.2,489.6 311.5,492.5 322.4,496.2 333.4,500.3 342.0,503.6 348.8,506.2 356.4,509.1 364.7,511.0 357.3,527.7 350.2,535.6 336.6,552.8 337.1,565.1 339.2,574.1 337.7,584.1 332.6,589.1 331.9,598.0 331.1,613.7 328.0,621.7 321.8,627.8 317.8,632.8 310.7,635.1 302.8,636.9 295.1,639.0 290.6,644.1 285.3,648.8 279.1,654.5 275.2,659.7 270.1,663.6 261.7,664.4 253.7,665.6 247.0,668.1 244.6,671.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="504.1,416.8 497.6,413.4 489.2,411.2 481.3,409.3 472.9,407.0 466.7,402.7 462.0,397.4 457.5,392.3 451.9,384.0 448.1,376.7 444.8,370.9 440.9,365.6 437.1,354.7 432.7,350.0 423.9,350.9 420.5,357.8 417.6,364.3 412.4,368.2 403.9,367.3 394.9,367.6 388.8,370.7 381.9,373.3 373.3,374.5 365.7,376.3 356.7,376.7 358.6,385.0 361.3,391.5 363.5,398.4 365.6,405.4 366.2,414.1 375.0,416.3 382.7,418.7 385.8,425.1 393.7,426.5 395.5,435.3 396.0,444.7 396.7,452.9 403.2,457.2 411.4,458.4 403.2,457.2 396.5,459.9 397.5,468.9 398.8,478.2 387.9,491.9 380.5,500.6 375.5,506.7 368.2,514.7 357.3,527.7 350.2,535.6 336.6,552.8 337.1,565.1 339.2,574.1 337.7,584.1 332.6,589.1 331.9,598.0 331.1,613.7 328.0,621.7 321.8,627.8 317.8,632.8 324.8,634.8 332.9,637.1 341.2,638.3 348.4,636.3 354.5,632.7 359.1,627.7 365.9,625.1 377.6,616.7 383.6,612.5 377.6,616.7 370.2,622.6 362.7,626.2 357.1,630.2 352.0,634.5 345.6,637.5 337.1,639.1 330.5,636.1 322.9,634.0 313.5,634.7 304.9,636.4 296.8,637.9 291.6,642.5 287.1,647.7 281.3,651.0 277.5,656.9 272.8,661.7 265.1,664.2 256.7,665.0 247.1,666.9 244.6,671.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="153.9,760.7 145.3,760.2 141.1,749.6 139.6,741.7 134.4,737.8 136.9,726.0 140.3,719.0 141.8,710.0 142.6,700.9 143.1,692.3 142.9,682.4 144.2,674.1 146.8,667.3 151.4,660.1 155.7,655.1 161.5,648.6 170.4,648.9 178.8,650.7 184.2,654.8 190.0,660.9 194.6,665.6 201.1,668.9 210.2,668.8 206.7,663.1 212.2,667.2 204.5,669.5 196.5,667.0 190.3,661.2 185.1,655.7 180.1,651.1 170.8,649.0 163.8,646.9 168.8,640.4 172.6,633.8 174.1,625.6 175.5,617.8 173.7,625.0 172.3,633.5 169.0,639.6 164.1,645.3 157.2,653.0 152.4,658.6 148.4,663.8 145.1,670.4 143.0,678.4 142.3,687.4 141.5,696.6 141.7,707.2 140.9,715.8 138.3,723.0 134.4,729.6 130.9,735.1 124.3,738.5 116.0,736.1 108.6,734.2 102.4,737.7 101.2,737.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 09</title></polyline>
+<polyline points="411.4,458.4 403.2,457.2 396.6,454.6 396.0,444.7 395.3,436.1 397.9,427.3 389.1,426.8 383.7,419.3 376.6,417.0 369.5,414.9 365.0,409.3 364.4,400.1 361.8,393.0 358.6,385.0 355.6,377.0 364.1,376.1 371.9,374.5 380.4,373.7 387.4,371.3 393.6,368.4 400.5,366.3 409.0,367.2 416.8,365.2 420.1,358.5 423.9,351.0 432.1,350.1 437.1,354.7 439.5,362.0 444.8,370.9 448.1,376.7 451.1,382.8 454.9,388.4 458.6,393.8 465.1,401.0 470.2,405.5 476.9,408.5 486.3,410.4 494.1,412.2 502.2,415.1 504.1,416.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 10</title></polyline>
+<polyline points="335.1,378.9 333.0,370.3 324.0,370.5 318.1,374.7 311.8,377.5 301.3,381.7 290.8,380.1 283.9,375.8 290.0,379.9 298.0,382.1 306.0,380.1 313.1,376.8 319.5,374.1 325.5,369.1 334.1,372.2 341.7,370.6 349.9,369.8 355.5,373.4 357.3,381.5 360.9,390.3 363.4,396.9 365.7,404.0 364.6,412.1 371.7,414.8 379.3,417.8 384.9,422.5 389.8,426.8 396.6,431.0 395.6,439.9 396.2,448.7 396.8,458.0 397.3,467.8 398.8,478.2 387.9,491.9 380.5,500.6 375.5,506.7 368.2,514.7 362.4,510.6 356.3,505.0 342.0,503.6 333.4,500.3 322.4,496.2 315.4,493.8 307.0,490.7 296.9,486.7 289.4,483.8 282.7,481.3 275.0,479.0 282.7,481.3 289.4,483.8 296.9,486.7 304.2,489.6 311.5,492.5 304.2,489.6 296.9,486.7 300.0,476.6 307.8,473.6 314.3,470.7 319.9,467.3 324.3,462.4 330.7,459.3 329.3,451.4 333.2,445.7 336.7,438.1 342.3,433.3 339.1,426.2 334.8,421.4 326.0,420.0 321.5,415.0 313.5,413.3 306.0,410.9 304.6,409.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 11</title></polyline>
+<polyline points="244.6,671.9 248.3,665.5 256.9,664.9 266.4,664.1 273.2,661.5 277.9,656.3 281.9,650.7 287.8,647.2 292.3,641.4 297.7,637.5 306.2,636.1 314.6,634.4 321.8,627.8 328.0,621.7 331.1,613.7 331.2,603.2 332.4,594.7 335.8,586.7 339.2,576.7 339.0,567.6 335.7,559.6 350.2,535.6 357.3,527.7 364.8,518.9 362.4,510.6 353.2,507.6 342.0,503.6 333.4,500.3 322.4,496.2 315.4,493.8 307.0,490.7 296.9,486.7 289.4,483.8 282.7,481.3 275.0,479.0 267.4,476.0 265.2,468.8 263.8,457.7 263.3,449.1 263.8,440.6 259.8,435.3 252.7,433.3 248.0,428.3 243.6,423.7 249.2,420.3 255.0,416.5 263.1,418.1 269.9,420.4 277.7,418.9 284.1,421.8 290.7,418.9 298.8,416.9 302.8,411.2 299.0,416.5 292.3,419.7 285.5,421.9 278.3,419.2 270.6,420.6 263.3,418.4 255.9,416.2 249.8,420.0 243.8,423.4 233.6,423.3 232.0,414.8 233.0,406.4 234.2,376.7 234.9,365.4 235.3,355.1 234.7,363.5 234.0,375.0 233.3,384.8 232.6,395.6 231.4,407.3 231.3,417.5 229.6,426.0 226.2,433.9 221.4,441.1 217.2,447.0 212.8,453.1 207.7,460.5 200.7,470.3 190.4,485.1 185.4,492.2 180.5,498.5 175.2,506.1 170.7,513.1 165.4,520.7 159.4,529.4 155.5,535.1 152.6,542.4 152.4,551.3 154.7,558.1 159.2,565.5 163.7,574.1 168.0,580.4 172.6,588.1 175.6,595.9 175.2,608.3 174.1,616.3 173.7,625.0 172.3,633.5 169.0,639.6 164.1,645.3 157.2,653.0 152.4,658.6 148.4,663.8 145.1,670.4 143.0,678.4 142.3,687.4 143.4,677.5 145.6,670.1 149.2,663.0 155.7,655.1 161.5,648.6 166.7,642.8 171.4,636.4 173.8,629.4 174.9,620.8 175.8,610.7 177.2,602.7 181.9,598.4 188.4,601.0 196.5,594.9 199.6,588.1 204.0,583.1 213.2,582.6 220.6,586.4 222.7,598.5 224.0,606.5 222.1,616.7 223.3,624.6 228.8,629.1 232.8,634.5 235.3,646.3 237.7,656.8 237.8,666.3 242.7,671.0 244.6,671.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 12</title></polyline>
+<polyline points="355.2,371.4 360.1,376.1 369.5,375.9 377.4,374.3 384.9,372.4 392.1,369.8 398.0,366.2 405.9,367.5 415.5,366.3 419.1,360.3 422.9,353.1 430.1,350.5 437.1,354.7 439.5,362.0 444.8,370.9 448.1,376.7 451.1,382.8 454.9,388.4 458.6,393.8 465.1,401.0 470.2,405.5 476.9,408.5 486.3,410.4 494.1,412.2 502.2,415.1 504.1,416.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 13</title></polyline>
+<polyline points="93.7,730.8 101.5,732.1 103.4,739.4 101.8,747.0 99.1,754.0 100.1,762.1 92.9,765.2 85.4,767.3 77.6,770.3 71.5,775.3 66.8,781.0 64.2,788.3 66.3,796.0 69.5,803.2 73.5,809.9 79.8,813.7 87.7,819.2 93.3,822.9 100.7,824.7 108.8,823.5 115.6,825.7 117.7,832.9 125.6,835.1 124.7,843.5 122.3,851.0 123.6,859.2 124.9,867.2 130.0,862.7 136.2,859.7 142.5,862.6 149.8,865.9 153.1,872.6 156.3,878.5 165.6,878.8 174.1,879.5 180.7,885.2 186.0,890.4 190.4,895.4 194.8,900.2 200.9,906.2 205.5,913.3 211.1,916.6 219.1,917.9 223.2,923.4 226.4,929.3 230.8,934.2 236.0,938.3 245.0,938.4 251.6,935.5 258.6,933.5 266.3,931.5 275.4,931.1 284.8,930.8 293.6,930.5 299.8,926.3 293.6,930.5 284.8,930.8 275.4,931.1 266.3,931.5 258.6,933.5 251.6,935.5 245.3,938.2 236.2,938.5 230.8,934.2 226.4,929.3 223.2,923.4 219.4,918.1 211.1,916.6 205.5,913.3 202.0,907.4 197.5,902.8 192.3,897.7 187.9,892.2 182.5,887.1 177.6,881.9 171.1,879.1 161.1,879.2 154.0,876.0 152.2,867.9 145.4,864.2 139.0,860.7 131.0,861.8 126.5,866.7 123.8,860.3 122.3,852.0 124.3,844.7 127.6,837.1 123.3,831.6 117.0,827.7 111.8,823.5 103.0,824.1 94.6,823.0 87.7,818.9 81.4,814.5 74.6,810.2 70.2,804.6 67.6,797.8 63.8,791.1 65.0,783.2 70.2,776.8 75.6,771.6 82.7,768.1 90.5,766.0 97.3,763.7 99.0,755.9 101.2,748.1 103.0,740.9 102.5,732.0 94.1,730.9 93.7,730.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fazenda Alagamar</title></polyline>
+<polyline points="93.7,730.8 85.9,728.8 80.3,720.6 76.1,714.0 76.8,705.6 74.2,697.9 70.8,692.2 72.8,685.1 75.5,678.0 80.2,673.5 85.4,669.5 88.8,661.9 80.0,655.8 89.5,659.3 98.1,662.6 108.5,666.6 117.6,666.3 125.9,668.0 140.8,673.4 142.7,680.5 141.9,691.3 141.4,700.3 141.6,710.7 140.0,719.0 136.1,726.8 132.3,733.0 128.7,739.1 119.6,737.2 112.4,735.5 105.6,732.9 97.3,732.0 93.7,730.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Terra Dura</title></polyline>
+<polyline points="614.0,534.2 611.3,526.4 605.3,522.8 596.7,520.0 588.6,517.6 596.7,520.0 605.3,522.8 611.3,526.4 614.7,532.3 614.0,534.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 05</title></polyline>
+<polyline points="142.6,762.4 148.7,759.0 157.5,761.5 162.0,767.5 163.5,775.2 163.9,783.9 158.2,787.6 152.0,792.5 148.8,798.4 152.0,792.5 156.3,787.8 163.3,785.5 163.5,775.2 162.0,767.5 158.1,761.8 151.4,759.0 144.0,760.9 142.6,762.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 06</title></polyline>
+<polyline points="189.4,486.5 185.4,492.2 180.5,498.5 175.2,506.1 170.7,513.1 165.4,520.7 159.4,529.4 153.0,526.6 147.7,522.7 138.5,523.2 133.2,519.0 133.3,507.9 130.9,501.2 123.1,499.3 113.1,499.7 105.5,497.4 94.7,492.9 99.4,488.5 104.1,484.0 109.4,480.0 117.1,478.1 123.5,475.2 128.9,470.9 139.8,470.3 148.0,468.7 155.6,466.0 162.9,463.6 167.2,457.2 176.6,457.2 184.5,458.9 192.7,459.7 199.4,455.0 205.0,449.7 211.7,446.3 218.4,443.6 212.8,453.1 207.7,460.5 200.7,470.3 190.4,485.1 185.4,492.2 180.5,498.5 185.0,493.7 190.6,485.6 194.9,479.4 199.3,473.2 204.9,465.1 213.1,453.3 218.9,445.1 223.1,439.2 227.4,432.6 230.0,426.0 231.5,418.5 232.9,409.2 234.2,376.7 235.7,368.7 236.2,359.8 241.8,355.0 249.1,352.2 253.6,345.5 258.3,340.0 253.6,345.5 249.9,351.1 244.2,354.4 237.6,357.8 235.9,366.7 235.4,357.2 234.4,350.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 12</title></polyline>
+<circle cx="359.6" cy="130.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="537.8" cy="747.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="536.3" cy="744.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="398.9" cy="185.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="455.6" cy="704.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="429.5" cy="709.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="401.0" cy="282.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="351.8" cy="267.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="218.2" cy="328.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="361.7" cy="720.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="410.9" cy="312.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="236.0" cy="409.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="317.9" cy="494.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="272.0" cy="478.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="356.0" cy="505.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="425.0" cy="338.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="249.2" cy="329.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="411.5" cy="458.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="327.2" cy="617.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="539.6" cy="553.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="131.1" cy="690.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="139.7" cy="760.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="614.9" cy="534.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="153.8" cy="760.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="613.7" cy="534.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="175.1" cy="640.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="311.9" cy="850.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="337.4" cy="899.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="503.6" cy="416.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="378.2" cy="871.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="101.3" cy="736.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="304.6" cy="409.4" r="2.2" fill="#b9b9b2"/>
+<polygon points="226.1,652.0 212.1,677.9 240.1,677.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="241.7,650.4 230.7,670.7 252.7,670.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="225.8,652.6 212.9,676.4 238.7,676.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="225.8,654.1 214.0,675.8 237.6,675.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="368.6,836.7 357.5,857.0 379.7,857.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="368.6" y="870.9" text-anchor="middle" fill="#5c5c57">Zona Rural</text>
+<polygon points="226.4,656.6 217.0,674.0 235.8,674.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="365.0,850.8 355.1,869.0 374.9,869.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="93.5,722.4 85.0,738.0 102.0,738.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="519.8,419.0 511.8,433.7 527.8,433.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="305.9,402.0 298.3,416.0 313.5,416.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="619.7,582.4 611.6,597.3 627.8,597.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="315.2" cy="927.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="322.2" y="922.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Alagamar 16,0 km</text>
+<circle cx="150.2" cy="460.6" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="157.2" y="455.6" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Usina Santa Clara 12,7 km</text>
+<circle cx="81.3" cy="653.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="88.3" y="648.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Terra Dura 6,5 km</text>
+<circle cx="148.5" cy="806.6" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="155.5" y="801.6" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Palmeira 5,1 km</text>
+<circle cx="258.6" cy="336.9" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="265.6" y="331.9" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Estreito 4,7 km</text>
+<circle cx="585.0" cy="500.1" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="472.6" y="495.1" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Pai Inácio 4,1 km</text>
+<rect x="239.4" y="667.5" width="10" height="10" fill="#1d1d1b"/><text x="253.4" y="690.5" font-weight="600" fill="#1d1d1b">Sede de Japaratuba</text>
+<line x1="35" x2="170.1" y1="971.0" y2="971.0" stroke="#8a8a84" stroke-width="2"/><text x="35" y="985.0" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="961.9520000000075" y2="961.9520000000075" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="965.9520000000075" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,955.0 421.4,967.2 434.6,967.2" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="965.9520000000075" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="979.9520000000075" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="988.9520000000075" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="984.9520000000075" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="988.9520000000075" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1007.9520000000075" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1011.9520000000075" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1007.9520000000075" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1011.9520000000075" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1030.9520000000075" y2="1030.9520000000075" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1034.9520000000075" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1053.9520000000075" y2="1053.9520000000075" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1057.9520000000075" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital – Roteiro de Transporte de Eleitores da 11ª Zona Eleitoral – Eleições Gerais 2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (20):</strong> Fazenda Alagamar, Camará, Metade da Estrada, Moitas, Agrovila do PA Caraíbas, Usina Santa Clara, Sapucaia, Porteira, Mundo Novo, Araticum, Pirunga, Timbó, Terra Dura, Baixa da Areia, Mourão, Rua Nova, Travessão, Riachão, Encruzilhada e Palmeira.</li>
+<li><strong>De 3 a 5 km (8):</strong> Sítio Gravatá, Estreito, Sibalde, Pai Inácio, Cajueiro, Olhos d&#x27;Água, Soledade e Pé de Galinha.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (11):</strong> Agrovila do PA 13 de Maio, Badajós, Biriba, Comunidade Quilombola Forges, Comunidade Quilombola Patioba, Comunidade Quilombola São José, Curral dos Bois, Marimbondo, PA Ivan Ribeiro, São José da Caatinga e Várzea Verde.</li>
+</ul><h2>Rotas do Edital – Roteiro de Transporte de Eleitores da 11ª Zona Eleitoral – Eleições Gerais 2026</h2>
+<p>O edital tem 13 rotas para Japaratuba. Horários: não informados. Veículos: não informados (veículos cedidos pelos órgãos públicos locais).</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>São José – Mulatas – São José – Sede</td></tr><tr><td>02</td><td>Camará – Caraíbas – Araticum – Mundo Novo – Encruzilhadas – Sibalde – Riachão – Caieiro – Cajueiro – Sede</td></tr><tr><td>03</td><td>Gobiraba – Sibalde – Riachão – Caieiro – Cajueiro – Sede</td></tr><tr><td>04</td><td>Moitas – Maracujá – Porteiras – Sapucaia – Sede</td></tr><tr><td>05</td><td>Badajós – Biriba – Olhos D&#x27;Água – Sapucaia – Sede</td></tr><tr><td>06</td><td>Patioba – Pé de Galinha – Forges – Faz. Saquinho – Assentamento 13 de Maio – Sede</td></tr><tr><td>07</td><td>Flexas – Várzea Comprida – Papagaio – Riacho Branco – Lavandeira – Curral dos Bois – Travessão – Rua Nova – Mourões – Sede</td></tr><tr><td>08</td><td>Várzea Verde – Mangabeira – Porções – Lavandeira – Sibalde – Tapera – Niterói – Saco – Sede</td></tr><tr><td>09</td><td>Forges – Pé de Galinha – Saquinho – Patioba</td></tr><tr><td>10</td><td>Sibalde – Porções – Várzea Verde</td></tr><tr><td>11</td><td>Riacho Branco – Papagaio – Mangabeira – Flexas – Riachão – Travessão – Rua Nova – Curral dos Bois</td></tr><tr><td>12</td><td>Sede – Rua Nova – Travessão – Curral dos Bois – Faz. São João – Sede</td></tr><tr><td>13</td><td>Mangabeira – Várzea Verde</td></tr></tbody></table></div>
+
+<p>Fonte: Edital &quot;Roteiro de Transporte de Eleitores da 11ª Zona Eleitoral – Eleições Gerais 2026&quot;, de 10/09/2026, DJE/TRE-SE nº 159/2026 (disp. 10/09/2026) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=SE&amp;numDiario=159&amp;anoDiario=2026).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 6 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Fazenda Alagamar</strong></td><td>Sede – Fazenda Alagamar – Sede</td><td>Fazenda Alagamar</td><td>32,3 km (ida e volta)</td><td>~46 min</td></tr><tr><td><strong>Rota nova – Terra Dura</strong></td><td>Sede – Terra Dura – Sede</td><td>Terra Dura</td><td>10,5 km (ida e volta)</td><td>~17 min</td></tr><tr><td><strong>Parada extra na Rota 05</strong></td><td>desvio pelo caminho atual: Pai Inácio</td><td>Pai Inácio</td><td>+2,6 km</td><td>+6 min</td></tr><tr><td><strong>Parada extra na Rota 06</strong></td><td>desvio pelo caminho atual: Palmeira</td><td>Palmeira</td><td>+5,4 km</td><td>+9 min</td></tr><tr><td><strong>Parada extra na Rota 12</strong></td><td>desvio pelo caminho atual: Usina Santa Clara – Estreito</td><td>Usina Santa Clara, Estreito</td><td>+22,7 km</td><td>+34 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMJ</strong></p><p>Japaratuba/SE, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Rinaldo Salvino do Nascimento</strong><br>Juiz Eleitoral da 11ª Zona Eleitoral – Japaratuba/SE</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital – Roteiro de Transporte de Eleitores da 11ª Zona Eleitoral – Eleições Gerais 2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Japaratuba, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital – Roteiro de Transporte de Eleitores da 11ª Zona Eleitoral – Eleições Gerais 2026: Fazenda Alagamar, Terra Dura, Usina Santa Clara, Palmeira, Estreito e Pai Inácio.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Fazenda Alagamar (Sede – Fazenda Alagamar – Sede);</li><li>a criação da Rota nova – Terra Dura (Sede – Terra Dura – Sede);</li><li>a inclusão de parada em Pai Inácio na Rota 05, mantido todo o percurso atual;</li><li>a inclusão de parada em Palmeira na Rota 06, mantido todo o percurso atual;</li><li>a inclusão de paradas em Usina Santa Clara e Estreito na Rota 12, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital – Roteiro de Transporte de Eleitores da 11ª Zona Eleitoral – Eleições Gerais 2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Japaratuba</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Japaratuba; Edital &quot;Roteiro de Transporte de Eleitores da 11ª Zona Eleitoral – Eleições Gerais 2026&quot;, de 10/09/2026, DJE/TRE-SE nº 159/2026 (disp. 10/09/2026) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=SE&amp;numDiario=159&amp;anoDiario=2026); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

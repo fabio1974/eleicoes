@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Canhoba</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Canhoba</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/canhoba.pdf?v=1792246161" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Canhoba (8ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 8ª Zona Eleitoral <strong>5 rotas novas e 2 paradas extras em rotas do edital</strong> no transporte gratuito de Canhoba.
+Traçamos pelas estradas o percurso das 6 rotas do Edital nº 1023/2026. 9 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 2 ficam a 1–2 km.</p>
+<ul>
+<li>Canhoba tem 4.715 eleitores aptos em 7 locais de votação e 17 seções. São 5 locais rurais, com 2.756 eleitores (58% do total).</li>
+<li>2 locais rurais ficam a 10 km ou mais da sede, com 1.384 eleitores. Os mais distantes: Povoado Frutuoso (18,4 km) e Povoado Caraíbas (15,6 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): São Borges (43,2 km do local de votação), Fazenda Ponto Novo (10,5 km do local de votação), Mata (9,3 km do local de votação), Fazenda Cajarana (6,0 km do local de votação), Areias (5,4 km do local de votação), Catingueira (5,0 km do local de votação), Fazenda Volta Grande (4,4 km do local de votação), Lagoa Pedra (3,4 km do local de votação) e Fazenda Tanque Grande (3,0 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Fazenda Mata de São João e Mata Grande.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 32 localidades rurais de Canhoba que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>São Borges</td><td>43,2</td><td>Rota 01</td><td>6,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Ponto Novo</td><td>10,5</td><td>Rota 05</td><td>2,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Mata de São João</td><td>9,8</td><td>Rota 05</td><td>1,8</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Mata</td><td>9,3</td><td>Rota 02</td><td>2,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Cinzeiro</td><td>8,5</td><td>Rota 05</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Gravatá</td><td>7,1</td><td>Rota 05</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Mata Grande</td><td>7,0</td><td>Rota 02</td><td>1,5</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Fazenda Mangueira</td><td>6,7</td><td>Rota 05</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fazenda Cajarana</td><td>6,0</td><td>Rota 01</td><td>3,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Areias</td><td>5,4</td><td>Rota 01</td><td>7,2</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda da Barra</td><td>5,4</td><td>Rota 05</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Catingueira</td><td>5,0</td><td>Rota 01</td><td>6,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Volta Grande</td><td>4,4</td><td>Rota 05</td><td>3,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Mamoeiro</td><td>4,2</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Lagoa Pedra</td><td>3,4</td><td>Rota 05</td><td>2,2</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Tanque Grande</td><td>3,0</td><td>Rota 05</td><td>5,4</td><td>Sem rota (mais de 2 km)</td></tr></tbody></table></div>
+<p>5 das 19 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Pov. Oiteiro Alto (Rota 01), Bem-te-vi (Rota 01), Povoado Alto Bonito (Rota 02), Pov. Barro Vermelho (Rota 06) e Serra (Rota 06). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 32 localidades rurais de Canhoba, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 556" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Canhoba: 11 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 1023/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="38.2,273.8 231.0,311.1 314.9,331.6 360.7,303.8 384.1,341.1 408.8,359.6 430.3,424.2 467.2,407.2 474.5,257.6 485.3,185.9 509.3,198.3 519.9,194.2 504.7,175.7 492.9,139.1 462.5,116.9 458.9,90.6 456.9,80.0 368.8,112.1 332.9,151.5 284.4,192.7 273.0,216.8 256.5,212.0 256.7,195.2 234.9,198.1 232.2,207.7 212.1,218.4 162.8,235.8 38.2,273.8 38.2,273.8" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="154.4,312.4 156.9,308.5 160.4,303.8 163.6,299.7 167.5,297.3 169.6,292.3 169.3,285.8 167.8,279.9 170.8,276.2 174.6,273.3 178.5,270.1 179.2,264.1 178.9,257.5 180.5,252.7 182.6,248.2 187.8,246.8 194.0,244.7 200.4,245.8 204.5,248.2 209.1,246.4 214.5,243.4 219.4,241.2 223.7,244.5 228.8,246.6 235.4,246.0 240.6,242.5 243.4,238.5 248.4,236.9 253.1,234.9 259.2,232.2 265.2,233.3 271.2,233.7 276.5,234.9 282.7,235.2 288.5,234.1 296.0,233.8 302.2,234.3 306.2,236.8 311.9,237.8 317.3,238.7 320.8,242.3 325.2,244.5 329.3,247.2 336.0,247.1 339.4,244.3 341.7,240.3 342.5,234.3 350.3,233.0 355.6,231.5 361.0,230.4 365.7,226.6 371.9,226.5 384.4,226.0 391.4,225.8 398.3,226.9 404.3,226.0 409.3,224.5 411.2,220.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="105.1,278.9 99.3,277.6 95.3,274.9 92.5,270.7 91.6,265.2 95.1,262.3 98.4,258.9 100.3,254.3 103.9,251.1 109.4,252.1 114.0,254.5 117.2,257.6 119.3,262.1 124.3,264.2 131.0,267.4 135.3,269.8 140.2,271.7 143.0,275.9 145.9,281.1 149.1,284.1 150.7,290.1 153.8,295.1 157.0,298.7 158.7,303.2 157.0,308.3 154.6,312.3 154.4,312.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="180.1,254.3 181.9,249.1 186.3,246.3 194.0,244.7 200.4,245.8 204.5,248.2 209.1,246.4 214.5,243.4 219.4,241.2 223.7,244.5 228.8,246.6 234.6,245.9 239.3,243.8 242.5,239.9 245.8,236.7 253.1,234.9 259.2,232.2 265.2,233.3 271.2,233.7 276.5,234.9 277.6,235.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="226.6,320.0 227.8,314.4 231.1,310.6 235.3,308.3 239.9,306.6 244.1,304.1 247.7,301.3 252.0,298.6 254.2,293.6 257.4,289.9 261.1,292.9 265.4,290.8 271.0,288.3 272.7,283.2 273.9,281.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="367.1,306.1 368.7,311.2 372.1,314.2 374.4,318.2 375.6,323.3 379.5,325.8 382.3,321.8 384.5,317.5 385.4,312.1 388.4,308.5 391.1,303.4 395.5,300.4 399.7,298.2 405.4,297.5 410.5,296.3 405.4,297.5 399.7,298.2 396.5,294.9 394.1,290.7 389.8,288.2 388.0,282.1 392.1,278.4 395.2,275.1 397.9,271.3 396.5,266.1 395.9,260.4 393.0,256.3 389.1,253.8 383.3,252.0 378.1,248.0 377.4,242.0 374.3,238.6 382.6,233.3 387.3,229.5 390.5,226.5 396.7,226.3 404.3,226.0 409.3,224.5 411.2,220.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="439.7,405.6 444.7,403.7 448.9,406.0 454.4,404.6 459.5,405.9 458.0,400.3 462.3,396.2 463.5,389.2 466.8,383.9 467.6,377.6 466.8,383.9 463.5,389.2 462.3,396.2 458.0,400.3 459.7,405.5 453.4,405.1 447.6,405.8 443.4,403.7 435.9,404.6 428.4,402.9 425.0,399.7 423.8,394.4 419.0,392.8 418.4,386.9 416.6,381.5 415.1,376.2 413.9,370.8 410.3,367.7 407.7,362.6 402.9,360.0 398.2,357.7 394.3,355.4 387.6,359.2 383.7,356.5 382.9,349.6 384.0,343.9 385.1,338.7 390.0,335.0 393.4,330.7 400.0,330.2 404.7,327.9 408.6,325.4 412.9,322.3 416.3,319.0 420.7,316.4 426.5,314.6 431.3,312.7 434.6,309.0 439.8,312.2 444.4,314.9 449.3,312.8 455.2,311.1 495.8,121.9 493.4,126.8 495.5,131.9 500.4,136.2 504.3,139.8 508.1,142.5 509.3,148.7 513.6,152.1 517.5,154.6 516.2,159.7 515.8,166.2 514.2,171.2 516.4,175.5 518.8,179.6 524.0,182.3 528.5,184.8 532.2,187.8 536.2,190.6 540.4,192.8 544.4,195.7 551.0,195.7 559.1,197.9 564.7,199.6 571.5,201.5 578.0,205.0 582.1,207.5 587.2,208.8 592.2,210.6 597.4,212.7 603.2,213.8 607.8,215.8 613.3,216.9 618.1,218.7 624.3,219.6 627.1,223.3 630.6,226.6 634.6,229.2 644.7,235.2 650.0,238.0 652.9,241.7 657.4,246.5 661.5,249.4 664.6,253.3 668.3,260.1 672.0,264.5 674.7,268.0 675.2,273.7 674.2,279.0 676.2,283.4 678.0,287.8 679.5,294.0 681.3,298.6 682.0,304.7 682.5,311.1 686.7,313.4 692.1,314.5 698.8,313.1 704.4,312.4 704.0,318.4 705.7,323.2 714.2,336.8 720.4,346.7 723.1,351.0 724.8,355.6 724.4,361.6 718.9,377.0 717.1,381.5 712.6,383.4 708.5,380.7 704.7,377.8 700.8,373.5 697.5,370.4 692.9,368.9 688.1,366.3 682.0,364.1 677.6,361.8 675.1,356.2 672.5,351.5 668.1,346.6 664.5,342.9 660.9,339.8 657.1,334.6 653.9,328.9 650.2,326.5 647.1,321.8 641.4,320.5 636.1,321.6 631.3,323.3 624.7,322.5 619.1,321.8 613.5,321.0 606.6,320.0 597.5,320.0 601.9,329.8 600.3,335.8 597.7,348.1 596.5,354.3 594.4,359.0 592.8,363.6 591.0,368.2 588.3,371.8 586.5,376.4 585.4,381.6 579.9,384.3 573.7,384.4 568.0,383.8 563.3,385.6 557.0,385.4 552.8,387.7 547.2,388.7 541.8,387.3 537.9,384.6 533.4,386.4 530.0,389.7 527.2,393.9 523.4,396.8 517.0,396.4 511.0,395.5 508.3,391.4 501.5,391.6 498.0,394.5 496.5,399.7 493.8,403.9 489.0,405.5 481.8,405.5 475.5,405.9 467.1,407.5 459.9,410.5 453.7,413.3 450.5,407.3 446.4,404.5 439.2,404.7 439.7,405.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – São Borges</title></polyline>
+<polyline points="154.4,312.4 149.5,310.9 146.0,308.2 141.8,305.9 137.4,304.0 132.4,302.7 127.9,304.5 124.0,307.2 120.3,303.7 118.1,299.1 115.2,295.1 110.3,293.7 109.1,288.4 107.8,282.7 105.1,278.9 99.3,277.6 95.3,274.9 92.5,270.7 88.0,266.9 84.9,263.4 79.0,262.3 74.2,259.2 69.0,257.7 63.7,255.4 59.1,257.8 56.7,262.8 54.0,266.4 49.4,268.4 46.7,272.1 44.9,276.9 40.7,278.9 36.1,275.4 39.4,278.4 44.6,277.4 46.7,272.1 49.4,268.4 54.0,266.4 56.7,262.8 59.1,257.8 61.0,253.2 64.8,255.8 69.7,258.0 75.7,259.9 79.5,262.6 85.3,263.6 89.5,268.2 93.1,271.2 95.9,276.6 101.9,277.3 105.9,280.3 109.3,283.4 108.8,289.8 111.4,293.7 115.9,296.4 118.6,300.1 120.8,304.4 124.9,306.7 129.6,305.1 133.4,302.4 137.9,304.2 142.1,306.2 146.6,308.1 150.6,311.3 154.4,312.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Mata</title></polyline>
+<polyline points="411.8,219.7 406.8,218.3 405.8,212.0 399.3,205.8 396.7,201.9 392.8,204.2 388.4,201.3 383.8,199.2 379.2,196.9 379.7,191.0 379.6,184.7 376.8,180.3 373.6,177.1 369.6,174.6 363.6,173.2 362.1,168.1 360.5,163.2 353.2,162.0 353.0,168.0 352.7,161.8 358.3,162.6 361.8,165.4 362.6,171.4 366.7,173.6 371.7,175.7 375.9,179.0 378.7,182.6 380.1,188.9 377.9,193.3 380.1,197.8 386.8,200.0 390.3,203.5 395.4,202.2 398.8,205.3 405.8,212.0 406.8,218.3 411.6,219.9 411.8,219.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fazenda Cajarana</title></polyline>
+<polyline points="457.5,112.2 451.5,112.6 444.8,113.7 440.5,117.4 434.1,116.3 427.0,113.4 421.8,115.7 416.1,114.0 414.6,109.0 410.7,106.1 404.5,108.0 398.5,106.3 393.9,104.0 388.3,104.6 383.1,106.2 387.9,104.8 387.4,98.8 385.8,92.3 383.5,88.3 385.8,92.3 387.7,96.7 388.8,102.8 393.8,104.0 398.0,106.1 402.7,107.8 408.6,107.1 414.0,108.3 417.1,111.8 419.7,116.2 425.4,113.7 432.3,115.4 437.8,117.5 443.2,114.6 448.6,113.0 454.4,114.1 457.5,112.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Areias</title></polyline>
+<polyline points="278.5,282.5 281.7,286.4 285.4,289.0 288.6,292.4 291.5,296.1 294.6,299.8 296.4,304.5 300.3,306.9 304.0,309.5 305.9,314.2 308.4,318.0 308.9,323.8 311.3,327.7 315.0,330.7 318.9,333.1 321.1,337.5 321.1,343.7 321.1,337.5 319.0,333.3 315.0,330.7 311.4,328.0 309.0,324.1 308.4,318.3 305.9,314.2 304.1,309.6 300.3,306.9 296.4,304.5 294.7,299.9 291.6,296.6 288.6,292.4 285.4,289.0 281.7,286.4 278.8,282.7 278.5,282.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fazenda Volta Grande</title></polyline>
+<polyline points="89.5,268.2 86.5,264.9 81.1,262.9 76.8,260.9 72.1,258.5 67.3,256.9 62.8,255.0 67.3,256.9 72.1,258.5 76.5,260.5 81.1,262.9 86.3,264.5 89.5,268.2 89.5,268.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 02</title></polyline>
+<polyline points="410.7,296.0 406.2,297.7 400.0,298.1 395.5,300.4 391.1,303.4 388.1,306.7 385.8,311.4 384.8,316.7 382.5,321.3 383.3,326.8 387.4,329.7 391.0,332.4 395.9,331.0 401.6,329.8 406.9,326.4 411.7,322.8 415.4,320.3 420.0,317.0 426.5,314.6 431.3,312.7 434.6,309.0 438.7,306.0 443.2,302.9 438.9,305.2 435.5,308.4 431.3,312.7 426.5,314.6 421.6,316.3 417.5,318.4 414.0,321.7 410.2,324.6 404.7,327.9 400.6,330.2 394.2,330.4 387.4,329.7 383.5,327.3 382.2,322.3 384.5,317.5 385.4,312.1 388.4,308.5 391.1,303.4 395.5,300.4 399.7,298.2 405.4,297.5 410.5,296.3 410.7,296.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 05</title></polyline>
+<circle cx="367.5" cy="305.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="411.1" cy="295.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="403.8" cy="301.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="386.4" cy="281.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="226.5" cy="319.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="234.4" cy="246.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="463.1" cy="134.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="145.8" cy="285.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="468.3" cy="408.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="426.9" cy="422.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="394.6" cy="236.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="375.7" cy="234.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="300.4" cy="279.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="300.6" cy="228.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="289.8" cy="291.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="280.0" cy="223.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="451.4" cy="113.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="273.9" cy="281.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="453.1" cy="111.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="436.8" cy="407.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="277.8" cy="234.4" r="2.2" fill="#b9b9b2"/>
+<polygon points="411.7,209.7 402.4,226.8 420.9,226.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="403.0,213.8 392.9,232.4 413.1,232.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="278.4,274.2 270.2,289.4 286.7,289.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="278.8,227.5 271.5,241.0 286.2,241.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="456.0,103.0 447.4,119.0 464.7,119.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="154.5,303.6 145.8,319.6 163.2,319.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="439.5,396.2 430.3,413.0 448.6,413.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="439.5" y="426.4" text-anchor="middle" fill="#5c5c57">Zona Rural</text>
+<circle cx="495.8" cy="121.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="502.8" y="116.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">São Borges 43,2 km</text>
+<circle cx="455.2" cy="311.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="462.2" y="306.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Ponto Novo 10,5 km</text>
+<circle cx="444.8" cy="302.6" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<circle cx="35.7" cy="273.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="42.7" y="268.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Mata 9,3 km</text>
+<circle cx="64.8" cy="253.4" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="71.8" y="248.4" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Mata Grande 7,0 km</text>
+<circle cx="353.6" cy="171.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="360.6" y="166.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Cajarana 6,0 km</text>
+<circle cx="384.2" cy="88.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="391.2" y="83.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Areias 5,4 km</text>
+<circle cx="381.2" cy="105.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="388.2" y="100.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Catingueira 5,0 km</text>
+<circle cx="319.7" cy="343.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="326.7" y="338.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Volta Grande 4,4 km</text>
+<circle cx="407.5" cy="359.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="414.5" y="354.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Lagoa Pedra 3,4 km</text>
+<circle cx="472.0" cy="377.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="479.0" y="372.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Tanque Grande 3,0 km</text>
+<rect x="406.1" y="215.2" width="10" height="10" fill="#1d1d1b"/><text x="420.1" y="238.2" font-weight="600" fill="#1d1d1b">Sede de Canhoba</text>
+<line x1="35" x2="128.4" y1="454.2" y2="454.2" stroke="#8a8a84" stroke-width="2"/><text x="35" y="468.2" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="445.2321612537906" y2="445.2321612537906" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="449.2321612537906" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,438.2 421.4,450.5 434.6,450.5" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="449.2321612537906" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="463.2321612537906" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="472.2321612537906" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="468.2321612537906" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="472.2321612537906" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="491.2321612537906" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="495.2321612537906" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="491.2321612537906" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="495.2321612537906" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="514.2321612537905" y2="514.2321612537905" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="518.2321612537905" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="537.2321612537905" y2="537.2321612537905" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="541.2321612537905" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 1023/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (11):</strong> São Borges, Fazenda Ponto Novo, Fazenda Mata de São João, Mata, Cinzeiro, Gravatá, Mata Grande, Fazenda Mangueira, Fazenda Cajarana, Areias e Fazenda da Barra.</li>
+<li><strong>De 3 a 5 km (5):</strong> Catingueira, Fazenda Volta Grande, Mamoeiro, Lagoa Pedra e Fazenda Tanque Grande.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (16):</strong> Acabono, Agrovila do PA Borda da Mata, Barra, Caraibas, Coitizeira, Comunidade Quilombola Caraíbas, Fazenda Baixinha, Fazenda Bom Nome, Fazenda Tapuiu, Fazenda Vinagre, Jaguaripe, Paragem, Poçãozinho, Projeto de Assentamento Borda da Mata, Sítios Novos e Tanque Grande.</li>
+</ul><h2>Rotas do Edital nº 1023/2026</h2>
+<p>O edital tem 6 rotas para Canhoba. Horários: Rotas 01, 03, 04 e 06: 8h e 14h; 02: 9h e 15h; 05: 8h e 15h. Veículos: não informados (vistoria dos veículos e motoristas no Cartório em 03/10 e, se houver 2º turno, 24/10/2026).</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Pov. Oiteiro Alto – Bem-te-vi – Frutuoso</td></tr><tr><td>02</td><td>Povoado Alto Bonito – Pau de Fava – Coitezeira – Frutuoso</td></tr><tr><td>03</td><td>Varame – Paragem – Sítios Novos</td></tr><tr><td>04</td><td>Mamoeiro – Poçãozinho</td></tr><tr><td>05</td><td>Cinzeiro – Gravata – Barra – Sede</td></tr><tr><td>06</td><td>Pov. Barro Vermelho – Serra – Sede</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 1023/2026 da 8ª ZE, DJE/TRE-SE nº 166/2026 (disp. 21/09/2026) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=SE&amp;numDiario=166&amp;anoDiario=2026).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 11 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – São Borges</strong></td><td>Sede – Fazenda Tanque Grande – Lagoa Pedra – Fazenda Ponto Novo – São Borges – Sede</td><td>Fazenda Tanque Grande, Lagoa Pedra, Fazenda Ponto Novo, São Borges</td><td>73,1 km (ida e volta)</td><td>~1h54</td></tr><tr><td><strong>Rota nova – Mata</strong></td><td>Sede – Mata – Sede</td><td>Mata</td><td>18,6 km (ida e volta)</td><td>~40 min</td></tr><tr><td><strong>Rota nova – Fazenda Cajarana</strong></td><td>Sede – Fazenda Cajarana – Sede</td><td>Fazenda Cajarana</td><td>11,9 km (ida e volta)</td><td>~29 min</td></tr><tr><td><strong>Rota nova – Areias</strong></td><td>Sede – Catingueira – Areias – Sede</td><td>Catingueira, Areias</td><td>12,0 km (ida e volta)</td><td>~29 min</td></tr><tr><td><strong>Rota nova – Fazenda Volta Grande</strong></td><td>Sede – Fazenda Volta Grande – Sede</td><td>Fazenda Volta Grande</td><td>8,8 km (ida e volta)</td><td>~21 min</td></tr><tr><td><strong>Parada extra na Rota 02</strong></td><td>desvio pelo caminho atual: Mata Grande</td><td>Mata Grande</td><td>+3,7 km</td><td>+9 min</td></tr><tr><td><strong>Parada extra na Rota 05</strong></td><td>desvio pelo caminho atual: Fazenda Mata de São João</td><td>Fazenda Mata de São João</td><td>+13,7 km</td><td>+27 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMC</strong></p><p>Canhoba/SE, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Anderson Clei Santos Rochão</strong><br>Juiz Eleitoral da 8ª Zona Eleitoral – Gararu/SE</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 1023/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Canhoba, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 1023/2026: São Borges, Fazenda Ponto Novo, Mata, Fazenda Cajarana, Areias, Catingueira, Fazenda Volta Grande, Lagoa Pedra, Fazenda Tanque Grande, Fazenda Mata de São João e Mata Grande.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – São Borges (Sede – Fazenda Tanque Grande – Lagoa Pedra – Fazenda Ponto Novo – São Borges – Sede);</li><li>a criação da Rota nova – Mata (Sede – Mata – Sede);</li><li>a criação da Rota nova – Fazenda Cajarana (Sede – Fazenda Cajarana – Sede);</li><li>a criação da Rota nova – Areias (Sede – Catingueira – Areias – Sede);</li><li>a criação da Rota nova – Fazenda Volta Grande (Sede – Fazenda Volta Grande – Sede);</li><li>a inclusão de parada em Mata Grande na Rota 02, mantido todo o percurso atual;</li><li>a inclusão de parada em Fazenda Mata de São João na Rota 05, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 1023/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Canhoba</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Canhoba; Edital nº 1023/2026 da 8ª ZE, DJE/TRE-SE nº 166/2026 (disp. 21/09/2026) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=SE&amp;numDiario=166&amp;anoDiario=2026); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Graccho Cardoso</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Graccho Cardoso</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/graccho-cardoso.pdf?v=1792246184" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Graccho Cardoso (3ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 3ª Zona Eleitoral <strong>4 rotas novas e 1 parada extra em rotas do edital</strong> no transporte gratuito de Graccho Cardoso.
+Traçamos pelas estradas o percurso das 8 rotas do Edital nº 1054/2026. 6 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 1 ficam a 1–2 km.</p>
+<ul>
+<li>Graccho Cardoso tem 6.460 eleitores aptos em 8 locais de votação e 27 seções. São 5 locais rurais, com 2.146 eleitores (33% do total).</li>
+<li>1 locais rurais ficam a 10 km ou mais da sede, com 761 eleitores. Os mais distantes: Povoado Quintas (19,7 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Fazenda Embira (10,5 km do local de votação), Piador (7,7 km do local de votação), Fazenda Riachão (4,8 km do local de votação), Cabeça do Boi (4,1 km do local de votação), Mocambo (3,9 km do local de votação) e Mata (3,3 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Pedra.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 33 localidades rurais de Graccho Cardoso que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Fazenda Jenipapo</td><td>11,4</td><td>Rota 06</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fazenda Embira</td><td>10,5</td><td>Rota 01</td><td>3,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Araras</td><td>7,9</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Mesinhas</td><td>7,7</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Piador</td><td>7,7</td><td>Rota 02</td><td>2,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Pedra</td><td>6,7</td><td>Rota 03</td><td>1,1</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Corujinha</td><td>6,5</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Manoel Velho</td><td>6,0</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Jaboticaba</td><td>5,7</td><td>Rota 08</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Riacho Grande</td><td>5,5</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Varjota</td><td>5,3</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fazenda Riachão</td><td>4,8</td><td>Rota 04</td><td>2,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Lagoa do Rancho</td><td>4,6</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Agrovila do PA Nossa Senhora Aparecida</td><td>4,5</td><td>Rota 08</td><td>0,4</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Cabeça do Boi</td><td>4,1</td><td>Rota 01</td><td>2,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Mocambo</td><td>3,9</td><td>Rota 03</td><td>2,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Boa Vista</td><td>3,8</td><td>Rota 08</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fazenda Umbuzeiro</td><td>3,5</td><td>Rota 03</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fazenda Taquari</td><td>3,5</td><td>Rota 03</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Mata</td><td>3,3</td><td>Rota 03</td><td>2,6</td><td>Sem rota (mais de 2 km)</td></tr></tbody></table></div>
+<p>6 das 52 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Retiro (Rota 06 e Rota 06), Imbira (Rota 08 e Rota 08) e Goiabeira (Rota 08 e Rota 08). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 33 localidades rurais de Graccho Cardoso, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 823" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Graccho Cardoso: 7 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 1054/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="247.0,386.6 276.5,436.8 300.7,455.0 323.1,493.8 323.1,509.6 361.6,565.4 381.0,572.3 400.7,558.6 426.1,561.3 476.0,595.6 506.4,602.5 516.9,638.9 529.1,652.9 510.6,668.7 514.8,690.5 537.2,689.3 536.9,663.4 563.4,653.2 578.7,634.1 564.0,589.3 587.0,575.6 576.9,537.4 613.0,507.5 610.6,449.0 599.3,441.2 607.0,410.2 582.2,395.6 576.3,378.8 584.0,322.7 599.6,287.8 619.6,272.9 616.9,253.2 590.6,246.3 565.2,225.4 577.8,162.1 534.2,187.5 512.1,185.1 485.2,194.6 469.7,168.1 421.6,149.3 411.8,109.6 369.4,80.0 360.1,113.4 368.5,138.8 341.0,137.6 322.2,151.1 289.1,115.5 247.0,146.6 247.0,161.5 216.5,165.1 196.2,185.1 181.0,180.9 185.8,148.1 139.5,137.0 89.3,134.0 35.0,304.2 247.0,386.6 247.0,386.6" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="91.9,327.4 87.4,318.5 83.5,310.8 78.5,300.8 74.1,291.9 75.1,282.5 73.7,273.6 73.9,264.2 75.4,256.1 81.3,252.7 87.0,249.2 93.9,244.6 100.0,241.3 108.3,240.7 112.6,235.7 118.5,231.8 127.1,234.6 141.2,235.1 147.9,238.2 154.0,244.6 165.1,245.2 174.5,244.5 179.1,239.6 182.1,232.4 182.8,223.8 180.3,217.3 182.7,210.1 179.2,202.0 170.5,197.3 160.4,193.1 149.9,192.6 142.8,190.5 133.9,191.0 126.3,188.2 120.9,184.5 118.6,177.6 113.5,173.6 111.2,166.0 104.3,170.0 101.4,176.8 104.3,170.0 111.0,164.2 112.4,171.8 117.4,176.5 120.4,183.4 125.6,187.9 132.9,191.0 141.9,190.5 149.9,192.6 160.4,193.1 166.9,195.9 176.8,201.6 181.1,209.1 180.3,217.3 182.8,223.8 180.5,230.6 184.4,237.9 177.7,242.0 170.9,244.7 160.9,246.0 151.7,242.4 147.4,237.5 131.6,236.1 121.7,232.9 113.4,233.8 110.5,240.0 101.4,240.3 93.9,244.6 88.3,248.1 82.2,251.7 76.2,255.0 73.9,264.2 73.7,273.6 75.1,282.5 74.1,291.9 78.5,300.8 82.2,308.1 87.4,318.5 90.8,325.3 91.9,327.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="239.6,190.2 231.6,198.1 217.7,200.1 210.5,205.0 203.4,211.9 197.6,216.1 188.8,213.8 183.0,210.2 180.7,203.5 170.5,197.3 160.4,193.1 149.9,192.6 142.8,190.5 133.9,191.0 126.3,188.2 120.9,184.5 118.6,177.6 113.5,173.6 111.2,166.0 104.3,170.0 101.4,176.8 104.3,170.0 111.0,164.2 112.4,171.8 117.4,176.5 120.4,183.4 125.6,187.9 132.9,191.0 141.9,190.5 149.9,192.6 160.4,193.1 166.9,195.9 176.8,201.6 181.1,209.1 188.8,213.8 195.8,216.6 203.4,211.9 208.9,207.3 213.7,202.3 227.5,199.2 236.9,196.1 239.6,190.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="398.4,134.9 407.9,141.5 411.0,148.0 419.3,152.6 424.8,156.3 429.0,162.0 432.3,169.6 439.4,172.5 447.2,173.8 450.9,179.8 454.7,185.4 459.5,189.6 463.7,194.6 467.3,201.5 470.9,207.0 473.0,214.0 474.2,222.3 479.4,227.2 486.0,230.6 490.6,236.0 497.2,238.5 505.1,240.4 514.4,241.9 532.4,241.4 544.1,241.2 554.6,234.7 561.0,229.2 554.6,234.7 548.7,239.8 538.1,241.3 519.3,241.8 510.1,241.9 502.4,239.2 487.9,243.4 482.2,247.1 479.0,258.1 476.2,268.2 474.0,276.0 468.6,299.3 467.5,308.1 470.8,314.3 471.7,325.6 465.5,333.7 458.0,339.6 452.1,344.3 448.0,353.2 445.8,360.9 439.6,358.0 443.5,363.3 447.0,357.5 449.4,350.1 453.1,343.4 465.5,333.7 470.8,329.5 471.2,318.2 468.7,310.7 468.6,299.3 472.2,282.4 475.2,271.6 478.8,259.1 480.9,251.0 484.2,245.1 496.6,239.4 505.1,240.4 514.4,241.9 532.4,241.4 544.1,241.2 554.6,234.7 561.0,229.2 554.6,234.7 548.7,239.8 538.1,241.3 519.3,241.8 510.1,241.9 502.4,239.2 493.6,237.6 488.4,233.7 483.6,229.2 476.7,225.6 474.0,218.9 472.3,210.9 469.9,204.3 465.7,199.0 462.5,192.3 457.6,188.1 453.0,183.6 449.6,177.0 444.3,173.1 436.0,171.3 430.9,167.3 427.1,159.9 422.4,154.4 416.0,150.8 410.2,146.2 402.7,138.8 398.4,134.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="491.7,472.9 496.5,464.4 501.0,459.7 500.1,451.2 499.4,441.8 494.2,434.8 492.3,425.8 495.7,417.2 493.1,409.6 486.8,405.3 478.1,398.8 471.1,396.0 466.7,390.8 461.4,383.8 454.8,380.7 450.9,374.7 447.6,368.0 443.7,362.7 447.5,354.8 450.3,348.2 454.8,342.2 465.5,333.7 470.8,329.5 471.2,318.2 468.7,310.7 465.0,305.1 462.7,297.6 462.1,288.9 457.3,283.4 449.9,281.1 444.9,275.3 438.9,270.6 434.7,265.3 429.6,258.8 421.8,253.1 415.2,247.9 411.1,242.6 408.1,233.7 410.6,240.8 414.8,247.7 420.3,251.9 427.1,256.2 431.7,260.9 435.0,266.5 440.0,271.4 446.7,276.3 450.9,282.2 459.1,285.5 462.4,292.0 463.8,301.6 466.7,308.0 470.3,313.3 471.7,325.6 465.5,333.7 458.0,339.6 452.1,344.3 448.0,353.2 445.8,360.9 448.0,368.8 451.4,375.3 455.9,381.3 462.6,386.5 469.4,394.1 478.1,398.8 483.9,402.1 491.5,407.0 494.6,414.5 493.2,422.6 492.9,431.6 497.3,439.5 500.2,446.4 500.5,455.4 498.2,462.1 493.3,469.5 491.7,472.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="363.2,246.2 361.2,239.1 365.4,234.3 375.0,233.3 383.7,231.7 390.3,228.3 395.5,223.1 404.3,221.4 406.2,230.1 409.3,236.1 410.7,244.1 417.6,249.7 425.5,255.4 431.7,260.9 435.0,266.5 440.0,271.4 446.7,276.3 450.9,282.2 459.1,285.5 462.4,292.0 463.8,301.6 466.7,308.0 470.3,313.3 471.7,325.6 465.5,333.7 458.0,339.6 452.1,344.3 448.0,353.2 445.8,360.9 439.6,358.0 443.5,363.3 447.0,357.5 449.4,350.1 453.1,343.4 465.5,333.7 470.8,329.5 471.2,318.2 468.7,310.7 465.0,305.1 462.7,297.6 462.1,288.9 457.3,283.4 449.9,281.1 444.9,275.3 438.9,270.6 434.7,265.3 429.6,258.8 421.8,253.1 415.2,247.9 411.1,242.6 408.1,233.7 404.5,221.6 396.3,222.4 391.5,227.2 386.2,230.9 378.5,232.7 370.7,234.0 360.9,235.1 362.8,242.7 363.2,246.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="579.1,669.2 589.2,667.4 594.6,662.9 599.3,656.6 603.8,651.6 612.8,652.2 620.0,649.7 623.5,641.9 626.5,635.2 626.4,626.1 623.9,619.4 626.6,610.2 633.1,607.0 639.6,602.7 642.8,596.2 649.5,593.3 657.4,591.5 660.2,585.3 664.4,579.0 669.3,574.7 675.9,572.3 683.9,571.0 690.2,567.0 696.4,562.9 701.3,558.6 708.0,556.2 713.6,551.5 718.1,546.4 721.4,540.5 724.6,534.1 722.4,527.0 715.0,524.1 709.3,519.8 703.0,515.1 695.1,511.6 688.6,508.6 684.8,503.1 680.6,496.8 676.7,491.0 672.9,485.6 665.9,481.8 657.3,480.5 649.5,482.7 642.8,485.0 635.8,488.2 628.8,490.4 619.7,491.5 611.0,492.1 600.4,492.3 590.9,491.7 585.3,488.3 577.8,485.5 567.1,487.7 558.0,489.9 552.1,493.5 558.0,489.9 565.5,488.4 572.5,485.5 580.3,486.8 587.5,489.9 599.2,492.2 608.8,492.1 617.6,491.8 627.2,490.8 635.0,488.7 641.5,485.6 648.2,483.4 654.1,480.3 663.0,480.4 669.7,483.7 675.7,489.5 680.6,496.8 684.8,503.1 688.6,508.6 695.1,511.6 701.8,514.2 707.6,518.5 715.0,524.1 722.4,527.0 725.0,533.4 722.0,539.5 718.6,545.2 713.6,551.5 708.6,555.6 701.3,558.6 696.4,562.9 690.2,567.0 683.9,571.0 675.9,572.3 669.3,574.7 664.4,579.0 660.6,584.6 657.8,590.8 650.8,593.2 644.8,596.2 640.2,601.0 633.1,607.0 626.6,610.2 623.0,616.4 625.4,624.1 626.5,634.5 623.5,641.9 621.0,649.6 612.8,652.2 604.7,651.1 600.0,655.8 594.6,662.9 589.2,667.4 582.8,670.7 579.1,669.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="341.8,180.6 348.8,188.2 354.4,193.4 353.5,203.6 353.8,214.5 351.7,221.6 354.3,229.0 358.1,234.4 362.8,242.7 365.2,250.0 369.7,255.3 377.0,258.8 383.1,262.5 387.6,267.5 392.8,275.8 398.7,279.5 400.4,288.4 402.5,295.3 405.8,301.0 409.5,309.3 413.5,315.3 418.2,320.8 420.6,327.8 424.4,336.2 429.7,341.7 433.6,347.6 436.1,355.3 433.6,348.8 430.6,342.7 426.0,338.2 422.2,332.8 419.8,326.1 417.8,318.6 411.7,312.9 408.4,306.9 405.6,300.3 400.9,292.4 400.8,283.3 396.1,277.7 390.7,273.1 385.4,263.3 379.1,259.6 372.9,256.5 367.3,252.8 363.1,245.9 360.8,238.0 356.2,233.0 352.0,227.1 353.3,219.2 353.3,209.0 353.5,199.9 350.9,190.0 343.3,182.9 341.8,180.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="319.2,442.4 318.8,432.7 319.8,423.6 316.1,417.9 313.2,411.7 309.3,406.1 309.8,397.5 309.6,388.5 310.3,379.7 324.3,382.1 333.7,384.1 333.4,375.1 336.8,369.3 341.4,363.6 343.5,356.5 347.0,350.7 350.5,344.7 359.4,345.1 369.8,344.8 378.0,345.8 386.1,344.3 392.1,347.2 399.6,349.0 407.7,347.8 417.5,345.5 426.0,346.3 432.1,350.6 437.5,356.2 431.5,352.9 428.3,347.0 419.7,345.4 412.2,347.6 402.7,348.8 393.4,348.3 388.3,343.7 378.9,345.5 370.4,344.8 360.2,345.1 353.8,342.4 348.7,346.4 346.7,353.4 342.4,358.4 340.3,365.6 334.1,368.8 335.1,377.0 329.8,383.2 317.4,380.7 309.7,382.0 310.4,391.0 309.5,400.3 311.2,409.2 315.0,414.9 319.0,420.5 318.7,429.3 319.1,439.2 319.2,442.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="433.6,366.1 429.1,371.4 424.8,376.5 419.6,383.0 414.2,389.7 408.7,396.3 398.6,397.4 389.9,395.7 381.0,393.8 373.5,392.3 357.0,388.9 344.1,386.2 333.7,384.1 326.0,382.4 313.8,379.9 303.0,379.7 293.4,380.8 282.1,382.2 271.8,383.4 260.5,384.8 251.2,386.1 240.9,387.4 232.4,388.3 228.6,383.1 224.7,376.8 221.5,370.8 219.4,363.4 217.3,356.0 214.1,349.8 210.0,344.2 203.7,339.9 208.8,343.8 213.4,348.4 216.7,354.1 219.1,362.3 221.3,370.2 224.7,376.8 228.6,383.1 232.4,388.3 240.9,387.4 251.2,386.1 260.5,384.8 271.8,383.4 282.1,382.2 292.9,380.8 303.0,379.7 313.8,379.9 324.3,382.1 333.7,384.1 344.1,386.2 357.0,388.9 369.4,391.4 377.0,393.0 385.8,394.8 397.7,397.3 405.9,398.3 411.6,392.8 416.5,386.9 422.5,379.2 426.9,374.1 431.2,368.9 433.6,366.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fazenda Embira</title></polyline>
+<polyline points="114.9,159.3 120.1,154.8 121.7,147.3 127.9,142.8 130.7,136.5 131.5,125.9 133.2,118.2 142.8,117.1 151.0,115.8 158.8,118.5 166.1,120.5 174.9,121.8 179.5,126.2 186.0,129.7 190.9,135.9 198.0,138.3 202.1,145.3 207.5,148.9 214.2,157.8 219.7,164.1 225.5,170.5 231.1,174.2 235.1,180.3 241.1,183.3 237.6,193.3 241.0,201.5 243.7,208.1 246.9,214.2 252.3,219.1 259.5,223.0 261.9,232.5 264.7,239.3 260.0,243.6 257.3,250.0 252.1,255.3 243.3,252.5 235.1,254.1 226.8,255.9 218.7,251.5 211.3,248.4 204.0,245.1 197.0,247.8 188.3,247.2 185.2,240.3 182.1,232.4 182.8,223.8 180.3,217.3 182.7,210.1 179.2,202.0 170.5,197.3 160.4,193.1 149.9,192.6 142.8,190.5 133.9,191.0 126.3,188.2 120.9,184.5 118.6,177.6 113.5,173.6 111.2,166.0 115.2,160.9 114.9,159.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Piador</title></polyline>
+<polyline points="552.1,493.5 544.7,498.2 544.2,508.5 541.1,516.6 537.7,523.3 533.7,528.3 529.7,533.6 522.7,536.2 512.3,536.3 503.1,535.2 497.7,531.2 490.4,527.0 483.6,524.3 473.3,519.5 465.6,515.5 473.3,519.5 479.1,522.7 487.7,524.6 492.9,529.9 500.3,532.8 508.1,535.7 517.8,536.7 525.1,534.6 530.9,531.1 536.1,526.5 540.0,519.6 541.9,512.0 545.1,505.1 546.5,496.4 552.1,493.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fazenda Riachão</title></polyline>
+<polyline points="553.6,233.9 561.4,228.9 566.6,223.9 572.0,218.2 576.6,213.4 578.2,206.0 577.0,197.7 578.8,188.5 582.0,174.8 579.4,168.2 574.4,163.7 579.4,168.2 582.0,174.8 580.1,182.8 577.8,192.5 577.7,202.5 577.8,211.3 572.3,217.9 566.6,223.9 566.4,233.2 572.7,236.0 580.9,237.6 585.8,241.8 590.8,246.4 598.0,248.4 605.8,250.1 613.5,251.6 618.5,255.9 620.7,263.1 618.9,270.8 626.8,268.5 620.7,272.3 620.7,263.1 618.5,255.9 613.5,251.6 605.8,250.1 598.4,248.5 590.8,246.4 585.8,241.8 580.9,237.6 572.7,236.0 563.8,235.8 557.6,232.1 553.6,233.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Mocambo</title></polyline>
+<polyline points="470.0,204.5 465.7,199.0 462.5,192.3 464.0,182.8 470.5,179.9 474.9,184.5 483.4,185.1 490.4,187.3 483.4,185.1 474.9,184.5 470.5,179.9 464.0,182.8 461.5,189.8 464.8,196.7 468.0,202.5 470.0,204.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 03</title></polyline>
+<circle cx="579.7" cy="668.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="398.3" cy="134.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="94.0" cy="326.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="407.0" cy="229.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="160.1" cy="244.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="320.4" cy="442.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="77.3" cy="271.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="492.4" cy="473.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="462.8" cy="190.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="386.4" cy="355.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="350.6" cy="342.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="475.5" cy="284.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="473.2" cy="256.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="151.7" cy="191.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="495.7" cy="348.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="600.6" cy="489.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="102.3" cy="197.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="438.9" cy="430.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="130.2" cy="188.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="102.8" cy="176.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="101.9" cy="175.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="562.2" cy="230.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="440.0" cy="358.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="581.2" cy="396.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="423.7" cy="460.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="555.5" cy="488.9" r="2.2" fill="#b9b9b2"/>
+<polygon points="435.7,349.4 425.3,368.5 446.0,368.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="551.8,485.0 543.8,499.8 559.8,499.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="422.8,455.0 415.2,469.1 430.5,469.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="115.6,148.9 106.5,165.7 124.7,165.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="115.6" y="179.1" text-anchor="middle" fill="#5c5c57">Zona Rural</text>
+<polygon points="587.6,390.8 580.0,404.9 595.2,404.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="433.9,355.4 423.2,375.0 444.5,375.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="442.2,350.6 431.0,371.3 453.4,371.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="553.3,226.5 545.8,240.2 560.8,240.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="198.2" cy="341.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="205.2" y="336.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Embira 10,5 km</text>
+<circle cx="242.8" cy="254.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="249.8" y="249.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Piador 7,7 km</text>
+<circle cx="496.8" cy="188.6" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="503.8" y="183.6" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Pedra 6,7 km</text>
+<circle cx="462.2" cy="519.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="469.2" y="514.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Riachão 4,8 km</text>
+<circle cx="186.2" cy="126.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="193.2" y="121.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Cabeça do Boi 4,1 km</text>
+<circle cx="630.4" cy="268.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="536.6" y="263.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Mocambo 3,9 km</text>
+<circle cx="574.5" cy="161.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="499.3" y="156.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Mata 3,3 km</text>
+<rect x="435.0" y="353.2" width="10" height="10" fill="#1d1d1b"/><text x="449.0" y="376.2" font-weight="600" fill="#1d1d1b">Sede de Graccho Cardoso</text>
+<line x1="35" x2="169.5" y1="720.5" y2="720.5" stroke="#8a8a84" stroke-width="2"/><text x="35" y="734.5" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="711.5375655515148" y2="711.5375655515148" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="715.5375655515148" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,704.5 421.4,716.8 434.6,716.8" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="715.5375655515148" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="729.5375655515148" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="738.5375655515148" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="734.5375655515148" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="738.5375655515148" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="757.5375655515148" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="761.5375655515148" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="757.5375655515148" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="761.5375655515148" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="780.5375655515148" y2="780.5375655515148" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="784.5375655515148" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="803.5375655515148" y2="803.5375655515148" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="807.5375655515148" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 1054/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (11):</strong> Fazenda Jenipapo, Fazenda Embira, Araras, Mesinhas, Piador, Pedra, Corujinha, Manoel Velho, Jaboticaba, Riacho Grande e Varjota.</li>
+<li><strong>De 3 a 5 km (9):</strong> Fazenda Riachão, Lagoa do Rancho, Agrovila do PA Nossa Senhora Aparecida, Cabeça do Boi, Mocambo, Boa Vista, Fazenda Umbuzeiro, Fazenda Taquari e Mata.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (13):</strong> Areias, Caldeirão, Chimarra, Conjunto Elvira Barbosa de Souza, Fazenda Gavião, Gavião, Graccho Cardoso, Guedes, Pedra Branca, Ponto Chique, Queimada Grande, Queimadinha do Cardeal e Quintas.</li>
+</ul><h2>Rotas do Edital nº 1054/2026</h2>
+<p>O edital tem 8 rotas para Graccho Cardoso. Horários: Em todas as rotas: 6h30 - 9h - 13h - 15h. Veículos: não informados (veículos cedidos pelos órgãos públicos locais, identificados &quot;A serviço da Justiça Eleitoral&quot;).</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Messinhas – Riacho Grande – Manoel Velho – Quintas – Manoel Velho – Riacho Grande – Messinhas</td></tr><tr><td>02</td><td>João da Mota – Caldeirão – Chimarra – Quintas – Chimarra – Caldeirão – João da Mota</td></tr><tr><td>03</td><td>Arara – Lagoa do Rancho – Guedes – Sede – Guedes – Lagoa do Rancho – Arara</td></tr><tr><td>04</td><td>Varjota – Pofia – Sede – Corujinha – Varjota</td></tr><tr><td>05</td><td>Três Barras – Corujinha – Sede – Corrujinha – Três Barras</td></tr><tr><td>06</td><td>Retiro – Jenipapo – Queimadinhas de Cardeal – Queimadas – Queimadinhas de Cardeal – Jenipapo – Retiro</td></tr><tr><td>07</td><td>Poço dos Paus – Sede – Poço dos Paus</td></tr><tr><td>08</td><td>Imbira – Jabuticaba – Goiabeira – Alecrim – Boa Vista – Sede – Boa Vista – Alecrim – Goiabeira – Jabuticaba – Imbira</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 1054/2026 da 3ª ZE (Transporte de Eleitores – Eleições Gerais 2026), DJE/TRE-SE nº 165/2026 (disp. 18/09/2026), p. 27-29 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=SE&amp;numDiario=165&amp;anoDiario=2026); Comissão Especial de Transporte instalada pelo Edital nº 919/2026, DJE/TRE-SE nº 155/2026 (disp. 03/09/2026), p. 11-12.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 7 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Fazenda Embira</strong></td><td>Sede – Fazenda Embira – Sede</td><td>Fazenda Embira</td><td>20,9 km (ida e volta)</td><td>~29 min</td></tr><tr><td><strong>Rota nova – Piador</strong></td><td>Sede – Cabeça do Boi – Piador – Sede</td><td>Cabeça do Boi, Piador</td><td>18,9 km (ida e volta)</td><td>~44 min</td></tr><tr><td><strong>Rota nova – Fazenda Riachão</strong></td><td>Sede – Fazenda Riachão – Sede</td><td>Fazenda Riachão</td><td>9,5 km (ida e volta)</td><td>~20 min</td></tr><tr><td><strong>Rota nova – Mocambo</strong></td><td>Sede – Mata – Mocambo – Sede</td><td>Mata, Mocambo</td><td>13,7 km (ida e volta)</td><td>~27 min</td></tr><tr><td><strong>Parada extra na Rota 03</strong></td><td>desvio pelo caminho atual: Pedra</td><td>Pedra</td><td>+4,9 km</td><td>+12 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMGC</strong></p><p>Graccho Cardoso/SE, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Pedro Rodrigues Neto</strong><br>Juiz Eleitoral da 3ª Zona Eleitoral – Aquidabã/SE</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 1054/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Graccho Cardoso, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 1054/2026: Fazenda Embira, Piador, Fazenda Riachão, Cabeça do Boi, Mocambo, Mata e Pedra.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Fazenda Embira (Sede – Fazenda Embira – Sede);</li><li>a criação da Rota nova – Piador (Sede – Cabeça do Boi – Piador – Sede);</li><li>a criação da Rota nova – Fazenda Riachão (Sede – Fazenda Riachão – Sede);</li><li>a criação da Rota nova – Mocambo (Sede – Mata – Mocambo – Sede);</li><li>a inclusão de parada em Pedra na Rota 03, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 1054/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Graccho Cardoso</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Graccho Cardoso; Edital nº 1054/2026 da 3ª ZE (Transporte de Eleitores – Eleições Gerais 2026), DJE/TRE-SE nº 165/2026 (disp. 18/09/2026), p. 27-29 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=SE&amp;numDiario=165&amp;anoDiario=2026); Comissão Especial de Transporte instalada pelo Edital nº 919/2026, DJE/TRE-SE nº 155/2026 (disp. 03/09/2026), p. 11-12; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

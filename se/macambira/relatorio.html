@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Macambira</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Macambira</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/macambira.pdf?v=1792246389" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Macambira (24ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 24ª Zona Eleitoral <strong>1 rota nova e 2 paradas extras em rotas do edital</strong> no transporte gratuito de Macambira.
+Traçamos pelas estradas o percurso das 9 rotas do Edital nº 962/2026. 2 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 5 ficam a 1–2 km.</p>
+<ul>
+<li>Macambira tem 6.863 eleitores aptos em 3 locais de votação e 20 seções. São 0 locais rurais, com 0 eleitores (0% do total).</li>
+
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Fazenda Lagoinha (15,4 km do local de votação) e Fazenda Capitão (12,1 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Projeto de Assentamento São José da Quixabeira, Agrovila do PA São José da Quixabeira, Projeto de Assentamento Zumbi dos Palmares Dois, Caatinga Redonda e Tapera de Macambira.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 29 localidades rurais de Macambira que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Projeto de Assentamento Zumbi dos Palmares</td><td>16,9</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Projeto de Assentamento São José da Quixabeira</td><td>16,4</td><td>Rota 04</td><td>1,3</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Agrovila do PA São José da Quixabeira</td><td>16,1</td><td>Rota 04</td><td>1,4</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Fazenda Lagoinha</td><td>15,4</td><td>Rota 04</td><td>3,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Manuíno</td><td>15,4</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Jacoquinha</td><td>13,4</td><td>Rota 05</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Projeto de Assentamento Zumbi dos Palmares Dois</td><td>13,3</td><td>Rota 04</td><td>1,0</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Agrovila do PA Zumbi dos Palmares</td><td>13,2</td><td>Rota 04</td><td>1,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fazenda Capitão</td><td>12,1</td><td>Rota 04</td><td>4,2</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Vargem da Onça</td><td>8,9</td><td>Rota 04</td><td>0,7</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Caatinga Redonda</td><td>4,8</td><td>Rota 06</td><td>1,5</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Cruz das Almas</td><td>4,4</td><td>Rota 06</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sobrado</td><td>3,8</td><td>Rota 07</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Cruz das Almas Lagoa Seca</td><td>3,8</td><td>Rota 06</td><td>0,6</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Tapera de Macambira</td><td>3,7</td><td>Rota 06</td><td>1,4</td><td>Rota passa perto (1–2 km)</td></tr></tbody></table></div>
+<p>2 das 22 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Belinho (Rota 09) e Nieta (Rota 09). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 29 localidades rurais de Macambira, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 684" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Macambira: 7 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 962/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="602.8,249.8 487.2,141.6 151.0,80.7 124.7,104.5 103.7,180.2 104.5,214.0 89.3,263.4 65.9,298.7 35.0,372.8 53.1,395.0 51.0,445.2 67.9,478.5 44.1,505.3 58.0,544.0 107.0,498.3 120.6,461.7 143.2,476.1 123.1,508.2 165.0,527.1 231.3,500.8 244.8,525.4 268.3,527.5 285.6,501.2 292.6,452.6 337.4,455.1 374.4,394.6 415.2,425.5 477.3,437.8 504.9,458.4 540.3,462.5 590.5,441.5 592.1,427.5 725.0,425.5 695.8,356.8 650.9,330.8 653.8,294.2 602.8,249.8 602.8,249.8" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="609.0,402.3 600.2,395.5 593.8,385.7 587.9,376.5 582.7,368.6 575.0,356.4 570.0,348.5 566.2,339.2 562.6,331.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="564.1,382.7 563.6,370.5 561.1,360.0 563.5,349.5 566.0,338.8 562.6,331.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="131.1,116.8 134.3,103.9 136.0,92.6 142.9,86.8 149.4,80.0 166.0,85.2 183.7,94.6 198.1,106.9 204.7,113.2 215.2,110.7 235.9,117.7 246.0,120.2 255.7,124.4 262.9,129.6 275.1,136.8 289.0,145.4 300.9,144.3 310.4,148.2 320.3,153.2 329.0,157.3 341.0,163.4 352.5,169.0 362.8,174.1 371.5,178.3 383.8,184.2 392.1,188.6 404.0,189.5 413.3,195.9 420.1,203.3 427.7,209.6 437.7,217.1 447.6,221.5 459.1,224.0 472.5,225.8 485.0,228.4 496.6,232.6 502.8,240.4 503.8,252.6 508.5,260.3 513.5,268.8 518.9,277.1 522.4,286.9 515.1,292.4 510.8,301.9 512.2,313.6 521.1,318.5 527.2,324.8 539.3,326.0 548.2,330.4 560.3,331.4 562.6,331.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="67.3,478.6 60.7,472.6 58.3,462.6 60.5,449.8 68.3,444.8 77.3,440.5 84.2,434.2 89.4,426.9 98.5,423.3 108.1,420.2 112.9,411.9 116.2,401.5 130.0,397.2 139.6,393.3 145.7,385.9 156.2,379.9 168.5,376.5 178.6,372.5 184.5,365.8 194.3,362.0 200.1,354.6 206.9,348.5 219.1,346.7 230.5,344.8 249.9,345.0 258.7,348.8 269.1,354.7 280.7,358.5 292.2,360.4 299.1,366.3 312.1,365.7 323.6,364.7 334.3,366.6 343.9,371.2 351.1,377.1 357.2,383.8 368.2,387.5 377.0,391.7 386.7,388.0 397.4,382.1 404.8,376.6 411.5,370.5 420.2,366.7 427.6,361.1 431.9,352.2 437.5,344.7 449.7,343.2 457.4,337.7 458.3,326.1 452.7,319.2 460.9,323.3 475.5,325.6 486.7,330.3 494.5,324.7 499.4,316.7 508.7,313.3 518.1,316.5 524.4,323.3 536.5,323.9 548.2,330.4 560.3,331.4 562.6,331.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="188.0,119.6 190.5,99.1 198.1,106.9 204.7,113.2 215.2,110.7 235.9,117.7 246.0,120.2 255.7,124.4 262.9,129.6 275.1,136.8 289.0,145.4 300.9,144.3 310.4,148.2 320.3,153.2 329.0,157.3 341.0,163.4 352.5,169.0 362.8,174.1 371.5,178.3 383.8,184.2 392.1,188.6 404.0,189.5 413.3,195.9 420.1,203.3 427.7,209.6 437.7,217.1 447.6,221.5 459.1,224.0 472.5,225.8 485.0,228.4 496.6,232.6 502.8,240.4 503.8,252.6 508.5,260.3 513.5,268.8 518.9,277.1 522.4,286.9 515.1,292.4 510.8,301.9 512.2,313.6 521.1,318.5 527.2,324.8 539.3,326.0 548.2,330.4 560.3,331.4 562.6,331.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="507.6,406.4 503.5,415.4 496.3,421.4 490.3,428.1 482.9,433.3 474.8,438.0 463.4,439.2 474.8,438.0 482.9,433.3 490.3,428.1 496.3,421.4 507.0,419.3 516.3,415.9 523.5,410.7 526.8,401.5 531.7,393.0 538.0,385.8 539.6,373.5 544.1,365.3 550.8,357.1 557.7,351.6 564.3,343.3 563.0,332.0 562.6,331.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="659.4,276.9 654.7,285.7 642.4,286.7 637.5,294.8 630.2,301.9 622.4,307.2 608.9,309.9 598.2,312.0 585.6,311.4 573.0,313.3 565.8,318.4 561.4,328.5 562.6,331.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="131.1,116.8 134.3,103.9 136.0,92.6 142.9,86.8 149.4,80.0 166.0,85.2 183.7,94.6 198.1,106.9 204.7,113.2 215.2,110.7 235.9,117.7 246.0,120.2 255.7,124.4 262.9,129.6 275.1,136.8 289.0,145.4 300.9,144.3 310.4,148.2 320.3,153.2 329.0,157.3 341.0,163.4 352.5,169.0 362.8,174.1 371.5,178.3 383.8,184.2 392.1,188.6 404.0,189.5 413.3,195.9 420.1,203.3 427.7,209.6 437.7,217.1 447.6,221.5 459.1,224.0 472.5,225.8 485.0,228.4 496.6,232.6 502.8,240.4 503.8,252.6 508.5,260.3 513.5,268.8 518.9,277.1 522.4,286.9 515.1,292.4 510.8,301.9 512.2,313.6 521.1,318.5 527.2,324.8 539.3,326.0 548.2,330.4 560.3,331.4 562.6,331.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="188.0,119.6 190.5,99.1 198.1,106.9 204.7,113.2 215.2,110.7 235.9,117.7 246.0,120.2 255.7,124.4 262.9,129.6 275.1,136.8 289.0,145.4 300.9,144.3 310.4,148.2 320.3,153.2 329.0,157.3 341.0,163.4 352.5,169.0 362.8,174.1 371.5,178.3 383.8,184.2 392.1,188.6 404.0,189.5 413.3,195.9 420.1,203.3 427.7,209.6 437.7,217.1 447.6,221.5 459.1,224.0 472.5,225.8 485.0,228.4 496.6,232.6 502.8,240.4 503.8,252.6 508.5,260.3 513.5,268.8 518.9,277.1 522.4,286.9 515.1,292.4 510.8,301.9 512.2,313.6 521.1,318.5 527.2,324.8 539.3,326.0 548.2,330.4 560.3,331.4 562.6,331.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 09</title></polyline>
+<polyline points="539.5,326.2 528.9,324.1 521.4,318.7 513.1,314.0 501.1,315.2 496.1,323.1 490.4,329.9 479.0,326.8 469.4,323.3 458.5,325.4 457.6,336.8 450.9,342.9 439.5,344.4 432.4,350.1 428.5,360.2 421.3,365.9 412.0,370.2 404.8,376.6 397.4,382.1 388.4,387.0 380.6,393.1 371.6,388.7 362.4,385.5 353.1,382.2 343.9,388.2 332.2,389.1 321.6,392.9 312.9,397.1 306.8,404.8 296.1,402.4 284.0,403.2 277.4,411.6 270.6,420.3 266.9,430.0 271.5,440.4 275.9,450.2 275.6,464.0 275.5,476.4 274.1,492.0 265.7,503.2 257.7,509.2 247.7,511.5 240.7,505.9 232.3,501.8 224.5,506.8 226.6,519.0 224.2,533.2 219.0,543.5 209.7,548.5 192.7,550.3 179.3,550.0 191.5,549.5 203.1,551.3 210.9,546.7 221.3,541.2 225.2,528.4 226.4,516.8 223.8,504.1 234.7,502.4 242.4,507.4 251.1,512.1 261.8,505.6 274.1,492.0 275.4,479.5 276.3,467.5 277.3,452.4 273.4,442.9 267.1,435.5 267.6,423.4 273.5,416.8 279.2,409.1 285.0,402.4 297.7,403.2 310.4,400.1 317.7,394.6 326.5,390.9 338.6,391.4 345.8,385.5 355.9,383.1 365.1,386.5 374.7,389.7 386.7,388.0 397.4,382.1 404.8,376.6 411.5,370.5 420.2,366.7 427.6,361.1 431.9,352.2 437.5,344.7 449.7,343.2 457.4,337.7 458.3,326.1 468.6,323.2 479.0,326.8 487.7,330.7 494.5,324.7 499.4,316.7 508.7,313.3 518.1,316.5 524.4,323.3 536.5,323.9 539.5,326.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fazenda Lagoinha</title></polyline>
+<polyline points="70.8,442.3 63.2,447.1 57.2,453.6 51.1,446.8 52.3,433.9 53.4,422.2 54.9,410.9 54.1,399.0 44.9,402.8 48.5,393.6 56.3,398.4 66.2,401.8 79.0,405.5 88.5,409.9 94.6,417.1 107.4,416.0 114.2,410.0 117.5,399.7 130.0,397.2 140.7,399.1 148.4,404.3 154.8,410.9 164.1,417.7 156.2,412.5 149.7,406.1 141.5,400.6 140.2,392.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 04</title></polyline>
+<polyline points="523.9,410.5 522.5,421.6 524.3,433.1 530.7,440.9 539.1,445.0 549.2,447.3 559.9,444.6 556.0,453.3 548.9,458.6 540.0,462.4 527.7,463.1 527.7,450.1 524.8,440.3 521.7,430.1 523.4,419.1 523.9,410.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 06</title></polyline>
+<circle cx="68.0" cy="478.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="130.8" cy="118.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="189.5" cy="120.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="164.6" cy="421.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="281.4" cy="330.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="460.4" cy="437.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="660.1" cy="275.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="469.1" cy="416.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="451.9" cy="318.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="567.4" cy="261.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="607.1" cy="400.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="508.0" cy="408.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="560.8" cy="264.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="524.2" cy="279.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="584.3" cy="285.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="494.9" cy="329.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="566.3" cy="382.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="518.5" cy="292.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="532.9" cy="377.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="513.5" cy="302.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="580.7" cy="361.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="561.9" cy="331.4" r="2.2" fill="#b9b9b2"/>
+<polygon points="554.7,324.0 540.7,349.7 568.6,349.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="539.4,312.9 526.7,336.3 552.1,336.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="548.5,323.5 538.8,341.3 558.1,341.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="41.3" cy="403.8" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="48.3" y="398.8" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Projeto de Assentamento São José da Quixabeira 16,4 km</text>
+<circle cx="51.9" cy="390.9" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="58.9" y="385.9" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Agrovila do PA São José da Quixabeira 16,1 km</text>
+<circle cx="168.4" cy="537.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="175.4" y="532.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Lagoinha 15,4 km</text>
+<circle cx="167.6" cy="419.4" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="174.6" y="414.4" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Projeto de Assentamento Zumbi dos Palmares Dois 13,3 km</text>
+<circle cx="251.9" cy="513.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="258.9" y="508.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Capitão 12,1 km</text>
+<circle cx="558.9" cy="453.3" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="565.9" y="448.3" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Caatinga Redonda 4,8 km</text>
+<circle cx="567.2" cy="438.1" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="399.0" y="433.1" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Tapera de Macambira 3,7 km</text>
+<rect x="556.9" y="326.4" width="10" height="10" fill="#1d1d1b"/><text x="570.9" y="349.4" font-weight="600" fill="#1d1d1b">Sede de Macambira</text>
+<line x1="35" x2="220.3" y1="582.0" y2="582.0" stroke="#8a8a84" stroke-width="2"/><text x="35" y="596.0" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="572.9896243291464" y2="572.9896243291464" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="576.9896243291464" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,566.0 421.4,578.2 434.6,578.2" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="576.9896243291464" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="590.9896243291464" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="599.9896243291464" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="595.9896243291464" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="599.9896243291464" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="618.9896243291464" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="622.9896243291464" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="618.9896243291464" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="622.9896243291464" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="641.9896243291464" y2="641.9896243291464" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="645.9896243291464" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="664.9896243291464" y2="664.9896243291464" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="668.9896243291464" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 962/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (10):</strong> Projeto de Assentamento Zumbi dos Palmares, Projeto de Assentamento São José da Quixabeira, Agrovila do PA São José da Quixabeira, Fazenda Lagoinha, Manuíno, Jacoquinha, Projeto de Assentamento Zumbi dos Palmares Dois, Agrovila do PA Zumbi dos Palmares, Fazenda Capitão e Fazenda Vargem da Onça.</li>
+<li><strong>De 3 a 5 km (5):</strong> Caatinga Redonda, Cruz das Almas, Sobrado, Cruz das Almas Lagoa Seca e Tapera de Macambira.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (14):</strong> Barro Preto, Boa Vista, Ininheta, Lagoa Seca, Macambira, Matadouro, Pé de Serra, Pé de Serra de Belinho, Pé de Serra de Bilau, Pé de Serra de Viturinho, Sapucaia, Tapera, Tauá e Venturinho.</li>
+</ul><h2>Rotas do Edital nº 962/2026</h2>
+<p>O edital tem 9 rotas para Macambira. Horários: Transporte a partir das 7h; saídas e retornos de 1h30 a 2h30 em cada rota, com último retorno por volta de 17h20 (horários por rota no Anexo I). Veículos: Ônibus e micro-ônibus (placa e motorista por rota no Anexo I; ex.: Campo do Brito Rota 1 ônibus QMD-6394).</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Barro Preto – Sede</td></tr><tr><td>02</td><td>Tapera – Sede</td></tr><tr><td>03</td><td>Manuíno – Sede</td></tr><tr><td>04</td><td>Assentamento Zumbi dos Palmares – Tauá – Sede</td></tr><tr><td>05</td><td>Jacoquinha – Sede</td></tr><tr><td>06</td><td>Lagoa Seca – Cruz das Almas – Sede</td></tr><tr><td>07</td><td>Sobrado – Sede</td></tr><tr><td>08</td><td>Manuíno – Sede</td></tr><tr><td>09</td><td>Jacoquinha – Belinho – Nieta – Sede</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 962/2026 da 24ª ZE (Percursos/Itinerários), DJE/TRE-SE nº 164/2026 (disp. 17/09/2026) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=SE&amp;numDiario=164&amp;anoDiario=2026), Anexo I (https://sitdoc.tse.jus.br/sitdoc/DownloadFile?id=98e6352a-4d4c-434f-b0d1-3f4e3e7a1f2e&amp;app=dje&amp;extensao=pdf).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 7 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Fazenda Lagoinha</strong></td><td>Sede – Fazenda Capitão – Fazenda Lagoinha – Sede</td><td>Fazenda Capitão, Fazenda Lagoinha</td><td>30,8 km (ida e volta)</td><td>~1h12</td></tr><tr><td><strong>Parada extra na Rota 04</strong></td><td>desvio pelo caminho atual: Projeto de Assentamento São José da Quixabeira – Agrovila do PA São José da Quixabeira – Projeto de Assentamento Zumbi dos Palmares Dois</td><td>Projeto de Assentamento São José da Quixabeira, Agrovila do PA São José da Quixabeira, Projeto de Assentamento Zumbi dos Palmares Dois</td><td>+8,4 km</td><td>+21 min</td></tr><tr><td><strong>Parada extra na Rota 06</strong></td><td>desvio pelo caminho atual: Tapera de Macambira – Caatinga Redonda</td><td>Tapera de Macambira, Caatinga Redonda</td><td>+4,8 km</td><td>+9 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMM</strong></p><p>Macambira/SE, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Alex Caetano de Oliveira</strong><br>Juiz Eleitoral da 24ª Zona Eleitoral – Campo do Brito/SE</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 962/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Macambira, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 962/2026: Fazenda Lagoinha, Fazenda Capitão, Projeto de Assentamento São José da Quixabeira, Agrovila do PA São José da Quixabeira, Projeto de Assentamento Zumbi dos Palmares Dois, Caatinga Redonda e Tapera de Macambira.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Fazenda Lagoinha (Sede – Fazenda Capitão – Fazenda Lagoinha – Sede);</li><li>a inclusão de paradas em Projeto de Assentamento São José da Quixabeira, Agrovila do PA São José da Quixabeira e Projeto de Assentamento Zumbi dos Palmares Dois na Rota 04, mantido todo o percurso atual;</li><li>a inclusão de paradas em Tapera de Macambira e Caatinga Redonda na Rota 06, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 962/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Macambira</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Macambira; Edital nº 962/2026 da 24ª ZE (Percursos/Itinerários), DJE/TRE-SE nº 164/2026 (disp. 17/09/2026) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=SE&amp;numDiario=164&amp;anoDiario=2026), Anexo I (https://sitdoc.tse.jus.br/sitdoc/DownloadFile?id=98e6352a-4d4c-434f-b0d1-3f4e3e7a1f2e&amp;app=dje&amp;extensao=pdf); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

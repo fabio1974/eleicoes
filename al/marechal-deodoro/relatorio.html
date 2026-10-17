@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Marechal Deodoro</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Marechal Deodoro</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/marechal-deodoro.pdf?v=1792246388" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Marechal Deodoro (26ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 26ª Zona Eleitoral <strong>2 rotas novas</strong> no transporte gratuito de Marechal Deodoro.
+Traçamos pelas estradas o percurso das 20 rotas do Edital nº 48/2026. 2 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>Marechal Deodoro tem 47.176 eleitores aptos em 22 locais de votação e 143 seções. São 2 locais rurais, com 4.893 eleitores (10% do total).</li>
+<li>2 locais rurais ficam a 10 km ou mais da sede, com 4.893 eleitores. Os mais distantes: Massagueira (14,8 km) e Massagueira (13,7 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Fazenda São Vicente de Paula (15,8 km do local de votação) e Usina Sumaúma (5,9 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 14 localidades rurais de Marechal Deodoro que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Fazenda Horizonte</td><td>15,9</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fazenda São Vicente de Paula</td><td>15,8</td><td>Rota 02</td><td>2,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Auxiliadora</td><td>11,6</td><td>Rota 09</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fazenda Santa Helena</td><td>10,9</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fazenda Dois Irmãos</td><td>10,8</td><td>Rota 01</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Riacho Velho</td><td>10,7</td><td>Rota 10</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Ribeira</td><td>9,0</td><td>Rota 09</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Usina Sumaúma</td><td>5,9</td><td>Rota 11</td><td>3,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Barra Nova</td><td>4,2</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Buraco</td><td>4,0</td><td>Rota 03</td><td>0,5</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Saco</td><td>4,0</td><td>Rota 07</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>39 das 92 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Calafate (Rota 01), Trevo da Usina (Rota 01 e Rota 02), Vila Altina (Rota 01, Rota 02, Rota 03, Rota 06, Rota 07 e Rota 17), São Vicente 1 e 2 (Rota 02), Aparecida (Rota 02), Conjunto Gislene Matheus (Rota 03 e Rota 04), Faculdade (Rota 03, Rota 05, Rota 17, Rota 18 e Rota 19), Francês (Rota 03 e Rota 16), Cruzeiro (Rota 06 e Rota 07), Povoado Vale Nova Vida (Chã do Polo) (Rota 08), Jericó do Polo (Rota 08), Jaraguá do Polo (Rota 08), Rio do Remédio (Rota 08), Recanto da Ilha (Rota 08, Rota 09 e Rota 14), Rua da Palha (Rota 09), Mucuri (Rota 11), Morro (Rota 11), Rua Nova (Rota 11), Massagueira de Baixo (Rota 11), Siriba (Rota 13), Conjunto Recanto da Ilha (Rota 15), Caipe 2 e 1 (Rota 17) e Terra da Esperança (Rota 19 e Rota 20). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 14 localidades rurais de Marechal Deodoro, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 710" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Marechal Deodoro: 2 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 48/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="521.5,515.0 562.4,469.1 585.6,432.7 609.6,406.8 632.6,361.4 696.4,309.1 715.6,269.1 692.7,227.4 662.8,219.9 634.2,159.3 599.0,164.4 574.7,158.0 496.9,158.5 488.4,121.4 488.7,82.4 433.7,140.1 288.4,119.3 237.9,127.0 192.5,129.1 170.1,179.1 177.6,198.0 70.2,136.1 81.2,173.7 40.3,218.9 35.0,235.7 44.6,251.7 45.1,282.9 71.6,282.4 125.8,295.5 168.5,288.3 163.7,382.3 122.9,458.4 133.3,478.1 158.6,497.6 189.1,509.6 203.5,504.0 223.0,515.2 251.0,510.7 299.9,518.5 302.3,532.1 331.4,534.7 343.7,556.4 362.9,571.9 387.2,578.0 521.5,515.0 521.5,515.0" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="315.4,165.3 310.3,162.4 308.2,154.7 306.7,147.9 301.2,145.1 293.4,145.4 291.7,152.3 283.1,153.8 284.4,145.6 276.7,141.6 276.4,133.3 274.2,127.4 278.5,123.6 282.6,119.5 278.5,123.6 274.1,127.2 276.4,133.3 276.3,141.3 283.1,144.1 283.3,152.1 281.7,161.2 280.2,168.4 277.8,174.4 274.5,182.0 271.7,189.0 269.2,194.7 266.4,201.7 263.6,208.4 260.2,216.9 256.9,224.4 254.5,230.4 250.7,239.9 242.3,238.2 229.2,231.8 223.6,229.0 213.2,223.9 204.9,219.7 198.6,216.2 190.1,209.4 195.1,213.6 201.9,218.2 213.2,223.9 220.4,227.4 229.2,231.8 242.3,238.2 249.8,242.2 262.6,251.3 272.2,258.2 281.2,264.7 290.6,270.3 298.0,274.3 307.4,279.5 313.5,282.9 322.5,282.6 331.6,281.3 339.9,278.6 345.9,275.1 353.5,277.0 359.1,273.9 366.4,274.7 371.5,277.8 376.6,280.8 383.2,284.5 388.2,288.6 392.9,292.2 400.7,293.0 408.6,293.4 411.4,301.4 411.9,306.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="93.3,164.7 95.5,171.1 103.4,172.8 109.2,170.3 115.0,168.1 118.0,162.4 124.5,163.9 129.6,167.9 139.6,174.3 144.6,177.6 157.7,185.9 165.9,191.2 173.2,195.9 179.0,199.9 186.2,206.0 195.1,213.6 201.9,218.2 213.2,223.9 220.4,227.4 229.2,231.8 242.3,238.2 249.8,242.2 262.6,251.3 272.2,258.2 281.2,264.7 290.6,270.3 298.0,274.3 307.4,279.5 313.5,282.9 322.5,282.6 331.6,281.3 339.9,278.6 345.9,275.1 353.5,277.0 359.1,273.9 366.4,274.7 371.5,277.8 376.6,280.8 383.2,284.5 388.2,288.6 392.9,292.2 400.7,293.0 408.6,293.4 411.4,301.4 411.9,306.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="463.1,427.7 467.5,423.6 472.2,419.6 476.7,424.1 481.2,429.6 485.0,434.0 489.4,439.0 494.5,442.3 500.5,444.9 509.3,448.5 517.3,451.8 523.8,454.6 530.2,457.2 536.4,454.9 543.4,452.1 548.5,449.0 551.0,443.3 553.5,437.2 556.3,430.4 559.7,421.7 562.1,415.8 565.0,408.8 569.6,397.7 572.0,391.9 568.0,396.3 562.9,392.9 563.3,383.3 565.7,370.2 573.7,370.2 578.8,374.8 576.4,380.5 573.5,386.2 576.9,380.1 580.9,370.1 583.5,363.8 586.2,357.7 588.6,352.0 591.9,344.0 594.3,338.2 598.0,329.5 600.5,323.6 603.5,317.6 609.4,313.5 616.4,309.5 621.9,312.5 624.7,304.8 633.7,299.6 640.6,296.4 645.7,293.4 653.1,289.1 646.4,290.7 642.2,286.7 636.2,278.5 631.2,271.8 627.3,265.7 620.5,267.1 616.9,271.7 613.0,276.2 606.0,279.3 600.7,284.4 597.2,285.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="484.5,446.9 487.5,441.9 495.0,442.5 489.4,439.0 485.0,434.1 481.2,429.6 476.7,424.1 472.9,419.6 468.2,423.0 463.2,427.3 468.2,423.0 472.6,419.3 468.9,414.9 462.7,408.7 457.8,403.9 453.0,399.4 448.1,394.7 443.3,391.0 436.9,388.2 431.2,385.4 428.5,379.0 426.5,371.4 423.6,365.6 421.7,359.5 419.6,353.5 419.0,344.1 418.9,335.1 420.7,328.7 422.8,322.5 418.2,318.5 415.8,310.3 414.2,303.5 411.9,306.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="346.4,218.3 350.8,222.1 354.7,227.3 356.3,234.9 359.5,242.1 364.6,249.5 367.3,255.0 363.7,260.9 361.4,269.3 358.5,274.7 351.9,276.5 358.5,274.7 367.2,275.3 373.1,278.8 378.3,282.0 385.8,286.7 390.6,290.6 396.7,293.3 404.1,292.4 409.7,295.0 411.4,301.4 411.9,306.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="360.3,244.8 364.6,249.5 367.3,255.0 363.7,260.9 361.4,269.3 364.9,274.1 370.7,277.1 378.5,276.0 384.4,279.2 390.3,282.0 385.8,286.7 390.6,290.6 396.7,293.3 404.1,292.4 409.7,295.0 411.4,301.4 411.9,306.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="597.2,285.5 604.2,281.7 608.8,277.0 614.2,274.0 618.2,269.7 622.4,265.1 629.4,269.3 636.2,278.5 642.2,286.7 644.5,292.4 638.5,296.5 630.5,301.1 624.5,304.6 612.4,311.5 605.8,315.2 601.4,320.6 598.7,326.7 595.9,332.0 593.3,338.2 590.5,345.8 588.3,352.0 583.8,362.6 580.7,369.9 575.3,372.5 569.9,369.0 562.7,368.0 567.9,371.2 575.1,372.6 576.4,380.5 573.5,386.2 576.9,380.1 580.9,370.1 583.5,363.8 586.2,357.7 588.6,352.0 591.9,344.0 594.3,338.2 598.0,329.5 600.5,323.6 603.5,317.6 609.4,313.5 616.4,309.5 621.9,312.5 623.4,314.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="489.3,349.3 497.1,348.7 504.9,349.8 509.3,346.1 516.1,341.7 522.3,339.8 529.4,341.2 534.5,344.5 539.3,349.2 547.6,348.9 554.5,346.5 561.1,344.2 566.5,340.8 565.7,332.7 566.7,325.2 568.3,318.5 571.5,313.3 575.7,308.8 580.4,304.9 583.0,298.8 585.7,292.8 591.5,288.5 597.2,285.5 604.2,281.7 608.8,277.0 614.2,274.0 618.2,269.7 622.4,265.1 629.4,269.3 636.2,278.5 642.2,286.7 644.5,292.4 638.5,296.5 630.5,301.1 624.5,304.6 612.4,311.5 605.8,315.2 601.4,320.6 598.7,326.7 595.9,332.0 593.3,338.2 590.5,345.8 588.3,352.0 583.8,362.6 580.7,369.9 575.3,372.5 569.9,369.0 562.7,368.0 567.9,371.2 575.1,372.6 576.4,380.5 573.5,386.2 576.9,380.1 580.9,370.1 583.5,363.8 586.2,357.7 588.6,352.0 591.9,344.0 594.3,338.2 598.0,329.5 600.5,323.6 603.5,317.6 609.4,313.5 616.4,309.5 621.9,312.5 623.4,314.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 09</title></polyline>
+<polyline points="506.8,346.8 410.9,305.1 410.9,305.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 10</title></polyline>
+<polyline points="227.3,278.2 229.9,272.7 226.6,267.6 225.5,260.1 229.0,255.1 232.8,250.3 236.9,245.0 242.3,238.2 249.8,242.2 262.6,251.3 272.2,258.2 281.2,264.7 290.6,270.3 298.0,274.3 307.4,279.5 313.5,282.9 320.3,292.0 329.0,304.4 334.7,307.8 345.9,306.0 353.7,304.7 365.8,302.4 373.2,303.3 377.0,310.3 381.0,318.3 383.7,323.9 386.9,330.3 389.9,336.2 394.8,341.6 401.1,347.4 411.2,356.5 415.6,360.5 421.1,365.5 423.9,370.8 426.9,376.1 429.4,382.3 433.8,386.9 439.9,389.5 446.0,392.7 451.0,397.4 456.2,402.4 461.2,407.2 466.0,412.0 471.7,418.1 476.0,423.3 480.2,428.3 485.0,434.0 489.4,439.0 494.5,442.3 500.5,444.9 509.3,448.5 517.3,451.8 523.8,454.6 530.2,457.2 536.4,454.9 543.4,452.1 548.5,449.0 551.0,443.3 553.5,437.2 556.3,430.4 559.7,421.7 562.1,415.8 565.0,408.8 569.6,397.7 572.0,391.9 568.0,396.3 562.9,392.9 563.3,383.3 565.7,370.2 563.3,366.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 11</title></polyline>
+<polyline points="563.3,366.6 567.4,371.0 574.4,372.1 576.4,380.5 573.2,386.6 570.9,393.8 567.1,403.2 564.7,408.9 561.4,416.9 557.8,425.6 554.9,433.3 552.0,440.3 548.3,448.9 542.0,452.2 535.9,454.3 530.7,457.4 523.8,454.6 517.3,451.8 509.3,448.5 501.3,445.2 495.0,442.5 489.4,439.0 485.0,434.1 481.2,429.6 476.7,424.1 472.9,419.6 468.9,414.9 462.7,408.7 457.8,403.9 453.0,399.4 448.1,394.7 443.3,391.0 436.9,388.2 431.2,385.4 428.5,379.0 426.5,371.4 423.6,365.6 421.7,359.5 419.6,353.5 419.0,344.1 418.9,335.1 420.7,328.7 422.8,322.5 418.2,318.5 415.8,310.3 414.2,303.5 411.9,306.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 12</title></polyline>
+<polyline points="623.4,314.4 621.1,308.5 625.5,304.4 633.7,299.6 640.6,296.4 645.7,293.4 653.1,289.1 647.0,291.6 641.7,294.8 633.8,299.2 628.3,302.4 620.3,306.9 612.4,311.5 605.8,315.2 601.4,320.6 598.7,326.7 595.9,332.0 593.3,338.2 590.5,345.8 588.3,352.0 583.8,362.6 580.7,369.9 576.4,380.5 573.5,386.2 576.9,380.1 580.9,370.1 583.5,363.8 586.2,357.7 588.6,352.0 591.9,344.0 594.3,338.2 598.0,329.5 600.5,323.6 603.5,317.6 609.4,313.5 616.4,309.5 621.9,312.5 623.4,314.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 13</title></polyline>
+<polyline points="700.8,266.2 710.3,270.6 718.4,274.2 723.7,277.0 718.5,273.9 711.8,270.9 705.6,268.1 697.1,264.2 689.1,267.1 671.4,277.3 665.8,280.6 660.4,283.7 654.8,286.9 649.6,290.1 642.2,286.7 636.2,278.5 631.2,271.8 627.3,265.7 620.5,267.1 616.9,271.7 613.0,276.2 606.0,279.3 600.7,284.4 605.3,280.0 609.5,276.2 615.4,272.9 618.9,268.3 623.2,264.4 629.4,269.3 636.2,278.5 642.2,286.7 644.5,292.4 638.5,296.5 630.5,301.1 624.5,304.6 612.4,311.5 605.8,315.2 601.4,320.6 598.7,326.7 595.9,332.0 593.3,338.2 590.5,345.8 588.3,352.0 583.8,362.6 580.7,369.9 575.3,372.5 569.9,369.0 562.7,368.0 567.9,371.2 575.1,372.6 576.4,380.5 573.5,386.2 576.9,380.1 580.9,370.1 583.5,363.8 586.2,357.7 588.6,352.0 591.9,344.0 594.3,338.2 598.0,329.5 600.5,323.6 603.5,317.6 609.4,313.5 616.4,309.5 621.9,312.5 623.4,314.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 14</title></polyline>
+<polyline points="459.5,425.9 466.8,424.2 471.1,420.5 467.8,413.7 462.7,408.7 457.8,403.9 453.0,399.4 448.1,394.7 443.3,391.0 436.9,388.2 431.2,385.4 428.5,379.0 426.5,371.4 423.6,365.6 421.7,359.5 419.6,353.5 419.0,344.1 418.9,335.1 420.7,328.7 422.8,322.5 418.2,318.5 415.8,310.3 414.2,303.5 411.9,306.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 18</title></polyline>
+<polyline points="563.3,366.6 567.4,371.0 574.4,372.1 576.4,380.5 573.2,386.6 570.9,393.8 567.1,403.2 564.7,408.9 561.4,416.9 557.8,425.6 554.9,433.3 552.0,440.3 548.3,448.9 542.0,452.2 535.9,454.3 530.7,457.4 523.8,454.6 517.3,451.8 509.3,448.5 501.3,445.2 495.0,442.5 489.4,439.0 485.0,434.1 481.2,429.6 476.7,424.1 472.9,419.6 468.9,414.9 462.7,408.7 457.8,403.9 453.0,399.4 448.1,394.7 443.3,391.0 436.9,388.2 431.2,385.4 428.5,379.0 426.5,371.4 423.6,365.6 421.7,359.5 419.6,353.5 419.0,344.1 418.9,335.1 420.7,328.7 422.8,322.5 418.2,318.5 415.8,310.3 414.2,303.5 411.9,306.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 19</title></polyline>
+<polyline points="411.1,299.9 408.9,293.7 400.7,293.0 392.9,292.2 388.2,288.6 383.2,284.5 376.6,280.8 371.5,277.8 366.4,274.7 359.1,273.9 353.5,277.0 347.4,274.3 339.9,278.6 331.6,281.3 322.5,282.6 315.9,285.7 311.5,281.8 300.3,275.5 290.6,270.3 283.2,266.0 276.5,261.3 262.6,251.3 251.3,243.2 244.5,239.4 229.2,231.8 223.6,229.0 213.2,223.9 204.9,219.7 198.6,216.2 190.1,209.4 179.0,199.9 173.2,195.9 165.9,191.2 157.7,185.9 154.2,191.0 150.3,196.0 146.6,200.6 142.6,205.5 138.8,210.1 135.6,217.3 132.5,223.5 128.2,227.3 131.3,232.2 135.2,237.7 140.5,242.9 143.6,248.8 140.7,243.1 136.7,238.7 132.8,234.6 128.8,230.5 132.2,224.4 135.6,217.3 138.1,211.6 141.6,206.6 146.6,200.6 150.3,196.0 154.2,191.0 157.7,185.9 165.9,191.2 173.2,195.9 179.0,199.9 186.2,206.0 195.1,213.6 201.9,218.2 213.2,223.9 220.4,227.4 229.2,231.8 242.3,238.2 249.8,242.2 262.6,251.3 272.2,258.2 281.2,264.7 290.6,270.3 298.0,274.3 307.4,279.5 313.5,282.9 322.5,282.6 331.6,281.3 339.9,278.6 345.9,275.1 353.5,277.0 359.1,273.9 366.4,274.7 371.5,277.8 376.6,280.8 383.2,284.5 388.2,288.6 392.9,292.2 400.7,293.0 408.6,293.4 411.1,299.9 411.1,299.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fazenda São Vicente de Paula</title></polyline>
+<polyline points="420.7,390.9 413.6,388.7 407.2,392.1 400.9,394.7 393.5,392.9 382.8,388.6 376.7,386.5 367.5,385.9 358.6,384.9 351.3,383.9 344.5,381.3 337.3,377.7 331.7,373.9 326.5,370.6 317.4,369.6 309.2,368.8 302.7,367.3 296.4,364.8 289.6,363.5 296.4,364.8 302.7,367.3 309.2,368.8 317.4,369.6 324.9,370.3 331.7,373.9 337.3,377.7 344.5,381.3 350.5,383.7 358.6,384.9 366.0,385.8 373.9,386.1 381.4,388.1 388.6,390.9 397.8,394.6 404.9,393.4 411.4,389.6 418.3,388.2 420.7,390.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Usina Sumaúma</title></polyline>
+<circle cx="92.7" cy="164.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="489.5" cy="349.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="186.4" cy="205.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="280.9" cy="180.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="506.8" cy="346.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="540.7" cy="350.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="623.4" cy="314.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="636.1" cy="255.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="360.5" cy="244.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="366.1" cy="390.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="532.9" cy="458.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="564.3" cy="366.9" r="2.2" fill="#b9b9b2"/>
+<polygon points="418.7,311.1 407.0,332.8 430.5,332.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="412.3,293.9 402.2,312.6 422.4,312.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="607.2,287.0 595.3,308.9 619.1,308.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="570.1,353.2 558.7,374.2 581.5,374.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="420.6,377.3 407.8,400.9 433.4,400.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="427.3,362.3 416.1,382.8 438.4,382.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="561.8,450.9 548.4,475.7 575.3,475.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="418.4,298.6 405.4,322.6 431.5,322.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="474.8,374.9 462.2,398.1 487.4,398.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="418.4,337.4 407.2,358.0 429.7,358.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="411.0,285.2 396.8,311.2 425.1,311.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="414.4,322.0 403.6,342.0 425.3,342.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="429.7,366.3 415.3,392.8 444.0,392.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="610.4,329.3 598.7,351.0 622.2,351.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="413.9,311.9 403.8,330.4 424.0,330.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="552.8,379.3 538.6,405.5 566.9,405.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="552.8" y="420.2" text-anchor="middle" fill="#5c5c57">Massagueira</text>
+<polygon points="456.9,415.6 444.9,437.7 468.9,437.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="396.3,341.5 385.2,361.9 407.4,361.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="426.2,366.6 414.1,388.9 438.3,388.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="612.3,331.0 599.8,353.9 624.8,353.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="561.8,349.3 551.3,368.7 572.4,368.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="384.3,336.9 373.9,356.0 394.6,356.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="143.7" cy="250.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="150.7" y="245.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda São Vicente de Paula 15,8 km</text>
+<circle cx="287.3" cy="362.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="294.3" y="357.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Usina Sumaúma 5,9 km</text>
+<rect x="405.9" y="300.1" width="10" height="10" fill="#1d1d1b"/><text x="419.9" y="323.1" font-weight="600" fill="#1d1d1b">Sede de Marechal Deodoro</text>
+<line x1="35" x2="155.3" y1="608.0" y2="608.0" stroke="#8a8a84" stroke-width="2"/><text x="35" y="622.0" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="598.997329773021" y2="598.997329773021" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="602.997329773021" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,592.0 421.4,604.2 434.6,604.2" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="602.997329773021" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="616.997329773021" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="625.997329773021" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="621.997329773021" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="625.997329773021" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="644.997329773021" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="648.997329773021" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="644.997329773021" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="648.997329773021" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="667.997329773021" y2="667.997329773021" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="671.997329773021" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="690.997329773021" y2="690.997329773021" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="694.997329773021" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 48/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (8):</strong> Fazenda Horizonte, Fazenda São Vicente de Paula, Auxiliadora, Fazenda Santa Helena, Fazenda Dois Irmãos, Riacho Velho, Ribeira e Usina Sumaúma.</li>
+<li><strong>De 3 a 5 km (3):</strong> Barra Nova, Sítio Buraco e Saco.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (3):</strong> Massagueira, Praia do Francês e Usina Sumaúma 2.</li>
+</ul><h2>Rotas do Edital nº 48/2026</h2>
+<p>O edital tem 20 rotas para Marechal Deodoro. Horários: 1ª saída às 6h30 (Barra de São Miguel: 7h); última viagem às 19h. Veículos: 1 ônibus por rota, exceto: 3, 4, 18 e 20 (2 ônibus); 15 e 16 (3); 10 (1 barco e 1 ônibus); 6 vans para pessoas com necessidades especiais.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Guganema – Oitizero – Calafate – Santa Helena – Trevo da Usina – Vila Altina – Sede</td></tr><tr><td>02</td><td>Fazenda Horizonte – São Vicente 1 e 2 – Aparecida – Ana Paula – Trevo da Usina – Vila Altina – Sede</td></tr><tr><td>03</td><td>Conjunto Gislene Matheus – Faculdade – Vila Altina – Pedras – Francês – Massagueira – Barra Nova – Santa Rita</td></tr><tr><td>04</td><td>Conjunto Gislene Matheus – Sede</td></tr><tr><td>05</td><td>Malhadas – Cabreiras – Pedras – Faculdade – Sede</td></tr><tr><td>06</td><td>Hortelã – Fonte Azul – Cruzeiro – Sede – Vila Altina</td></tr><tr><td>07</td><td>Saco – Tuquanduba – Cruzeiro – Sede – Vila Altina</td></tr><tr><td>08</td><td>Povoado Vale Nova Vida (Chã do Polo) – Jericó do Polo – Jaraguá do Polo – Rio do Remédio – Santa Rita – Recanto da Ilha – Massagueira – Barra Nova</td></tr><tr><td>09</td><td>Sítio Auxiliadora – Riacho Velho – Ribeira – Bica da Pedra – Rua da Palha – Santa Rita – Recanto da Ilha – Massagueira – Barra Nova</td></tr><tr><td>10</td><td>Riacho Velho – Sede</td></tr><tr><td>11</td><td>Campo Grande – Mucuri – Morro – Rua Nova – Massagueira – Massagueira de Baixo</td></tr><tr><td>12</td><td>Massagueira – Sede</td></tr><tr><td>13</td><td>Barra Nova – Jacaré – Siriba – Barra Nova</td></tr><tr><td>14</td><td>Jibóia – Santa Rita – Recanto da Ilha – Massagueira – Barra Nova</td></tr><tr><td>15</td><td>Conjunto Recanto da Ilha – Sede</td></tr><tr><td>16</td><td>Francês – Sede</td></tr><tr><td>17</td><td>Caipe 2 e 1 – Vila Altina – Faculdade – Sede</td></tr><tr><td>18</td><td>Dênisson Amorim – Pedras – Faculdade – Sede</td></tr><tr><td>19</td><td>Terra da Esperança – Faculdade – Massagueira</td></tr><tr><td>20</td><td>Terra da Esperança – Sede</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 48/2026 da 26ª ZE (Quadro Geral de Percurso), DJE/TRE-AL nº 183/2026 (disp. 17/09/2026) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=AL&amp;numDiario=183&amp;anoDiario=2026); Portaria nº 3/2026 (comissão), DJE/TRE-AL nº 171/2026 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=AL&amp;numDiario=171&amp;anoDiario=2026).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 2 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Fazenda São Vicente de Paula</strong></td><td>Sede – Fazenda São Vicente de Paula – Sede</td><td>Fazenda São Vicente de Paula</td><td>31,7 km (ida e volta)</td><td>~45 min</td></tr><tr><td><strong>Rota nova – Usina Sumaúma</strong></td><td>Sede – Usina Sumaúma – Sede</td><td>Usina Sumaúma</td><td>11,7 km (ida e volta)</td><td>~12 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMMD</strong></p><p>Marechal Deodoro/AL, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Ewerton Luiz Chaves Carminati</strong><br>Juiz Eleitoral da 26ª Zona Eleitoral – Marechal Deodoro/AL</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 48/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Marechal Deodoro, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 48/2026: Fazenda São Vicente de Paula e Usina Sumaúma.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Fazenda São Vicente de Paula (Sede – Fazenda São Vicente de Paula – Sede);</li><li>a criação da Rota nova – Usina Sumaúma (Sede – Usina Sumaúma – Sede).</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 48/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Marechal Deodoro</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Marechal Deodoro; Edital nº 48/2026 da 26ª ZE (Quadro Geral de Percurso), DJE/TRE-AL nº 183/2026 (disp. 17/09/2026) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=AL&amp;numDiario=183&amp;anoDiario=2026); Portaria nº 3/2026 (comissão), DJE/TRE-AL nº 171/2026 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=AL&amp;numDiario=171&amp;anoDiario=2026); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

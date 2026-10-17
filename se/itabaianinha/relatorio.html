@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Itabaianinha</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Itabaianinha</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/itabaianinha.pdf?v=1792246492" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Itabaianinha (30ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 30ª Zona Eleitoral <strong>3 rotas novas e 4 paradas extras em rotas do edital</strong> no transporte gratuito de Itabaianinha.
+Traçamos pelas estradas o percurso das 26 rotas do Edital nº 1058/2026. 5 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 4 ficam a 1–2 km.</p>
+<ul>
+<li>Itabaianinha tem 32.195 eleitores aptos em 22 locais de votação e 116 seções. São 11 locais rurais, com 9.244 eleitores (29% do total).</li>
+<li>5 locais rurais ficam a 10 km ou mais da sede, com 4.950 eleitores. Os mais distantes: Vermelho (16,5 km), Ilha (14,9 km) e Ilha (12,4 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Carnaíba (16,2 km do local de votação), Várzea Grande (14,7 km do local de votação), Olhos d&#x27;Água da Bica (13,0 km do local de votação), Amparo (12,5 km do local de votação) e Jaqueira (8,4 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Caxingó, Assentamento Espirito Santo, Rosário e Saco da Rainha.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 63 localidades rurais de Itabaianinha que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço. 1 locais não foram encontrados nas duas bases: Povoado Fundão, com 279 eleitores.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Carnaíba</td><td>16,2</td><td>Rota 07</td><td>6,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Várzea Grande</td><td>14,7</td><td>Rota 26</td><td>3,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Olhos d&#x27;Água da Bica</td><td>13,0</td><td>Rota 10</td><td>2,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Amparo</td><td>12,5</td><td>Rota 10</td><td>2,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Carrasco</td><td>11,3</td><td>Rota 10</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Caxingó</td><td>9,6</td><td>Rota 19</td><td>1,9</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Fundão</td><td>9,2</td><td>Rota 10</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Jaqueira</td><td>8,4</td><td>Rota 20</td><td>2,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Água Nova</td><td>8,2</td><td>Rota 10</td><td>0,9</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Cinco Estradas</td><td>8,1</td><td>Rota 01</td><td>0,6</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Lagoa Dantas</td><td>8,0</td><td>Rota 05</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Macaquinho</td><td>7,6</td><td>Rota 05</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Assentamento Espirito Santo</td><td>7,5</td><td>Rota 11</td><td>1,3</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Flor da Roda</td><td>7,3</td><td>Rota 09</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Patu</td><td>7,2</td><td>Rota 10</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Garangau</td><td>7,0</td><td>Rota 09</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Parreira</td><td>6,1</td><td>Rota 11</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Gameleiro</td><td>5,8</td><td>Rota 05</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Lagoa da Mata</td><td>5,6</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Lages</td><td>5,6</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Campinhos</td><td>5,3</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Terra Vermelha</td><td>5,0</td><td>Rota 11</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Curralinho</td><td>4,7</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Rosário</td><td>4,7</td><td>Rota 07</td><td>1,1</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Fazenda Bonfim</td><td>4,6</td><td>Rota 05</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Caldeirão</td><td>4,4</td><td>Rota 07</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Alto</td><td>4,1</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Mombaça</td><td>4,0</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Travessão</td><td>3,9</td><td>Rota 16</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Queimadas</td><td>3,8</td><td>Rota 12</td><td>0,7</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Borda da Mata</td><td>3,7</td><td>Rota 24</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Jardim de Dentro</td><td>3,6</td><td>Rota 22</td><td>0,6</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Saco da Rainha</td><td>3,5</td><td>Rota 12</td><td>1,9</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Capim Grosso</td><td>3,4</td><td>Rota 22</td><td>0,6</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>São Bento</td><td>3,4</td><td>Rota 03</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Maravilha</td><td>3,0</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Alagoas</td><td>3,0</td><td>Rota 12</td><td>0,7</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>25 das 124 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Faz. Velha (Rota 01), Pov. Jardim (Rota 02 e Rota 05), Murtuá (Rota 04), Montalvão (Rota 04), Pov. Campo do Retiro (Rota 06 e Rota 15), Pov. Camboatá (Rota 07), Tabela da Onça (Rota 07), Pov. Pati (Rota 08), Cantinho da Bica (Rota 08), Pov. Saco da Rainha (Rota 12), Pov. Ilha (Rota 12), Pov. Jaqueira (Rota 13), Ribeiro (Rota 13), Pov. Vermelho (Rota 14), Faz. Jorge (Rota 14), Periperi (Rota 14), Tanque Grande (Entrada de João das Piabas) (Rota 16), Pov. Rosária (Rota 17), Flores (Rota 17), Barreiro (Rota 18), Faz. Mangueira (Rota 19), Pov. Poxica (Rota 20) e Conjunto Leonor Barreto Franco (Rota 21). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 63 localidades rurais de Itabaianinha, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 892" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Itabaianinha: 9 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 1058/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="35.0,388.5 44.9,409.8 61.5,415.3 82.8,431.5 97.0,410.7 115.2,400.6 160.8,428.7 175.5,419.4 188.5,445.5 199.6,454.7 219.1,448.8 230.8,463.7 269.8,499.0 291.3,496.6 300.0,522.9 327.2,537.8 351.8,558.2 353.3,587.6 364.3,607.8 387.9,628.8 401.7,631.0 402.8,653.1 419.9,663.9 418.2,686.0 440.8,686.2 449.1,699.2 473.4,691.9 486.8,677.5 569.9,599.0 570.1,472.5 633.0,432.8 635.4,351.7 619.0,321.7 602.3,311.6 587.6,278.3 583.3,257.9 542.9,217.5 551.3,195.6 537.9,179.2 526.3,162.1 502.6,151.3 489.4,154.6 469.5,124.8 453.3,132.5 441.9,121.7 408.5,107.9 400.2,93.5 384.7,86.2 348.0,88.6 321.5,104.2 231.6,149.6 166.1,206.1 180.8,231.4 189.3,256.3 181.9,278.3 143.3,264.0 103.8,283.8 65.9,326.5 62.0,343.2 35.0,388.5 35.0,388.5" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="248.5,184.7 252.3,181.9 258.6,182.8 263.2,184.9 269.4,184.4 274.0,192.8 278.1,197.8 280.6,203.3 281.1,217.0 289.2,228.2 291.5,233.8 297.0,242.5 299.5,255.0 301.6,260.9 306.4,264.7 312.7,272.0 317.0,277.3 321.4,274.0 324.7,269.5 325.2,260.4 323.2,251.1 319.2,240.9 318.2,234.4 319.4,228.9 320.3,222.7 322.6,217.6 322.9,210.6 328.9,209.9 322.9,210.6 322.6,217.6 320.3,222.7 319.4,228.9 318.2,234.4 319.2,240.9 322.9,248.8 325.2,260.4 324.6,266.9 322.1,272.3 317.0,277.3 310.2,278.3 300.1,276.2 304.7,278.5 312.7,277.6 318.8,278.9 328.8,289.5 332.0,293.7 337.2,300.4 341.0,305.3 344.1,309.4 345.7,316.0 346.6,322.7 347.9,330.5 351.4,339.8 353.5,344.5 356.1,351.0 359.4,358.9 361.6,363.5 364.3,367.8 365.8,373.2 367.2,379.2 366.8,386.3 364.5,390.9 362.3,395.4 364.2,401.5 362.9,402.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="386.3,591.5 390.2,588.7 391.3,583.2 390.9,576.6 393.1,571.4 396.1,567.0 401.9,565.1 408.4,567.2 415.3,567.8 421.2,565.7 426.0,563.7 426.0,563.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="432.8,634.3 431.0,627.2 427.0,622.7 421.5,619.4 418.4,615.0 416.6,607.8 415.8,601.8 416.9,595.9 417.0,588.8 417.8,582.2 418.2,575.5 417.4,568.3 422.3,565.4 427.1,563.0 431.9,560.9 436.0,558.0 441.7,556.8 445.4,553.9 447.0,548.6 443.3,542.2 441.5,537.2 442.9,531.8 442.2,522.8 440.8,517.6 437.6,513.4 434.8,509.6 430.6,502.8 426.9,495.6 423.4,490.1 418.8,484.0 415.3,479.3 412.3,475.3 397.0,454.8 391.3,447.1 384.5,438.1 380.9,433.8 377.5,430.3 376.7,424.4 374.9,419.4 373.0,414.6 371.2,409.7 365.7,404.4 362.9,402.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="343.1,500.5 342.6,494.2 343.9,487.8 346.3,481.6 347.5,475.6 349.1,467.8 350.2,461.9 350.8,455.8 352.8,440.1 351.5,433.9 349.7,426.7 348.3,421.5 351.3,417.6 354.0,413.3 356.7,409.0 361.2,405.0 362.9,402.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="547.5,572.7 553.0,573.9 558.4,575.5 562.0,578.5 565.3,581.9 569.6,584.2 573.1,587.7 577.7,589.8 575.7,594.9 578.2,599.3 585.3,604.7 587.0,610.3 590.4,614.1 593.2,619.2 598.4,620.9 607.1,623.8 612.5,625.6 617.8,627.3 626.2,629.8 630.4,632.3 627.4,636.6 622.6,643.6 617.7,650.5 613.8,656.1 609.5,660.1 603.7,664.0 596.8,668.6 592.8,671.2 588.2,674.1 579.3,678.9 571.2,684.8 566.4,687.1 562.1,689.5 557.4,695.0 551.0,705.9 545.6,711.2 541.2,714.7 536.7,717.2 532.4,720.2 528.9,724.1 522.9,731.4 517.8,734.9 512.3,736.4 505.4,736.7 499.0,737.8 494.6,740.1 488.7,744.3 485.3,747.8 483.1,752.3 476.6,757.3 468.2,756.8 461.7,759.2 454.6,754.4 454.2,747.8 448.5,743.0 454.2,747.8 454.6,754.4 457.4,759.1 463.5,758.4 476.6,757.3 482.4,755.1 484.7,748.8 488.7,744.3 494.6,740.1 499.0,737.8 505.4,736.7 512.3,736.4 517.8,734.9 522.1,732.2 526.7,726.9 530.8,721.8 534.4,718.6 539.5,715.7 544.3,712.2 548.8,708.5 557.4,695.0 560.5,690.8 564.9,687.8 570.2,685.4 577.5,679.9 584.0,676.5 592.8,671.2 596.8,668.6 603.7,664.0 607.9,661.2 611.9,658.3 615.9,653.1 621.9,644.5 627.4,636.6 630.4,632.3 626.2,629.8 621.0,628.3 615.9,626.7 610.4,624.9 603.0,622.4 597.3,620.5 591.1,618.5 585.5,616.5 578.9,616.3 573.9,619.7 567.4,624.1 562.9,627.2 557.8,629.4 553.1,627.4 548.6,621.5 545.1,616.9 542.1,612.8 538.5,608.0 535.0,604.7 529.6,601.0 522.2,595.8 518.2,593.1 513.6,589.9 509.2,586.8 505.2,584.0 500.5,581.6 493.0,579.1 487.0,576.2 488.0,570.0 489.8,564.8 492.4,559.9 491.1,554.6 487.2,551.6 487.1,546.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="503.9,469.8 499.9,479.8 497.9,486.1 495.4,494.7 493.4,498.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="578.0,430.5 572.9,433.8 568.0,435.6 560.6,434.4 554.5,433.4 546.5,432.0 537.8,430.5 531.1,429.4 524.2,429.4 516.7,430.2 512.3,447.6 508.9,460.5 509.9,467.7 508.9,460.5 510.2,452.0 515.2,433.4 509.8,430.9 503.5,428.8 498.9,423.5 494.5,418.4 490.5,413.8 489.7,404.9 486.9,401.0 489.8,396.4 487.1,400.6 489.7,404.9 490.0,411.5 482.5,404.5 475.1,401.4 468.0,399.5 460.1,397.3 447.6,393.9 442.8,392.1 433.6,386.8 429.5,384.3 421.9,383.7 413.2,383.4 406.5,382.3 395.9,379.0 390.1,378.1 382.3,379.0 376.7,380.1 371.1,381.2 366.8,386.3 364.5,390.9 362.3,395.4 364.2,401.5 362.9,402.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="540.4,272.5 536.0,275.1 531.8,279.2 528.7,283.9 524.0,281.9 517.4,282.6 514.1,286.1 513.3,293.1 512.2,299.6 512.1,307.0 512.8,313.2 511.2,318.5 508.0,322.1 504.3,325.4 498.5,329.9 493.7,331.8 489.2,337.0 486.6,341.1 481.8,344.4 477.5,346.7 475.7,356.9 474.1,362.2 472.1,366.8 470.6,372.0 466.5,374.9 463.6,379.1 460.4,385.5 458.1,390.3 456.2,396.2 447.6,393.9 442.8,392.1 433.6,386.8 429.5,384.3 421.9,383.7 413.2,383.4 406.5,382.3 395.9,379.0 390.1,378.1 382.3,379.0 376.7,380.1 371.1,381.2 366.8,386.3 364.5,390.9 362.3,395.4 364.2,401.5 362.9,402.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="468.2,180.6 469.2,186.2 466.5,190.4 469.9,194.1 474.4,198.0 480.8,202.6 476.7,199.9 472.9,197.1 469.1,192.8 464.5,190.7 458.9,188.7 454.0,185.8 453.3,179.9 450.9,175.5 446.4,173.4 439.5,173.5 433.3,174.0 428.2,175.6 422.5,173.6 424.0,178.8 422.6,184.0 423.0,190.8 424.5,196.5 425.7,202.0 423.9,207.6 421.3,211.8 420.8,219.3 420.1,226.5 420.7,232.6 417.1,236.1 414.8,241.3 413.8,246.9 414.0,254.8 411.6,261.3 416.1,265.4 417.8,271.2 420.0,276.0 415.9,280.9 410.8,287.2 405.4,293.8 402.0,297.9 401.6,305.2 398.9,313.2 397.4,319.1 395.0,324.2 392.7,328.7 389.1,334.2 386.3,338.3 383.4,343.0 380.7,347.1 379.4,352.6 381.6,357.1 380.8,364.6 379.2,373.1 378.6,379.2 371.1,381.2 366.8,386.3 364.5,390.9 362.3,395.4 364.2,401.5 362.9,402.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 09</title></polyline>
+<polyline points="271.6,101.9 271.9,108.2 277.8,109.0 284.1,108.2 290.2,104.7 294.4,101.6 300.0,103.7 302.8,108.1 299.6,114.3 303.5,117.9 309.9,118.2 313.3,121.7 320.2,120.9 324.3,123.6 326.6,128.0 330.6,131.1 333.8,135.9 339.5,137.2 342.6,142.2 345.9,145.7 344.8,151.5 346.9,156.6 351.5,160.8 353.9,165.1 355.3,170.6 356.8,175.7 353.1,178.6 347.7,177.1 352.9,178.6 356.8,175.7 355.3,170.6 353.9,165.1 351.5,160.8 348.2,156.8 343.5,154.6 348.2,156.8 351.5,160.8 358.2,161.0 361.2,164.5 362.9,170.4 365.2,175.0 372.1,176.4 377.3,177.9 376.7,185.0 377.5,191.0 379.1,197.3 382.6,202.4 384.1,211.4 386.1,216.3 389.9,220.3 392.1,225.8 393.3,234.1 389.5,242.1 386.2,249.2 387.9,254.5 388.7,261.1 390.1,267.7 391.4,274.9 390.8,281.0 392.7,286.3 394.8,291.6 396.8,296.3 397.8,302.4 400.7,306.9 398.9,313.2 397.4,319.1 395.0,324.2 392.7,328.7 389.1,334.2 386.3,338.3 384.5,344.2 382.8,353.5 381.8,359.3 380.3,367.3 379.2,373.1 378.6,379.2 371.1,381.2 366.8,386.3 364.5,390.9 362.3,395.4 364.2,401.5 362.9,402.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 10</title></polyline>
+<polyline points="296.0,274.1 304.7,278.5 303.9,284.6 301.7,290.0 300.3,296.2 299.3,301.7 296.8,306.9 299.3,312.2 300.8,317.5 304.1,322.4 305.9,327.2 309.7,330.0 316.1,328.6 322.0,327.4 326.9,325.3 328.3,330.6 328.9,336.6 329.9,342.4 328.7,348.1 327.7,353.8 326.3,359.4 325.5,365.2 324.4,371.6 321.1,384.7 323.9,389.2 329.8,390.3 337.0,390.8 342.6,394.1 347.7,396.0 353.3,397.4 356.4,402.2 357.3,408.1 354.4,412.8 351.8,417.1 348.6,420.8 349.7,426.7 351.5,433.9 352.8,440.1 352.0,452.0 352.4,458.7 349.1,467.8 347.5,475.6 346.3,481.6 343.9,487.8 342.6,494.2 343.7,499.8 345.4,505.9 347.0,511.7 348.5,521.9 349.5,529.4 350.3,535.2 351.4,541.5 349.3,548.0 352.1,552.4 354.4,557.4 358.2,565.7 360.4,571.1 364.4,576.4 368.0,581.4 364.4,576.4 360.4,571.1 358.5,566.3 355.8,560.7 354.0,555.6 350.0,550.8 351.3,543.1 350.3,535.2 349.5,529.4 348.5,521.9 347.4,514.3 345.4,505.9 344.0,500.6 342.6,494.2 343.9,487.8 346.3,481.6 347.5,475.6 349.1,467.8 350.2,461.9 350.8,455.8 352.8,440.1 351.5,433.9 349.7,426.7 348.3,421.5 351.3,417.6 354.0,413.3 356.7,409.0 361.2,405.0 362.9,402.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 11</title></polyline>
+<polyline points="126.7,373.2 124.3,369.0 126.1,363.2 127.1,357.1 129.5,352.5 132.2,347.5 133.9,341.6 135.9,336.5 142.3,336.1 146.9,333.6 151.7,331.4 154.7,325.8 157.5,321.3 160.9,317.0 165.0,312.4 166.5,305.7 169.6,301.9 172.8,297.3 177.6,304.0 184.3,308.1 188.1,315.0 199.4,324.4 201.7,330.0 205.8,334.4 214.1,341.2 219.0,342.9 223.7,345.0 226.3,349.4 232.5,356.0 235.9,359.3 240.1,364.3 243.9,367.0 251.3,368.6 258.3,372.1 263.5,374.4 267.7,377.4 269.6,382.3 274.0,387.1 280.5,388.1 286.9,390.6 294.6,393.8 304.1,391.6 309.3,393.0 315.1,387.9 321.4,388.4 328.2,390.3 334.7,390.2 340.9,393.1 346.0,395.5 351.8,397.1 354.6,400.9 359.7,404.1 362.9,402.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 12</title></polyline>
+<polyline points="311.0,415.9 306.0,451.2 326.2,404.0 331.3,406.2 337.9,404.9 342.6,402.2 347.0,399.3 351.8,397.1 354.6,400.9 359.7,404.1 362.9,402.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 13</title></polyline>
+<polyline points="202.1,185.3 204.4,190.2 202.3,195.3 202.2,201.9 202.6,208.8 206.5,214.7 205.5,220.7 201.5,225.0 198.1,230.6 194.5,235.9 192.5,240.5 190.7,246.0 187.8,250.2 187.0,257.0 185.0,262.9 182.9,268.7 179.4,273.8 178.9,280.6 178.4,286.7 175.3,294.1 177.6,304.0 184.3,308.1 188.1,315.0 199.4,324.4 201.7,330.0 205.8,334.4 214.1,341.2 219.0,342.9 223.7,345.0 226.3,349.4 232.5,356.0 235.9,359.3 240.1,364.3 243.9,367.0 251.3,368.6 258.3,372.1 263.5,374.4 267.7,377.4 269.6,382.3 274.0,387.1 280.5,388.1 286.9,390.6 294.6,393.8 297.6,398.3 299.2,403.4 297.6,398.3 304.1,391.6 309.3,393.0 315.1,387.9 321.4,388.4 326.4,390.9 332.6,389.9 338.3,391.3 342.6,394.1 347.7,396.0 353.3,397.4 356.4,402.2 361.2,405.0 362.9,402.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 14</title></polyline>
+<polyline points="503.9,469.8 499.9,479.8 497.9,486.1 495.4,494.7 491.6,501.1 492.1,507.4 490.5,514.8 484.2,513.5 479.3,516.6 474.3,518.5 467.6,519.1 460.4,518.6 454.7,517.4 449.3,514.3 443.2,515.6 441.7,521.0 439.1,515.2 435.6,510.8 432.5,506.3 429.8,501.4 426.9,495.6 423.4,490.1 418.8,484.0 415.3,479.3 412.3,475.3 397.0,454.8 391.3,447.1 384.5,438.1 380.9,433.8 377.5,430.3 376.7,424.4 374.9,419.4 373.0,414.6 371.2,409.7 365.7,404.4 362.9,402.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 15</title></polyline>
+<polyline points="424.8,413.6 420.0,411.3 414.3,409.3 410.2,406.6 404.4,405.6 398.2,402.7 393.8,400.2 388.2,397.9 383.4,396.0 380.7,400.3 377.5,403.8 373.2,406.3 365.7,404.4 362.9,402.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 16</title></polyline>
+<polyline points="397.0,375.6 393.0,378.2 386.4,378.1 379.8,378.2 374.0,380.6 368.9,382.2 365.8,388.3 363.4,393.1 360.5,399.3 362.9,402.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 17</title></polyline>
+<polyline points="355.4,237.8 353.4,243.4 351.4,249.8 347.0,252.1 340.6,252.5 334.9,250.7 331.6,245.9 326.9,239.6 322.4,235.8 319.6,231.6 320.1,223.9 322.6,217.6 322.9,210.6 328.9,209.9 322.9,210.6 322.6,217.6 320.3,222.7 319.4,228.9 321.7,235.1 326.9,239.6 330.1,243.1 332.7,247.6 336.2,251.4 342.2,252.2 349.2,252.4 356.5,253.4 361.2,256.1 365.7,258.9 360.9,262.6 356.0,265.3 351.5,267.4 351.5,274.9 349.4,279.9 346.2,284.1 344.0,289.2 342.6,295.1 339.7,299.3 332.4,294.2 337.2,300.4 341.0,305.3 344.1,309.4 345.7,316.0 346.6,322.7 347.9,330.5 351.4,339.8 353.5,344.5 356.1,351.0 359.4,358.9 361.6,363.5 364.3,367.8 365.8,373.2 367.2,379.2 366.8,386.3 364.5,390.9 362.3,395.4 364.2,401.5 362.9,402.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 18</title></polyline>
+<polyline points="324.4,448.3 324.6,455.3 321.4,460.9 317.0,464.1 312.5,469.7 307.5,474.1 304.5,478.5 302.1,485.0 305.2,489.8 312.8,491.2 318.9,492.2 327.7,493.6 333.4,496.4 337.3,500.6 343.7,499.8 342.6,494.2 343.9,487.8 346.3,481.6 347.5,475.6 349.1,467.8 350.2,461.9 350.8,455.8 352.8,440.1 351.5,433.9 349.7,426.7 348.3,421.5 351.3,417.6 354.0,413.3 356.7,409.0 361.2,405.0 362.9,402.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 19</title></polyline>
+<polyline points="234.8,425.0 228.1,427.6 225.0,423.2 222.1,418.8 219.5,414.7 218.6,408.3 214.9,404.6 209.3,402.4 206.0,402.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 20</title></polyline>
+<polyline points="403.5,501.0 400.4,495.9 397.3,492.1 396.8,485.2 396.9,478.4 393.9,471.0 392.6,465.3 388.8,460.7 383.2,456.4 381.9,451.1 382.4,445.0 383.4,439.1 380.9,433.8 377.5,430.3 376.7,424.4 374.9,419.4 373.0,414.6 371.2,409.7 365.7,404.4 362.9,402.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 22</title></polyline>
+<polyline points="346.0,318.3 347.4,327.2 349.1,334.1 351.4,339.8 353.5,344.5 356.1,351.0 359.4,358.9 355.4,365.5 352.4,370.3 349.6,374.9 349.2,382.6 347.6,388.0 349.1,393.3 352.4,397.0 356.4,402.2 361.2,405.0 362.9,402.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 23</title></polyline>
+<polyline points="466.0,461.4 466.6,455.4 466.5,448.7 473.1,445.5 475.3,440.5 476.7,435.0 478.8,430.2 481.7,425.3 485.9,422.1 490.7,420.2 497.5,421.9 494.4,418.3 490.5,413.8 482.5,404.5 475.1,401.4 468.0,399.5 460.1,397.3 447.6,393.9 442.8,392.1 433.6,386.8 429.5,384.3 421.9,383.7 413.2,383.4 406.5,382.3 395.9,379.0 390.1,378.1 382.3,379.0 376.7,380.1 371.1,381.2 366.8,386.3 364.5,390.9 362.3,395.4 364.2,401.5 362.9,402.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 24</title></polyline>
+<polyline points="408.7,470.5 397.0,454.8 391.3,447.1 384.5,438.1 380.9,433.8 377.5,430.3 376.7,424.4 374.9,419.4 373.0,414.6 371.2,409.7 365.7,404.4 362.9,402.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 25</title></polyline>
+<polyline points="468.2,180.6 469.2,186.2 465.5,190.1 459.8,189.1 454.3,187.7 454.2,181.0 451.5,176.3 446.8,173.5 440.3,173.6 433.6,173.7 428.2,175.6 422.5,173.6 420.1,168.5 415.6,166.0 408.8,166.1 403.3,164.9 399.7,168.5 398.0,173.6 395.5,177.8 392.0,181.3 387.3,183.5 383.3,180.3 378.9,178.2 378.3,178.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 26</title></polyline>
+<polyline points="568.6,435.6 574.4,432.8 578.4,430.3 584.7,428.9 593.9,427.3 600.4,426.3 606.4,424.9 613.2,421.9 619.7,418.9 624.4,416.9 633.0,415.5 640.5,415.0 648.9,415.9 655.6,416.2 664.1,414.8 678.7,412.4 686.5,411.2 692.6,410.0 697.2,407.7 698.8,402.4 702.6,397.6 706.2,394.3 709.9,390.8 713.7,387.3 718.4,382.9 721.7,378.4 725.0,373.8 724.3,367.7 723.0,362.4 719.7,357.9 711.5,349.3 708.1,345.6 705.4,341.0 703.4,336.3 701.4,331.3 698.8,324.9 696.7,319.9 694.0,313.2 691.6,308.6 688.7,304.4 684.8,298.7 679.6,300.1 675.8,303.0 672.6,306.9 669.7,310.7 665.8,313.6 663.5,318.2 660.0,322.1 656.0,324.9 651.6,327.2 647.9,331.4 650.9,327.4 655.7,325.1 660.0,322.1 663.2,318.7 665.5,314.0 669.7,310.7 672.6,306.9 675.8,303.0 679.6,300.1 682.5,295.8 687.3,302.3 690.7,307.3 693.3,311.7 695.4,316.7 698.1,323.2 701.0,330.1 703.4,336.3 705.4,341.0 708.1,345.6 711.5,349.3 718.3,356.4 721.8,360.4 723.9,365.0 724.9,372.3 722.3,377.6 719.5,381.5 716.0,385.1 711.0,389.8 706.2,394.3 702.6,397.6 698.8,402.4 697.2,407.7 692.6,410.0 686.5,411.2 678.7,412.4 667.3,414.3 658.8,415.7 650.4,416.0 642.5,415.2 636.1,414.9 629.7,416.0 623.9,417.1 616.8,420.2 610.2,423.3 605.1,425.4 596.7,426.9 589.9,428.0 582.4,429.3 577.0,431.1 572.9,433.8 568.6,435.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Carnaíba</title></polyline>
+<polyline points="409.2,289.1 405.5,284.5 401.7,278.0 398.5,274.3 394.8,271.2 391.9,274.9 390.4,268.7 388.9,263.5 388.6,256.7 385.0,251.3 387.9,245.8 392.0,239.2 393.3,230.7 391.5,222.1 387.1,218.9 384.6,214.4 382.3,206.8 381.6,200.1 378.6,194.9 376.9,189.8 377.8,183.3 379.8,178.8 379.5,171.5 379.7,165.0 378.1,159.6 378.2,152.9 376.0,147.2 375.8,140.0 374.8,134.1 374.1,128.1 375.6,122.7 378.7,118.8 381.4,114.5 384.0,110.2 384.9,104.2 382.9,98.9 380.3,94.5 376.9,91.2 370.9,90.3 366.9,87.2 366.3,80.8 372.3,81.4 378.6,81.9 383.1,84.0 387.4,86.8 392.8,88.2 398.4,89.2 392.8,88.2 387.4,86.8 383.1,84.0 378.6,81.9 372.3,81.4 366.5,80.1 366.2,86.4 365.4,80.2 366.8,85.7 369.3,90.3 376.9,91.2 380.3,94.5 382.9,98.9 383.9,104.9 383.2,111.6 380.6,115.7 377.6,119.8 375.2,124.4 374.2,130.2 375.0,136.4 375.7,143.1 376.7,148.8 378.3,154.0 378.6,161.1 380.1,166.2 379.2,173.0 379.8,179.1 377.4,184.2 377.5,191.0 379.1,197.3 382.6,202.4 384.1,211.4 386.1,216.3 389.9,220.3 392.1,225.8 393.3,234.1 389.5,242.1 386.2,249.2 387.9,254.5 388.7,261.1 390.1,267.7 391.4,274.9 394.8,271.2 398.5,274.3 401.7,278.0 403.8,282.7 407.0,286.8 409.2,289.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Várzea Grande</title></polyline>
+<polyline points="352.6,397.2 347.0,399.3 343.0,402.0 337.9,404.9 331.3,406.2 325.9,408.3 323.0,413.5 315.7,413.4 309.4,414.5 305.9,418.2 299.4,424.0 295.1,426.6 287.2,428.6 280.5,427.2 276.3,424.6 271.9,428.9 270.0,433.7 269.6,440.3 267.4,445.6 258.6,453.1 251.1,453.3 243.4,459.0 241.0,468.0 238.3,473.1 236.0,478.2 238.3,473.1 240.8,468.7 242.5,461.3 248.7,454.2 255.5,453.9 265.2,448.1 268.2,444.3 269.9,438.7 270.3,432.2 272.8,427.1 277.9,425.4 281.9,428.3 289.4,427.2 295.8,426.5 305.0,419.0 308.6,416.0 311.8,412.6 319.7,414.6 324.5,409.8 328.8,406.5 336.4,405.7 341.1,403.1 345.5,400.6 348.4,396.5 352.6,397.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Jaqueira</title></polyline>
+<polyline points="424.7,383.8 424.0,377.7 424.4,370.9 425.2,364.2 424.3,369.9 423.9,376.3 425.2,381.9 424.7,383.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 07</title></polyline>
+<polyline points="365.2,578.0 362.0,573.1 359.3,577.0 355.0,582.4 352.6,586.6 349.5,590.4 344.9,592.4 349.5,590.4 352.5,586.7 355.0,582.4 358.8,577.6 359.4,569.5 362.8,574.2 365.2,578.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 11</title></polyline>
+<polyline points="124.0,368.0 121.2,363.8 117.0,358.8 111.7,353.1 107.6,346.5 102.0,348.8 96.6,355.0 91.3,360.9 87.8,365.0 91.3,360.9 96.6,355.0 99.4,351.2 105.8,347.1 109.6,350.7 115.8,357.3 119.1,362.0 123.5,366.1 124.0,368.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 12</title></polyline>
+<polyline points="302.2,487.4 298.2,483.1 294.3,485.8 290.9,490.6 286.2,493.0 283.9,498.5 283.3,506.3 278.8,511.3 274.5,513.9 278.8,511.3 282.6,507.5 283.1,501.4 284.7,495.6 289.3,490.9 292.5,487.5 298.2,483.1 302.0,486.9 302.2,487.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 19</title></polyline>
+<circle cx="326.8" cy="126.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="343.4" cy="154.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="378.1" cy="157.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="334.2" cy="221.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="547.5" cy="572.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="546.0" cy="617.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="484.8" cy="204.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="378.3" cy="177.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="423.5" cy="170.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="368.9" cy="582.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="490.8" cy="546.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="386.4" cy="591.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="416.4" cy="607.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="332.2" cy="293.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="326.6" cy="325.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="343.0" cy="500.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="498.6" cy="581.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="491.0" cy="395.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="345.1" cy="318.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="395.8" cy="565.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="424.1" cy="413.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="267.2" cy="398.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="476.3" cy="439.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="391.9" cy="503.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="393.6" cy="508.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="397.1" cy="450.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="409.0" cy="470.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="265.8" cy="359.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="380.0" cy="349.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="498.2" cy="421.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="398.7" cy="502.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="126.6" cy="373.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="512.9" cy="294.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="493.2" cy="497.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="322.0" cy="418.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="260.8" cy="375.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="395.0" cy="376.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="520.1" cy="431.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="504.3" cy="493.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="498.2" cy="485.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="239.7" cy="336.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="400.0" cy="306.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="135.4" cy="321.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="423.5" cy="285.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="505.1" cy="467.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="441.1" cy="537.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="446.5" cy="536.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="577.3" cy="429.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="449.5" cy="513.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="149.7" cy="336.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="225.1" cy="349.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="442.2" cy="522.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="204.1" cy="221.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="494.3" cy="332.1" r="2.2" fill="#b9b9b2"/>
+<polygon points="354.2,385.7 340.0,411.8 368.4,411.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="356.2,384.8 342.8,409.4 369.5,409.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="365.4,381.6 353.6,403.3 377.1,403.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="352.6,380.9 337.3,409.2 368.0,409.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="147.9,323.3 137.8,342.0 158.0,342.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="147.9" y="355.6" text-anchor="middle" fill="#5c5c57">Ilha</text>
+<polygon points="441.6,511.1 431.7,529.5 451.6,529.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="441.6" y="543.1" text-anchor="middle" fill="#5c5c57">Jardim</text>
+<polygon points="568.6,424.9 557.9,444.5 579.3,444.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="568.6" y="458.3" text-anchor="middle" fill="#5c5c57">Dispensa</text>
+<polygon points="227.7,342.5 218.1,360.1 237.3,360.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="227.7" y="373.7" text-anchor="middle" fill="#5c5c57">Poxica</text>
+<polygon points="206.6,214.4 198.7,229.1 214.6,229.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="508.5,450.0 498.6,468.3 518.4,468.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="508.5" y="481.9" text-anchor="middle" fill="#5c5c57">Sapé</text>
+<polygon points="443.0,509.9 432.2,529.6 453.7,529.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="354.4,397.5 340.4,423.2 368.3,423.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="144.6,325.2 135.1,342.8 154.2,342.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="362.7,391.3 352.4,410.3 373.1,410.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="359.0,398.8 349.3,416.5 368.7,416.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="495.4,324.5 487.4,339.1 503.3,339.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="353.5,397.6 341.5,419.7 365.5,419.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="441.9,511.2 436.0,522.1 447.7,522.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="409.0,281.7 402.3,294.1 415.7,294.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="359.4,389.1 347.1,411.9 371.8,411.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="645.9" cy="333.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="539.7" y="328.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Carnaíba 16,2 km</text>
+<circle cx="399.0" cy="89.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="406.0" y="84.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Várzea Grande 14,7 km</text>
+<circle cx="364.6" cy="81.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="365.6" cy="88.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="372.6" y="103.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Amparo 12,5 km</text>
+<circle cx="274.5" cy="514.1" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="281.5" y="509.1" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Caxingó 9,6 km</text>
+<circle cx="235.7" cy="478.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="242.7" y="473.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Jaqueira 8,4 km</text>
+<circle cx="344.0" cy="591.8" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="351.0" y="586.8" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Assentamento Espirito Santo 7,5 km</text>
+<circle cx="425.4" cy="361.8" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="432.4" y="356.8" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Rosário 4,7 km</text>
+<circle cx="86.8" cy="364.2" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="93.8" y="359.2" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Saco da Rainha 3,5 km</text>
+<rect x="357.8" y="397.2" width="10" height="10" fill="#1d1d1b"/><text x="371.8" y="420.2" font-weight="600" fill="#1d1d1b">Sede de Itabaianinha</text>
+<line x1="35" x2="133.7" y1="790.0" y2="790.0" stroke="#8a8a84" stroke-width="2"/><text x="35" y="804.0" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="781.043176164472" y2="781.043176164472" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="785.043176164472" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,774.0 421.4,786.3 434.6,786.3" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="785.043176164472" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="799.043176164472" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="808.043176164472" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="804.043176164472" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="808.043176164472" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="827.043176164472" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="831.043176164472" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="827.043176164472" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="831.043176164472" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="850.043176164472" y2="850.043176164472" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="854.043176164472" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="873.043176164472" y2="873.043176164472" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="877.043176164472" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 1058/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (21):</strong> Carnaíba, Várzea Grande, Olhos d&#x27;Água da Bica, Amparo, Carrasco, Caxingó, Fundão, Jaqueira, Água Nova, Cinco Estradas, Lagoa Dantas, Macaquinho, Assentamento Espirito Santo, Flor da Roda, Patu, Garangau, Parreira, Gameleiro, Lagoa da Mata, Lages e Campinhos.</li>
+<li><strong>De 3 a 5 km (16):</strong> Terra Vermelha, Curralinho, Rosário, Fazenda Bonfim, Caldeirão, Alto, Mombaça, Travessão, Queimadas, Borda da Mata, Jardim de Dentro, Saco da Rainha, Capim Grosso, São Bento, Maravilha e Alagoas.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (26):</strong> Arruda, Bagaço Grosso, Barro Preto, Campestre, Candeias, Cantinho, Cardosas, Diamante, Dispensa, Fazenda Seis Marias, Fonte Grande, Ilha, Jardim, Lessa, Muquém, Pedra de Légua, Pitombeira, Poxica, Residencial Pérolas de Itabaianinha, Santa Rita, Sapé, Tabela, Taboca, Tanque Verde, Terreiro Muquém e Vermelho.</li>
+</ul><h2>Rotas do Edital nº 1058/2026</h2>
+<p>O edital tem 26 rotas para Itabaianinha. Horários: não informados. Veículos: não informados.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Mutuca – Queimadinhas – Cinco Estradas – Faz. Velha – Caborge – Campinhos – Alto – Sede</td></tr><tr><td>02</td><td>Lagoa da Mata – Mumbaça – Salgado do Juazeiro – Pov. Jardim</td></tr><tr><td>03</td><td>Alto do Tanque – Mansinho – Lajes – Campestre – Jardim – Sede</td></tr><tr><td>04</td><td>Murtuá – Curralinho – Montalvão – Sede</td></tr><tr><td>05</td><td>Faz. Lagoa Dantas – Monte Alegre – Patioba – Gameleiro – Pov. Jardim</td></tr><tr><td>06</td><td>Pov. Campo do Retiro – Sapé – Arruda</td></tr><tr><td>07</td><td>Pov. Camboatá – Dispensa – Cipó Branco – Tabela da Onça – Diamante – Caldeirão – Sede</td></tr><tr><td>08</td><td>Pov. Pati – Periquito – Cantinho da Bica – Santa Rita – Barro Preto – Sede</td></tr><tr><td>09</td><td>Mata Verde – Flor da Roda – Garangau – Muquém – Lessa – Sede</td></tr><tr><td>10</td><td>Água Boa – Carrasco – Piabas – Carretéis – Fundão – Patu – Sede</td></tr><tr><td>11</td><td>Caborge – Faz. Araújo – Terra Vermelha – Sítio Pereira – Sede</td></tr><tr><td>12</td><td>Pov. Saco da Rainha – Candeias – Bairro São José (Matadouro) – Pov. Ilha</td></tr><tr><td>13</td><td>Pov. Jaqueira – Pilões – Pai João – Ribeiro – Caraíbas – Sede</td></tr><tr><td>14</td><td>Jacinto – Pov. Vermelho – Faz. Jorge – Periperi – Poxica – Pedra de Légua – Jacaré – Angelim – Sede</td></tr><tr><td>15</td><td>Pov. Campo do Retiro – Sapé – Arruda – Cantinho – Jardim – Sede</td></tr><tr><td>16</td><td>Tanque Grande (Entrada de João das Piabas) – Travessão – Sede</td></tr><tr><td>17</td><td>Pov. Rosária – Aldeia – Flores – Taboca – Sede</td></tr><tr><td>18</td><td>Pedra Branca – Cinco Estradas – Olhos D&#x27;Água – Campinhos – Alto – Barreiro – Sede</td></tr><tr><td>19</td><td>Faz. Mangueira – Riacho Seco de Dentro – Sede</td></tr><tr><td>20</td><td>Lagoa Grande – Pau D&#x27;Onça – Pov. Poxica</td></tr><tr><td>21</td><td>Conjunto Leonor Barreto Franco – Sede</td></tr><tr><td>22</td><td>Bagaço Grosso – Sede</td></tr><tr><td>23</td><td>Alto – Mutirão – Sede</td></tr><tr><td>24</td><td>Campo do Retiro – Borda da Mata – Diamante – Sede</td></tr><tr><td>25</td><td>Povoado Maravilha – Sede</td></tr><tr><td>26</td><td>Mata Verde – Garangau – Poderoso – Patu</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 1058/2026 da 30ª ZE (Itabaianinha), DJE/TRE-SE nº 170/2026 (disp. 25/09/2026) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=SE&amp;numDiario=170&amp;anoDiario=2026).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 9 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Carnaíba</strong></td><td>Dispensa – Carnaíba – Dispensa</td><td>Carnaíba</td><td>32,4 km (ida e volta)</td><td>~43 min</td></tr><tr><td><strong>Rota nova – Várzea Grande</strong></td><td>Muquém – Várzea Grande – Amparo – Olhos d&#x27;Água da Bica – Muquém</td><td>Várzea Grande, Amparo, Olhos d&#x27;Água da Bica</td><td>30,5 km (ida e volta)</td><td>~1h14</td></tr><tr><td><strong>Rota nova – Jaqueira</strong></td><td>Sede – Jaqueira – Sede</td><td>Jaqueira</td><td>17,1 km (ida e volta)</td><td>~17 min</td></tr><tr><td><strong>Parada extra na Rota 07</strong></td><td>desvio pelo caminho atual: Rosário</td><td>Rosário</td><td>+2,3 km</td><td>+5 min</td></tr><tr><td><strong>Parada extra na Rota 11</strong></td><td>desvio pelo caminho atual: Assentamento Espirito Santo</td><td>Assentamento Espirito Santo</td><td>+4,1 km</td><td>+7 min</td></tr><tr><td><strong>Parada extra na Rota 12</strong></td><td>desvio pelo caminho atual: Saco da Rainha</td><td>Saco da Rainha</td><td>+5,7 km</td><td>+14 min</td></tr><tr><td><strong>Parada extra na Rota 19</strong></td><td>desvio pelo caminho atual: Caxingó</td><td>Caxingó</td><td>+5,2 km</td><td>+13 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMI</strong></p><p>Itabaianinha/SE, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Gilson Guedes Cavalcanti Neto</strong><br>Juiz Eleitoral da 30ª Zona Eleitoral – Cristinápolis/SE</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 1058/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Itabaianinha, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 1058/2026: Carnaíba, Várzea Grande, Olhos d&#x27;Água da Bica, Amparo, Jaqueira, Caxingó, Assentamento Espirito Santo, Rosário e Saco da Rainha.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Carnaíba (Dispensa – Carnaíba – Dispensa);</li><li>a criação da Rota nova – Várzea Grande (Muquém – Várzea Grande – Amparo – Olhos d&#x27;Água da Bica – Muquém);</li><li>a criação da Rota nova – Jaqueira (Sede – Jaqueira – Sede);</li><li>a inclusão de parada em Rosário na Rota 07, mantido todo o percurso atual;</li><li>a inclusão de parada em Assentamento Espirito Santo na Rota 11, mantido todo o percurso atual;</li><li>a inclusão de parada em Saco da Rainha na Rota 12, mantido todo o percurso atual;</li><li>a inclusão de parada em Caxingó na Rota 19, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 1058/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Itabaianinha</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Itabaianinha; Edital nº 1058/2026 da 30ª ZE (Itabaianinha), DJE/TRE-SE nº 170/2026 (disp. 25/09/2026) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=SE&amp;numDiario=170&amp;anoDiario=2026); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

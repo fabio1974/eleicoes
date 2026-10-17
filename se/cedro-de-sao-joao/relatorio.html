@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Cedro de São João</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Cedro de São João</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/cedro-de-sao-joao.pdf?v=1792246150" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Cedro de São João (3ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 3ª Zona Eleitoral <strong>1 rota nova</strong> no transporte gratuito de Cedro de São João.
+Traçamos pelas estradas o percurso das 3 rotas do Edital nº 1054/2026. 3 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>Cedro de São João tem 5.361 eleitores aptos em 5 locais de votação e 17 seções. São 1 locais rurais, com 485 eleitores (9% do total).</li>
+
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Piçarreira (6,4 km do local de votação), Bananeiras (6,0 km do local de votação) e Alto dos Monjolos (4,3 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 6 localidades rurais de Cedro de São João que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Piçarreira</td><td>6,4</td><td>Rota 01</td><td>3,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Bananeiras</td><td>6,0</td><td>Rota 01</td><td>3,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Alto dos Monjolos</td><td>4,3</td><td>Rota 01</td><td>2,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Agrovila do PA São João Batista</td><td>3,7</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>2 das 11 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: São Sebastião (Rota 02 e Rota 02). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 6 localidades rurais de Cedro de São João, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 860" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Cedro de São João: 3 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 1054/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="352.5,727.8 423.4,644.1 457.9,578.3 534.0,554.7 560.2,510.0 677.7,409.7 725.0,329.8 698.8,191.8 576.1,114.5 358.3,99.2 184.5,80.0 35.0,359.2 154.5,420.5 140.4,616.0 352.5,727.8 352.5,727.8" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="304.3,503.5 300.2,488.1 308.4,474.9 325.0,466.8 332.6,454.4 340.5,443.0 346.2,428.9 349.8,412.9 357.4,400.9 363.8,387.1 371.4,373.3 386.1,363.7 403.6,362.0 423.8,360.5 443.3,352.5 455.8,342.4 468.2,334.8 481.9,319.4 493.5,311.5 490.7,289.8 482.1,277.5 482.6,258.5 479.4,274.7 488.6,286.2 496.7,299.5 490.5,315.6 475.4,325.5 465.4,337.1 451.6,345.9 436.6,355.6 418.5,362.3 400.9,360.5 382.4,365.1 369.5,375.3 363.0,389.2 356.8,402.4 349.2,414.6 345.4,431.4 337.3,447.4 328.6,461.2 320.0,472.2 307.1,479.2 307.5,498.8 304.3,503.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="415.7,217.7 437.4,232.9 448.9,243.8 467.6,247.3 481.8,255.2 467.6,247.3 450.3,244.8 438.7,234.1 427.4,223.3 415.7,217.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="266.7,230.9 286.8,230.9 301.3,235.8 315.6,230.2 330.4,236.8 350.8,239.0 362.8,231.9 373.7,223.4 390.6,226.0 405.3,219.6 418.3,213.3 437.4,232.9 448.9,243.8 467.6,247.3 481.8,255.2 467.6,247.3 450.3,244.8 438.7,234.1 427.4,223.3 415.5,214.8 403.2,222.1 386.9,225.7 369.4,227.4 357.9,236.1 342.2,239.6 327.0,233.8 307.4,233.9 292.4,229.6 274.8,231.3 266.7,230.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="298.6,512.3 297.8,492.7 298.8,473.7 290.1,462.3 283.6,449.1 277.7,435.8 264.3,427.8 254.8,417.6 238.5,414.5 225.4,407.1 207.9,414.4 184.0,421.7 172.5,430.5 160.0,421.3 172.5,430.5 184.0,421.7 201.5,415.2 219.6,411.0 236.6,413.9 253.5,416.7 266.6,423.0 282.1,418.1 292.8,406.5 304.5,398.9 318.8,392.6 336.3,389.0 352.9,392.2 364.9,384.6 372.9,371.9 386.1,363.7 403.6,362.0 423.8,360.5 443.3,352.5 455.8,342.4 468.2,334.8 481.9,319.4 498.2,315.1 543.2,344.8 571.0,369.6 563.4,388.3 555.3,401.0 547.8,416.7 535.4,439.3 517.5,472.4 507.9,489.9 500.2,503.8 487.4,527.7 478.7,540.1 468.4,558.6 460.4,573.2 452.9,587.5 443.6,604.5 434.8,622.1 426.1,636.2 436.1,620.7 443.7,606.0 452.4,590.1 459.3,577.5 470.1,568.1 483.9,558.9 498.3,553.0 484.5,558.4 471.0,567.2 461.1,576.8 467.4,561.6 476.7,549.3 465.0,564.5 452.9,587.5 443.6,604.5 431.2,594.4 421.8,575.9 411.6,564.6 399.5,555.8 382.6,558.3 364.5,556.2 353.5,547.1 340.6,537.3 332.0,524.4 326.3,510.2 309.0,508.1 298.6,512.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Piçarreira</title></polyline>
+<circle cx="266.9" cy="230.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="415.1" cy="216.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="305.5" cy="504.2" r="2.2" fill="#b9b9b2"/>
+<polygon points="491.8,243.6 479.7,265.9 503.9,265.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="483.5,271.6 473.7,289.6 493.3,289.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="488.0,251.9 477.7,270.8 498.2,270.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="298.9,502.6 290.6,517.8 307.1,517.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="441.3,283.4 433.1,298.6 449.6,298.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="507.1" cy="548.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="514.1" y="543.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Piçarreira 6,4 km</text>
+<circle cx="446.5" cy="605.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="453.5" y="600.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Bananeiras 6,0 km</text>
+<circle cx="154.1" cy="413.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="161.1" y="408.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Alto dos Monjolos 4,3 km</text>
+<rect x="482.3" y="253.1" width="10" height="10" fill="#1d1d1b"/><text x="496.3" y="276.1" font-weight="600" fill="#1d1d1b">Sede de Cedro de São João</text>
+<line x1="35" x2="322.8" y1="757.8" y2="757.8" stroke="#8a8a84" stroke-width="2"/><text x="35" y="771.8" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="748.833333333351" y2="748.833333333351" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="752.833333333351" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,741.8 421.4,754.1 434.6,754.1" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="752.833333333351" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="766.833333333351" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="775.833333333351" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="771.833333333351" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="775.833333333351" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="794.833333333351" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="798.833333333351" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="794.833333333351" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="798.833333333351" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="817.833333333351" y2="817.833333333351" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="821.833333333351" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="840.833333333351" y2="840.833333333351" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="844.833333333351" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 1054/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (2):</strong> Piçarreira e Bananeiras.</li>
+<li><strong>De 3 a 5 km (2):</strong> Alto dos Monjolos e Agrovila do PA São João Batista.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (2):</strong> Lagoa Nova e Poço dos Bois.</li>
+</ul><h2>Rotas do Edital nº 1054/2026</h2>
+<p>O edital tem 3 rotas para Cedro de São João. Horários: Em todas as rotas: 6h30 - 9h - 13h - 15h. Veículos: não informados (veículos cedidos pelos órgãos públicos locais, identificados &quot;A serviço da Justiça Eleitoral&quot;).</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Poço dos Bois – Sede – Poço dos Bois</td></tr><tr><td>02</td><td>Lagoa Nova – São Sebastião – Sede – São Sebastião – Lagoa Nova</td></tr><tr><td>03</td><td>Assentamento São João Batista – Sede – Assentamento São João Batista</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 1054/2026 da 3ª ZE (Transporte de Eleitores – Eleições Gerais 2026), DJE/TRE-SE nº 165/2026 (disp. 18/09/2026), p. 27-29 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=SE&amp;numDiario=165&amp;anoDiario=2026); Comissão Especial de Transporte instalada pelo Edital nº 919/2026, DJE/TRE-SE nº 155/2026 (disp. 03/09/2026), p. 11-12.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 3 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Piçarreira</strong></td><td>Sede – Alto dos Monjolos – Bananeiras – Piçarreira – Sede</td><td>Alto dos Monjolos, Bananeiras, Piçarreira</td><td>26,9 km (ida e volta)</td><td>~41 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMCSJ</strong></p><p>Cedro de São João/SE, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Pedro Rodrigues Neto</strong><br>Juiz Eleitoral da 3ª Zona Eleitoral – Aquidabã/SE</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 1054/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Cedro de São João, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 1054/2026: Piçarreira, Bananeiras e Alto dos Monjolos.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Piçarreira (Sede – Alto dos Monjolos – Bananeiras – Piçarreira – Sede).</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 1054/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Cedro de São João</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Cedro de São João; Edital nº 1054/2026 da 3ª ZE (Transporte de Eleitores – Eleições Gerais 2026), DJE/TRE-SE nº 165/2026 (disp. 18/09/2026), p. 27-29 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=SE&amp;numDiario=165&amp;anoDiario=2026); Comissão Especial de Transporte instalada pelo Edital nº 919/2026, DJE/TRE-SE nº 155/2026 (disp. 03/09/2026), p. 11-12; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>
