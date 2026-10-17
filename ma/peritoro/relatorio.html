@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Peritoró</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Peritoró</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/peritoro.pdf?v=1792242332" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Peritoró (8ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 8ª Zona Eleitoral <strong>5 rotas novas</strong> no transporte gratuito de Peritoró.
+Traçamos pelas estradas o percurso das 11 rotas do Edital nº 30 - TRE-MA/ZE/ZE-08 (Quadro Definitivo de Percursos - Peritoró), que homologou o Edital nº 22/2026. 7 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>Peritoró tem 16.383 eleitores aptos em 19 locais de votação e 56 seções. São 9 locais rurais, com 3.851 eleitores (24% do total).</li>
+<li>6 locais rurais ficam a 10 km ou mais da sede, com 1.990 eleitores. Os mais distantes: Povoado Matões Da Rita (20,8 km), Povoado Levada (20,2 km) e Povoado Tesouro (17,7 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Vila Boa Esperança (6,5 km do local de votação), Morada Nova (5,4 km do local de votação), Fagunde (4,9 km do local de votação), Roçinha (4,3 km do local de votação), Santa Rosa (3,9 km do local de votação), PA Rocinha (3,6 km do local de votação) e Passa Bem (3,3 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 46 localidades rurais de Peritoró que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Comunidade Quilombola Pracateira</td><td>17,7</td><td>Rota 10</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Novo</td><td>14,5</td><td>Rota 10</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Comunidade Quilombola São Benedito do Elcias</td><td>11,6</td><td>Rota 07</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Frei Solano</td><td>9,6</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Mendonça</td><td>9,0</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Comunidade Quilombola Santa Maria</td><td>8,1</td><td>Rota 06</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Comunidade Quilombola Jiquiri</td><td>7,9</td><td>Rota 06</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Comunidade Quilombola São Bento do Juvenal</td><td>6,6</td><td>Rota 06</td><td>1,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Vila Boa Esperança</td><td>6,5</td><td>Rota 01</td><td>4,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Comunidade Quilombola Sossego</td><td>6,0</td><td>Rota 06</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Comunidade Quilombola Lago Grande</td><td>5,9</td><td>Rota 06</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Alto Seco</td><td>5,5</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Comunidade Quilombola São Bento Luirtito</td><td>5,5</td><td>Rota 06</td><td>0,7</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Morada Nova</td><td>5,4</td><td>Rota 02</td><td>5,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fagunde</td><td>4,9</td><td>Rota 08</td><td>2,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Cananhede</td><td>4,7</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Comunidade Quilombola Eira dos Coqueiros</td><td>4,6</td><td>Rota 06</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Povoado Quechada</td><td>4,5</td><td>Rota 08</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Roçinha</td><td>4,3</td><td>Rota 09</td><td>3,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Santa Rosa</td><td>3,9</td><td>Rota 06</td><td>4,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Prazeres</td><td>3,8</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Bom Passar</td><td>3,8</td><td>Rota 07</td><td>0,3</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>PA Rocinha</td><td>3,6</td><td>Rota 09</td><td>2,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Passa Bem</td><td>3,3</td><td>Rota 08</td><td>6,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Comunidade Quilombola Bom Passar</td><td>3,1</td><td>Rota 06</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Piranhinha</td><td>3,0</td><td>Rota 02</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>8 das 42 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Bom Sossego (Rota 03), Aldeia (Rota 03), Centro do Lili (Rota 05), Bacuri 1 (Rota 08), Medeiros (Rota 09), Veloso (Rota 09), Pitoró dos Pretos (Rota 11) e Resfriado (Rota 11). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 46 localidades rurais de Peritoró, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 795" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Peritoró: 7 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 30 - TRE-MA/ZE/ZE-08 (Quadro Definitivo de Percursos - Peritoró), que homologou o Edital nº 22/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="712.9,535.2 538.5,217.1 365.0,98.3 329.9,103.9 296.7,82.2 256.3,80.8 247.0,88.8 226.3,80.0 184.3,80.2 152.4,105.3 137.3,108.1 120.0,129.4 99.7,133.9 93.1,144.5 88.1,182.1 83.4,186.5 105.1,180.1 49.5,375.5 35.0,507.1 202.2,662.7 506.7,601.2 725.0,557.2 712.9,535.2 712.9,535.2" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="187.7,435.6 182.3,436.2 175.9,435.6 168.4,434.7 162.7,433.2 156.6,432.8 152.6,436.0 148.8,440.4 144.7,442.9 143.7,443.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="251.3,117.1 250.0,123.0 247.8,126.9 247.0,132.2 244.2,135.8 246.2,140.7 249.2,144.8 250.2,150.4 253.3,153.6 259.6,158.0 261.7,162.5 263.5,167.0 268.1,169.5 271.6,172.5 275.1,175.3 273.7,180.0 271.3,184.6 268.4,188.4 270.5,193.3 272.3,197.9 277.2,199.3 282.5,201.1 285.0,204.8 290.2,207.4 296.8,208.5 300.0,212.5 303.5,209.5 306.8,206.2 309.4,202.3 309.2,200.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="153.7,246.5 157.4,249.1 162.9,252.6 168.8,256.3 173.8,259.4 179.4,262.9 198.6,274.8 202.8,277.4 206.7,279.7 211.8,282.9 215.8,285.5 220.0,287.8 226.7,290.3 232.1,292.3 234.9,289.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="390.4,480.5 390.8,487.4 393.1,492.4 396.7,496.4 403.3,498.9 407.6,500.8 410.1,504.4 414.4,507.9 413.8,514.3 414.0,520.6 416.7,524.3 419.2,527.8 422.1,532.0 419.2,527.8 416.7,524.3 414.0,520.6 413.8,514.3 414.5,508.7 410.1,504.4 407.6,500.8 403.3,498.9 397.5,496.7 393.5,493.4 390.9,487.4 389.9,482.3 391.5,476.1 391.4,469.6 389.1,464.1 388.4,458.7 390.7,454.6 388.7,450.0 385.5,443.0 381.0,440.8 377.9,434.5 375.7,429.4 372.1,425.5 369.2,422.2 366.2,418.5 362.8,415.6 356.1,414.6 352.7,407.7 355.1,403.1 361.3,397.1 366.6,391.3 370.5,386.7 373.2,382.8 375.7,378.7 377.7,372.9 377.5,365.7 377.7,359.3 373.5,355.8 372.4,353.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="76.7,239.7 81.8,237.2 87.8,237.3 96.9,237.4 104.1,237.4 110.8,237.4 115.0,232.7 117.4,228.3 124.6,228.5 134.6,234.8 138.3,237.1 145.0,241.3 149.4,244.1 153.7,246.5 153.7,246.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="461.0,383.5 461.7,377.0 464.0,372.6 467.5,368.6 471.2,365.7 472.6,360.7 476.6,357.5 480.7,352.4 483.0,343.5 485.2,336.3 487.2,330.2 489.2,326.0 493.0,323.8 499.4,323.8 506.1,322.5 512.0,325.4 517.4,328.1 521.3,330.6 527.3,332.6 530.2,336.6 534.7,339.7 539.9,344.2 538.0,348.6 535.3,353.1 529.9,354.3 522.3,358.9 518.9,362.1 514.5,364.9 515.4,370.5 517.6,374.9 517.8,381.0 520.6,384.3 523.2,388.1 524.6,393.5 526.0,399.2 528.6,403.4 531.2,408.4 530.9,414.3 529.3,420.0 528.8,426.9 525.8,432.4 522.6,435.4 518.9,437.9 513.9,435.1 510.8,428.4 504.6,420.4 491.2,414.1 471.4,396.1 467.0,389.4 463.3,386.6 456.6,386.5 447.6,386.5 441.9,384.1 431.9,374.8 425.8,372.9 418.9,372.9 412.0,370.4 403.8,367.2 388.4,366.8 383.3,364.6 377.7,359.3 373.5,355.8 372.4,353.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="607.0,478.8 603.1,482.0 599.5,484.5 597.6,488.8 595.9,494.4 594.1,498.8 592.0,503.0 598.7,515.4 602.2,521.2 606.0,525.7 610.6,529.0 633.9,533.7 645.5,535.8 654.7,537.5 674.4,542.5 684.7,545.1 692.2,547.0 684.7,545.1 674.4,542.5 656.3,537.8 647.6,536.2 635.8,534.0 630.8,539.1 633.9,533.7 613.1,529.9 608.3,527.7 604.4,524.2 598.7,515.4 591.8,504.2 583.2,490.3 579.9,485.1 576.9,480.5 573.7,477.6 567.2,473.0 562.8,470.0 557.5,467.6 551.2,464.8 546.7,461.0 541.6,455.5 537.2,452.2 531.5,448.4 517.7,439.4 521.6,436.1 524.7,433.2 528.0,429.8 528.9,424.4 530.1,418.4 530.7,412.8 531.0,406.6 530.7,412.8 530.1,418.4 528.5,422.8 528.2,429.4 525.4,432.7 521.6,436.1 517.7,439.4 513.9,435.1 510.8,428.4 504.6,420.4 491.2,414.1 471.4,396.1 467.0,389.4 463.3,386.6 456.6,386.5 447.6,386.5 441.9,384.1 431.9,374.8 425.8,372.9 418.9,372.9 412.0,370.4 403.8,367.2 388.4,366.8 383.3,364.6 377.7,359.3 373.5,355.8 372.4,353.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="286.6,134.2 296.4,135.9 300.5,138.1 302.4,142.4 304.5,150.4 305.6,155.6 306.7,172.6 307.1,182.2 307.4,190.8 307.7,197.9 309.1,202.8 319.5,209.7 323.2,219.0 325.3,226.5 329.8,230.9 336.1,233.1 340.5,235.1 345.6,238.9 348.0,244.0 351.3,248.1 352.1,253.6 348.8,259.7 346.8,264.9 348.8,259.7 352.1,253.6 351.3,248.1 348.0,244.0 346.0,239.8 340.5,235.1 336.1,233.1 331.1,231.9 325.3,226.5 323.2,219.0 321.6,212.4 311.5,202.7 309.2,200.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="46.8,491.2 49.1,485.5 51.5,480.6 63.2,474.4 74.4,472.3 91.5,468.6 98.9,463.7 103.5,459.0 107.9,454.4 115.5,450.9 122.5,448.2 128.3,446.7 133.9,445.5 139.9,444.9 143.7,443.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 09</title></polyline>
+<polyline points="327.0,555.1 327.8,561.0 327.1,566.4 324.9,570.6 322.7,574.9 324.7,579.4 326.0,587.0 328.7,591.4 339.2,595.8 346.6,599.0 352.7,599.5 355.8,604.4 354.5,599.6 348.4,599.5 339.2,595.8 328.7,591.4 326.0,587.0 325.4,580.8 323.2,576.4 324.4,571.6 326.4,567.3 327.8,561.3 326.9,554.5 327.2,547.8 329.4,543.8 329.1,537.4 327.3,533.2 326.0,527.7 325.1,521.9 325.9,515.2 328.6,511.8 332.3,508.2 337.5,505.8 343.7,504.6 348.3,501.5 353.0,498.9 351.6,493.2 349.4,489.2 343.4,488.8 340.0,485.2 336.3,482.6 340.9,477.8 342.6,472.0 342.4,466.2 345.2,461.5 348.3,457.0 351.2,451.2 354.3,447.9 356.0,443.6 357.4,438.0 357.1,430.2 357.1,423.7 358.7,417.7 354.8,412.1 352.7,407.7 355.1,403.1 361.3,397.1 366.6,391.3 370.5,386.7 373.2,382.8 375.7,378.7 377.7,372.9 377.5,365.7 377.7,359.3 373.5,355.8 372.4,353.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 10</title></polyline>
+<polyline points="355.8,604.4 354.5,599.6 348.4,599.5 339.2,595.8 328.7,591.4 326.0,587.0 325.4,580.8 323.2,576.4 324.4,571.6 326.4,567.3 327.8,561.3 326.9,554.5 327.2,547.8 329.4,543.8 329.1,537.4 327.3,533.2 326.0,527.7 325.1,521.9 325.9,515.2 328.6,511.8 332.3,508.2 337.5,505.8 343.7,504.6 348.3,501.5 353.0,498.9 351.6,493.2 349.4,489.2 343.4,488.8 340.0,485.2 336.3,482.6 340.9,477.8 342.6,472.0 342.4,466.2 345.2,461.5 348.3,457.0 351.2,451.2 354.3,447.9 356.0,443.6 357.4,438.0 357.1,430.2 357.1,423.7 358.7,417.7 354.8,412.1 352.7,407.7 355.1,403.1 361.3,397.1 366.6,391.3 370.5,386.7 373.2,382.8 375.7,378.7 377.7,372.9 377.5,365.7 377.7,359.3 373.5,355.8 372.4,353.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 11</title></polyline>
+<polyline points="143.4,444.1 145.7,448.6 143.9,453.9 141.3,458.7 140.9,464.8 142.5,471.4 146.9,475.6 151.9,478.6 155.5,482.2 158.1,486.1 161.7,501.3 163.3,509.4 165.5,514.3 175.4,523.3 182.6,525.5 193.6,524.1 182.6,525.5 176.4,524.4 166.9,515.9 163.9,511.5 161.7,501.3 159.5,490.1 157.5,485.1 154.2,480.6 150.6,477.8 144.6,474.0 141.6,469.3 140.8,463.8 141.8,457.4 144.8,452.3 145.6,445.6 143.4,444.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Vila Boa Esperança</title></polyline>
+<polyline points="179.2,193.9 172.2,194.6 169.1,191.4 167.3,186.9 162.9,185.1 160.1,180.7 159.2,175.2 157.6,168.5 156.4,162.4 156.5,156.4 159.5,152.8 162.0,148.9 162.2,142.8 159.5,138.2 153.0,136.2 147.8,135.1 142.3,129.5 146.9,134.5 153.0,136.2 158.3,137.8 162.1,140.4 162.2,148.5 159.9,152.4 156.6,156.1 156.4,162.4 157.6,168.5 159.2,175.2 160.1,180.7 162.4,184.9 167.0,186.7 168.9,191.1 172.2,194.6 176.6,193.0 179.2,193.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Morada Nova</title></polyline>
+<polyline points="369.5,352.6 372.4,348.1 375.1,343.8 376.8,339.0 378.0,332.7 378.5,325.9 375.8,321.8 374.3,315.9 373.5,309.1 374.3,302.5 376.2,298.2 378.9,294.6 381.9,290.9 385.6,286.5 389.1,282.5 391.7,278.4 394.1,274.7 391.7,278.4 389.1,282.5 385.6,286.5 381.9,290.9 378.9,294.6 376.2,298.2 374.3,302.5 373.0,307.6 373.9,313.2 374.9,318.6 376.4,323.4 378.0,330.7 377.7,336.9 375.6,341.9 373.3,347.1 370.5,350.8 369.5,352.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fagunde</title></polyline>
+<polyline points="137.6,445.8 136.8,439.9 131.3,437.7 127.5,433.7 123.6,428.6 118.7,424.8 111.5,422.8 108.7,418.5 104.6,414.4 100.5,412.1 100.2,405.9 99.4,400.4 97.3,393.0 98.9,397.7 100.2,405.9 100.5,412.1 104.6,414.4 108.7,418.5 111.5,422.8 118.7,424.8 123.6,428.6 127.5,433.7 131.3,437.7 136.2,439.7 140.3,443.8 137.6,445.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Roçinha</title></polyline>
+<polyline points="483.9,234.3 482.2,227.3 482.3,219.9 480.6,214.7 477.9,210.1 478.8,203.7 477.0,199.2 473.0,192.3 469.4,188.4 460.3,187.1 468.3,188.1 473.0,192.3 475.9,197.3 478.8,203.7 477.9,210.1 480.6,214.7 482.3,219.9 482.2,227.3 483.3,233.0 485.7,236.7 481.7,238.8 477.2,240.9 473.0,246.0 468.1,248.6 464.8,251.3 461.2,254.1 457.1,256.2 452.9,259.2 449.7,262.2 446.1,265.0 443.0,268.6 439.6,272.1 436.8,276.4 439.6,272.1 443.0,268.6 446.1,265.0 449.7,262.2 452.9,259.2 457.1,256.2 461.2,254.1 464.8,251.3 468.1,248.6 472.2,246.5 475.6,243.6 478.7,239.3 484.7,237.5 483.9,234.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Santa Rosa</title></polyline>
+<circle cx="358.0" cy="604.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="326.8" cy="555.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="649.2" cy="534.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="392.0" cy="490.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="390.1" cy="480.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="481.2" cy="352.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="479.8" cy="355.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="451.5" cy="403.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="522.0" cy="329.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="458.9" cy="382.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="261.3" cy="161.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="477.4" cy="419.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="251.1" cy="116.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="540.7" cy="344.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="285.0" cy="133.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="352.6" cy="405.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="532.8" cy="456.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="510.9" cy="425.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="271.0" cy="200.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="187.8" cy="435.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="184.9" cy="438.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="335.5" cy="170.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="334.3" cy="169.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="273.4" cy="240.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="287.8" cy="222.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="174.3" cy="263.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="322.4" cy="216.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="294.7" cy="208.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="46.9" cy="491.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="149.0" cy="443.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="486.4" cy="234.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="181.8" cy="192.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="56.5" cy="477.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="372.1" cy="353.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="528.0" cy="403.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="92.3" cy="309.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="154.1" cy="245.8" r="2.2" fill="#b9b9b2"/>
+<polygon points="143.5,430.4 130.4,454.6 156.7,454.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="217.7,283.3 206.9,303.2 228.5,303.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="229.8,284.2 219.9,302.5 239.7,302.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="229.6,283.8 220.0,301.4 239.1,301.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="217.1,281.2 206.2,301.3 228.0,301.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="241.0,280.6 229.7,301.3 252.3,301.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="308.9,191.5 300.5,207.1 317.4,207.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="484.0,224.7 474.8,241.6 493.2,241.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="484.0" y="255.0" text-anchor="middle" fill="#5c5c57">Zona Rural</text>
+<polygon points="369.6,342.4 359.8,360.5 379.5,360.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="53.5,470.4 46.0,484.3 61.0,484.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="234.2,278.5 224.0,297.3 244.4,297.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="530.4,397.1 522.2,412.3 538.7,412.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="76.4,232.3 69.9,244.3 82.9,244.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="88.3,302.9 81.6,315.2 95.0,315.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="179.3,185.8 171.9,199.4 186.7,199.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="298.1,75.0 291.5,87.2 304.7,87.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="243.8,258.2 236.1,272.4 251.5,272.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="155.4,236.0 144.9,255.3 165.9,255.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="137.5,437.9 130.3,451.1 144.7,451.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="196.4" cy="524.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="203.4" y="519.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Vila Boa Esperança 6,5 km</text>
+<circle cx="143.9" cy="127.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="150.9" y="122.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Morada Nova 5,4 km</text>
+<circle cx="394.4" cy="275.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="401.4" y="270.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fagunde 4,9 km</text>
+<circle cx="96.1" cy="392.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="103.1" y="387.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Roçinha 4,3 km</text>
+<circle cx="435.4" cy="278.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="442.4" y="293.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santa Rosa 3,9 km</text>
+<circle cx="100.5" cy="404.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="107.5" y="399.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">PA Rocinha 3,6 km</text>
+<circle cx="459.9" cy="187.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="466.9" y="182.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Passa Bem 3,3 km</text>
+<rect x="229.1" y="284.2" width="10" height="10" fill="#1d1d1b"/><text x="243.1" y="307.2" font-weight="600" fill="#1d1d1b">Sede de Peritoró</text>
+<line x1="35" x2="125.5" y1="692.7" y2="692.7" stroke="#8a8a84" stroke-width="2"/><text x="35" y="706.7" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="683.6711331197222" y2="683.6711331197222" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="687.6711331197222" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,676.7 421.4,688.9 434.6,688.9" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="687.6711331197222" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="701.6711331197222" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="710.6711331197222" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="706.6711331197222" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="710.6711331197222" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="729.6711331197222" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="733.6711331197222" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="729.6711331197222" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="733.6711331197222" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="752.6711331197222" y2="752.6711331197222" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="756.6711331197222" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="775.6711331197222" y2="775.6711331197222" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="779.6711331197222" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 30 - TRE-MA/ZE/ZE-08 (Quadro Definitivo de Percursos - Peritoró), que homologou o Edital nº 22/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (14):</strong> Comunidade Quilombola Pracateira, Sítio Novo, Comunidade Quilombola São Benedito do Elcias, Frei Solano, Mendonça, Comunidade Quilombola Santa Maria, Comunidade Quilombola Jiquiri, Comunidade Quilombola São Bento do Juvenal, Vila Boa Esperança, Comunidade Quilombola Sossego, Comunidade Quilombola Lago Grande, Alto Seco, Comunidade Quilombola São Bento Luirtito e Morada Nova.</li>
+<li><strong>De 3 a 5 km (12):</strong> Fagunde, Cananhede, Comunidade Quilombola Eira dos Coqueiros, Povoado Quechada, Roçinha, Santa Rosa, Prazeres, Bom Passar, PA Rocinha, Passa Bem, Comunidade Quilombola Bom Passar e Piranhinha.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (20):</strong> Agrovila do PA Feliz Lembrança, Agrovila do PA Levada, Agrovila do PA Quilombola Matões da Rita 1, Agrovila do PA São João das Neves, Agrovila do PA São Pedro, Bacuri, Barro Vermelho, Felipinho, Independência, Km-29, Livramento, PA Vila Simão, PA Vila Vitória, Povoado Marajá D Veloso., Povoado Vila Mendes, Povoado Vila Vitória, Rodovia MA-020, Sagrima, São Pedro 2 e Vinte e Nove.</li>
+</ul><h2>Rotas do Edital nº 30 - TRE-MA/ZE/ZE-08 (Quadro Definitivo de Percursos - Peritoró), que homologou o Edital nº 22/2026</h2>
+<p>O edital tem 11 rotas para Peritoró. Horários: 07h às 11h e 13h às 17h em todas as rotas. Veículos: Rota 01: van HYV 8986; 02: micro-ônibus DJB 2069; 03: van NITOF27; 04: micro-ônibus MWHOH86; 05: van NLL2161; 06: van NXI 7902; 07: van NHU 2856; 08: van NGC 0210; 09: van NAX 9099; 10: van LWL1F03; 11: van NIQ4286.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Vila Vitória – Independência</td></tr><tr><td>02</td><td>Cantanhede – Alto Seco – Piranha – Feliz Lembrança</td></tr><tr><td>03</td><td>Bom Sossego – Aldeia – Livramento</td></tr><tr><td>04</td><td>Mendonça – Limeira – Frei Solano – São João das Neves</td></tr><tr><td>05</td><td>Centro do Lili – Trânsito – Livramento</td></tr><tr><td>06</td><td>Lago Grande – Santa Maria – Sossego – Eira – Matões da Rita – São João das Neves</td></tr><tr><td>07</td><td>Boqueirão – Pindoval – Baixa dos Teixeira – Matões da Rita – São João das Neves</td></tr><tr><td>08</td><td>Queixada – Bacuri 1 – Bacuri 2 – Feliz Lembrança</td></tr><tr><td>09</td><td>Medeiros – Veloso – São Pedro – Independência</td></tr><tr><td>10</td><td>Sítio Novo – Precateira – São João das Neves</td></tr><tr><td>11</td><td>Pitoró dos Pretos – Resfriado – Precateira – São João das Neves</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 30 - TRE-MA/ZE/ZE-08, 8ª ZE (Coroatá); DJE/TRE-MA nº 215, disp. 03/10/2026 (https://dje.tse.jus.br/dje/pdf/v1/edicao/130269); Edital nº 22/2026 no DJE nº 206 (https://dje.tse.jus.br/dje/pdf/v1/edicao/130050).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 7 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Vila Boa Esperança</strong></td><td>Sede – Vila Boa Esperança – Sede</td><td>Vila Boa Esperança</td><td>13,0 km (ida e volta)</td><td>~16 min</td></tr><tr><td><strong>Rota nova – Morada Nova</strong></td><td>Sede – Morada Nova – Sede</td><td>Morada Nova</td><td>10,8 km (ida e volta)</td><td>~26 min</td></tr><tr><td><strong>Rota nova – Fagunde</strong></td><td>Sede – Fagunde – Sede</td><td>Fagunde</td><td>9,8 km (ida e volta)</td><td>~24 min</td></tr><tr><td><strong>Rota nova – Roçinha</strong></td><td>Sede – PA Rocinha – Roçinha – Sede</td><td>PA Rocinha, Roçinha</td><td>8,6 km (ida e volta)</td><td>~20 min</td></tr><tr><td><strong>Rota nova – Santa Rosa</strong></td><td>Sede – Passa Bem – Santa Rosa – Sede</td><td>Passa Bem, Santa Rosa</td><td>14,5 km (ida e volta)</td><td>~29 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMP</strong></p><p>Peritoró/MA, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Dra. Anelise Nogueira Reginato</strong><br>Juíza Eleitoral da 8ª Zona Eleitoral – Coroatá/MA</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 30 - TRE-MA/ZE/ZE-08 (Quadro Definitivo de Percursos - Peritoró), que homologou o Edital nº 22/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de Peritoró, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 30 - TRE-MA/ZE/ZE-08 (Quadro Definitivo de Percursos - Peritoró), que homologou o Edital nº 22/2026: Vila Boa Esperança, Morada Nova, Fagunde, Roçinha, Santa Rosa, PA Rocinha e Passa Bem.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Vila Boa Esperança (Sede – Vila Boa Esperança – Sede);</li><li>a criação da Rota nova – Morada Nova (Sede – Morada Nova – Sede);</li><li>a criação da Rota nova – Fagunde (Sede – Fagunde – Sede);</li><li>a criação da Rota nova – Roçinha (Sede – PA Rocinha – Roçinha – Sede);</li><li>a criação da Rota nova – Santa Rosa (Sede – Passa Bem – Santa Rosa – Sede).</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 30 - TRE-MA/ZE/ZE-08 (Quadro Definitivo de Percursos - Peritoró), que homologou o Edital nº 22/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Peritoró</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Peritoró; Edital nº 30 - TRE-MA/ZE/ZE-08, 8ª ZE (Coroatá); DJE/TRE-MA nº 215, disp. 03/10/2026 (https://dje.tse.jus.br/dje/pdf/v1/edicao/130269); Edital nº 22/2026 no DJE nº 206 (https://dje.tse.jus.br/dje/pdf/v1/edicao/130050); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

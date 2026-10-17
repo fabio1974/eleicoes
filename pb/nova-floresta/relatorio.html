@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Nova Floresta</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Nova Floresta</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/nova-floresta.pdf?v=1792242142" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Nova Floresta (24ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 24ª Zona Eleitoral <strong>2 paradas extras em rotas do edital</strong> no transporte gratuito de Nova Floresta.
+Traçamos pelas estradas o percurso das 4 rotas do Edital nº 22/2026. 0 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 3 ficam a 1–2 km.</p>
+<ul>
+<li>Nova Floresta tem 8.318 eleitores aptos em 5 locais de votação e 29 seções. São 0 locais rurais, com 0 eleitores (0% do total).</li>
+
+
+<li><strong>Rota passa perto</strong> (1–2 km): Sítio São José, Lagoa do Meio e Jaçanã.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 19 localidades rurais de Nova Floresta que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Canoa do Costa</td><td>14,0</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Malhada da Catingueira</td><td>10,8</td><td>Rota 01</td><td>0,4</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Cachoeira da Moça</td><td>10,5</td><td>Rota 01</td><td>1,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio São José</td><td>5,6</td><td>Rota 03</td><td>1,1</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Fazenda Ouro Branco</td><td>5,0</td><td>Rota 03</td><td>0,8</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Flores de Baixo</td><td>5,0</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Chácara Ouro Verde</td><td>5,0</td><td>Rota 03</td><td>0,6</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Lagoa do Meio</td><td>4,8</td><td>Rota 03</td><td>1,7</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Sítio Bujari</td><td>4,2</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Lagoa do Junco</td><td>4,1</td><td>Rota 04</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Boca da Mata</td><td>4,0</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Rancho Feliz</td><td>3,9</td><td>Rota 03</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Jaçanã</td><td>3,0</td><td>Rota 04</td><td>1,2</td><td>Rota passa perto (1–2 km)</td></tr></tbody></table></div>
+<p>2 das 16 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Campo Grande (Rota 02) e Mato Grosso (Rota 04). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 19 localidades rurais de Nova Floresta, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1499" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Nova Floresta: 3 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 22/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="647.6,106.2 137.9,137.6 151.6,1366.9 588.8,491.5 647.6,106.2 647.6,106.2" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="115.7,1343.9 109.6,1319.1 100.7,1297.1 84.8,1279.5 81.4,1251.6 85.8,1226.2 109.5,1220.0 136.5,1217.0 160.3,1207.7 168.4,1183.7 170.9,1156.6 193.2,1146.4 215.4,1155.5 193.2,1146.4 179.5,1126.9 173.5,1098.8 162.4,1080.2 162.8,1050.7 168.1,1020.7 179.2,1000.0 186.0,975.2 187.0,940.3 181.2,916.4 178.4,889.7 179.2,883.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="35.0,653.4 62.4,650.2 91.9,651.9 115.9,645.2 148.1,643.7 159.6,622.6 179.2,604.7 204.6,600.3 218.1,578.0 224.0,551.5 230.9,525.9 230.1,496.6 227.7,451.5 224.0,418.6 243.8,384.8 265.9,375.7 276.5,379.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="558.9,158.0 513.3,171.4 483.9,174.7 486.7,232.9 521.2,249.1 552.4,245.8 559.5,283.8 576.5,270.9 601.6,265.4 654.7,255.9 675.2,243.6 674.5,235.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="88.7,422.8 83.9,382.2 94.2,361.4 104.2,316.8 110.5,276.1 105.3,236.2 100.6,199.2 120.7,212.8 152.0,222.1 182.3,227.7 229.2,229.2 245.2,243.0 261.9,267.7 285.5,308.3 287.3,338.5 315.8,342.9 348.4,347.3 360.9,328.1 373.7,266.2 370.3,217.2 366.7,193.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="674.5,235.2 673.4,204.4 705.3,199.5 724.6,184.4 721.1,157.4 724.6,184.4 705.3,199.5 673.4,204.4 674.4,234.8 678.7,266.3 693.8,297.2 627.7,305.4 613.8,328.3 618.8,364.6 622.2,392.2 639.0,419.0 668.5,427.3 639.4,420.3 630.0,397.7 618.8,364.6 615.1,338.7 611.2,308.1 693.8,297.2 682.4,275.8 674.6,253.4 669.4,254.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 03</title></polyline>
+<polyline points="366.7,193.2 362.6,167.9 358.6,139.5 362.1,106.9 358.4,133.9 362.6,167.9 366.7,193.2 366.7,193.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 04</title></polyline>
+<circle cx="113.7" cy="1348.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="137.3" cy="1149.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="73.3" cy="1040.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="652.5" cy="170.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="557.5" cy="159.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="711.8" cy="192.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="676.6" cy="235.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="95.2" cy="422.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="95.2" cy="193.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="573.3" cy="162.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="607.6" cy="389.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="137.3" cy="306.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="559.2" cy="286.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="510.4" cy="431.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="283.0" cy="259.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="358.4" cy="347.7" r="2.2" fill="#b9b9b2"/>
+<polygon points="426.1,383.7 414.0,405.9 438.1,405.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="361.4,320.9 351.2,339.7 371.6,339.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="404.5,327.7 393.3,348.4 415.8,348.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="328.0,330.0 315.3,353.5 340.8,353.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="346.7,361.2 337.5,378.1 355.8,378.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="725.0" cy="154.3" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="587.8" y="149.3" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Sítio São José 5,6 km</text>
+<circle cx="690.5" cy="406.1" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="559.5" y="401.1" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Lagoa do Meio 4,8 km</text>
+<circle cx="362.8" cy="89.0" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="369.8" y="84.0" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Jaçanã 3,0 km</text>
+<rect x="353.4" y="342.7" width="10" height="10" fill="#1d1d1b"/><text x="367.4" y="365.7" font-weight="600" fill="#1d1d1b">Sede de Nova Floresta</text>
+<line x1="35" x2="476.6" y1="1396.9" y2="1396.9" stroke="#8a8a84" stroke-width="2"/><text x="35" y="1410.9" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="1387.8646945333758" y2="1387.8646945333758" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="1391.8646945333758" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,1380.9 421.4,1393.1 434.6,1393.1" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="1391.8646945333758" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="1405.8646945333758" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="1414.8646945333758" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="1410.8646945333758" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="1414.8646945333758" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1433.8646945333758" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1437.8646945333758" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1433.8646945333758" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1437.8646945333758" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1456.8646945333758" y2="1456.8646945333758" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1460.8646945333758" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1479.8646945333758" y2="1479.8646945333758" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1483.8646945333758" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 22/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (4):</strong> Canoa do Costa, Malhada da Catingueira, Cachoeira da Moça e Sítio São José.</li>
+<li><strong>De 3 a 5 km (9):</strong> Fazenda Ouro Branco, Sítio Flores de Baixo, Chácara Ouro Verde, Lagoa do Meio, Sítio Bujari, Lagoa do Junco, Boca da Mata, Rancho Feliz e Jaçanã.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (6):</strong> Chácara Honório, Gamelas de Baixo, Nova Floresta, Novo, Sítio Flores de Cima e Vila Bom Jesus.</li>
+</ul><h2>Rotas do Edital nº 22/2026</h2>
+<p>O edital tem 4 rotas para Nova Floresta. Horários: não informados. Veículos: não informados.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Canoa do Costa – Morada Nova – Boi Morto – Pedra D&#x27;Água</td></tr><tr><td>02</td><td>Campo Grande – Jandaíra – Pororoca – Montevideo</td></tr><tr><td>03</td><td>Flores de Baixo – Gamelas – Bujari</td></tr><tr><td>04</td><td>Lagoa do Junco – Boca da Mata – Mato Grosso – Flores de Cima – Estrondo</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 22/2026 TRE-PB/PTRE/24ª_ZONA (Quadro Geral de Percursos e Horários), DJE/TRE-PB nº 195/2026, disp. 16/09/2026, publ. 17/09/2026, p. 72-74, anexo &#x27;ANEXO - Quadro Geral de Percursos e Horários - Nova Floresta.pdf&#x27; (https://sitdoc.tse.jus.br/sitdoc/DownloadFile?id=35af28c4-5891-44d6-a981-8ada6f378129&amp;app=dje&amp;extensao=pdf) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=PB&amp;numDiario=195&amp;anoDiario=2026).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 3 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Parada extra na Rota 03</strong></td><td>desvio pelo caminho atual: Sítio São José – Lagoa do Meio</td><td>Sítio São José, Lagoa do Meio</td><td>+10,3 km</td><td>+26 min</td></tr><tr><td><strong>Parada extra na Rota 04</strong></td><td>desvio pelo caminho atual: Jaçanã</td><td>Jaçanã</td><td>+2,6 km</td><td>+3 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMNF</strong></p><p>Nova Floresta/PB, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Fábio Brito de Faria</strong><br>Juiz Eleitoral da 24ª Zona Eleitoral – Cuité/PB</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 22/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Nova Floresta, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 22/2026: Sítio São José, Lagoa do Meio e Jaçanã.</p><p>Sugerimos, respeitosamente:</p><ol><li>a inclusão de paradas em Sítio São José e Lagoa do Meio na Rota 03, mantido todo o percurso atual;</li><li>a inclusão de parada em Jaçanã na Rota 04, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 22/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Nova Floresta</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Nova Floresta; Edital nº 22/2026 TRE-PB/PTRE/24ª_ZONA (Quadro Geral de Percursos e Horários), DJE/TRE-PB nº 195/2026, disp. 16/09/2026, publ. 17/09/2026, p. 72-74, anexo &#x27;ANEXO - Quadro Geral de Percursos e Horários - Nova Floresta.pdf&#x27; (https://sitdoc.tse.jus.br/sitdoc/DownloadFile?id=35af28c4-5891-44d6-a981-8ada6f378129&amp;app=dje&amp;extensao=pdf) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=PB&amp;numDiario=195&amp;anoDiario=2026); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

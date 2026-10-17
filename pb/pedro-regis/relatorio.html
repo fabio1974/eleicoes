@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Pedro Régis</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Pedro Régis</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/pedro-regis.pdf?v=1792242366" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Pedro Régis (60ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 60ª Zona Eleitoral <strong>2 rotas novas</strong> no transporte gratuito de Pedro Régis.
+Traçamos pelas estradas o percurso das 3 rotas do Edital nº 17/2026. 4 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>Pedro Régis tem 5.741 eleitores aptos em 4 locais de votação e 18 seções. São 2 locais rurais, com 1.212 eleitores (21% do total).</li>
+
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Macedo (7,5 km do local de votação), Timbó (7,3 km do local de votação), Cafula e Macedo (6,4 km do local de votação) e Fazenda Patos (5,0 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 18 localidades rurais de Pedro Régis que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Macedo</td><td>7,5</td><td>Rota 01</td><td>3,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Timbó</td><td>7,3</td><td>Rota 01</td><td>3,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Cafula e Macedo</td><td>6,4</td><td>Rota 01</td><td>2,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Patos</td><td>5,0</td><td>Rota 01</td><td>2,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Sítio Pau d&#x27;Arco de Baixo 3</td><td>3,7</td><td>Rota 02</td><td>0,3</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Barro Vermelho 2</td><td>3,4</td><td>Rota 02</td><td>0,4</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Pau d&#x27;Arco de Baixo</td><td>3,3</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Pau d&#x27;Arco de Baixo 4</td><td>3,3</td><td>Rota 02</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Barro Vermelho</td><td>3,1</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>3 das 16 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Tabuleiro (Rota 01), Fazenda Santo Antônio (Rota 01) e Cana Brava (Rota 03). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 18 localidades rurais de Pedro Régis, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 889" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Pedro Régis: 4 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 17/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="725.0,605.1 623.1,411.2 705.2,356.0 617.4,277.4 600.4,227.2 500.0,138.0 407.2,107.6 169.5,96.3 118.5,80.0 35.0,271.8 83.1,298.7 182.2,429.6 178.7,695.0 236.0,684.4 255.1,737.4 330.8,756.6 446.2,695.7 530.4,678.0 590.5,699.9 679.7,657.5 725.0,605.1 725.0,605.1" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="464.9,436.7 483.3,432.5 486.4,454.4 486.3,475.9 490.7,493.5 483.1,509.5 478.7,529.6 485.7,546.9 490.4,565.0 487.6,584.2 491.1,603.7 491.5,626.1 494.3,644.6 501.9,658.9 509.1,673.8 501.9,658.9 485.7,668.4 473.4,677.5 465.0,691.1 450.5,684.0 436.1,675.3 441.0,658.7 439.3,638.9 442.8,617.2 434.3,602.3 424.3,588.4 417.5,572.2 399.6,561.0 382.5,547.5 379.9,551.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="295.2,451.1 270.3,451.4 261.6,436.8 242.5,432.1 218.6,431.0 199.8,426.3 186.1,415.2 173.4,404.7 176.0,384.8 195.8,373.7 216.9,363.7 238.8,357.6 257.1,353.4 274.5,348.6 286.4,338.7 293.6,324.4 299.9,305.1 311.2,294.2 328.3,281.2 338.5,269.7 342.3,247.1 348.4,229.8 360.5,220.2 391.0,222.3 405.5,229.9 401.6,248.9 402.4,259.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="288.7,140.4 301.0,151.8 310.8,163.2 320.3,175.6 332.6,185.2 341.0,198.7 335.3,215.0 317.9,221.7 303.1,230.1 292.1,240.9 275.4,245.8 253.5,245.5 238.5,238.7 227.0,228.5 213.4,220.7 197.4,214.6 186.4,203.6 174.9,189.3 186.4,203.6 197.4,214.6 212.1,221.2 197.2,230.6 179.0,235.7 155.5,234.7 141.5,243.6 130.7,257.1 117.0,265.8 100.0,275.2 86.1,289.1 79.9,306.1 86.1,289.1 97.5,277.1 111.2,267.7 127.1,260.9 140.8,269.3 153.0,281.3 159.9,301.5 160.0,325.2 161.7,336.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="372.9,204.5 390.1,210.6 409.9,208.0 439.2,211.9 463.7,210.4 487.4,207.0 501.9,199.5 515.7,191.8 538.7,191.3 559.3,195.0 576.3,204.5 589.1,214.2 599.4,225.3 599.6,247.0 605.3,262.5 616.0,276.1 615.2,298.3 611.9,316.2 606.2,332.4 598.7,349.1 612.0,357.8 630.5,361.1 644.1,369.5 660.4,375.2 669.2,388.1 679.3,376.8 692.0,387.8 712.4,385.7 710.4,366.2 702.0,353.2 687.6,340.4 671.8,326.4 657.6,313.8 645.2,302.8 631.4,290.5 619.5,279.9 608.7,267.5 599.7,247.7 600.1,226.5 589.9,214.9 577.4,205.2 559.3,195.0 545.4,187.4 516.8,191.3 502.7,199.0 487.4,207.0 466.8,210.0 443.4,213.0 428.6,206.5 408.9,208.1 384.8,212.8 372.9,204.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Macedo</title></polyline>
+<polyline points="293.4,463.3 296.7,481.4 292.2,500.2 294.4,522.1 296.1,543.9 300.3,561.9 301.2,582.2 296.4,599.6 298.8,621.4 303.2,639.3 307.8,657.3 314.2,672.3 307.0,688.4 307.4,710.3 292.7,718.7 276.0,712.4 292.7,718.7 307.6,711.9 307.1,690.5 314.2,672.3 307.8,657.3 303.2,639.3 298.8,621.4 296.0,602.0 299.7,584.1 300.3,561.9 296.1,543.9 294.7,523.9 292.5,502.2 296.3,483.0 293.4,463.9 293.4,463.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fazenda Patos</title></polyline>
+<circle cx="210.5" cy="401.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="190.7" cy="350.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="168.8" cy="373.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="182.9" cy="390.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="161.7" cy="336.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="379.7" cy="551.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="292.6" cy="334.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="371.9" cy="528.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="301.1" cy="581.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="294.0" cy="537.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="416.3" cy="208.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="174.4" cy="189.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="294.7" cy="443.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="296.1" cy="451.0" r="2.2" fill="#b9b9b2"/>
+<polygon points="373.3,193.9 363.1,212.6 383.4,212.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="293.3,453.7 283.9,471.0 302.7,471.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="293.3" y="484.4" text-anchor="middle" fill="#5c5c57">Cuité</text>
+<polygon points="203.4,209.1 195.7,223.4 211.2,223.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="361.2,204.7 347.3,230.4 375.2,230.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="666.3" cy="356.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="578.7" y="351.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Macedo 7,5 km</text>
+<circle cx="716.5" cy="381.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="635.1" y="376.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Timbó 7,3 km</text>
+<circle cx="608.9" cy="356.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="465.5" y="371.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Cafula e Macedo 6,4 km</text>
+<circle cx="257.1" cy="711.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="264.1" y="706.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Patos 5,0 km</text>
+<rect x="411.3" y="203.8" width="10" height="10" fill="#1d1d1b"/><text x="425.3" y="226.8" font-weight="600" fill="#1d1d1b">Sede de Pedro Régis</text>
+<line x1="35" x2="353.8" y1="786.6" y2="786.6" stroke="#8a8a84" stroke-width="2"/><text x="35" y="800.6" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="777.5538461538215" y2="777.5538461538215" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="781.5538461538215" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,770.6 421.4,782.8 434.6,782.8" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="781.5538461538215" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="795.5538461538215" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="804.5538461538215" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="800.5538461538215" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="804.5538461538215" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="823.5538461538215" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="827.5538461538215" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="823.5538461538215" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="827.5538461538215" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="846.5538461538215" y2="846.5538461538215" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="850.5538461538215" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="869.5538461538215" y2="869.5538461538215" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="873.5538461538215" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 17/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (3):</strong> Macedo, Timbó e Cafula e Macedo.</li>
+<li><strong>De 3 a 5 km (6):</strong> Fazenda Patos, Sítio Pau d&#x27;Arco de Baixo 3, Sítio Barro Vermelho 2, Pau d&#x27;Arco de Baixo, Sítio Pau d&#x27;Arco de Baixo 4 e Sítio Barro Vermelho.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (9):</strong> Cuité, Pedro Régis, Sítio Carnauba, Sítio Cuité 2, Sítio Cuité 3, Sítio Lages, Sítio Lages 2, Sítio Pau d&#x27;Arco e Sítio Pau d&#x27;Arco de Baixo 2.</li>
+</ul><h2>Rotas do Edital nº 17/2026</h2>
+<p>O edital tem 3 rotas para Pedro Régis. Horários: início das rotas às 07:00, término às 17:00. Veículos: Rota 01: Ônibus OGC5J69, Ônibus SKU0J15; Rota 02: Ônibus QFD8A62, Ônibus SLD3I42; Rota 03: Ônibus RLZ2JI34, Ônibus TOT8H33.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Tabuleiro – Cafula – Fazenda Santo Antônio – Fazenda Folha – Cambambe – Lajes</td></tr><tr><td>02</td><td>Cuité – Canto de Pedra – Pau D&#x27;Arco de Baixo – Baixa Funda</td></tr><tr><td>03</td><td>Salitre – Pau D&#x27;Arco de Cima – Carnaúba – Cana Brava – Milhã – Barro Vermelho</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 17/2026 TRE-PB/PTRE/60ª_ZONA (Quadro Geral de Percursos), DJE/TRE-PB nº 190/2026 (publ. 15/09/2026, p. 3) e republicado na íntegra no DJE/TRE-PB nº 198/2026, disp. 18/09/2026, publ. 19/09/2026, p. 120 e seguintes, anexo SEI_2499510_Edital_17-1.pdf (https://sitdoc.tse.jus.br/sitdoc/DownloadFile?id=054f2813-8a10-4c7c-ba2b-79bae1dc3798&amp;app=dje&amp;extensao=pdf) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=PB&amp;numDiario=198&amp;anoDiario=2026).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 4 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Macedo</strong></td><td>Sede – Cafula e Macedo – Macedo – Timbó – Sede</td><td>Cafula e Macedo, Macedo, Timbó</td><td>16,5 km (ida e volta)</td><td>~24 min</td></tr><tr><td><strong>Rota nova – Fazenda Patos</strong></td><td>Cuité – Fazenda Patos – Cuité</td><td>Fazenda Patos</td><td>10,1 km (ida e volta)</td><td>~24 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMPR</strong></p><p>Pedro Régis/PB, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Eduardo Roberto de Oliveira Barros Filho</strong><br>Juiz Eleitoral da 60ª Zona Eleitoral – Jacaraú/PB</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 17/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Pedro Régis, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 17/2026: Macedo, Timbó, Cafula e Macedo e Fazenda Patos.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Macedo (Sede – Cafula e Macedo – Macedo – Timbó – Sede);</li><li>a criação da Rota nova – Fazenda Patos (Cuité – Fazenda Patos – Cuité).</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 17/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Pedro Régis</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Pedro Régis; Edital nº 17/2026 TRE-PB/PTRE/60ª_ZONA (Quadro Geral de Percursos), DJE/TRE-PB nº 190/2026 (publ. 15/09/2026, p. 3) e republicado na íntegra no DJE/TRE-PB nº 198/2026, disp. 18/09/2026, publ. 19/09/2026, p. 120 e seguintes, anexo SEI_2499510_Edital_17-1.pdf (https://sitdoc.tse.jus.br/sitdoc/DownloadFile?id=054f2813-8a10-4c7c-ba2b-79bae1dc3798&amp;app=dje&amp;extensao=pdf) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=PB&amp;numDiario=198&amp;anoDiario=2026); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

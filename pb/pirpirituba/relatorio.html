@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Pirpirituba</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Pirpirituba</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/pirpirituba.pdf?v=1792242400" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Pirpirituba (47ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 47ª Zona Eleitoral <strong>2 rotas novas e 1 parada extra em rotas do edital</strong> no transporte gratuito de Pirpirituba.
+Traçamos pelas estradas o percurso das 6 rotas do Edital nº 22/2026. 2 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 1 ficam a 1–2 km.</p>
+<ul>
+<li>Pirpirituba tem 8.208 eleitores aptos em 6 locais de votação e 34 seções. São 0 locais rurais, com 0 eleitores (0% do total).</li>
+
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Sítio Miguel (24,0 km do local de votação) e Sítio Riachão (15,9 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Fazenda Cacimbas.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 12 localidades rurais de Pirpirituba que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Sítio Miguel</td><td>24,0</td><td>Rota 02</td><td>2,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Cacimbas</td><td>18,1</td><td>Rota 02</td><td>1,7</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Sítio Riachão</td><td>15,9</td><td>Rota 06</td><td>2,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Pau D&#x27;Arco</td><td>10,3</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Passassunga</td><td>8,6</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Campineiro</td><td>8,3</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sertãozinho</td><td>7,9</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Itamatai 2</td><td>6,6</td><td>Rota 05</td><td>1,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Itamatai 1</td><td>5,2</td><td>Rota 05</td><td>0,9</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Itamatai 3</td><td>3,7</td><td>Rota 05</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>2 das 22 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Cafélis (Rota 01) e Serraria (Rota 01). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 12 localidades rurais de Pirpirituba, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 632" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Pirpirituba: 3 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 22/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="585.3,81.8 517.6,88.0 447.9,167.1 365.5,182.3 313.4,105.2 266.7,104.8 263.0,137.6 227.3,156.8 215.8,170.4 94.9,260.6 42.4,304.9 39.1,371.3 410.6,353.2 497.1,326.2 564.8,263.0 666.8,184.7 699.2,170.8 724.7,134.7 702.1,110.1 654.5,101.5 630.4,83.0 604.9,97.4 585.3,81.8 585.3,81.8" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="147.0,262.6 151.8,254.6 156.0,244.3 163.9,238.8 174.5,236.2 187.8,236.2 199.6,234.4 206.8,227.2 213.5,218.2 228.6,219.3 239.9,220.6 251.0,222.5 263.1,225.2 274.4,218.4 283.7,210.2 294.4,203.3 300.4,213.3 303.7,224.1 304.2,236.4 306.7,246.9 304.4,258.1 304.5,258.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="218.9,357.7 227.3,353.6 228.0,341.5 231.3,330.7 235.0,320.7 233.7,309.3 244.4,307.0 251.0,299.0 257.3,292.6 259.1,280.7 263.0,271.7 272.4,268.1 282.3,264.4 293.2,260.4 303.8,258.5 307.6,249.1 304.5,239.5 304.6,226.8 301.5,217.6 298.0,206.7 303.0,199.0 313.3,193.7 322.8,188.7 335.4,192.6 345.7,195.9 356.0,198.3 364.5,197.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="303.0,317.2 299.6,328.4 294.7,340.2 300.5,346.9 308.7,341.6 318.2,338.5 328.3,336.2 334.1,329.7 341.9,324.9 352.6,326.7 362.6,324.3 361.9,312.2 357.5,304.1 354.6,294.3 358.1,285.3 358.5,272.2 355.7,257.9 359.3,248.7 367.3,244.5 367.1,231.8 366.1,220.5 367.3,209.1 364.5,198.8 364.5,197.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="497.6,173.1 490.6,167.3 482.1,162.9 477.8,154.6 474.3,145.5 476.3,135.0 482.3,127.8 490.5,120.4 497.3,112.8 502.4,104.2 507.9,97.1 515.0,90.1 526.5,85.0 541.9,82.0 553.4,80.6 541.9,82.0 531.1,83.5 518.9,87.5 511.2,93.6 505.3,100.4 499.2,109.7 493.9,117.1 487.4,123.4 480.6,129.4 474.1,137.6 476.0,149.1 470.5,142.2 476.3,135.0 482.3,127.8 490.5,120.4 497.3,112.8 502.4,104.2 507.9,97.1 515.0,90.1 526.5,85.0 541.9,82.0 553.4,80.6 565.4,81.9 577.6,81.5 590.0,80.8 602.7,80.2 613.1,82.1 623.2,85.0 636.2,85.5 641.7,92.5 649.9,98.2 651.9,108.9 655.5,117.7 657.6,128.2 661.5,139.3 666.6,146.6 678.2,147.4 689.1,145.1 678.8,147.4 669.1,150.0 664.4,157.9 654.4,160.1 646.7,164.9 640.2,159.0 632.7,164.1 623.7,167.6 614.3,170.8 606.4,177.5 601.0,184.5 589.9,186.9 580.3,189.9 573.0,195.3 563.6,199.2 554.4,202.7 546.0,209.0 538.2,215.0 530.2,210.7 520.3,213.4 514.1,219.8 506.4,224.6 498.2,229.1 492.4,222.0 487.7,214.4 491.5,205.8 493.7,195.5 489.3,187.1 490.0,175.3 494.0,166.8 490.0,175.3 489.3,187.1 493.7,195.5 491.5,205.8 487.7,214.4 492.4,222.0 498.2,229.1 506.2,224.6 514.1,219.8 520.3,213.4 529.9,210.6 536.7,216.4 543.8,210.8 551.3,204.6 560.0,200.1 567.2,194.5 577.5,191.5 586.3,187.1 598.6,187.0 604.4,179.9 611.2,174.2 619.8,169.3 628.7,165.1 636.2,160.1 645.6,163.5 654.7,160.1 664.6,157.6 669.3,149.8 679.4,147.4 689.5,145.0 698.5,140.9 708.9,137.4 716.7,132.9 718.9,144.2 716.2,155.7 709.3,162.2 701.3,168.6 689.3,176.2 679.9,179.5 671.0,183.3 662.8,188.2 654.5,195.5 648.7,202.1 641.8,207.8 633.8,213.4 627.0,219.5 619.4,225.4 611.7,230.2 603.7,235.6 591.5,236.2 583.5,240.6 575.9,245.5 569.0,251.4 566.5,261.2 560.1,267.3 553.4,273.9 564.5,275.2 574.4,271.6 579.2,263.9 587.6,259.9 596.1,263.7 600.8,268.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="468.8,292.6 457.7,290.6 451.6,277.6 432.2,265.0 431.7,252.5 435.8,243.4 436.9,241.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="105.1,290.5 94.8,293.9 86.7,289.1 76.1,291.4 66.7,286.9 82.1,263.1 75.8,245.1 81.3,238.2 95.6,231.4 101.9,224.5 111.3,218.5 120.0,210.7 129.5,207.7 140.3,199.4 148.8,195.6 157.5,191.9 166.7,186.4 180.4,180.3 187.1,174.3 194.0,168.8 202.6,164.5 211.8,159.1 226.1,158.3 237.4,156.9 260.2,153.6 270.7,155.7 278.6,160.8 285.2,174.8 289.8,182.6 297.2,177.2 310.2,179.9 320.8,177.7 310.8,180.1 300.7,177.7 292.2,182.3 296.4,201.7 283.7,210.2 274.4,218.4 265.0,224.4 255.3,221.7 242.8,221.2 230.5,219.7 219.2,218.6 210.1,222.1 204.3,231.1 194.4,236.0 182.2,236.6 169.4,237.1 159.1,241.5 157.3,242.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="384.5,209.4 384.9,223.1 389.1,232.1 399.6,238.9 407.9,243.7 416.1,251.4 425.5,260.5 445.6,272.7 455.6,287.6 463.8,292.2 474.7,293.8 483.0,298.6 486.9,309.9 489.7,319.4 485.1,328.6 479.5,336.4 473.7,344.6 467.9,353.0 460.7,360.8 452.1,369.0 445.2,387.7 437.3,396.3 428.2,403.0 416.9,411.4 409.7,419.4 405.9,428.9 402.9,439.3 400.7,449.8 396.5,459.8 387.2,463.8 377.4,468.0 368.7,471.7 360.6,475.9 352.2,481.6 340.6,480.7 329.5,478.8 318.3,476.6 306.2,476.4 293.7,476.4 280.5,474.7 271.0,470.5 261.3,467.9 250.4,466.0 242.1,461.6 232.9,457.8 222.1,455.5 211.1,457.0 203.9,462.6 194.1,465.2 185.7,460.2 175.0,457.1 172.8,446.6 166.6,440.4 157.1,437.0 147.4,433.2 142.1,440.8 132.9,444.1 120.8,445.6 110.2,443.8 102.0,439.2 88.8,439.4 75.4,438.4 68.0,432.3 63.7,421.1 74.1,418.3 86.8,420.9 92.4,414.1 101.8,417.4 113.3,413.7 116.4,404.3 124.2,398.7 128.9,407.8 135.5,413.5 128.9,407.8 124.9,398.6 117.1,403.7 113.4,412.7 106.2,418.2 96.4,415.4 87.7,420.2 75.1,418.8 65.8,414.8 67.3,426.6 70.8,436.3 79.0,440.5 90.2,438.8 103.2,441.1 113.6,443.9 125.0,447.1 135.0,444.3 143.9,437.2 155.9,435.9 165.6,439.9 172.7,445.3 175.0,457.1 184.8,459.6 193.5,465.1 203.9,462.6 210.8,457.2 222.1,455.5 232.9,457.8 242.1,461.6 250.4,466.0 261.3,467.9 271.0,470.5 279.8,474.5 290.0,477.1 303.9,475.8 318.3,476.6 329.5,478.8 340.6,480.7 350.3,483.7 356.4,489.9 363.7,495.1 373.8,497.5 379.8,490.1 385.9,483.7 393.6,475.5 397.7,465.0 399.9,453.7 402.1,442.9 404.7,431.9 408.8,421.7 414.0,413.7 422.9,407.0 437.3,396.3 444.4,389.9 448.1,377.1 454.6,366.6 462.1,359.5 470.2,349.6 476.1,341.9 481.9,333.1 487.9,324.6 486.9,309.9 483.7,299.9 474.7,293.8 463.8,292.2 455.6,287.6 451.6,277.6 432.2,265.0 418.7,254.0 412.4,247.8 404.8,241.9 392.5,234.7 386.9,227.9 382.9,218.5 384.5,209.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Sítio Miguel</title></polyline>
+<polyline points="359.3,194.9 348.0,196.3 337.7,194.1 330.6,185.5 324.3,179.0 313.2,180.3 301.1,177.8 292.2,182.3 285.8,176.0 280.3,162.3 270.7,155.7 260.2,153.6 247.0,155.5 235.5,157.1 222.2,157.7 209.0,160.1 201.5,165.1 193.0,169.5 185.7,175.3 174.1,184.7 162.6,189.2 148.8,195.6 140.3,199.4 129.5,207.7 120.0,210.7 111.3,218.5 103.3,223.6 95.6,231.4 86.6,235.3 79.4,241.1 83.9,253.6 65.6,277.3 70.2,290.4 80.7,286.5 89.1,293.1 100.4,294.4 99.4,306.4 92.1,313.7 85.8,321.2 74.0,318.5 71.4,328.9 59.2,327.9 50.8,332.7 43.0,337.6 40.0,347.0 36.1,356.2 35.4,368.0 36.1,356.2 40.0,347.0 43.0,337.6 50.8,332.7 58.7,328.0 71.4,328.9 74.0,318.5 84.2,320.8 91.8,315.0 96.5,307.1 101.6,296.9 90.7,293.8 82.8,286.3 74.5,291.9 66.7,286.9 82.1,263.1 75.8,245.1 81.3,238.2 95.6,231.4 101.9,224.5 111.3,218.5 120.0,210.7 129.5,207.7 140.3,199.4 148.8,195.6 157.5,191.9 166.7,186.4 180.4,180.3 187.1,174.3 194.0,168.8 202.6,164.5 211.8,159.1 226.1,158.3 237.4,156.9 260.2,153.6 270.7,155.7 278.6,160.8 285.2,174.8 289.8,182.6 297.2,177.2 310.2,179.9 320.8,177.7 328.6,183.5 334.8,189.9 342.3,195.3 357.1,195.3 359.3,194.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Sítio Riachão</title></polyline>
+<polyline points="219.8,360.8 219.9,348.3 213.4,340.8 204.0,337.0 193.8,334.4 187.3,328.3 179.4,322.6 168.0,324.6 158.6,328.5 148.6,332.0 138.3,335.5 127.8,338.3 118.3,343.1 122.5,352.2 130.1,357.3 136.2,365.0 140.5,373.1 150.0,382.1 157.6,388.2 150.0,382.1 145.2,374.0 138.2,368.4 132.3,358.8 124.7,353.4 117.0,347.8 123.0,340.0 131.6,336.3 142.8,334.0 153.1,331.4 162.5,327.7 171.6,323.1 182.1,325.5 188.2,332.3 199.4,335.7 210.8,337.7 217.3,344.6 218.9,358.3 219.8,360.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 02</title></polyline>
+<circle cx="645.6" cy="204.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="600.6" cy="268.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="218.3" cy="357.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="594.6" cy="80.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="457.7" cy="327.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="502.4" cy="299.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="472.5" cy="294.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="367.5" cy="130.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="365.0" cy="197.2" r="2.2" fill="#b9b9b2"/>
+<polygon points="367.5,203.7 355.9,225.1 379.1,225.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="358.9,184.4 348.9,202.9 369.0,202.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="373.7,187.5 363.5,206.3 383.9,206.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="365.1,177.3 353.7,198.2 376.4,198.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="357.7,195.8 346.4,216.6 369.0,216.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="385.2,199.9 376.6,215.7 393.7,215.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="142.9" cy="402.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="149.9" y="397.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Miguel 24,0 km</text>
+<circle cx="160.4" cy="382.9" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="167.4" y="377.9" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Fazenda Cacimbas 18,1 km</text>
+<circle cx="40.9" cy="373.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<rect x="360.0" y="192.2" width="10" height="10" fill="#1d1d1b"/><text x="374.0" y="215.2" font-weight="600" fill="#1d1d1b">Sede de Pirpirituba</text>
+<line x1="35" x2="219.7" y1="529.8" y2="529.8" stroke="#8a8a84" stroke-width="2"/><text x="35" y="543.8" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="520.8033704526956" y2="520.8033704526956" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="524.8033704526956" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,513.8 421.4,526.1 434.6,526.1" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="524.8033704526956" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="538.8033704526956" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="547.8033704526956" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="543.8033704526956" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="547.8033704526956" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="566.8033704526956" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="570.8033704526956" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="566.8033704526956" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="570.8033704526956" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="589.8033704526956" y2="589.8033704526956" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="593.8033704526956" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="612.8033704526956" y2="612.8033704526956" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="616.8033704526956" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 22/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (9):</strong> Sítio Miguel, Fazenda Cacimbas, Sítio Riachão, Pau D&#x27;Arco, Passassunga, Campineiro, Sertãozinho, Sítio Itamatai 2 e Sítio Itamatai 1.</li>
+<li><strong>De 3 a 5 km (1):</strong> Sítio Itamatai 3.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (2):</strong> Engenho do Diu e Pirpirituba.</li>
+</ul><h2>Rotas do Edital nº 22/2026</h2>
+<p>O edital tem 6 rotas para Pirpirituba. Horários: início das rotas às 07h, término às 17h. Veículos: não informados.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Boca da Mata – Baixa do Carro – Cafélis – Serraria</td></tr><tr><td>02</td><td>Campineiro</td></tr><tr><td>03</td><td>Serra da Jurema</td></tr><tr><td>04</td><td>Várzea Comprida – Mata – Nica – Pedra D&#x27;água – Santa Laura – Várzea Comprida – Castanha Velha – Mascate – Pau D&#x27;arco – Passassunga</td></tr><tr><td>05</td><td>Itamataí – Boa Esperança</td></tr><tr><td>06</td><td>Tanques – Dois Irmãos – Alto da Matriz – Pacova</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 22/2026 TRE-PB/PTRE/47ª_ZONA (Quadro Geral de Percursos - Rotas de Transporte de Eleitores), DJE/TRE-PB nº 198/2026, disp. 18/09/2026, publ. 19/09/2026, p. 92-94 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=PB&amp;numDiario=198&amp;anoDiario=2026).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 3 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Sítio Miguel</strong></td><td>Sede – Sítio Miguel – Sede</td><td>Sítio Miguel</td><td>47,5 km (ida e volta)</td><td>~1h13</td></tr><tr><td><strong>Rota nova – Sítio Riachão</strong></td><td>Sede – Sítio Riachão – Sede</td><td>Sítio Riachão</td><td>31,6 km (ida e volta)</td><td>~1h00</td></tr><tr><td><strong>Parada extra na Rota 02</strong></td><td>desvio pelo caminho atual: Fazenda Cacimbas</td><td>Fazenda Cacimbas</td><td>+11,5 km</td><td>+28 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMP</strong></p><p>Pirpirituba/PB, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Alírio Maciel Lima de Brito</strong><br>Juiz Eleitoral da 47ª Zona Eleitoral – Guarabira/PB</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 22/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Pirpirituba, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 22/2026: Sítio Miguel, Sítio Riachão e Fazenda Cacimbas.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Sítio Miguel (Sede – Sítio Miguel – Sede);</li><li>a criação da Rota nova – Sítio Riachão (Sede – Sítio Riachão – Sede);</li><li>a inclusão de parada em Fazenda Cacimbas na Rota 02, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 22/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Pirpirituba</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Pirpirituba; Edital nº 22/2026 TRE-PB/PTRE/47ª_ZONA (Quadro Geral de Percursos - Rotas de Transporte de Eleitores), DJE/TRE-PB nº 198/2026, disp. 18/09/2026, publ. 19/09/2026, p. 92-94 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=PB&amp;numDiario=198&amp;anoDiario=2026); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

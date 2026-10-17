@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Alagoa Nova</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Alagoa Nova</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/alagoa-nova.pdf?v=1792242129" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Alagoa Nova (13ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 13ª Zona Eleitoral <strong>1 parada extra em rotas do edital</strong> no transporte gratuito de Alagoa Nova.
+Traçamos pelas estradas o percurso das 16 rotas do Edital nº 24/2026. 0 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 1 ficam a 1–2 km.</p>
+<ul>
+<li>Alagoa Nova tem 16.604 eleitores aptos em 9 locais de votação e 54 seções. São 0 locais rurais, com 0 eleitores (0% do total).</li>
+
+
+<li><strong>Rota passa perto</strong> (1–2 km): Gameleira 1.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 17 localidades rurais de Alagoa Nova que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Sítio Angellim</td><td>8,6</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Gameleira 1</td><td>6,4</td><td>Rota 13</td><td>1,1</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Serra Preta</td><td>6,2</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Queira-Deus</td><td>6,0</td><td>Rota 08</td><td>0,3</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Mazagão</td><td>5,9</td><td>Rota 06</td><td>0,7</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Geraldo</td><td>5,6</td><td>Rota 09</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Boa Esperança</td><td>5,4</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>São José</td><td>4,7</td><td>Rota 09</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Gameleira</td><td>4,7</td><td>Rota 13</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Santarém de Cima</td><td>4,6</td><td>Rota 16</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Preguiçoso</td><td>4,6</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Bacupari</td><td>4,1</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Balsamo</td><td>3,7</td><td>Rota 11</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Ourique</td><td>3,4</td><td>Rota 10</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>14 das 61 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: São Severino (Rota 01), Vitória (Rota 02), Nova Horta (Rota 04), Furna de Faca (Rota 05), Serra da Boa (Rota 05), Braz (Rota 08), Camará (Rota 08), Feitosa (Rota 08), Geraldo de Cima (Rota 09), Onorato (Rota 10), Pedra D&#x27;Água (Rota 11), Tanques (Rota 12), Tanque de Palmeira (Rota 12) e Chã da Barra (Rota 13). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 17 localidades rurais de Alagoa Nova, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 558" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Alagoa Nova: 1 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 24/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="202.8,401.4 239.0,399.0 272.9,417.5 314.2,415.9 346.9,401.4 428.8,425.4 471.0,406.5 499.3,410.4 562.7,379.3 600.2,347.8 630.1,316.3 636.0,270.2 683.6,243.4 704.1,189.1 725.0,158.4 694.3,115.4 597.0,86.7 571.0,98.5 513.5,80.0 483.6,111.5 418.2,110.7 397.3,130.0 329.6,102.1 287.4,105.6 259.1,96.5 222.9,125.7 104.3,98.1 96.4,139.9 35.0,199.7 35.4,266.7 46.8,281.2 89.0,291.5 149.6,273.8 194.1,327.7 202.8,401.4 202.8,401.4" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="627.7,99.4 638.2,96.1 646.4,92.3 651.5,99.7 661.5,102.4 671.4,104.5 673.6,114.1 671.1,124.0 666.4,131.2 672.7,137.0 680.2,141.6 687.3,146.6 680.2,141.6 672.7,137.0 666.3,131.4 671.1,124.0 673.4,114.5 671.4,104.5 661.5,102.4 651.2,100.8 653.3,90.7 643.7,94.3 634.7,97.3 622.9,97.7 613.4,100.2 606.1,95.6 599.0,90.9 592.3,96.2 586.4,102.2 580.8,110.2 574.9,116.5 568.6,122.2 563.2,129.8 559.4,138.0 554.4,144.9 548.8,151.2 543.2,157.7 537.2,163.9 532.9,171.7 526.1,177.2 521.7,184.7 515.4,192.5 506.9,188.3 496.3,190.9 494.2,178.8 486.9,173.2 476.5,175.2 465.8,177.0 455.1,179.1 450.9,187.3 450.2,189.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="676.6,209.2 670.9,201.9 675.6,194.2 675.8,182.3 665.6,180.7 655.6,178.6 645.1,176.6 642.5,165.5 637.0,159.0 632.8,151.1 624.3,147.6 615.7,151.8 612.1,160.5 600.9,161.9 591.0,159.9 582.5,163.4 579.4,172.3 580.0,183.7 585.9,189.7 593.3,194.6 585.9,189.7 580.0,183.7 568.1,184.0 557.5,182.7 547.5,180.2 536.2,179.4 529.5,185.1 521.4,191.8 514.6,197.4 504.2,194.8 493.6,196.0 491.8,200.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="562.8,231.5 570.9,235.5 582.6,234.5 587.1,232.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="515.1,259.2 527.0,259.1 515.3,259.3 502.7,260.0 492.8,256.6 481.8,259.0 475.0,253.8 481.5,259.2 473.5,263.3 469.0,271.0 461.9,276.1 458.2,284.3 453.5,291.6 458.6,298.7 463.8,305.4 468.6,312.6 461.7,317.9 465.4,326.2 471.1,333.5 473.1,337.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="570.4,295.6 565.1,302.1 556.1,305.1 550.0,311.2 546.9,319.9 541.6,326.5 533.8,330.6 530.3,338.9 527.6,340.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="444.3,357.3 434.9,354.0 428.7,348.1 417.2,347.3 408.1,344.5 399.2,348.1 389.0,350.0 378.8,347.7 386.3,343.2 375.9,344.7 374.9,333.5 377.6,323.7 375.0,333.2 370.2,340.8 377.6,345.7 383.9,351.2 385.9,361.4 378.9,366.4 381.2,376.4 374.3,371.2 381.5,366.3 385.3,358.2 389.5,350.3 379.2,348.3 371.0,344.2 363.0,337.6 355.0,333.3 348.3,326.3 343.4,316.1 345.3,305.5 352.2,300.1 361.6,297.3 364.7,288.5 365.3,286.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="491.7,384.5 485.1,390.6 479.0,396.5 473.7,403.8 467.6,409.5 460.0,414.6 451.8,418.6 444.1,423.0 433.1,424.6 421.1,424.3 411.5,422.0 399.6,420.8 391.6,416.8 382.0,413.7 373.0,410.7 374.6,399.7 384.3,397.0 392.9,393.7 402.7,391.3 392.9,393.7 382.1,392.5 379.5,383.2 369.0,384.5 357.8,383.4 352.0,376.0 357.0,369.1 360.8,370.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="300.5,364.4 292.6,368.6 285.2,373.6 275.7,370.6 265.2,368.3 259.9,361.3 261.3,350.9 253.6,346.1 245.0,342.2 232.6,344.7 223.4,348.6 215.0,344.2 213.1,343.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="224.5,303.2 223.2,292.4 228.6,285.8 223.7,276.9 214.0,280.6 205.3,286.0 195.6,291.8 185.3,295.1 185.3,295.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 09</title></polyline>
+<polyline points="269.3,275.3 282.3,266.1 285.1,255.3 276.4,246.2 276.1,234.3 276.4,246.2 282.3,252.2 282.1,264.9 292.8,261.8 302.4,260.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 10</title></polyline>
+<polyline points="431.2,133.6 422.9,129.2 413.9,132.4 409.3,139.8 416.8,144.4 405.7,145.7 410.3,155.9 409.9,169.5 415.4,161.9 425.0,158.0 429.3,157.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 11</title></polyline>
+<polyline points="376.4,176.3 377.0,187.6 374.1,197.4 369.0,204.7 359.2,201.0 351.8,196.1 343.0,192.6 335.8,187.7 336.1,186.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 12</title></polyline>
+<polyline points="279.6,161.5 285.8,169.8 291.5,180.2 296.3,190.4 302.4,196.5 313.1,198.1 310.8,208.0 309.5,219.9 314.5,226.7 322.7,230.5 332.0,233.5 343.6,238.1 354.2,240.4 368.4,237.9 378.6,234.8 389.7,233.5 398.0,237.3 404.6,235.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 13</title></polyline>
+<polyline points="213.8,162.9 221.0,157.6 227.0,151.1 234.2,146.3 242.5,150.1 250.0,154.6 252.8,163.7 250.0,154.6 242.5,150.1 234.2,146.3 227.0,151.1 221.0,157.6 214.1,162.8 209.3,170.2 200.5,173.2 188.8,172.7 181.6,177.6 177.2,185.7 167.7,188.8 162.4,195.8 159.1,204.3 151.3,208.5 139.4,208.3 136.4,213.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 14</title></polyline>
+<polyline points="162.3,174.6 164.5,184.4 167.0,193.9 157.7,196.6 148.4,193.9 144.4,191.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 15</title></polyline>
+<polyline points="169.6,142.3 159.8,144.6 154.4,138.2 148.3,132.1 141.0,125.3 133.8,130.2 128.0,136.8 123.8,144.9 115.3,149.6 109.2,155.9 101.9,160.8 96.1,167.2 91.5,174.6 87.0,183.1 82.7,190.7 75.4,195.6 71.7,204.8 70.9,211.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 16</title></polyline>
+<polyline points="279.6,161.5 273.3,155.7 269.3,143.9 278.4,139.2 289.6,137.7 301.2,131.3 291.9,137.2 278.4,139.2 269.3,143.9 273.3,155.7 279.6,161.5 279.6,161.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 13</title></polyline>
+<circle cx="627.3" cy="99.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="587.2" cy="232.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="273.7" cy="342.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="328.0" cy="287.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="224.4" cy="303.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="562.4" cy="232.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="185.4" cy="295.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="279.6" cy="161.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="76.4" cy="210.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="472.9" cy="337.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="515.1" cy="259.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="431.2" cy="133.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="276.0" cy="228.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="429.2" cy="156.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="144.5" cy="191.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="163.1" cy="175.2" r="2.2" fill="#b9b9b2"/>
+<polygon points="406.8,212.6 393.2,237.6 420.4,237.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="392.2,216.5 378.6,241.6 405.8,241.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="411.1,223.3 402.8,238.6 419.4,238.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="420.6,223.6 408.1,246.6 433.0,246.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="157.5,163.9 147.4,182.5 167.6,182.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="397.3,223.4 386.9,242.6 407.8,242.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="380.0,219.8 366.9,243.9 393.1,243.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="391.8,231.9 382.4,249.3 401.3,249.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="391.4,210.6 380.8,230.2 402.1,230.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="304.0" cy="130.4" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="311.0" y="125.4" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Gameleira 1 6,4 km</text>
+<rect x="399.2" y="229.8" width="10" height="10" fill="#1d1d1b"/><text x="413.2" y="252.8" font-weight="600" fill="#1d1d1b">Sede de Alagoa Nova</text>
+<line x1="35" x2="212.4" y1="455.6" y2="455.6" stroke="#8a8a84" stroke-width="2"/><text x="35" y="469.6" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="446.56712328766304" y2="446.56712328766304" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="450.56712328766304" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,439.6 421.4,451.8 434.6,451.8" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="450.56712328766304" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="464.56712328766304" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="473.56712328766304" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="469.56712328766304" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="473.56712328766304" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="492.56712328766304" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="496.56712328766304" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="492.56712328766304" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="496.56712328766304" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="515.567123287663" y2="515.567123287663" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="519.567123287663" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="538.567123287663" y2="538.567123287663" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="542.567123287663" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 24/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (7):</strong> Sítio Angellim, Gameleira 1, Serra Preta, Queira-Deus, Mazagão, Sítio Geraldo e Boa Esperança.</li>
+<li><strong>De 3 a 5 km (7):</strong> São José, Sítio Gameleira, Sítio Santarém de Cima, Preguiçoso, Sítio Bacupari, Sítio Balsamo e Ourique.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (3):</strong> Montevidéu, São Tomé e Sítio São Tomé de Cima.</li>
+</ul><h2>Rotas do Edital nº 24/2026</h2>
+<p>O edital tem 16 rotas para Alagoa Nova. Horários: das 7h até meia hora após o final da votação da última seção eleitoral em funcionamento. Veículos: não informados.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Angelim – Mendonça – São Severino – Santo Antônio</td></tr><tr><td>02</td><td>Genipapo – Urucú – Beatriz – Vitória – Pau D&#x27;Arco</td></tr><tr><td>03</td><td>Boa Esperança – Serra Preta</td></tr><tr><td>04</td><td>Bacuparí – Viração – Horta – Nova Horta – Preguiçoso</td></tr><tr><td>05</td><td>Buraco D&#x27;Agua – Boa Vista – Furna de Faca – Serra da Boa</td></tr><tr><td>06</td><td>Serra Grande – Titara – Alagoinha – Cutias – Assis</td></tr><tr><td>07</td><td>Juá de Baixo – Juá – Juá de Cima – Tanquinho – Cascavel</td></tr><tr><td>08</td><td>Queira Deus – Braz – Camará – Geraldo de Baixo – Feitosa</td></tr><tr><td>09</td><td>Geraldo – Geraldo de Cima – São José</td></tr><tr><td>10</td><td>Onorato – Bonito – Ourique – Cruz</td></tr><tr><td>11</td><td>Bálsamo – Pedra D&#x27;Água – Bom Jesus – Montevideu</td></tr><tr><td>12</td><td>Tanques – Tanque de Palmeira – Palmeira – Cajueiro</td></tr><tr><td>13</td><td>Gameleira – Chã da Barra</td></tr><tr><td>14</td><td>Ribeiro – Lajedo – São Tomé de Baixo</td></tr><tr><td>15</td><td>São Tomé – Povoado São Tomé – São Tomé de Cima</td></tr><tr><td>16</td><td>Riachão – Mumbuca – Santarém</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 24/2026 TRE-PB/PTRE/13ª_ZONA (Quadro Geral de Percursos e Horários Programados para o Transporte de Eleitores), DJE/TRE-PB nº 198/2026, disp. 18/09/2026, publ. 19/09/2026, p. 14, anexo &#x27;QUADRO GERAL DE PERCURSOS - TRANSPORTE DE ELEITORES - ELEIÇÕES 2026.pdf&#x27; (https://sitdoc.tse.jus.br/sitdoc/DownloadFile?id=af730200-0cbc-4205-a18f-6c3c077a75c1&amp;app=dje&amp;extensao=pdf) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=PB&amp;numDiario=198&amp;anoDiario=2026).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 1 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Parada extra na Rota 13</strong></td><td>desvio pelo caminho atual: Gameleira 1</td><td>Gameleira 1</td><td>+3,4 km</td><td>+8 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMAN</strong></p><p>Alagoa Nova/PB, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Eronildo José Pereira</strong><br>Juiz Eleitoral da 13ª Zona Eleitoral – Alagoa Nova/PB</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 24/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Alagoa Nova, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 24/2026: Gameleira 1.</p><p>Sugerimos, respeitosamente:</p><ol><li>a inclusão de parada em Gameleira 1 na Rota 13, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 24/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Alagoa Nova</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Alagoa Nova; Edital nº 24/2026 TRE-PB/PTRE/13ª_ZONA (Quadro Geral de Percursos e Horários Programados para o Transporte de Eleitores), DJE/TRE-PB nº 198/2026, disp. 18/09/2026, publ. 19/09/2026, p. 14, anexo &#x27;QUADRO GERAL DE PERCURSOS - TRANSPORTE DE ELEITORES - ELEIÇÕES 2026.pdf&#x27; (https://sitdoc.tse.jus.br/sitdoc/DownloadFile?id=af730200-0cbc-4205-a18f-6c3c077a75c1&amp;app=dje&amp;extensao=pdf) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=PB&amp;numDiario=198&amp;anoDiario=2026); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

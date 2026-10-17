@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Puxinanã</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Puxinanã</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/puxinana.pdf?v=1792242421" download>Baixar em PDF</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Puxinanã (50ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 50ª Zona Eleitoral <strong>nenhuma proposta necessária</strong> no transporte gratuito de Puxinanã.
+Traçamos pelas estradas o percurso das 12 rotas do Edital nº 20/2026. 0 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>Puxinanã tem 12.891 eleitores aptos em 10 locais de votação e 39 seções. São 3 locais rurais, com 2.029 eleitores (16% do total).</li>
+
+
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 16 localidades rurais de Puxinanã que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Lagoa de Dentro</td><td>6,4</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Malícia 2</td><td>5,0</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Malícia</td><td>4,1</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Azevem</td><td>3,3</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Pai Domingos</td><td>3,3</td><td>Rota 04</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Maracajá</td><td>3,1</td><td>Rota 07</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>10 das 55 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Sítio Serra do Maracajá (Rota 01), Sítio Lagoa Grande (Rota 02), Sítio de Luiz do Vale (Rota 04), Grupo de Campo de Angola (Rota 05 e Rota 06), Sítio Potela (Rota 07), Sítio Milhã (Rota 09), Sítio Piaca (Rota 10), Sítio Lagoa do Tetéu (Rota 11) e Sítio Furna de Onça (Rota 12). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 16 localidades rurais de Puxinanã, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 796" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b">Puxinanã: nenhuma localidade rural fica a 3 km ou mais do local de votação</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 20/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="725.0,543.3 718.6,480.8 568.4,277.5 593.5,244.8 589.5,120.9 524.0,117.4 422.4,151.9 381.5,151.9 303.2,80.0 35.0,465.6 261.1,433.5 345.8,538.6 352.8,582.5 397.2,632.7 442.8,646.1 532.8,619.8 540.4,517.6 725.0,543.3 725.0,543.3" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="386.5,420.5 395.5,406.1 403.0,395.9 407.2,382.0 412.4,368.9 409.2,355.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="477.0,663.6 463.3,658.6 451.4,651.7 454.5,636.8 468.2,632.3 478.7,624.9 497.1,624.5 512.8,627.7 526.7,623.8 537.9,617.1 548.2,607.7 544.4,594.0 538.7,581.7 525.9,576.5 517.6,567.0 506.2,560.6 499.1,549.6 490.8,538.4 482.6,528.7 470.4,518.6 460.5,509.4 452.1,499.4 446.8,486.8 441.2,474.0 431.4,464.9 426.8,451.7 423.1,436.7 420.7,421.2 416.1,407.7 410.7,392.1 407.3,376.6 412.9,364.4 409.2,355.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="447.5,182.0 458.7,188.4 457.1,204.7 445.5,210.9 434.1,217.1 440.3,231.5 450.5,239.7 462.0,246.4 471.4,261.0 481.2,271.1 491.6,281.5 506.0,285.4 518.1,291.8 532.7,294.7 518.1,291.8 504.9,296.7 493.6,303.8 483.8,311.6 474.1,319.9 463.9,327.4 452.5,334.5 441.9,342.2 430.3,348.2 413.5,353.5 396.4,354.3 378.5,353.5 373.9,339.6 368.4,325.3 363.6,311.8 360.4,295.7 356.6,278.1 354.3,262.5 355.8,246.0 357.4,227.8 356.3,211.3 348.3,201.2 356.3,211.3 357.4,227.8 355.8,246.0 354.3,262.5 356.6,278.1 360.4,295.7 363.5,311.4 368.4,325.3 373.5,337.8 376.7,353.5 394.1,354.5 409.2,355.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="620.1,369.3 623.8,355.4 635.1,364.2 638.3,379.0 640.7,395.3 649.3,405.9 662.9,411.0 675.1,418.5 683.3,428.0 690.2,443.3 697.2,455.5 706.0,465.2 694.5,457.5 681.1,453.1 683.7,428.6 675.1,418.5 662.9,411.0 649.3,405.9 640.7,395.3 638.3,379.0 635.1,364.2 625.1,354.3 616.9,338.7 607.3,330.7 600.2,318.5 592.7,306.1 584.0,295.5 570.8,290.2 555.2,293.6 538.1,294.4 520.3,293.6 504.9,296.7 493.6,303.8 483.8,311.6 474.1,319.9 463.9,327.4 452.5,334.5 441.9,342.2 430.3,348.2 413.5,353.5 409.2,355.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="381.8,557.8 370.9,571.5 356.0,576.6 362.9,588.4 374.4,600.9 384.2,615.2 391.7,628.1 404.6,633.1 422.6,634.2 435.0,639.7 445.6,647.9 435.5,640.1 422.6,634.2 404.6,633.1 391.7,628.1 384.2,615.2 376.9,603.7 364.5,590.2 352.7,582.4 333.9,578.6 311.2,573.9 296.2,570.8 283.5,563.8 272.2,557.4 260.1,550.5 271.8,544.5 283.7,537.7 295.7,531.9 301.5,519.9 307.9,506.7 320.0,500.4 335.1,496.4 346.4,489.2 351.5,473.9 353.1,457.5 345.1,441.2 333.6,432.0 332.2,414.7 331.7,392.6 332.7,373.6 337.3,357.5 344.6,347.1 358.9,351.4 376.7,353.5 394.1,354.5 409.2,355.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="381.8,557.8 370.9,571.5 356.0,576.6 362.9,588.4 374.4,600.9 384.2,615.2 391.7,628.1 404.6,633.1 422.6,634.2 435.0,639.7 445.6,647.9 435.5,640.1 422.6,634.2 404.6,633.1 391.7,628.1 384.2,615.2 376.9,603.7 364.5,590.2 352.7,582.4 333.9,578.6 311.2,573.9 296.2,570.8 283.5,563.8 272.2,557.4 260.1,550.5 271.8,544.5 283.7,537.7 295.7,531.9 301.5,519.9 307.9,506.7 320.0,500.4 335.1,496.4 346.4,489.2 351.5,473.9 353.1,457.5 345.1,441.2 333.6,432.0 332.2,414.7 331.7,392.6 332.7,373.6 337.3,357.5 344.6,347.1 358.9,351.4 376.7,353.5 394.1,354.5 409.2,355.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="280.7,313.3 270.3,306.0 261.8,296.8 246.4,291.2 234.1,285.8 221.1,278.9 210.3,271.2 197.7,264.8 185.7,259.2 177.5,249.7 185.8,238.9 196.5,246.0 185.8,238.9 169.6,240.4 156.9,246.8 149.5,257.5 149.1,274.7 151.1,290.9 160.9,299.1 175.9,302.7 174.8,320.4 180.7,333.1 189.6,342.0 199.3,349.9 209.3,358.0 219.4,366.4 229.9,374.5 241.0,384.2 258.6,383.9 272.6,380.2 287.4,374.8 303.9,373.6 316.6,366.7 334.7,365.2 338.3,349.9 343.9,335.4 350.9,349.0 366.1,353.4 384.0,353.8 401.0,355.3 409.2,355.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="343.7,200.1 353.4,192.0 355.4,171.2 356.5,153.6 357.8,136.3 349.9,126.1 339.4,117.4 328.1,110.3 310.9,111.8 297.9,105.7 290.6,122.3 300.5,130.9 310.1,140.6 305.5,154.3 293.4,160.2 278.9,163.7 288.7,171.9 279.8,183.9 281.1,201.8 289.1,212.4 296.7,226.0 301.7,238.5 314.6,248.5 325.5,255.4 340.2,262.1 353.8,268.9 357.3,283.4 362.1,303.7 366.9,320.2 373.5,337.8 376.7,353.5 394.1,354.5 409.2,355.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="522.4,248.7 507.5,252.0 509.8,268.3 510.7,286.1 521.0,294.2 533.3,299.6 547.5,295.0 562.0,291.2 567.9,278.7 576.8,267.8 587.0,256.8 593.0,244.7 592.9,226.1 591.9,208.7 592.9,226.1 593.0,244.2 587.0,256.8 576.8,267.8 568.1,277.3 563.7,290.5 549.7,294.7 531.6,294.1 515.6,292.2 502.6,297.9 491.8,304.8 481.9,313.2 472.0,320.9 462.5,329.2 451.0,335.9 439.5,342.9 426.9,349.4 412.1,354.0 409.2,355.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 09</title></polyline>
+<polyline points="683.3,452.5 668.5,474.0 663.8,487.6 659.7,501.1 651.3,510.4 659.7,501.1 663.8,487.6 668.5,474.0 683.8,471.5 700.6,469.2 696.0,454.6 689.1,439.5 681.2,424.9 670.4,415.3 658.1,409.2 645.5,402.0 639.2,390.4 638.5,372.9 631.9,360.5 619.1,365.9 625.1,354.3 616.9,338.7 607.3,330.7 600.2,318.5 592.7,306.1 584.0,295.5 570.8,290.2 555.2,293.6 538.1,294.4 520.3,293.6 504.9,296.7 493.6,303.8 483.8,311.6 474.1,319.9 463.9,327.4 452.5,334.5 441.9,342.2 430.3,348.2 413.5,353.5 409.2,355.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 10</title></polyline>
+<polyline points="683.3,452.5 683.7,428.6 675.1,418.5 662.9,411.0 649.3,405.9 640.7,395.3 638.3,379.0 635.1,364.2 625.1,354.3 616.9,338.7 607.3,330.7 600.2,318.5 592.7,306.1 584.0,295.5 570.8,290.2 555.2,293.6 538.1,294.4 520.3,293.6 504.9,296.7 493.6,303.8 483.8,311.6 474.1,319.9 463.9,327.4 452.5,334.5 441.9,342.2 430.3,348.2 413.5,353.5 409.2,355.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 11</title></polyline>
+<polyline points="323.5,287.0 321.2,303.3 327.9,315.4 346.0,317.3 365.0,316.3 373.5,337.8 376.7,353.5 394.1,354.5 409.2,355.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 12</title></polyline>
+<circle cx="447.0" cy="649.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="528.1" cy="580.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="500.1" cy="549.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="343.5" cy="200.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="622.8" cy="368.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="254.7" cy="386.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="306.1" cy="248.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="615.2" cy="430.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="281.0" cy="313.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="630.9" cy="453.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="644.9" cy="510.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="644.9" cy="490.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="646.7" cy="469.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="661.3" cy="473.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="684.1" cy="455.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="707.6" cy="467.5" r="2.2" fill="#b9b9b2"/>
+<polygon points="404.2,343.0 396.5,357.2 412.0,357.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="393.1,332.4 378.7,359.0 407.6,359.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="427.6,330.3 415.7,352.3 439.6,352.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="401.3,341.2 391.4,359.5 411.2,359.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="714.5,467.7 705.4,484.5 723.6,484.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="714.5" y="497.8" text-anchor="middle" fill="#5c5c57">Jenipapo</text>
+<polygon points="355.8,453.5 346.4,470.6 365.1,470.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="355.8" y="484.1" text-anchor="middle" fill="#5c5c57">Zona Rural</text>
+<polygon points="417.7,333.8 405.7,355.9 429.7,355.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="392.0,342.0 382.2,360.0 401.7,360.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="712.1,463.5 704.0,478.4 720.3,478.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="387.9,337.4 379.3,353.2 396.4,353.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<rect x="404.3" y="350.3" width="10" height="10" fill="#1d1d1b"/><text x="418.3" y="373.3" font-weight="600" fill="#1d1d1b">Sede de Puxinanã</text>
+<line x1="35" x2="298.2" y1="693.7" y2="693.7" stroke="#8a8a84" stroke-width="2"/><text x="35" y="707.7" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="684.6546994072932" y2="684.6546994072932" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="688.6546994072932" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,677.7 421.4,689.9 434.6,689.9" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="688.6546994072932" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="702.6546994072932" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="711.6546994072932" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="707.6546994072932" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="711.6546994072932" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="730.6546994072932" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="734.6546994072932" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="730.6546994072932" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="734.6546994072932" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="753.6546994072932" y2="753.6546994072932" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="757.6546994072932" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="776.6546994072932" y2="776.6546994072932" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="780.6546994072932" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 20/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (1):</strong> Lagoa de Dentro.</li>
+<li><strong>De 3 a 5 km (5):</strong> Sítio Malícia 2, Sítio Malícia, Sítio Azevem, Pai Domingos e Sítio Maracajá.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (10):</strong> Antas, Jenipapo, Malhada de Areia, Sítio Antas 2, Sítio Antas 3, Sítio Antas 4, Sítio Espinheiro, Sítio Jenipapo de Cima, Sítio Jenipapo de Cima 2 e Sítio Samambaia.</li>
+</ul><h2>Rotas do Edital nº 20/2026</h2>
+<p>O edital tem 12 rotas para Puxinanã. Horários: início dos trabalhos às 07:00 h e término às 17:30 h. Veículos: não informados.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Sítio Serra do Maracajá – Sítio Barro Vermelho – Sede</td></tr><tr><td>02</td><td>Sítio Catirina – Sítio Malícia – Sítio Lagoa Grande – Sede</td></tr><tr><td>03</td><td>Sítio Açudinho – Sítio Várzea Alegre – Sítio Azevém – Sede</td></tr><tr><td>04</td><td>Sítio Pai Domingos – Sítio Jenipapo – Sítio de Luiz do Vale – Sítio Antas – Sede</td></tr><tr><td>05</td><td>Sítio Grotão – Sítio Lagoa de Dentro – Sítio São José da Mata – Grupo de Campo de Angola – Sede</td></tr><tr><td>06</td><td>Sítio Grotão – Sítio Lagoa de Dentro – Sítio São José da Mata – Grupo de Campo de Angola – Sede</td></tr><tr><td>07</td><td>Sítio Malhada de Aréia – Sítio Várzea de Lagoa – Sítio Potela – Sítio Maracajá – Sítio Beija Flôr – Sede</td></tr><tr><td>08</td><td>Sítio Azevém – Sítio Maxixe – Sítio Maris Preto – Sítio Várzea Salgada – Sítio Espinheiro – Sede</td></tr><tr><td>09</td><td>Sítio Canário – Sítio Milhã – Sítio Várzea Alegre – Sítio Caxangá – Sede</td></tr><tr><td>10</td><td>Sítio Piaca – Sítio Antas – Sítio Samambaia – Sítio Jenipapo – Sítio Pai Domingos – Sede</td></tr><tr><td>11</td><td>Sítio Lagoa do Tetéu – Sítio Antas – Sede</td></tr><tr><td>12</td><td>Sítio Furna de Onça – Sítio Várzea de Barriguda – Sede</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 20/2026 TRE-PB/PTRE/50ª_ZONA (Divulgação do Quadro Geral dos Percursos dos veículos da Comissão de Transportes), DJE/TRE-PB nº 198/2026, disp. 18/09/2026, publ. 19/09/2026, p. 101-102 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=PB&amp;numDiario=198&amp;anoDiario=2026).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 0 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<p>Nenhuma localidade precisa de rota nova.</p>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMP</strong></p><p>Puxinanã/PB, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Carmen Helen Agra de Brito</strong><br>Juíza Eleitoral da 50ª Zona Eleitoral – Pocinhos/PB</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 20/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de Puxinanã, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 20/2026: .</p><p>Sugerimos, respeitosamente:</p><p></p><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 20/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Puxinanã</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Puxinanã; Edital nº 20/2026 TRE-PB/PTRE/50ª_ZONA (Divulgação do Quadro Geral dos Percursos dos veículos da Comissão de Transportes), DJE/TRE-PB nº 198/2026, disp. 18/09/2026, publ. 19/09/2026, p. 101-102 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=PB&amp;numDiario=198&amp;anoDiario=2026); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

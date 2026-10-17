@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Baraúna</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Baraúna</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/barauna.pdf?v=1792242114" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Baraúna (25ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 25ª Zona Eleitoral <strong>1 rota nova e 2 paradas extras em rotas do edital</strong> no transporte gratuito de Baraúna.
+Traçamos pelas estradas o percurso das 3 rotas do Edital nº 12/2026. 2 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 2 ficam a 1–2 km.</p>
+<ul>
+<li>Baraúna tem 4.661 eleitores aptos em 4 locais de votação e 19 seções. São 1 locais rurais, com 303 eleitores (7% do total).</li>
+<li>1 locais rurais ficam a 10 km ou mais da sede, com 303 eleitores. Os mais distantes: Mendes (11,1 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Minador (8,3 km do local de votação) e Barra do Mineiro (5,9 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Saquinho e Cacimbinha.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 28 localidades rurais de Baraúna que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Minador</td><td>8,3</td><td>Rota 01</td><td>2,2</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Galante</td><td>7,2</td><td>Rota 03</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Barra do Mineiro</td><td>5,9</td><td>Rota 01</td><td>2,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Pedreiras</td><td>5,4</td><td>Rota 01</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Pedra Atravessada</td><td>5,2</td><td>Rota 03</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Cabeça do Boi</td><td>5,2</td><td>Rota 03</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>São Francisco</td><td>5,2</td><td>Rota 01</td><td>0,8</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Lagoa do Mato</td><td>5,1</td><td>Rota 02</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Saquinho</td><td>5,1</td><td>Rota 01</td><td>1,4</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Assentamento Padre Assis</td><td>5,1</td><td>Rota 03</td><td>0,3</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Cacimbinha</td><td>4,6</td><td>Rota 02</td><td>1,1</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Riacho do Guardião</td><td>4,2</td><td>Rota 01</td><td>0,7</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Logradouro</td><td>4,1</td><td>Rota 03</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Tanque de Areia</td><td>4,0</td><td>Rota 01</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Lagoa de Pedra</td><td>3,8</td><td>Rota 02</td><td>0,9</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Monte Azul</td><td>3,6</td><td>Rota 02</td><td>0,8</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Lagoa dos Currais</td><td>3,2</td><td>Rota 02</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>3 das 22 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Fortuna (Rota 01), Trincheira (Rota 02) e Maniçoba (Rota 03). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 28 localidades rurais de Baraúna, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1527" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Baraúna: 4 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 12/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="725.0,493.5 620.0,422.6 539.9,337.8 367.7,267.9 303.2,204.3 100.7,80.0 103.4,184.1 360.3,595.7 372.3,690.5 352.1,900.5 312.5,1038.6 356.7,1204.4 385.2,1369.2 555.6,1311.2 631.1,914.3 725.0,493.5 725.0,493.5" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="218.7,159.0 246.7,173.5 298.3,200.4 343.3,249.2 358.1,262.2 383.3,274.2 493.3,318.9 516.7,328.5 545.6,341.4 561.6,354.4 575.8,371.8 594.8,358.2 616.7,351.3 643.3,347.9 617.5,351.4 594.8,358.2 586.8,385.0 610.7,413.7 631.5,430.1 659.8,449.3 702.5,478.3 720.8,490.0 711.2,514.5 699.5,562.9 694.5,585.8 687.8,607.1 680.9,629.1 667.7,654.1 652.1,678.8 628.4,711.6 613.0,732.2 605.1,760.0 584.7,768.2 560.9,784.6 554.3,807.3 562.3,828.4 552.8,847.5 546.5,869.7 534.9,886.6 530.6,910.9 528.0,924.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="218.7,159.0 246.7,173.5 298.3,200.4 343.3,249.2 358.1,262.2 383.3,274.2 493.3,318.9 480.4,365.6 468.6,383.5 463.8,413.3 435.0,413.9 414.2,402.1 398.4,379.6 373.7,368.6 347.6,375.2 277.1,388.8 255.8,395.5 272.4,453.9 289.7,481.0 304.3,504.2 316.5,526.3 330.2,559.3 353.0,568.2 360.3,591.3 363.1,629.5 362.7,667.2 371.5,686.4 362.4,706.1 349.1,721.4 359.9,738.6 359.0,767.2 357.6,795.3 355.8,822.0 354.7,850.1 372.4,865.0 381.2,884.4 395.8,898.4 414.6,888.6 438.0,882.7 457.1,893.7 479.5,902.3 498.5,912.3 518.2,921.5 528.0,924.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="472.8,1075.2 474.7,1102.7 470.6,1132.8 466.5,1157.3 463.3,1183.9 449.4,1212.4 430.5,1225.3 402.9,1235.2 364.7,1231.8 359.1,1264.3 365.3,1294.3 377.7,1338.9 383.3,1363.7 400.9,1385.5 424.4,1391.1 449.3,1394.4 484.4,1393.9 514.4,1384.5 531.4,1367.6 546.5,1348.1 554.1,1321.2 539.2,1306.7 562.0,1300.5 572.4,1278.6 559.5,1259.7 562.9,1233.3 567.8,1210.2 575.4,1190.1 569.1,1166.3 573.7,1142.7 578.3,1119.0 583.9,1096.8 590.8,1075.5 595.6,1050.9 594.5,1023.7 592.0,998.2 587.3,974.1 575.8,956.1 581.5,931.7 607.0,924.6 581.7,929.1 576.1,951.5 561.2,965.0 566.4,941.3 549.2,926.5 528.0,924.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="445.6,419.3 417.6,406.1 404.9,384.7 385.6,371.1 357.9,372.3 277.1,388.8 255.8,395.5 206.6,345.0 194.5,326.9 175.6,295.1 154.6,284.6 138.9,263.2 127.6,246.5 104.6,240.4 86.7,262.2 100.6,246.2 116.7,231.8 111.2,206.9 71.6,202.0 51.8,192.2 35.0,179.9 41.7,156.7 41.4,123.9 53.8,106.3 99.4,112.8 131.3,118.3 155.1,128.0 246.7,173.5 298.3,200.4 343.3,249.2 358.1,262.2 383.3,274.2 493.3,318.9 480.4,365.6 468.6,383.5 463.8,413.3 445.6,419.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Minador</title></polyline>
+<polyline points="631.5,430.1 610.7,413.7 602.0,439.0 594.4,469.9 597.7,498.3 581.3,524.0 596.9,511.8 592.2,477.3 601.4,451.1 606.5,426.5 631.5,430.1 631.5,430.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 01</title></polyline>
+<polyline points="371.9,688.7 394.4,679.9 425.0,671.1 448.9,666.4 425.0,671.1 399.9,678.6 378.2,686.6 371.9,688.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 02</title></polyline>
+<circle cx="417.6" cy="1383.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="227.9" cy="141.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="360.7" cy="1237.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="515.6" cy="1297.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="703.7" cy="380.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="359.1" cy="548.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="583.3" cy="1321.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="599.4" cy="474.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="438.1" cy="1198.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="643.6" cy="334.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="164.7" cy="427.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="183.6" cy="355.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="357.5" cy="727.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="490.3" cy="1071.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="390.7" cy="1014.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="632.6" cy="716.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="564.6" cy="796.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="509.3" cy="347.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="468.2" cy="797.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="425.5" cy="840.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="337.0" cy="362.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="404.9" cy="903.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="555.1" cy="975.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="528.0" cy="924.4" r="2.2" fill="#b9b9b2"/>
+<polygon points="567.5,860.8 556.1,881.9 579.0,881.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="492.9,897.0 482.6,916.0 503.2,916.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="444.1,415.6 436.6,429.4 451.6,429.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="581.3,927.1 570.8,946.6 591.9,946.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="35.0" cy="146.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="42.0" y="141.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Minador 8,3 km</text>
+<circle cx="68.2" cy="246.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="75.2" y="241.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Barra do Mineiro 5,9 km</text>
+<circle cx="578.8" cy="535.6" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="478.8" y="530.6" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Saquinho 5,1 km</text>
+<circle cx="461.9" cy="678.5" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="468.9" y="673.5" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Cacimbinha 4,6 km</text>
+<rect x="523.0" y="919.4" width="10" height="10" fill="#1d1d1b"/><text x="537.0" y="942.4" font-weight="600" fill="#1d1d1b">Sede de Baraúna</text>
+<line x1="35" x2="449.8" y1="1425.2" y2="1425.2" stroke="#8a8a84" stroke-width="2"/><text x="35" y="1439.2" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="1416.162284799106" y2="1416.162284799106" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="1420.162284799106" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,1409.2 421.4,1421.4 434.6,1421.4" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="1420.162284799106" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="1434.162284799106" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="1443.162284799106" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="1439.162284799106" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="1443.162284799106" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1462.162284799106" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1466.162284799106" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1462.162284799106" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1466.162284799106" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1485.162284799106" y2="1485.162284799106" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1489.162284799106" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1508.162284799106" y2="1508.162284799106" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1512.162284799106" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 12/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (10):</strong> Minador, Galante, Barra do Mineiro, Pedreiras, Pedra Atravessada, Cabeça do Boi, São Francisco, Lagoa do Mato, Saquinho e Assentamento Padre Assis.</li>
+<li><strong>De 3 a 5 km (7):</strong> Cacimbinha, Riacho do Guardião, Logradouro, Tanque de Areia, Lagoa de Pedra, Monte Azul e Lagoa dos Currais.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (11):</strong> Baixio, Baraúna, Cacimba do Mato, Lagoa da Caraibeira, Lagoa da Jurema, Lagoa do Meio, Mendes, Pedra Vermelha, Riacho Fundo, Serrote Verde e Tanque Redondo.</li>
+</ul><h2>Rotas do Edital nº 12/2026</h2>
+<p>O edital tem 3 rotas para Baraúna. Horários: das 07:00 horas até quando existirem eleitores para serem transportados. Veículos: não informados.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Pedreiras – Mendes – Tanque de Areia – Fortuna – Serrote Verde – Pedra Vermelha – Sede</td></tr><tr><td>02</td><td>Pedreiras – Trincheira – Riacho Fundo – Lagoa do Mato – Lagoa dos Currais – Lagoa da Jurema – Sede</td></tr><tr><td>03</td><td>Tanque Redondo – Logradouro – Pedra Atravessada – Cabeça do Boi – Catolé dos Galdinos – Maniçoba – Lagoa da Caraibeira – Sede</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 12/2026 TRE-PB/PTRE/25ª_ZONA (Quadros Gerais de Percursos e Horários Programados para o Transporte de Eleitores), DJE/TRE-PB nº 198/2026, disp. 18/09/2026, publ. 19/09/2026, p. 35-40 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=PB&amp;numDiario=198&amp;anoDiario=2026).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 4 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Minador</strong></td><td>Mendes – Barra do Mineiro – Minador – Mendes</td><td>Barra do Mineiro, Minador</td><td>16,5 km (ida e volta)</td><td>~33 min</td></tr><tr><td><strong>Parada extra na Rota 01</strong></td><td>desvio pelo caminho atual: Saquinho</td><td>Saquinho</td><td>+3,9 km</td><td>+9 min</td></tr><tr><td><strong>Parada extra na Rota 02</strong></td><td>desvio pelo caminho atual: Cacimbinha</td><td>Cacimbinha</td><td>+2,3 km</td><td>+9 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMB</strong></p><p>Baraúna/PB, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Anyfrancis Araújo da Silva</strong><br>Juiz Eleitoral da 25ª Zona Eleitoral – Picuí/PB</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 12/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Baraúna, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 12/2026: Minador, Barra do Mineiro, Saquinho e Cacimbinha.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Minador (Mendes – Barra do Mineiro – Minador – Mendes);</li><li>a inclusão de parada em Saquinho na Rota 01, mantido todo o percurso atual;</li><li>a inclusão de parada em Cacimbinha na Rota 02, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 12/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Baraúna</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Baraúna; Edital nº 12/2026 TRE-PB/PTRE/25ª_ZONA (Quadros Gerais de Percursos e Horários Programados para o Transporte de Eleitores), DJE/TRE-PB nº 198/2026, disp. 18/09/2026, publ. 19/09/2026, p. 35-40 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=PB&amp;numDiario=198&amp;anoDiario=2026); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

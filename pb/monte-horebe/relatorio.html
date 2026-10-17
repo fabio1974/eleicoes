@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Monte Horebe</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Monte Horebe</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/monte-horebe.pdf?v=1792242240" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Monte Horebe (40ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 40ª Zona Eleitoral <strong>2 rotas novas e 4 paradas extras em rotas do edital</strong> no transporte gratuito de Monte Horebe.
+Traçamos pelas estradas o percurso das 7 rotas do Edital nº 14/2026. 3 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 9 ficam a 1–2 km.</p>
+<ul>
+<li>Monte Horebe tem 4.338 eleitores aptos em 4 locais de votação e 16 seções. São 1 locais rurais, com 192 eleitores (4% do total).</li>
+<li>1 locais rurais ficam a 10 km ou mais da sede, com 192 eleitores. Os mais distantes: Santa Fé (16,6 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Lagoa Vermelha (9,5 km do local de votação), Macambira de Baixo (9,2 km do local de votação) e Barra das Quixabeiras (6,1 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Macambira, Borges, Caieira, Retiro, Baixio dos Britos, Olho d&#x27;Água do Descanso, Simão, Lagoa do Limoeiro e Serra Verde.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 51 localidades rurais de Monte Horebe que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Macambira</td><td>11,0</td><td>Rota 01</td><td>1,6</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Lagoa Vermelha</td><td>9,5</td><td>Rota 01</td><td>2,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Macambira de Baixo</td><td>9,2</td><td>Rota 01</td><td>2,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Serrote</td><td>8,5</td><td>Rota 04</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Carrancudo</td><td>8,2</td><td>Rota 03</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Angelim</td><td>8,2</td><td>Rota 03</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Canoa</td><td>8,1</td><td>Rota 04</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Borges</td><td>7,9</td><td>Rota 01</td><td>1,0</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Belém</td><td>7,8</td><td>Rota 04</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Caieira</td><td>7,7</td><td>Rota 01</td><td>1,3</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Retiro</td><td>7,6</td><td>Rota 05</td><td>1,5</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Baixio Verde</td><td>7,3</td><td>Rota 03</td><td>0,8</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Areias</td><td>6,9</td><td>Rota 03</td><td>0,3</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Barros</td><td>6,8</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Baixio dos Britos</td><td>6,7</td><td>Rota 01</td><td>1,3</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Açudinho</td><td>6,6</td><td>Rota 04</td><td>0,5</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Araújo</td><td>6,5</td><td>Rota 01</td><td>0,4</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Gravatá</td><td>6,5</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sozinho</td><td>6,4</td><td>Rota 06</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Pascoal</td><td>6,4</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Olho d&#x27;Água do Descanso</td><td>6,3</td><td>Rota 03</td><td>1,8</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Burro</td><td>6,2</td><td>Rota 02</td><td>0,7</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Braga</td><td>6,2</td><td>Rota 05</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Barra das Quixabeiras</td><td>6,1</td><td>Rota 02</td><td>2,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Pires</td><td>5,4</td><td>Rota 06</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>João Velho</td><td>5,3</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Cacau</td><td>5,0</td><td>Rota 04</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Ribeiro 1</td><td>4,8</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Batalha</td><td>4,7</td><td>Rota 03</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Carro</td><td>4,7</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Chapada</td><td>4,4</td><td>Rota 05</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Pinga</td><td>4,4</td><td>Rota 04</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Simão</td><td>4,3</td><td>Rota 05</td><td>1,0</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Queimadas</td><td>4,3</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Lagoa do Limoeiro</td><td>4,1</td><td>Rota 02</td><td>1,9</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Serra Verde</td><td>4,0</td><td>Rota 02</td><td>1,6</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Batinga</td><td>3,6</td><td>Rota 05</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Boa Vista</td><td>3,3</td><td>Rota 06</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>7 das 44 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Baixas (Rota 01 e Rota 07), Serra Verde dos Quixabeiras (Rota 02), Logradouro (Rota 02), Pinga de Baixo (Rota 04), Pinga de Cima (Rota 04) e Serrinha (Rota 05). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 51 localidades rurais de Monte Horebe, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 616" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Monte Horebe: 12 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 14/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="104.5,255.3 117.7,284.3 182.6,334.3 210.4,336.6 279.9,310.7 299.7,322.5 292.9,346.6 323.0,333.1 323.6,307.0 369.5,283.4 380.7,288.6 420.6,263.9 463.4,247.0 503.9,248.1 542.7,222.3 540.7,195.3 562.8,177.2 578.3,232.0 611.6,236.4 611.3,259.0 654.4,271.4 718.7,215.1 712.9,204.8 712.7,176.9 679.6,173.5 649.8,190.4 620.2,195.9 598.4,187.8 573.4,150.8 509.1,153.4 479.2,142.2 440.4,153.1 397.4,147.6 395.4,120.6 373.3,109.4 337.6,104.0 308.4,110.3 242.9,149.4 120.3,148.2 35.0,151.1 56.8,179.8 90.7,172.6 105.1,189.3 96.2,208.5 104.5,255.3 104.5,255.3" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="679.0,203.0 671.5,205.8 665.8,210.4 659.0,212.3 648.3,209.2 638.4,209.3 627.1,212.0 614.1,211.9 605.6,208.6 592.1,196.2 583.9,193.8 578.9,186.0 574.7,181.5 568.3,179.1 564.7,185.3 563.1,194.1 561.0,201.4 563.8,207.3 563.8,215.9 567.6,220.9 562.8,225.3 564.1,234.9 562.9,243.1 562.1,252.3 562.0,261.8 559.1,269.3 556.8,277.4 563.5,281.8 572.7,286.1 577.7,293.1 587.9,292.7 595.9,293.6 587.9,292.7 578.2,293.1 574.6,287.3 568.7,284.2 558.3,279.5 552.9,283.5 550.5,290.8 544.9,296.1 541.2,303.0 538.9,310.8 536.3,319.0 534.4,326.6 531.3,334.4 527.8,341.6 524.1,348.8 521.4,357.2 514.6,362.6 509.9,370.1 505.5,375.2 503.2,381.6 504.1,389.5 505.0,397.5 503.9,405.3 505.5,412.3 508.0,419.1 501.2,421.0 492.6,420.2 484.2,422.9 477.7,426.1 473.4,431.2 470.7,437.1 471.6,447.4 468.0,452.4 461.0,454.1 455.7,457.9 450.2,462.0 445.2,465.7 440.0,469.9 435.4,474.5 430.2,478.4 424.9,482.1 421.5,476.2 423.8,469.7 428.5,457.8 432.6,447.1 430.6,439.9 426.7,432.0 424.1,425.7 425.3,416.3 419.2,387.2 410.1,376.1 389.5,365.6 381.6,367.0 373.1,366.7 362.9,354.0 338.1,355.5 328.3,347.9 319.2,348.3 324.5,344.6 300.9,321.1 304.5,316.2 305.2,307.2 306.4,298.7 312.0,292.7 318.2,289.1 320.4,280.8 324.5,276.0 331.4,273.7 338.6,275.6 347.5,275.1 353.4,272.4 361.8,272.9 369.8,273.7 376.8,271.4 383.3,268.9 389.7,266.1 397.3,263.9 405.3,262.1 410.8,258.3 418.4,256.0 426.3,252.9 431.9,256.1 426.3,252.9 420.0,255.3 412.5,258.0 406.4,261.5 398.9,263.1 391.7,265.3 384.7,268.3 378.3,271.1 371.2,273.3 362.5,272.8 354.2,272.2 347.5,275.1 339.4,275.7 331.4,273.7 324.5,276.0 316.3,276.4 307.6,276.0 298.4,275.4 290.5,274.1 282.9,275.6 274.9,276.5 269.0,279.5 260.9,278.5 251.7,274.0 244.0,266.6 239.5,262.2 234.4,257.4 228.2,253.0 220.2,248.9 210.8,244.1 204.1,239.4 202.5,238.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="207.2,296.6 214.3,294.8 220.6,291.6 226.9,288.3 233.8,286.5 235.7,278.9 231.8,272.9 231.7,264.3 234.2,258.1 239.5,262.2 244.0,266.6 251.7,274.0 259.7,281.6 271.9,293.3 278.8,299.9 291.0,311.6 298.7,319.1 302.9,325.6 302.3,335.1 296.5,340.8 294.8,348.1 294.4,356.7 293.1,364.7 295.6,372.0 294.9,380.0 286.4,380.7 280.8,377.4 286.4,380.7 294.9,380.0 297.6,373.7 293.4,367.6 294.6,358.3 295.2,349.4 296.0,341.3 301.8,336.0 303.1,326.4 299.7,320.9 291.0,311.6 282.0,303.0 271.9,293.3 261.6,283.4 254.5,276.6 252.5,283.6 249.9,290.5 247.3,297.1 248.8,304.3 246.1,311.3 242.0,316.0 239.9,324.9 236.3,330.0 239.9,324.9 241.9,317.7 245.8,311.6 248.8,304.3 247.3,297.1 249.9,290.5 252.5,283.6 254.5,276.8 248.3,270.7 243.3,265.9 238.2,261.0 233.5,256.5 228.2,253.0 220.2,248.9 210.8,244.1 204.1,239.4 202.5,238.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="440.7,194.0 435.8,190.0 433.8,183.0 426.8,181.0 421.0,177.8 413.4,176.4 407.0,174.1 405.3,166.5 399.5,163.5 395.0,159.2 392.4,152.9 395.0,159.2 399.5,163.5 405.3,166.5 406.9,173.6 407.9,181.4 410.0,189.3 408.9,197.0 401.1,195.6 391.2,194.9 382.1,194.8 376.5,191.4 369.1,189.5 362.6,196.6 361.6,204.7 364.0,211.2 368.3,215.7 375.2,219.2 381.3,222.3 388.8,223.6 396.6,224.5 402.9,226.9 409.6,229.0 413.4,234.5 410.1,240.2 406.4,245.3 399.1,247.0 406.4,245.3 410.1,240.2 414.2,235.5 410.0,229.8 403.8,227.3 397.8,224.6 389.6,224.1 382.2,222.6 376.3,219.5 369.0,217.8 365.6,211.8 360.9,207.8 354.5,205.3 351.2,199.8 345.6,203.1 338.6,204.9 333.2,201.5 326.1,199.7 320.4,196.5 314.2,199.1 307.6,201.1 303.2,205.9 299.1,213.1 290.1,213.1 283.3,215.4 276.8,219.3 268.6,217.9 263.0,213.9 255.9,210.1 250.5,206.5 246.0,211.1 238.8,216.3 232.9,220.6 227.0,224.7 221.5,228.5 215.8,232.7 210.6,236.3 204.1,239.4 202.5,238.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="386.5,120.0 383.9,126.3 376.7,128.0 370.1,130.4 361.7,129.1 354.7,127.4 345.3,128.0 338.1,129.7 332.6,125.9 328.8,120.8 325.6,115.4 323.2,108.9 322.6,100.3 325.4,94.4 328.1,87.9 327.4,80.0 320.8,82.8 311.0,95.2 300.9,104.7 295.8,109.6 292.4,118.3 289.2,127.6 286.6,134.7 283.9,142.5 281.3,149.9 277.7,160.0 272.8,163.8 269.2,169.1 264.3,173.1 256.8,174.8 249.2,176.2 244.2,172.5 236.9,174.2 231.0,178.1 225.6,174.8 221.6,170.0 225.6,174.8 227.6,182.0 226.4,189.9 228.4,197.8 229.7,206.7 230.9,214.1 228.0,221.0 222.9,227.6 217.1,231.8 211.5,235.7 204.1,239.4 202.5,238.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="154.7,201.7 151.4,207.6 145.7,211.0 138.7,212.7 134.2,208.2 131.5,201.7 127.5,196.5 124.8,190.4 120.9,185.4 113.3,183.4 109.4,177.8 100.3,177.8 98.5,170.9 103.9,165.9 108.4,161.6 103.9,165.9 98.5,170.9 96.2,177.3 104.2,178.2 110.9,180.4 111.7,188.3 115.0,193.9 115.5,202.6 113.7,210.0 112.1,217.6 106.6,220.9 100.9,223.8 102.8,230.7 105.8,236.4 107.3,243.8 106.4,252.3 110.1,257.9 117.0,256.0 110.1,257.9 106.3,253.0 107.3,244.8 106.2,237.1 103.2,231.5 99.8,225.5 106.0,222.7 111.0,218.3 113.5,212.1 121.1,210.8 128.7,212.5 135.9,213.9 143.7,213.1 147.6,208.2 156.3,207.2 162.5,209.6 165.7,215.3 170.4,219.6 177.2,221.9 180.4,227.8 184.2,232.8 189.6,236.4 197.8,237.2 202.5,238.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="420.6,153.0 415.0,156.7 411.1,161.8 406.9,166.7 407.5,174.9 408.9,183.6 409.9,191.4 406.2,197.2 399.4,194.9 388.8,194.9 380.5,194.2 375.1,190.5 366.5,188.8 358.3,187.1 355.6,193.4 350.9,199.1 345.6,203.1 341.7,209.7 340.0,216.9 336.4,222.1 333.5,228.4 327.9,231.9 321.3,234.7 314.5,237.4 310.7,242.4 307.2,247.6 300.2,249.4 292.8,250.9 284.9,252.1 276.7,253.3 271.7,256.9 265.8,262.7 262.9,268.8 257.3,273.0 248.3,270.7 243.3,265.9 238.2,261.0 233.5,256.5 228.2,253.0 220.2,248.9 210.8,244.1 204.1,239.4 202.5,238.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="679.0,203.0 671.5,205.8 665.8,210.4 659.0,212.3 648.3,209.2 638.4,209.3 627.1,212.0 614.1,211.9 605.6,208.6 592.1,196.2 583.9,193.8 578.9,186.0 574.7,181.5 568.3,179.1 564.7,185.3 563.1,194.1 561.0,201.4 563.8,207.3 563.8,215.9 567.6,220.9 562.8,225.3 564.1,234.9 562.9,243.1 562.1,252.3 562.0,261.8 559.1,269.3 556.8,277.4 563.5,281.8 572.7,286.1 577.7,293.1 587.9,292.7 595.9,293.6 587.9,292.7 578.2,293.1 574.6,287.3 568.7,284.2 558.3,279.5 552.9,283.5 550.5,290.8 544.9,296.1 541.2,303.0 538.9,310.8 536.3,319.0 534.4,326.6 531.3,334.4 527.8,341.6 524.1,348.8 521.4,357.2 514.6,362.6 509.9,370.1 505.5,375.2 503.2,381.6 504.1,389.5 505.0,397.5 503.9,405.3 505.5,412.3 508.0,419.1 501.2,421.0 492.6,420.2 484.2,422.9 477.7,426.1 473.4,431.2 470.7,437.1 471.6,447.4 468.0,452.4 461.0,454.1 455.7,457.9 450.2,462.0 445.2,465.7 440.0,469.9 435.4,474.5 430.2,478.4 424.9,482.1 421.5,476.2 423.8,469.7 428.5,457.8 432.6,447.1 430.6,439.9 426.7,432.0 424.1,425.7 425.3,416.3 419.2,387.2 410.1,376.1 389.5,365.6 381.6,367.0 373.1,366.7 362.9,354.0 338.1,355.5 328.3,347.9 319.2,348.3 324.5,344.6 300.9,321.1 304.5,316.2 305.2,307.2 306.4,298.7 312.0,292.7 318.2,289.1 320.4,280.8 324.5,276.0 331.4,273.7 338.6,275.6 347.5,275.1 353.4,272.4 361.8,272.9 369.8,273.7 376.8,271.4 383.3,268.9 389.7,266.1 397.3,263.9 405.3,262.1 410.8,258.3 418.4,256.0 426.3,252.9 431.9,256.1 434.2,248.9 442.0,247.1 448.9,245.1 456.2,243.2 458.9,237.1 462.8,231.2 467.5,227.0 473.1,223.4 476.9,218.3 482.4,214.1 483.6,205.7 491.0,204.3 499.4,203.8 508.1,205.2 517.2,206.2 525.1,207.7 527.3,201.1 531.9,195.6 531.9,195.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="535.5,194.1 541.5,191.3 551.5,188.2 558.4,185.8 565.0,183.6 569.9,179.5 576.0,182.8 580.7,188.4 585.7,194.3 605.6,208.6 614.1,211.9 624.6,212.4 633.1,209.8 638.8,212.7 636.9,220.1 635.2,227.6 632.5,234.0 628.1,238.5 625.2,244.4 626.4,252.1 626.4,260.8 633.2,263.0 633.1,272.5 629.0,277.8 633.9,282.5 641.3,284.3 649.2,281.7 654.0,277.1 658.3,272.5 666.8,272.9 672.9,270.1 680.7,268.4 687.8,269.9 693.9,266.1 703.7,264.8 710.1,262.2 717.9,261.1 717.0,241.1 720.8,232.5 723.0,225.3 724.6,217.7 715.0,214.5 711.0,209.2 710.5,198.2 710.5,189.6 711.1,181.1 714.2,175.3 718.2,170.7 719.0,162.8 721.7,156.6 717.3,160.8 720.0,166.8 716.7,172.5 712.7,177.5 709.9,183.6 709.0,191.5 702.4,196.6 693.4,198.0 686.6,201.9 678.1,203.2 671.5,205.8 665.8,210.4 659.0,212.3 648.3,209.2 638.4,209.3 627.1,212.0 614.1,211.9 605.6,208.6 592.1,196.2 583.9,193.8 578.9,186.0 574.7,181.5 568.3,179.1 563.8,183.5 555.0,186.6 545.5,190.4 537.7,193.0 535.5,194.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Lagoa Vermelha</title></polyline>
+<polyline points="203.1,247.2 205.7,253.6 210.4,257.6 206.8,264.0 204.4,270.4 201.4,276.3 198.0,281.8 196.3,289.3 196.6,297.7 199.9,303.3 198.2,310.9 196.0,317.3 194.6,324.6 191.5,330.8 184.4,332.7 177.9,335.6 173.9,340.2 167.0,342.0 159.0,340.8 151.4,342.2 144.3,344.3 151.4,342.2 159.0,340.8 167.0,342.0 173.9,340.2 177.9,335.6 184.4,332.7 191.3,331.0 194.6,324.6 196.0,317.3 198.2,310.9 199.9,303.3 196.6,297.7 196.3,289.3 197.8,282.1 201.2,276.6 204.2,270.8 206.8,264.0 210.2,258.5 205.7,253.6 203.1,247.4 203.1,247.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Barra das Quixabeiras</title></polyline>
+<polyline points="665.8,210.4 671.5,205.8 678.1,203.2 686.6,201.9 693.4,198.0 702.4,196.6 710.5,198.2 711.0,209.2 715.0,214.5 722.6,216.5 723.0,225.3 720.8,232.5 712.5,234.2 706.7,238.9 698.7,240.8 693.7,244.6 698.7,240.8 703.6,236.9 711.4,236.0 715.0,231.0 721.9,227.7 725.0,220.7 715.0,214.5 711.0,209.2 710.5,198.2 704.5,195.1 698.0,198.0 690.3,199.0 683.5,202.5 671.5,205.8 665.8,210.4 659.0,212.3 648.3,209.2 638.4,209.3 638.6,217.8 635.0,223.1 634.0,230.7 630.9,236.3 626.5,240.9 621.0,244.1 613.0,245.3 621.0,244.1 625.8,249.7 626.8,257.7 632.0,261.3 634.1,268.0 631.4,274.0 628.1,279.5 624.5,285.5 619.7,290.5 614.0,293.8 606.5,296.3 599.8,301.0 596.3,294.6 589.5,292.5 589.8,283.3 593.4,278.1 594.8,270.7 593.4,278.1 589.8,283.3 587.7,290.0 580.6,293.1 574.5,289.2 568.7,284.2 558.3,279.5 559.1,269.3 562.0,261.8 563.0,257.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 01</title></polyline>
+<polyline points="207.2,296.6 199.8,298.0 199.1,305.9 197.8,313.7 195.3,320.0 193.9,327.8 189.8,332.7 182.5,334.5 176.4,331.9 171.4,328.2 165.9,324.6 164.2,317.4 163.6,308.8 161.5,301.5 160.6,293.2 161.5,301.5 167.4,304.7 173.4,301.9 180.2,300.1 183.7,294.8 191.3,293.6 196.4,297.3 204.7,296.6 207.2,296.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 02</title></polyline>
+<polyline points="436.2,184.2 435.9,193.1 443.6,194.1 452.6,194.0 457.0,188.3 459.0,181.3 456.6,174.6 451.4,170.1 455.2,165.3 463.3,164.2 472.3,164.1 477.1,159.0 473.9,153.1 477.9,157.8 474.2,163.0 467.1,164.8 458.2,164.8 450.2,166.0 454.6,171.2 457.9,176.7 458.7,184.8 455.3,190.4 449.3,194.1 439.4,194.0 436.4,188.3 436.2,184.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 03</title></polyline>
+<polyline points="99.7,169.2 95.2,164.5 91.9,159.1 88.1,153.9 85.3,147.8 82.1,141.7 74.9,139.5 81.6,141.5 85.0,146.9 87.9,153.0 91.4,158.6 95.2,164.5 101.0,168.1 96.9,173.5 102.8,177.9 110.5,178.8 111.2,187.0 115.0,192.7 115.5,200.9 114.2,209.2 113.0,217.0 107.5,220.3 102.0,223.6 103.2,231.5 106.2,237.1 107.3,244.8 106.4,252.6 110.1,257.9 117.0,256.0 125.7,256.5 131.8,259.3 134.7,253.5 137.5,247.1 144.4,245.1 152.0,241.9 145.4,244.6 137.5,247.1 134.7,253.3 137.2,259.5 141.4,264.3 144.9,269.7 152.3,271.1 158.8,267.1 164.8,261.8 170.9,259.0 174.2,253.5 178.4,249.0 181.9,241.4 186.9,237.0 183.6,231.2 179.2,226.6 176.2,220.8 170.9,220.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 05</title></polyline>
+<circle cx="319.3" cy="101.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="386.6" cy="221.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="402.6" cy="252.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="387.1" cy="121.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="332.6" cy="129.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="359.7" cy="237.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="383.8" cy="155.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="317.3" cy="351.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="327.4" cy="140.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="333.6" cy="339.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="431.4" cy="263.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="341.1" cy="215.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="679.1" cy="204.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="277.2" cy="339.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="107.7" cy="159.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="309.8" cy="241.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="234.0" cy="335.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="289.6" cy="132.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="239.2" cy="324.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="315.6" cy="200.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="637.0" cy="207.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="108.4" cy="216.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="261.7" cy="175.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="290.1" cy="276.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="124.1" cy="256.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="265.9" cy="264.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="219.6" cy="170.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="207.2" cy="298.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="140.1" cy="212.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="157.1" cy="203.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="183.8" cy="292.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="262.5" cy="219.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="532.2" cy="241.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="199.0" cy="214.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="566.6" cy="179.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="203.0" cy="270.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="174.4" cy="254.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="202.8" cy="238.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="532.0" cy="196.1" r="2.2" fill="#b9b9b2"/>
+<polygon points="215.6,221.9 206.0,239.7 225.2,239.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="535.5,186.6 528.5,199.3 542.4,199.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="203.3,235.1 191.7,256.4 214.8,256.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="190.1,229.0 179.5,248.4 200.6,248.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="690.7" cy="242.4" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="578.3" y="237.4" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Macambira 11,0 km</text>
+<circle cx="722.5" cy="153.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="585.3" y="148.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Lagoa Vermelha 9,5 km</text>
+<circle cx="658.2" cy="281.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="496.2" y="276.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Macambira de Baixo 9,2 km</text>
+<circle cx="589.2" cy="262.7" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="501.6" y="257.7" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Borges 7,9 km</text>
+<circle cx="710.4" cy="193.3" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="616.6" y="188.3" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Caieira 7,7 km</text>
+<circle cx="70.4" cy="142.9" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="77.4" y="137.9" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Retiro 7,6 km</text>
+<circle cx="609.4" cy="245.3" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<circle cx="468.7" cy="150.0" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="475.7" y="165.0" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Olho d&#x27;Água do Descanso 6,3 km</text>
+<circle cx="139.6" cy="329.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="146.6" y="324.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Barra das Quixabeiras 6,1 km</text>
+<circle cx="154.2" cy="240.4" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="161.2" y="235.4" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Simão 4,3 km</text>
+<circle cx="159.1" cy="293.5" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="166.1" y="288.5" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Lagoa do Limoeiro 4,1 km</text>
+<circle cx="186.0" cy="332.1" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="193.0" y="347.1" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Serra Verde 4,0 km</text>
+<rect x="197.8" y="233.6" width="10" height="10" fill="#1d1d1b"/><text x="211.8" y="256.6" font-weight="600" fill="#1d1d1b">Sede de Monte Horebe</text>
+<line x1="35" x2="164.3" y1="514.3" y2="514.3" stroke="#8a8a84" stroke-width="2"/><text x="35" y="528.3" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="505.3073062534135" y2="505.3073062534135" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="509.3073062534135" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,498.3 421.4,510.6 434.6,510.6" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="509.3073062534135" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="523.3073062534136" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="532.3073062534136" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="528.3073062534136" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="532.3073062534136" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="551.3073062534136" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="555.3073062534136" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="551.3073062534136" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="555.3073062534136" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="574.3073062534136" y2="574.3073062534136" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="578.3073062534136" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="597.3073062534136" y2="597.3073062534136" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="601.3073062534136" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 14/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (26):</strong> Macambira, Lagoa Vermelha, Macambira de Baixo, Serrote, Carrancudo, Angelim, Canoa, Borges, Belém, Caieira, Retiro, Baixio Verde, Areias, Barros, Baixio dos Britos, Açudinho, Araújo, Gravatá, Sozinho, Pascoal, Olho d&#x27;Água do Descanso, Burro, Braga, Barra das Quixabeiras, Pires e João Velho.</li>
+<li><strong>De 3 a 5 km (12):</strong> Cacau, Ribeiro 1, Batalha, Carro, Chapada, Pinga, Simão, Queimadas, Lagoa do Limoeiro, Serra Verde, Batinga e Boa Vista.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (13):</strong> Baixo, Cabrais, Guaia, Mamoeiro, Monte Horebe, Ponta da Serra, Posse, Poço Preto, Poço do Cavalo, Ribeiro, Rita, Santa Fé e Serra Verde dos Martins.</li>
+</ul><h2>Rotas do Edital nº 14/2026</h2>
+<p>O edital tem 7 rotas para Monte Horebe. Horários: das 06:00 às 17:30 horas, em 04/10/2026 e 25/10/2026 (2º turno, se houver). Veículos: não informados.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Pascoal – Cabrais – Baixio – Baixas – Barro – Gravatá – Sede</td></tr><tr><td>02</td><td>Ribeiro – Serra Verde dos Quixabeiras – Logradouro – Açude Novo – João Velho – Sede</td></tr><tr><td>03</td><td>Capim – Areias – Angelim – Batalha – Rita – Sede</td></tr><tr><td>04</td><td>Canoa – Serrote – Pinga de Baixo – Pinga de Cima – Cacau – Ponta de Serra – Sede</td></tr><tr><td>05</td><td>Serra Verde dos Martins – Guaiá – Serrinha – Braga – Batinga – Chapada – Sede</td></tr><tr><td>06</td><td>Olho D&#x27;Água – Pires – Boa Vista – Sede</td></tr><tr><td>07</td><td>Pascoal – Cabrais – Baixio – Baixas – Barro – Gravatá – Povoado de Santa Fé</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 14/2026 TRE-PB/PTRE/40ª_ZONA (Quadro de Percursos dos Transportes de eleitores), DJE/TRE-PB nº 191/2026, disp. 14/09/2026, publ. 15/09/2026, p. 243 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=PB&amp;numDiario=191&amp;anoDiario=2026), republicado no DJE/TRE-PB nº 198/2026, disp. 18/09/2026, publ. 19/09/2026, p. 78-81 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=PB&amp;numDiario=198&amp;anoDiario=2026).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 12 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Lagoa Vermelha</strong></td><td>Santa Fé – Macambira de Baixo – Lagoa Vermelha – Santa Fé</td><td>Macambira de Baixo, Lagoa Vermelha</td><td>26,7 km (ida e volta)</td><td>~50 min</td></tr><tr><td><strong>Rota nova – Barra das Quixabeiras</strong></td><td>Sede – Barra das Quixabeiras – Sede</td><td>Barra das Quixabeiras</td><td>12,4 km (ida e volta)</td><td>~19 min</td></tr><tr><td><strong>Parada extra na Rota 01</strong></td><td>desvio pelo caminho atual: Macambira – Caieira – Baixio dos Britos – Borges</td><td>Macambira, Caieira, Baixio dos Britos, Borges</td><td>+22,4 km</td><td>+43 min</td></tr><tr><td><strong>Parada extra na Rota 02</strong></td><td>desvio pelo caminho atual: Serra Verde – Lagoa do Limoeiro</td><td>Serra Verde, Lagoa do Limoeiro</td><td>+6,9 km</td><td>+15 min</td></tr><tr><td><strong>Parada extra na Rota 03</strong></td><td>desvio pelo caminho atual: Olho d&#x27;Água do Descanso</td><td>Olho d&#x27;Água do Descanso</td><td>+8,8 km</td><td>+21 min</td></tr><tr><td><strong>Parada extra na Rota 05</strong></td><td>desvio pelo caminho atual: Retiro – Simão</td><td>Retiro, Simão</td><td>+16,5 km</td><td>+40 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMMH</strong></p><p>Monte Horebe/PB, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Ricardo Henriques Pereira Amorim</strong><br>Juiz Eleitoral da 40ª Zona Eleitoral – São José de Piranhas/PB</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 14/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Monte Horebe, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 14/2026: Lagoa Vermelha, Macambira de Baixo, Barra das Quixabeiras, Macambira, Borges, Caieira, Retiro, Baixio dos Britos, Olho d&#x27;Água do Descanso, Simão, Lagoa do Limoeiro e Serra Verde.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Lagoa Vermelha (Santa Fé – Macambira de Baixo – Lagoa Vermelha – Santa Fé);</li><li>a criação da Rota nova – Barra das Quixabeiras (Sede – Barra das Quixabeiras – Sede);</li><li>a inclusão de paradas em Macambira, Caieira, Baixio dos Britos e Borges na Rota 01, mantido todo o percurso atual;</li><li>a inclusão de paradas em Serra Verde e Lagoa do Limoeiro na Rota 02, mantido todo o percurso atual;</li><li>a inclusão de parada em Olho d&#x27;Água do Descanso na Rota 03, mantido todo o percurso atual;</li><li>a inclusão de paradas em Retiro e Simão na Rota 05, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 14/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Monte Horebe</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Monte Horebe; Edital nº 14/2026 TRE-PB/PTRE/40ª_ZONA (Quadro de Percursos dos Transportes de eleitores), DJE/TRE-PB nº 191/2026, disp. 14/09/2026, publ. 15/09/2026, p. 243 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=PB&amp;numDiario=191&amp;anoDiario=2026), republicado no DJE/TRE-PB nº 198/2026, disp. 18/09/2026, publ. 19/09/2026, p. 78-81 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=PB&amp;numDiario=198&amp;anoDiario=2026); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

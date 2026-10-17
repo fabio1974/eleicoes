@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Arara</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Arara</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/arara.pdf?v=1792242240" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Arara (48ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 48ª Zona Eleitoral <strong>1 rota nova e 1 parada extra em rotas do edital</strong> no transporte gratuito de Arara.
+Traçamos pelas estradas o percurso das 7 rotas do Edital nº 10/2026. 2 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 1 ficam a 1–2 km.</p>
+<ul>
+<li>Arara tem 9.338 eleitores aptos em 5 locais de votação e 37 seções. São 0 locais rurais, com 0 eleitores (0% do total).</li>
+
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Chan do Pau d&#x27;Arco (35,2 km do local de votação) e Pntura de Cima (32,5 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Sítio Chã dos Cordeiros.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 5 localidades rurais de Arara que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Chan do Pau d&#x27;Arco</td><td>35,2</td><td>Rota 04</td><td>4,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Pntura de Cima</td><td>32,5</td><td>Rota 04</td><td>3,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Sítio Chã dos Cordeiros</td><td>15,4</td><td>Rota 04</td><td>1,3</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Sítio Cuité dos Bitus</td><td>11,1</td><td>Rota 04</td><td>0,4</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>3 das 18 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Volta (Rota 05), Serrote (Rota 07) e São Bento (Rota 07). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 5 localidades rurais de Arara, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 561" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Arara: 3 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 10/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="75.5,276.6 103.9,284.0 190.0,319.8 273.4,306.3 279.8,330.6 302.1,338.1 486.2,358.7 573.3,429.2 593.9,427.6 606.8,334.7 584.8,335.0 568.9,284.7 522.0,275.6 500.7,284.7 448.0,255.7 433.8,221.5 389.3,180.3 439.9,121.6 454.1,115.8 423.0,102.3 353.8,137.8 333.5,116.2 288.0,104.0 249.5,134.4 212.6,131.4 199.5,157.4 173.8,159.1 144.1,139.1 121.5,167.2 48.8,187.1 35.0,208.7 65.1,247.2 52.2,269.2 75.5,276.6 75.5,276.6" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="322.7,322.4 315.2,325.0 302.3,320.2 297.3,312.7 291.6,305.2 281.6,304.9 271.9,304.2 267.7,297.7 263.2,291.3 259.6,283.5 247.8,271.5 239.0,264.5 234.6,258.7 230.6,251.7 225.5,244.5 220.7,238.5 218.6,236.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="84.4,248.2 93.4,249.7 96.9,256.3 105.5,254.2 111.8,249.7 117.7,245.1 127.3,242.3 136.0,240.1 144.5,238.1 152.6,235.8 159.9,230.6 164.8,224.6 169.7,218.7 175.0,212.2 180.1,205.9 187.8,196.5 192.5,190.8 198.5,183.6 207.0,171.6 212.9,162.8 217.3,156.8 218.9,148.2 219.1,145.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="197.4,298.2 196.6,307.5 186.9,308.2 178.5,310.7 167.3,311.1 159.8,308.3 150.5,307.1 143.9,302.8 134.7,301.2 128.6,297.1 122.0,293.2 114.6,289.4 110.9,281.7 108.2,273.8 103.1,267.0 96.6,263.1 95.3,253.7 90.5,248.3 84.4,248.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="469.3,312.7 469.3,302.3 477.4,299.9 480.4,292.0 490.2,290.5 496.9,285.7 494.3,277.5 489.8,271.8 479.7,272.0 472.4,268.7 465.2,264.8 455.8,263.0 451.3,256.9 448.5,249.2 445.0,242.4 437.1,239.6 434.5,231.2 433.8,221.5 429.0,215.8 423.1,211.5 416.4,207.4 409.6,202.5 403.6,196.7 393.3,193.8 383.4,195.7 373.3,196.6 372.6,199.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="397.1,236.2 389.8,233.0 380.9,239.3 372.1,243.9 362.8,241.7 349.9,240.1 341.1,241.6 329.8,244.3 324.3,238.8 320.3,232.6 320.3,222.2 311.9,219.5 305.2,226.2 299.0,233.7 287.9,235.4 286.4,235.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="408.0,133.7 409.4,144.7 409.2,155.5 411.1,167.5 417.6,174.7 424.5,179.2 414.0,179.1 404.0,176.9 394.0,177.1 383.3,175.2 370.4,173.3 364.3,167.5 358.8,162.1 347.4,163.9 335.5,160.7 330.6,154.8 323.3,151.1 312.7,148.0 305.4,151.2 304.6,156.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="199.0,270.0 193.6,263.9 189.0,258.2 181.3,254.0 174.0,250.3 168.5,245.1 163.5,239.2 157.9,234.6 161.8,228.2 167.5,221.3 172.7,215.1 178.5,208.0 183.7,201.5 189.6,194.4 196.9,185.5 207.0,171.6 212.9,162.8 217.3,156.8 218.9,148.2 219.1,145.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="213.9,128.5 218.2,135.0 219.0,146.3 226.2,149.4 236.6,148.4 247.7,150.0 255.4,155.3 261.7,159.2 272.8,158.1 279.7,154.2 286.8,151.0 296.3,152.1 306.3,150.7 313.0,145.5 320.1,138.3 331.6,128.0 341.4,118.3 347.8,113.2 354.3,106.9 361.6,100.5 369.7,96.9 379.9,99.5 388.2,101.7 397.0,100.1 406.0,102.5 416.0,103.5 421.6,98.3 427.9,92.3 436.0,86.6 441.9,81.2 452.5,81.4 460.6,84.2 466.8,88.5 470.2,95.6 478.3,99.2 487.6,102.5 496.2,107.1 503.6,111.0 513.3,111.6 524.1,111.4 535.7,113.0 543.8,115.2 553.9,119.0 562.5,121.3 571.8,113.7 575.8,107.4 579.7,100.9 587.9,103.8 599.0,106.0 607.7,109.6 615.0,114.0 621.1,121.1 630.6,122.4 639.9,120.7 649.5,121.9 658.5,124.0 666.7,121.9 672.2,117.3 680.7,122.2 689.7,124.2 695.4,128.9 703.4,126.4 717.9,126.0 725.0,130.6 720.4,137.4 712.1,143.9 708.5,152.6 711.8,160.3 710.5,169.2 706.5,175.6 702.2,183.0 694.5,185.8 685.5,184.6 678.8,188.3 672.0,191.9 665.7,196.5 658.2,200.8 655.3,210.0 657.8,219.1 655.2,228.4 658.6,235.3 661.7,243.2 669.6,245.6 665.7,252.6 669.3,259.7 676.7,262.5 683.9,267.7 686.3,276.1 690.4,282.7 694.1,289.7 696.5,297.7 692.2,303.7 684.9,306.9 680.2,313.2 666.6,317.8 656.3,316.2 646.7,317.0 641.0,322.1 634.5,326.6 626.2,331.5 619.8,335.7 610.6,332.7 605.6,338.3 605.3,348.2 601.1,354.4 594.1,359.8 598.0,367.1 602.8,372.5 605.6,380.1 602.0,392.7 591.8,394.1 601.5,394.8 606.0,385.3 601.8,378.8 599.7,368.8 594.9,362.8 598.7,356.3 602.9,349.9 605.4,340.6 607.6,332.6 615.7,335.3 624.8,332.5 631.8,328.2 638.9,323.7 644.9,318.6 651.7,314.9 660.0,317.3 673.0,315.7 680.8,312.9 685.3,306.6 693.4,303.2 696.8,296.0 693.5,288.8 689.2,280.2 684.3,273.6 679.8,267.1 674.5,261.5 666.6,258.8 669.0,250.1 661.7,243.2 658.6,235.3 653.8,229.9 658.7,224.4 656.6,215.6 656.1,204.4 663.0,199.3 668.0,193.8 676.5,190.0 683.7,186.8 694.5,185.8 702.2,183.0 706.2,176.4 710.2,170.0 712.3,161.6 708.3,155.1 711.2,145.5 715.9,139.6 722.8,134.6 724.2,125.8 712.6,126.7 702.1,126.8 692.2,125.8 683.6,123.9 674.3,117.9 666.7,121.9 658.5,124.0 649.5,121.9 639.9,120.7 630.6,122.4 621.1,121.1 616.0,114.5 608.3,110.3 600.8,106.9 591.8,104.9 584.1,101.0 576.2,106.6 572.3,112.9 566.3,118.8 557.4,120.8 545.7,115.8 535.7,113.0 524.8,111.5 514.8,111.5 504.7,111.2 497.5,107.9 490.9,103.9 483.4,100.3 472.8,97.2 468.4,90.8 463.2,85.8 456.1,82.5 447.2,80.4 439.2,83.2 432.0,89.5 424.4,95.2 420.2,101.7 411.1,104.1 401.7,100.9 389.8,101.3 379.9,99.5 371.5,96.4 363.5,99.7 357.1,104.3 351.6,109.4 344.7,115.4 336.4,123.2 324.8,134.6 317.6,140.0 312.1,146.5 305.4,151.2 295.6,152.1 285.9,151.1 278.8,154.7 271.3,158.7 261.3,159.1 252.7,152.9 244.8,148.9 234.8,148.7 224.6,148.7 219.3,143.1 217.6,133.6 213.9,128.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Chan do Pau d&#x27;Arco</title></polyline>
+<polyline points="499.0,284.2 492.2,287.6 490.3,296.0 493.2,303.4 500.6,306.5 506.3,311.6 514.4,316.5 524.7,315.9 517.7,319.4 509.7,314.8 504.7,308.0 497.3,304.7 490.9,300.5 488.9,291.4 494.9,285.9 499.0,284.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 04</title></polyline>
+<circle cx="435.9" cy="258.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="218.7" cy="236.1" r="2.2" fill="#b9b9b2"/>
+<polygon points="208.2,155.9 195.3,179.8 221.2,179.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="199.5,172.9 187.9,194.2 211.0,194.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="214.0,119.4 205.2,135.6 222.8,135.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="193.4,186.7 183.1,205.7 203.7,205.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="192.0,182.2 178.8,206.7 205.3,206.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="591.9" cy="393.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="423.7" y="388.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Chan do Pau d&#x27;Arco 35,2 km</text>
+<circle cx="601.4" cy="336.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="458.0" y="331.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pntura de Cima 32,5 km</text>
+<circle cx="526.7" cy="313.1" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="533.7" y="308.1" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Sítio Chã dos Cordeiros 15,4 km</text>
+<rect x="214.2" y="140.9" width="10" height="10" fill="#1d1d1b"/><text x="228.2" y="163.9" font-weight="600" fill="#1d1d1b">Sede de Arara</text>
+<line x1="35" x2="187.1" y1="459.2" y2="459.2" stroke="#8a8a84" stroke-width="2"/><text x="35" y="473.2" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="450.24512510278345" y2="450.24512510278345" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="454.24512510278345" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,443.2 421.4,455.5 434.6,455.5" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="454.24512510278345" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="468.24512510278345" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="477.24512510278345" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="473.24512510278345" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="477.24512510278345" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="496.24512510278345" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="500.24512510278345" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="496.24512510278345" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="500.24512510278345" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="519.2451251027835" y2="519.2451251027835" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="523.2451251027835" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="542.2451251027835" y2="542.2451251027835" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="546.2451251027835" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 10/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (4):</strong> Chan do Pau d&#x27;Arco, Pntura de Cima, Sítio Chã dos Cordeiros e Sítio Cuité dos Bitus.</li>
+<li><strong>De 3 a 5 km (0):</strong> nenhuma.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (1):</strong> Sítio Limpo Grande.</li>
+</ul><h2>Rotas do Edital nº 10/2026</h2>
+<p>O edital tem 7 rotas para Arara. Horários: 07:00 às 18:00. Veículos: Rota 01: Micro- ônibus MOM6F05; Rota 02: Micro- ônibus SLD8A22; Rota 03: Micro- ônibus NPR6E33; Rota 04: Ônibus OFG2E02; Rota 05: Micro- onibus QSJ4G47; Rota 06: Micro- onibus TOW-6E57; Rota 07: Micro- onibus SKW7H39.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Uruçu – Limpo Grande</td></tr><tr><td>02</td><td>Lagoa de Pedra I – Lagoa de Pedra II</td></tr><tr><td>03</td><td>São Bento de Baixo – Lagoa de Pedra</td></tr><tr><td>04</td><td>Barra do Salgado – Araçá</td></tr><tr><td>05</td><td>Jucá – Volta – Serra – Cajazeiras</td></tr><tr><td>06</td><td>Poço do Gado – Jaboticaba – Saco</td></tr><tr><td>07</td><td>Serrote – São Bento – Riacho do Saguim</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 10/2026 TRE-PB/PTRE/48ª_ZONA (Quadro de percurso de transporte de eleitores dos municípios de Arara, Casserengue e Solânea), DJE/TRE-PB nº 198/2026, disp. 18/09/2026, publ. 19/09/2026, p. 94-95, anexo &#x27;ANEXO I.pdf&#x27; (https://sitdoc.tse.jus.br/sitdoc/DownloadFile?id=7fb78de2-5e35-452f-a6db-8c75e4738ae1&amp;app=dje&amp;extensao=pdf) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=PB&amp;numDiario=198&amp;anoDiario=2026).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 3 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Chan do Pau d&#x27;Arco</strong></td><td>Sede – Pntura de Cima – Chan do Pau d&#x27;Arco – Sede</td><td>Pntura de Cima, Chan do Pau d&#x27;Arco</td><td>70,7 km (ida e volta)</td><td>~1h21</td></tr><tr><td><strong>Parada extra na Rota 04</strong></td><td>desvio pelo caminho atual: Sítio Chã dos Cordeiros</td><td>Sítio Chã dos Cordeiros</td><td>+4,8 km</td><td>+12 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMA</strong></p><p>Arara/PB, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Osenival dos Santos Costa</strong><br>Juiz Eleitoral da 48ª Zona Eleitoral – Solânea/PB</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 10/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Arara, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 10/2026: Chan do Pau d&#x27;Arco, Pntura de Cima e Sítio Chã dos Cordeiros.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Chan do Pau d&#x27;Arco (Sede – Pntura de Cima – Chan do Pau d&#x27;Arco – Sede);</li><li>a inclusão de parada em Sítio Chã dos Cordeiros na Rota 04, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 10/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Arara</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Arara; Edital nº 10/2026 TRE-PB/PTRE/48ª_ZONA (Quadro de percurso de transporte de eleitores dos municípios de Arara, Casserengue e Solânea), DJE/TRE-PB nº 198/2026, disp. 18/09/2026, publ. 19/09/2026, p. 94-95, anexo &#x27;ANEXO I.pdf&#x27; (https://sitdoc.tse.jus.br/sitdoc/DownloadFile?id=7fb78de2-5e35-452f-a6db-8c75e4738ae1&amp;app=dje&amp;extensao=pdf) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=PB&amp;numDiario=198&amp;anoDiario=2026); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

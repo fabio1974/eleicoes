@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Pirapemas</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Pirapemas</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/pirapemas.pdf?v=1792242376" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Pirapemas (68ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 68ª Zona Eleitoral <strong>3 rotas novas e 1 parada extra em rotas do edital</strong> no transporte gratuito de Pirapemas.
+Traçamos pelas estradas o percurso das 4 rotas do Edital nº 36 - TRE-MA/ZE/ZE-68 (Transporte de eleitores para as Eleições 2026 - Pirapemas), anexo único &quot;Cronograma de Rotas Rurais Oficiais&quot;. 11 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 1 ficam a 1–2 km.</p>
+<ul>
+<li>Pirapemas tem 12.940 eleitores aptos em 11 locais de votação e 44 seções. São 2 locais rurais, com 1.034 eleitores (8% do total).</li>
+<li>2 locais rurais ficam a 10 km ou mais da sede, com 1.034 eleitores. Os mais distantes: Povoado Estirão (95,2 km) e Povoado Matões (13,5 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Comunidade Quilombola Espinheira (25,9 km do local de votação), Comunidade Quilombola Belmonte (25,4 km do local de votação), Comunidade Quilombola Vereda Lagos (22,5 km do local de votação), Comunidade Quilombola Deserto (19,5 km do local de votação), Corante (18,7 km do local de votação), Comunidade Quilombola São Benedito (17,9 km do local de votação), Pedras (17,8 km do local de votação), Alto da Trindade (12,8 km do local de votação), Marajá (4,3 km do local de votação), São Bartolomeu (3,3 km do local de votação) e Comunidade Quilombola São Bartolomeu (3,2 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Tiquara.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 25 localidades rurais de Pirapemas que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Comunidade Quilombola Espinheira</td><td>25,9</td><td>Rota 03</td><td>5,2</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Comunidade Quilombola Belmonte</td><td>25,4</td><td>Rota 03</td><td>14,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Comunidade Quilombola Vereda Lagos</td><td>22,5</td><td>Rota 03</td><td>10,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Comunidade Quilombola Deserto</td><td>19,5</td><td>Rota 03</td><td>9,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Corante</td><td>18,7</td><td>Rota 03</td><td>11,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Comunidade Quilombola São Benedito</td><td>17,9</td><td>Rota 03</td><td>8,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Pedras</td><td>17,8</td><td>Rota 02</td><td>5,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Comunidade Quilombola Panamirim</td><td>14,9</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Comunidade Quilombola São José dos Pretos/Balaiada</td><td>14,0</td><td>Rota 01</td><td>0,4</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Comunidade Quilombola São Benedito dos Pretos</td><td>13,6</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Alto da Trindade</td><td>12,8</td><td>Rota 03</td><td>7,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Comunidade Quilombola Bica</td><td>12,4</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Farinha Seca</td><td>9,7</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Comunidade Quilombola Bagaceira</td><td>8,9</td><td>Rota 03</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Santo Honório</td><td>7,9</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Tiquara</td><td>5,5</td><td>Rota 02</td><td>1,8</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Morro Grande</td><td>5,3</td><td>Rota 02</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Marajá</td><td>4,3</td><td>Rota 01</td><td>3,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Forquilha</td><td>3,9</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Pregos</td><td>3,6</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>São Bartolomeu</td><td>3,3</td><td>Rota 03</td><td>3,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Comunidade Quilombola São Bartolomeu</td><td>3,2</td><td>Rota 03</td><td>2,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Comunidade Quilombola Aldeia Velha</td><td>3,1</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>1 das 11 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Maioba (Rota 04). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 25 localidades rurais de Pirapemas, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 797" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Pirapemas: 12 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 36 - TRE-MA/ZE/ZE-68 (Transporte de eleitores para as Eleições 2026 - Pirapemas), anexo único &quot;Cronograma de Rotas Rurais Oficiais&quot; e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="93.9,544.6 331.2,664.8 355.0,663.5 370.2,643.6 393.9,632.5 406.1,555.5 404.0,532.7 413.9,491.6 725.0,502.3 722.3,494.3 631.5,271.9 616.8,247.1 619.1,237.7 524.3,83.6 500.2,94.7 476.3,100.3 454.7,94.3 445.3,129.9 418.1,135.4 392.9,174.3 390.2,184.4 370.3,204.1 360.2,222.4 318.5,248.4 268.6,241.4 236.7,233.5 212.4,220.3 183.9,239.8 170.4,243.7 155.3,233.3 157.6,260.7 173.6,280.6 196.7,287.6 192.2,303.7 208.8,325.9 211.7,340.0 189.9,347.8 184.5,365.1 164.6,353.6 151.6,368.9 134.8,357.8 114.2,362.2 104.6,374.4 70.2,405.4 77.8,419.7 69.2,431.4 55.6,431.6 40.0,466.0 39.8,477.7 50.3,498.3 35.0,514.8 93.9,544.6 93.9,544.6" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="359.3,565.4 352.4,565.1 348.0,562.0 344.7,559.0 343.4,553.6 339.9,550.3 336.6,546.6 333.6,543.5 335.5,538.1 336.2,531.8 339.7,528.5 343.0,524.4 384.5,495.4 387.8,509.9 392.5,534.0 388.3,511.7 384.8,494.7 381.8,478.6 378.2,460.6 376.1,449.5 362.9,429.6 349.8,419.4 347.3,416.0 343.3,412.7 340.9,408.7 337.3,405.7 332.2,403.8 328.6,401.2 323.2,399.0 318.5,396.2 315.1,389.2 312.9,383.7 313.4,375.9 310.0,370.9 308.0,366.5 303.7,362.3 290.4,360.0 285.0,353.3 285.2,346.7 285.1,340.8 284.9,334.6 283.0,330.4 281.9,323.2 281.6,316.7 280.6,310.8 279.8,305.7 278.3,301.1 280.5,296.9 283.5,292.8 282.2,287.5 279.9,284.0 277.6,282.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="93.2,438.7 100.4,437.7 107.7,437.8 114.9,439.1 120.7,438.9 125.8,440.1 128.5,443.3 132.8,445.5 137.3,448.2 141.3,451.1 144.6,455.9 147.6,459.3 152.5,460.9 154.5,464.8 155.2,470.9 157.9,474.0 161.7,470.0 168.4,468.3 186.1,465.7 197.5,463.1 202.6,461.1 206.3,458.3 209.2,462.2 210.0,467.6 208.5,473.6 208.3,481.1 210.1,488.6 212.0,494.2 215.0,499.1 218.1,503.0 223.0,505.4 225.8,509.4 229.0,520.2 229.4,526.3 229.9,533.0 229.4,526.3 229.0,520.2 227.4,512.5 224.5,507.1 218.9,503.6 215.0,499.1 212.0,494.2 210.1,488.6 208.9,483.8 208.4,478.2 208.9,471.5 209.7,465.4 207.1,459.1 208.9,452.6 213.2,449.5 217.8,445.5 224.1,443.3 229.3,440.1 235.4,437.6 244.2,429.1 248.2,425.4 258.9,417.8 262.9,414.8 266.8,410.5 269.5,405.8 267.8,396.9 266.8,391.1 263.7,385.1 264.6,378.4 265.1,373.1 265.8,366.8 268.9,359.3 273.0,357.3 280.5,355.3 284.5,353.3 285.3,348.2 284.4,342.9 285.0,337.7 283.2,331.0 282.5,325.5 281.9,320.1 281.3,314.9 280.3,308.7 278.6,302.6 280.1,297.4 283.0,294.5 282.6,288.7 279.9,284.0 277.6,282.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="576.1,438.3 325.0,314.9 321.2,311.4 316.3,306.2 297.9,294.6 293.7,292.0 290.0,289.6 285.8,287.1 279.9,284.0 277.6,282.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="283.7,283.1 286.1,279.4 292.2,276.8 297.3,274.7 303.3,272.1 308.6,269.5 312.2,267.3 316.0,264.6 317.5,259.1 321.1,256.6 323.1,251.4 323.1,245.6 326.5,243.2 329.5,240.4 332.0,237.0 336.3,235.5 339.4,232.4 343.1,230.1 347.7,227.8 350.8,224.7 356.0,223.5 359.8,221.1 362.0,217.5 365.3,214.0 371.1,214.0 376.6,215.9 381.4,217.3 387.2,216.1 392.8,214.9 397.0,212.6 401.6,214.6 405.0,217.6 407.0,223.4 408.8,228.7 411.7,232.3 415.7,235.3 418.4,238.4 423.9,239.8 431.0,240.6 436.8,241.1 441.7,240.0 446.0,238.2 449.8,235.5 454.8,234.7 460.1,234.2 463.5,231.2 465.7,227.4 466.5,221.9 467.2,215.9 468.0,210.7 468.1,203.8 474.0,204.5 478.2,207.4 482.0,209.5 486.9,210.4 489.1,206.3 491.5,202.4 490.7,197.4 489.7,192.3 487.7,188.2 485.5,182.9 487.8,178.3 492.7,177.4 496.2,179.7 504.0,180.3 508.2,182.0 510.3,185.9 514.3,187.9 518.3,186.1 522.3,183.7 527.3,185.4 525.6,191.9 526.4,197.1 527.5,202.4 524.9,207.1 522.3,210.7 519.7,214.7 519.9,220.5 519.4,225.8 520.8,230.2 520.4,236.6 520.3,242.6 522.0,247.4 527.7,248.4 532.3,249.7 537.1,250.7 543.3,251.0 549.7,251.0 557.6,251.2 564.0,252.4 567.9,254.5 572.1,257.5 575.6,260.1 579.3,262.2 581.5,265.9 587.9,264.9 591.5,262.6 594.7,258.4 591.9,262.3 588.2,264.7 584.7,267.0 581.6,269.8 579.7,274.2 578.5,278.9 582.6,284.7 586.2,287.9 590.0,291.4 592.0,295.4 593.6,299.8 592.0,304.9 593.8,309.5 595.5,314.7 595.9,320.3 594.6,325.1 596.1,332.4 594.2,327.9 595.3,322.8 595.6,316.0 593.8,309.5 591.8,305.7 593.6,300.4 592.0,295.4 590.0,291.4 586.5,288.2 582.6,284.7 578.0,281.6 579.0,276.3 580.8,270.7 580.3,264.9 577.2,260.5 572.8,258.4 570.1,255.0 566.2,252.2 560.6,251.9 555.1,250.9 548.9,251.0 540.1,250.5 534.5,250.2 528.9,249.0 523.2,247.6 513.7,248.3 508.0,249.9 501.5,251.0 495.7,249.1 491.8,246.6 488.2,243.4 484.1,241.5 479.7,239.6 474.2,237.7 469.6,236.1 464.8,235.0 459.0,234.1 453.9,234.8 448.0,236.1 445.1,239.2 440.3,240.3 435.4,241.1 428.0,240.4 421.5,239.6 417.2,237.0 413.8,233.7 409.1,229.0 406.8,225.0 405.3,218.4 401.6,214.6 397.6,212.6 392.8,214.9 387.2,216.1 381.4,217.3 376.6,215.9 372.6,214.0 367.0,214.3 362.8,216.4 359.8,221.1 356.0,223.5 351.1,224.6 347.7,227.8 343.1,230.1 339.4,232.4 336.3,235.5 332.0,237.0 329.5,240.4 326.5,243.2 323.1,245.6 323.1,251.4 321.6,256.1 317.5,257.8 316.5,263.1 312.2,267.3 308.6,269.5 304.7,271.5 299.3,273.8 294.2,275.9 289.6,277.8 285.2,279.6 283.7,283.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Espinheira</title></polyline>
+<polyline points="283.7,283.1 286.1,279.4 292.2,276.8 297.3,274.7 303.3,272.1 308.6,269.5 312.2,267.3 316.0,264.6 317.5,259.1 321.1,256.6 323.1,251.4 323.1,245.6 326.5,243.2 329.5,240.4 332.0,237.0 336.3,235.5 339.4,232.4 343.1,230.1 347.7,227.8 350.8,224.7 356.0,223.5 359.8,221.1 362.0,217.5 365.3,214.0 368.2,210.5 369.8,204.7 377.0,198.1 379.9,193.8 383.9,189.3 386.9,184.9 390.9,177.9 395.2,170.9 398.4,167.6 401.0,163.3 404.9,159.2 408.5,154.8 411.8,150.3 414.3,145.6 415.5,140.5 421.0,134.5 426.2,132.6 432.0,133.1 436.9,131.1 441.5,129.7 446.3,126.0 449.4,122.3 451.0,117.9 452.5,113.4 454.1,108.7 457.1,104.9 458.5,99.7 464.1,99.0 467.0,95.5 473.3,98.1 478.6,100.7 482.9,99.0 489.1,98.8 492.4,95.6 496.9,94.4 503.0,93.9 506.8,91.9 509.6,88.8 515.3,87.9 520.5,85.8 526.2,83.2 530.3,81.2 536.6,82.0 540.4,84.2 545.7,87.2 547.4,91.4 545.0,98.5 544.9,104.4 543.5,109.1 544.6,114.5 543.9,124.5 547.1,129.0 548.6,133.5 550.5,138.7 548.7,134.7 547.6,129.5 544.7,126.5 544.0,118.7 543.7,112.2 544.0,106.5 545.9,102.2 547.1,94.9 546.5,89.1 543.0,86.0 539.7,82.6 534.6,81.4 528.9,81.5 524.3,84.2 519.1,86.3 514.1,89.1 508.5,91.2 504.3,93.2 500.1,94.9 495.0,94.2 491.2,97.1 486.5,98.9 480.1,100.5 474.9,98.8 470.2,95.7 465.7,97.4 460.3,98.7 458.7,102.8 454.1,108.7 452.5,113.4 451.0,117.9 449.4,122.3 446.3,126.0 442.7,129.1 438.0,130.6 434.0,132.7 428.1,132.6 422.9,133.8 416.9,137.8 415.3,142.1 413.1,148.2 409.6,152.3 407.4,156.3 403.8,160.8 399.6,166.5 396.1,169.9 391.6,175.5 388.3,181.2 383.9,189.3 379.9,193.8 377.0,198.1 371.1,202.4 368.4,208.7 366.5,212.7 363.3,215.8 361.3,219.9 357.0,222.9 352.5,224.4 348.9,226.5 345.7,229.3 341.3,230.9 338.2,233.8 335.0,236.5 330.9,238.5 328.1,241.5 324.8,244.1 323.4,248.7 322.7,254.2 318.9,257.1 316.7,261.8 314.8,265.8 310.3,268.5 305.9,270.9 299.3,273.8 294.2,275.9 289.6,277.8 285.2,279.6 283.7,283.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Belmonte</title></polyline>
+<polyline points="273.5,275.1 270.0,277.3 265.5,275.6 259.4,275.8 253.8,271.8 233.2,254.9 234.2,250.0 237.7,247.0 240.9,243.7 244.4,239.5 241.7,242.9 237.7,247.0 234.2,250.0 230.4,253.1 201.7,249.7 178.2,247.3 171.0,246.3 165.8,247.1 158.7,247.9 151.2,249.0 144.7,248.1 136.9,245.1 118.0,237.7 114.4,241.2 110.7,244.3 106.6,249.7 103.0,255.3 100.3,260.8 98.6,267.4 97.1,271.8 97.3,277.6 97.3,285.0 97.9,291.2 98.3,297.2 99.8,304.6 106.8,309.2 111.2,311.1 116.1,317.8 116.9,323.3 117.6,329.1 123.3,334.2 126.5,337.5 128.2,343.1 130.8,346.5 132.5,350.8 130.8,346.5 128.2,343.1 126.5,338.7 123.3,334.2 119.0,331.5 116.9,326.4 117.2,320.2 112.0,311.9 106.8,309.2 101.0,306.5 99.1,301.0 97.5,293.9 97.2,287.1 97.5,281.1 96.9,276.0 97.3,270.1 99.3,265.5 101.0,258.7 105.5,251.8 109.8,245.2 112.8,242.1 118.0,237.7 136.9,245.1 143.6,247.7 148.5,248.9 158.7,247.9 165.1,247.2 171.0,246.3 178.2,247.3 201.7,249.7 227.2,252.2 232.1,254.0 253.8,271.8 258.0,275.1 264.7,275.6 269.2,277.1 273.5,275.4 273.5,275.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Pedras</title></polyline>
+<polyline points="157.9,474.0 154.4,478.1 154.1,484.0 154.7,490.2 158.5,492.4 158.8,498.0 157.4,503.7 158.8,498.0 160.8,494.2 156.9,491.6 153.1,488.4 154.8,482.8 154.9,476.3 157.9,474.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 02</title></polyline>
+<circle cx="384.5" cy="497.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="363.3" cy="570.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="357.7" cy="567.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="377.4" cy="455.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="576.1" cy="438.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="346.8" cy="323.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="326.8" cy="399.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="232.9" cy="536.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="259.3" cy="417.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="153.7" cy="468.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="326.2" cy="315.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="202.7" cy="461.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="268.4" cy="270.2" r="2.2" fill="#b9b9b2"/>
+<polygon points="282.2,268.4 270.5,290.0 293.9,290.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="283.9,274.4 275.7,289.5 292.1,289.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="280.1,272.0 273.0,285.0 287.2,285.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="275.1,270.3 264.7,289.6 285.6,289.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="281.6,271.8 269.0,295.1 294.3,295.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="273.6,265.3 264.4,282.3 282.8,282.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="282.6,277.2 270.7,299.1 294.5,299.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="280.5,283.3 269.9,302.9 291.1,302.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="266.1,258.9 255.8,278.0 276.5,278.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="206.5,447.5 197.6,463.9 215.4,463.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="456.0,377.0 448.3,391.2 463.7,391.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="591.7" cy="347.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="336.7" y="342.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Espinheira 25,9 km</text>
+<circle cx="550.6" cy="141.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="557.6" y="136.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Belmonte 25,4 km</text>
+<circle cx="597.3" cy="256.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="329.9" y="251.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Vereda Lagos 22,5 km</text>
+<circle cx="559.4" cy="252.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="566.4" y="267.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Deserto 19,5 km</text>
+<circle cx="489.7" cy="177.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="496.7" y="172.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Corante 18,7 km</text>
+<circle cx="531.5" cy="249.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="132.5" cy="352.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="139.5" y="347.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pedras 17,8 km</text>
+<circle cx="448.3" cy="236.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="455.3" y="231.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Alto da Trindade 12,8 km</text>
+<circle cx="157.0" cy="504.9" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="164.0" y="499.9" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Tiquara 5,5 km</text>
+<circle cx="245.3" cy="238.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="252.3" y="233.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Marajá 4,3 km</text>
+<circle cx="326.1" cy="250.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="333.1" y="265.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">São Bartolomeu 3,3 km</text>
+<circle cx="325.0" cy="253.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<rect x="272.7" y="276.8" width="10" height="10" fill="#1d1d1b"/><text x="286.7" y="299.8" font-weight="600" fill="#1d1d1b">Sede de Pirapemas</text>
+<line x1="35" x2="121.1" y1="694.8" y2="694.8" stroke="#8a8a84" stroke-width="2"/><text x="35" y="708.8" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="685.8404821280116" y2="685.8404821280116" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="689.8404821280116" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,678.8 421.4,691.1 434.6,691.1" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="689.8404821280116" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="703.8404821280116" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="712.8404821280116" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="708.8404821280116" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="712.8404821280116" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="731.8404821280116" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="735.8404821280116" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="731.8404821280116" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="735.8404821280116" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="754.8404821280116" y2="754.8404821280116" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="758.8404821280116" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="777.8404821280116" y2="777.8404821280116" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="781.8404821280116" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 36 - TRE-MA/ZE/ZE-68 (Transporte de eleitores para as Eleições 2026 - Pirapemas), anexo único &quot;Cronograma de Rotas Rurais Oficiais&quot; · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (17):</strong> Comunidade Quilombola Espinheira, Comunidade Quilombola Belmonte, Comunidade Quilombola Vereda Lagos, Comunidade Quilombola Deserto, Corante, Comunidade Quilombola São Benedito, Pedras, Comunidade Quilombola Panamirim, Comunidade Quilombola São José dos Pretos/Balaiada, Comunidade Quilombola São Benedito dos Pretos, Alto da Trindade, Comunidade Quilombola Bica, Farinha Seca, Comunidade Quilombola Bagaceira, Santo Honório, Tiquara e Morro Grande.</li>
+<li><strong>De 3 a 5 km (6):</strong> Marajá, Forquilha, Pregos, São Bartolomeu, Comunidade Quilombola São Bartolomeu e Comunidade Quilombola Aldeia Velha.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (2):</strong> Comunidade Quilombola Rampa e Matões.</li>
+</ul><h2>Rotas do Edital nº 36 - TRE-MA/ZE/ZE-68 (Transporte de eleitores para as Eleições 2026 - Pirapemas), anexo único &quot;Cronograma de Rotas Rurais Oficiais&quot;</h2>
+<p>O edital tem 4 rotas para Pirapemas. Horários: não informados. Veículos: Rotas 01 a 03: ônibus BUS 10-190 (chassis 932K61BDZT8718049, 932K61BDZT9718020, 932K61BDZT8718035); Rota 04: ônibus VW Neobus 15.190 ESC (chassi 9532F2W9PR036233).</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>São Benedito dos Pretos – Agoga Bode – Sede</td></tr><tr><td>02</td><td>Tanque – Morro Grande – Sede</td></tr><tr><td>03</td><td>Farinha Seca – Pontes – Sede</td></tr><tr><td>04</td><td>Maioba – Sede</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 36 - TRE-MA/ZE/ZE-68, 68ª ZE (Cantanhede); DJE/TRE-MA nº 206, disp. 28/09/2026, p. 251-252 (https://dje.tse.jus.br/dje/pdf/v1/edicao/130050).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 12 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Comunidade Quilombola Espinheira</strong></td><td>Sede – Comunidade Quilombola São Bartolomeu – São Bartolomeu – Alto da Trindade – Corante – Comunidade Quilombola São Benedito – Comunidade Quilombola Deserto – Comunidade Quilombola Vereda Lagos – Comunidade Quilombola Espinheira – Sede</td><td>Comunidade Quilombola São Bartolomeu, São Bartolomeu, Alto da Trindade, Corante, Comunidade Quilombola São Benedito, Comunidade Quilombola Deserto, Comunidade Quilombola Vereda Lagos, Comunidade Quilombola Espinheira</td><td>62,6 km (ida e volta)</td><td>~2h21</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Belmonte</strong></td><td>Sede – Comunidade Quilombola Belmonte – Sede</td><td>Comunidade Quilombola Belmonte</td><td>50,7 km (ida e volta)</td><td>~1h24</td></tr><tr><td><strong>Rota nova – Pedras</strong></td><td>Sede – Marajá – Pedras – Sede</td><td>Marajá, Pedras</td><td>38,0 km (ida e volta)</td><td>~52 min</td></tr><tr><td><strong>Parada extra na Rota 02</strong></td><td>desvio pelo caminho atual: Tiquara</td><td>Tiquara</td><td>+4,6 km</td><td>+7 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMP</strong></p><p>Pirapemas/MA, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Dra. Bruna Fernanda Oliveira da Costa</strong><br>Juíza Eleitoral da 68ª Zona Eleitoral – Cantanhede/MA</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 36 - TRE-MA/ZE/ZE-68 (Transporte de eleitores para as Eleições 2026 - Pirapemas), anexo único &quot;Cronograma de Rotas Rurais Oficiais&quot;) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de Pirapemas, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 36 - TRE-MA/ZE/ZE-68 (Transporte de eleitores para as Eleições 2026 - Pirapemas), anexo único &quot;Cronograma de Rotas Rurais Oficiais&quot;: Comunidade Quilombola Espinheira, Comunidade Quilombola Belmonte, Comunidade Quilombola Vereda Lagos, Comunidade Quilombola Deserto, Corante, Comunidade Quilombola São Benedito, Pedras, Alto da Trindade, Marajá, São Bartolomeu, Comunidade Quilombola São Bartolomeu e Tiquara.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Comunidade Quilombola Espinheira (Sede – Comunidade Quilombola São Bartolomeu – São Bartolomeu – Alto da Trindade – Corante – Comunidade Quilombola São Benedito – Comunidade Quilombola Deserto – Comunidade Quilombola Vereda Lagos – Comunidade Quilombola Espinheira – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola Belmonte (Sede – Comunidade Quilombola Belmonte – Sede);</li><li>a criação da Rota nova – Pedras (Sede – Marajá – Pedras – Sede);</li><li>a inclusão de parada em Tiquara na Rota 02, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 36 - TRE-MA/ZE/ZE-68 (Transporte de eleitores para as Eleições 2026 - Pirapemas), anexo único &quot;Cronograma de Rotas Rurais Oficiais&quot; deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Pirapemas</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Pirapemas; Edital nº 36 - TRE-MA/ZE/ZE-68, 68ª ZE (Cantanhede); DJE/TRE-MA nº 206, disp. 28/09/2026, p. 251-252 (https://dje.tse.jus.br/dje/pdf/v1/edicao/130050); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – São Domingos</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← São Domingos</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/sao-domingos.pdf?v=1792242214" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – São Domingos (31ª ZE): proposta de novas rotas</h1><p class="data">17/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 31ª Zona Eleitoral <strong>1 rota nova e 2 paradas extras em rotas do edital</strong> no transporte gratuito de São Domingos.
+Traçamos pelas estradas o percurso das 7 rotas do Edital nº 19/2026. 5 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 5 ficam a 1–2 km.</p>
+<ul>
+<li>São Domingos tem 3.300 eleitores aptos em 2 locais de votação e 10 seções. São 0 locais rurais, com 0 eleitores (0% do total).</li>
+
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Boa Morte (11,0 km do local de votação), Tijuca (10,6 km do local de votação), Figueira (6,0 km do local de votação), São Lourenço (4,4 km do local de votação) e Nova Cova (3,3 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Cajazeiras, Córrego Fechado, Cajazeiras dos Lourenços, Massapê e Roça Nova.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 33 localidades rurais de São Domingos que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Cajazeiras</td><td>20,7</td><td>Rota 02</td><td>1,1</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Carnaúbas</td><td>19,7</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Carnaúba</td><td>19,6</td><td>Rota 02</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Tigre</td><td>19,5</td><td>Rota 02</td><td>0,3</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Cachoeira</td><td>18,2</td><td>Rota 02</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Pedregulho</td><td>16,4</td><td>Rota 07</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Mofumbo</td><td>16,4</td><td>Rota 07</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Riacho de Pedra</td><td>12,4</td><td>Rota 03</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Cinete</td><td>12,0</td><td>Rota 04</td><td>0,3</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Currupati</td><td>11,5</td><td>Rota 04</td><td>0,7</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Lagoa Cavada</td><td>11,4</td><td>Rota 04</td><td>1,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Boa Morte</td><td>11,0</td><td>Rota 02</td><td>3,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Grotão</td><td>10,6</td><td>Rota 05</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Tijuca</td><td>10,6</td><td>Rota 02</td><td>6,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Sítio Boi</td><td>9,3</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Baldinho</td><td>9,1</td><td>Rota 04</td><td>0,8</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Boa Vista</td><td>8,4</td><td>Rota 05</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Jurema</td><td>8,4</td><td>Rota 04</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Paissandu</td><td>8,0</td><td>Rota 05</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Verdes</td><td>7,3</td><td>Rota 06</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Água Bela</td><td>7,3</td><td>Rota 02</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Córrego Fechado</td><td>7,3</td><td>Rota 04</td><td>1,9</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Cajazeiras dos Lourenços</td><td>7,0</td><td>Rota 04</td><td>1,4</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Massapê</td><td>6,7</td><td>Rota 04</td><td>1,8</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Caieira</td><td>6,3</td><td>Rota 05</td><td>0,9</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Figueira</td><td>6,0</td><td>Rota 01</td><td>3,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Roça Nova</td><td>5,9</td><td>Rota 04</td><td>1,4</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>São Lourenço</td><td>4,4</td><td>Rota 01</td><td>3,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Sítio Sossego</td><td>3,9</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Nova Cova</td><td>3,3</td><td>Rota 01</td><td>2,5</td><td>Sem rota (mais de 2 km)</td></tr></tbody></table></div>
+<p>5 das 36 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Aguas Belas de Cima (Rota 01 e Rota 06), Jaboatão (Rota 04), Boa Vista do Meio (Rota 04) e Mofumbo de Baixo (Rota 05). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 33 localidades rurais de São Domingos, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 852" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">São Domingos: 10 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 19/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="143.9,720.4 404.3,717.2 420.8,669.5 471.7,660.4 509.7,586.1 563.8,571.0 648.1,573.3 677.0,550.8 710.0,502.7 709.6,455.0 675.2,425.2 679.8,346.8 644.0,325.7 595.9,317.5 619.7,280.3 610.6,212.0 562.9,184.1 598.2,121.7 583.5,80.0 489.1,91.9 380.9,121.7 213.1,151.5 96.2,210.2 39.4,220.7 76.0,262.9 74.7,347.7 103.1,375.2 129.7,433.4 165.0,479.3 109.5,508.6 88.9,564.5 96.2,620.5 139.3,638.3 143.9,720.4 143.9,720.4" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="384.0,267.3 387.9,277.7 379.7,283.6 371.7,289.5 365.3,299.2 364.2,317.0 363.9,332.9 360.8,344.0 353.2,355.4 346.6,365.0 338.3,372.7 346.6,365.0 353.2,355.4 358.9,345.6 363.9,332.9 377.5,337.3 388.1,341.2 399.2,347.1 410.9,352.4 422.1,356.9 435.8,360.1 442.4,370.1 449.8,362.1 442.4,370.1 444.9,390.0 447.0,401.9 453.7,420.1 458.9,428.8 467.1,434.3 446.4,444.4 427.9,449.9 413.8,454.2 408.2,463.4 407.1,465.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="126.7,342.7 117.8,337.5 107.5,328.6 100.8,321.0 95.2,312.5 87.4,306.3 84.2,295.5 83.2,282.3 81.8,268.6 77.6,256.1 76.4,243.5 77.6,230.0 71.8,221.6 50.4,218.7 70.9,215.4 83.0,213.5 94.9,210.8 117.4,199.6 163.5,176.4 177.2,169.7 189.6,163.2 204.8,155.5 214.7,151.0 232.0,147.7 259.6,142.9 286.6,138.3 314.0,133.4 328.9,130.9 338.2,142.3 343.9,155.1 348.4,169.1 358.7,173.3 363.3,183.9 367.1,194.7 377.3,199.6 385.6,206.9 385.2,226.1 387.0,242.2 387.8,256.8 384.0,267.2 387.9,277.7 408.6,281.1 434.8,287.6 442.1,300.7 447.3,311.0 454.5,320.3 461.6,335.2 455.6,351.7 450.7,361.2 443.3,368.3 444.9,390.0 447.0,401.9 453.7,420.1 458.9,428.8 467.1,434.3 446.4,444.4 427.9,449.9 413.8,454.2 408.2,463.4 407.1,465.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="47.1,212.8 70.9,215.4 83.0,213.5 94.9,210.8 117.4,199.6 163.5,176.4 177.2,169.7 189.6,163.2 204.8,155.5 214.7,151.0 232.0,147.7 259.6,142.9 286.6,138.3 286.1,124.0 286.6,138.3 314.0,133.4 328.9,130.9 338.2,142.3 343.9,155.1 348.4,169.1 358.7,173.3 363.3,183.9 367.1,194.7 377.3,199.6 385.6,206.9 385.2,226.1 387.0,242.2 387.8,256.8 384.0,267.2 387.9,277.7 408.6,281.1 434.8,287.6 442.1,300.7 447.3,311.0 454.5,320.3 461.6,335.2 455.6,351.7 450.7,361.2 443.3,368.3 444.9,390.0 447.0,401.9 453.7,420.1 458.9,428.8 467.1,434.3 446.4,444.4 427.9,449.9 413.8,454.2 408.2,463.4 407.1,465.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="540.0,686.7 543.8,676.0 549.4,667.5 562.3,664.8 572.6,668.9 586.7,673.0 600.3,674.2 610.3,678.5 621.5,682.1 634.0,672.2 635.8,657.5 631.9,642.1 629.5,628.7 636.5,618.1 641.1,607.0 640.8,593.1 644.7,582.6 648.8,572.3 661.0,565.5 670.1,558.1 677.6,550.1 680.3,538.8 689.3,529.9 696.2,519.8 703.2,511.4 710.1,503.7 710.1,490.0 712.9,476.6 717.9,466.8 724.4,455.8 710.5,455.1 702.5,448.5 695.2,441.1 688.8,433.4 680.8,426.9 666.5,427.7 653.1,425.1 642.4,420.7 627.5,412.9 614.8,411.5 600.9,410.7 590.7,406.9 581.0,402.8 567.8,396.8 555.7,399.7 544.6,395.6 530.0,388.4 517.4,391.7 509.5,397.8 493.0,401.0 479.8,404.0 468.9,410.2 459.4,416.9 450.0,411.0 446.3,399.2 442.8,374.9 448.5,363.4 455.6,351.7 461.8,339.6 457.3,325.3 450.4,315.0 443.5,305.0 440.4,292.4 413.7,282.0 392.7,279.7 384.3,270.0 387.6,259.2 387.6,244.4 384.7,230.4 386.7,216.4 380.4,202.3 367.1,194.7 363.3,183.9 359.4,173.8 348.8,170.0 345.3,158.2 338.2,142.3 333.9,132.7 349.2,127.3 364.4,124.6 381.5,121.6 394.4,118.1 425.3,109.6 437.8,106.3 451.1,102.5 471.1,96.9 483.0,93.9 499.5,90.8 494.3,99.7 497.5,110.7 502.8,127.8 505.8,139.1 502.8,127.8 498.0,113.8 494.3,103.2 499.5,92.8 483.0,93.9 471.1,96.9 451.1,102.5 437.8,106.3 425.3,109.6 394.4,118.1 382.5,121.4 364.4,124.6 352.4,126.7 337.2,129.4 338.2,142.3 343.9,155.1 348.4,169.1 358.7,173.3 363.3,183.9 367.1,194.7 377.3,199.6 385.6,206.9 385.2,226.1 387.0,242.2 387.8,256.8 384.0,267.2 387.9,277.7 408.6,281.1 434.8,287.6 442.1,300.7 447.3,311.0 454.5,320.3 461.6,335.2 455.6,351.7 450.7,361.2 443.3,368.3 444.9,390.0 447.0,401.9 453.7,420.1 458.9,428.8 467.1,434.3 446.4,444.4 427.9,449.9 413.8,454.2 408.2,463.4 407.1,465.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="598.3,218.9 606.9,213.3 611.1,223.1 614.9,233.0 620.7,241.0 621.8,254.9 620.4,267.8 621.5,282.6 629.6,290.1 621.5,282.6 620.2,269.7 621.5,256.6 620.9,242.8 615.3,233.7 611.2,224.1 608.1,213.0 596.3,215.8 588.5,209.4 586.0,198.1 578.0,191.7 566.5,189.2 552.3,190.8 544.1,196.4 531.2,198.9 517.0,198.3 508.3,204.9 500.7,211.7 490.5,216.2 477.4,221.2 474.4,233.0 486.0,246.8 491.6,255.5 494.0,267.3 498.4,277.5 506.3,284.9 509.3,301.5 504.8,312.1 496.8,321.1 488.9,327.4 475.6,331.0 466.2,335.4 455.6,351.7 450.7,361.2 443.3,368.3 444.9,390.0 447.0,401.9 453.7,420.1 458.9,428.8 467.1,434.3 446.4,444.4 427.9,449.9 413.8,454.2 408.2,463.4 407.1,465.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="384.0,267.3 387.9,277.7 379.7,283.6 371.7,289.5 365.3,299.2 364.2,317.0 363.9,332.9 377.5,337.3 388.1,341.2 399.2,347.1 410.9,352.4 422.1,356.9 435.8,360.1 442.4,370.1 449.8,362.1 442.4,370.1 444.9,390.0 447.0,401.9 453.7,420.1 458.9,428.8 467.1,434.3 446.4,444.4 427.9,449.9 413.8,454.2 408.2,463.4 407.1,465.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="328.6,131.9 342.8,128.4 364.4,124.6 381.5,121.6 394.4,118.1 425.3,109.6 437.8,106.3 451.1,102.5 471.1,96.9 483.0,93.9 499.5,90.8 494.3,99.7 497.5,110.7 502.8,127.8 505.8,139.1 502.8,127.8 498.0,113.8 494.3,103.2 499.5,92.8 483.0,93.9 471.1,96.9 451.1,102.5 437.8,106.3 425.3,109.6 394.4,118.1 382.5,121.4 364.4,124.6 352.4,126.7 337.2,129.4 338.2,142.3 343.9,155.1 348.4,169.1 358.7,173.3 363.3,183.9 367.1,194.7 377.3,199.6 385.6,206.9 385.2,226.1 387.0,242.2 387.8,256.8 384.0,267.2 387.9,277.7 408.6,281.1 434.8,287.6 442.1,300.7 447.3,311.0 454.5,320.3 461.6,335.2 455.6,351.7 450.7,361.2 443.3,368.3 444.9,390.0 447.0,401.9 453.7,420.1 458.9,428.8 467.1,434.3 446.4,444.4 427.9,449.9 413.8,454.2 408.2,463.4 407.1,465.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="407.7,469.5 418.3,464.8 430.1,466.9 437.3,474.4 442.2,483.4 443.8,496.9 450.1,507.7 462.0,510.0 470.3,515.7 477.6,522.9 483.9,530.5 477.0,537.3 483.9,530.5 477.6,522.9 470.3,515.7 462.0,510.0 450.1,507.7 439.0,511.1 432.7,521.3 432.0,535.0 424.0,542.8 416.3,549.4 412.6,559.8 410.3,572.8 396.7,568.2 382.6,569.7 372.5,578.3 367.0,586.9 366.9,602.5 362.8,616.2 366.4,605.2 366.2,589.6 371.9,579.7 378.9,571.7 388.5,566.8 400.6,572.8 412.4,570.2 413.5,556.5 420.1,546.6 432.0,535.0 432.7,521.3 437.2,511.9 443.6,502.8 441.2,491.1 443.9,479.6 434.3,471.5 424.1,466.9 413.1,462.1 401.3,459.7 389.9,462.8 378.0,466.0 367.7,469.4 356.8,473.1 345.2,475.7 334.5,479.5 322.5,482.9 311.1,486.0 299.2,488.3 286.6,492.1 272.2,496.5 260.9,499.6 248.7,503.1 245.0,492.8 249.5,482.9 251.2,468.5 244.2,460.6 231.8,456.2 221.3,452.9 208.2,451.5 197.6,447.4 187.7,451.4 184.6,463.0 177.9,471.1 180.5,482.8 172.4,489.5 163.5,494.8 150.7,495.8 139.9,491.8 126.8,493.6 115.4,496.4 104.0,493.3 94.4,497.5 87.2,490.7 78.5,484.7 97.2,618.8 95.1,586.7 102.7,579.3 115.4,584.9 130.3,598.5 148.0,599.8 169.1,590.5 185.7,590.7 201.3,592.8 219.8,588.9 232.8,587.7 237.0,578.1 237.2,564.5 235.4,551.6 232.8,540.3 236.5,530.2 237.1,517.0 240.2,505.8 251.9,502.3 263.8,498.8 279.2,494.4 289.6,491.0 301.8,487.7 314.4,485.1 325.2,481.9 336.1,479.0 347.2,475.2 359.2,472.6 370.0,468.5 384.1,465.8 395.3,461.6 402.7,470.6 407.7,469.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Boa Morte</title></polyline>
+<polyline points="80.4,264.4 83.1,277.5 84.1,291.6 75.2,296.7 62.1,291.5 53.8,285.8 44.6,281.1 37.9,273.9 44.6,281.1 53.8,285.8 62.1,291.5 72.4,295.6 83.5,300.7 84.1,286.2 82.6,272.7 80.4,264.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 02</title></polyline>
+<polyline points="648.1,573.7 636.8,570.6 622.6,570.0 609.1,568.7 594.8,568.7 582.2,572.0 569.3,571.0 558.7,574.2 547.6,576.9 536.2,574.5 523.5,575.7 514.5,582.4 507.9,590.0 504.0,600.6 499.0,612.4 492.8,620.0 495.6,631.7 494.5,644.4 498.5,654.2 495.1,668.7 490.0,681.4 492.3,693.2 513.2,693.2 527.2,696.0 536.9,691.4 542.4,680.3 543.8,676.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 04</title></polyline>
+<circle cx="87.5" cy="305.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="94.8" cy="301.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="113.7" cy="185.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="40.5" cy="209.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="497.3" cy="142.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="501.5" cy="146.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="291.3" cy="111.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="380.1" cy="110.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="664.1" cy="512.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="720.0" cy="554.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="571.3" cy="182.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="126.9" cy="342.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="676.3" cy="594.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="631.9" cy="295.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="698.0" cy="438.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="465.1" cy="214.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="361.6" cy="300.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="393.0" cy="243.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="548.5" cy="307.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="414.8" cy="349.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="306.9" cy="458.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="363.5" cy="389.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="407.3" cy="465.2" r="2.2" fill="#b9b9b2"/>
+<polygon points="421.2,439.5 410.0,460.2 432.5,460.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="407.5,457.0 396.4,477.5 418.6,477.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="35.0" cy="277.3" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="42.0" y="272.3" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Cajazeiras 20,7 km</text>
+<circle cx="78.3" cy="482.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="85.3" y="477.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Boa Morte 11,0 km</text>
+<circle cx="97.2" cy="618.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="104.2" y="613.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Tijuca 10,6 km</text>
+<circle cx="579.6" cy="536.7" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="436.2" y="531.7" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Córrego Fechado 7,3 km</text>
+<circle cx="489.8" cy="659.8" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="496.8" y="654.8" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Cajazeiras dos Lourenços 7,0 km</text>
+<circle cx="565.8" cy="578.1" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="472.0" y="573.1" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Massapê 6,7 km</text>
+<circle cx="345.0" cy="612.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="352.0" y="607.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Figueira 6,0 km</text>
+<circle cx="508.3" cy="623.9" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="515.3" y="618.9" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Roça Nova 5,9 km</text>
+<circle cx="245.1" cy="508.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="252.1" y="503.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">São Lourenço 4,4 km</text>
+<circle cx="480.8" cy="539.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="487.8" y="554.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Nova Cova 3,3 km</text>
+<rect x="402.3" y="460.2" width="10" height="10" fill="#1d1d1b"/><text x="416.3" y="483.2" font-weight="600" fill="#1d1d1b">Sede de São Domingos</text>
+<line x1="35" x2="241.5" y1="750.4" y2="750.4" stroke="#8a8a84" stroke-width="2"/><text x="35" y="764.4" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="741.4063287901334" y2="741.4063287901334" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="745.4063287901334" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,734.4 421.4,746.7 434.6,746.7" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="745.4063287901334" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="759.4063287901334" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="768.4063287901334" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="764.4063287901334" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="768.4063287901334" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="787.4063287901334" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="791.4063287901334" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="787.4063287901334" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="791.4063287901334" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="810.4063287901334" y2="810.4063287901334" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="814.4063287901334" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="833.4063287901334" y2="833.4063287901334" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="837.4063287901334" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 19/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (27):</strong> Cajazeiras, Carnaúbas, Carnaúba, Tigre, Cachoeira, Pedregulho, Mofumbo, Riacho de Pedra, Cinete, Currupati, Lagoa Cavada, Boa Morte, Grotão, Tijuca, Sítio Boi, Baldinho, Boa Vista, Jurema, Paissandu, Verdes, Água Bela, Córrego Fechado, Cajazeiras dos Lourenços, Massapê, Caieira, Figueira e Roça Nova.</li>
+<li><strong>De 3 a 5 km (3):</strong> São Lourenço, Sítio Sossego e Nova Cova.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (3):</strong> Formigas, Mari e São Domingos.</li>
+</ul><h2>Rotas do Edital nº 19/2026</h2>
+<p>O edital tem 7 rotas para São Domingos. Horários: horários previstos por rota no anexo (em geral 06h00, 08h00, 10h00, 13h00, 15h00, 17h00). Veículos: Rota 01: MICROONIBUS NQJ5518; Rota 02: MICROONIBUS OFD9G16; Rota 03: MICROONIBUS TPA0J35; Rota 04: MICROONIBUS TOZ6C56; Rota 05: MICROONIBUS QFE9G46; Rota 06: MICROONIBUS OGA9380; Rota 07: MICROONIBUS QFD7B32.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Aguas Belas de Cima – Águas Belas – Várzea Grande – Formiga – Sede</td></tr><tr><td>02</td><td>Boi – Carnaúba – Cachoeira – Sede</td></tr><tr><td>03</td><td>Cachoeira – Riacho de Pedra – Sede</td></tr><tr><td>04</td><td>Santo Amaro – Jaboatão – Curupati – Jurema – Logradouro – Boa Vista do Meio – Pedregulho – Sede</td></tr><tr><td>05</td><td>Caeira – Boa Vista – Grotão – Paissandu – Mofumbo de Baixo – Sede</td></tr><tr><td>06</td><td>Aguas Belas de Cima – Aguas Belas – Verdes – Sossego – Formiga – Sede</td></tr><tr><td>07</td><td>Ginete – Mofumbo – Aguas Belas – Sede</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 19/2026 TRE-PB/PTRE/31ª_ZONA (Quadro Geral de Percursos e Horários da 31ª ZE - Pombal, São Domingos e Lagoa), DJE/TRE-PB nº 198/2026, disp. 18/09/2026, publ. 19/09/2026, p. 57, anexo SEI_2508482_Edital_19.pdf (https://sitdoc.tse.jus.br/sitdoc/DownloadFile?id=d3070918-662e-47c8-be0c-35e2089d2553&amp;app=dje&amp;extensao=pdf) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=PB&amp;numDiario=198&amp;anoDiario=2026); veículos e motoristas alterados pelo Edital nº 25/2026 (DJE nº 218/2026), &#x27;sem alteração de rotas e percursos&#x27;.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 10 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Boa Morte</strong></td><td>Sede – Nova Cova – Figueira – São Lourenço – Boa Morte – Tijuca – Sede</td><td>Nova Cova, Figueira, São Lourenço, Boa Morte, Tijuca</td><td>40,9 km (ida e volta)</td><td>~1h35</td></tr><tr><td><strong>Parada extra na Rota 02</strong></td><td>desvio pelo caminho atual: Cajazeiras</td><td>Cajazeiras</td><td>+4,7 km</td><td>+11 min</td></tr><tr><td><strong>Parada extra na Rota 04</strong></td><td>desvio pelo caminho atual: Córrego Fechado – Massapê – Roça Nova – Cajazeiras dos Lourenços</td><td>Córrego Fechado, Massapê, Roça Nova, Cajazeiras dos Lourenços</td><td>+8,5 km</td><td>+21 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMSD</strong></p><p>São Domingos/PB, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Lucas Sobreira de Barros Fonseca</strong><br>Juiz Eleitoral da 31ª Zona Eleitoral – Pombal/PB</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 19/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de São Domingos, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 19/2026: Boa Morte, Tijuca, Figueira, São Lourenço, Nova Cova, Cajazeiras, Córrego Fechado, Cajazeiras dos Lourenços, Massapê e Roça Nova.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Boa Morte (Sede – Nova Cova – Figueira – São Lourenço – Boa Morte – Tijuca – Sede);</li><li>a inclusão de parada em Cajazeiras na Rota 02, mantido todo o percurso atual;</li><li>a inclusão de paradas em Córrego Fechado, Massapê, Roça Nova e Cajazeiras dos Lourenços na Rota 04, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 19/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de São Domingos</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de São Domingos; Edital nº 19/2026 TRE-PB/PTRE/31ª_ZONA (Quadro Geral de Percursos e Horários da 31ª ZE - Pombal, São Domingos e Lagoa), DJE/TRE-PB nº 198/2026, disp. 18/09/2026, publ. 19/09/2026, p. 57, anexo SEI_2508482_Edital_19.pdf (https://sitdoc.tse.jus.br/sitdoc/DownloadFile?id=d3070918-662e-47c8-be0c-35e2089d2553&amp;app=dje&amp;extensao=pdf) (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=PB&amp;numDiario=198&amp;anoDiario=2026); veículos e motoristas alterados pelo Edital nº 25/2026 (DJE nº 218/2026), &#x27;sem alteração de rotas e percursos&#x27;; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>
