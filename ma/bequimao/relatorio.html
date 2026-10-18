@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Bequimão</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Bequimão</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/bequimao.pdf?v=1792366072" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Bequimão (111ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 111ª Zona Eleitoral <strong>14 rotas novas</strong> no transporte gratuito de Bequimão.
+<strong>A Justiça Eleitoral dispensou o transporte gratuito de eleitores neste município nas Eleições 2026</strong> (A Portaria nº 3/2026 da 111ª ZE (DJE-MA nº 163 de 02.09.2026, p. 127-128) declarou &quot;prejudicada a instalação da Comissão de Transporte nos municípios de Bequimão/MA e Peri Mirim/MA para as Eleições de 2026&quot;; não cita o 2º turno). As 40 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Bequimão tem 18.715 eleitores aptos em 19 locais de votação e 73 seções. São 12 locais rurais, com 10.682 eleitores (57% do total).</li>
+<li>10 locais rurais ficam a 10 km ou mais da sede, com 9.168 eleitores. Os mais distantes: Povoado Pontal (17,9 km), Povoado Mojo (17,0 km) e Povoado Ariquipa (16,2 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Prainha (50,3 km do local de votação), Quiriritiua (38,5 km do local de votação), Ponta dos Soares (14,5 km do local de votação), Comunidade Quilombola Sassuy (11,6 km do local de votação), Tubarao (11,0 km do local de votação), Comunidade Quilombola Pericumã (10,4 km do local de votação), Comunidade Quilombola Mafra (9,7 km do local de votação), Itapotiua (9,6 km do local de votação), Goiabal (9,5 km do local de votação), Matinha (9,1 km do local de votação), Calhau (8,8 km do local de votação), Meião (7,8 km do local de votação), Comunidade Quilombola Itamatatiuá (7,6 km do local de votação), Vila Nova (7,3 km do local de votação), Comunidade Quilombola Juraraitá (7,1 km do local de votação), Iribui (6,9 km do local de votação), Samuma (6,7 km do local de votação), Comunidade Quilombola Jacaretiua (6,6 km do local de votação), Buritirana (6,2 km do local de votação), Comunidade Quilombola Rio Grande (5,5 km do local de votação), Beira do Campo (5,5 km do local de votação), Comunidade Quilombola Iritiua (5,3 km do local de votação), Comunidade Quilombola Santa Tereza (5,1 km do local de votação), Comunidade Quilombola Ramal de Quindiua (5,1 km do local de votação), Comunidade Quilombola Ramal do Quindiua (5,1 km do local de votação), Bebedouro (4,8 km do local de votação), Povoado Muricizal (4,7 km do local de votação), Comunidade Quilombola Monte Alegre (4,5 km do local de votação), Vitório (4,5 km do local de votação), Comunidade Quilombola São João (4,3 km do local de votação), Comunidade Quilombola Boa Vista (4,2 km do local de votação), Frederico (4,1 km do local de votação), Santa Maria (3,9 km do local de votação), Centro dos Câmaras (3,7 km do local de votação), Comunidade Quilombola Rio Grande 2 (3,7 km do local de votação), Benfica (3,5 km do local de votação), Comunidade Quilombola Povoado Ramal de Quindiua (3,4 km do local de votação), Comunidade Quilombola Sibéria (3,2 km do local de votação), Comunidade Quilombola Chega e Vira (3,0 km do local de votação) e Floresta (3,0 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 76 localidades rurais de Bequimão que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Prainha</td><td>50,3</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Quiriritiua</td><td>38,5</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Ponta dos Soares</td><td>14,5</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Sassuy</td><td>11,6</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Tubarao</td><td>11,0</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Pericumã</td><td>10,4</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Mafra</td><td>9,7</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Itapotiua</td><td>9,6</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Goiabal</td><td>9,5</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Matinha</td><td>9,1</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Calhau</td><td>8,8</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Meião</td><td>7,8</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Itamatatiuá</td><td>7,6</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Vila Nova</td><td>7,3</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Juraraitá</td><td>7,1</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Iribui</td><td>6,9</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Samuma</td><td>6,7</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Jacaretiua</td><td>6,6</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Buritirana</td><td>6,2</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Rio Grande</td><td>5,5</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Beira do Campo</td><td>5,5</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Iritiua</td><td>5,3</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Santa Tereza</td><td>5,1</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Ramal de Quindiua</td><td>5,1</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Ramal do Quindiua</td><td>5,1</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Bebedouro</td><td>4,8</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Povoado Muricizal</td><td>4,7</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Monte Alegre</td><td>4,5</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Vitório</td><td>4,5</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola São João</td><td>4,3</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Boa Vista</td><td>4,2</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Frederico</td><td>4,1</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Santa Maria</td><td>3,9</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Centro dos Câmaras</td><td>3,7</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Rio Grande 2</td><td>3,7</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Benfica</td><td>3,5</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Povoado Ramal de Quindiua</td><td>3,4</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Sibéria</td><td>3,2</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Chega e Vira</td><td>3,0</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Floresta</td><td>3,0</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 76 localidades rurais de Bequimão, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 855" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Bequimão: 40 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="35.7,423.0 78.6,518.1 114.3,533.2 144.5,530.0 184.7,537.4 189.2,529.3 226.3,528.1 258.0,523.2 256.9,546.1 284.8,544.3 296.7,561.5 298.0,649.9 410.0,647.6 412.9,668.5 434.7,692.1 469.7,701.2 479.9,722.8 526.5,578.1 506.3,521.3 480.0,506.4 464.3,510.4 462.2,477.1 487.5,451.6 492.2,430.2 521.5,419.4 526.1,411.4 551.7,397.8 572.2,381.0 558.8,364.2 560.2,349.4 576.9,329.2 584.0,314.6 592.4,281.0 587.4,258.3 564.0,228.5 557.9,209.3 563.3,174.7 598.1,131.5 580.3,127.0 570.8,115.4 549.2,116.1 538.6,103.2 524.9,113.4 502.7,112.7 471.5,91.1 396.6,80.0 389.5,85.7 377.1,108.0 355.1,125.0 308.5,146.1 290.8,135.4 248.1,163.8 237.2,167.4 238.1,189.2 215.6,191.3 196.9,205.4 207.9,232.4 207.9,241.5 186.9,253.3 175.8,276.7 161.8,272.2 144.5,289.6 127.5,299.2 112.0,301.0 91.5,322.8 92.7,339.0 67.0,345.8 52.9,362.3 42.5,365.1 35.0,383.7 35.7,423.0 35.7,423.0" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="458.6,566.4 462.3,568.2 466.9,567.0 470.4,564.8 473.5,562.4 475.6,559.0 476.8,554.6 478.7,551.0 479.0,545.5 481.3,541.9 483.6,537.5 486.0,534.1 487.2,528.3 488.6,524.2 487.5,519.6 490.5,516.5 493.6,513.2 513.2,525.5 525.9,533.5 546.6,546.6 550.3,549.0 556.4,552.3 559.4,555.0 562.0,558.4 568.6,567.0 572.4,568.7 576.1,566.3 584.4,566.9 595.8,568.8 602.3,567.6 610.0,561.7 614.5,559.2 625.4,556.4 629.0,553.6 633.5,547.7 636.8,545.6 646.9,540.5 649.3,537.1 662.4,516.0 664.2,510.4 665.4,505.8 664.5,501.0 662.0,495.6 659.0,488.9 656.9,484.3 654.7,479.9 651.8,473.7 648.3,469.9 645.8,466.9 644.6,458.5 643.6,453.4 641.1,449.3 637.0,443.9 635.2,437.6 634.1,428.1 632.5,417.6 631.8,412.7 634.0,407.9 635.0,401.1 635.2,393.1 635.9,388.3 639.6,384.2 644.3,380.3 648.1,377.9 651.5,373.6 655.1,371.7 660.2,366.9 662.1,363.1 661.7,356.8 663.6,350.7 665.6,347.1 667.1,342.4 668.5,338.3 670.0,331.7 671.5,327.5 670.3,323.1 672.2,317.2 674.3,311.8 675.9,306.1 675.1,301.3 670.9,299.1 667.9,301.5 665.2,304.2 662.7,307.1 656.9,307.4 652.2,306.6 647.9,305.3 642.2,304.3 636.7,303.2 633.6,300.8 629.5,298.6 625.1,300.1 620.9,302.3 616.9,303.9 613.3,306.2 611.4,310.3 606.4,309.8 603.0,305.0 600.6,301.4 603.0,305.0 605.1,308.7 610.4,310.3 612.8,306.9 615.8,304.3 620.9,302.3 625.1,300.1 629.5,298.6 633.2,300.5 636.4,303.1 642.2,304.3 646.7,305.3 651.0,306.5 656.3,307.2 661.4,307.8 664.3,305.0 666.7,301.9 670.0,299.6 675.0,301.2 680.7,299.4 682.8,295.7 684.9,291.6 690.3,289.6 694.9,288.2 702.1,272.7 701.5,265.3 704.9,261.5 707.9,258.9 710.8,255.5 720.6,252.6 724.2,249.9 723.5,243.4 723.8,238.0 722.8,233.3 720.6,229.9 719.1,225.9 718.4,221.1 715.1,218.0 710.6,216.4 707.6,209.3 704.7,206.0 702.4,202.5 699.7,199.5 695.5,197.2 691.5,194.7 684.5,193.5 679.3,192.8 673.7,191.6 667.6,191.6 662.6,192.9 659.6,195.6 655.5,196.8 650.2,197.3 645.2,196.7 640.3,196.2 636.9,198.5 633.3,200.5 626.2,200.5 625.0,195.3 622.6,191.7 620.2,187.8 617.0,185.1 612.5,184.2 608.3,180.6 607.7,174.6 608.2,169.7 608.5,163.4 607.1,159.2 604.0,156.6 602.1,151.8 603.8,156.4 607.1,159.2 608.5,163.4 608.2,169.3 607.7,174.6 607.9,180.0 610.8,183.4 615.5,184.4 619.4,186.2 622.6,191.7 625.0,195.3 626.2,200.5 631.5,200.9 636.5,198.6 639.6,196.2 645.2,196.7 650.2,197.3 655.5,196.8 659.6,195.6 662.6,192.9 666.9,191.5 672.4,192.3 678.1,192.7 683.2,193.4 690.0,194.3 693.9,195.8 698.0,198.4 701.4,201.1 703.8,204.0 705.9,207.6 709.8,213.0 711.1,217.3 716.0,218.3 718.4,221.3 719.2,226.2 721.0,230.6 722.9,234.5 723.4,239.5 724.0,245.3 724.7,251.6 712.1,254.7 707.9,258.9 704.9,261.5 701.6,264.1 702.3,271.4 696.3,286.3 690.3,289.6 685.9,291.0 682.8,295.7 680.7,299.4 676.9,302.5 675.7,308.0 673.3,314.4 670.7,321.0 671.4,326.4 670.0,331.7 668.6,335.6 667.9,340.5 666.0,343.9 665.0,348.8 661.9,353.1 662.1,361.4 661.1,365.8 657.6,370.1 654.0,372.1 649.7,375.8 646.9,378.8 642.1,381.7 637.7,386.3 635.5,389.7 635.2,397.1 635.0,404.1 632.9,409.5 632.5,417.6 634.1,428.1 635.2,437.6 636.2,442.8 639.4,447.2 642.7,451.7 644.1,456.1 645.3,462.1 645.9,467.3 650.0,471.4 653.3,476.8 655.8,482.1 658.0,486.6 661.0,493.7 663.3,498.3 665.1,502.5 664.8,508.2 663.7,512.6 650.7,533.3 649.0,538.0 636.8,545.6 633.5,547.7 629.0,553.6 625.4,556.4 614.5,559.2 610.0,561.7 603.2,566.9 599.5,569.3 585.1,567.0 578.2,565.9 574.2,567.7 568.6,567.0 563.2,560.0 560.7,556.7 557.3,552.9 552.5,550.4 546.6,546.6 525.9,533.5 513.2,525.5 494.4,513.7 491.0,516.2 487.7,518.9 488.6,524.2 487.2,528.3 486.4,533.0 484.4,536.4 482.2,540.3 480.3,544.1 479.4,548.9 477.3,552.7 476.2,557.7 474.3,561.7 471.2,564.0 467.8,566.2 463.7,568.3 459.6,566.8 458.6,566.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Prainha</title></polyline>
+<polyline points="458.6,566.4 462.3,568.2 467.0,571.1 466.4,576.1 465.6,581.1 463.3,585.8 459.9,588.1 459.0,593.3 459.8,598.5 463.6,600.1 468.7,600.5 474.4,600.2 479.6,600.5 484.6,601.1 489.7,600.5 494.5,598.8 497.4,595.7 499.7,592.3 503.4,590.6 503.8,584.2 502.2,580.1 503.8,584.2 506.2,587.6 510.0,589.3 515.7,589.4 519.6,587.1 522.2,584.0 523.7,580.0 527.1,577.1 528.6,581.0 530.2,585.8 534.7,588.0 532.9,591.6 530.8,588.3 529.8,583.3 527.8,579.6 523.5,581.1 521.7,585.4 518.9,588.0 513.6,590.2 509.4,588.2 504.3,587.3 502.6,591.3 499.4,593.8 496.7,596.6 493.8,599.5 488.3,601.1 484.5,603.6 481.0,605.6 477.9,608.2 475.2,611.3 473.5,615.2 471.8,619.5 474.4,625.7 474.4,631.2 470.1,634.5 467.3,637.5 466.2,641.9 467.3,637.5 470.1,634.5 473.4,631.8 474.9,627.7 471.6,622.1 469.1,618.9 467.7,614.9 464.7,611.9 462.3,608.2 460.4,604.3 459.8,598.5 459.0,593.3 459.7,588.4 463.0,586.2 465.2,582.4 466.5,577.6 467.4,572.4 465.6,567.6 459.6,566.8 458.6,566.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Tubarao</title></polyline>
+<polyline points="424.5,377.1 427.1,380.3 427.6,385.5 430.9,388.4 433.5,392.1 438.1,395.4 444.2,395.8 448.9,397.0 453.8,396.4 458.7,395.8 463.2,394.5 469.2,394.1 474.3,387.4 484.1,383.7 489.1,382.3 493.7,381.2 499.1,379.3 502.8,377.2 501.3,371.2 502.8,366.9 501.4,361.1 498.3,357.1 495.7,352.1 495.0,347.2 492.1,344.0 488.0,342.7 492.1,344.0 495.0,347.2 495.7,352.1 498.0,356.6 501.4,361.1 502.9,365.2 501.4,369.7 502.4,375.2 505.2,379.2 508.6,376.5 513.9,376.6 518.6,375.9 523.2,377.2 526.6,379.2 533.6,378.1 541.1,374.6 551.0,368.6 555.3,365.2 552.5,367.8 541.1,374.6 537.1,377.1 531.2,378.6 526.1,379.1 522.8,376.9 517.9,375.9 512.4,376.1 506.2,378.6 502.8,376.6 501.3,371.2 502.8,366.9 507.1,358.7 510.4,355.6 512.5,351.8 514.7,348.3 516.8,344.6 518.2,340.1 520.3,336.0 522.5,332.7 526.7,331.1 531.9,330.8 536.0,332.4 541.4,332.6 549.8,335.1 554.4,336.2 549.8,335.1 545.0,332.8 539.7,332.8 534.7,332.1 531.2,330.3 525.3,331.6 523.8,327.4 525.8,323.5 529.3,319.7 532.6,317.3 534.0,312.1 534.9,306.7 537.1,301.4 537.1,295.9 538.0,290.4 542.3,288.3 546.2,286.5 547.9,282.6 549.4,277.8 550.4,273.2 547.7,269.2 544.4,266.5 547.7,269.2 550.5,271.9 549.4,277.8 547.9,282.6 546.2,286.5 542.3,288.3 538.5,290.2 537.1,295.0 537.3,300.9 535.3,304.6 534.9,309.6 533.3,314.0 531.3,318.4 527.9,321.0 524.5,326.0 522.9,330.7 520.7,335.4 518.2,340.1 516.8,344.6 514.7,348.3 512.5,351.8 510.4,355.6 507.1,358.7 502.2,362.3 502.5,367.7 501.8,373.3 502.7,378.0 497.2,379.9 492.3,381.4 485.6,383.2 477.0,385.8 470.8,391.0 469.5,395.5 471.5,399.0 477.0,398.9 482.7,399.0 487.1,400.2 492.1,401.0 497.4,401.0 500.5,403.4 503.0,406.8 504.2,411.2 506.8,414.6 508.5,418.5 506.8,414.6 504.2,411.2 503.0,407.0 501.0,403.6 497.4,401.0 492.1,401.0 487.1,400.2 482.7,399.0 477.0,398.9 471.5,399.0 469.5,395.5 464.1,394.4 459.5,395.8 454.0,396.3 448.9,397.0 444.2,395.8 439.0,396.0 435.3,393.4 432.1,389.8 429.3,386.9 427.6,383.2 425.6,377.9 424.5,377.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Ponta dos Soares</title></polyline>
+<polyline points="151.0,458.8 150.1,453.0 148.5,448.8 146.9,444.5 145.8,439.8 145.2,434.5 147.1,428.7 145.3,424.2 143.1,420.9 138.4,417.9 133.8,415.1 129.4,412.4 124.2,409.0 119.8,406.3 116.6,403.1 115.4,397.3 116.6,403.1 119.8,406.3 123.6,408.6 127.3,411.0 132.5,414.3 138.4,417.9 142.0,420.0 145.3,424.2 147.2,427.7 145.6,432.7 145.8,438.7 146.5,443.8 148.3,447.7 150.1,453.0 153.2,456.3 150.2,459.1 143.1,458.4 138.3,457.6 134.7,455.7 131.1,452.5 127.3,449.0 124.6,445.2 121.8,442.0 119.3,438.3 113.6,436.0 109.1,434.5 104.7,432.8 99.9,433.4 96.4,435.9 84.5,483.9 88.7,486.0 90.7,489.5 92.6,493.3 90.8,498.6 90.9,505.1 93.8,508.7 97.2,512.0 102.6,512.1 105.9,514.6 108.9,517.1 112.9,520.1 118.3,520.5 124.5,523.3 130.4,523.0 134.7,526.9 145.1,519.1 150.9,513.9 160.3,505.8 163.5,503.2 165.8,506.5 169.4,508.3 169.7,513.7 172.1,517.2 175.2,519.8 178.9,521.7 182.2,523.9 185.4,526.1 186.9,532.6 185.8,526.6 182.2,523.9 178.9,521.7 175.2,519.8 172.1,517.2 169.7,514.0 169.4,508.3 165.8,506.5 163.5,503.2 176.0,494.7 187.0,491.2 206.8,478.4 210.5,475.4 213.6,471.8 212.2,466.8 214.2,461.5 219.2,462.0 224.3,461.6 247.2,455.5 253.4,455.7 255.5,460.6 256.0,466.0 254.3,470.2 252.5,475.2 251.0,479.1 248.6,482.8 251.0,479.1 252.5,475.2 254.3,470.2 256.0,466.0 255.5,460.6 257.4,456.8 251.6,455.4 225.6,461.2 220.7,462.1 215.4,461.0 210.2,461.4 206.1,460.0 201.3,456.0 198.3,453.5 194.6,451.5 190.6,450.0 186.2,448.1 181.4,448.7 174.1,447.6 166.9,447.3 162.1,448.4 157.3,450.4 153.6,455.8 150.8,458.5 151.0,458.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Pericumã</title></polyline>
+<polyline points="376.7,188.7 373.7,191.1 372.9,197.2 369.3,199.7 365.3,202.6 362.1,205.0 358.7,208.1 355.4,211.2 351.6,214.8 347.9,217.4 344.0,221.3 340.0,225.9 336.3,229.6 333.2,232.5 330.5,235.9 328.5,240.5 328.8,247.4 327.4,242.7 324.8,239.0 317.8,232.7 312.0,227.8 306.7,223.1 299.9,217.1 295.0,212.9 289.7,208.1 287.0,214.7 284.2,218.2 280.7,220.5 276.3,222.1 272.6,225.2 275.9,222.5 280.3,220.7 284.2,218.2 287.0,214.7 289.4,208.7 295.0,212.9 299.9,217.1 306.7,223.1 312.0,227.8 317.8,232.7 322.6,237.0 326.1,240.6 329.5,237.8 331.9,234.1 335.3,230.5 338.9,227.1 341.6,224.1 345.3,219.8 349.3,216.4 353.0,213.4 356.2,210.4 360.2,206.8 363.4,203.9 368.2,200.5 372.2,197.9 373.5,193.2 377.3,190.7 381.6,192.4 382.9,197.1 385.4,200.3 387.1,204.3 389.8,207.6 392.2,213.3 394.5,216.6 397.3,219.7 402.2,222.5 405.8,224.4 411.3,224.9 415.5,223.3 419.2,221.3 422.3,217.9 425.9,215.8 429.7,212.6 433.9,211.2 438.7,209.7 443.1,208.1 447.1,206.6 450.1,202.9 447.5,206.2 443.1,208.1 438.7,209.7 433.9,211.2 429.7,212.6 426.7,215.3 422.8,217.6 419.7,220.8 416.1,223.1 411.8,224.7 405.8,224.4 402.2,222.5 398.1,220.7 395.5,217.9 392.8,214.0 390.4,209.5 387.8,205.6 385.7,200.9 382.9,197.1 381.6,192.5 377.8,190.8 376.7,188.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Mafra</title></polyline>
+<polyline points="194.4,396.1 193.4,401.2 196.1,405.4 198.4,408.5 200.9,412.2 205.1,413.6 207.1,417.0 209.7,420.4 211.4,425.8 214.2,428.8 216.2,432.3 214.2,428.8 211.4,425.8 209.8,421.9 208.2,417.6 206.0,414.2 201.7,412.7 199.3,409.6 196.2,405.6 193.6,402.0 194.1,396.3 197.3,393.7 200.6,390.9 204.5,388.9 209.9,388.4 213.9,386.7 219.1,388.0 223.8,389.4 228.5,391.1 233.7,390.2 239.3,391.4 246.0,394.4 250.0,396.2 255.4,398.0 261.1,401.0 266.2,403.1 267.1,407.8 263.2,410.3 267.1,407.8 266.2,403.1 261.1,401.0 255.4,398.0 250.0,396.2 246.0,394.4 241.9,392.4 237.4,390.6 231.3,390.6 223.8,389.4 219.1,388.0 213.9,386.7 209.9,388.4 204.5,388.9 200.6,390.9 197.3,393.7 194.4,396.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Rio Grande</title></polyline>
+<polyline points="349.5,405.2 344.2,403.7 341.4,401.1 338.6,397.6 333.3,396.8 327.2,395.9 321.2,395.3 315.4,394.7 310.5,394.0 307.0,392.0 303.7,389.1 302.8,384.5 301.4,379.5 298.6,376.7 296.3,373.5 294.8,369.6 289.2,368.3 283.7,364.3 286.8,367.0 290.4,368.9 295.1,369.8 296.4,374.0 298.8,377.1 301.7,380.2 302.7,384.8 304.0,389.6 307.6,392.4 311.1,394.4 319.1,395.2 324.1,395.6 329.1,396.2 334.5,396.9 339.6,398.3 341.8,401.8 345.1,404.7 349.5,405.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Beira do Campo</title></polyline>
+<polyline points="436.6,336.9 433.2,334.0 431.9,329.3 429.7,325.4 425.8,320.4 426.9,315.4 428.1,309.7 429.5,303.3 429.9,298.2 427.5,286.8 426.4,282.0 423.8,279.0 426.3,275.9 431.6,275.6 436.1,274.5 431.6,275.6 426.3,275.9 423.8,279.0 426.4,282.0 427.5,286.8 429.7,293.6 430.1,299.7 428.4,308.2 427.3,313.1 426.8,318.2 428.0,323.8 431.0,326.3 432.1,330.7 434.0,335.1 436.6,336.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Iritiua</title></polyline>
+<polyline points="336.4,422.9 336.9,428.0 337.3,433.2 337.0,439.5 336.6,444.6 335.9,451.7 335.5,456.7 335.0,461.8 332.4,464.9 324.4,464.2 316.1,463.4 308.1,462.7 311.0,459.1 308.1,462.7 313.6,463.2 324.4,464.2 329.8,464.6 335.5,464.5 335.3,459.3 335.8,454.1 336.3,447.4 336.8,441.9 337.3,436.9 337.3,431.2 336.8,426.1 336.4,422.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Bebedouro</title></polyline>
+<polyline points="338.0,374.5 336.5,354.6 336.1,349.2 335.6,343.1 335.2,337.4 334.7,331.5 330.9,329.9 325.7,327.9 320.6,326.5 315.0,326.4 309.2,323.2 306.0,320.2 309.2,323.2 314.4,326.1 320.6,326.5 325.7,327.9 330.9,329.9 334.7,331.5 335.2,337.4 335.6,343.1 336.1,349.2 336.5,354.6 338.0,374.5 338.0,374.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Povoado Muricizal</title></polyline>
+<polyline points="430.3,556.7 429.2,552.2 427.6,548.2 429.8,541.3 431.1,537.1 435.1,534.4 438.2,531.0 438.2,525.4 440.1,521.7 441.1,516.1 430.6,506.6 438.2,514.4 440.2,518.2 439.1,522.8 438.6,527.7 437.4,532.6 433.9,534.7 430.9,537.7 428.6,545.7 429.2,552.2 430.0,556.8 430.3,556.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Frederico</title></polyline>
+<polyline points="325.2,609.8 321.0,608.5 316.8,606.7 312.3,605.2 308.1,603.3 304.4,600.8 296.7,601.2 295.7,595.1 294.7,590.6 289.6,590.3 284.5,589.8 281.7,587.1 284.5,589.8 289.6,590.3 294.7,590.6 295.7,595.1 296.4,600.6 301.8,600.7 307.2,600.7 308.9,604.7 314.1,605.8 318.0,607.8 323.3,608.6 325.2,609.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Santa Maria</title></polyline>
+<polyline points="344.4,538.8 339.4,537.9 335.8,540.1 331.8,542.2 325.4,542.0 320.5,541.1 315.8,543.4 311.9,545.4 307.8,546.9 303.4,548.3 300.5,551.2 296.3,553.6 300.5,551.2 303.4,548.3 307.8,546.9 311.9,545.4 315.8,543.4 319.9,541.2 325.4,542.0 330.5,542.6 334.4,541.0 337.7,538.5 344.1,538.1 344.4,538.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Centro dos Câmaras</title></polyline>
+<polyline points="376.6,455.0 382.0,454.3 386.5,453.4 390.3,449.7 392.1,445.6 393.8,441.5 397.0,439.3 398.0,434.4 399.6,427.7 403.2,424.6 400.1,427.1 398.8,431.4 397.9,436.2 396.2,440.0 392.9,442.7 391.7,447.5 388.3,451.4 384.9,453.7 380.5,454.9 376.6,455.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Floresta</title></polyline>
+<circle cx="343.5" cy="217.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="362.1" cy="354.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="160.1" cy="391.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="401.6" cy="532.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="380.0" cy="537.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="453.8" cy="595.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="334.2" cy="462.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="351.5" cy="502.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="338.2" cy="644.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="176.5" cy="368.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="224.6" cy="389.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="321.4" cy="410.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="173.5" cy="447.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="312.1" cy="625.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="369.4" cy="416.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="173.8" cy="402.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="361.6" cy="583.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="423.2" cy="539.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="187.4" cy="411.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="465.2" cy="578.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="352.8" cy="646.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="429.1" cy="542.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="430.2" cy="327.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="438.1" cy="328.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="384.9" cy="185.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="196.1" cy="403.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="147.5" cy="463.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="433.4" cy="331.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="382.3" cy="187.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="319.4" cy="607.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="365.0" cy="643.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="426.2" cy="379.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="376.6" cy="457.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="336.6" cy="375.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="346.2" cy="539.9" r="2.2" fill="#b9b9b2"/>
+<polygon points="347.3,400.7 337.8,418.2 356.8,418.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="350.0,394.4 341.5,410.1 358.5,410.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="348.4,395.3 335.7,418.5 361.0,418.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="376.6,177.7 366.2,196.8 387.0,196.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="376.6" y="210.6" text-anchor="middle" fill="#5c5c57">Povoado Quindiua Zona Rural</text>
+<polygon points="151.1,448.1 141.1,466.7 161.2,466.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="151.1" y="480.3" text-anchor="middle" fill="#5c5c57">Povoado Areial Zona Rural</text>
+<polygon points="346.6,399.8 337.1,417.3 356.1,417.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="338.0,364.1 328.2,382.2 347.8,382.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="336.2,413.0 326.8,430.2 345.6,430.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="349.6,394.1 339.1,413.4 360.1,413.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="458.8,553.5 446.9,575.3 470.6,575.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="458.8" y="589.4" text-anchor="middle" fill="#5c5c57">Povoado Mojo Zona Rural</text>
+<polygon points="365.7,638.5 356.5,655.4 374.9,655.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="365.7" y="668.8" text-anchor="middle" fill="#5c5c57">Povoado Pontal Zona Rural</text>
+<polygon points="436.6,327.0 427.2,344.4 446.1,344.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="436.6" y="357.8" text-anchor="middle" fill="#5c5c57">Povoado Paricatiua Zona Rural</text>
+<polygon points="424.5,366.4 414.6,384.5 434.3,384.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="424.5" y="398.1" text-anchor="middle" fill="#5c5c57">Zona Rural</text>
+<polygon points="344.3,528.8 334.8,546.2 353.7,546.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="344.3" y="559.7" text-anchor="middle" fill="#5c5c57">Povoado Codozinho Zona Rural</text>
+<polygon points="430.4,546.1 420.4,564.5 440.4,564.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="430.4" y="578.2" text-anchor="middle" fill="#5c5c57">Povoado Jacioca Zona Rural</text>
+<polygon points="325.1,601.8 317.6,615.7 332.7,615.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="194.5,387.6 186.3,402.7 202.8,402.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="376.8,446.5 368.5,461.7 385.0,461.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="359.3,593.5 351.7,607.5 366.9,607.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="602.0" cy="150.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="502.0" y="145.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Prainha 50,3 km</text>
+<circle cx="598.1" cy="299.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="473.3" y="294.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Quiriritiua 38,5 km</text>
+<circle cx="542.7" cy="267.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="549.7" y="262.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Ponta dos Soares 14,5 km</text>
+<circle cx="556.5" cy="336.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="563.5" y="331.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Sassuy 11,6 km</text>
+<circle cx="533.0" cy="589.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="540.0" y="584.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Tubarao 11,0 km</text>
+<circle cx="84.5" cy="483.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="91.5" y="478.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Pericumã 10,4 km</text>
+<circle cx="270.1" cy="227.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="277.1" y="222.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Mafra 9,7 km</text>
+<circle cx="555.4" cy="365.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="562.4" y="360.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Itapotiua 9,6 km</text>
+<circle cx="527.8" cy="572.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="534.8" y="567.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Goiabal 9,5 km</text>
+<circle cx="247.6" cy="485.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="254.6" y="500.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Matinha 9,1 km</text>
+<circle cx="486.3" cy="339.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="184.0" cy="532.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="191.0" y="527.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Meião 7,8 km</text>
+<circle cx="523.3" cy="582.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="530.3" y="597.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Itamatatiuá 7,6 km</text>
+<circle cx="257.1" cy="457.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="264.1" y="452.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Vila Nova 7,3 km</text>
+<circle cx="510.4" cy="418.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="517.4" y="413.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Juraraitá 7,1 km</text>
+<circle cx="515.9" cy="376.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="522.9" y="391.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Iribui 6,9 km</text>
+<circle cx="504.3" cy="578.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="453.2" cy="204.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="460.2" y="199.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Jacaretiua 6,6 km</text>
+<circle cx="463.8" cy="644.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="470.8" y="639.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Buritirana 6,2 km</text>
+<circle cx="261.9" cy="408.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="268.9" y="403.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Rio Grande 5,5 km</text>
+<circle cx="284.9" cy="363.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="291.9" y="358.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Beira do Campo 5,5 km</text>
+<circle cx="439.3" cy="274.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="115.2" cy="396.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="326.7" cy="248.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="333.7" y="243.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Ramal de Quindiua 5,1 km</text>
+<circle cx="323.5" cy="248.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="313.7" cy="456.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="305.5" cy="320.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="312.5" y="315.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Povoado Muricizal 4,7 km</text>
+<circle cx="214.4" cy="462.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="147.0" cy="521.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="93.6" cy="436.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="100.6" y="431.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola São João 4,3 km</text>
+<circle cx="421.8" cy="276.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="428.8" cy="503.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="435.8" y="498.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Frederico 4,1 km</text>
+<circle cx="285.6" cy="585.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="292.6" y="580.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santa Maria 3,9 km</text>
+<circle cx="300.1" cy="555.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="307.1" y="550.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Centro dos Câmaras 3,7 km</text>
+<circle cx="249.0" cy="395.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="256.0" y="390.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Rio Grande 2 3,7 km</text>
+<circle cx="302.3" cy="386.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="339.6" cy="225.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="136.5" cy="416.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="215.8" cy="433.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="404.3" cy="423.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="411.3" y="418.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Floresta 3,0 km</text>
+<rect x="335.7" y="400.2" width="10" height="10" fill="#1d1d1b"/><text x="349.7" y="423.2" font-weight="600" fill="#1d1d1b">Sede de Bequimão</text>
+<line x1="35" x2="115.5" y1="752.8" y2="752.8" stroke="#8a8a84" stroke-width="2"/><text x="35" y="766.8" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="743.799440733258" y2="743.799440733258" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="747.799440733258" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,736.8 421.4,749.0 434.6,749.0" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="747.799440733258" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="761.799440733258" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="770.799440733258" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="766.799440733258" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="770.799440733258" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="789.799440733258" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="793.799440733258" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="789.799440733258" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="793.799440733258" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="812.799440733258" y2="812.799440733258" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="816.799440733258" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="835.799440733258" y2="835.799440733258" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="839.799440733258" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital de transporte de eleitores da 111ª ZE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (25):</strong> Prainha, Quiriritiua, Ponta dos Soares, Comunidade Quilombola Sassuy, Tubarao, Comunidade Quilombola Pericumã, Comunidade Quilombola Mafra, Itapotiua, Goiabal, Matinha, Calhau, Meião, Comunidade Quilombola Itamatatiuá, Vila Nova, Comunidade Quilombola Juraraitá, Iribui, Samuma, Comunidade Quilombola Jacaretiua, Buritirana, Comunidade Quilombola Rio Grande, Beira do Campo, Comunidade Quilombola Iritiua, Comunidade Quilombola Santa Tereza, Comunidade Quilombola Ramal de Quindiua e Comunidade Quilombola Ramal do Quindiua.</li>
+<li><strong>De 3 a 5 km (15):</strong> Bebedouro, Povoado Muricizal, Comunidade Quilombola Monte Alegre, Vitório, Comunidade Quilombola São João, Comunidade Quilombola Boa Vista, Frederico, Santa Maria, Centro dos Câmaras, Comunidade Quilombola Rio Grande 2, Benfica, Comunidade Quilombola Povoado Ramal de Quindiua, Comunidade Quilombola Sibéria, Comunidade Quilombola Chega e Vira e Floresta.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (36):</strong> Areal, Balandro, Barroso, Centrinho, Codozinho, Coelho, Comunidade Quilombola Ariquipá, Comunidade Quilombola Conceição, Comunidade Quilombola Itapeua, Comunidade Quilombola Lugarejo Mucambo, Comunidade Quilombola Marajá, Comunidade Quilombola Mata Boi, Comunidade Quilombola Monte Palmas, Comunidade Quilombola Olho d&#x27;Água, Comunidade Quilombola Paricatiua, Comunidade Quilombola Pontal, Comunidade Quilombola Pontal 2, Comunidade Quilombola Quilombo Frechal, Comunidade Quilombola Quindua, Comunidade Quilombola Santa Rita, Comunidade Quilombola Vila Conceição, Comunidade Quilombola Vila Juca Martins, Comunidade Quilombola Águas Belas, Jacioca, Jassioca, Jeniparana, Macajubal, Marinho, Mojo, Paricatiua, Quindua, Ramal de Bequimão, Santa Flor, Santana, Vila do Meio e Zé Felipe.</li>
+</ul><h2>Rotas do Edital de transporte de eleitores da 111ª ZE</h2>
+<p>O edital tem 0 rotas para Bequimão. Horários: não informados. Veículos: não informados.</p>
+<p><strong>A Justiça Eleitoral dispensou o transporte gratuito de eleitores neste município nas Eleições 2026.</strong> A Portaria nº 3/2026 da 111ª ZE (DJE-MA nº 163 de 02.09.2026, p. 127-128) declarou &quot;prejudicada a instalação da Comissão de Transporte nos municípios de Bequimão/MA e Peri Mirim/MA para as Eleições de 2026&quot;; não cita o 2º turno</p>
+<p><strong>Atenção:</strong> A dispensa do transporte foi publicada sem citar o turno e é considerada válida também para o 2º turno. A minuta pede a reconsideração para as localidades mais distantes.</p>
+<p>Fonte: Quadro de percursos não localizado nas edições do DJE/TRE-MA consultadas.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 40 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Prainha</strong></td><td>Sede – Quiriritiua – Prainha – Sede</td><td>Quiriritiua, Prainha</td><td>112,6 km (ida e volta)</td><td>~2h50</td></tr><tr><td><strong>Rota nova – Tubarao</strong></td><td>Sede – Samuma – Comunidade Quilombola Itamatatiuá – Goiabal – Tubarao – Buritirana – Sede</td><td>Samuma, Comunidade Quilombola Itamatatiuá, Goiabal, Tubarao, Buritirana</td><td>25,5 km (ida e volta)</td><td>~1h02</td></tr><tr><td><strong>Rota nova – Ponta dos Soares</strong></td><td>Sede – Calhau – Iribui – Itapotiua – Comunidade Quilombola Sassuy – Ponta dos Soares – Comunidade Quilombola Juraraitá – Sede</td><td>Calhau, Iribui, Itapotiua, Comunidade Quilombola Sassuy, Ponta dos Soares, Comunidade Quilombola Juraraitá</td><td>53,6 km (ida e volta)</td><td>~2h10</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Pericumã</strong></td><td>Sede – Comunidade Quilombola Sibéria – Comunidade Quilombola Santa Tereza – Comunidade Quilombola São João – Comunidade Quilombola Pericumã – Vitório – Meião – Comunidade Quilombola Monte Alegre – Matinha – Vila Nova – Sede</td><td>Comunidade Quilombola Sibéria, Comunidade Quilombola Santa Tereza, Comunidade Quilombola São João, Comunidade Quilombola Pericumã, Vitório, Meião, Comunidade Quilombola Monte Alegre, Matinha, Vila Nova</td><td>49,8 km (ida e volta)</td><td>~1h39</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Mafra</strong></td><td>Sede – Comunidade Quilombola Povoado Ramal de Quindiua – Comunidade Quilombola Ramal de Quindiua – Comunidade Quilombola Ramal do Quindiua – Comunidade Quilombola Mafra – Comunidade Quilombola Jacaretiua – Sede</td><td>Comunidade Quilombola Povoado Ramal de Quindiua, Comunidade Quilombola Ramal de Quindiua, Comunidade Quilombola Ramal do Quindiua, Comunidade Quilombola Mafra, Comunidade Quilombola Jacaretiua</td><td>33,3 km (ida e volta)</td><td>~1h10</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Rio Grande</strong></td><td>Sede – Comunidade Quilombola Chega e Vira – Comunidade Quilombola Rio Grande 2 – Comunidade Quilombola Rio Grande – Sede</td><td>Comunidade Quilombola Chega e Vira, Comunidade Quilombola Rio Grande 2, Comunidade Quilombola Rio Grande</td><td>17,0 km (ida e volta)</td><td>~41 min</td></tr><tr><td><strong>Rota nova – Beira do Campo</strong></td><td>Sede – Benfica – Beira do Campo – Sede</td><td>Benfica, Beira do Campo</td><td>11,1 km (ida e volta)</td><td>~26 min</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Iritiua</strong></td><td>Sede – Comunidade Quilombola Boa Vista – Comunidade Quilombola Iritiua – Sede</td><td>Comunidade Quilombola Boa Vista, Comunidade Quilombola Iritiua</td><td>10,7 km (ida e volta)</td><td>~26 min</td></tr><tr><td><strong>Rota nova – Bebedouro</strong></td><td>Sede – Bebedouro – Sede</td><td>Bebedouro</td><td>9,6 km (ida e volta)</td><td>~10 min</td></tr><tr><td><strong>Rota nova – Povoado Muricizal</strong></td><td>Sede – Povoado Muricizal – Sede</td><td>Povoado Muricizal</td><td>9,3 km (ida e volta)</td><td>~14 min</td></tr><tr><td><strong>Rota nova – Frederico</strong></td><td>Sede – Frederico – Sede</td><td>Frederico</td><td>8,1 km (ida e volta)</td><td>~16 min</td></tr><tr><td><strong>Rota nova – Santa Maria</strong></td><td>Sede – Santa Maria – Sede</td><td>Santa Maria</td><td>7,8 km (ida e volta)</td><td>~19 min</td></tr><tr><td><strong>Rota nova – Centro dos Câmaras</strong></td><td>Sede – Centro dos Câmaras – Sede</td><td>Centro dos Câmaras</td><td>7,3 km (ida e volta)</td><td>~18 min</td></tr><tr><td><strong>Rota nova – Floresta</strong></td><td>Sede – Floresta – Sede</td><td>Floresta</td><td>6,0 km (ida e volta)</td><td>~14 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMB</strong></p><p>Bequimão/MA, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Dra. Patrícia Bastos de Carvalho Correia</strong><br>Juíza Eleitoral da 111ª Zona Eleitoral – [sede da zona]/MA</p><p><strong>Assunto:</strong> Pedido de reconsideração da dispensa do transporte gratuito de eleitores (de transporte de eleitores da 111ª ZE) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de Bequimão, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação que, com a dispensa do transporte gratuito determinada pela de transporte de eleitores da 111ª ZE, ficam sem nenhum meio de transporte da Justiça Eleitoral para votar: Prainha, Quiriritiua, Ponta dos Soares, Comunidade Quilombola Sassuy, Tubarao, Comunidade Quilombola Pericumã, Comunidade Quilombola Mafra, Itapotiua, Goiabal, Matinha, Calhau, Meião, Comunidade Quilombola Itamatatiuá, Vila Nova, Comunidade Quilombola Juraraitá, Iribui, Samuma, Comunidade Quilombola Jacaretiua, Buritirana, Comunidade Quilombola Rio Grande, Beira do Campo, Comunidade Quilombola Iritiua, Comunidade Quilombola Santa Tereza, Comunidade Quilombola Ramal de Quindiua, Comunidade Quilombola Ramal do Quindiua, Bebedouro, Povoado Muricizal, Comunidade Quilombola Monte Alegre, Vitório, Comunidade Quilombola São João, Comunidade Quilombola Boa Vista, Frederico, Santa Maria, Centro dos Câmaras, Comunidade Quilombola Rio Grande 2, Benfica, Comunidade Quilombola Povoado Ramal de Quindiua, Comunidade Quilombola Sibéria, Comunidade Quilombola Chega e Vira e Floresta.</p><p>Sugerimos, respeitosamente, que Vossa Excelência reconsidere a dispensa ao menos para essas localidades, com a criação das seguintes rotas:</p><ol><li>a criação da Rota nova – Prainha (Sede – Quiriritiua – Prainha – Sede);</li><li>a criação da Rota nova – Tubarao (Sede – Samuma – Comunidade Quilombola Itamatatiuá – Goiabal – Tubarao – Buritirana – Sede);</li><li>a criação da Rota nova – Ponta dos Soares (Sede – Calhau – Iribui – Itapotiua – Comunidade Quilombola Sassuy – Ponta dos Soares – Comunidade Quilombola Juraraitá – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola Pericumã (Sede – Comunidade Quilombola Sibéria – Comunidade Quilombola Santa Tereza – Comunidade Quilombola São João – Comunidade Quilombola Pericumã – Vitório – Meião – Comunidade Quilombola Monte Alegre – Matinha – Vila Nova – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola Mafra (Sede – Comunidade Quilombola Povoado Ramal de Quindiua – Comunidade Quilombola Ramal de Quindiua – Comunidade Quilombola Ramal do Quindiua – Comunidade Quilombola Mafra – Comunidade Quilombola Jacaretiua – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola Rio Grande (Sede – Comunidade Quilombola Chega e Vira – Comunidade Quilombola Rio Grande 2 – Comunidade Quilombola Rio Grande – Sede);</li><li>a criação da Rota nova – Beira do Campo (Sede – Benfica – Beira do Campo – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola Iritiua (Sede – Comunidade Quilombola Boa Vista – Comunidade Quilombola Iritiua – Sede);</li><li>a criação da Rota nova – Bebedouro (Sede – Bebedouro – Sede);</li><li>a criação da Rota nova – Povoado Muricizal (Sede – Povoado Muricizal – Sede);</li><li>a criação da Rota nova – Frederico (Sede – Frederico – Sede);</li><li>a criação da Rota nova – Santa Maria (Sede – Santa Maria – Sede);</li><li>a criação da Rota nova – Centro dos Câmaras (Sede – Centro dos Câmaras – Sede);</li><li>a criação da Rota nova – Floresta (Sede – Floresta – Sede).</li></ol><p>As rotas sugeridas atendem só as localidades mais distantes, que hoje não têm como chegar ao local de votação.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Bequimão</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Bequimão; Quadro de percursos não localizado nas edições do DJE/TRE-MA consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

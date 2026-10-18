@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Brejo de Areia</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Brejo de Areia</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/brejo-de-areia.pdf?v=1792365684" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Brejo de Areia (49ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 49ª Zona Eleitoral <strong>10 rotas novas</strong> no transporte gratuito de Brejo de Areia.
+<strong>A Justiça Eleitoral dispensou o transporte gratuito de eleitores neste município nas Eleições 2026</strong> (A Portaria nº 6/2026 da 49ª ZE (DJE-MA nº 170 de 05.09.2026, p. 12-13) declarou &quot;prejudicada [...] a instalação de Comissão de Transporte nos municípios de Vitorino Freire/MA, Brejo de Areia/MA e Altamira do Maranhão/MA&quot;; não cita o 2º turno). As 22 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Brejo de Areia tem 8.486 eleitores aptos em 17 locais de votação e 34 seções. São 14 locais rurais, com 5.083 eleitores (60% do total).</li>
+<li>12 locais rurais ficam a 10 km ou mais da sede, com 4.378 eleitores. Os mais distantes: Rua Principal, S/N (48,9 km), Povoado São Domingos (40,8 km) e Rua Principal, S/N (37,8 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Brejo Grande (97,8 km do local de votação), Serra do Monte (94,3 km do local de votação), Alto do Camilo (86,0 km do local de votação), La. Bonita (79,7 km do local de votação), Duas Lagoas (79,5 km do local de votação), Lagoa do Mururu (77,2 km do local de votação), Alto Alegre (21,4 km do local de votação), S. Domingos (14,2 km do local de votação), Campo Grande (13,6 km do local de votação), Alto de Areia (12,8 km do local de votação), Santo Antonio da Boiada (12,5 km do local de votação), Alto Bonito (8,6 km do local de votação), Brejo da Fortuna (5,6 km do local de votação), Gavião (5,0 km do local de votação), Centro dos Augosto (4,6 km do local de votação), Lagoa do Gato (4,3 km do local de votação), Lagoa do Galdino (4,0 km do local de votação), Centro do Estaveiro (4,0 km do local de votação), Rua dos Crentes (4,0 km do local de votação), Bela Vista (3,6 km do local de votação), Jussaral (3,5 km do local de votação) e Lagoa Grande (3,5 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 46 localidades rurais de Brejo de Areia que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Brejo Grande</td><td>97,8</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Serra do Monte</td><td>94,3</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Alto do Camilo</td><td>86,0</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>La. Bonita</td><td>79,7</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Duas Lagoas</td><td>79,5</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Lagoa do Mururu</td><td>77,2</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Alto Alegre</td><td>21,4</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>S. Domingos</td><td>14,2</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Campo Grande</td><td>13,6</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Alto de Areia</td><td>12,8</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Santo Antonio da Boiada</td><td>12,5</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Alto Bonito</td><td>8,6</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Brejo da Fortuna</td><td>5,6</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Gavião</td><td>5,0</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Centro dos Augosto</td><td>4,6</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Lagoa do Gato</td><td>4,3</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Lagoa do Galdino</td><td>4,0</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Centro do Estaveiro</td><td>4,0</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Rua dos Crentes</td><td>4,0</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Bela Vista</td><td>3,6</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Jussaral</td><td>3,5</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Lagoa Grande</td><td>3,5</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 46 localidades rurais de Brejo de Areia, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 644" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Brejo de Areia: 22 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="506.0,380.8 505.0,353.2 450.5,365.9 426.6,346.3 401.5,328.6 410.2,322.0 412.3,312.9 420.8,313.8 431.7,298.8 437.7,298.2 450.4,271.3 461.8,267.4 472.8,269.8 477.8,259.1 504.9,251.3 507.5,247.4 480.6,230.7 476.0,225.6 474.0,212.2 477.8,204.1 490.0,193.3 501.3,176.4 497.6,162.1 487.1,175.8 480.7,178.2 469.9,190.4 461.8,194.8 448.8,191.8 425.4,193.4 413.5,201.5 401.4,200.3 394.6,194.0 393.2,182.1 383.0,185.2 378.7,193.8 361.4,197.6 345.1,198.1 325.9,194.4 299.4,197.5 292.6,202.5 276.1,191.5 268.3,173.1 274.2,168.5 270.8,155.8 276.5,142.4 294.7,127.5 304.3,125.2 308.0,107.9 304.5,95.7 296.3,97.9 283.1,92.3 268.0,91.5 252.8,96.2 248.2,80.0 235.5,94.4 223.5,99.0 214.7,111.1 146.3,135.8 137.5,145.2 120.9,145.3 102.4,153.1 92.9,160.1 86.2,159.0 77.6,166.1 70.6,177.0 64.8,194.6 70.4,215.7 75.5,224.2 71.7,228.7 77.2,244.9 76.0,259.1 67.4,269.7 67.3,290.8 58.9,303.6 60.6,312.5 45.4,322.5 48.7,338.7 36.6,350.3 35.0,358.7 39.8,365.4 50.3,362.6 58.9,368.4 66.7,382.6 77.4,395.5 75.9,407.2 81.2,437.4 88.2,441.3 93.7,457.7 101.4,465.8 113.8,467.1 111.6,483.2 127.6,486.7 154.0,500.3 168.0,511.7 184.1,451.2 254.5,433.3 305.9,486.9 308.4,476.8 310.3,426.6 312.2,414.6 384.6,365.7 470.6,378.2 506.0,380.8 506.0,380.8" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="472.0,188.9 502.3,253.7 473.7,352.6 471.2,354.0 468.7,355.1 466.4,356.6 464.3,358.0 462.2,359.6 459.9,361.5 457.5,362.9 455.5,364.9 451.1,365.7 447.6,367.8 445.2,369.3 442.8,370.7 430.6,373.6 426.8,373.6 423.5,376.4 420.7,377.9 415.0,378.8 411.7,377.8 410.1,374.7 411.4,377.5 414.2,378.6 418.4,378.0 416.6,380.4 413.7,379.5 416.6,380.4 418.7,378.9 415.0,378.8 411.7,377.8 410.1,374.7 408.2,372.7 400.0,371.9 394.9,369.6 392.1,367.9 388.8,367.4 384.9,366.6 383.8,369.7 382.9,372.7 381.8,375.1 379.6,376.5 378.4,374.1 375.8,373.1 372.5,374.8 368.8,374.7 366.3,373.7 363.7,372.6 366.3,373.7 368.8,374.7 372.5,374.8 375.8,373.1 378.4,374.1 377.9,377.2 377.9,381.3 376.0,383.1 374.7,385.6 373.6,388.4 371.4,393.2 370.4,396.6 370.0,400.1 368.3,402.3 368.4,406.1 367.2,408.5 364.9,410.3 363.5,413.5 361.4,415.5 358.6,417.0 355.0,417.0 351.5,418.8 349.0,419.8 345.3,420.7 342.4,421.8 340.4,424.0 338.2,425.3 335.1,426.4 333.1,428.8 331.0,430.4 328.5,432.2 324.6,431.8 321.2,432.0 317.3,431.9 316.6,428.9 316.5,424.5 315.8,421.5 315.1,418.6 315.8,421.5 316.5,424.5 316.6,428.3 317.0,431.7 320.5,431.6 323.9,431.9 326.8,432.6 329.7,431.3 332.2,430.0 334.5,427.5 336.1,425.6 339.5,424.8 341.4,422.9 343.2,421.1 346.3,420.5 349.4,419.7 353.0,418.4 355.2,417.0 353.6,419.8 350.9,421.7 350.2,424.6 349.4,427.6 343.5,432.5 340.3,435.1 338.3,436.6 335.9,438.5 334.7,441.5 334.5,445.6 331.6,447.8 329.8,449.8 327.8,452.7 325.1,455.5 316.5,461.9 311.2,467.1 311.8,470.5 311.2,474.5 308.7,476.5 306.3,478.6 304.7,482.1 303.1,485.2 304.5,482.9 305.1,479.9 307.2,477.7 310.1,475.3 312.0,473.5 311.4,469.8 315.4,464.1 324.4,456.2 326.4,453.6 328.7,451.7 331.6,447.8 334.2,446.4 334.8,442.5 335.0,439.3 338.3,436.6 340.3,435.1 343.5,432.5 347.9,429.2 349.7,427.4 350.0,423.8 352.1,421.0 354.0,419.2 355.7,416.9 359.4,416.8 362.0,414.8 364.0,412.7 365.8,409.5 368.0,407.9 368.1,403.9 369.4,401.4 370.4,396.6 371.6,394.1 373.0,391.1 373.6,387.8 375.0,385.3 376.3,382.8 378.0,380.5 379.0,377.9 380.2,375.6 383.0,374.1 383.6,371.0 383.6,367.5 387.1,366.9 390.1,367.5 394.9,369.6 398.3,371.3 405.2,372.5 408.6,372.8 411.1,377.2 414.2,378.6 418.4,378.0 422.1,377.6 426.0,374.0 429.5,373.9 442.8,370.7 445.2,369.3 447.6,367.8 450.1,366.0 453.2,365.4 455.9,367.0 458.4,370.8 465.0,377.8 467.5,380.0 471.1,380.2 474.4,380.6 479.3,379.0 482.4,378.2 484.8,379.3 490.0,379.7 497.1,382.6 502.4,384.9 505.7,384.7 507.5,382.9 511.4,382.2 514.3,383.0 515.4,385.8 517.3,388.7 519.7,389.8 522.7,390.8 527.1,390.4 530.4,388.7 533.7,387.0 537.7,387.4 539.9,386.1 543.0,385.1 545.4,384.0 547.3,386.4 550.6,387.0 553.2,388.0 557.1,389.3 560.0,390.3 562.8,389.0 565.1,383.7 568.8,381.3 572.2,379.1 574.7,377.6 580.0,372.4 583.3,373.4 588.2,373.8 590.3,375.9 592.9,376.8 598.1,375.8 601.7,376.6 608.1,381.8 610.8,383.6 620.0,382.8 623.2,383.3 626.4,384.3 632.2,386.3 639.8,393.4 648.4,402.5 652.6,401.8 655.4,401.2 658.6,400.8 667.2,399.5 672.4,400.7 683.0,399.8 687.7,399.2 691.6,398.1 694.1,397.0 697.2,396.0 699.9,395.0 703.2,393.6 706.1,392.0 708.4,390.7 711.0,388.8 713.9,386.6 716.7,385.4 718.0,381.6 717.9,378.2 717.9,374.7 718.2,370.2 718.3,366.7 717.9,360.3 717.4,354.6 718.0,343.2 718.3,339.2 718.9,333.4 719.4,330.0 721.1,321.9 722.0,318.6 723.8,315.6 725.0,313.0 724.5,309.2 724.0,305.5 723.6,302.4 723.0,297.6 721.0,282.2 718.5,263.8 712.2,247.7 710.5,240.0 709.1,233.2 708.5,228.8 707.8,220.4 707.8,216.7 707.5,212.4 707.1,208.8 707.4,204.4 708.4,201.0 705.2,199.8 700.3,200.2 698.2,196.5 696.6,193.0 695.4,190.3 693.4,188.7 685.8,185.9 683.3,184.5 681.5,182.5 679.2,179.6 676.2,176.0 674.3,174.4 669.2,172.6 665.4,172.3 659.5,172.2 655.7,172.0 648.9,169.6 636.0,164.8 629.4,162.3 619.2,158.3 612.4,155.7 592.8,148.0 589.7,147.1 584.4,147.7 580.3,148.4 576.7,149.1 575.6,151.7 575.7,156.0 574.7,159.2 571.1,159.7 570.0,162.2 569.3,165.2 562.0,167.7 558.0,167.1 553.8,167.1 550.9,166.4 546.4,166.8 542.7,167.1 539.7,166.0 535.5,166.9 530.9,166.3 527.2,166.3 524.6,165.1 521.6,163.8 518.5,161.3 515.6,160.7 512.0,160.2 509.3,159.4 507.8,162.5 504.3,163.0 501.3,161.1 497.7,161.2 496.1,164.0 494.0,166.9 491.8,170.6 489.3,173.2 487.0,175.7 483.8,176.5 481.1,177.7 478.0,179.6 476.5,183.0 473.6,185.1 472.2,188.5 472.1,188.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Brejo Grande</title></polyline>
+<polyline points="148.7,139.2 146.0,140.7 143.4,142.6 141.4,144.7 138.6,145.8 137.9,148.6 137.3,151.7 137.0,155.0 135.9,157.5 134.2,159.4 131.9,160.8 129.7,162.3 126.4,162.8 122.3,162.9 121.0,165.2 117.9,165.6 115.9,167.2 113.6,169.7 111.9,172.3 109.4,174.2 108.3,177.7 106.0,179.7 104.9,182.1 106.7,184.7 107.7,187.6 108.4,190.5 108.8,193.7 107.2,196.0 105.2,198.1 104.3,200.9 102.2,202.7 100.8,204.9 98.6,206.7 95.9,207.8 92.5,208.6 90.0,209.9 87.8,211.5 84.9,212.1 81.3,212.1 77.6,212.5 75.4,214.4 76.0,217.5 77.2,220.3 77.4,224.0 76.8,227.6 75.4,230.3 76.8,227.6 77.4,224.0 77.2,220.3 76.0,217.5 75.4,214.4 77.2,212.6 81.3,212.1 84.4,211.7 87.8,211.5 90.0,209.9 92.5,208.6 95.4,208.0 98.1,207.1 100.4,205.4 101.9,203.2 104.3,200.9 105.1,198.1 107.2,196.0 108.8,193.7 108.4,190.5 107.7,187.6 106.7,184.7 105.1,182.3 103.6,180.2 106.9,179.3 108.5,176.7 109.8,173.6 112.7,171.7 114.8,168.9 116.9,166.9 119.5,165.6 121.2,163.7 124.1,163.0 127.3,162.6 130.3,161.8 132.8,160.1 135.2,158.7 136.5,156.2 137.3,153.2 137.9,149.9 138.1,146.2 140.7,145.3 142.6,143.1 145.1,141.3 148.1,139.4 148.7,139.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – S. Domingos</title></polyline>
+<polyline points="174.8,313.4 175.7,310.3 175.2,307.2 173.0,305.7 171.1,307.3 170.0,304.9 167.4,303.5 165.6,301.6 164.6,299.1 161.6,297.5 159.2,296.2 156.8,294.2 153.9,292.9 151.1,291.9 148.9,289.6 147.2,287.4 144.1,287.0 142.2,285.0 140.0,283.2 137.8,281.6 135.2,279.5 132.5,278.2 129.5,277.5 127.0,276.3 124.4,274.7 121.2,274.1 119.1,272.3 115.4,271.9 113.0,270.6 110.2,269.7 108.3,267.1 105.7,266.1 103.9,264.2 101.4,261.6 97.6,261.5 95.6,259.8 93.1,258.6 89.3,258.9 85.3,258.9 83.0,257.6 81.1,255.5 77.7,255.8 74.8,255.1 74.3,251.1 73.9,254.2 76.6,255.3 80.9,255.4 83.0,256.8 85.3,258.9 89.3,258.9 92.2,258.3 95.1,259.7 97.6,261.5 101.4,261.6 103.7,263.6 105.9,265.0 108.3,267.1 110.2,269.7 113.0,270.6 115.3,271.8 117.5,273.2 120.8,273.9 123.5,274.7 125.9,275.8 128.3,277.4 131.2,278.2 134.1,278.9 136.1,280.6 138.3,282.1 140.9,284.0 142.9,285.6 144.5,287.6 147.7,288.3 149.5,290.3 151.4,292.2 154.3,293.4 157.5,294.6 160.1,296.0 162.3,298.0 164.8,299.3 165.9,301.9 168.1,303.9 170.4,305.4 173.8,305.9 175.8,307.9 175.2,311.3 174.8,313.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Campo Grande</title></polyline>
+<polyline points="408.0,301.7 406.6,304.7 408.1,307.5 409.2,310.2 411.7,311.3 413.9,312.7 413.0,315.9 411.5,317.8 411.7,321.3 412.0,324.7 413.6,328.4 414.4,331.2 415.4,333.9 418.0,335.2 421.2,335.7 424.3,335.1 425.8,337.5 429.2,338.9 432.3,338.1 435.4,337.5 436.2,334.3 435.3,331.6 435.2,328.0 436.8,325.5 438.7,323.7 441.4,322.6 442.5,319.9 443.7,317.6 445.3,315.3 444.1,312.7 442.5,310.5 441.7,307.4 443.2,304.8 444.4,302.0 444.8,298.4 446.8,296.3 448.5,294.4 447.9,291.4 447.7,288.0 446.6,284.8 447.5,282.0 446.6,284.8 447.7,288.0 447.9,291.4 448.5,294.4 446.8,296.3 444.8,298.4 444.3,301.4 443.2,304.8 441.7,307.1 442.5,310.5 444.1,312.7 445.3,315.3 443.7,317.6 442.5,319.9 441.4,322.6 439.0,323.7 436.8,325.5 435.5,327.7 434.5,330.4 435.5,333.1 436.5,335.7 435.0,338.0 431.2,337.9 428.1,338.3 425.5,337.2 423.7,335.2 420.0,335.2 416.7,334.7 414.8,332.8 414.1,329.3 412.4,326.0 411.2,323.6 411.7,319.5 412.9,316.7 414.3,313.8 412.8,311.4 409.6,310.7 408.3,308.0 406.7,305.4 407.5,302.3 408.0,301.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Alto de Areia</title></polyline>
+<polyline points="79.7,420.7 79.5,424.6 78.6,427.4 79.9,430.0 81.6,433.8 82.8,436.6 84.1,439.0 86.8,440.2 89.0,441.6 89.8,444.7 91.1,447.0 92.6,449.5 93.0,453.2 94.0,456.0 93.0,453.2 92.6,449.5 91.1,447.0 89.8,444.7 89.2,441.8 86.8,440.2 84.1,439.0 82.8,436.8 81.2,434.9 81.4,431.5 79.7,429.4 78.5,425.9 79.6,422.1 78.5,419.2 78.4,415.8 78.1,412.0 76.5,409.3 76.9,406.0 78.3,403.8 79.5,401.4 78.7,397.9 77.3,395.0 75.9,392.6 74.2,390.8 73.6,387.9 72.1,385.7 69.7,384.3 68.0,382.5 66.7,380.1 67.8,377.1 66.0,375.2 62.8,374.2 61.7,371.5 59.4,370.1 58.5,367.4 55.5,366.9 52.5,366.1 49.5,362.9 46.2,363.3 42.7,362.8 40.2,364.4 42.7,362.8 46.0,363.2 49.5,362.9 52.2,363.7 53.2,366.5 56.3,367.1 58.8,368.5 60.2,370.8 62.4,372.4 64.6,374.9 67.2,376.1 66.5,379.2 67.8,382.3 69.7,384.3 72.1,385.7 73.6,387.9 74.2,390.8 75.9,392.6 77.3,395.0 78.7,397.9 79.7,400.7 78.8,403.5 77.2,405.6 76.5,409.1 77.8,411.4 78.1,414.6 78.2,418.2 79.7,420.6 79.7,420.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Alto Bonito</title></polyline>
+<polyline points="244.7,101.1 245.1,104.3 245.2,107.7 245.0,111.1 243.3,113.7 241.5,116.0 239.9,118.2 238.0,120.2 234.3,120.3 231.2,119.4 228.2,120.0 225.5,118.7 221.7,119.3 218.6,119.9 216.8,121.7 215.3,124.0 213.1,125.5 209.8,125.7 213.1,125.5 215.3,124.0 216.8,121.7 218.6,119.9 221.7,119.3 224.6,118.7 228.2,120.0 231.2,119.4 234.0,120.2 237.3,120.5 240.0,119.6 241.1,116.6 242.8,114.3 244.2,112.2 245.4,109.2 245.2,105.7 245.5,102.2 244.7,101.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Brejo da Fortuna</title></polyline>
+<polyline points="193.7,377.8 195.4,375.5 197.2,373.7 198.7,371.3 199.9,368.3 201.6,366.3 202.5,362.3 204.0,359.9 207.3,360.3 210.8,360.3 214.0,360.6 215.9,362.5 218.1,363.9 219.7,366.6 222.2,367.7 219.7,366.6 218.1,364.7 216.0,362.6 214.0,360.6 210.8,360.3 207.3,360.3 204.2,359.5 204.0,356.1 203.9,352.4 201.9,350.9 202.3,347.4 204.1,344.6 205.3,342.2 204.1,339.6 202.2,337.9 200.0,336.0 202.2,337.9 204.1,339.6 205.3,342.2 204.1,344.6 202.5,346.8 201.8,349.9 203.7,352.0 204.6,355.1 203.5,357.9 203.3,361.3 201.8,363.9 201.0,367.1 199.4,369.5 197.7,373.2 195.8,374.9 194.3,377.0 193.7,377.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Gavião</title></polyline>
+<polyline points="451.1,213.7 449.3,212.0 446.7,214.7 444.3,216.1 441.5,215.3 439.2,216.6 436.1,218.0 432.9,219.2 429.9,219.7 428.4,222.0 424.8,221.9 422.4,222.9 420.8,225.0 420.2,228.2 418.4,230.0 416.3,231.9 418.1,230.2 420.2,228.2 420.8,225.0 422.4,222.9 424.2,221.2 427.1,222.2 429.3,220.7 432.2,219.8 434.2,218.3 437.0,217.5 439.9,216.4 443.1,215.5 446.5,215.0 448.4,212.3 451.1,213.7 451.1,213.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Centro dos Augosto</title></polyline>
+<polyline points="142.4,208.9 143.8,205.9 145.8,204.3 147.6,202.6 150.3,203.7 151.0,206.5 154.6,206.2 157.9,205.8 159.7,207.6 162.0,206.3 164.1,204.1 166.6,205.1 169.1,206.9 171.3,208.4 169.1,206.9 166.9,205.4 164.7,204.0 162.3,205.3 161.0,207.6 158.7,206.4 154.6,206.2 151.3,206.7 150.3,203.7 147.6,202.6 145.8,204.3 143.8,205.9 142.8,208.5 142.4,208.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Lagoa do Galdino</title></polyline>
+<polyline points="316.1,250.6 314.6,252.6 311.7,251.9 308.2,251.9 304.8,251.1 301.3,250.8 298.0,251.2 294.5,251.3 292.1,250.1 290.5,248.1 289.9,244.9 290.6,247.7 292.1,250.1 294.5,251.3 298.0,251.2 301.2,250.8 304.5,251.0 307.6,251.9 310.6,251.2 313.3,252.2 315.6,253.5 316.1,250.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Bela Vista</title></polyline>
+<circle cx="183.8" cy="340.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="268.7" cy="217.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="77.6" cy="395.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="193.9" cy="398.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="240.3" cy="118.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="172.3" cy="306.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="158.2" cy="138.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="147.7" cy="140.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="372.8" cy="221.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="318.1" cy="253.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="453.9" cy="214.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="235.7" cy="310.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="372.1" cy="218.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="245.9" cy="101.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="142.9" cy="208.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="272.9" cy="191.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="407.5" cy="302.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="341.4" cy="338.2" r="2.2" fill="#b9b9b2"/>
+<polygon points="321.1,246.7 310.8,265.8 331.5,265.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="317.2,247.9 307.7,265.3 326.6,265.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="193.7,369.0 185.3,384.5 202.1,384.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="79.6,411.9 71.2,427.4 88.0,427.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="370.1,210.1 361.5,225.9 378.6,225.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="174.6,306.1 167.7,318.8 181.5,318.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="244.6,91.3 235.4,108.4 253.9,108.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="244.6" y="121.8" text-anchor="middle" fill="#5c5c57">Povoado Palestina</text>
+<polygon points="237.6,303.3 230.5,316.4 244.8,316.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="315.9,239.8 305.5,258.9 326.3,258.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="148.7,128.1 138.3,147.2 159.0,147.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="148.7" y="160.9" text-anchor="middle" fill="#5c5c57">Povoado São Domingos</text>
+<polygon points="451.1,206.3 444.1,219.2 458.1,219.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="472.1,182.3 465.8,193.8 478.3,193.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="142.5,201.7 135.6,214.3 149.4,214.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="351.2,198.0 344.7,209.9 357.6,209.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="272.1,185.2 265.9,196.7 278.3,196.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="340.6,331.9 333.8,344.3 347.3,344.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="408.2,295.5 401.8,307.4 414.7,307.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="302.6" cy="486.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="309.6" y="481.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Brejo Grande 97,8 km</text>
+<circle cx="314.9" cy="418.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="321.9" y="413.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Serra do Monte 94,3 km</text>
+<circle cx="346.8" cy="368.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="353.8" y="363.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Alto do Camilo 86,0 km</text>
+<circle cx="412.7" cy="373.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="419.7" y="388.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">La. Bonita 79,7 km</text>
+<circle cx="411.4" cy="378.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="473.7" cy="352.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="480.7" y="347.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Lagoa do Mururu 77,2 km</text>
+<circle cx="502.3" cy="253.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="509.3" y="248.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Alto Alegre 21,4 km</text>
+<circle cx="65.1" cy="229.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="72.1" y="224.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">S. Domingos 14,2 km</text>
+<circle cx="74.9" cy="251.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="81.9" y="246.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Campo Grande 13,6 km</text>
+<circle cx="448.9" cy="279.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="455.9" y="274.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Alto de Areia 12,8 km</text>
+<circle cx="75.7" cy="215.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="82.7" y="210.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santo Antonio da Boiada 12,5 km</text>
+<circle cx="38.8" cy="364.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="45.8" y="359.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Alto Bonito 8,6 km</text>
+<circle cx="207.4" cy="124.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="214.4" y="119.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Brejo da Fortuna 5,6 km</text>
+<circle cx="200.5" cy="335.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="207.5" y="330.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Gavião 5,0 km</text>
+<circle cx="415.9" cy="232.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="422.9" y="227.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Centro dos Augosto 4,6 km</text>
+<circle cx="223.0" cy="367.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="230.0" y="382.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Lagoa do Gato 4,3 km</text>
+<circle cx="176.1" cy="205.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="70.8" cy="383.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="77.8" y="398.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Centro do Estaveiro 4,0 km</text>
+<circle cx="94.0" cy="455.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="101.0" y="450.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Rua dos Crentes 4,0 km</text>
+<circle cx="286.8" cy="243.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="293.8" y="238.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Bela Vista 3,6 km</text>
+<circle cx="148.7" cy="303.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="155.7" y="298.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Jussaral 3,5 km</text>
+<circle cx="415.0" cy="330.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="422.0" y="325.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Lagoa Grande 3,5 km</text>
+<rect x="313.1" y="248.7" width="10" height="10" fill="#1d1d1b"/><text x="327.1" y="271.7" font-weight="600" fill="#1d1d1b">Sede de Brejo de Areia</text>
+<line x1="35" x2="87.5" y1="541.7" y2="541.7" stroke="#8a8a84" stroke-width="2"/><text x="35" y="555.7" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="532.7107379571212" y2="532.7107379571212" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="536.7107379571212" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,525.7 421.4,538.0 434.6,538.0" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="536.7107379571212" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="550.7107379571212" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="559.7107379571212" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="555.7107379571212" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="559.7107379571212" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="578.7107379571212" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="582.7107379571212" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="578.7107379571212" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="582.7107379571212" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="601.7107379571212" y2="601.7107379571212" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="605.7107379571212" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="624.7107379571212" y2="624.7107379571212" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="628.7107379571212" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital de transporte de eleitores da 49ª ZE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (13):</strong> Brejo Grande, Serra do Monte, Alto do Camilo, La. Bonita, Duas Lagoas, Lagoa do Mururu, Alto Alegre, S. Domingos, Campo Grande, Alto de Areia, Santo Antonio da Boiada, Alto Bonito e Brejo da Fortuna.</li>
+<li><strong>De 3 a 5 km (9):</strong> Gavião, Centro dos Augosto, Lagoa do Gato, Lagoa do Galdino, Centro do Estaveiro, Rua dos Crentes, Bela Vista, Jussaral e Lagoa Grande.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (24):</strong> Balanço, Boa Esperança, Brejo Novo, Brejo de Areia, Brejo dos Bezerra, Brejo dos Bezerros, Centro do Pedrão, Centro dos Passarinhos, Cocal Grande, Cocalinho, Ig. do Meio, Igarapé do Meio, Lagoa Bonita, Lagoa da Veada, Mateus, Palestina, Povoado São Domingos, Serra Seca, Serra da Onça, Serra do Cocal, São Domingos, São João dos Pretos, São Miguel e Água Limpa.</li>
+</ul><h2>Rotas do Edital de transporte de eleitores da 49ª ZE</h2>
+<p>O edital tem 0 rotas para Brejo de Areia. Horários: não informados. Veículos: não informados.</p>
+<p><strong>A Justiça Eleitoral dispensou o transporte gratuito de eleitores neste município nas Eleições 2026.</strong> A Portaria nº 6/2026 da 49ª ZE (DJE-MA nº 170 de 05.09.2026, p. 12-13) declarou &quot;prejudicada [...] a instalação de Comissão de Transporte nos municípios de Vitorino Freire/MA, Brejo de Areia/MA e Altamira do Maranhão/MA&quot;; não cita o 2º turno</p>
+<p><strong>Atenção:</strong> A dispensa do transporte foi publicada sem citar o turno e é considerada válida também para o 2º turno. A minuta pede a reconsideração para as localidades mais distantes.</p>
+<p>Fonte: Quadro de percursos não localizado nas edições do DJE/TRE-MA consultadas.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 22 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Brejo Grande</strong></td><td>Sede – Alto Alegre – Lagoa do Mururu – La. Bonita – Duas Lagoas – Alto do Camilo – Serra do Monte – Brejo Grande – Sede</td><td>Alto Alegre, Lagoa do Mururu, La. Bonita, Duas Lagoas, Alto do Camilo, Serra do Monte, Brejo Grande</td><td>164,9 km (ida e volta)</td><td>~4h14</td></tr><tr><td><strong>Rota nova – S. Domingos</strong></td><td>Povoado São Domingos – Santo Antonio da Boiada – S. Domingos – Povoado São Domingos</td><td>Santo Antonio da Boiada, S. Domingos</td><td>28,4 km (ida e volta)</td><td>~1h08</td></tr><tr><td><strong>Rota nova – Campo Grande</strong></td><td>Sede – Jussaral – Campo Grande – Sede</td><td>Jussaral, Campo Grande</td><td>27,2 km (ida e volta)</td><td>~1h05</td></tr><tr><td><strong>Rota nova – Alto de Areia</strong></td><td>Sede – Lagoa Grande – Alto de Areia – Sede</td><td>Lagoa Grande, Alto de Areia</td><td>25,7 km (ida e volta)</td><td>~1h02</td></tr><tr><td><strong>Rota nova – Alto Bonito</strong></td><td>Sede – Rua dos Crentes – Centro do Estaveiro – Alto Bonito – Sede</td><td>Rua dos Crentes, Centro do Estaveiro, Alto Bonito</td><td>25,2 km (ida e volta)</td><td>~1h00</td></tr><tr><td><strong>Rota nova – Brejo da Fortuna</strong></td><td>Sede – Brejo da Fortuna – Sede</td><td>Brejo da Fortuna</td><td>11,1 km (ida e volta)</td><td>~27 min</td></tr><tr><td><strong>Rota nova – Gavião</strong></td><td>Sede – Lagoa do Gato – Gavião – Sede</td><td>Lagoa do Gato, Gavião</td><td>14,3 km (ida e volta)</td><td>~34 min</td></tr><tr><td><strong>Rota nova – Centro dos Augosto</strong></td><td>Sede – Centro dos Augosto – Sede</td><td>Centro dos Augosto</td><td>9,2 km (ida e volta)</td><td>~22 min</td></tr><tr><td><strong>Rota nova – Lagoa do Galdino</strong></td><td>Sede – Lagoa do Galdino – Sede</td><td>Lagoa do Galdino</td><td>7,9 km (ida e volta)</td><td>~19 min</td></tr><tr><td><strong>Rota nova – Bela Vista</strong></td><td>Sede – Bela Vista – Sede</td><td>Bela Vista</td><td>7,2 km (ida e volta)</td><td>~16 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMBA</strong></p><p>Brejo de Areia/MA, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Dra. Talita de Castro Barreto</strong><br>Juíza Eleitoral da 49ª Zona Eleitoral – Vitorino Freire/MA</p><p><strong>Assunto:</strong> Pedido de reconsideração da dispensa do transporte gratuito de eleitores (de transporte de eleitores da 49ª ZE) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de Brejo de Areia, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação que, com a dispensa do transporte gratuito determinada pela de transporte de eleitores da 49ª ZE, ficam sem nenhum meio de transporte da Justiça Eleitoral para votar: Brejo Grande, Serra do Monte, Alto do Camilo, La. Bonita, Duas Lagoas, Lagoa do Mururu, Alto Alegre, S. Domingos, Campo Grande, Alto de Areia, Santo Antonio da Boiada, Alto Bonito, Brejo da Fortuna, Gavião, Centro dos Augosto, Lagoa do Gato, Lagoa do Galdino, Centro do Estaveiro, Rua dos Crentes, Bela Vista, Jussaral e Lagoa Grande.</p><p>Sugerimos, respeitosamente, que Vossa Excelência reconsidere a dispensa ao menos para essas localidades, com a criação das seguintes rotas:</p><ol><li>a criação da Rota nova – Brejo Grande (Sede – Alto Alegre – Lagoa do Mururu – La. Bonita – Duas Lagoas – Alto do Camilo – Serra do Monte – Brejo Grande – Sede);</li><li>a criação da Rota nova – S. Domingos (Povoado São Domingos – Santo Antonio da Boiada – S. Domingos – Povoado São Domingos);</li><li>a criação da Rota nova – Campo Grande (Sede – Jussaral – Campo Grande – Sede);</li><li>a criação da Rota nova – Alto de Areia (Sede – Lagoa Grande – Alto de Areia – Sede);</li><li>a criação da Rota nova – Alto Bonito (Sede – Rua dos Crentes – Centro do Estaveiro – Alto Bonito – Sede);</li><li>a criação da Rota nova – Brejo da Fortuna (Sede – Brejo da Fortuna – Sede);</li><li>a criação da Rota nova – Gavião (Sede – Lagoa do Gato – Gavião – Sede);</li><li>a criação da Rota nova – Centro dos Augosto (Sede – Centro dos Augosto – Sede);</li><li>a criação da Rota nova – Lagoa do Galdino (Sede – Lagoa do Galdino – Sede);</li><li>a criação da Rota nova – Bela Vista (Sede – Bela Vista – Sede).</li></ol><p>As rotas sugeridas atendem só as localidades mais distantes, que hoje não têm como chegar ao local de votação.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Brejo de Areia</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Brejo de Areia; Quadro de percursos não localizado nas edições do DJE/TRE-MA consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

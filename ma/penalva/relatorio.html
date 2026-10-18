@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Penalva</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Penalva</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/penalva.pdf?v=1792365795" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Penalva (45ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 45ª Zona Eleitoral <strong>13 rotas novas</strong> no transporte gratuito de Penalva.
+<strong>A Justiça Eleitoral dispensou o transporte gratuito de eleitores neste município nas Eleições 2026</strong> (A Portaria nº 4/2026 da 45ª ZE (DJE-MA nº 161 de 01.09.2026, p. 159-160) declarou &quot;prejudicada [...] a instalação de Comissão de Transporte no município de Penalva/MA&quot; e vedou &quot;qualquer tipo de transporte e/ou fornecimento de alimentos a eleitores&quot;, ressalvados os casos legais; não cita o 2º turno). As 22 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Penalva tem 26.084 eleitores aptos em 46 locais de votação e 113 seções. São 35 locais rurais, com 12.463 eleitores (48% do total).</li>
+<li>29 locais rurais ficam a 10 km ou mais da sede, com 10.488 eleitores. Os mais distantes: Povoado  Escorrega (101,6 km), Povoado Igarapé Grande (35,8 km) e Povoado Igapó (34,1 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Alto Alegre (19,4 km do local de votação), Taguipe (17,8 km do local de votação), Tororoma (10,1 km do local de votação), Ponta da Bacaba (9,2 km do local de votação), Olho d&#x27;Água (6,1 km do local de votação), Comunidade Quilombola Panelada (4,9 km do local de votação), Comunidade Quilombola Juçaralzinho (4,8 km do local de votação), Comunidade Quilombola São Miguel do Povoado Querés (4,5 km do local de votação), Comunidade Quilombola Tibiri (4,3 km do local de votação), Comunidade Quilombola Flechal (4,3 km do local de votação), Comunidade Quilombola São José (4,2 km do local de votação), Comunidade Quilombola São José 2 (4,2 km do local de votação), Monte Cristo (4,2 km do local de votação), Comunidade Quilombola Monte Cristo (4,1 km do local de votação), Comunidade Quilombola Ponta do Curral (3,9 km do local de votação), Comunidade Quilombola das Quebradeiras de Coco Bairro Novo (3,7 km do local de votação), Comunidade Quilombola Conduru (3,4 km do local de votação), Comunidade Quilombola Combute (3,3 km do local de votação), Conduru (3,3 km do local de votação), Comunidade Quilombola São Manoel (3,1 km do local de votação), Comunidade Quilombola São João (3,1 km do local de votação) e Comunidade Quilombola São Benedito (3,0 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 113 localidades rurais de Penalva que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Alto Alegre</td><td>19,4</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Taguipe</td><td>17,8</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Tororoma</td><td>10,1</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Ponta da Bacaba</td><td>9,2</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Olho d&#x27;Água</td><td>6,1</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Panelada</td><td>4,9</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Juçaralzinho</td><td>4,8</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola São Miguel do Povoado Querés</td><td>4,5</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Tibiri</td><td>4,3</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Flechal</td><td>4,3</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola São José</td><td>4,2</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola São José 2</td><td>4,2</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Monte Cristo</td><td>4,2</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Monte Cristo</td><td>4,1</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Ponta do Curral</td><td>3,9</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola das Quebradeiras de Coco Bairro Novo</td><td>3,7</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Conduru</td><td>3,4</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Combute</td><td>3,3</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Conduru</td><td>3,3</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola São Manoel</td><td>3,1</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola São João</td><td>3,1</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola São Benedito</td><td>3,0</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 113 localidades rurais de Penalva, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 579" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Penalva: 22 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="470.7,413.1 473.0,369.7 476.8,366.4 478.3,345.2 493.3,345.8 504.7,356.1 531.9,360.0 552.4,356.9 569.9,360.6 619.8,360.0 626.7,352.3 647.6,352.3 657.8,344.7 671.1,321.2 680.3,317.8 701.8,289.5 706.3,279.5 725.0,267.9 712.0,253.4 686.0,229.8 639.4,180.6 627.2,154.4 587.7,137.6 573.4,140.6 559.7,137.6 544.7,125.6 528.2,124.3 470.8,101.3 460.9,94.0 447.2,94.8 431.8,89.0 412.5,87.3 390.8,80.0 337.0,149.5 238.2,177.2 145.7,204.5 37.5,233.7 211.8,311.3 294.0,382.8 330.4,406.2 339.2,391.4 347.3,389.1 364.6,371.8 368.8,371.6 470.7,413.1 470.7,413.1" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="204.1,202.4 200.2,201.8 195.7,200.4 193.1,198.1 192.0,195.0 187.6,194.2 182.9,193.3 180.3,191.7 178.0,189.1 177.1,185.8 176.4,182.1 172.6,178.4 169.0,177.0 165.7,175.5 163.4,173.1 160.5,171.2 158.1,169.2 155.8,167.3 152.4,165.4 143.1,163.7 139.9,162.4 136.0,161.7 133.5,159.8 131.8,156.8 129.5,154.6 126.2,153.8 123.4,155.7 120.5,157.6 118.1,159.6 115.4,161.2 113.3,163.3 109.6,165.8 107.1,167.9 105.2,170.5 103.5,175.0 102.1,177.9 100.2,181.5 98.9,184.3 94.6,187.7 91.9,189.2 88.6,191.1 83.1,194.3 79.7,196.2 75.1,198.7 71.8,200.7 67.2,203.4 64.8,205.3 66.1,210.0 66.3,214.4 66.3,218.5 63.4,221.5 61.9,224.4 60.4,227.2 56.1,229.0 52.6,230.0 48.7,230.3 44.8,232.3 40.7,232.1 36.7,233.5 39.7,231.9 44.1,232.4 48.0,230.4 51.9,230.0 56.1,229.0 60.1,227.3 62.5,225.6 63.4,221.5 66.1,219.8 66.3,214.4 66.1,210.0 64.9,205.8 67.2,203.4 71.8,200.7 75.1,198.7 78.4,196.9 83.1,194.3 88.6,191.1 91.9,189.2 94.6,187.7 97.7,185.3 99.8,183.3 101.3,179.5 103.5,175.0 104.9,171.8 107.1,167.9 109.6,165.8 112.4,164.0 114.5,161.8 117.4,160.1 120.0,158.2 122.2,156.2 125.2,154.5 129.5,154.6 131.8,156.8 133.4,159.5 135.6,161.6 139.2,162.1 143.1,163.7 150.7,165.8 154.3,166.5 158.1,169.2 160.5,171.2 163.4,173.1 165.7,175.5 168.2,177.0 172.6,178.4 176.4,182.1 177.1,185.8 178.0,189.1 180.3,191.7 182.9,193.3 187.6,194.2 192.0,195.0 193.1,198.1 195.7,200.4 198.8,201.6 203.8,202.6 204.1,202.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Alto Alegre</title></polyline>
+<polyline points="384.6,366.2 385.4,370.2 387.0,373.6 388.4,377.3 387.9,382.6 389.9,386.7 392.1,389.4 392.7,394.6 395.8,399.5 397.9,403.0 398.6,406.6 399.1,414.8 399.2,422.0 397.9,429.6 397.0,434.9 403.2,435.6 407.9,435.9 412.4,436.3 416.5,436.3 423.5,436.3 431.9,439.3 437.8,442.7 446.5,445.1 452.6,446.7 454.8,443.8 456.8,441.0 459.3,438.9 461.6,436.5 463.7,434.3 466.3,428.6 467.9,425.2 471.2,421.9 473.3,420.0 475.2,417.6 475.9,413.8 474.6,410.1 473.3,406.9 474.5,403.3 476.3,400.4 477.4,397.2 480.1,394.3 481.4,390.9 475.8,391.7 472.9,390.5 468.7,388.9 472.9,390.5 475.8,391.7 480.3,389.6 480.3,393.9 478.2,396.3 476.7,399.2 474.5,403.3 473.3,406.6 474.3,409.8 476.4,412.1 475.2,417.6 473.3,420.0 471.2,421.9 468.6,424.5 466.3,428.6 465.3,432.0 462.6,435.3 460.4,437.7 458.1,440.0 455.9,442.3 452.6,446.7 446.5,445.1 437.8,442.7 431.9,439.3 423.5,436.3 416.5,436.3 412.4,436.3 407.9,435.9 403.2,435.6 397.3,435.7 397.9,429.6 398.8,425.3 399.1,417.6 398.5,409.8 398.8,405.1 397.2,401.8 393.8,397.0 392.1,389.4 389.9,386.7 387.9,382.6 388.4,378.1 387.4,374.4 385.7,371.8 384.9,368.3 384.6,366.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Taguipe</title></polyline>
+<polyline points="322.1,174.0 319.1,176.2 317.4,180.3 315.0,184.4 312.7,187.7 311.5,191.1 312.4,197.7 311.9,201.9 312.0,207.2 313.3,210.5 316.0,213.8 314.7,223.0 315.6,226.4 318.7,229.9 317.2,236.0 316.6,240.0 318.2,252.8 316.8,255.4 314.0,257.7 313.1,260.9 309.7,266.0 307.6,269.3 305.2,267.5 303.2,265.1 300.5,263.6 303.2,265.1 305.1,267.3 306.2,270.6 309.7,266.0 313.1,260.9 314.0,257.7 316.7,255.9 318.2,252.8 316.8,242.9 316.9,239.0 318.0,232.7 317.2,227.7 315.4,224.8 315.2,216.1 313.9,212.0 311.6,209.9 311.3,204.8 311.7,200.9 311.5,191.1 312.7,187.7 315.0,184.4 317.0,181.2 318.6,177.1 320.9,175.1 322.1,174.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Tororoma</title></polyline>
+<polyline points="274.5,315.9 273.3,312.7 266.3,309.5 263.1,306.3 260.0,300.7 260.3,295.4 260.0,289.8 257.8,287.7 255.0,283.9 256.7,279.7 256.6,272.7 253.7,271.0 251.7,268.2 243.3,267.1 240.2,265.1 243.3,267.1 251.7,268.2 253.7,271.0 256.6,272.7 257.3,277.2 255.9,281.2 255.7,287.0 258.9,288.2 261.0,292.4 259.9,297.9 262.0,304.0 265.1,308.5 272.0,312.6 274.3,314.9 275.1,318.2 278.0,322.2 280.1,325.0 282.4,328.1 286.6,327.6 290.0,329.0 292.4,331.7 294.9,335.0 298.6,337.5 302.1,338.6 308.8,340.0 308.0,335.5 306.7,332.5 306.3,327.9 309.1,324.3 310.5,321.6 312.4,319.0 315.9,316.9 318.2,314.0 320.1,310.5 319.4,307.0 320.0,303.0 330.6,297.0 332.0,292.3 333.5,287.4 332.0,290.1 331.9,294.6 322.2,301.8 319.7,303.9 319.8,308.2 319.7,312.3 317.7,314.6 314.3,317.9 311.7,319.5 309.7,323.2 306.8,327.2 306.3,330.8 307.8,333.8 308.1,338.2 304.0,338.5 298.6,337.5 295.5,335.7 293.1,332.5 291.1,330.0 288.6,328.0 283.8,328.1 281.0,326.2 278.0,322.2 275.4,318.8 274.5,315.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Ponta da Bacaba</title></polyline>
+<polyline points="498.4,286.3 502.0,287.2 506.1,288.8 509.6,289.7 514.9,290.7 519.1,290.4 523.3,290.5 525.4,288.3 528.3,287.1 528.5,291.5 528.4,296.5 529.5,300.3 531.1,302.8 530.6,306.5 526.9,307.5 530.6,306.5 531.3,303.2 529.5,300.3 528.4,296.5 528.4,292.2 529.3,288.7 525.7,287.9 523.7,290.3 519.6,290.2 515.6,290.7 511.1,291.1 508.6,289.2 504.4,288.4 501.5,287.0 498.4,286.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Panelada</title></polyline>
+<polyline points="424.3,126.0 422.4,130.1 419.8,131.9 416.5,130.9 413.1,132.1 409.0,132.0 405.3,132.6 400.6,134.2 397.3,135.3 393.6,134.6 389.2,133.2 384.3,131.2 381.4,132.4 377.6,131.8 374.7,133.6 377.6,131.8 381.4,132.4 384.3,131.2 389.2,133.2 393.6,134.6 397.3,135.3 400.6,134.2 403.9,132.5 408.3,131.9 413.1,132.1 416.5,130.9 419.8,131.9 422.4,130.1 424.3,126.0 424.3,126.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Juçaralzinho</title></polyline>
+<polyline points="558.1,239.5 556.7,242.5 554.6,244.6 551.8,246.0 549.3,248.4 547.5,251.2 545.5,253.5 542.2,254.3 540.1,252.1 537.4,250.7 534.8,248.9 531.7,247.5 528.3,244.1 523.9,242.2 518.8,240.4 521.2,242.2 526.3,242.7 531.2,247.1 534.7,248.9 537.4,250.4 540.1,252.1 542.2,254.3 545.5,253.5 547.5,251.3 549.3,248.4 551.3,246.1 554.1,244.9 556.5,243.1 557.4,239.7 558.1,239.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola São Miguel do Povoado Querés</title></polyline>
+<polyline points="627.1,227.0 628.2,223.9 629.8,220.9 628.2,218.0 624.6,217.1 624.4,213.2 625.7,209.9 626.8,206.4 628.8,203.2 630.4,199.0 632.4,196.9 634.3,194.4 637.2,193.1 641.2,193.2 644.5,195.1 641.2,193.2 637.2,193.1 634.3,194.4 631.9,197.3 629.7,200.4 628.0,204.5 626.0,207.4 625.3,211.3 624.1,214.3 625.1,217.4 628.6,218.1 629.8,222.2 627.7,224.8 627.8,229.0 629.0,232.6 633.4,233.0 636.5,234.0 634.6,238.1 632.4,240.6 630.7,243.2 627.2,243.7 625.7,247.0 626.6,250.5 629.7,251.8 633.8,253.2 632.8,256.3 634.3,253.7 629.9,252.0 626.8,250.6 625.7,247.5 626.8,243.9 630.4,243.4 632.4,240.6 634.4,238.5 635.8,235.8 633.9,233.1 629.9,232.9 627.7,230.9 627.1,227.1 627.1,227.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Tibiri</title></polyline>
+<polyline points="555.3,273.4 552.4,271.9 549.3,270.1 545.1,269.8 541.1,270.1 538.1,272.4 537.4,268.5 534.1,267.1 531.5,264.9 528.3,264.0 524.5,264.7 519.7,262.2 518.1,259.2 519.5,261.9 521.7,263.8 524.9,264.6 529.0,264.2 532.0,265.7 534.5,267.4 537.5,269.6 540.0,271.2 542.5,269.6 546.0,270.3 550.1,270.5 552.6,272.2 555.3,273.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Ponta do Curral</title></polyline>
+<polyline points="408.8,188.1 404.7,188.6 400.8,188.3 397.3,187.3 394.1,185.8 392.7,183.1 390.3,179.5 387.5,177.9 383.4,176.4 380.8,174.7 379.1,170.0 376.8,166.3 379.1,170.0 380.8,174.7 383.4,176.4 386.9,177.6 390.3,179.5 392.6,182.2 393.8,185.4 396.7,187.3 400.8,188.3 404.7,188.6 407.7,187.4 408.8,188.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola das Quebradeiras de Coco Bairro Novo</title></polyline>
+<polyline points="599.5,224.6 598.7,228.1 598.8,232.2 597.0,235.4 596.2,239.6 599.0,241.5 602.2,243.6 606.3,243.9 608.7,245.6 611.4,247.1 613.7,249.1 615.3,251.6 613.7,249.1 611.4,247.1 608.7,245.6 606.4,243.9 602.2,243.6 599.7,242.0 597.0,240.0 596.8,236.1 597.9,233.1 598.5,229.5 599.2,225.9 599.5,224.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Conduru</title></polyline>
+<polyline points="593.0,153.6 590.1,152.1 592.2,140.8 590.1,138.7 586.3,137.7 582.4,138.0 578.7,138.8 574.9,139.6 578.3,138.9 581.5,137.9 586.3,137.7 589.6,138.6 592.6,139.8 589.0,149.9 590.2,152.9 593.0,153.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Combute</title></polyline>
+<polyline points="508.8,200.7 507.4,203.6 504.7,205.2 502.8,207.9 500.9,210.7 499.3,213.3 498.6,217.6 497.7,221.2 501.5,220.7 505.4,221.0 507.6,223.1 505.4,221.0 502.7,219.5 500.2,221.5 498.0,219.5 498.8,216.0 499.5,212.3 501.9,209.1 503.8,206.5 506.1,204.6 508.1,201.9 508.8,200.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola São Manoel</title></polyline>
+<circle cx="467.1" cy="178.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="560.5" cy="144.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="626.1" cy="247.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="434.7" cy="344.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="576.2" cy="252.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="623.0" cy="199.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="383.5" cy="174.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="459.1" cy="152.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="382.1" cy="196.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="412.9" cy="164.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="415.4" cy="166.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="459.4" cy="167.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="412.7" cy="164.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="429.3" cy="339.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="588.4" cy="233.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="422.3" cy="110.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="494.8" cy="189.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="498.6" cy="218.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="409.5" cy="169.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="587.8" cy="139.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="517.9" cy="186.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="509.1" cy="146.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="401.8" cy="358.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="467.8" cy="114.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="533.5" cy="178.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="610.2" cy="230.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="394.7" cy="186.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="413.1" cy="131.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="512.3" cy="290.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="630.9" cy="171.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="451.4" cy="254.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="501.3" cy="210.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="630.6" cy="172.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="401.9" cy="195.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="627.0" cy="217.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="403.8" cy="85.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="468.7" cy="171.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="570.7" cy="191.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="553.3" cy="229.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="509.4" cy="290.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="431.3" cy="120.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="481.4" cy="138.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="450.6" cy="251.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="566.0" cy="210.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="450.3" cy="127.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="580.9" cy="302.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="444.6" cy="326.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="581.3" cy="309.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="596.3" cy="291.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="572.9" cy="297.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="556.5" cy="166.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="660.6" cy="232.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="580.1" cy="297.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="583.2" cy="311.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="580.5" cy="297.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="424.5" cy="223.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="601.3" cy="220.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="405.7" cy="92.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="522.6" cy="162.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="410.6" cy="344.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="405.9" cy="188.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="495.8" cy="288.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="274.6" cy="313.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="584.7" cy="287.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="666.7" cy="289.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="578.5" cy="290.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="446.2" cy="326.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="582.3" cy="285.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="415.0" cy="351.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="386.3" cy="364.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="523.9" cy="163.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="556.6" cy="273.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="677.7" cy="273.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="588.4" cy="320.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="428.8" cy="347.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="561.3" cy="213.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="428.8" cy="226.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="322.4" cy="173.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="576.8" cy="180.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="458.8" cy="127.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="489.8" cy="140.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="474.6" cy="162.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="494.0" cy="266.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="664.7" cy="287.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="458.7" cy="127.1" r="2.2" fill="#b9b9b2"/>
+<polygon points="588.0,289.7 578.2,307.7 597.8,307.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="430.0,339.1 419.9,357.7 440.2,357.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="430.0" y="371.3" text-anchor="middle" fill="#5c5c57">Povoado Jacaré</text>
+<polygon points="587.3,296.2 577.8,313.7 596.8,313.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="587.3,291.5 574.7,314.7 599.9,314.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="459.9,203.7 453.2,216.1 466.7,216.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="677.7,263.0 669.7,277.8 685.8,277.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="627.0,219.0 619.3,233.1 634.6,233.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="449.9,319.8 443.3,332.0 456.5,332.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="431.0,339.8 421.2,357.8 440.8,357.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="418.9,342.8 409.9,359.4 428.0,359.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="424.3,117.3 416.0,132.8 432.7,132.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="457.7,201.5 450.5,214.9 465.0,214.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="592.9,145.0 584.5,160.3 601.2,160.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="204.1,195.7 197.7,207.6 210.5,207.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="522.7,158.1 514.3,173.5 531.1,173.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="587.6,307.7 577.7,326.0 597.5,326.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="593.3,286.1 583.8,303.5 602.7,303.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="599.8,217.1 592.6,230.3 607.0,230.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="666.2,224.9 659.0,238.2 673.4,238.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="621.5,172.0 614.0,185.9 629.1,185.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="474.2,156.1 467.2,168.9 481.1,168.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="498.4,278.5 490.7,292.6 506.0,292.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="558.1,231.8 550.7,245.4 565.5,245.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="556.6,164.3 549.1,178.1 564.1,178.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="406.8,89.7 399.7,102.9 414.0,102.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="457.5,239.1 451.2,250.6 463.7,250.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="561.9,205.7 552.9,222.4 570.9,222.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="561.9" y="235.8" text-anchor="middle" fill="#5c5c57">Povoado São Joaquim</text>
+<polygon points="491.3,134.0 483.9,147.6 498.7,147.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="384.4,356.2 375.1,373.3 393.7,373.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="384.4" y="386.8" text-anchor="middle" fill="#5c5c57">Povoado Ouro</text>
+<polygon points="274.3,308.7 267.5,321.3 281.1,321.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="322.0,166.5 315.0,179.3 328.9,179.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="408.9,179.0 400.4,194.6 417.3,194.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="458.2,120.6 450.9,133.9 465.4,133.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="508.8,192.6 501.1,206.8 516.5,206.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="428.7,217.8 421.6,230.9 435.8,230.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="588.4,300.3 578.5,318.5 598.3,318.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="582.0,278.4 572.3,296.2 591.7,296.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="577.1,282.6 567.9,299.5 586.3,299.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="588.4,288.1 578.4,306.5 598.4,306.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="587.8,296.1 575.6,318.6 600.1,318.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="663.9,280.2 656.6,293.7 671.2,293.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="577.0,174.3 569.6,188.0 584.4,188.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="407.8,336.0 402.0,346.7 413.6,346.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="555.3,266.8 548.7,278.8 561.8,278.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="523.3,114.3 517.4,125.3 529.3,125.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="582.7,284.9 572.6,303.5 592.8,303.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="35.0" cy="234.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="42.0" y="229.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Alto Alegre 19,4 km</text>
+<circle cx="466.0" cy="387.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="473.0" y="382.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Taguipe 17,8 km</text>
+<circle cx="299.8" cy="263.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="306.8" y="258.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Tororoma 10,1 km</text>
+<circle cx="334.0" cy="287.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="341.0" y="282.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Ponta da Bacaba 9,2 km</text>
+<circle cx="227.4" cy="284.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="234.4" y="299.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Olho d&#x27;Água 6,1 km</text>
+<circle cx="522.1" cy="311.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="529.1" y="306.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Panelada 4,9 km</text>
+<circle cx="374.1" cy="133.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="381.1" y="128.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Juçaralzinho 4,8 km</text>
+<circle cx="519.7" cy="237.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="526.7" y="232.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola São Miguel do Povoado Querés 4,5 km</text>
+<circle cx="646.6" cy="196.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="422.6" y="191.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Tibiri 4,3 km</text>
+<circle cx="654.7" cy="206.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="521.0" cy="241.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="528.0" y="256.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola São José 4,2 km</text>
+<circle cx="521.3" cy="243.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="632.7" cy="256.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="507.9" y="271.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Monte Cristo 4,2 km</text>
+<circle cx="647.5" cy="260.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="517.9" cy="259.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="383.6" cy="160.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="390.6" y="155.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola das Quebradeiras de Coco Bairro Novo 3,7 km</text>
+<circle cx="615.1" cy="252.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="571.3" cy="140.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="615.1" cy="250.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="507.3" cy="223.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="514.3" y="218.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola São Manoel 3,1 km</text>
+<circle cx="635.5" cy="200.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="530.4" cy="285.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<rect x="582.6" y="295.2" width="10" height="10" fill="#1d1d1b"/><text x="596.6" y="318.2" font-weight="600" fill="#1d1d1b">Sede de Penalva</text>
+<line x1="35" x2="96.2" y1="476.7" y2="476.7" stroke="#8a8a84" stroke-width="2"/><text x="35" y="490.7" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="467.6890044813377" y2="467.6890044813377" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="471.6890044813377" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,460.7 421.4,472.9 434.6,472.9" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="471.6890044813377" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="485.6890044813377" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="494.6890044813377" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="490.6890044813377" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="494.6890044813377" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="513.6890044813376" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="517.6890044813376" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="513.6890044813376" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="517.6890044813376" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="536.6890044813376" y2="536.6890044813376" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="540.6890044813376" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="559.6890044813376" y2="559.6890044813376" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="563.6890044813376" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital de transporte de eleitores da 45ª ZE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (5):</strong> Alto Alegre, Taguipe, Tororoma, Ponta da Bacaba e Olho d&#x27;Água.</li>
+<li><strong>De 3 a 5 km (17):</strong> Comunidade Quilombola Panelada, Comunidade Quilombola Juçaralzinho, Comunidade Quilombola São Miguel do Povoado Querés, Comunidade Quilombola Tibiri, Comunidade Quilombola Flechal, Comunidade Quilombola São José, Comunidade Quilombola São José 2, Monte Cristo, Comunidade Quilombola Monte Cristo, Comunidade Quilombola Ponta do Curral, Comunidade Quilombola das Quebradeiras de Coco Bairro Novo, Comunidade Quilombola Conduru, Comunidade Quilombola Combute, Conduru, Comunidade Quilombola São Manoel, Comunidade Quilombola São João e Comunidade Quilombola São Benedito.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (91):</strong> Agrovila do PA Ouro, Angelim, Boa vontade, Caju, Caminho Novo, Comunidade Quilombola Achui 1, Comunidade Quilombola Achui 2, Comunidade Quilombola Achuí, Comunidade Quilombola Alto Bonito, Comunidade Quilombola Angelim, Comunidade Quilombola Areal, Comunidade Quilombola Bairro Novo, Comunidade Quilombola Beira Lago, Comunidade Quilombola Boa Esperança, Comunidade Quilombola Boa Vontade, Comunidade Quilombola Bom Que Dói, Comunidade Quilombola Buritiata, Comunidade Quilombola Buritirana, Comunidade Quilombola Caju, Comunidade Quilombola Camaputiua, Comunidade Quilombola Caminho Novo, Comunidade Quilombola Campo de Pouso, Comunidade Quilombola Capim Fino, Comunidade Quilombola Capivari, Comunidade Quilombola Capoeira, Comunidade Quilombola Capoeira 2, Comunidade Quilombola Capoeiro, Comunidade Quilombola Carrapichal, Comunidade Quilombola Cedreiro, Comunidade Quilombola Centro do Meio, Comunidade Quilombola Centro do Meio 1, Comunidade Quilombola Conceição, Comunidade Quilombola Cutia, Comunidade Quilombola Descanso, Comunidade Quilombola Estaca Zero, Comunidade Quilombola Formigas, Comunidade Quilombola Gameleira, Comunidade Quilombola Gapó, Comunidade Quilombola Goiabal, Comunidade Quilombola Jacaré, Comunidade Quilombola Jaraguaia, Comunidade Quilombola Jardim Alvorada, Comunidade Quilombola Jatobá, Comunidade Quilombola Lagoa, Comunidade Quilombola Lagoa Mirim, Comunidade Quilombola Mariza, Comunidade Quilombola Masangana, Comunidade Quilombola Muniz, Comunidade Quilombola Nice, Comunidade Quilombola Oiteiro, Comunidade Quilombola Oriente, Comunidade Quilombola Outeiro, Comunidade Quilombola Picarreira, Comunidade Quilombola Ponta Grande, Comunidade Quilombola Ponta da Areia, Comunidade Quilombola Povoado Ludovico, Comunidade Quilombola Povoado São João, Comunidade Quilombola Proteção de São Raimundo, Comunidade Quilombola Recreio, Comunidade Quilombola Retiro, Comunidade Quilombola Samaúma, Comunidade Quilombola Sansapé, Comunidade Quilombola Santa Maria, Comunidade Quilombola Santa Rita, Comunidade Quilombola Santa Rosa, Comunidade Quilombola Santo Antônio, Comunidade Quilombola Santo Antônio São Braz, Comunidade Quilombola Saubeiro, Comunidade Quilombola Serraria, Comunidade Quilombola Simauma 2, Comunidade Quilombola Sossego, Comunidade Quilombola São Joaquim, Comunidade Quilombola São Joaquim 2, Comunidade Quilombola São Malaquias, Comunidade Quilombola Taba Quente, Comunidade Quilombola Tabareu, Comunidade Quilombola Taboca, Comunidade Quilombola Tabocal, Comunidade Quilombola Teso, Comunidade Quilombola das Quebradeiras de Coco, Escorrega, Estrada Velha, Igarapé Grande, Jacaré, Limeira, Ponta Grossa, Ricoa, Saubeiro, São Joaquim, Tabareu e Trizidela do Jacaré.</li>
+</ul><h2>Rotas do Edital de transporte de eleitores da 45ª ZE</h2>
+<p>O edital tem 0 rotas para Penalva. Horários: não informados. Veículos: não informados.</p>
+<p><strong>A Justiça Eleitoral dispensou o transporte gratuito de eleitores neste município nas Eleições 2026.</strong> A Portaria nº 4/2026 da 45ª ZE (DJE-MA nº 161 de 01.09.2026, p. 159-160) declarou &quot;prejudicada [...] a instalação de Comissão de Transporte no município de Penalva/MA&quot; e vedou &quot;qualquer tipo de transporte e/ou fornecimento de alimentos a eleitores&quot;, ressalvados os casos legais; não cita o 2º turno</p>
+<p><strong>Atenção:</strong> A dispensa do transporte foi publicada sem citar o turno e é considerada válida também para o 2º turno. A minuta pede a reconsideração para as localidades mais distantes.</p>
+<p>Fonte: Quadro de percursos não localizado nas edições do DJE/TRE-MA consultadas.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 22 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Alto Alegre</strong></td><td>Sede – Alto Alegre – Sede</td><td>Alto Alegre</td><td>38,8 km (ida e volta)</td><td>~1h33</td></tr><tr><td><strong>Rota nova – Taguipe</strong></td><td>Sede – Taguipe – Sede</td><td>Taguipe</td><td>35,6 km (ida e volta)</td><td>~1h13</td></tr><tr><td><strong>Rota nova – Tororoma</strong></td><td>Sede – Tororoma – Sede</td><td>Tororoma</td><td>20,3 km (ida e volta)</td><td>~1h16</td></tr><tr><td><strong>Rota nova – Ponta da Bacaba</strong></td><td>Sede – Olho d&#x27;Água – Ponta da Bacaba – Sede</td><td>Olho d&#x27;Água, Ponta da Bacaba</td><td>30,6 km (ida e volta)</td><td>~1h19</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Panelada</strong></td><td>Sede – Comunidade Quilombola São Benedito – Comunidade Quilombola Panelada – Sede</td><td>Comunidade Quilombola São Benedito, Comunidade Quilombola Panelada</td><td>10,0 km (ida e volta)</td><td>~24 min</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Juçaralzinho</strong></td><td>Sede – Comunidade Quilombola Juçaralzinho – Sede</td><td>Comunidade Quilombola Juçaralzinho</td><td>9,5 km (ida e volta)</td><td>~23 min</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola São Miguel do Povoado Querés</strong></td><td>Sede – Comunidade Quilombola São José 2 – Comunidade Quilombola São José – Comunidade Quilombola São Miguel do Povoado Querés – Sede</td><td>Comunidade Quilombola São José 2, Comunidade Quilombola São José, Comunidade Quilombola São Miguel do Povoado Querés</td><td>9,1 km (ida e volta)</td><td>~22 min</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Tibiri</strong></td><td>Sede – Comunidade Quilombola São João – Comunidade Quilombola Tibiri – Comunidade Quilombola Flechal – Monte Cristo – Comunidade Quilombola Monte Cristo – Sede</td><td>Comunidade Quilombola São João, Comunidade Quilombola Tibiri, Comunidade Quilombola Flechal, Monte Cristo, Comunidade Quilombola Monte Cristo</td><td>17,0 km (ida e volta)</td><td>~41 min</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Ponta do Curral</strong></td><td>Sede – Comunidade Quilombola Ponta do Curral – Sede</td><td>Comunidade Quilombola Ponta do Curral</td><td>7,8 km (ida e volta)</td><td>~19 min</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola das Quebradeiras de Coco Bairro Novo</strong></td><td>Sede – Comunidade Quilombola das Quebradeiras de Coco Bairro Novo – Sede</td><td>Comunidade Quilombola das Quebradeiras de Coco Bairro Novo</td><td>7,3 km (ida e volta)</td><td>~18 min</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Conduru</strong></td><td>Sede – Conduru – Comunidade Quilombola Conduru – Sede</td><td>Conduru, Comunidade Quilombola Conduru</td><td>6,8 km (ida e volta)</td><td>~17 min</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Combute</strong></td><td>Sede – Comunidade Quilombola Combute – Sede</td><td>Comunidade Quilombola Combute</td><td>6,5 km (ida e volta)</td><td>~13 min</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola São Manoel</strong></td><td>Sede – Comunidade Quilombola São Manoel – Sede</td><td>Comunidade Quilombola São Manoel</td><td>6,2 km (ida e volta)</td><td>~15 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMP</strong></p><p>Penalva/MA, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Dra. Jylyanne Maria Ribeiro Bernardo</strong><br>Juíza Eleitoral da 45ª Zona Eleitoral – [sede da zona]/MA</p><p><strong>Assunto:</strong> Pedido de reconsideração da dispensa do transporte gratuito de eleitores (de transporte de eleitores da 45ª ZE) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de Penalva, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação que, com a dispensa do transporte gratuito determinada pela de transporte de eleitores da 45ª ZE, ficam sem nenhum meio de transporte da Justiça Eleitoral para votar: Alto Alegre, Taguipe, Tororoma, Ponta da Bacaba, Olho d&#x27;Água, Comunidade Quilombola Panelada, Comunidade Quilombola Juçaralzinho, Comunidade Quilombola São Miguel do Povoado Querés, Comunidade Quilombola Tibiri, Comunidade Quilombola Flechal, Comunidade Quilombola São José, Comunidade Quilombola São José 2, Monte Cristo, Comunidade Quilombola Monte Cristo, Comunidade Quilombola Ponta do Curral, Comunidade Quilombola das Quebradeiras de Coco Bairro Novo, Comunidade Quilombola Conduru, Comunidade Quilombola Combute, Conduru, Comunidade Quilombola São Manoel, Comunidade Quilombola São João e Comunidade Quilombola São Benedito.</p><p>Sugerimos, respeitosamente, que Vossa Excelência reconsidere a dispensa ao menos para essas localidades, com a criação das seguintes rotas:</p><ol><li>a criação da Rota nova – Alto Alegre (Sede – Alto Alegre – Sede);</li><li>a criação da Rota nova – Taguipe (Sede – Taguipe – Sede);</li><li>a criação da Rota nova – Tororoma (Sede – Tororoma – Sede);</li><li>a criação da Rota nova – Ponta da Bacaba (Sede – Olho d&#x27;Água – Ponta da Bacaba – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola Panelada (Sede – Comunidade Quilombola São Benedito – Comunidade Quilombola Panelada – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola Juçaralzinho (Sede – Comunidade Quilombola Juçaralzinho – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola São Miguel do Povoado Querés (Sede – Comunidade Quilombola São José 2 – Comunidade Quilombola São José – Comunidade Quilombola São Miguel do Povoado Querés – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola Tibiri (Sede – Comunidade Quilombola São João – Comunidade Quilombola Tibiri – Comunidade Quilombola Flechal – Monte Cristo – Comunidade Quilombola Monte Cristo – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola Ponta do Curral (Sede – Comunidade Quilombola Ponta do Curral – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola das Quebradeiras de Coco Bairro Novo (Sede – Comunidade Quilombola das Quebradeiras de Coco Bairro Novo – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola Conduru (Sede – Conduru – Comunidade Quilombola Conduru – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola Combute (Sede – Comunidade Quilombola Combute – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola São Manoel (Sede – Comunidade Quilombola São Manoel – Sede).</li></ol><p>As rotas sugeridas atendem só as localidades mais distantes, que hoje não têm como chegar ao local de votação.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Penalva</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Penalva; Quadro de percursos não localizado nas edições do DJE/TRE-MA consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

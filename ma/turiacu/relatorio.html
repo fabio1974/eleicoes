@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Turiaçu</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Turiaçu</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/turiacu.pdf?v=1792365731" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Turiaçu (39ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 39ª Zona Eleitoral <strong>10 rotas novas</strong> no transporte gratuito de Turiaçu.
+<strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-MA) para Turiaçu</strong> (O quadro de percursos do transporte de eleitores (edital da zona no DJE/TRE-MA) ainda não foi incorporado a este levantamento. A análise considera apenas a distância até o local de votação). As 22 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Turiaçu tem 28.340 eleitores aptos em 62 locais de votação e 142 seções. São 55 locais rurais, com 18.448 eleitores (65% do total).</li>
+<li>50 locais rurais ficam a 10 km ou mais da sede, com 16.694 eleitores. Os mais distantes: Rua Principal S/N (63,9 km), Rua Principal Sn (63,8 km) e Pracinha Do Pau Brasil Sn (63,4 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Faixa São Benedito (47,9 km do local de votação), Colônia São José (26,9 km do local de votação), Luzilândia (16,5 km do local de votação), Faixa da Sapucaia (15,6 km do local de votação), Areia Fina (15,6 km do local de votação), Barraca (8,8 km do local de votação), Comunidade Quilombola Barraca (8,8 km do local de votação), Santa Luzia (7,3 km do local de votação), Comunidade Quilombola Fundão (6,9 km do local de votação), Tipizal (6,8 km do local de votação), Fundão (6,8 km do local de votação), Comunidade Quilombola Campinas (6,7 km do local de votação), Campina do Roxo (6,1 km do local de votação), Comunidade Quilombola Campina do Roxo (6,1 km do local de votação), Sumauma (5,6 km do local de votação), Massapê (5,1 km do local de votação), João Veloso (3,7 km do local de votação), Tatajubinha (3,2 km do local de votação), Santa Tereznha (3,2 km do local de votação), Vila Damasio (3,2 km do local de votação), Povoado Tatajubinha (3,2 km do local de votação) e Pindobal Grande (3,0 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 129 localidades rurais de Turiaçu que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço. 1 locais não foram encontrados nas duas bases: Avenida Principal S/N - Povoado Vila Dos Crentes, com 264 eleitores.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Faixa São Benedito</td><td>47,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Colônia São José</td><td>26,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Luzilândia</td><td>16,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Faixa da Sapucaia</td><td>15,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Areia Fina</td><td>15,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Barraca</td><td>8,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Barraca</td><td>8,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Santa Luzia</td><td>7,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Fundão</td><td>6,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Tipizal</td><td>6,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fundão</td><td>6,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Campinas</td><td>6,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Campina do Roxo</td><td>6,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Campina do Roxo</td><td>6,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sumauma</td><td>5,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Massapê</td><td>5,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>João Veloso</td><td>3,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Tatajubinha</td><td>3,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Santa Tereznha</td><td>3,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Vila Damasio</td><td>3,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Povoado Tatajubinha</td><td>3,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Pindobal Grande</td><td>3,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 129 localidades rurais de Turiaçu, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1419" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Turiaçu: 22 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="719.6,845.2 719.8,834.4 692.5,815.5 683.9,788.3 687.9,771.4 698.9,750.3 673.4,700.5 647.7,665.1 625.3,657.7 583.3,677.5 565.3,678.2 544.0,665.1 534.8,652.4 531.5,637.4 539.6,603.5 558.2,548.4 576.5,476.1 551.9,468.0 549.0,461.9 560.3,432.9 582.3,420.6 579.2,404.3 587.1,389.8 588.5,366.6 596.5,355.9 597.9,336.4 586.9,321.7 558.3,309.0 544.8,312.4 528.3,301.5 510.9,304.3 499.5,310.7 489.0,309.9 487.0,300.2 493.3,294.4 520.8,281.7 545.4,272.5 558.3,270.8 595.3,254.3 607.6,255.7 610.9,247.1 612.6,219.6 606.0,181.5 591.8,175.0 590.4,163.7 598.6,155.6 601.7,130.4 594.4,120.9 602.8,112.6 583.4,97.4 556.0,82.5 538.5,80.0 522.8,88.2 519.3,102.6 532.0,107.2 545.5,123.9 530.0,126.0 521.8,147.5 505.0,153.5 499.5,185.9 509.6,197.3 492.3,206.4 484.3,218.1 463.9,230.2 447.0,234.0 437.7,227.6 425.1,240.5 419.7,241.0 402.1,275.0 390.4,278.3 389.1,299.1 381.2,308.9 364.9,312.7 358.0,329.4 336.7,338.7 321.5,337.5 294.8,361.9 274.2,369.6 261.4,382.5 248.8,382.0 234.3,392.9 224.4,393.5 208.8,404.3 186.6,426.7 135.7,524.1 35.0,717.7 160.1,969.5 135.8,989.8 122.7,1016.3 119.5,1039.5 147.0,1185.9 185.5,1183.8 205.2,1161.0 222.5,1154.5 238.6,1141.2 251.7,1125.0 276.2,1106.0 303.2,1094.8 328.0,1092.8 330.0,1082.9 338.4,1081.5 366.3,1069.3 390.8,1071.8 403.2,1069.5 431.1,1089.4 439.3,1091.2 452.6,1082.2 463.5,1069.2 484.4,1077.0 492.3,1071.4 507.6,1081.3 516.8,1076.4 531.4,1080.3 535.9,1087.7 551.3,1081.0 565.9,1088.8 579.5,1088.8 591.7,1081.5 616.8,1044.2 626.8,1021.9 628.3,1010.6 648.3,992.3 655.5,993.2 674.9,986.2 684.8,971.0 684.7,954.4 701.6,931.2 705.1,919.4 725.0,898.5 718.4,885.1 721.4,870.0 717.6,859.8 719.6,845.2 719.6,845.2" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polygon points="454.7,226.9 463.8,214.3 457.8,200.1 446.2,205.4 443.1,220.0 454.7,226.9 454.7,226.9" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="404.1,1063.7 405.4,1068.0 404.8,1074.3 404.5,1079.1 404.3,1083.8 401.8,1085.8 395.9,1085.7 391.6,1085.5 386.6,1085.2 382.5,1084.9 375.9,1084.7 371.6,1084.1 363.6,1083.9 357.5,1085.7 353.6,1087.6 350.1,1089.6 345.2,1091.3 336.0,1091.2 331.8,1090.9 327.0,1090.7 323.7,1089.0 322.4,1085.9 320.2,1083.6 316.8,1080.7 310.6,1074.0 303.1,1066.8 296.5,1060.7 288.7,1053.6 282.0,1047.4 279.2,1044.8 269.7,1045.2 259.0,1045.7 254.5,1045.0 156.1,1139.5 153.2,1141.2 152.0,1145.3 150.5,1150.2 148.1,1159.1 146.8,1162.2 145.3,1166.3 143.9,1171.7 142.6,1175.7 141.1,1181.0 145.0,1184.7 149.8,1187.7 158.5,1190.1 166.0,1189.8 170.0,1189.5 178.7,1189.3 184.8,1188.0 186.0,1195.9 184.5,1201.3 181.0,1213.6 178.9,1220.2 174.0,1235.9 171.6,1244.0 168.7,1253.3 166.7,1259.6 168.2,1262.4 167.6,1267.1 171.6,1267.9 180.2,1268.9 213.1,1272.8 258.4,1277.7 295.4,1281.4 329.1,1284.2 339.3,1285.0 343.3,1285.4 352.1,1286.1 356.7,1286.5 361.4,1286.7 362.7,1283.9 368.1,1262.2 369.1,1258.1 370.2,1253.9 371.0,1250.2 371.9,1246.5 373.5,1239.7 374.9,1233.4 375.8,1229.8 376.7,1225.8 378.2,1219.3 380.2,1210.5 381.0,1207.1 381.9,1203.4 382.8,1199.3 383.7,1195.5 386.3,1184.4 389.8,1169.0 392.8,1156.2 394.1,1150.0 395.4,1144.1 396.8,1138.0 398.0,1132.4 399.5,1125.9 401.2,1118.1 401.7,1114.1 402.2,1108.5 403.0,1100.6 403.3,1096.0 403.8,1090.6 404.1,1085.8 404.5,1079.1 404.8,1074.3 405.2,1069.5 405.7,1064.6 404.1,1063.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Faixa São Benedito</title></polyline>
+<polyline points="404.1,1063.7 405.4,1068.0 404.8,1074.3 404.5,1079.1 404.3,1083.8 404.0,1088.4 407.1,1089.7 411.5,1090.0 417.2,1089.1 420.9,1088.3 417.2,1089.1 414.0,1090.2 410.2,1089.5 405.7,1089.8 404.1,1086.8 404.5,1079.1 404.8,1074.3 405.2,1069.5 405.7,1064.6 404.1,1063.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – João Veloso</title></polyline>
+<polyline points="235.8,737.0 228.8,738.7 225.1,742.1 211.5,750.2 208.6,752.3 205.7,753.7 202.5,757.6 198.8,758.6 195.6,759.6 187.2,781.4 185.4,784.1 183.5,789.0 179.0,793.2 183.5,789.0 185.4,784.1 187.2,781.4 185.4,784.1 183.5,789.0 176.9,795.2 173.2,798.1 171.5,801.0 126.2,798.2 80.6,794.9 76.1,810.4 71.5,826.8 56.8,878.2 61.5,878.4 113.4,881.8 116.8,882.6 113.4,881.8 61.5,878.4 56.8,878.2 71.5,826.8 76.1,810.4 80.6,794.9 82.3,789.4 84.9,776.0 82.3,789.4 80.6,794.9 126.2,798.2 171.5,801.0 173.2,798.1 176.2,795.7 183.5,789.0 185.4,784.1 187.2,781.4 194.1,761.9 195.9,759.3 200.2,758.2 203.9,755.8 207.7,752.9 211.2,750.4 225.1,742.1 228.8,738.7 234.2,738.0 235.8,737.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Colônia São José</title></polyline>
+<polyline points="200.5,611.1 195.6,611.6 192.9,613.2 191.1,615.9 97.8,664.0 96.6,668.4 95.4,674.2 92.8,685.7 91.7,704.1 87.2,731.3 86.6,738.2 87.2,731.3 91.7,704.1 92.6,689.4 96.1,676.1 96.2,670.0 96.4,665.1 190.4,616.5 192.6,613.6 195.6,611.6 200.2,611.2 200.5,611.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Faixa da Sapucaia</title></polyline>
+<polyline points="679.7,875.0 677.4,873.0 679.6,867.6 677.4,865.1 670.9,858.0 667.6,857.0 667.3,851.8 664.6,849.9 658.0,843.6 655.4,841.7 641.7,841.0 636.5,841.7 631.4,840.6 628.8,837.3 629.1,833.0 628.1,836.3 628.8,839.9 626.5,843.2 614.5,847.2 610.1,847.2 606.2,848.6 602.5,851.4 606.2,848.6 610.1,847.2 614.5,847.2 624.3,844.7 627.1,841.7 630.0,840.0 633.4,842.1 639.1,841.8 652.2,841.5 658.0,843.6 664.6,849.9 667.3,851.8 668.5,855.3 670.9,858.0 675.2,863.7 678.7,865.9 677.3,869.6 678.1,874.0 679.7,875.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Barraca</title></polyline>
+<polyline points="406.4,881.2 403.2,883.1 398.7,881.7 396.7,875.7 394.4,872.8 387.1,877.5 378.6,881.1 370.8,882.4 364.1,886.2 358.4,889.0 354.9,891.3 345.1,891.1 341.5,893.4 334.4,894.1 329.2,895.1 334.4,894.1 341.5,893.4 345.1,891.1 353.1,890.2 358.4,889.0 361.3,885.9 370.8,882.4 378.6,881.1 387.1,877.5 394.4,872.8 396.7,875.7 398.7,880.0 400.0,883.4 404.0,882.5 406.4,881.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Santa Luzia</title></polyline>
+<polyline points="362.9,550.6 358.1,550.4 353.1,551.1 349.2,552.0 343.5,551.7 340.5,550.2 334.7,547.6 331.2,545.6 327.3,542.3 323.6,541.7 324.2,537.6 323.0,532.6 320.9,527.5 319.3,523.5 320.9,527.5 322.4,531.7 324.1,536.5 323.4,540.6 326.7,542.0 330.3,544.9 333.4,546.9 338.1,548.8 340.8,550.5 345.2,552.3 350.5,551.7 355.5,550.8 360.6,550.5 362.9,550.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Massapê</title></polyline>
+<polyline points="351.7,450.9 354.4,455.8 356.6,459.4 358.6,461.9 359.8,465.4 361.3,468.2 363.1,471.4 365.0,474.9 366.8,477.6 367.7,485.9 367.2,480.0 366.1,476.5 364.2,473.7 362.7,470.7 359.8,465.4 358.6,461.9 356.6,459.4 354.4,455.8 352.3,451.2 351.7,450.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Santa Tereznha</title></polyline>
+<polyline points="342.6,441.2 340.8,437.2 338.6,434.7 336.1,429.1 333.3,426.8 330.7,423.5 328.5,420.8 324.9,416.6 321.4,418.4 323.2,415.1 328.5,420.8 330.7,423.5 332.7,426.1 335.1,428.0 337.5,431.8 338.9,435.1 341.6,438.1 342.6,441.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Vila Damasio</title></polyline>
+<polyline points="461.5,682.4 464.9,681.6 468.8,681.3 468.6,674.4 471.9,668.0 475.2,666.0 478.7,660.0 479.4,656.1 478.7,660.0 475.2,666.0 471.9,668.0 468.6,674.4 469.5,679.6 466.1,681.3 461.5,682.4 461.5,682.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Pindobal Grande</title></polyline>
+<circle cx="377.8" cy="716.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="230.0" cy="537.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="275.0" cy="441.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="231.6" cy="536.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="374.8" cy="682.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="375.5" cy="682.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="423.6" cy="754.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="394.3" cy="812.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="428.9" cy="621.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="281.7" cy="431.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="254.4" cy="565.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="566.7" cy="749.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="477.8" cy="681.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="404.1" cy="624.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="445.5" cy="669.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="312.1" cy="596.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="368.2" cy="640.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="368.4" cy="528.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="368.2" cy="640.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="374.5" cy="623.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="420.3" cy="683.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="677.4" cy="870.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="435.9" cy="674.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="297.5" cy="410.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="499.2" cy="875.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="409.6" cy="650.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="410.1" cy="628.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="521.8" cy="583.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="519.0" cy="577.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="516.4" cy="542.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="677.2" cy="870.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="516.9" cy="574.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="505.7" cy="578.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="517.7" cy="576.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="515.8" cy="573.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="298.1" cy="372.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="321.6" cy="599.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="416.5" cy="561.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="290.4" cy="548.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="531.0" cy="462.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="713.9" cy="852.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="298.1" cy="363.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="503.3" cy="875.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="296.8" cy="365.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="417.7" cy="560.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="307.0" cy="675.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="380.9" cy="610.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="703.2" cy="879.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="405.5" cy="884.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="198.9" cy="609.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="284.9" cy="544.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="403.4" cy="1061.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="405.6" cy="883.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="306.6" cy="675.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="269.5" cy="620.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="704.0" cy="878.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="562.5" cy="768.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="367.3" cy="651.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="419.6" cy="632.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="361.9" cy="549.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="184.5" cy="518.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="436.6" cy="495.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="509.7" cy="485.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="303.4" cy="387.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="403.1" cy="1062.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="417.2" cy="773.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="405.2" cy="883.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="437.7" cy="495.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="306.6" cy="675.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="428.1" cy="372.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="453.3" cy="421.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="453.5" cy="390.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="553.0" cy="1077.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="590.6" cy="767.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="417.1" cy="776.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="377.9" cy="614.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="433.0" cy="505.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="343.9" cy="440.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="384.5" cy="748.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="391.2" cy="786.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="589.0" cy="768.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="325.8" cy="599.1" r="2.2" fill="#b9b9b2"/>
+<polygon points="504.9,562.1 493.9,582.3 515.9,582.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="513.0,566.5 502.3,586.1 523.6,586.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="511.0,567.3 498.2,591.0 523.9,591.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="461.5,673.9 453.2,689.3 469.9,689.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="532.5,126.9 525.4,140.0 539.6,140.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="428.5,364.7 420.5,379.3 436.4,379.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="342.3,431.9 333.8,447.5 350.7,447.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="416.1,548.1 406.4,565.9 425.8,565.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="416.1" y="579.5" text-anchor="middle" fill="#5c5c57">Povoado Canarinho Zona Rural</text>
+<polygon points="508.0,565.8 499.6,581.2 516.3,581.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="573.9,249.3 566.0,264.0 581.9,264.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="433.5,256.4 425.9,270.4 441.1,270.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="298.8,354.7 287.7,375.1 309.8,375.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="298.8" y="389.0" text-anchor="middle" fill="#5c5c57">Povoado Porto Santo Zona Rural</text>
+<polygon points="200.4,599.8 189.6,619.7 211.2,619.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="200.4" y="633.5" text-anchor="middle" fill="#5c5c57">Povoado Colonia Amelia Zona Rural</text>
+<polygon points="391.2,426.2 383.7,440.1 398.8,440.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="679.8,866.6 671.8,881.4 687.9,881.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="229.7,438.8 222.1,452.8 237.3,452.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="610.2,216.7 604.3,227.6 616.1,227.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="452.3,381.8 443.7,397.7 460.9,397.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="184.9,513.2 177.6,526.7 192.3,526.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="403.9,1053.4 394.1,1071.5 413.8,1071.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="403.9" y="1085.1" text-anchor="middle" fill="#5c5c57">Povoado Nova Caxias Zona Rural</text>
+<polygon points="508.7,479.5 500.0,495.5 517.4,495.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="371.3,423.6 363.7,437.6 378.9,437.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="326.6,590.9 319.0,604.9 334.3,604.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="416.6,767.8 408.3,783.1 424.9,783.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="417.4,623.7 409.9,637.6 425.0,637.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="432.0,498.3 424.5,512.0 439.4,512.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="519.1,555.6 508.0,576.2 530.3,576.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="485.5,560.2 474.3,580.8 496.7,580.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="510.8,565.5 502.4,580.9 519.1,580.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="305.7,667.4 297.6,682.4 313.8,682.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="406.2,873.2 398.5,887.4 413.8,887.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="267.1,486.5 260.1,499.4 274.1,499.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="505.0,868.3 496.8,883.5 513.3,883.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="236.0,729.9 229.0,742.7 242.9,742.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="378.7,604.8 370.6,619.6 386.7,619.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="378.4,526.7 371.2,539.9 385.6,539.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="563.1,757.6 556.0,770.7 570.2,770.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="286.9,536.7 279.4,550.6 294.4,550.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="493.2,526.8 486.1,539.9 500.3,539.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="302.5,381.9 295.3,395.2 309.7,395.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="351.8,443.5 344.6,456.6 358.9,456.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="428.6,676.8 421.5,690.0 435.8,690.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="362.9,542.7 355.5,556.3 370.3,556.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="269.5,653.4 262.8,665.6 276.1,665.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="293.5,608.1 286.9,620.2 300.0,620.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="367.9,644.5 360.6,657.9 375.2,657.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="436.1,484.7 428.5,498.8 443.8,498.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="452.3,414.5 445.7,426.7 458.9,426.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="705.9,870.6 699.7,882.0 712.1,882.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="461.1,603.5 454.5,615.6 467.7,615.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="431.5,557.8 424.8,570.1 438.3,570.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="398.2,409.9 391.6,422.0 404.8,422.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="384.8,742.8 378.2,755.0 391.4,755.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="294.4,411.1 288.1,422.8 300.8,422.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="390.1,780.8 383.8,792.4 396.4,792.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="534.8,454.5 528.5,466.0 541.0,466.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="497.5,787.8 491.4,799.1 503.6,799.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="267.2,613.4 261.1,624.6 273.3,624.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="589.7,760.7 583.4,772.3 596.0,772.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="552.0,1072.3 546.0,1083.4 558.1,1083.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="254.0,546.6 248.0,557.5 259.9,557.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="156.1" cy="1139.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="163.1" y="1134.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Faixa São Benedito 47,9 km</text>
+<circle cx="120.1" cy="882.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="127.1" y="877.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Colônia São José 26,9 km</text>
+<circle cx="85.1" cy="776.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="92.1" y="771.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Luzilândia 16,5 km</text>
+<circle cx="87.0" cy="741.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="94.0" y="736.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Faixa da Sapucaia 15,6 km</text>
+<circle cx="254.8" cy="1044.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="261.8" y="1039.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Areia Fina 15,6 km</text>
+<circle cx="599.6" cy="852.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="505.8" y="847.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Barraca 8,8 km</text>
+<circle cx="598.9" cy="851.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="368.7" y="866.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Barraca 8,8 km</text>
+<circle cx="329.2" cy="895.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="336.2" y="890.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santa Luzia 7,3 km</text>
+<circle cx="630.3" cy="831.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="406.3" y="826.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Fundão 6,9 km</text>
+<circle cx="179.0" cy="793.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="186.0" y="788.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Tipizal 6,8 km</text>
+<circle cx="630.3" cy="831.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="629.3" cy="833.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="628.9" cy="840.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="628.8" cy="840.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="246.9" cy="805.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="253.9" y="820.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sumauma 5,6 km</text>
+<circle cx="318.8" cy="520.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="325.8" y="515.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Massapê 5,1 km</text>
+<circle cx="422.2" cy="1087.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="429.2" y="1082.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">João Veloso 3,7 km</text>
+<circle cx="202.2" cy="757.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="209.2" y="752.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Tatajubinha 3,2 km</text>
+<circle cx="369.3" cy="486.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="376.3" y="481.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santa Tereznha 3,2 km</text>
+<circle cx="321.1" cy="420.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="328.1" y="415.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Vila Damasio 3,2 km</text>
+<circle cx="202.4" cy="757.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="209.4" y="772.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Povoado Tatajubinha 3,2 km</text>
+<circle cx="479.3" cy="655.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="486.3" y="650.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pindobal Grande 3,0 km</text>
+<rect x="509.2" y="574.4" width="10" height="10" fill="#1d1d1b"/><text x="523.2" y="597.4" font-weight="600" fill="#1d1d1b">Sede de Turiaçu</text>
+<line x1="35" x2="97.8" y1="1316.8" y2="1316.8" stroke="#8a8a84" stroke-width="2"/><text x="35" y="1330.8" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="1307.7942389326822" y2="1307.7942389326822" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="1311.7942389326822" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,1300.8 421.4,1313.0 434.6,1313.0" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="1311.7942389326822" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="1325.7942389326822" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="1334.7942389326822" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="1330.7942389326822" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="1334.7942389326822" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1353.7942389326822" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1357.7942389326822" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1353.7942389326822" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1357.7942389326822" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1376.7942389326822" y2="1376.7942389326822" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1380.7942389326822" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1399.7942389326822" y2="1399.7942389326822" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1403.7942389326822" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital de transporte de eleitores da 39ª ZE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (16):</strong> Faixa São Benedito, Colônia São José, Luzilândia, Faixa da Sapucaia, Areia Fina, Barraca, Comunidade Quilombola Barraca, Santa Luzia, Comunidade Quilombola Fundão, Tipizal, Fundão, Comunidade Quilombola Campinas, Campina do Roxo, Comunidade Quilombola Campina do Roxo, Sumauma e Massapê.</li>
+<li><strong>De 3 a 5 km (6):</strong> João Veloso, Tatajubinha, Santa Tereznha, Vila Damasio, Povoado Tatajubinha e Pindobal Grande.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (107):</strong> Alto da Alegria, Antonio Dino, Baico, Banta de Baixo, Bom de Dança, Butequim, Caetano, Campina dos Freitas, Campo Grande, Canarinho, Capoeira Grande, Capoeira de Gado, Castanhal, Centrinho, Coloninha, Colônia Santa Amélia, Comunidade Quilombola Alto Alegria, Comunidade Quilombola Banta de Baixo, Comunidade Quilombola Banta de Cima, Comunidade Quilombola Boa Esperança, Comunidade Quilombola Campina dos Roxos, Comunidade Quilombola Campo Grande, Comunidade Quilombola Canarinho, Comunidade Quilombola Capoeira Grande, Comunidade Quilombola Capoeira do Gado, Comunidade Quilombola Crispim, Comunidade Quilombola Cruzeiro, Comunidade Quilombola Cutia, Comunidade Quilombola Cutia 2, Comunidade Quilombola Estrela Divina, Comunidade Quilombola Estrela Divina 2, Comunidade Quilombola Gurita, Comunidade Quilombola Jamari dos Pretos, Comunidade Quilombola Nova Caxias, Comunidade Quilombola Nova Correa, Comunidade Quilombola Nova Correia 2, Comunidade Quilombola Nova Esperança, Comunidade Quilombola Ponta Grande, Comunidade Quilombola Ponta do Mangue, Comunidade Quilombola Povoado Baico, Comunidade Quilombola Povoado Raia Sol, Comunidade Quilombola Rosa, Comunidade Quilombola Santa Rita, Comunidade Quilombola Santa Rosa, Comunidade Quilombola São José dos Britos, Comunidade Quilombola São José dos Portugueses, Comunidade Quilombola São Romão, Comunidade Quilombola Tauá, Cristóvão, Cruzeiro, Cunhã Coema, Cunhã Cuema, Cutia, Estado, Estrela Divina, Fortaleza, Guarani, Igarapé Grande, Jamari dos Pretos, Janauba, Jucaral, Leal, Limão, Miramar, Monte Alegre, Mucuratiua, Mutuoca, Nova Caxias, Nova Correia, Nova Santa Rita, PA Alto da Alegria, Pau-Santo, Paxiba, Ponta Grossa, Ponta do Mangue, Porto Santo, Povoado Bom de Dança, Povoado Centrinho, Povoado Colonia da Paz, Praia Areia Branca, Praia Sababa, Quanani, Rafael, Santa Bárbara, Santa Fé, Santa Rita, Santa Rosa, Santa Terezinha, Santa Vitoria, Santo Antônio, Serra dos Paes, Serra dos Paz, São Carlos, São Cristovão, São Francisco, São Gonçalo, São Joaquim, São José do Brito, São João do Meio, São Miguel, São Romão, São Sebastião, Tauá, Torozinho, Vila Nova, Vila do Castro e Vila dos Castro.</li>
+</ul><h2>Rotas do Edital de transporte de eleitores da 39ª ZE</h2>
+<p>O edital tem 0 rotas para Turiaçu. Horários: não informados. Veículos: não informados.</p>
+<p><strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-MA) para Turiaçu.</strong> O quadro de percursos do transporte de eleitores (edital da zona no DJE/TRE-MA) ainda não foi incorporado a este levantamento. A análise considera apenas a distância até o local de votação</p>
+<p><strong>Atenção:</strong> Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral para este município (edições lidas até 18/10/2026). As rotas do mapa são sugestões deste levantamento. </p>
+<p>Fonte: Quadro de percursos não localizado nas edições do DJE/TRE-MA consultadas.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 22 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Faixa São Benedito</strong></td><td>Sede – Areia Fina – Faixa São Benedito – Sede</td><td>Areia Fina, Faixa São Benedito</td><td>77,7 km (ida e volta)</td><td>~1h59</td></tr><tr><td><strong>Rota nova – João Veloso</strong></td><td>Sede – João Veloso – Sede</td><td>João Veloso</td><td>7,4 km (ida e volta)</td><td>~12 min</td></tr><tr><td><strong>Rota nova – Colônia São José</strong></td><td>Sede – Povoado Tatajubinha – Tatajubinha – Tipizal – Sumauma – Colônia São José – Luzilândia – Sede</td><td>Povoado Tatajubinha, Tatajubinha, Tipizal, Sumauma, Colônia São José, Luzilândia</td><td>59,3 km (ida e volta)</td><td>~2h07</td></tr><tr><td><strong>Rota nova – Faixa da Sapucaia</strong></td><td>Sede – Faixa da Sapucaia – Sede</td><td>Faixa da Sapucaia</td><td>31,2 km (ida e volta)</td><td>~47 min</td></tr><tr><td><strong>Rota nova – Barraca</strong></td><td>Sede – Campina do Roxo – Comunidade Quilombola Campina do Roxo – Comunidade Quilombola Campinas – Fundão – Comunidade Quilombola Fundão – Barraca – Comunidade Quilombola Barraca – Sede</td><td>Campina do Roxo, Comunidade Quilombola Campina do Roxo, Comunidade Quilombola Campinas, Fundão, Comunidade Quilombola Fundão, Barraca, Comunidade Quilombola Barraca</td><td>19,2 km (ida e volta)</td><td>~46 min</td></tr><tr><td><strong>Rota nova – Santa Luzia</strong></td><td>Sede – Santa Luzia – Sede</td><td>Santa Luzia</td><td>14,6 km (ida e volta)</td><td>~35 min</td></tr><tr><td><strong>Rota nova – Massapê</strong></td><td>Sede – Massapê – Sede</td><td>Massapê</td><td>10,3 km (ida e volta)</td><td>~25 min</td></tr><tr><td><strong>Rota nova – Santa Tereznha</strong></td><td>Sede – Santa Tereznha – Sede</td><td>Santa Tereznha</td><td>6,4 km (ida e volta)</td><td>~10 min</td></tr><tr><td><strong>Rota nova – Vila Damasio</strong></td><td>Sede – Vila Damasio – Sede</td><td>Vila Damasio</td><td>6,3 km (ida e volta)</td><td>~11 min</td></tr><tr><td><strong>Rota nova – Pindobal Grande</strong></td><td>Sede – Pindobal Grande – Sede</td><td>Pindobal Grande</td><td>6,0 km (ida e volta)</td><td>~14 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMT</strong></p><p>Turiaçu/MA, ___ de outubro de 2026.</p><p>Ao(À) Excelentíssimo(a) Senhor(a)<br><strong>[nome do(a) Juiz(a) Eleitoral]</strong><br>Juiz(a) Eleitoral da 39ª Zona Eleitoral – [sede da zona]/MA</p><p><strong>Assunto:</strong> Sugestão de rotas de transporte gratuito de eleitores da zona rural – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo(a) Senhor(a) Juiz(a),</p><p>O Município de Turiaçu, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação. Não localizamos no Diário da Justiça Eleitoral (DJE/TRE-MA) quadro de percursos nem ato sobre o transporte de eleitores para este município; estas localidades: Faixa São Benedito, Colônia São José, Luzilândia, Faixa da Sapucaia, Areia Fina, Barraca, Comunidade Quilombola Barraca, Santa Luzia, Comunidade Quilombola Fundão, Tipizal, Fundão, Comunidade Quilombola Campinas, Campina do Roxo, Comunidade Quilombola Campina do Roxo, Sumauma, Massapê, João Veloso, Tatajubinha, Santa Tereznha, Vila Damasio, Povoado Tatajubinha e Pindobal Grande.</p><p>Sugerimos, respeitosamente, que Vossa Excelência avalie instituir o transporte gratuito de eleitores no 2º turno, com as seguintes rotas:</p><ol><li>a criação da Rota nova – Faixa São Benedito (Sede – Areia Fina – Faixa São Benedito – Sede);</li><li>a criação da Rota nova – João Veloso (Sede – João Veloso – Sede);</li><li>a criação da Rota nova – Colônia São José (Sede – Povoado Tatajubinha – Tatajubinha – Tipizal – Sumauma – Colônia São José – Luzilândia – Sede);</li><li>a criação da Rota nova – Faixa da Sapucaia (Sede – Faixa da Sapucaia – Sede);</li><li>a criação da Rota nova – Barraca (Sede – Campina do Roxo – Comunidade Quilombola Campina do Roxo – Comunidade Quilombola Campinas – Fundão – Comunidade Quilombola Fundão – Barraca – Comunidade Quilombola Barraca – Sede);</li><li>a criação da Rota nova – Santa Luzia (Sede – Santa Luzia – Sede);</li><li>a criação da Rota nova – Massapê (Sede – Massapê – Sede);</li><li>a criação da Rota nova – Santa Tereznha (Sede – Santa Tereznha – Sede);</li><li>a criação da Rota nova – Vila Damasio (Sede – Vila Damasio – Sede);</li><li>a criação da Rota nova – Pindobal Grande (Sede – Pindobal Grande – Sede).</li></ol><p>As rotas sugeridas atendem as localidades mais distantes. Caso esse Juízo já tenha definido rotas, pedimos que estas sugestões sejam consideradas naquilo que ainda não estiver contemplado.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Turiaçu</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Turiaçu; Quadro de percursos não localizado nas edições do DJE/TRE-MA consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

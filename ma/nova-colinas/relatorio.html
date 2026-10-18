@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Nova Colinas</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Nova Colinas</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/nova-colinas.pdf?v=1792366030" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Nova Colinas (105ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 105ª Zona Eleitoral <strong>7 rotas novas</strong> no transporte gratuito de Nova Colinas.
+<strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-MA) para Nova Colinas</strong> (O quadro de percursos do transporte de eleitores (edital da zona no DJE/TRE-MA) ainda não foi incorporado a este levantamento. A análise considera apenas a distância até o local de votação). As 27 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Nova Colinas tem 4.516 eleitores aptos em 6 locais de votação e 19 seções. São 2 locais rurais, com 906 eleitores (20% do total).</li>
+<li>2 locais rurais ficam a 10 km ou mais da sede, com 906 eleitores. Os mais distantes: Povoado São Bento (13,3 km) e Povoado São Joaquim (10,2 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Boa Esperança (32,5 km do local de votação), Piripiri (31,1 km do local de votação), Vagem (29,1 km do local de votação), Canto de Pedra (26,8 km do local de votação), Nathalia (26,7 km do local de votação), Novo Acordo (26,2 km do local de votação), Pedreira (24,3 km do local de votação), Três Burite (23,8 km do local de votação), Aparecida (21,3 km do local de votação), Sobral (20,7 km do local de votação), Porteira (20,3 km do local de votação), Três Barras (13,6 km do local de votação), Arizona (12,6 km do local de votação), Maracuja (11,8 km do local de votação), Vila Maracujá (11,8 km do local de votação), Estrema (11,6 km do local de votação), Pussar (9,7 km do local de votação), Samanbaia (8,6 km do local de votação), Copacabana (8,0 km do local de votação), Monte Santo (7,7 km do local de votação), Caicara (7,0 km do local de votação), Passarinho (4,8 km do local de votação), Macauba (4,1 km do local de votação), Assentamento Macaúba (4,1 km do local de votação), Galho da Manga (4,0 km do local de votação), Baixão (3,7 km do local de votação) e Fazenda São José (3,6 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 33 localidades rurais de Nova Colinas que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Boa Esperança</td><td>32,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Piripiri</td><td>31,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Vagem</td><td>29,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Canto de Pedra</td><td>26,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Nathalia</td><td>26,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Novo Acordo</td><td>26,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Pedreira</td><td>24,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Três Burite</td><td>23,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Aparecida</td><td>21,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sobral</td><td>20,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Porteira</td><td>20,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Três Barras</td><td>13,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Arizona</td><td>12,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Maracuja</td><td>11,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Vila Maracujá</td><td>11,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Estrema</td><td>11,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Pussar</td><td>9,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Samanbaia</td><td>8,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Copacabana</td><td>8,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Monte Santo</td><td>7,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Caicara</td><td>7,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Passarinho</td><td>4,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Macauba</td><td>4,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Assentamento Macaúba</td><td>4,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Galho da Manga</td><td>4,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Baixão</td><td>3,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda São José</td><td>3,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 33 localidades rurais de Nova Colinas, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 848" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Nova Colinas: 27 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="725.0,373.7 445.9,149.1 233.7,80.2 120.0,80.0 35.0,203.7 322.3,446.3 323.8,460.5 318.5,476.5 303.2,488.0 310.1,504.3 306.5,522.2 295.4,543.5 297.0,568.2 287.0,599.3 291.4,629.7 302.3,644.4 298.1,662.1 321.8,698.7 350.7,710.0 370.2,709.4 386.7,715.8 409.8,703.0 495.2,552.2 713.7,378.6 725.0,373.7 725.0,373.7" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="384.7,305.1 382.0,310.1 385.0,312.6 387.7,315.5 389.0,319.8 389.3,325.1 387.5,330.6 384.8,335.8 382.6,339.7 381.2,345.3 379.5,349.9 376.3,355.6 375.1,360.7 373.5,364.8 372.4,372.2 366.0,375.9 362.3,378.2 358.9,383.8 353.0,388.0 348.9,389.3 345.5,392.2 343.6,397.9 340.3,401.9 337.7,405.7 332.8,408.8 330.0,412.1 328.4,417.8 329.7,423.0 328.3,428.5 329.3,442.8 331.8,446.0 336.2,449.4 339.9,452.5 343.3,455.3 343.5,462.5 341.0,467.8 338.9,471.4 340.2,476.6 341.9,481.3 341.0,485.9 344.0,488.4 346.4,492.3 352.6,496.5 357.6,501.0 362.5,506.1 365.4,508.9 368.6,511.7 381.4,517.7 382.5,522.8 384.2,530.8 386.4,537.3 389.5,545.9 387.9,552.6 382.6,557.9 377.9,562.2 375.2,565.1 371.9,574.5 373.7,569.6 371.9,574.5 373.2,580.4 375.0,585.1 373.2,580.4 371.9,574.8 368.0,570.9 364.6,567.4 359.6,563.0 355.1,559.1 351.0,555.4 347.7,552.0 340.6,548.8 335.7,547.4 326.4,547.0 318.6,547.8 313.5,548.6 308.9,551.0 304.4,553.9 302.9,558.2 301.5,562.7 299.1,566.8 300.0,571.9 297.1,574.5 295.6,579.3 293.0,583.0 292.8,588.8 289.7,592.3 290.9,596.8 290.5,602.5 289.9,607.9 291.5,613.3 292.5,618.6 292.9,624.5 296.3,628.0 299.0,632.1 301.5,635.2 301.3,640.5 302.9,646.9 303.3,652.5 305.2,656.4 303.3,652.5 302.9,646.9 301.3,642.4 301.7,636.2 299.0,632.1 296.7,628.3 293.1,625.5 292.7,619.3 291.5,613.3 290.0,608.5 290.5,602.5 290.9,596.8 289.7,592.3 292.8,589.5 292.8,583.8 295.0,580.6 296.0,575.7 299.2,573.3 299.5,568.0 301.5,562.7 302.9,558.2 304.4,553.9 308.9,551.0 313.5,548.6 318.6,547.8 325.4,547.1 331.9,547.2 340.6,548.8 346.7,550.7 349.3,554.2 352.7,557.0 358.3,561.9 362.4,565.2 368.0,570.9 371.4,574.2 374.1,568.5 377.9,562.2 382.6,557.9 387.3,553.5 389.2,548.4 393.1,550.4 396.6,554.0 399.9,556.5 404.9,557.0 408.8,554.3 413.4,553.2 418.8,551.4 422.7,549.0 428.2,550.6 431.3,553.4 436.3,556.0 442.8,556.9 450.8,556.7 456.6,559.3 460.2,563.6 463.2,566.6 468.1,570.0 471.1,573.0 472.9,580.1 473.2,586.4 472.4,592.8 472.4,598.8 472.0,604.8 472.4,598.8 472.5,593.2 473.2,588.4 472.9,580.1 471.1,573.0 468.1,570.0 464.8,567.7 460.6,564.0 457.5,560.4 453.7,556.6 447.0,558.0 440.8,556.5 433.0,555.3 430.0,552.6 427.8,549.3 421.7,550.2 415.2,552.4 410.1,553.9 406.1,556.1 400.9,556.8 397.3,554.5 394.2,551.8 391.4,548.5 386.4,537.3 384.3,532.3 383.4,526.9 382.6,521.8 368.6,511.7 365.4,508.9 362.5,506.1 357.6,501.0 354.5,497.9 349.0,494.6 346.0,491.8 343.4,488.0 341.3,484.5 341.3,478.7 338.8,473.2 340.7,468.4 343.0,464.6 344.5,459.6 342.2,454.1 338.8,451.7 334.1,448.1 329.7,443.2 328.4,429.9 329.6,424.0 328.7,418.5 330.0,412.1 332.8,408.8 336.2,406.7 340.3,401.9 343.6,397.9 345.0,393.5 347.5,390.0 352.5,388.3 355.6,385.8 361.3,381.8 362.3,377.4 369.8,374.8 373.6,369.1 373.9,362.7 375.5,358.8 377.5,353.3 380.0,349.4 381.8,342.5 384.8,335.8 387.5,330.6 389.3,325.1 389.0,319.8 387.7,315.5 385.0,312.6 382.0,310.1 384.2,306.1 384.7,305.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Boa Esperança</title></polyline>
+<polyline points="384.7,305.1 382.0,310.1 385.0,312.6 387.7,315.5 389.0,319.8 389.3,325.1 387.5,330.6 384.8,335.8 382.6,339.7 381.2,345.3 379.5,349.9 376.3,355.6 375.1,360.7 373.5,364.8 372.4,372.2 366.0,375.9 362.3,378.2 358.9,383.8 353.0,388.0 348.9,389.3 345.5,392.2 343.6,397.9 340.3,401.9 337.7,405.7 331.0,406.4 328.2,402.2 326.1,398.6 320.4,397.7 317.0,395.5 314.8,391.6 309.8,390.3 304.0,388.1 297.3,387.9 292.0,387.4 286.6,387.6 282.6,385.9 286.6,387.6 292.0,387.4 297.2,387.9 302.2,387.3 307.4,389.9 312.1,390.7 315.6,393.4 318.4,396.4 322.4,398.0 327.0,399.0 329.5,404.4 335.1,407.2 338.3,404.1 341.1,400.6 344.5,396.1 346.4,391.1 349.9,388.8 355.6,385.8 361.3,381.8 362.3,377.4 369.8,374.8 373.6,369.1 373.9,362.7 375.5,358.8 377.5,353.3 380.0,349.4 381.8,342.5 384.8,335.8 387.5,330.6 389.3,325.1 389.0,319.8 387.7,315.5 385.0,312.6 382.0,310.1 384.2,306.1 384.7,305.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Maracuja</title></polyline>
+<polyline points="385.0,304.5 388.1,302.1 393.7,303.0 399.0,307.0 403.5,308.7 407.6,312.1 410.8,314.9 415.0,316.3 419.3,317.9 423.0,320.7 425.6,323.6 431.0,323.9 435.3,320.7 438.4,318.1 442.8,319.6 447.3,322.3 451.4,324.9 455.3,327.5 459.3,329.4 462.1,332.6 464.2,336.2 467.1,340.0 468.1,344.6 473.5,345.2 479.2,345.5 484.6,345.7 490.2,346.4 496.0,347.2 501.5,345.9 507.4,346.3 509.5,349.9 511.9,355.0 514.3,359.3 520.0,359.3 525.5,359.7 530.7,362.6 535.5,363.8 540.3,366.0 545.2,368.0 550.4,367.4 555.1,366.0 559.8,364.8 560.9,360.2 562.0,355.5 567.4,355.0 572.8,352.8 577.3,350.7 580.3,348.2 585.1,347.1 588.7,344.9 592.3,348.6 595.2,354.3 600.2,356.5 603.9,354.1 607.5,351.2 611.0,346.6 614.6,342.6 620.8,334.8 625.8,331.3 631.1,330.6 636.6,331.1 642.0,330.5 647.2,334.4 665.6,341.7 671.6,344.0 675.6,345.7 678.7,348.2 682.3,350.6 682.8,356.9 681.1,360.7 678.2,364.0 675.5,367.3 678.2,364.0 681.1,360.7 684.3,358.3 686.9,364.5 691.0,366.2 697.5,364.6 700.8,362.4 707.5,362.8 708.1,368.0 707.0,373.9 705.9,378.5 707.0,373.9 708.0,368.7 707.5,362.8 701.4,362.3 697.5,364.6 693.6,367.1 688.8,366.2 686.7,360.5 683.5,357.4 681.9,352.0 678.7,348.2 675.6,345.7 671.6,344.0 665.6,341.7 648.2,335.1 644.0,331.2 638.9,330.8 633.5,330.7 627.7,331.0 623.0,332.2 614.6,342.6 611.0,346.6 607.5,351.2 603.9,354.1 601.1,357.1 596.9,354.8 592.8,349.3 590.0,345.9 585.5,346.9 580.7,348.0 577.3,350.7 572.8,352.8 569.1,354.7 564.1,355.4 561.0,357.8 560.0,362.5 556.0,365.9 550.4,367.4 545.2,368.0 540.3,366.0 535.5,363.8 530.7,362.6 525.5,359.7 520.0,359.3 514.3,359.3 512.3,355.4 509.4,350.8 507.9,346.6 504.1,344.8 499.7,346.9 493.3,346.9 487.5,346.3 482.2,345.4 476.3,345.4 470.8,345.6 467.2,343.5 464.9,337.7 462.7,333.8 459.9,329.9 456.1,328.0 452.5,325.6 448.6,323.1 445.0,321.0 440.7,318.8 436.1,319.8 433.5,322.7 428.7,323.8 424.1,321.9 420.3,318.7 416.7,316.7 411.9,315.9 408.6,313.1 405.1,309.6 401.2,308.0 396.3,305.7 393.1,302.2 389.9,299.0 387.4,303.4 385.0,304.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Novo Acordo</title></polyline>
+<polyline points="245.4,274.2 242.0,277.7 236.4,277.7 229.2,277.0 223.8,279.5 221.0,282.9 217.5,285.2 211.4,288.7 202.1,292.6 197.2,293.8 188.9,297.4 182.0,294.0 177.3,290.8 174.0,288.7 171.2,291.7 167.5,294.5 159.5,295.0 155.1,296.4 148.8,296.2 139.6,295.7 135.5,294.3 133.2,289.2 130.4,285.9 126.2,284.2 121.1,283.6 117.4,285.4 108.9,282.7 101.8,281.4 97.0,280.0 92.9,274.8 91.2,270.0 89.9,264.7 88.1,260.5 84.4,255.0 82.2,249.5 83.3,243.8 85.9,240.1 88.1,236.3 85.9,240.1 83.3,243.8 80.1,246.4 83.1,251.8 85.9,257.4 88.6,261.3 90.3,265.4 91.9,272.7 94.2,277.6 98.5,280.8 106.7,282.3 116.0,285.1 121.1,283.6 126.2,284.2 130.4,285.9 133.1,288.8 135.5,294.3 139.6,295.7 148.8,296.2 155.1,296.4 159.5,295.0 164.9,294.5 170.6,292.7 173.6,288.9 177.3,290.8 182.0,294.0 186.4,297.3 194.8,295.3 198.7,293.4 208.1,290.3 217.5,285.2 221.0,282.9 223.8,279.5 227.6,277.5 236.4,277.7 242.0,277.7 245.4,274.2 245.4,274.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Três Barras</title></polyline>
+<polyline points="245.4,274.2 248.6,282.4 255.5,286.5 263.6,286.4 274.1,286.1 279.3,285.0 290.9,281.8 295.5,280.7 300.6,278.8 304.1,281.5 308.1,287.3 312.2,292.9 316.3,296.0 318.8,299.3 315.1,306.6 310.9,314.7 308.3,320.0 298.8,318.8 294.1,326.7 296.9,321.7 306.7,323.2 310.9,314.7 315.1,306.6 318.8,299.3 316.3,296.0 312.5,293.1 309.3,289.0 307.1,280.9 302.1,279.8 296.3,280.3 290.9,281.8 283.4,283.8 277.3,285.4 268.4,286.3 258.9,286.5 250.0,284.2 246.7,277.9 245.4,274.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Samanbaia</title></polyline>
+<polyline points="256.4,163.9 257.7,159.4 258.3,154.0 254.8,151.0 250.0,153.4 242.8,153.1 238.5,154.9 232.7,155.5 226.3,155.7 219.7,154.9 213.8,155.5 208.9,154.5 202.8,154.7 149.8,118.8 135.1,152.0 153.1,164.9 155.6,161.8 153.1,164.9 151.6,169.8 150.8,175.3 152.1,179.6 153.2,185.7 152.6,193.1 151.9,198.0 152.1,203.6 151.6,208.8 141.7,215.0 151.6,208.8 152.1,203.6 151.9,198.0 152.6,193.1 153.2,186.5 152.1,179.6 150.8,175.3 151.6,169.8 152.9,165.3 155.5,161.9 161.7,163.8 168.8,165.1 173.6,166.1 177.9,164.7 181.6,162.5 186.1,161.6 191.8,161.4 196.4,158.6 198.3,154.9 204.5,154.3 210.4,154.1 215.2,154.7 221.7,155.8 229.3,155.1 235.2,155.8 239.9,153.5 245.7,153.9 251.7,152.6 257.7,150.6 258.9,156.1 257.2,160.2 256.4,163.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Arizona</title></polyline>
+<polyline points="383.2,294.7 386.5,292.3 392.8,286.2 395.5,282.9 404.1,264.6 406.3,259.8 408.2,256.0 412.4,246.9 415.6,244.6 417.5,236.5 424.5,221.4 427.9,214.2 431.8,217.9 435.4,220.8 437.4,225.8 439.1,229.7 437.4,225.8 436.0,221.1 431.8,217.9 428.5,214.6 424.5,221.4 419.0,232.7 415.3,241.1 413.1,245.6 408.7,254.8 406.4,259.7 404.1,264.6 397.0,279.6 395.0,283.8 388.7,290.2 385.3,293.4 379.2,292.1 376.2,285.7 367.7,277.6 360.9,272.0 356.1,270.5 350.6,271.7 345.0,273.5 340.1,274.9 334.0,274.5 340.1,274.9 345.0,273.5 349.9,272.0 355.3,270.5 359.7,271.5 366.8,276.7 375.2,284.5 377.8,289.0 380.6,292.9 383.2,294.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Caicara</title></polyline>
+<circle cx="354.7" cy="347.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="369.6" cy="332.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="361.4" cy="269.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="360.9" cy="269.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="380.6" cy="300.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="257.0" cy="165.9" r="2.2" fill="#b9b9b2"/>
+<polygon points="380.2,287.7 370.5,305.4 389.8,305.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="256.4,155.3 248.3,170.3 264.6,170.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="245.5,265.7 237.5,280.5 253.6,280.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="383.1,284.7 373.6,302.2 392.6,302.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="384.5,295.5 375.5,312.3 393.6,312.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="384.9,294.1 375.1,312.1 394.7,312.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="303.2" cy="657.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="310.2" y="652.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Boa Esperança 32,5 km</text>
+<circle cx="302.1" cy="634.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="309.1" y="629.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Piripiri 31,1 km</text>
+<circle cx="289.1" cy="605.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="296.1" y="600.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Vagem 29,1 km</text>
+<circle cx="436.5" cy="599.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="443.5" y="594.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Canto de Pedra 26,8 km</text>
+<circle cx="299.5" cy="572.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="306.5" y="567.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Nathalia 26,7 km</text>
+<circle cx="701.5" cy="380.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="576.7" y="375.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Novo Acordo 26,2 km</text>
+<circle cx="666.8" cy="402.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="560.6" y="397.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pedreira 24,3 km</text>
+<circle cx="452.3" cy="574.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="459.3" y="569.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Três Burite 23,8 km</text>
+<circle cx="363.3" cy="588.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="371.3" cy="573.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="386.9" cy="574.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="87.1" cy="234.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="94.1" y="229.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Três Barras 13,6 km</text>
+<circle cx="149.8" cy="118.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="156.8" y="113.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Arizona 12,6 km</text>
+<circle cx="285.9" cy="371.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="292.9" y="366.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Maracuja 11,8 km</text>
+<circle cx="285.7" cy="371.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="292.7" y="386.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Vila Maracujá 11,8 km</text>
+<circle cx="136.1" cy="213.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="143.1" y="208.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Estrema 11,6 km</text>
+<circle cx="321.0" cy="370.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="291.9" cy="328.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="298.9" y="323.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Samanbaia 8,6 km</text>
+<circle cx="135.1" cy="152.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="142.1" y="147.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Copacabana 8,0 km</text>
+<circle cx="155.4" cy="161.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="162.4" y="176.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Monte Santo 7,7 km</text>
+<circle cx="439.1" cy="231.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="446.1" y="226.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Caicara 7,0 km</text>
+<circle cx="182.9" cy="132.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="189.9" y="127.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Passarinho 4,8 km</text>
+<circle cx="183.2" cy="319.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="190.2" y="314.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Macauba 4,1 km</text>
+<circle cx="182.6" cy="319.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="418.4" cy="242.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="425.4" y="257.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Galho da Manga 4,0 km</text>
+<circle cx="330.7" cy="253.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="337.7" y="248.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Baixão 3,7 km</text>
+<circle cx="412.8" cy="245.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="419.8" y="240.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda São José 3,6 km</text>
+<rect x="375.6" y="295.5" width="10" height="10" fill="#1d1d1b"/><text x="389.6" y="318.5" font-weight="600" fill="#1d1d1b">Sede de Nova Colinas</text>
+<line x1="35" x2="117.0" y1="745.8" y2="745.8" stroke="#8a8a84" stroke-width="2"/><text x="35" y="759.8" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="736.775316455701" y2="736.775316455701" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="740.775316455701" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,729.8 421.4,742.0 434.6,742.0" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="740.775316455701" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="754.775316455701" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="763.775316455701" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="759.775316455701" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="763.775316455701" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="782.775316455701" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="786.775316455701" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="782.775316455701" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="786.775316455701" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="805.775316455701" y2="805.775316455701" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="809.775316455701" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="828.775316455701" y2="828.775316455701" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="832.775316455701" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital de transporte de eleitores da 105ª ZE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (21):</strong> Boa Esperança, Piripiri, Vagem, Canto de Pedra, Nathalia, Novo Acordo, Pedreira, Três Burite, Aparecida, Sobral, Porteira, Três Barras, Arizona, Maracuja, Vila Maracujá, Estrema, Pussar, Samanbaia, Copacabana, Monte Santo e Caicara.</li>
+<li><strong>De 3 a 5 km (6):</strong> Passarinho, Macauba, Assentamento Macaúba, Galho da Manga, Baixão e Fazenda São José.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (6):</strong> Mangabeira, Nova Colinas, Patis, São Bento, Vargem Suja e Vila Mangabeira.</li>
+</ul><h2>Rotas do Edital de transporte de eleitores da 105ª ZE</h2>
+<p>O edital tem 0 rotas para Nova Colinas. Horários: não informados. Veículos: não informados.</p>
+<p><strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-MA) para Nova Colinas.</strong> O quadro de percursos do transporte de eleitores (edital da zona no DJE/TRE-MA) ainda não foi incorporado a este levantamento. A análise considera apenas a distância até o local de votação</p>
+<p><strong>Atenção:</strong> Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral para este município (edições lidas até 18/10/2026). As rotas do mapa são sugestões deste levantamento. </p>
+<p>Fonte: Quadro de percursos não localizado nas edições do DJE/TRE-MA consultadas.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 27 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Boa Esperança</strong></td><td>Sede – Sobral – Porteira – Aparecida – Nathalia – Vagem – Piripiri – Boa Esperança – Canto de Pedra – Três Burite – Sede</td><td>Sobral, Porteira, Aparecida, Nathalia, Vagem, Piripiri, Boa Esperança, Canto de Pedra, Três Burite</td><td>83,6 km (ida e volta)</td><td>~3h21</td></tr><tr><td><strong>Rota nova – Maracuja</strong></td><td>Sede – Pussar – Maracuja – Vila Maracujá – Sede</td><td>Pussar, Maracuja, Vila Maracujá</td><td>23,5 km (ida e volta)</td><td>~57 min</td></tr><tr><td><strong>Rota nova – Novo Acordo</strong></td><td>Sede – Pedreira – Novo Acordo – Sede</td><td>Pedreira, Novo Acordo</td><td>54,5 km (ida e volta)</td><td>~2h12</td></tr><tr><td><strong>Rota nova – Três Barras</strong></td><td>Sede – Macauba – Assentamento Macaúba – Três Barras – Sede</td><td>Macauba, Assentamento Macaúba, Três Barras</td><td>27,2 km (ida e volta)</td><td>~1h06</td></tr><tr><td><strong>Rota nova – Samanbaia</strong></td><td>Sede – Samanbaia – Sede</td><td>Samanbaia</td><td>17,2 km (ida e volta)</td><td>~42 min</td></tr><tr><td><strong>Rota nova – Arizona</strong></td><td>Sede – Passarinho – Arizona – Copacabana – Monte Santo – Estrema – Sede</td><td>Passarinho, Arizona, Copacabana, Monte Santo, Estrema</td><td>26,3 km (ida e volta)</td><td>~58 min</td></tr><tr><td><strong>Rota nova – Caicara</strong></td><td>Sede – Fazenda São José – Galho da Manga – Caicara – Baixão – Sede</td><td>Fazenda São José, Galho da Manga, Caicara, Baixão</td><td>22,2 km (ida e volta)</td><td>~35 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMNC</strong></p><p>Nova Colinas/MA, ___ de outubro de 2026.</p><p>Ao(À) Excelentíssimo(a) Senhor(a)<br><strong>[nome do(a) Juiz(a) Eleitoral]</strong><br>Juiz(a) Eleitoral da 105ª Zona Eleitoral – [sede da zona]/MA</p><p><strong>Assunto:</strong> Sugestão de rotas de transporte gratuito de eleitores da zona rural – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo(a) Senhor(a) Juiz(a),</p><p>O Município de Nova Colinas, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação. Não localizamos no Diário da Justiça Eleitoral (DJE/TRE-MA) quadro de percursos nem ato sobre o transporte de eleitores para este município; estas localidades: Boa Esperança, Piripiri, Vagem, Canto de Pedra, Nathalia, Novo Acordo, Pedreira, Três Burite, Aparecida, Sobral, Porteira, Três Barras, Arizona, Maracuja, Vila Maracujá, Estrema, Pussar, Samanbaia, Copacabana, Monte Santo, Caicara, Passarinho, Macauba, Assentamento Macaúba, Galho da Manga, Baixão e Fazenda São José.</p><p>Sugerimos, respeitosamente, que Vossa Excelência avalie instituir o transporte gratuito de eleitores no 2º turno, com as seguintes rotas:</p><ol><li>a criação da Rota nova – Boa Esperança (Sede – Sobral – Porteira – Aparecida – Nathalia – Vagem – Piripiri – Boa Esperança – Canto de Pedra – Três Burite – Sede);</li><li>a criação da Rota nova – Maracuja (Sede – Pussar – Maracuja – Vila Maracujá – Sede);</li><li>a criação da Rota nova – Novo Acordo (Sede – Pedreira – Novo Acordo – Sede);</li><li>a criação da Rota nova – Três Barras (Sede – Macauba – Assentamento Macaúba – Três Barras – Sede);</li><li>a criação da Rota nova – Samanbaia (Sede – Samanbaia – Sede);</li><li>a criação da Rota nova – Arizona (Sede – Passarinho – Arizona – Copacabana – Monte Santo – Estrema – Sede);</li><li>a criação da Rota nova – Caicara (Sede – Fazenda São José – Galho da Manga – Caicara – Baixão – Sede).</li></ol><p>As rotas sugeridas atendem as localidades mais distantes. Caso esse Juízo já tenha definido rotas, pedimos que estas sugestões sejam consideradas naquilo que ainda não estiver contemplado.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Nova Colinas</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Nova Colinas; Quadro de percursos não localizado nas edições do DJE/TRE-MA consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

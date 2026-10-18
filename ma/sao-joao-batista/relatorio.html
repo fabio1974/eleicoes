@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – São João Batista</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← São João Batista</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/sao-joao-batista.pdf?v=1792365880" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – São João Batista (63ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 63ª Zona Eleitoral <strong>7 rotas novas</strong> no transporte gratuito de São João Batista.
+<strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-MA) para São João Batista</strong> (O quadro de percursos do transporte de eleitores (edital da zona no DJE/TRE-MA) ainda não foi incorporado a este levantamento. A análise considera apenas a distância até o local de votação). As 13 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>São João Batista tem 20.254 eleitores aptos em 37 locais de votação e 88 seções. São 30 locais rurais, com 13.513 eleitores (67% do total).</li>
+<li>16 locais rurais ficam a 10 km ou mais da sede, com 7.697 eleitores. Os mais distantes: Povoado Pirapendiba (36,0 km), Povoado Coroata (33,4 km) e Povoado Beira Da Baixa (33,4 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Teles (19,2 km do local de votação), Gameleira (17,1 km do local de votação), Raposa (8,5 km do local de votação), Comunidade Quilombola Sapucaia (4,7 km do local de votação), Comunidade Quilombola Manival (4,2 km do local de votação), Comunidade Quilombola Taboca (4,0 km do local de votação), Comunidade Quilombola Cafuzal (4,0 km do local de votação), Manival (3,9 km do local de votação), Comunidade Quilombola Bom Jesus (3,6 km do local de votação), Comunidade Quilombola Ilha dos Poços (3,6 km do local de votação), Comunidade Quilombola Comporta (3,3 km do local de votação), Comunidade Quilombola Carão (3,3 km do local de votação) e Comunidade Quilombola Chapada Grande (3,2 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 66 localidades rurais de São João Batista que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Teles</td><td>19,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Gameleira</td><td>17,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Raposa</td><td>8,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Sapucaia</td><td>4,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Manival</td><td>4,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Taboca</td><td>4,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Cafuzal</td><td>4,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Manival</td><td>3,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Bom Jesus</td><td>3,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Ilha dos Poços</td><td>3,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Comporta</td><td>3,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Carão</td><td>3,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Chapada Grande</td><td>3,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 66 localidades rurais de São João Batista, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 673" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">São João Batista: 13 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="176.4,354.4 262.0,354.9 285.5,364.8 341.2,397.8 342.5,413.3 358.9,420.0 379.9,437.1 390.7,441.8 398.9,455.0 417.7,457.8 443.2,470.7 451.6,487.2 482.9,491.3 492.2,501.5 538.8,507.5 568.1,541.2 584.8,531.0 656.3,452.0 695.3,410.0 725.0,373.3 712.5,367.3 706.0,355.8 685.3,350.6 662.5,335.3 621.6,324.1 587.8,309.1 572.8,295.1 566.3,281.7 559.6,252.7 564.1,223.4 556.9,187.7 558.9,153.2 571.3,130.9 605.3,109.2 574.9,99.7 562.4,104.7 556.1,97.0 544.1,102.7 520.3,105.8 482.2,98.0 469.2,98.2 457.2,80.0 434.1,101.0 421.2,101.5 385.2,113.8 372.4,101.0 255.0,197.4 236.0,198.5 215.6,184.7 187.3,182.4 149.3,165.0 138.4,151.9 67.6,185.9 84.7,205.6 92.2,239.6 109.4,246.7 126.9,248.7 152.9,302.4 133.3,312.4 140.6,321.6 152.3,316.6 160.4,325.8 153.9,341.1 159.8,350.8 176.4,354.4 176.4,354.4" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="108.1,176.1 96.8,181.6 93.3,183.2 88.5,182.7 83.6,182.9 82.1,186.6 80.2,191.3 76.9,199.8 73.5,208.1 71.9,212.3 70.0,216.4 63.5,217.1 58.0,217.3 53.3,220.1 50.1,223.2 46.9,226.3 44.6,229.4 42.0,234.3 39.7,238.5 37.5,242.4 35.7,245.8 35.4,250.9 36.3,255.5 37.3,260.5 38.3,265.4 39.3,270.4 40.2,275.0 40.2,280.1 37.0,283.4 39.2,287.3 41.9,290.3 46.1,291.2 48.8,294.8 51.5,297.2 55.4,299.7 59.1,302.7 64.1,305.5 67.4,307.4 70.7,310.4 78.6,307.7 84.0,306.6 86.1,310.0 106.0,306.7 121.8,305.5 124.6,302.5 127.3,299.7 131.4,298.7 131.5,293.2 132.9,289.1 134.3,285.3 139.2,283.8 134.3,285.3 132.9,289.1 131.5,293.2 131.6,298.6 127.3,299.7 126.4,304.4 121.8,305.5 107.5,308.8 87.5,310.8 85.0,307.2 78.6,307.7 73.5,309.1 67.4,307.4 64.1,305.5 59.1,302.7 55.4,299.7 52.1,297.8 48.8,294.8 46.7,291.8 42.6,290.4 39.9,288.0 37.1,285.0 39.5,281.0 40.7,277.2 39.8,272.7 38.9,268.3 38.0,263.8 37.1,259.3 36.2,255.0 35.1,249.4 36.1,245.0 38.1,241.3 42.0,234.3 44.6,229.4 46.9,226.3 50.1,223.2 53.3,220.1 56.4,217.6 63.5,217.1 68.9,216.9 71.9,212.3 73.5,208.1 76.9,199.8 79.2,194.0 82.1,186.6 83.6,182.9 88.5,182.7 93.3,183.2 96.8,181.6 106.9,176.7 108.1,176.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Teles</title></polyline>
+<polyline points="362.7,218.9 367.9,218.6 369.6,222.0 374.7,222.5 381.8,224.8 385.5,227.9 390.1,229.2 393.3,231.4 396.2,233.8 399.7,236.1 403.7,237.3 402.6,241.4 404.2,237.8 400.2,236.5 397.2,234.3 394.3,232.1 397.9,229.2 402.3,228.4 407.3,228.0 402.3,228.4 397.9,229.2 394.3,231.5 391.0,229.8 387.1,228.0 381.8,224.8 378.8,222.5 371.1,222.6 368.2,220.1 371.7,218.2 377.4,217.4 382.1,216.9 407.8,213.7 463.0,206.9 486.5,218.1 466.6,207.3 411.9,213.2 382.1,216.9 377.4,217.4 372.5,218.0 367.9,218.5 362.7,218.9 362.7,218.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Raposa</title></polyline>
+<polyline points="339.0,166.7 337.1,163.5 336.6,158.7 335.4,151.5 335.9,147.0 334.3,143.6 329.8,142.9 326.3,144.5 321.4,144.3 322.1,139.7 322.6,134.9 326.7,133.1 330.4,131.7 334.4,129.6 330.8,131.0 326.7,133.1 322.6,134.9 322.1,139.7 321.0,144.2 326.3,144.5 329.8,142.9 334.3,143.6 336.0,146.9 335.4,151.5 337.3,155.5 336.3,159.7 337.2,163.8 339.0,166.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Sapucaia</title></polyline>
+<polyline points="149.9,195.2 151.5,198.8 153.0,202.7 152.1,206.8 150.4,210.2 149.8,214.7 151.3,218.3 153.1,222.3 156.0,225.2 158.0,228.3 161.9,226.9 165.9,225.6 169.9,223.7 173.5,222.2 176.7,220.3 173.5,222.2 169.9,223.7 166.8,225.6 162.5,226.7 159.0,228.3 159.1,233.7 160.7,237.3 159.9,241.7 157.6,246.5 159.6,242.0 161.4,238.7 159.7,235.2 158.1,231.0 157.1,226.6 154.3,224.0 152.1,220.5 150.5,217.1 149.3,213.0 151.1,209.0 152.5,205.0 151.5,198.8 149.9,195.2 149.9,195.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Manival</title></polyline>
+<polyline points="392.4,141.8 393.5,137.7 393.3,132.3 391.9,127.9 390.4,124.2 385.7,123.8 381.4,124.5 377.5,122.7 373.6,121.4 372.2,117.1 369.9,112.2 368.1,108.6 369.9,112.2 372.2,117.1 373.5,121.0 377.4,122.4 380.7,124.8 385.7,123.8 390.4,124.2 391.9,127.9 393.2,132.1 393.5,137.7 392.5,142.1 392.4,141.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Taboca</title></polyline>
+<polyline points="240.7,196.7 237.3,198.3 233.9,200.0 230.8,202.3 227.6,204.8 225.5,207.8 222.0,209.7 217.2,211.2 213.4,212.5 209.3,214.0 205.2,215.5 201.0,217.0 197.1,218.4 193.1,219.5 197.1,218.4 201.0,217.0 205.2,215.5 209.3,214.0 213.3,212.5 217.2,211.2 221.3,209.8 225.5,207.8 227.6,204.8 230.8,202.3 233.9,200.0 237.3,198.3 240.7,196.7 240.7,196.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Manival</title></polyline>
+<polyline points="309.7,190.2 310.1,185.0 309.7,179.8 313.5,178.0 313.9,173.4 316.3,170.5 318.2,167.3 317.7,162.3 317.1,157.8 314.2,155.5 312.5,151.8 313.9,155.5 317.0,157.7 317.7,162.3 318.2,167.3 316.3,170.5 313.9,173.4 313.5,178.0 309.9,179.6 310.4,184.4 309.0,188.1 309.7,190.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Chapada Grande</title></polyline>
+<circle cx="397.0" cy="227.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="419.5" cy="137.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="410.9" cy="138.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="158.1" cy="231.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="140.3" cy="157.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="264.5" cy="302.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="318.3" cy="160.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="138.6" cy="164.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="355.5" cy="178.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="82.4" cy="184.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="331.2" cy="139.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="315.8" cy="289.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="83.2" cy="185.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="376.4" cy="152.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="305.8" cy="372.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="376.0" cy="288.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="130.6" cy="166.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="224.3" cy="210.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="225.6" cy="210.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="261.2" cy="199.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="283.3" cy="348.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="210.6" cy="299.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="356.7" cy="277.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="361.2" cy="266.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="393.7" cy="150.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="300.3" cy="292.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="300.0" cy="292.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="330.7" cy="175.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="355.9" cy="148.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="95.7" cy="181.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="354.7" cy="148.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="247.6" cy="199.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="373.7" cy="218.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="387.4" cy="281.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="341.8" cy="171.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="376.4" cy="235.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="310.0" cy="186.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="351.7" cy="142.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="231.6" cy="288.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="369.5" cy="250.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="288.5" cy="220.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="319.5" cy="228.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="361.0" cy="200.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="368.2" cy="250.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="364.2" cy="251.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="389.2" cy="275.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="392.4" cy="143.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="378.0" cy="183.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="187.3" cy="183.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="207.3" cy="185.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="215.5" cy="251.1" r="2.2" fill="#b9b9b2"/>
+<polygon points="360.7,210.7 350.5,229.4 370.9,229.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="353.7,203.4 342.8,223.5 364.6,223.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="290.3,309.4 281.1,326.4 299.6,326.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="290.3" y="339.8" text-anchor="middle" fill="#5c5c57">Povoado Olinda Dos Aranhas</text>
+<polygon points="321.8,371.2 312.1,389.1 331.5,389.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="321.8" y="402.7" text-anchor="middle" fill="#5c5c57">Povoado Santana</text>
+<polygon points="505.1,392.9 497.6,406.7 512.6,406.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="288.5,351.6 279.6,367.9 297.3,367.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="241.1,187.2 232.3,203.6 250.0,203.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="294.7,264.2 285.2,281.5 304.1,281.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="294.7" y="295.0" text-anchor="middle" fill="#5c5c57">Povoado Romana</text>
+<polygon points="392.2,132.7 383.5,148.7 400.9,148.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="340.8,202.6 331.7,219.4 349.9,219.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="387.9,267.6 379.2,283.6 396.6,283.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="362.7,207.6 351.8,227.6 373.6,227.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="108.3,168.1 100.2,182.9 116.3,182.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="227.6,281.6 218.8,297.9 236.5,297.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="336.0,360.9 328.4,375.0 343.7,375.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="548.8,350.3 541.7,363.4 555.8,363.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="320.3,223.3 312.6,237.5 328.1,237.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="353.7,130.1 345.9,144.5 361.5,144.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="296.0,297.2 286.6,314.5 305.3,314.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="358.0,210.4 349.8,225.6 366.3,225.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="187.6,172.7 178.6,189.3 196.6,189.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="187.6" y="202.7" text-anchor="middle" fill="#5c5c57">Povoado Jaqueira</text>
+<polygon points="209.5,176.2 201.6,190.8 217.4,190.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="286.3,213.4 277.8,229.1 294.8,229.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="217.8,243.7 210.8,256.6 224.8,256.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="340.3,204.9 332.7,218.9 348.0,218.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="377.2,222.9 369.4,237.2 385.0,237.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="360.9,196.4 352.5,211.8 369.2,211.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="487.1,491.1 480.4,503.4 493.8,503.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="309.7,181.9 301.7,196.5 317.6,196.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="376.4,174.2 369.3,187.1 383.4,187.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="348.9,205.5 339.6,222.5 358.1,222.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="364.9,243.8 357.1,258.0 372.6,258.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="339.2,158.7 331.7,172.4 346.7,172.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="307.2,193.1 298.6,208.8 315.7,208.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="149.9,188.7 143.7,200.1 156.1,200.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="265.5,234.8 259.2,246.4 271.8,246.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="139.4" cy="284.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="146.4" y="279.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Teles 19,2 km</text>
+<circle cx="125.4" cy="304.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="132.4" y="299.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Gameleira 17,1 km</text>
+<circle cx="486.8" cy="217.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="493.8" y="212.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Raposa 8,5 km</text>
+<circle cx="339.3" cy="129.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="346.3" y="124.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Sapucaia 4,7 km</text>
+<circle cx="180.1" cy="219.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="187.1" y="214.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Manival 4,2 km</text>
+<circle cx="362.4" cy="110.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="369.4" y="105.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Taboca 4,0 km</text>
+<circle cx="156.3" cy="248.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="163.3" y="243.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Cafuzal 4,0 km</text>
+<circle cx="189.3" cy="219.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="401.9" cy="240.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="408.9" y="235.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Bom Jesus 3,6 km</text>
+<circle cx="409.4" cy="229.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="411.9" cy="214.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="412.4" cy="215.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="314.5" cy="150.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="321.5" y="145.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Chapada Grande 3,2 km</text>
+<rect x="356.1" y="212.9" width="10" height="10" fill="#1d1d1b"/><text x="370.1" y="235.9" font-weight="600" fill="#1d1d1b">Sede de São João Batista</text>
+<line x1="35" x2="110.1" y1="571.2" y2="571.2" stroke="#8a8a84" stroke-width="2"/><text x="35" y="585.2" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="562.1838051397305" y2="562.1838051397305" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="566.1838051397305" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,555.2 421.4,567.4 434.6,567.4" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="566.1838051397305" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="580.1838051397305" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="589.1838051397305" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="585.1838051397305" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="589.1838051397305" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="608.1838051397305" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="612.1838051397305" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="608.1838051397305" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="612.1838051397305" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="631.1838051397305" y2="631.1838051397305" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="635.1838051397305" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="654.1838051397305" y2="654.1838051397305" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="658.1838051397305" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital de transporte de eleitores da 63ª ZE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (3):</strong> Teles, Gameleira e Raposa.</li>
+<li><strong>De 3 a 5 km (10):</strong> Comunidade Quilombola Sapucaia, Comunidade Quilombola Manival, Comunidade Quilombola Taboca, Comunidade Quilombola Cafuzal, Manival, Comunidade Quilombola Bom Jesus, Comunidade Quilombola Ilha dos Poços, Comunidade Quilombola Comporta, Comunidade Quilombola Carão e Comunidade Quilombola Chapada Grande.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (53):</strong> Bom Viver, Centrinho, Comunidade Quilombola Arrebenta, Comunidade Quilombola Bela Vista, Comunidade Quilombola Camiranga, Comunidade Quilombola Capim Açu, Comunidade Quilombola Capim-Açú, Comunidade Quilombola Cazumba, Comunidade Quilombola Chapada Grande 2, Comunidade Quilombola Charco, Comunidade Quilombola Eis de Vencer, Comunidade Quilombola Enseada dos Bezerras, Comunidade Quilombola Enseada dos Silva, Comunidade Quilombola Estrada da Raposa, Comunidade Quilombola Filadélfia, Comunidade Quilombola Guaribal, Comunidade Quilombola Ilha Doce, Comunidade Quilombola Ilha dos Morenos, Comunidade Quilombola Ilha dos Urubus, Comunidade Quilombola Jamari, Comunidade Quilombola Laranjal, Comunidade Quilombola Maraja, Comunidade Quilombola Olho D&#x27;água, Comunidade Quilombola Olho d&#x27;Água Bodes, Comunidade Quilombola Olho d&#x27;Água dos Bungas, Comunidade Quilombola Palmeiral, Comunidade Quilombola Quia, Comunidade Quilombola Quiriri, Comunidade Quilombola Romana, Comunidade Quilombola Romana 2, Comunidade Quilombola Santa Rita, Comunidade Quilombola Santa Rita 1, Comunidade Quilombola Sarnambi, Comunidade Quilombola São Caetano, Comunidade Quilombola São José, Comunidade Quilombola São João Batista, Conceição, Enseada dos Bezerras, Enseada dos Bezerros, Estrada do Urucu, Jaqueira, Lago dos Peixes, Laranjal, Maravilha, Quia, Rumo, Santa Rita, Santana, São Domingos, São José, Ubá, Vertente e Vista Alegre.</li>
+</ul><h2>Rotas do Edital de transporte de eleitores da 63ª ZE</h2>
+<p>O edital tem 0 rotas para São João Batista. Horários: não informados. Veículos: não informados.</p>
+<p><strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-MA) para São João Batista.</strong> O quadro de percursos do transporte de eleitores (edital da zona no DJE/TRE-MA) ainda não foi incorporado a este levantamento. A análise considera apenas a distância até o local de votação</p>
+<p><strong>Atenção:</strong> Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral para este município (edições lidas até 18/10/2026). As rotas do mapa são sugestões deste levantamento. </p>
+<p>Fonte: Quadro de percursos não localizado nas edições do DJE/TRE-MA consultadas.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 13 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Teles</strong></td><td>Sede – Teles – Gameleira – Sede</td><td>Teles, Gameleira</td><td>38,4 km (ida e volta)</td><td>~1h14</td></tr><tr><td><strong>Rota nova – Raposa</strong></td><td>Sede – Comunidade Quilombola Bom Jesus – Comunidade Quilombola Ilha dos Poços – Comunidade Quilombola Carão – Comunidade Quilombola Comporta – Raposa – Sede</td><td>Comunidade Quilombola Bom Jesus, Comunidade Quilombola Ilha dos Poços, Comunidade Quilombola Carão, Comunidade Quilombola Comporta, Raposa</td><td>25,7 km (ida e volta)</td><td>~1h07</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Sapucaia</strong></td><td>Sede – Comunidade Quilombola Sapucaia – Sede</td><td>Comunidade Quilombola Sapucaia</td><td>9,4 km (ida e volta)</td><td>~23 min</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Manival</strong></td><td>Sede – Comunidade Quilombola Manival – Comunidade Quilombola Cafuzal – Sede</td><td>Comunidade Quilombola Manival, Comunidade Quilombola Cafuzal</td><td>11,4 km (ida e volta)</td><td>~1h08</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Taboca</strong></td><td>Sede – Comunidade Quilombola Taboca – Sede</td><td>Comunidade Quilombola Taboca</td><td>7,9 km (ida e volta)</td><td>~20 min</td></tr><tr><td><strong>Rota nova – Manival</strong></td><td>Sede – Manival – Sede</td><td>Manival</td><td>7,8 km (ida e volta)</td><td>~44 min</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Chapada Grande</strong></td><td>Sede – Comunidade Quilombola Chapada Grande – Sede</td><td>Comunidade Quilombola Chapada Grande</td><td>6,4 km (ida e volta)</td><td>~15 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMSJB</strong></p><p>São João Batista/MA, ___ de outubro de 2026.</p><p>Ao(À) Excelentíssimo(a) Senhor(a)<br><strong>[nome do(a) Juiz(a) Eleitoral]</strong><br>Juiz(a) Eleitoral da 63ª Zona Eleitoral – [sede da zona]/MA</p><p><strong>Assunto:</strong> Sugestão de rotas de transporte gratuito de eleitores da zona rural – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo(a) Senhor(a) Juiz(a),</p><p>O Município de São João Batista, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação. Não localizamos no Diário da Justiça Eleitoral (DJE/TRE-MA) quadro de percursos nem ato sobre o transporte de eleitores para este município; estas localidades: Teles, Gameleira, Raposa, Comunidade Quilombola Sapucaia, Comunidade Quilombola Manival, Comunidade Quilombola Taboca, Comunidade Quilombola Cafuzal, Manival, Comunidade Quilombola Bom Jesus, Comunidade Quilombola Ilha dos Poços, Comunidade Quilombola Comporta, Comunidade Quilombola Carão e Comunidade Quilombola Chapada Grande.</p><p>Sugerimos, respeitosamente, que Vossa Excelência avalie instituir o transporte gratuito de eleitores no 2º turno, com as seguintes rotas:</p><ol><li>a criação da Rota nova – Teles (Sede – Teles – Gameleira – Sede);</li><li>a criação da Rota nova – Raposa (Sede – Comunidade Quilombola Bom Jesus – Comunidade Quilombola Ilha dos Poços – Comunidade Quilombola Carão – Comunidade Quilombola Comporta – Raposa – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola Sapucaia (Sede – Comunidade Quilombola Sapucaia – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola Manival (Sede – Comunidade Quilombola Manival – Comunidade Quilombola Cafuzal – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola Taboca (Sede – Comunidade Quilombola Taboca – Sede);</li><li>a criação da Rota nova – Manival (Sede – Manival – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola Chapada Grande (Sede – Comunidade Quilombola Chapada Grande – Sede).</li></ol><p>As rotas sugeridas atendem as localidades mais distantes. Caso esse Juízo já tenha definido rotas, pedimos que estas sugestões sejam consideradas naquilo que ainda não estiver contemplado.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de São João Batista</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de São João Batista; Quadro de percursos não localizado nas edições do DJE/TRE-MA consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>
