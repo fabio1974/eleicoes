@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Várzea da Roça</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Várzea da Roça</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/varzea-da-roca.pdf?v=1792366828" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Várzea da Roça (86ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 86ª Zona Eleitoral <strong>5 rotas novas e 2 paradas extras em rotas do edital</strong> no transporte gratuito de Várzea da Roça.
+Traçamos pelas estradas o percurso das 4 rotas do Edital ZE-086 nº 34, de 18/09/2026 (Quadro Geral de Percursos do Transporte de Eleitora e Eleitor), tornado definitivo pelo Edital ZE-086 nº 37, de 23/09/2026. 14 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 3 ficam a 1–2 km.</p>
+<ul>
+<li>Várzea da Roça tem 10.950 eleitores aptos em 13 locais de votação e 51 seções. São 9 locais rurais, com 4.335 eleitores (40% do total).</li>
+<li>7 locais rurais ficam a 10 km ou mais da sede, com 3.630 eleitores. Os mais distantes: Campo de São João (30,9 km), Povoado Cruz De Almas, Várzea Da Roça - Bahia  (19,2 km) e Praça Do Campo, S/N - Zona Rural (17,3 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Rompe Gibão (16,9 km do local de votação), Estrelinha (11,0 km do local de votação), Bela Vista (9,7 km do local de votação), Gentil (8,6 km do local de votação), Canto Escuro (8,6 km do local de votação), Gameleira (8,1 km do local de votação), Tanquinho (7,6 km do local de votação), Lagoa das Porteiras (6,8 km do local de votação), Banco da Areia (6,7 km do local de votação), Soinho (5,5 km do local de votação), Vital Brasília (5,2 km do local de votação), Sítio Papagaio (5,1 km do local de votação), Jurema (4,1 km do local de votação) e Água Fria (3,2 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Sítio Caldeirãozinho, Pau Ferro e Amazonas.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 46 localidades rurais de Várzea da Roça que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Rompe Gibão</td><td>16,9</td><td>Rota 02</td><td>10,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Estrelinha</td><td>11,0</td><td>Rota 01</td><td>2,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Bela Vista</td><td>9,7</td><td>Rota 02</td><td>8,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Gentil</td><td>8,6</td><td>Rota 02</td><td>7,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Canto Escuro</td><td>8,6</td><td>Rota 02</td><td>7,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Gameleira</td><td>8,1</td><td>Rota 02</td><td>3,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Tanquinho</td><td>7,6</td><td>Rota 02</td><td>2,2</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Lagoa das Porteiras</td><td>6,8</td><td>Rota 02</td><td>3,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Banco da Areia</td><td>6,7</td><td>Rota 02</td><td>4,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Soinho</td><td>5,5</td><td>Rota 01</td><td>4,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Vital Brasília</td><td>5,2</td><td>Rota 01</td><td>4,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Sítio Papagaio</td><td>5,1</td><td>Rota 01</td><td>2,8</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Sítio Caldeirãozinho</td><td>4,1</td><td>Rota 02</td><td>1,7</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Jurema</td><td>4,1</td><td>Rota 02</td><td>3,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Pau Ferro</td><td>4,0</td><td>Rota 01</td><td>1,9</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Amazonas</td><td>3,5</td><td>Rota 01</td><td>2,0</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Chapada</td><td>3,5</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Pé da Pedra</td><td>3,4</td><td>Rota 01</td><td>0,3</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Água Fria</td><td>3,2</td><td>Rota 01</td><td>2,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Patos</td><td>3,2</td><td>Rota 02</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Água Boa</td><td>3,0</td><td>Rota 01</td><td>0,4</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 46 localidades rurais de Várzea da Roça, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 682" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Várzea da Roça: 17 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital ZE-086 nº 34, de 18/09/2026 (Quadro Geral de Percursos do Transporte de Eleitora e Eleitor), tornado definitivo pelo Edital ZE-086 nº 37, de 23/09/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="66.1,305.4 171.5,378.7 249.8,379.1 382.4,418.9 444.4,486.9 502.8,493.2 647.2,486.9 662.8,473.5 678.9,467.2 667.7,428.0 641.1,408.9 624.5,409.9 609.8,381.3 602.1,351.1 594.8,339.9 602.9,324.7 602.1,261.1 598.9,212.6 582.8,80.0 558.3,80.8 533.9,104.2 512.4,97.5 493.1,108.6 463.7,118.2 463.4,142.9 414.9,142.1 391.8,153.7 369.0,153.7 333.5,174.6 311.4,174.2 283.1,141.7 262.0,128.3 257.0,136.7 228.3,147.4 210.7,140.7 192.8,140.9 185.9,153.9 166.4,159.4 138.8,180.3 125.6,179.1 113.6,197.4 89.8,206.5 74.8,224.6 63.5,243.9 72.0,272.9 58.6,296.9 66.1,305.4 66.1,305.4" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="95.6,268.9 102.0,286.7 104.7,290.6 105.3,298.2 106.3,304.7 107.4,309.8 109.9,321.1 117.4,325.4 132.1,332.6 137.8,334.5 149.0,338.3 154.8,340.3 159.5,341.6 164.9,342.5 169.1,344.6 187.8,348.5 196.1,345.7 202.2,347.3 207.3,348.9 217.6,348.0 221.8,345.1 226.5,341.7 232.3,334.7 237.6,328.3 241.3,325.6 248.2,319.3 250.6,315.4 253.6,311.9 257.9,308.1 255.4,306.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="509.1,471.7 506.7,466.5 505.1,461.6 502.4,458.4 497.2,457.7 491.9,459.2 485.4,456.0 482.7,452.4 479.5,449.6 475.7,447.4 472.4,443.1 468.8,440.7 464.3,437.8 460.7,435.2 457.5,432.4 454.0,429.8 455.4,424.9 459.4,421.4 462.1,417.7 461.0,411.9 459.2,407.4 458.6,401.8 457.9,396.2 454.1,393.3 450.9,390.3 446.4,388.6 442.9,385.8 440.6,381.7 438.2,376.3 436.4,370.7 434.5,366.1 432.5,361.6 430.5,357.6 428.4,353.4 426.9,348.9 425.4,344.4 424.5,339.3 421.5,336.0 417.7,333.4 415.6,329.4 414.5,324.0 412.7,319.8 410.1,315.8 407.5,312.0 404.4,309.1 403.4,303.4 401.5,298.6 399.8,293.4 398.9,287.3 398.0,281.3 394.3,278.5 388.0,279.0 383.0,280.4 376.6,281.3 371.5,282.1 361.5,283.5 349.4,285.2 343.2,286.1 336.8,286.9 330.7,288.2 326.1,289.8 317.1,292.9 311.1,295.0 304.4,297.2 297.4,299.7 288.6,302.6 283.9,304.3 272.3,308.2 267.4,310.0 259.1,312.8 254.8,311.2 257.9,308.1 255.4,306.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="376.5,184.9 376.2,190.8 379.5,194.8 381.0,199.7 381.5,206.0 381.0,212.0 385.7,210.8 391.4,210.5 396.2,209.0 401.1,207.7 404.2,204.5 407.0,201.3 408.7,191.2 406.2,186.6 404.7,182.2 406.2,186.6 407.4,191.4 409.7,198.6 407.2,202.9 404.5,206.9 399.4,208.0 394.2,209.7 389.5,211.0 384.7,212.2 381.6,215.2 377.0,217.9 372.4,220.0 368.3,223.0 365.1,226.8 361.3,230.5 359.0,234.9 356.9,239.1 357.7,244.8 358.7,250.9 357.0,255.6 357.8,261.3 359.1,268.8 360.0,274.1 360.7,279.7 356.4,283.9 351.0,284.7 345.7,285.4 340.3,286.5 334.7,287.1 328.4,289.0 323.4,290.7 317.1,292.9 311.1,295.0 304.4,297.2 297.4,299.7 288.6,302.6 283.9,304.3 272.3,308.2 267.4,310.0 259.1,312.8 254.8,311.2 257.9,308.1 255.4,306.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="487.6,284.2 487.5,278.1 488.4,271.7 484.1,269.0 476.9,267.9 471.8,265.5 467.6,262.6 461.3,264.4 450.4,264.9 438.0,264.4 434.3,261.2 431.4,257.8 430.3,252.9 424.3,252.6 418.8,253.6 412.5,254.3 407.2,255.0 402.1,259.6 399.3,264.6 397.1,268.4 394.7,272.8 392.0,276.2 388.0,279.0 383.0,280.4 376.6,281.3 371.5,282.1 361.5,283.5 349.4,285.2 343.2,286.1 336.8,286.9 330.7,288.2 326.1,289.8 317.1,292.9 311.1,295.0 304.4,297.2 297.4,299.7 288.6,302.6 283.9,304.3 272.3,308.2 267.4,310.0 259.1,312.8 254.8,311.2 257.9,308.1 255.4,306.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="510.0,470.6 512.2,466.6 516.1,464.5 519.7,462.1 524.5,460.6 529.7,459.9 534.0,457.9 540.9,457.2 546.9,455.8 549.6,452.5 552.1,448.1 555.3,443.4 559.3,439.2 565.7,438.1 569.3,435.8 574.2,434.5 580.5,433.3 588.2,433.0 595.7,432.4 601.6,431.0 606.8,429.0 610.0,425.9 613.5,423.1 619.6,422.6 630.2,423.3 636.4,423.8 642.3,423.3 652.4,488.5 620.6,521.1 615.8,523.3 617.2,528.1 622.0,531.3 628.7,535.9 638.1,541.5 642.8,544.2 647.0,546.3 650.8,548.6 656.0,550.3 661.9,549.3 667.8,548.2 673.0,546.1 676.0,543.2 680.5,538.9 686.5,538.4 691.3,536.7 695.2,534.4 699.5,532.4 705.8,532.8 714.3,527.9 717.8,522.7 720.7,519.6 724.1,516.1 643.6,439.3 645.4,424.6 640.8,423.2 633.3,423.2 625.0,422.7 617.4,422.7 611.6,424.9 608.3,427.7 603.6,430.2 598.7,431.8 592.6,432.8 580.5,433.3 574.2,434.5 569.3,435.8 565.7,438.1 560.2,438.6 555.3,443.4 552.1,448.1 549.6,452.5 546.9,455.8 540.9,457.2 535.2,457.7 530.8,459.5 525.4,460.6 520.6,461.9 516.6,464.0 512.7,466.2 510.6,470.5 510.0,470.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Rompe Gibão</title></polyline>
+<polyline points="155.8,340.6 152.6,343.7 148.0,345.9 138.8,346.5 119.0,352.8 125.4,363.0 124.0,367.5 120.7,370.3 105.6,373.9 92.0,377.1 81.9,379.8 70.2,382.5 65.0,384.1 56.7,388.5 54.1,385.2 56.4,380.8 58.1,375.3 58.0,369.2 56.6,363.0 54.5,357.1 50.3,352.2 48.4,346.4 50.1,341.2 49.2,335.4 48.7,329.4 49.2,335.4 50.1,341.2 48.4,346.4 50.3,352.2 53.1,355.5 54.8,360.2 57.4,365.6 58.4,370.8 57.6,376.8 55.9,381.5 54.7,386.4 63.5,386.4 70.2,382.5 81.9,379.8 92.0,377.1 105.6,373.9 119.7,370.7 123.2,368.0 125.6,364.0 119.0,352.8 133.2,346.6 144.8,346.6 150.0,345.4 153.4,342.3 155.8,340.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Estrelinha</title></polyline>
+<polyline points="452.4,430.0 454.9,425.5 458.6,422.9 460.9,419.3 461.6,413.7 459.5,409.7 458.9,404.1 459.1,398.2 456.1,394.9 452.3,391.9 449.0,389.1 443.5,386.7 441.0,382.2 436.0,384.5 432.2,387.9 428.9,390.7 425.0,393.1 420.5,394.8 415.7,396.6 411.9,398.8 413.1,403.7 411.9,408.5 411.7,414.3 410.5,419.2 408.0,423.0 405.8,427.1 408.0,423.0 410.5,419.2 411.7,414.3 411.9,408.5 413.3,403.9 411.2,400.0 407.1,397.9 404.1,394.9 404.4,389.2 400.4,391.2 396.5,393.6 394.9,398.0 394.4,403.6 393.9,409.3 390.3,411.7 387.2,414.7 402.7,453.7 405.3,468.3 410.3,472.5 412.8,476.6 413.0,482.8 414.3,487.9 416.2,492.6 418.2,499.2 420.3,494.9 424.7,491.7 428.6,489.3 430.3,485.0 432.9,481.3 434.1,476.4 435.9,471.1 437.5,466.7 440.1,461.0 441.1,456.0 443.6,452.5 445.9,448.7 447.7,444.2 448.5,437.6 451.5,430.5 452.4,430.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Gameleira</title></polyline>
+<polyline points="259.6,321.1 262.9,327.3 269.0,327.6 278.4,327.2 279.6,334.6 280.9,341.2 286.3,341.9 285.2,347.5 287.7,352.5 288.7,358.4 294.2,359.6 299.5,358.4 304.2,360.2 308.5,361.9 313.2,363.6 316.6,361.0 320.4,358.4 327.2,357.4 329.0,366.6 327.2,357.4 321.3,358.3 318.1,361.2 313.8,363.1 308.5,361.9 304.2,360.2 299.5,358.4 296.9,362.5 292.0,359.2 282.8,359.2 281.1,363.9 274.7,365.1 269.5,366.4 272.3,375.2 268.4,378.0 261.7,376.8 257.2,374.6 252.0,376.2 249.3,363.9 249.1,351.0 248.7,336.5 248.6,328.6 254.5,321.3 259.1,319.5 259.6,321.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Banco da Areia</title></polyline>
+<polyline points="94.6,269.4 91.6,266.4 85.2,265.9 79.7,266.6 75.2,269.6 70.6,271.2 64.5,271.7 59.7,273.2 54.9,274.4 48.5,274.0 41.5,275.0 35.7,275.5 35.8,282.1 37.5,286.5 43.2,286.1 47.3,289.0 52.1,292.9 47.9,289.5 44.1,286.7 37.8,286.7 36.0,282.3 35.1,276.8 40.1,275.2 45.4,274.4 52.2,274.2 59.7,273.2 64.3,271.7 70.0,271.3 75.2,269.6 79.5,266.8 85.2,265.9 90.3,265.1 93.6,268.4 96.6,271.4 100.8,274.4 104.8,277.9 108.3,281.1 111.7,284.3 114.1,287.9 116.8,291.2 122.3,292.3 127.7,293.5 134.8,294.6 140.1,295.5 144.0,298.0 148.8,299.7 155.1,299.7 160.6,299.1 163.6,294.5 161.2,279.8 160.6,270.6 159.8,265.3 169.8,262.7 174.7,260.9 178.9,254.8 176.9,251.0 174.9,246.3 175.4,240.7 174.7,235.3 170.4,233.5 164.7,233.1 159.5,232.3 154.0,231.8 151.7,236.2 149.3,241.5 145.8,245.0 140.7,246.4 135.8,247.9 131.4,250.0 126.0,251.0 121.2,252.2 117.7,255.1 115.0,258.4 111.2,260.7 106.5,262.3 102.4,264.9 98.6,267.1 93.8,268.6 94.6,269.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Soinho</title></polyline>
+<polyline points="162.8,342.0 157.2,341.1 150.4,338.8 148.0,331.0 156.5,320.1 152.9,307.9 154.6,299.7 160.6,299.1 165.9,299.8 170.2,301.6 175.6,303.2 180.3,301.6 186.8,300.8 191.2,299.3 194.9,295.7 205.1,294.7 209.0,298.1 213.6,300.2 217.0,305.3 218.9,310.5 223.2,312.4 226.9,314.9 230.3,317.5 235.3,316.4 241.9,316.1 249.7,316.2 249.3,322.1 248.6,328.6 248.7,334.8 249.1,351.0 249.3,362.8 249.5,373.9 249.3,363.9 249.1,351.0 248.7,336.5 244.6,331.9 242.0,328.1 232.3,334.7 226.5,341.7 221.8,345.1 219.7,347.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 01</title></polyline>
+<polyline points="459.1,398.2 465.6,393.0 470.7,391.5 476.8,394.1 480.3,396.8 486.2,396.2 491.3,392.9 486.7,395.9 481.5,397.1 477.1,394.4 471.3,391.7 465.9,392.8 459.6,398.4 459.1,398.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 02</title></polyline>
+<circle cx="440.9" cy="382.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="117.2" cy="331.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="440.2" cy="388.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="197.7" cy="352.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="482.3" cy="500.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="211.9" cy="303.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="361.9" cy="249.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="81.2" cy="215.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="362.1" cy="249.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="465.5" cy="483.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="542.2" cy="456.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="493.7" cy="432.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="123.2" cy="249.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="465.2" cy="458.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="109.9" cy="300.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="254.0" cy="338.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="487.9" cy="285.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="487.8" cy="284.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="370.5" cy="281.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="369.4" cy="281.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="95.6" cy="268.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="467.9" cy="143.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="509.2" cy="471.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="453.5" cy="429.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="508.9" cy="470.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="155.0" cy="340.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="452.9" cy="429.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="404.2" cy="180.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="376.5" cy="184.6" r="2.2" fill="#b9b9b2"/>
+<polygon points="243.8,286.3 231.7,308.7 256.0,308.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="249.2,289.5 239.3,307.7 259.1,307.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="156.2,331.8 148.4,346.0 163.9,346.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="510.1,461.2 501.2,477.5 518.9,477.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="452.5,421.7 444.9,435.8 460.1,435.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="94.9,261.3 87.4,275.1 102.4,275.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="490.7,278.7 479.7,298.9 501.8,298.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="490.7" y="312.8" text-anchor="middle" fill="#5c5c57">Povoado Várzea Do Meio</text>
+<polygon points="469.9,134.3 463.0,146.9 476.7,146.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="375.5,176.2 367.4,191.0 383.5,191.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="250.3,287.6 241.3,304.3 259.4,304.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="259.6,307.7 246.8,331.3 272.5,331.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="404.4,175.1 397.7,187.6 411.2,187.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="367.4,274.0 359.7,288.3 375.1,288.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="689.3" cy="476.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="564.5" y="471.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Rompe Gibão 16,9 km</text>
+<circle cx="58.0" cy="320.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="65.0" y="315.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Estrelinha 11,0 km</text>
+<circle cx="652.4" cy="488.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="540.0" y="503.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Bela Vista 9,7 km</text>
+<circle cx="643.6" cy="439.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="556.0" y="434.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Gentil 8,6 km</text>
+<circle cx="641.9" cy="465.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="393.4" cy="419.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="400.4" y="414.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Gameleira 8,1 km</text>
+<circle cx="411.9" cy="432.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="418.9" y="427.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Tanquinho 7,6 km</text>
+<circle cx="402.7" cy="453.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="409.7" y="448.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Lagoa das Porteiras 6,8 km</text>
+<circle cx="317.8" cy="379.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="324.8" y="374.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Banco da Areia 6,7 km</text>
+<circle cx="174.9" cy="233.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="181.9" y="228.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Soinho 5,5 km</text>
+<circle cx="280.3" cy="400.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="287.3" y="395.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Vital Brasília 5,2 km</text>
+<circle cx="50.9" cy="294.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="57.9" y="289.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Papagaio 5,1 km</text>
+<circle cx="299.6" cy="361.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="306.6" y="356.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Jurema 4,1 km</text>
+<circle cx="489.4" cy="390.2" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="496.4" y="385.2" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Sítio Caldeirãozinho 4,1 km</text>
+<circle cx="166.5" cy="308.8" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<circle cx="242.8" cy="374.1" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<circle cx="145.6" cy="282.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="152.6" y="277.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Água Fria 3,2 km</text>
+<rect x="250.6" y="302.4" width="10" height="10" fill="#1d1d1b"/><text x="264.6" y="325.4" font-weight="600" fill="#1d1d1b">Sede de Várzea da Roça</text>
+<line x1="35" x2="123.8" y1="580.3" y2="580.3" stroke="#8a8a84" stroke-width="2"/><text x="35" y="594.3" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="571.3060461025339" y2="571.3060461025339" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="575.3060461025339" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,564.3 421.4,576.6 434.6,576.6" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="575.3060461025339" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="589.3060461025339" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="598.3060461025339" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="594.3060461025339" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="598.3060461025339" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="617.3060461025339" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="621.3060461025339" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="617.3060461025339" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="621.3060461025339" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="640.3060461025339" y2="640.3060461025339" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="644.3060461025339" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="663.3060461025339" y2="663.3060461025339" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="667.3060461025339" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital ZE-086 nº 34, de 18/09/2026 (Quadro Geral de Percursos do Transporte de Eleitora e Eleitor), tornado definitivo pelo Edital ZE-086 nº 37, de 23/09/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (12):</strong> Rompe Gibão, Estrelinha, Bela Vista, Gentil, Canto Escuro, Gameleira, Tanquinho, Lagoa das Porteiras, Banco da Areia, Soinho, Vital Brasília e Sítio Papagaio.</li>
+<li><strong>De 3 a 5 km (9):</strong> Sítio Caldeirãozinho, Jurema, Pau Ferro, Amazonas, Chapada, Pé da Pedra, Água Fria, Patos e Água Boa.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (25):</strong> Acampamento Mário Rodrigues, Barracas, Barro Branco, Campo São João, Campo de São João, Caraíba, Cruz de Alma, Cruz de Almas, Lagoa d&#x27;Anta, Lagoa das Pedras, Mario Rodrigues 1, Morrinhos, Ponta da Serra, Poço do Quilombo, Salgada, São Leandro, São Roque, Tábua, Umbuzeiro, Uruçu, Vila Nova dos Intrigantes, Vila Nova dos Irrigantes, Várzea da Praia, Várzea do Meio e Várzea do Meio/Forquilha.</li>
+</ul><h2>Rotas do Edital ZE-086 nº 34, de 18/09/2026 (Quadro Geral de Percursos do Transporte de Eleitora e Eleitor), tornado definitivo pelo Edital ZE-086 nº 37, de 23/09/2026</h2>
+<p>O edital tem 4 rotas para Várzea da Roça. Horários: Transporte em 04/10/2026, das 08h00 às 17h00.. Veículos: Rota 01: PLQ 2G90 (Evaldo Sousa Nascimento); Rota 02: NTF 3553 (Cleiton Souza de Araujo); Rota 03: OUF 7144 (Geanderson Oliveira da Cruz); Rota 04: SKL 2B27 (José Dilson dos Santos Silva).</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Morrinhos – Barracas – Sede</td></tr><tr><td>02</td><td>Campo de São João – Cruz de Alma – Chapada – Sede</td></tr><tr><td>03</td><td>Prainha – Lagoa das Pedras – Mário Rodrigues – Sede</td></tr><tr><td>04</td><td>Várzea do Meio – Vila Nova dos Irrigantes – Sede</td></tr></tbody></table></div>
+<p><strong>Atenção:</strong> As rotas foram publicadas para o 1º turno (04/10) e não houve ato próprio do 2º turno no DJE até 18/10/2026; elas são consideradas válidas para o 2º turno. Confirme com o Cartório Eleitoral da zona.</p>
+<p>Fonte: Edital ZE-086 nº 34/2026 da 86ª ZE/BA (Mairi), Anexo Único – Município de Várzea da Roça; DJE/TRE-BA nº 200, disp. 19/09/2026 (https://dje.tse.jus.br/dje/pdf/v1/edicao/129730); rotas declaradas definitivas pelo Edital ZE-086 nº 37/2026, DJE nº 206, disp. 24/09/2026.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 17 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Rompe Gibão</strong></td><td>Campo de São João – Canto Escuro – Bela Vista – Rompe Gibão – Gentil – Campo de São João</td><td>Canto Escuro, Bela Vista, Rompe Gibão, Gentil</td><td>31,6 km (ida e volta)</td><td>~1h11</td></tr><tr><td><strong>Rota nova – Estrelinha</strong></td><td>Sede – Estrelinha – Sede</td><td>Estrelinha</td><td>22,0 km (ida e volta)</td><td>~53 min</td></tr><tr><td><strong>Rota nova – Gameleira</strong></td><td>Sede – Tanquinho – Gameleira – Lagoa das Porteiras – Sede</td><td>Tanquinho, Gameleira, Lagoa das Porteiras</td><td>21,8 km (ida e volta)</td><td>~51 min</td></tr><tr><td><strong>Rota nova – Banco da Areia</strong></td><td>Sede – Jurema – Banco da Areia – Vital Brasília – Sede</td><td>Jurema, Banco da Areia, Vital Brasília</td><td>18,1 km (ida e volta)</td><td>~39 min</td></tr><tr><td><strong>Rota nova – Soinho</strong></td><td>Sede – Sítio Papagaio – Água Fria – Soinho – Sede</td><td>Sítio Papagaio, Água Fria, Soinho</td><td>24,8 km (ida e volta)</td><td>~53 min</td></tr><tr><td><strong>Parada extra na Rota 01</strong></td><td>desvio pelo caminho atual: Pau Ferro – Amazonas</td><td>Pau Ferro, Amazonas</td><td>+17,5 km</td><td>+35 min</td></tr><tr><td><strong>Parada extra na Rota 02</strong></td><td>desvio pelo caminho atual: Sítio Caldeirãozinho</td><td>Sítio Caldeirãozinho</td><td>+4,1 km</td><td>+10 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMVR</strong></p><p>Várzea da Roça/BA, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Júlia Wanderley Lopes</strong><br>Juíza Eleitoral da 86ª Zona Eleitoral – Mairi/BA</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital ZE-086 nº 34, de 18/09/2026 (Quadro Geral de Percursos do Transporte de Eleitora e Eleitor), tornado definitivo pelo Edital ZE-086 nº 37, de 23/09/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de Várzea da Roça, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital ZE-086 nº 34, de 18/09/2026 (Quadro Geral de Percursos do Transporte de Eleitora e Eleitor), tornado definitivo pelo Edital ZE-086 nº 37, de 23/09/2026: Rompe Gibão, Estrelinha, Bela Vista, Gentil, Canto Escuro, Gameleira, Tanquinho, Lagoa das Porteiras, Banco da Areia, Soinho, Vital Brasília, Sítio Papagaio, Jurema, Água Fria, Sítio Caldeirãozinho, Pau Ferro e Amazonas.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Rompe Gibão (Campo de São João – Canto Escuro – Bela Vista – Rompe Gibão – Gentil – Campo de São João);</li><li>a criação da Rota nova – Estrelinha (Sede – Estrelinha – Sede);</li><li>a criação da Rota nova – Gameleira (Sede – Tanquinho – Gameleira – Lagoa das Porteiras – Sede);</li><li>a criação da Rota nova – Banco da Areia (Sede – Jurema – Banco da Areia – Vital Brasília – Sede);</li><li>a criação da Rota nova – Soinho (Sede – Sítio Papagaio – Água Fria – Soinho – Sede);</li><li>a inclusão de paradas em Pau Ferro e Amazonas na Rota 01, mantido todo o percurso atual;</li><li>a inclusão de parada em Sítio Caldeirãozinho na Rota 02, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital ZE-086 nº 34, de 18/09/2026 (Quadro Geral de Percursos do Transporte de Eleitora e Eleitor), tornado definitivo pelo Edital ZE-086 nº 37, de 23/09/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Várzea da Roça</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Várzea da Roça; Edital ZE-086 nº 34/2026 da 86ª ZE/BA (Mairi), Anexo Único – Município de Várzea da Roça; DJE/TRE-BA nº 200, disp. 19/09/2026 (https://dje.tse.jus.br/dje/pdf/v1/edicao/129730); rotas declaradas definitivas pelo Edital ZE-086 nº 37/2026, DJE nº 206, disp. 24/09/2026; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>
