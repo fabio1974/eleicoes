@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Morrinhos</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Morrinhos</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/morrinhos.pdf?v=1792331453" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Morrinhos (44ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 44ª Zona Eleitoral <strong>1 rota nova e 1 parada extra em rotas do edital</strong> no transporte gratuito de Morrinhos.
+Traçamos pelas estradas o percurso das 3 rotas do Edital nº 38/2026 (no corpo: nº 033/2026). 1 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 1 ficam a 1–2 km.</p>
+<ul>
+<li>Morrinhos tem 19.122 eleitores aptos em 25 locais de votação e 71 seções. São 19 locais rurais, com 11.502 eleitores (60% do total).</li>
+<li>14 locais rurais ficam a 10 km ou mais da sede, com 8.526 eleitores. Os mais distantes: Povoado Nova Floresta (25,2 km), Santa Fé (24,5 km) e Sítio Alegre (23,6 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Serrote Branco (4,3 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Canudos.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 32 localidades rurais de Morrinhos que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista do TRE-CE e a posição de cada local publicada pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Serrote Branco</td><td>4,3</td><td>Rota 02</td><td>3,2</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Olheiros</td><td>3,7</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Olheiros de Cima</td><td>3,3</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Peba</td><td>3,2</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Canudos</td><td>3,0</td><td>Rota 01</td><td>1,8</td><td>Rota passa perto (1–2 km)</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 32 localidades rurais de Morrinhos, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 504" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Morrinhos: 2 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital nº 38/2026 (no corpo: nº 033/2026) e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="35.0,281.7 272.5,267.3 289.3,275.3 299.5,286.7 317.6,287.5 335.8,280.9 344.1,271.7 365.6,260.4 389.8,278.2 394.7,276.8 432.0,286.2 471.0,280.6 457.1,346.7 478.0,349.6 494.6,368.2 515.5,371.6 521.1,366.0 547.3,363.0 554.8,356.8 582.3,362.1 607.7,357.9 635.1,365.3 640.7,365.3 661.8,345.5 689.1,336.0 716.5,313.1 725.0,280.9 609.0,118.7 450.7,80.0 408.7,84.1 210.8,230.7 140.8,192.9 148.2,263.8 115.0,253.3 106.5,258.7 95.5,252.8 73.8,230.5 66.2,235.0 45.7,224.6 35.8,237.5 35.0,281.7 35.0,281.7" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="680.9,224.7 680.5,219.1 676.9,217.2 672.7,216.2 671.2,212.1 670.0,207.2 667.8,203.9 662.7,203.5 657.6,203.2 651.9,203.0 646.0,202.7 642.1,201.0 638.1,199.6 634.2,197.2 629.7,194.6 622.5,194.1 615.4,193.7 608.6,193.3 615.4,193.7 622.5,194.1 629.7,194.6 634.2,197.2 637.7,199.2 639.9,202.4 641.1,206.5 636.7,207.9 634.3,211.3 632.2,214.4 629.0,217.2 628.5,222.2 627.7,226.8 626.5,231.2 625.5,236.1 624.5,240.2 622.4,243.4 618.4,244.7 616.4,247.8 612.0,248.9 608.8,251.0 607.4,254.7 605.4,259.5 603.3,263.7 601.3,267.1 599.5,270.5 599.5,275.7 597.5,278.9 596.8,282.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="558.3,117.7 554.5,119.6 549.0,122.2 545.6,124.0 542.5,126.7 536.9,131.7 533.3,134.0 522.1,132.5 508.4,130.7 496.8,129.1 491.1,128.4 486.3,127.8 481.3,127.1 476.8,126.5 475.6,126.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="509.1,323.1 511.0,319.4 514.4,317.1 516.4,313.5 517.3,308.5 518.7,304.4 516.9,300.2 518.3,295.4 520.3,292.3 522.5,288.4 523.2,283.9 524.0,283.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="490.7,157.6 496.6,156.3 501.6,156.8 505.3,158.3 509.1,159.8 511.9,162.3 515.2,164.7 518.1,167.1 519.4,171.2 521.9,175.1 523.9,178.3 527.9,179.9 532.1,183.2 536.7,185.9 539.2,183.2 536.7,185.9 532.1,183.2 528.2,180.2 524.5,178.4 521.9,175.1 519.6,171.6 518.6,167.5 515.2,164.7 512.1,162.5 509.1,159.8 505.3,158.3 501.6,156.8 496.6,156.3 491.3,156.4 490.7,157.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Serrote Branco</title></polyline>
+<polyline points="608.3,251.7 607.1,255.6 604.0,258.4 598.2,257.5 595.6,254.3 591.7,252.4 591.0,247.9 590.8,242.0 590.0,237.6 587.8,234.6 590.0,237.6 590.8,242.0 591.0,247.1 591.6,251.8 595.2,254.2 597.7,257.0 601.8,258.5 606.4,257.7 607.9,253.3 608.3,251.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 01</title></polyline>
+<circle cx="641.1" cy="206.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="647.5" cy="202.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="509.3" cy="323.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="604.5" cy="123.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="416.6" cy="186.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="411.5" cy="157.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="403.7" cy="205.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="322.7" cy="240.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="410.1" cy="151.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="401.9" cy="202.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="343.7" cy="145.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="399.3" cy="217.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="404.1" cy="195.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="395.6" cy="205.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="389.3" cy="151.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="491.6" cy="170.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="472.2" cy="218.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="395.8" cy="198.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="397.1" cy="186.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="475.7" cy="125.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="533.9" cy="263.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="596.8" cy="282.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="360.5" cy="145.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="333.2" cy="252.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="338.5" cy="227.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="681.1" cy="224.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="341.3" cy="228.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="524.0" cy="283.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="462.7" cy="276.4" r="2.2" fill="#b9b9b2"/>
+<polygon points="599.7,264.0 588.0,285.5 611.4,285.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="599.7" y="299.6" text-anchor="middle" fill="#5c5c57">Alegre</text>
+<polygon points="401.4,119.6 391.0,138.7 411.7,138.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="395.4,126.6 383.4,148.9 407.5,148.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="411.2,117.4 400.1,138.0 422.3,138.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="589.5,273.4 578.7,293.3 600.4,293.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="402.2,118.8 391.5,138.5 412.9,138.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="342.9,220.6 334.4,236.3 351.4,236.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="597.3,272.4 590.1,285.8 604.6,285.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="399.5,123.6 390.4,140.4 408.6,140.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="341.5,211.9 332.8,227.9 350.2,227.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="584.5,151.2 576.2,166.4 592.7,166.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="460.9,265.2 453.0,279.6 468.7,279.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="481.0,117.3 470.3,137.1 491.8,137.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="481.0" y="151.0" text-anchor="middle" fill="#5c5c57">Bom Princípio</text>
+<polygon points="387.3,220.1 379.8,233.9 394.8,233.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="336.3,246.7 328.6,260.8 343.9,260.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="470.2,218.8 462.6,232.8 477.8,232.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="363.4,137.7 355.1,153.0 371.7,153.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="490.7,149.2 483.0,163.4 498.4,163.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="524.1,273.8 515.0,290.7 533.2,290.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="524.1" y="304.1" text-anchor="middle" fill="#5c5c57">Bela Vista</text>
+<polygon points="290.7,235.0 284.1,247.1 297.2,247.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="566.8,265.0 559.3,278.8 574.3,278.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="391.5,184.3 383.7,198.7 399.3,198.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="403.2,121.9 395.2,136.7 411.3,136.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="533.4,250.7 525.0,266.2 541.9,266.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="680.9,216.8 672.8,231.7 689.0,231.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="539.7" cy="182.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="546.7" y="177.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Serrote Branco 4,3 km</text>
+<circle cx="586.5" cy="234.1" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="492.7" y="229.1" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Canudos 3,0 km</text>
+<rect x="394.7" y="128.2" width="10" height="10" fill="#1d1d1b"/><text x="408.7" y="151.2" font-weight="600" fill="#1d1d1b">Sede de Morrinhos</text>
+<line x1="35" x2="111.4" y1="401.6" y2="401.6" stroke="#8a8a84" stroke-width="2"/><text x="35" y="415.6" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="392.5970515970493" y2="392.5970515970493" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="396.5970515970493" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,385.6 421.4,397.8 434.6,397.8" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="396.5970515970493" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="410.5970515970493" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="419.5970515970493" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="415.5970515970493" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="419.5970515970493" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="438.5970515970493" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="442.5970515970493" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="438.5970515970493" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="442.5970515970493" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="461.5970515970493" y2="461.5970515970493" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="465.5970515970493" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="484.5970515970493" y2="484.5970515970493" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="488.5970515970493" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TRE-CE e TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 38/2026 (no corpo: nº 033/2026) · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (0):</strong> nenhuma.</li>
+<li><strong>De 3 a 5 km (5):</strong> Serrote Branco, Olheiros, Olheiros de Cima, Peba e Canudos.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (27):</strong> Areal, Beira Rio, Bela Vista, Boa Esperança, Bom Jardim, Bom Princípio, Caninana, Comunidade Quilombola Alto Alegre, Comunidade Quilombola Curralinho, Comunidade Quilombola Curralinho 1, Comunidade Quilombola Curralinho 2, Comunidade Quilombola Curralinho 3, Comunidade Quilombola Curralinho 4, Comunidade Quilombola Curralinho 5, Comunidade Quilombola Junco Manso, Comunidade Quilombola Junco Manso 1, Curralinhos, Espinho, Espinhos, Intains, Lajes, Lua, Pilões, Povoado Areal, Santa Fé, Sítio Alegre e Umari.</li>
+</ul><h2>Rotas do Edital nº 38/2026 (no corpo: nº 033/2026)</h2>
+<p>O edital tem 3 rotas para Morrinhos. Horários: Cada rota: ida 7:00 e 14:00; volta 11:00 e 18:00 (sentido inverso). Veículos: 3 veículos (1 de pequeno e 2 de médio porte) à disposição no Fórum para demandas pontuais da zona rural; veículo da rota não identificado no anexo.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Santa Fé – Mourões – Olheiros – Umbilina – Sítio Alegre</td></tr><tr><td>02</td><td>Solidão – Bom Princípio</td></tr><tr><td>03</td><td>Peba – Bela Vista</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 38/2026 da 44ª ZE (no corpo: nº 033/2026), DJE/TRE-CE nº 203 (disp. 16/09/2026), p. 201; https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=CE&amp;numDiario=203&amp;anoDiario=2026; quadro no anexo do DJE (https://sitdoc.tse.jus.br/sitdoc/DownloadFile?id=c730ab3a-7e11-4974-b7f4-749b53be8c6b&amp;app=dje&amp;extensao=jpeg), cópia em fontes/coleta_agentes/rodada2/CE/anexos/ze044_ed203_c730ab3a.jpeg.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 2 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Serrote Branco</strong></td><td>Caninana – Serrote Branco – Caninana</td><td>Serrote Branco</td><td>8,5 km (ida e volta)</td><td>~21 min</td></tr><tr><td><strong>Parada extra na Rota 01</strong></td><td>desvio pelo caminho atual: Canudos</td><td>Canudos</td><td>+5,8 km</td><td>+10 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMM</strong></p><p>Morrinhos/CE, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. José Mendes Lima Aguiar</strong><br>Juiz Eleitoral da 44ª Zona Eleitoral – Santana do Acaraú/CE</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 38/2026 (no corpo: nº 033/2026)) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Morrinhos, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 38/2026 (no corpo: nº 033/2026): Serrote Branco e Canudos.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Serrote Branco (Caninana – Serrote Branco – Caninana);</li><li>a inclusão de parada em Canudos na Rota 01, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 38/2026 (no corpo: nº 033/2026) deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Morrinhos</p></blockquote>
+<p class="fontes">Fontes: TRE-CE e TSE, Locais de Votação de Morrinhos; Edital nº 38/2026 da 44ª ZE (no corpo: nº 033/2026), DJE/TRE-CE nº 203 (disp. 16/09/2026), p. 201; https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=CE&amp;numDiario=203&amp;anoDiario=2026; quadro no anexo do DJE (https://sitdoc.tse.jus.br/sitdoc/DownloadFile?id=c730ab3a-7e11-4974-b7f4-749b53be8c6b&amp;app=dje&amp;extensao=jpeg), cópia em fontes/coleta_agentes/rodada2/CE/anexos/ze044_ed203_c730ab3a.jpeg; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>
