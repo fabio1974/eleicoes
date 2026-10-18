@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Mari</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Mari</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/mari.pdf?v=1792333089" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Mari (4ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 4ª Zona Eleitoral <strong>1 parada extra em rotas do edital</strong> no transporte gratuito de Mari.
+Traçamos pelas estradas o percurso das 3 rotas do Edital nº 0010/2026 da 4ª ZE. 0 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 1 ficam a 1–2 km.</p>
+<ul>
+<li>Mari tem 18.489 eleitores aptos em 15 locais de votação e 65 seções. São 3 locais rurais, com 2.256 eleitores (12% do total).</li>
+<li>1 locais rurais ficam a 10 km ou mais da sede, com 597 eleitores. Os mais distantes: Lagoa do Félix (16,7 km).</li>
+
+<li><strong>Rota passa perto</strong> (1–2 km): Padre Gino.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 11 localidades rurais de Mari que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Padre Gino</td><td>7,6</td><td>Eixo 3</td><td>1,8</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Caldas Brandão</td><td>4,2</td><td>Eixo 3</td><td>0,8</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fundo do Vale</td><td>4,0</td><td>Eixo 2</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Agrovila do PA Zumbi dos Palmares</td><td>3,5</td><td>Eixo 1</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Pirpiri</td><td>3,4</td><td>Eixo 1</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>1 das 16 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Fazenda Marisa (Eixo 1). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 11 localidades rurais de Mari, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1087" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Mari: 1 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital nº 0010/2026 da 4ª ZE e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="35.0,501.0 291.3,842.0 333.6,870.4 340.6,920.8 365.3,943.4 439.2,954.6 458.5,926.2 509.5,912.8 561.5,879.0 629.0,752.0 692.3,689.8 719.6,597.5 725.0,544.5 713.2,476.9 685.3,446.9 684.3,310.2 703.0,288.7 690.2,206.7 655.8,152.0 643.5,90.4 566.8,161.1 365.3,253.4 295.6,282.3 243.6,281.2 208.2,243.7 188.9,275.9 144.4,268.9 131.0,317.2 91.3,334.8 35.5,449.6 35.0,501.0 35.0,501.0" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="564.2,227.6 552.2,232.5 545.9,243.7 539.2,256.2 533.4,266.7 526.1,279.4 517.1,271.9 506.9,263.7 497.3,255.8 482.5,254.3 468.7,257.4 455.5,252.7 439.4,252.3 424.9,254.5 410.4,251.2 394.3,251.6 380.8,255.5 365.8,253.9 354.0,261.4 340.5,264.9 328.6,271.7 314.3,286.6 305.1,296.3 295.4,306.5 286.4,315.8 274.3,328.3 263.5,338.0 255.3,347.8 248.2,358.3 234.6,378.7 220.7,399.2 207.3,418.9 197.2,433.6 204.9,453.8 215.9,466.3 237.2,490.4 247.4,501.9 258.1,493.9 273.6,496.9 289.3,499.9 285.2,520.7 269.8,517.9 284.1,543.6 292.4,553.1 309.2,572.1 317.4,581.5 327.3,592.8 336.8,603.1 347.8,611.6 350.6,626.1 349.3,636.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Eixo 1</title></polyline>
+<polyline points="659.5,80.0 656.7,94.0 648.9,107.6 648.1,123.7 650.5,137.7 655.1,150.3 663.0,159.0 666.2,173.1 675.2,183.2 681.6,193.5 688.2,205.0 695.7,219.1 698.0,233.7 703.5,245.8 704.4,261.8 704.5,278.3 701.0,291.3 691.1,303.5 684.1,318.8 681.6,349.2 679.2,373.8 647.2,362.3 613.2,347.8 603.7,366.0 579.0,406.6 567.9,397.2 547.1,382.8 537.2,375.1 526.1,367.2 515.5,360.6 503.5,354.6 492.2,348.2 496.8,333.4 506.9,308.5 512.0,295.8 506.9,308.5 500.3,324.3 492.0,345.9 502.4,353.9 515.5,360.6 526.1,367.2 536.9,374.8 547.1,382.8 561.6,392.6 579.0,406.6 575.0,421.7 570.7,437.1 564.4,447.9 553.7,461.3 548.2,474.3 537.7,485.4 533.6,501.7 521.2,512.8 502.5,523.7 490.5,530.4 479.5,524.2 473.2,540.4 456.5,550.1 451.9,561.9 447.2,573.6 437.6,581.7 433.2,595.7 429.9,612.8 420.9,621.2 412.0,628.9 399.6,632.8 386.0,628.9 371.1,623.1 359.4,618.5 362.5,634.6 349.3,636.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Eixo 2</title></polyline>
+<polyline points="421.3,711.2 409.3,703.7 412.7,691.0 407.4,674.1 398.6,666.6 401.2,648.4 405.3,636.3 423.2,643.2 439.8,649.5 475.1,663.2 495.1,670.8 475.1,663.2 439.8,649.5 426.0,644.3 411.9,638.8 398.0,633.5 386.0,628.9 371.1,623.1 359.4,618.5 362.5,634.6 363.7,650.4 358.1,666.0 352.4,679.4 347.4,692.5 342.8,704.4 337.4,718.0 333.3,730.6 335.2,745.6 338.1,762.4 339.2,778.4 334.6,791.1 338.9,804.6 345.1,815.3 337.3,827.7 341.9,841.6 344.2,856.2 351.0,865.6 353.7,880.2 359.5,891.0 371.0,898.9 382.3,906.5 390.8,914.1 405.8,911.7 411.7,900.9 425.6,897.9 437.3,902.7 445.5,911.5 458.8,916.0 473.9,913.3 485.1,919.0 497.3,915.0 500.0,901.4 514.2,904.7 512.9,889.2 510.5,873.8 520.4,865.0 519.0,848.6 524.6,837.4 532.0,827.1 539.8,816.6 547.1,807.5 539.8,816.6 532.0,827.1 524.6,837.4 519.0,848.6 520.4,865.0 510.9,872.1 512.2,887.6 517.2,900.5 501.4,901.6 497.8,914.6 485.6,919.2 476.1,912.1 463.3,916.2 449.1,913.8 439.6,906.3 431.5,898.0 421.9,891.3 412.2,884.4 398.6,881.9 389.3,872.8 381.1,863.9 373.0,855.2 358.7,860.3 344.8,858.0 343.1,843.3 336.9,832.9 342.9,822.7 340.7,807.4 334.6,796.7 337.6,783.0 340.1,768.9 335.1,756.1 334.1,737.9 336.5,720.0 341.9,706.9 346.5,695.0 351.3,683.2 355.4,671.0 361.8,660.0 363.4,645.6 356.9,635.2 349.3,636.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Eixo 3</title></polyline>
+<polyline points="548.4,805.8 555.2,795.8 561.0,785.1 564.8,771.2 568.4,756.0 574.3,745.8 587.3,749.8 598.9,754.8 607.6,762.3 622.4,764.2 634.5,759.0 648.5,756.9 650.1,771.4 641.3,780.3 650.1,771.4 651.5,755.8 639.8,760.4 627.7,764.7 614.3,761.8 601.8,757.0 588.7,750.2 574.0,744.1 568.4,756.0 564.8,771.2 561.0,785.1 555.2,795.8 548.4,805.8 548.4,805.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Eixo 3</title></polyline>
+<circle cx="311.8" cy="876.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="694.4" cy="296.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="285.4" cy="502.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="564.2" cy="227.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="363.9" cy="243.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="659.2" cy="81.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="344.4" cy="538.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="433.9" cy="263.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="414.0" cy="634.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="477.9" cy="521.4" r="2.2" fill="#b9b9b2"/>
+<polygon points="349.7,606.2 339.1,625.8 360.3,625.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="334.7,637.9 321.6,662.0 347.8,662.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="376.5,636.3 366.5,654.8 386.6,654.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="355.6,659.8 346.0,677.5 365.3,677.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="355.6,636.6 344.3,657.4 366.9,657.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="400.1,635.3 389.1,655.6 411.1,655.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="342.2,614.7 330.0,637.2 354.4,637.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="443.5,241.2 433.5,259.6 453.5,259.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="443.5" y="273.3" text-anchor="middle" fill="#5c5c57">Zona Rural</text>
+<polygon points="399.0,630.0 390.2,646.4 407.9,646.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="350.2,592.0 340.4,610.1 360.1,610.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="343.3,691.5 333.2,710.1 353.4,710.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="327.7,600.5 318.8,616.9 336.7,616.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="633.9,128.5 625.2,144.4 642.5,144.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="324.5,627.1 314.9,644.8 334.1,644.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="479.5,521.6 471.0,537.2 487.9,537.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="632.6" cy="785.9" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="520.2" y="780.9" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Padre Gino 7,6 km</text>
+<rect x="344.6" y="632.0" width="10" height="10" fill="#1d1d1b"/><text x="358.6" y="655.0" font-weight="600" fill="#1d1d1b">Sede de Mari</text>
+<line x1="35" x2="276.5" y1="984.6" y2="984.6" stroke="#8a8a84" stroke-width="2"/><text x="35" y="998.6" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="975.6111888111767" y2="975.6111888111767" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="979.6111888111767" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,968.6 421.4,980.9 434.6,980.9" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="979.6111888111767" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="993.6111888111767" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="1002.6111888111767" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="998.6111888111767" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="1002.6111888111767" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1021.6111888111767" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1025.6111888111768" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1021.6111888111767" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1025.6111888111768" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1044.6111888111768" y2="1044.6111888111768" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1048.6111888111768" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1067.6111888111768" y2="1067.6111888111768" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1071.6111888111768" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 0010/2026 da 4ª ZE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (1):</strong> Padre Gino.</li>
+<li><strong>De 3 a 5 km (4):</strong> Caldas Brandão, Fundo do Vale, Agrovila do PA Zumbi dos Palmares e Sítio Pirpiri.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (6):</strong> Agrovila do PA Tiradentes, Assentamento Zumbi dos Palmares, Lagoa do Félix, Ocupação Orlando Bernardo de Oliveira, Sítio Taumatá 2 e Taumatá.</li>
+</ul><h2>Rotas do Edital nº 0010/2026 da 4ª ZE</h2>
+<p>O edital tem 3 rotas para Mari. Horários: Embarque às 6h nas localidades e desembarque às 8h no largo das Matrizes de cada município. Veículos: não informados.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td> 1</td><td>Sítio Pirpiri – Sítio Taumatá – Fazenda Marisa – Assentamento Zumbi dos Palmares – Sede</td></tr><tr><td> 2</td><td>Sítio Lagoa do Félix – Sítio Fundo do Vale – Sítio Açude Grande – Assentamento Tiradentes – Sede</td></tr><tr><td> 3</td><td>Sítio Santo Antônio – Sítio Caldeirão – Sítio Junco – Sítio Baixinha – Sítio Alfavaca – Sede</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 0010/2026 da 4ª ZE (Rota dos transportes de eleitoras), anexo &quot;ROTAS DOS TRANSPORTES.pdf&quot;; DJE/TRE-PB nº 198, disponibilizado em 18/09/2026 (publ. 19/09/2026), p. 5 (edição inteira em fontes/dje/PB/198.pdf); quadro no anexo do DJE (https://sitdoc.tse.jus.br/sitdoc/DownloadFile?id=9aa7e146-9dbd-4ceb-a9ba-c68c401418d8&amp;app=dje&amp;extensao=pdf), cópia em fontes/coleta_agentes/rodada2/PB/anexos/ze004_ed198_9aa7e146.pdf.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 1 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Parada extra na Eixo 3</strong></td><td>desvio pelo caminho atual: Padre Gino</td><td>Padre Gino</td><td>+8,4 km</td><td>+21 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMM</strong></p><p>Mari/PB, ___ de outubro de 2026.</p><p>À Excelentíssima Senhora<br><strong>Dra. Adriana Lins de Oliveira Bezerra</strong><br>Juíza Eleitoral da 4ª Zona Eleitoral – Sapé/PB</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 0010/2026 da 4ª ZE) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssima Senhora Juíza,</p><p>O Município de Mari, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 0010/2026 da 4ª ZE: Padre Gino.</p><p>Sugerimos, respeitosamente:</p><ol><li>a inclusão de parada em Padre Gino na Eixo 3, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 0010/2026 da 4ª ZE deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Mari</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Mari; Edital nº 0010/2026 da 4ª ZE (Rota dos transportes de eleitoras), anexo &quot;ROTAS DOS TRANSPORTES.pdf&quot;; DJE/TRE-PB nº 198, disponibilizado em 18/09/2026 (publ. 19/09/2026), p. 5 (edição inteira em fontes/dje/PB/198.pdf); quadro no anexo do DJE (https://sitdoc.tse.jus.br/sitdoc/DownloadFile?id=9aa7e146-9dbd-4ceb-a9ba-c68c401418d8&amp;app=dje&amp;extensao=pdf), cópia em fontes/coleta_agentes/rodada2/PB/anexos/ze004_ed198_9aa7e146.pdf; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>
