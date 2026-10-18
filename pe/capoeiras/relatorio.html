@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Capoeiras</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Capoeiras</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/capoeiras.pdf?v=1792365384" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Capoeiras (130ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 130ª Zona Eleitoral <strong>5 rotas novas</strong> no transporte gratuito de Capoeiras.
+<strong>A Justiça Eleitoral dispensou o transporte gratuito de eleitores neste município nas Eleições 2026</strong> (O quadro de percursos do transporte de eleitores (edital da zona no DJE/TRE-PE) ainda não foi incorporado a este levantamento. A análise considera apenas a distância até o local de votação). As 20 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Capoeiras tem 16.560 eleitores aptos em 7 locais de votação e 50 seções. São 3 locais rurais, com 3.800 eleitores (23% do total).</li>
+<li>3 locais rurais ficam a 10 km ou mais da sede, com 3.800 eleitores. Os mais distantes: Povoado Do Alegre , Sn (17,8 km), Povoado Da Maniçoba , Sn (16,1 km) e Povoado Riacho Do Mel , Sn (14,0 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Comunidade Quilombola Caldeirão (16,7 km do local de votação), São Pedro (16,5 km do local de votação), Comunidade Quilombola Fidelão 2 (15,5 km do local de votação), Comunidade Quilombola Cascavel (14,9 km do local de votação), Comunidade Quilombola Fidelão 1 (14,2 km do local de votação), Cajarana (13,8 km do local de votação), Comunidade Quilombola Imbé 2 (12,4 km do local de votação), Comunidade Quilombola Imbé (11,7 km do local de votação), Grotão (9,7 km do local de votação), Campo Alegre (9,4 km do local de votação), Barra do Juá (9,2 km do local de votação), Poços (8,4 km do local de votação), Canhoto (8,2 km do local de votação), Piador (7,5 km do local de votação), Olho d&#x27;Água (7,1 km do local de votação), Pau Ferro (6,9 km do local de votação), Tamboril (6,8 km do local de votação), Catete (5,5 km do local de votação), Ramalho (4,7 km do local de votação) e Pirim (4,4 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 23 localidades rurais de Capoeiras que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Comunidade Quilombola Caldeirão</td><td>16,7</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>São Pedro</td><td>16,5</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Fidelão 2</td><td>15,5</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Cascavel</td><td>14,9</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Fidelão 1</td><td>14,2</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Cajarana</td><td>13,8</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Imbé 2</td><td>12,4</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Comunidade Quilombola Imbé</td><td>11,7</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Grotão</td><td>9,7</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Campo Alegre</td><td>9,4</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Barra do Juá</td><td>9,2</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Poços</td><td>8,4</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Canhoto</td><td>8,2</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Piador</td><td>7,5</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Olho d&#x27;Água</td><td>7,1</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Pau Ferro</td><td>6,9</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Tamboril</td><td>6,8</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Catete</td><td>5,5</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Ramalho</td><td>4,7</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr><tr><td>Pirim</td><td>4,4</td><td>—</td><td>—</td><td>Sem rota (transporte dispensado pela Justiça Eleitoral)</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 23 localidades rurais de Capoeiras, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 963" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Capoeiras: 20 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="43.2,599.0 274.0,699.6 279.9,721.1 301.4,747.4 330.2,749.5 366.4,741.1 431.7,743.9 450.1,718.6 501.0,705.8 516.3,741.1 549.4,786.1 574.4,799.2 585.3,785.1 618.7,791.7 669.6,813.2 677.8,823.5 715.2,823.2 624.7,743.6 621.2,717.1 636.2,706.8 653.1,662.1 628.7,625.9 666.8,596.8 679.9,577.5 682.7,550.0 714.6,536.6 706.8,505.6 668.1,460.7 568.8,395.1 541.9,283.3 497.6,317.0 483.5,345.4 463.2,327.3 463.5,260.5 434.2,264.6 413.9,243.0 400.4,214.3 332.7,231.8 351.7,194.3 311.1,120.9 318.9,80.0 196.8,168.4 155.9,193.7 150.3,235.8 120.6,250.8 113.8,288.6 88.2,301.4 88.5,317.6 123.4,364.8 157.2,382.3 149.4,404.2 109.4,407.6 111.6,423.2 81.3,431.3 43.2,599.0 43.2,599.0" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="522.4,302.2 516.0,306.4 508.4,309.8 502.3,313.1 497.3,318.4 493.6,325.1 490.2,331.5 480.4,327.4 473.7,322.8 467.4,319.3 460.7,311.5 453.1,308.6 445.3,305.7 436.0,304.3 428.5,306.2 419.5,304.6 416.5,295.2 412.1,289.1 406.0,285.2 396.2,285.4 389.9,288.5 383.2,291.4 374.7,292.7 365.5,292.4 359.7,296.4 351.9,298.3 342.5,298.4 333.4,297.3 326.7,300.0 320.8,296.4 311.2,296.8 303.8,303.5 294.1,304.5 285.6,303.6 278.2,301.1 270.6,302.9 263.2,305.1 258.1,310.1 250.5,312.6 241.9,313.9 243.9,305.6 247.8,299.7 252.2,292.9 256.3,284.7 261.6,279.3 261.3,269.8 261.1,260.0 263.4,251.0 252.1,251.0 241.6,252.5 234.7,256.4 227.3,258.6 221.0,262.5 212.8,265.6 203.4,260.8 192.7,261.2 183.5,260.4 192.7,261.2 203.4,260.8 211.0,264.0 219.5,262.9 225.8,259.2 233.6,257.3 239.0,253.3 245.0,248.9 254.9,251.1 261.9,254.5 261.6,263.8 262.5,272.9 260.3,280.3 255.0,286.4 262.4,288.9 264.5,297.1 269.6,303.3 278.2,301.1 285.6,303.6 293.7,305.0 303.0,304.5 307.1,299.2 314.1,296.6 323.8,296.3 332.8,296.8 341.3,298.2 350.7,298.2 359.1,296.8 364.4,292.6 374.1,292.6 383.2,291.4 389.9,288.5 396.2,285.4 406.0,285.2 412.1,289.1 416.5,295.2 418.4,303.4 424.3,307.0 431.6,304.9 442.4,305.1 450.4,307.1 460.7,311.5 466.8,316.9 472.2,322.0 479.4,326.7 484.7,331.3 492.1,328.1 495.6,321.3 499.6,315.6 505.0,311.4 512.1,308.2 518.6,305.0 522.4,302.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Caldeirão</title></polyline>
+<polyline points="639.9,466.3 644.1,460.8 653.1,459.4 661.7,461.5 668.3,465.2 675.1,469.0 681.9,472.1 687.2,477.0 692.2,481.8 695.1,489.9 699.0,496.7 705.1,501.7 708.1,508.5 711.9,514.7 714.8,521.8 714.7,533.4 716.6,541.0 710.9,545.2 706.7,550.6 703.4,557.2 700.5,564.1 695.9,570.0 690.4,575.0 686.0,580.5 684.0,587.8 685.4,596.4 689.7,601.7 694.7,606.5 697.5,614.3 695.9,623.4 693.2,632.0 690.0,639.0 686.1,644.8 681.6,651.3 678.2,658.0 681.4,667.4 686.6,672.7 692.3,679.6 696.3,685.0 698.3,692.6 703.6,697.5 709.6,701.5 714.0,707.0 712.9,716.0 713.4,725.1 712.8,734.4 715.5,741.5 717.4,749.2 721.4,754.7 723.8,761.8 724.8,772.0 725.0,781.6 723.5,789.7 720.6,796.4 720.2,805.7 717.9,814.1 720.7,823.4 723.1,830.7 720.7,823.4 718.0,816.5 719.2,807.9 720.7,798.4 722.7,790.7 724.8,782.9 724.9,773.5 724.1,764.7 721.9,757.3 718.5,751.0 716.9,742.9 712.4,737.5 714.4,729.9 713.1,721.0 713.7,710.7 711.1,702.4 704.3,698.3 699.0,693.5 696.6,685.6 692.3,679.6 688.1,674.4 682.7,668.8 678.0,663.3 679.9,654.8 682.7,647.9 687.4,643.2 691.4,636.9 693.8,629.0 696.4,621.8 697.3,612.6 694.2,605.9 689.1,601.0 684.0,594.8 684.4,585.7 687.1,578.8 692.9,572.4 698.1,567.8 701.8,561.5 705.6,554.3 709.0,547.4 714.0,543.0 714.7,533.8 714.8,522.9 712.5,515.3 708.4,509.6 705.8,502.6 699.0,496.7 695.2,490.5 693.1,483.1 687.5,477.3 682.5,472.5 675.8,469.3 669.6,466.0 663.8,462.4 656.6,460.0 648.5,458.4 642.9,462.3 639.9,466.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – São Pedro</title></polyline>
+<polyline points="276.0,618.3 263.9,610.3 256.3,603.7 252.0,597.9 243.1,596.9 235.6,600.0 227.4,601.2 218.2,600.2 209.2,597.9 201.6,596.1 192.8,595.3 185.2,593.6 177.8,591.0 170.3,587.9 164.6,583.5 159.1,579.4 149.6,579.7 141.3,576.7 133.5,574.7 124.9,573.7 119.5,569.0 112.7,566.4 106.5,563.0 98.1,561.9 93.3,556.8 84.8,553.9 77.3,550.3 71.9,545.8 64.6,543.5 59.4,539.1 52.7,535.8 42.9,535.7 35.3,531.8 43.6,530.3 49.5,526.5 54.7,521.3 53.7,512.4 50.1,506.3 47.7,499.2 48.0,490.1 44.5,483.0 45.2,474.1 44.2,464.7 43.4,454.6 47.2,445.5 56.5,443.6 62.9,435.4 74.8,422.5 80.0,417.0 85.1,407.8 89.9,398.8 94.6,392.9 101.0,384.9 106.3,377.6 107.4,367.2 105.4,359.2 102.3,351.7 97.6,346.5 96.8,334.7 93.6,327.7 93.5,316.0 93.0,305.9 90.1,298.7 98.2,297.3 106.9,294.9 99.7,297.5 90.1,298.7 93.0,305.9 93.6,314.8 93.2,324.5 96.1,332.7 98.5,341.7 99.7,350.2 109.3,355.4 117.0,357.6 123.8,365.1 129.6,368.7 133.0,361.6 137.6,355.5 141.7,349.6 147.3,343.1 155.5,339.6 164.8,333.6 171.6,330.2 176.7,325.4 171.6,330.2 164.8,333.6 156.7,339.0 149.6,341.9 143.3,347.7 138.3,355.0 133.0,361.6 129.6,368.7 136.8,373.4 140.5,380.2 145.2,385.5 152.8,389.3 159.6,392.2 163.7,399.6 165.6,408.0 169.3,414.2 173.7,423.4 177.3,430.5 178.4,439.1 179.8,447.8 179.7,457.0 178.8,466.1 177.1,473.9 182.2,479.1 184.4,487.9 183.8,496.8 183.1,505.6 182.2,514.4 183.0,524.5 187.6,531.6 195.6,534.2 200.5,539.3 205.3,544.2 210.7,550.6 213.7,557.6 216.5,565.0 220.6,572.8 224.2,579.7 229.1,585.9 230.9,594.9 235.6,600.0 243.1,596.9 251.9,597.7 256.3,603.7 263.9,610.3 272.5,615.3 276.0,618.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Fidelão 2</title></polyline>
+<polyline points="481.3,643.6 476.8,636.8 473.5,630.7 468.2,626.5 469.9,618.8 465.9,613.4 470.0,608.1 474.9,603.6 480.6,599.6 488.9,600.6 495.9,603.3 504.9,604.4 512.8,607.1 519.9,609.8 523.1,616.5 531.3,618.3 540.2,619.1 546.7,622.2 550.9,627.5 552.9,635.2 549.4,641.2 546.3,647.6 541.9,652.6 538.7,659.2 536.5,667.2 540.6,673.8 544.3,679.9 550.2,684.1 554.6,690.0 558.1,696.3 560.5,704.1 562.0,712.7 562.2,722.3 559.3,729.2 556.5,736.0 551.9,741.5 547.1,746.9 547.6,756.0 544.7,762.6 536.6,766.5 529.2,771.4 522.6,776.0 527.5,780.9 535.8,785.5 541.6,789.2 543.3,797.1 548.5,792.6 545.0,798.9 542.2,791.8 538.0,786.6 529.6,782.1 523.4,777.7 529.2,771.4 534.5,767.4 542.0,764.4 547.6,758.9 545.4,750.8 549.0,744.7 553.2,739.5 557.6,734.2 560.9,727.0 562.6,719.1 561.6,710.6 560.3,702.3 557.1,694.9 554.7,687.9 549.5,683.6 543.7,679.4 539.0,671.1 535.5,665.2 538.9,658.9 542.3,652.1 546.6,646.9 550.0,640.4 553.2,632.9 549.9,626.8 544.9,621.1 536.8,619.7 529.4,617.6 522.6,614.7 519.4,608.2 511.0,606.4 503.4,604.1 494.9,602.8 488.3,600.0 478.9,600.1 473.2,603.9 468.2,609.3 469.2,617.7 465.4,623.4 471.1,627.6 475.1,633.8 478.3,640.6 481.3,643.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Cajarana</title></polyline>
+<polyline points="279.6,651.5 286.9,648.7 295.6,649.9 301.6,654.9 306.9,661.0 310.7,667.0 315.4,672.5 319.9,677.4 321.9,685.8 320.7,694.0 322.0,702.5 327.6,706.5 330.3,713.2 335.2,720.1 339.2,725.8 345.4,729.3 350.3,734.0 354.8,739.0 358.8,745.0 363.4,750.3 367.1,756.5 362.7,762.5 353.9,761.6 346.1,763.3 337.1,765.8 329.4,768.3 322.7,764.1 328.4,768.1 337.1,765.8 346.1,763.3 353.9,761.6 362.7,762.5 369.7,759.9 374.2,753.6 383.4,753.9 393.0,753.5 400.7,750.9 409.1,749.9 417.4,750.9 422.2,756.6 429.1,753.6 433.0,747.9 437.9,742.9 443.1,738.2 450.8,736.4 458.5,738.8 469.1,740.0 472.4,733.9 471.0,725.4 467.4,719.6 466.1,711.1 462.5,704.4 458.0,699.4 448.5,699.1 447.3,707.6 439.4,709.6 434.8,716.6 426.7,714.9 421.1,710.6 414.2,706.3 407.7,702.3 402.3,697.8 407.5,702.1 414.2,706.3 420.2,710.2 425.9,714.5 432.3,717.9 437.6,712.4 443.5,708.3 448.7,703.5 454.1,697.7 461.0,702.8 466.0,708.7 467.2,718.2 477.1,721.0 484.1,723.8 490.2,727.1 484.1,723.8 477.1,721.0 469.0,719.7 466.2,711.6 463.1,705.2 458.0,699.4 448.5,699.1 440.9,696.4 436.9,690.8 432.8,685.0 427.5,680.6 420.0,676.9 414.0,673.1 406.4,675.1 397.0,675.2 390.0,677.7 383.5,681.0 374.2,681.1 364.8,681.1 356.1,676.4 346.3,676.1 336.6,676.0 328.8,674.1 320.6,672.4 313.0,670.2 308.7,664.2 305.1,657.2 299.5,652.9 292.1,650.6 284.0,647.4 279.6,651.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Campo Alegre</title></polyline>
+<circle cx="529.4" cy="298.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="642.1" cy="463.7" r="2.2" fill="#b9b9b2"/>
+<polygon points="282.1,620.4 267.4,647.5 296.8,647.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="275.8,604.0 262.2,629.1 289.5,629.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="522.9,292.0 512.8,310.6 533.0,310.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="522.9" y="324.3" text-anchor="middle" fill="#5c5c57">Zona Rural</text>
+<polygon points="639.7,455.5 629.1,474.9 650.2,474.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="481.3,632.3 470.8,651.6 491.8,651.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="283.3,623.1 269.7,648.2 296.9,648.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="279.6,637.8 266.9,661.2 292.3,661.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="179.0" cy="256.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="186.0" y="251.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Caldeirão 16,7 km</text>
+<circle cx="722.5" cy="829.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="610.1" y="824.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">São Pedro 16,5 km</text>
+<circle cx="107.2" cy="295.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="114.2" y="290.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Fidelão 2 15,5 km</text>
+<circle cx="226.8" cy="255.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="233.8" y="270.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Cascavel 14,9 km</text>
+<circle cx="195.3" cy="301.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="202.3" y="316.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Fidelão 1 14,2 km</text>
+<circle cx="551.8" cy="788.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="558.8" y="783.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Cajarana 13,8 km</text>
+<circle cx="239.3" cy="318.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="246.3" y="333.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Imbé 2 12,4 km</text>
+<circle cx="253.7" cy="315.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="35.6" cy="532.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="42.6" y="527.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Grotão 9,7 km</text>
+<circle cx="449.0" cy="732.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="456.0" y="727.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Campo Alegre 9,4 km</text>
+<circle cx="490.4" cy="727.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="497.4" y="742.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Barra do Juá 9,2 km</text>
+<circle cx="432.5" cy="749.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="439.5" y="764.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Poços 8,4 km</text>
+<circle cx="461.0" cy="717.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="468.0" y="712.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Canhoto 8,2 km</text>
+<circle cx="321.6" cy="760.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="328.6" y="755.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Piador 7,5 km</text>
+<circle cx="447.8" cy="698.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="454.8" y="693.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Olho d&#x27;Água 7,1 km</text>
+<circle cx="433.5" cy="719.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="394.9" cy="752.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="401.7" cy="697.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="352.5" cy="737.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="359.5" y="732.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Ramalho 4,7 km</text>
+<circle cx="713.7" cy="533.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="632.3" y="528.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pirim 4,4 km</text>
+<rect x="273.6" y="640.2" width="10" height="10" fill="#1d1d1b"/><text x="287.6" y="663.2" font-weight="600" fill="#1d1d1b">Sede de Capoeiras</text>
+<line x1="35" x2="175.7" y1="860.8" y2="860.8" stroke="#8a8a84" stroke-width="2"/><text x="35" y="874.8" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="851.823478296308" y2="851.823478296308" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="855.823478296308" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,844.8 421.4,857.1 434.6,857.1" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="855.823478296308" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="869.823478296308" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="878.823478296308" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="874.823478296308" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="878.823478296308" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="897.823478296308" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="901.823478296308" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="897.823478296308" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="901.823478296308" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="920.823478296308" y2="920.823478296308" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="924.823478296308" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="943.823478296308" y2="943.823478296308" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="947.823478296308" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital de transporte de eleitores da 130ª ZE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (18):</strong> Comunidade Quilombola Caldeirão, São Pedro, Comunidade Quilombola Fidelão 2, Comunidade Quilombola Cascavel, Comunidade Quilombola Fidelão 1, Cajarana, Comunidade Quilombola Imbé 2, Comunidade Quilombola Imbé, Grotão, Campo Alegre, Barra do Juá, Poços, Canhoto, Piador, Olho d&#x27;Água, Pau Ferro, Tamboril e Catete.</li>
+<li><strong>De 3 a 5 km (2):</strong> Ramalho e Pirim.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (3):</strong> Alegre, Maniçoba e Riacho do Mel.</li>
+</ul><h2>Rotas do Edital de transporte de eleitores da 130ª ZE</h2>
+<p>O edital tem 0 rotas para Capoeiras. Horários: não informados. Veículos: não informados.</p>
+<p><strong>A Justiça Eleitoral dispensou o transporte gratuito de eleitores neste município nas Eleições 2026.</strong> O quadro de percursos do transporte de eleitores (edital da zona no DJE/TRE-PE) ainda não foi incorporado a este levantamento. A análise considera apenas a distância até o local de votação</p>
+<p><strong>Atenção:</strong> A dispensa do transporte foi publicada sem citar o turno e é considerada válida também para o 2º turno. A minuta pede a reconsideração para as localidades mais distantes.</p>
+<p>Fonte: Quadro de percursos não localizado nas edições do DJE/TRE-PE consultadas.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 20 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Comunidade Quilombola Caldeirão</strong></td><td>Sede – Comunidade Quilombola Imbé – Comunidade Quilombola Imbé 2 – Comunidade Quilombola Cascavel – Comunidade Quilombola Caldeirão – Sede</td><td>Comunidade Quilombola Imbé, Comunidade Quilombola Imbé 2, Comunidade Quilombola Cascavel, Comunidade Quilombola Caldeirão</td><td>35,4 km (ida e volta)</td><td>~1h17</td></tr><tr><td><strong>Rota nova – São Pedro</strong></td><td>Sede – Pirim – São Pedro – Sede</td><td>Pirim, São Pedro</td><td>33,1 km (ida e volta)</td><td>~50 min</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Fidelão 2</strong></td><td>Sede – Grotão – Comunidade Quilombola Fidelão 2 – Comunidade Quilombola Fidelão 1 – Sede</td><td>Grotão, Comunidade Quilombola Fidelão 2, Comunidade Quilombola Fidelão 1</td><td>41,1 km (ida e volta)</td><td>~1h15</td></tr><tr><td><strong>Rota nova – Cajarana</strong></td><td>Sede – Cajarana – Sede</td><td>Cajarana</td><td>27,5 km (ida e volta)</td><td>~1h06</td></tr><tr><td><strong>Rota nova – Campo Alegre</strong></td><td>Sede – Ramalho – Piador – Tamboril – Poços – Campo Alegre – Canhoto – Olho d&#x27;Água – Pau Ferro – Catete – Barra do Juá – Sede</td><td>Ramalho, Piador, Tamboril, Poços, Campo Alegre, Canhoto, Olho d&#x27;Água, Pau Ferro, Catete, Barra do Juá</td><td>32,9 km (ida e volta)</td><td>~1h13</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMC</strong></p><p>Capoeiras/PE, ___ de outubro de 2026.</p><p>Ao(À) Excelentíssimo(a) Senhor(a)<br><strong>[nome do(a) Juiz(a) Eleitoral]</strong><br>Juiz(a) Eleitoral da 130ª Zona Eleitoral – [sede da zona]/PE</p><p><strong>Assunto:</strong> Pedido de reconsideração da dispensa do transporte gratuito de eleitores (de transporte de eleitores da 130ª ZE) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo(a) Senhor(a) Juiz(a),</p><p>O Município de Capoeiras, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação que, com a dispensa do transporte gratuito determinada pela de transporte de eleitores da 130ª ZE, ficam sem nenhum meio de transporte da Justiça Eleitoral para votar: Comunidade Quilombola Caldeirão, São Pedro, Comunidade Quilombola Fidelão 2, Comunidade Quilombola Cascavel, Comunidade Quilombola Fidelão 1, Cajarana, Comunidade Quilombola Imbé 2, Comunidade Quilombola Imbé, Grotão, Campo Alegre, Barra do Juá, Poços, Canhoto, Piador, Olho d&#x27;Água, Pau Ferro, Tamboril, Catete, Ramalho e Pirim.</p><p>Sugerimos, respeitosamente, que Vossa Excelência reconsidere a dispensa ao menos para essas localidades, com a criação das seguintes rotas:</p><ol><li>a criação da Rota nova – Comunidade Quilombola Caldeirão (Sede – Comunidade Quilombola Imbé – Comunidade Quilombola Imbé 2 – Comunidade Quilombola Cascavel – Comunidade Quilombola Caldeirão – Sede);</li><li>a criação da Rota nova – São Pedro (Sede – Pirim – São Pedro – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola Fidelão 2 (Sede – Grotão – Comunidade Quilombola Fidelão 2 – Comunidade Quilombola Fidelão 1 – Sede);</li><li>a criação da Rota nova – Cajarana (Sede – Cajarana – Sede);</li><li>a criação da Rota nova – Campo Alegre (Sede – Ramalho – Piador – Tamboril – Poços – Campo Alegre – Canhoto – Olho d&#x27;Água – Pau Ferro – Catete – Barra do Juá – Sede).</li></ol><p>As rotas sugeridas atendem só as localidades mais distantes, que hoje não têm como chegar ao local de votação.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Capoeiras</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Capoeiras; Quadro de percursos não localizado nas edições do DJE/TRE-PE consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

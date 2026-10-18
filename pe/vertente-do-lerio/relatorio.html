@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Vertente do Lério</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Vertente do Lério</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/vertente-do-lerio.pdf?v=1792364752" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Vertente do Lério (34ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 34ª Zona Eleitoral <strong>3 rotas novas</strong> no transporte gratuito de Vertente do Lério.
+<strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-PE) para Vertente do Lério</strong> (O quadro de percursos do transporte de eleitores (edital da zona no DJE/TRE-PE) ainda não foi incorporado a este levantamento. A análise considera apenas a distância até o local de votação). As 26 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Vertente do Lério tem 8.319 eleitores aptos em 4 locais de votação e 25 seções. São 0 locais rurais, com 0 eleitores (0% do total).</li>
+
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Mata Virgem (8,0 km do local de votação), Santa Cecília (6,2 km do local de votação), Sítio Jardim (6,2 km do local de votação), Sítio Cajá de Batista (5,4 km do local de votação), Sítio Embebedado 2 (5,1 km do local de votação), Pá Virada (5,0 km do local de votação), Sítio José de Moura (5,0 km do local de votação), Sítio Covico (4,9 km do local de votação), Sítio Embebedado 1 (4,7 km do local de votação), Sítio Pedra Branca 2 (4,6 km do local de votação), Sítio Cajá dos Martins (4,5 km do local de votação), Gambá (4,3 km do local de votação), Sítio Pedra Branca 1 (4,2 km do local de votação), Sítio Pedregulho (4,2 km do local de votação), Capoeiras (4,1 km do local de votação), Embebedado (3,9 km do local de votação), Sítio Brejo de Dentro 2 (3,9 km do local de votação), Pedra Branca (3,5 km do local de votação), Sítio Brejo de Dentro 1 (3,5 km do local de votação), Sítio Pedra Branca 3 (3,5 km do local de votação), Sítio Capoeira (3,4 km do local de votação), Tambor de Cima 1 (3,4 km do local de votação), Brejo de Dentro (3,3 km do local de votação), Gancho do Galo 2 (3,2 km do local de votação), Tambor de Cima 2 (3,1 km do local de votação) e Sítio Cajá de Franca (3,0 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 37 localidades rurais de Vertente do Lério que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Mata Virgem</td><td>8,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Santa Cecília</td><td>6,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Jardim</td><td>6,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Cajá de Batista</td><td>5,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Embebedado 2</td><td>5,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Pá Virada</td><td>5,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio José de Moura</td><td>5,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Covico</td><td>4,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Embebedado 1</td><td>4,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Pedra Branca 2</td><td>4,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Cajá dos Martins</td><td>4,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Gambá</td><td>4,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Pedra Branca 1</td><td>4,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Pedregulho</td><td>4,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Capoeiras</td><td>4,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Embebedado</td><td>3,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Brejo de Dentro 2</td><td>3,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Pedra Branca</td><td>3,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Brejo de Dentro 1</td><td>3,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Pedra Branca 3</td><td>3,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Capoeira</td><td>3,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Tambor de Cima 1</td><td>3,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Brejo de Dentro</td><td>3,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Gancho do Galo 2</td><td>3,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Tambor de Cima 2</td><td>3,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Cajá de Franca</td><td>3,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 37 localidades rurais de Vertente do Lério, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 607" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Vertente do Lério: 26 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="534.0,87.4 481.2,94.5 354.2,134.1 225.2,123.4 166.3,141.2 116.5,133.6 67.3,158.5 71.3,218.9 119.6,237.7 213.5,313.9 249.6,434.3 283.1,466.8 327.8,458.7 365.9,434.3 414.2,447.0 471.6,407.4 545.7,442.4 725.0,437.3 685.4,401.3 676.7,356.1 648.3,310.3 652.9,246.9 534.0,87.4 534.0,87.4" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="582.4,397.8 596.0,400.0 605.9,406.5 614.8,414.4 629.3,413.1 640.0,407.3 645.6,397.4 650.2,386.6 661.0,379.3 669.1,369.5 667.4,355.7 658.2,345.6 647.9,340.2 646.3,326.3 644.7,311.9 643.0,296.6 646.2,284.5 651.0,273.8 659.4,266.1 659.0,251.0 657.0,237.5 655.1,222.4 641.5,218.0 630.3,212.6 623.1,204.4 610.1,209.3 593.3,209.6 581.3,202.0 570.8,196.0 561.3,189.2 550.7,182.6 541.8,174.6 533.6,167.6 524.5,161.4 520.7,148.7 517.5,135.9 516.1,121.7 518.6,107.6 522.1,95.8 515.8,83.5 522.0,93.0 517.4,103.8 514.9,117.3 515.7,132.0 518.3,144.8 522.6,156.4 531.1,163.6 538.9,171.8 547.3,180.1 557.4,185.7 566.0,192.8 571.9,205.2 573.5,219.6 577.0,232.4 579.2,245.9 581.2,259.1 581.5,274.7 582.8,289.9 584.1,303.9 585.6,317.7 587.1,332.2 582.1,343.1 583.6,357.4 583.0,374.2 584.4,389.9 582.4,397.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Mata Virgem</title></polyline>
+<polyline points="228.5,258.0 228.3,242.1 235.9,226.3 242.9,217.2 250.5,208.4 263.9,206.1 274.0,211.7 281.4,220.1 295.8,221.6 306.2,226.8 316.0,232.8 332.5,233.9 346.5,238.1 360.3,240.0 373.9,243.1 380.3,232.9 389.9,225.8 385.7,213.9 385.1,199.1 387.8,185.7 395.9,177.0 398.7,164.3 397.2,148.9 389.0,141.5 381.4,132.4 365.9,133.3 351.0,134.7 344.8,143.8 330.2,145.4 319.2,140.7 307.0,144.5 295.4,140.4 279.6,138.3 267.9,134.2 258.8,127.2 245.3,125.4 232.5,128.8 221.0,124.3 206.5,125.6 197.1,132.0 184.1,135.7 170.8,140.8 155.0,138.2 141.3,134.3 133.3,141.6 133.0,158.2 126.8,168.8 129.3,183.5 118.0,187.6 110.3,196.6 98.1,200.2 90.4,190.7 81.1,183.2 70.9,175.9 66.6,161.0 79.1,157.5 87.9,149.9 87.3,134.9 82.4,120.4 80.0,106.4 68.5,110.6 54.4,113.1 57.8,126.4 62.8,137.6 66.0,154.5 66.0,169.9 57.3,178.5 48.9,186.3 35.2,184.8 43.7,191.4 53.8,201.2 63.1,208.3 71.1,216.3 81.9,221.9 93.4,226.9 106.8,224.6 121.0,222.0 136.2,221.7 147.6,226.5 158.6,232.2 168.8,238.1 181.8,245.5 190.8,252.5 206.6,253.1 219.4,255.7 232.9,258.2 241.4,265.9 249.1,276.4 255.5,288.1 262.3,297.3 267.9,308.9 272.4,320.5 278.1,330.1 280.8,343.2 283.9,359.1 288.0,370.8 294.6,380.5 300.4,390.3 298.6,406.2 291.9,415.7 284.2,423.6 270.4,421.5 284.2,423.6 291.9,415.7 298.6,406.2 305.8,396.7 314.1,405.1 326.6,414.4 316.7,407.2 307.4,398.4 298.7,387.5 292.7,377.2 286.4,367.2 282.8,355.4 280.8,341.1 277.6,328.9 271.3,318.6 267.7,306.9 260.7,295.6 254.2,285.9 248.1,272.8 238.6,263.2 228.7,256.9 228.5,258.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Santa Cecília</title></polyline>
+<polyline points="562.0,415.0 559.8,400.1 552.0,392.3 545.4,380.3 540.6,369.8 534.5,359.4 531.6,347.1 525.0,337.2 513.8,332.9 504.5,325.4 499.1,314.7 491.1,306.4 483.2,297.9 475.6,290.0 467.3,280.7 453.8,278.5 467.3,280.7 475.6,290.0 483.2,297.9 491.1,306.4 498.8,314.1 503.9,325.0 512.4,332.0 523.6,336.4 531.3,346.0 534.5,359.4 539.9,369.3 545.2,379.8 550.8,390.6 558.5,398.3 561.3,411.5 562.0,415.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Gambá</title></polyline>
+<circle cx="677.3" cy="382.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="116.0" cy="206.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="466.0" cy="403.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="536.6" cy="313.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="646.8" cy="389.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="543.2" cy="349.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="568.6" cy="474.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="557.9" cy="437.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="229.6" cy="254.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="586.4" cy="398.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="557.9" cy="409.9" r="2.2" fill="#b9b9b2"/>
+<polygon points="228.8,245.9 217.3,267.1 240.3,267.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="258.2,241.7 243.7,268.5 272.7,268.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="561.5,402.1 549.2,424.6 573.7,424.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="582.3,389.6 574.1,404.6 590.4,404.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="512.8" cy="80.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="519.8" y="75.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Mata Virgem 8,0 km</text>
+<circle cx="79.8" cy="106.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="86.8" y="101.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santa Cecília 6,2 km</text>
+<circle cx="396.4" cy="149.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="403.4" y="144.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Jardim 6,2 km</text>
+<circle cx="387.2" cy="207.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="394.2" y="202.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Cajá de Batista 5,4 km</text>
+<circle cx="92.2" cy="148.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="99.2" y="143.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Embebedado 2 5,1 km</text>
+<circle cx="354.2" cy="134.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="361.2" y="129.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pá Virada 5,0 km</text>
+<circle cx="38.6" cy="184.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="45.6" y="179.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio José de Moura 5,0 km</text>
+<circle cx="266.9" cy="417.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="273.9" y="412.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Covico 4,9 km</text>
+<circle cx="81.0" cy="158.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="167.3" cy="142.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="174.3" y="157.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Pedra Branca 2 4,6 km</text>
+<circle cx="375.0" cy="249.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="382.0" y="244.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Cajá dos Martins 4,5 km</text>
+<circle cx="449.7" cy="279.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="456.7" y="274.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Gambá 4,3 km</text>
+<circle cx="132.8" cy="150.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="327.8" cy="415.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="334.8" y="430.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Pedregulho 4,2 km</text>
+<circle cx="61.3" cy="221.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="68.3" y="216.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Capoeiras 4,1 km</text>
+<circle cx="79.2" cy="172.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="308.5" cy="145.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="221.3" cy="116.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="228.3" y="111.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pedra Branca 3,5 km</text>
+<circle cx="294.3" cy="139.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="128.7" cy="174.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="87.1" cy="224.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="94.1" y="239.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Capoeira 3,4 km</text>
+<circle cx="661.0" cy="355.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="511.4" y="350.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Tambor de Cima 1 3,4 km</text>
+<circle cx="278.4" cy="133.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="109.9" cy="189.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="116.9" y="204.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Gancho do Galo 2 3,2 km</text>
+<circle cx="670.7" cy="363.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="521.1" y="378.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Tambor de Cima 2 3,1 km</text>
+<circle cx="317.2" cy="230.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="324.2" y="225.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Cajá de Franca 3,0 km</text>
+<rect x="224.6" y="249.7" width="10" height="10" fill="#1d1d1b"/><text x="238.6" y="272.7" font-weight="600" fill="#1d1d1b">Sede de Vertente do Lério</text>
+<line x1="35" x2="263.8" y1="504.9" y2="504.9" stroke="#8a8a84" stroke-width="2"/><text x="35" y="518.9" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="495.8693661531122" y2="495.8693661531122" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="499.8693661531122" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,488.9 421.4,501.1 434.6,501.1" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="499.8693661531122" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="513.8693661531122" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="522.8693661531122" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="518.8693661531122" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="522.8693661531122" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="541.8693661531122" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="545.8693661531122" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="541.8693661531122" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="545.8693661531122" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="564.8693661531122" y2="564.8693661531122" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="568.8693661531122" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="587.8693661531122" y2="587.8693661531122" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="591.8693661531122" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital de transporte de eleitores da 34ª ZE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (5):</strong> Mata Virgem, Santa Cecília, Sítio Jardim, Sítio Cajá de Batista e Sítio Embebedado 2.</li>
+<li><strong>De 3 a 5 km (21):</strong> Pá Virada, Sítio José de Moura, Sítio Covico, Sítio Embebedado 1, Sítio Pedra Branca 2, Sítio Cajá dos Martins, Gambá, Sítio Pedra Branca 1, Sítio Pedregulho, Capoeiras, Embebedado, Sítio Brejo de Dentro 2, Pedra Branca, Sítio Brejo de Dentro 1, Sítio Pedra Branca 3, Sítio Capoeira, Tambor de Cima 1, Brejo de Dentro, Gancho do Galo 2, Tambor de Cima 2 e Sítio Cajá de Franca.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (11):</strong> Chã do Pavão, Gancho do Galo 1, Sítio Cases, Sítio Malemba, Sítio Salvador 1, Sítio Salvador 2, Tambor, Tambor de Baixo, Tambor de Baixo 2, Tambor de Cima 3 e Vertente do Lério.</li>
+</ul><h2>Rotas do Edital de transporte de eleitores da 34ª ZE</h2>
+<p>O edital tem 0 rotas para Vertente do Lério. Horários: não informados. Veículos: não informados.</p>
+<p><strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-PE) para Vertente do Lério.</strong> O quadro de percursos do transporte de eleitores (edital da zona no DJE/TRE-PE) ainda não foi incorporado a este levantamento. A análise considera apenas a distância até o local de votação</p>
+<p><strong>Atenção:</strong> Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral para este município (edições lidas até 18/10/2026). As rotas do mapa são sugestões deste levantamento. O edital da zona cita um quadro de percursos que não foi publicado no DJE (anexo ou mural do cartório). </p>
+<p>Fonte: Quadro de percursos não localizado nas edições do DJE/TRE-PE consultadas.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 26 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Mata Virgem</strong></td><td>Sede – Tambor de Cima 1 – Tambor de Cima 2 – Mata Virgem – Sede</td><td>Tambor de Cima 1, Tambor de Cima 2, Mata Virgem</td><td>21,1 km (ida e volta)</td><td>~52 min</td></tr><tr><td><strong>Rota nova – Santa Cecília</strong></td><td>Sede – Sítio Cajá de Franca – Sítio Cajá dos Martins – Sítio Cajá de Batista – Sítio Jardim – Pá Virada – Sítio Brejo de Dentro 2 – Sítio Brejo de Dentro 1 – Brejo de Dentro – Pedra Branca – Sítio Pedra Branca 2 – Sítio Pedra Branca 1 – Sítio Pedra Branca 3 – Gancho do Galo 2 – Embebedado – Sítio Embebedado 1 – Sítio Embebedado 2 – Santa Cecília – Sítio José de Moura – Capoeiras – Sítio Capoeira – Sítio Covico – Sítio Pedregulho – Sede</td><td>Sítio Cajá de Franca, Sítio Cajá dos Martins, Sítio Cajá de Batista, Sítio Jardim, Pá Virada, Sítio Brejo de Dentro 2, Sítio Brejo de Dentro 1, Brejo de Dentro, Pedra Branca, Sítio Pedra Branca 2, Sítio Pedra Branca 1, Sítio Pedra Branca 3, Gancho do Galo 2, Embebedado, Sítio Embebedado 1, Sítio Embebedado 2, Santa Cecília, Sítio José de Moura, Capoeiras, Sítio Capoeira, Sítio Covico, Sítio Pedregulho</td><td>38,9 km (ida e volta)</td><td>~1h16</td></tr><tr><td><strong>Rota nova – Gambá</strong></td><td>Sede – Gambá – Sede</td><td>Gambá</td><td>8,6 km (ida e volta)</td><td>~21 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMVL</strong></p><p>Vertente do Lério/PE, ___ de outubro de 2026.</p><p>Ao(À) Excelentíssimo(a) Senhor(a)<br><strong>[nome do(a) Juiz(a) Eleitoral]</strong><br>Juiz(a) Eleitoral da 34ª Zona Eleitoral – [sede da zona]/PE</p><p><strong>Assunto:</strong> Sugestão de rotas de transporte gratuito de eleitores da zona rural – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo(a) Senhor(a) Juiz(a),</p><p>O Município de Vertente do Lério, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação. Não localizamos no Diário da Justiça Eleitoral (DJE/TRE-PE) quadro de percursos nem ato sobre o transporte de eleitores para este município; estas localidades: Mata Virgem, Santa Cecília, Sítio Jardim, Sítio Cajá de Batista, Sítio Embebedado 2, Pá Virada, Sítio José de Moura, Sítio Covico, Sítio Embebedado 1, Sítio Pedra Branca 2, Sítio Cajá dos Martins, Gambá, Sítio Pedra Branca 1, Sítio Pedregulho, Capoeiras, Embebedado, Sítio Brejo de Dentro 2, Pedra Branca, Sítio Brejo de Dentro 1, Sítio Pedra Branca 3, Sítio Capoeira, Tambor de Cima 1, Brejo de Dentro, Gancho do Galo 2, Tambor de Cima 2 e Sítio Cajá de Franca.</p><p>Sugerimos, respeitosamente, que Vossa Excelência avalie instituir o transporte gratuito de eleitores no 2º turno, com as seguintes rotas:</p><ol><li>a criação da Rota nova – Mata Virgem (Sede – Tambor de Cima 1 – Tambor de Cima 2 – Mata Virgem – Sede);</li><li>a criação da Rota nova – Santa Cecília (Sede – Sítio Cajá de Franca – Sítio Cajá dos Martins – Sítio Cajá de Batista – Sítio Jardim – Pá Virada – Sítio Brejo de Dentro 2 – Sítio Brejo de Dentro 1 – Brejo de Dentro – Pedra Branca – Sítio Pedra Branca 2 – Sítio Pedra Branca 1 – Sítio Pedra Branca 3 – Gancho do Galo 2 – Embebedado – Sítio Embebedado 1 – Sítio Embebedado 2 – Santa Cecília – Sítio José de Moura – Capoeiras – Sítio Capoeira – Sítio Covico – Sítio Pedregulho – Sede);</li><li>a criação da Rota nova – Gambá (Sede – Gambá – Sede).</li></ol><p>As rotas sugeridas atendem as localidades mais distantes. Caso esse Juízo já tenha definido rotas, pedimos que estas sugestões sejam consideradas naquilo que ainda não estiver contemplado.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Vertente do Lério</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Vertente do Lério; Quadro de percursos não localizado nas edições do DJE/TRE-PE consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>
