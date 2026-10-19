@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Esperança</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Esperança</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/esperanca.pdf?v=1792369314" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Esperança (19ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 19ª Zona Eleitoral <strong>1 parada extra em rotas do edital</strong> no transporte gratuito de Esperança.
+Traçamos pelas estradas o percurso das 16 rotas do Edital nº 18/2026. 0 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 1 ficam a 1–2 km.</p>
+<ul>
+<li>Esperança tem 26.062 eleitores aptos em 10 locais de votação e 81 seções. São 3 locais rurais, com 2.785 eleitores (11% do total).</li>
+
+
+<li><strong>Rota passa perto</strong> (1–2 km): Benefício.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 17 localidades rurais de Esperança que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Campo Formoso</td><td>5,2</td><td>Rota 12</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Mulatinho</td><td>4,7</td><td>Rota 05</td><td>0,7</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Pau Ferro</td><td>4,6</td><td>Rota 08</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Lagoa de Pedra 1</td><td>4,5</td><td>Rota 12</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Logradouro</td><td>4,4</td><td>Rota 07</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Riacho do Boi</td><td>4,1</td><td>Rota 05</td><td>0,5</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Logradouro 1</td><td>4,1</td><td>Rota 09</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Boa Vista</td><td>3,6</td><td>Rota 10</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Lagoa de Pedra</td><td>3,6</td><td>Rota 11</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Mulatinha</td><td>3,4</td><td>Rota 05</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Timbaúba</td><td>3,1</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Benefício</td><td>3,0</td><td>Rota 11</td><td>1,1</td><td>Rota passa perto (1–2 km)</td></tr></tbody></table></div>
+<p>14 das 72 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Marcela (Rota 01), Jose Laureano (Rota 04), Grupo de Barra do Camará (Rota 05), Casa de Hermes Dias (Rota 05), Ladeira do Moco Punaré (Rota 05), Antônio Alfredo (Rota 06), Pedro Calô (Rota 06), Bananeiras (Rota 06), Araçagi (Rota 08 e Rota 09), Grupo do Benefício (Rota 11), Grupo de Lagoa de Pedra (Rota 12), Lagoa Cumprida (Rota 12) e Cabeça (Rota 15). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 17 localidades rurais de Esperança, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 713" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Esperança: 1 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 18/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="712.9,397.8 725.0,379.9 668.1,355.7 647.5,369.9 603.3,335.7 588.9,304.4 598.2,246.1 529.9,222.0 508.9,208.6 461.0,196.1 410.7,162.7 376.2,161.3 350.0,171.7 319.0,143.4 276.9,84.8 241.1,91.7 171.5,80.0 151.5,94.8 158.7,116.2 129.1,168.9 63.6,202.7 35.0,201.0 35.7,259.9 67.4,324.0 105.7,366.8 135.0,374.0 206.6,364.3 233.5,397.8 254.9,405.0 289.0,444.0 294.5,485.3 286.9,543.2 309.7,581.1 353.5,495.0 386.9,506.0 428.3,501.5 455.1,483.2 508.9,430.9 515.8,394.3 619.5,418.5 651.2,392.9 676.1,400.9 712.9,397.8 712.9,397.8" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="341.5,510.4 343.0,519.9 346.1,527.2 335.5,526.8 325.2,526.0 315.3,524.5 325.2,526.0 330.8,520.8 330.4,510.5 330.2,498.6 330.0,488.4 333.9,481.1 340.6,477.0 336.2,471.0 341.2,476.4 348.6,472.4 355.0,468.0 359.6,461.2 363.9,454.4 369.3,449.0 376.1,445.5 385.7,440.2 392.1,435.5 401.3,432.3 409.6,428.6 417.5,422.2 419.9,414.1 420.0,403.7 424.4,395.6 430.8,390.4 437.2,385.8 444.9,380.1 450.2,374.7 455.9,369.9 465.9,368.5 466.3,368.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="341.5,510.4 334.3,506.2 339.9,501.3 344.5,495.4 337.8,491.8 330.0,488.4 333.9,481.1 340.6,477.0 336.2,471.0 341.2,476.4 348.6,472.4 355.0,468.0 359.6,461.2 363.9,454.4 369.3,449.0 376.1,445.5 385.7,440.2 392.1,435.5 401.3,432.3 409.6,428.6 417.3,425.5 425.2,428.4 431.8,432.5 438.6,438.6 446.4,441.8 456.5,441.2 465.5,442.8 471.4,447.3 465.5,442.8 456.5,441.2 446.4,441.8 438.7,438.7 433.1,433.6 426.3,429.1 418.3,425.9 409.6,428.6 402.4,431.9 392.9,435.2 386.8,439.6 379.6,443.1 372.6,448.0 364.8,451.3 361.0,458.9 356.8,466.0 360.3,473.0 361.7,482.5 360.0,491.4 358.1,499.8 349.8,497.6 357.8,500.0 360.0,491.4 361.7,482.5 360.2,473.4 368.2,470.6 378.0,468.8 389.3,469.4 396.5,464.4 391.8,457.3 385.2,453.1 381.0,446.6 385.7,440.2 392.1,435.5 401.3,432.3 409.6,428.6 417.5,422.2 419.9,414.1 420.0,403.7 424.4,395.6 430.8,390.4 437.2,385.8 444.9,380.1 450.2,374.7 455.9,369.9 465.9,368.5 466.3,368.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="235.1,371.6 228.4,375.3 225.3,383.9 229.5,390.9 233.7,397.9 241.6,400.5 248.4,405.3 256.9,408.0 262.3,414.0 265.7,421.2 269.7,428.1 274.0,434.2 283.4,433.1 287.3,426.5 293.8,422.6 302.0,419.9 311.3,418.8 321.9,419.9 329.6,417.2 335.1,412.3 338.8,405.6 348.0,406.7 357.9,407.5 366.6,405.5 370.1,398.4 373.8,391.4 380.6,387.7 386.1,382.7 396.1,381.6 405.0,379.3 413.9,375.6 423.6,374.9 434.5,379.5 430.8,390.4 424.4,395.6 420.3,402.2 410.0,401.8 420.0,403.7 424.4,395.6 430.8,390.4 437.2,385.8 444.9,380.1 450.2,374.7 455.9,369.9 465.9,368.5 466.3,368.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="311.8,437.1 311.9,426.4 308.1,419.8 298.0,420.8 294.6,413.4 297.5,420.9 307.0,420.0 316.9,419.3 326.7,418.7 333.3,414.8 337.2,408.2 346.4,406.7 355.8,407.7 365.1,406.3 369.5,399.9 372.9,392.6 379.7,388.6 385.1,383.4 394.0,381.8 403.2,379.7 412.1,378.0 420.2,375.0 429.2,373.6 434.5,379.5 430.8,390.4 424.4,395.6 420.3,402.2 410.0,401.8 420.0,403.7 424.4,395.6 430.8,390.4 437.2,385.8 444.9,380.1 450.2,374.7 455.9,369.9 465.9,368.5 466.3,368.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="632.5,385.2 627.5,390.5 621.1,394.8 612.6,396.7 605.7,400.3 599.3,404.3 589.3,404.9 581.8,401.9 575.4,397.8 568.9,392.3 563.7,387.0 557.9,382.2 563.7,387.0 568.9,392.3 574.2,397.5 580.6,401.4 588.0,404.6 592.5,398.8 599.1,395.0 599.9,385.4 602.0,376.7 600.5,366.7 596.2,360.4 590.6,353.3 585.9,346.3 583.7,337.4 581.9,327.8 579.6,318.5 576.7,310.4 569.4,306.7 561.7,303.7 553.8,300.7 542.6,300.8 534.5,297.9 526.0,294.1 512.7,296.8 505.3,301.3 498.6,306.0 492.6,311.3 483.9,315.5 475.1,319.7 466.7,325.0 460.9,329.5 456.8,338.1 453.5,345.2 451.0,353.1 448.5,362.2 452.9,368.2 463.3,367.7 470.6,371.8 478.3,374.7 470.6,371.8 466.3,368.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="476.7,262.3 472.3,268.8 468.0,275.1 463.5,283.8 461.0,291.8 457.8,299.3 456.5,309.0 456.0,316.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="481.2,252.2 476.1,246.3 470.8,241.2 460.3,239.6 455.5,233.2 447.0,226.6 438.8,223.8 449.3,221.2 454.1,214.2 460.0,208.2 453.8,204.0 460.0,208.2 454.1,214.2 449.3,221.2 452.7,231.0 458.1,238.0 466.6,241.1 475.3,243.2 477.0,252.1 475.6,262.0 471.6,269.9 466.3,276.7 463.5,284.4 460.6,292.1 457.1,300.5 456.7,310.9 457.6,320.4 461.9,327.7 457.6,336.3 454.1,343.7 451.4,351.6 448.5,362.2 452.9,368.2 463.3,367.7 466.3,368.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="396.8,295.5 398.1,286.2 401.9,278.2 408.4,273.9 400.5,269.8 388.2,265.0 393.9,270.1 404.8,271.4 411.8,275.2 419.4,279.9 426.1,285.1 429.3,292.8 436.3,297.6 435.3,308.0 439.0,317.3 441.5,329.0 443.3,338.7 446.0,348.3 449.0,356.1 448.0,365.5 455.0,369.2 464.3,368.0 466.3,368.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="301.8,212.0 311.7,204.1 306.4,194.0 301.2,182.9 298.7,174.5 304.5,167.6 303.9,157.7 310.4,152.8 320.1,151.7 332.5,149.5 340.2,154.0 344.8,160.2 349.1,169.9 350.0,181.1 353.4,190.3 358.4,195.8 364.8,204.7 371.4,215.1 372.1,226.5 377.0,233.0 385.0,235.6 395.6,233.7 399.1,226.7 403.4,220.3 415.1,215.2 425.6,215.8 434.6,217.1 438.8,223.8 442.0,237.0 445.8,245.2 448.8,253.8 455.3,258.6 464.1,261.0 467.5,270.2 464.8,277.9 464.0,287.6 459.7,293.7 456.6,301.7 456.6,312.1 458.3,321.3 462.1,328.1 457.6,336.3 454.1,343.7 451.4,351.6 448.5,362.2 452.9,368.2 463.3,367.7 466.3,368.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 09</title></polyline>
+<polyline points="203.2,236.4 204.1,245.8 207.7,253.0 214.1,248.0 224.3,246.9 226.9,254.6 229.6,262.6 240.4,267.5 242.1,258.5 246.9,251.9 253.9,246.2 263.8,238.2 262.2,225.7 257.8,215.2 254.0,207.6 264.6,208.1 276.9,202.2 285.1,198.6 293.9,200.4 293.3,210.5 301.8,212.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 10</title></polyline>
+<polyline points="357.1,320.9 351.3,326.6 347.2,333.0 344.5,340.9 340.2,347.2 329.8,347.6 338.7,352.7 347.0,355.6 354.7,358.8 362.1,362.3 369.7,365.7 378.2,367.8 390.8,371.4 400.1,373.9 410.8,375.3 421.3,374.8 428.9,370.3 437.8,367.1 443.3,362.2 449.4,366.8 460.8,367.5 466.3,368.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 11</title></polyline>
+<polyline points="250.7,320.1 257.5,324.1 262.0,331.0 266.8,337.2 277.1,337.6 287.1,337.0 297.7,337.0 305.8,339.4 312.7,343.8 321.2,346.2 330.9,348.0 338.7,352.7 347.0,355.6 354.7,358.8 362.1,362.3 369.7,365.7 378.2,367.8 390.8,371.4 400.1,373.9 410.8,375.3 421.3,374.8 428.9,370.3 437.8,367.1 443.3,362.2 449.4,366.8 460.8,367.5 466.3,368.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 12</title></polyline>
+<polyline points="542.2,264.0 537.3,271.0 531.5,277.5 526.0,283.8 521.9,290.5 512.7,296.8 505.3,301.3 498.6,306.0 492.6,311.3 483.9,315.5 475.1,319.7 466.7,325.0 460.9,329.5 456.8,338.1 453.5,345.2 451.0,353.1 448.5,362.2 452.9,368.2 463.3,367.7 466.3,368.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 13</title></polyline>
+<polyline points="474.9,428.6 465.6,427.3 458.8,423.5 456.9,414.9 453.6,407.8 451.3,399.3 452.8,385.3 449.5,376.6 455.1,370.7 462.4,367.4 466.3,368.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 14</title></polyline>
+<polyline points="253.4,202.9 256.3,211.5 260.4,220.6 262.3,231.6 255.8,225.4 250.3,220.3 243.5,209.6 232.9,211.6 225.3,214.9 217.4,219.4 208.8,232.1 202.7,236.7 194.5,242.5 187.3,240.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 15</title></polyline>
+<polyline points="301.8,212.0 296.6,217.4 288.9,222.1 281.5,226.1 276.9,232.0 271.3,237.4 264.3,257.3 266.4,265.7 271.4,276.7 275.6,285.2 278.4,293.5 283.6,299.1 286.2,306.9 287.4,316.4 293.0,324.5 297.6,332.0 302.9,338.3 309.5,342.8 319.4,345.7 325.3,347.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 16</title></polyline>
+<polyline points="357.1,320.9 363.7,316.7 362.6,306.7 358.0,300.6 354.1,293.9 358.0,300.6 362.6,306.7 366.2,313.9 359.6,318.5 357.1,320.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 11</title></polyline>
+<circle cx="275.2" cy="337.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="560.6" cy="328.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="397.2" cy="295.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="299.4" cy="336.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="438.9" cy="222.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="599.2" cy="329.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="444.8" cy="250.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="239.7" cy="264.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="325.2" cy="348.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="583.3" cy="318.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="348.6" cy="406.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="366.2" cy="458.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="286.9" cy="223.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="542.7" cy="263.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="300.7" cy="215.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="397.9" cy="459.1" r="2.2" fill="#b9b9b2"/>
+<polygon points="428.6,355.2 416.3,377.8 440.9,377.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="429.3,354.8 415.0,381.2 443.6,381.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="436.9,350.0 421.9,377.5 451.8,377.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="430.3,347.6 414.7,376.3 445.9,376.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="446.2,355.7 432.4,381.1 459.9,381.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="538.2,255.7 528.3,273.9 548.0,273.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="538.2" y="287.5" text-anchor="middle" fill="#5c5c57">São Miguel</text>
+<polygon points="301.8,201.7 292.0,219.7 311.6,219.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="301.8" y="233.3" text-anchor="middle" fill="#5c5c57">Distrito Massabielle</text>
+<polygon points="463.4,343.7 451.7,365.3 475.1,365.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="398.6,450.3 389.6,466.9 407.6,466.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="398.6" y="480.3" text-anchor="middle" fill="#5c5c57">Pintado</text>
+<polygon points="434.5,373.2 420.6,398.7 448.3,398.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="350.0" cy="288.5" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="357.0" y="283.5" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Benefício 3,0 km</text>
+<rect x="460.5" y="365.6" width="10" height="10" fill="#1d1d1b"/><text x="474.5" y="388.6" font-weight="600" fill="#1d1d1b">Sede de Esperança</text>
+<line x1="35" x2="190.3" y1="611.1" y2="611.1" stroke="#8a8a84" stroke-width="2"/><text x="35" y="625.1" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="602.1288711288666" y2="602.1288711288666" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="606.1288711288666" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,595.1 421.4,607.4 434.6,607.4" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="606.1288711288666" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="620.1288711288666" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="629.1288711288666" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="625.1288711288666" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="629.1288711288666" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="648.1288711288666" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="652.1288711288666" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="648.1288711288666" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="652.1288711288666" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="671.1288711288666" y2="671.1288711288666" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="675.1288711288666" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="694.1288711288666" y2="694.1288711288666" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="698.1288711288666" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 18/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (1):</strong> Campo Formoso.</li>
+<li><strong>De 3 a 5 km (11):</strong> Mulatinho, Pau Ferro, Sítio Lagoa de Pedra 1, Sítio Logradouro, Sítio Riacho do Boi, Sítio Logradouro 1, Boa Vista, Sítio Lagoa de Pedra, Sítio Mulatinha, Sítio Timbaúba e Benefício.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (5):</strong> Boa Vista 1, Chácara JF, Massabiele, Pintado e São Miguel.</li>
+</ul><h2>Rotas do Edital nº 18/2026</h2>
+<p>O edital tem 16 rotas para Esperança. Horários: durante todo o dia. Veículos: não informados.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Marcela – Riacho Fundo – Lages – Lagoa dos Cavalos – Cruz Queimada – Sede</td></tr><tr><td>02</td><td>Riacho Fundo – Lagoinha das Pedra – Lagoa dos Cavalos – Riacho Amarelo – Alto dos Pintos – Pintado – Sede</td></tr><tr><td>03</td><td>Covão – Arara – Timbauba – Lagoa das Cinzas – Sede</td></tr><tr><td>04</td><td>Gravatazinho – Arara – Timbauba – Jose Laureano – Lagoa das Cinzas – Sede</td></tr><tr><td>05</td><td>Grupo de Barra do Camará – Carrasco – Lagoa Verde – Cinza – Mulatinha – Casa de Hermes Dias – Ladeira do Moco Punaré – Bela Vista – Sede</td></tr><tr><td>06</td><td>Grupo Escolar Meia Pataca – Antônio Alfredo – Pedro Calô – Bananeiras – Sitio Umburanas</td></tr><tr><td>07</td><td>Meia Pataca de Baixo – Logradouro – Meia Pataca de Cima – Sede</td></tr><tr><td>08</td><td>Pau Ferro – Lagedão – Araçagi – Sede</td></tr><tr><td>09</td><td>Massabielle – Umbu – Maniçoba – Logradouro – Araçagi – Sede</td></tr><tr><td>10</td><td>Malhada da Serra – Boa Vista – Capeba – Massabielle</td></tr><tr><td>11</td><td>Grupo do Benefício – Lagoa do Sapo – Lagoa de Pedra – Sede</td></tr><tr><td>12</td><td>Grupo de Lagoa de Pedra – Pedrinha D&#x27;água – Lagoa Cumprida – Campo Formoso – Sede</td></tr><tr><td>13</td><td>Distrito São Miguel</td></tr><tr><td>14</td><td>Sítio Quebra Pé</td></tr><tr><td>15</td><td>Capeba – Jacinto – Cabeça</td></tr><tr><td>16</td><td>Massabielle – Lagoa de Pedra</td></tr></tbody></table></div>
+<p><strong>Atenção:</strong> As rotas foram publicadas para o 1º turno (04/10) e não houve ato próprio do 2º turno no DJE até 18/10/2026; elas são consideradas válidas para o 2º turno. Confirme com o Cartório Eleitoral da zona.</p>
+<p>Fonte: Edital nº 18/2026 TRE-PB/PTRE/19ª_ZONA (Transporte de eleitores - Quadro Geral de Percursos da 19ª Zona Eleitoral - Areial, Esperança e São Sebastião de Lagoa de Roça), DJE/TRE-PB nº 198/2026, disp. 18/09/2026, publ. 19/09/2026, p. 24-26 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=PB&amp;numDiario=198&amp;anoDiario=2026).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 1 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Parada extra na Rota 11</strong></td><td>desvio pelo caminho atual: Benefício</td><td>Benefício</td><td>+2,9 km</td><td>+7 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PME</strong></p><p>Esperança/PB, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Natan Figueredo Oliveira</strong><br>Juiz Eleitoral da 19ª Zona Eleitoral – Esperança/PB</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 18/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Esperança, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 18/2026: Benefício.</p><p>Sugerimos, respeitosamente:</p><ol><li>a inclusão de parada em Benefício na Rota 11, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 18/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Esperança</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Esperança; Edital nº 18/2026 TRE-PB/PTRE/19ª_ZONA (Transporte de eleitores - Quadro Geral de Percursos da 19ª Zona Eleitoral - Areial, Esperança e São Sebastião de Lagoa de Roça), DJE/TRE-PB nº 198/2026, disp. 18/09/2026, publ. 19/09/2026, p. 24-26 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=PB&amp;numDiario=198&amp;anoDiario=2026); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Quixaba</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Quixaba</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/quixaba.pdf?v=1792369386" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Quixaba (28ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 28ª Zona Eleitoral <strong>2 rotas novas</strong> no transporte gratuito de Quixaba.
+<strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-PB) para Quixaba</strong> (O quadro de percursos do transporte de eleitores (edital da zona no DJE/TRE-PB) ainda não foi incorporado a este levantamento. A análise considera apenas a distância até o local de votação). As 34 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Quixaba tem 2.511 eleitores aptos em 1 locais de votação e 8 seções. São 0 locais rurais, com 0 eleitores (0% do total).</li>
+
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Serrote Branco (18,7 km do local de votação), Cacimba de Pedra (18,1 km do local de votação), Reinaldo (17,5 km do local de votação), Picote Fino (17,2 km do local de votação), Boa Vista (15,7 km do local de votação), São Severino (15,4 km do local de votação), Logradouro (15,2 km do local de votação), Boa Esperança (15,1 km do local de votação), Favela (14,5 km do local de votação), Pilões (14,5 km do local de votação), Marrecas (14,1 km do local de votação), Preacas (12,6 km do local de votação), Lagoa do Açude (12,4 km do local de votação), Patos Ecoville (12,1 km do local de votação), Mangangá (11,9 km do local de votação), Pia (10,7 km do local de votação), Olho d&#x27;Água Velho (10,7 km do local de votação), Cachoeiras (10,4 km do local de votação), Serra Preta (10,3 km do local de votação), Pia de Pedro Izidro (9,5 km do local de votação), Cachoeira de Dentro (9,1 km do local de votação), Saco do Marcolino (8,6 km do local de votação), Pia Nova (8,6 km do local de votação), Bruno (8,5 km do local de votação), Rajada (8,4 km do local de votação), Sítio Motorista (7,5 km do local de votação), Cuncas (6,8 km do local de votação), Quixaba Velha (6,0 km do local de votação), Aroeiras (5,7 km do local de votação), Cupim (5,6 km do local de votação), Serrota (5,4 km do local de votação), Calado (4,7 km do local de votação), Picotes (4,0 km do local de votação) e Serrota Vermelha (3,5 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 37 localidades rurais de Quixaba que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Serrote Branco</td><td>18,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Cacimba de Pedra</td><td>18,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Reinaldo</td><td>17,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Picote Fino</td><td>17,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Boa Vista</td><td>15,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>São Severino</td><td>15,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Logradouro</td><td>15,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Boa Esperança</td><td>15,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Favela</td><td>14,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Pilões</td><td>14,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Marrecas</td><td>14,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Preacas</td><td>12,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Lagoa do Açude</td><td>12,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Patos Ecoville</td><td>12,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Mangangá</td><td>11,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Pia</td><td>10,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Olho d&#x27;Água Velho</td><td>10,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Cachoeiras</td><td>10,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Serra Preta</td><td>10,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Pia de Pedro Izidro</td><td>9,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Cachoeira de Dentro</td><td>9,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Saco do Marcolino</td><td>8,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Pia Nova</td><td>8,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Bruno</td><td>8,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Rajada</td><td>8,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Motorista</td><td>7,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Cuncas</td><td>6,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Quixaba Velha</td><td>6,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Aroeiras</td><td>5,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Cupim</td><td>5,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Serrota</td><td>5,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Calado</td><td>4,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Picotes</td><td>4,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Serrota Vermelha</td><td>3,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 37 localidades rurais de Quixaba, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 565" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Quixaba: 34 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="212.9,293.1 248.1,315.1 274.0,312.8 329.5,342.1 355.9,351.4 372.0,367.7 420.4,382.4 474.4,409.1 501.8,433.3 485.1,398.4 495.3,390.8 489.6,362.9 510.5,331.7 568.5,327.2 623.1,304.1 631.8,288.6 651.2,290.9 725.0,273.1 677.1,264.7 634.6,246.1 577.5,239.9 584.8,192.9 533.0,167.8 502.0,189.8 455.0,191.2 437.6,171.2 402.4,163.6 380.7,140.5 346.1,132.6 309.8,101.7 257.4,80.0 161.1,135.2 135.2,161.6 102.8,181.6 111.8,210.6 113.2,246.1 96.9,259.3 116.9,277.9 167.9,283.5 212.9,293.1 212.9,293.1" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="334.8,210.2 339.2,205.3 344.2,201.4 352.3,199.8 360.5,198.2 363.0,192.0 363.1,183.1 363.5,174.7 364.2,166.6 365.7,159.6 363.8,152.7 365.0,144.4 364.7,135.5 365.0,144.3 363.8,152.7 365.7,159.6 364.2,166.6 363.5,174.7 363.1,183.1 362.4,191.0 365.9,196.5 374.5,198.4 383.1,200.0 390.9,200.7 408.8,201.9 418.1,203.1 422.5,199.0 422.5,190.0 423.3,182.4 425.8,176.4 428.9,170.9 432.6,165.4 428.9,170.9 425.8,176.4 423.3,182.4 422.5,190.0 422.4,198.5 424.8,204.7 434.2,205.5 442.2,206.3 450.3,204.2 457.8,199.8 469.2,198.4 477.0,196.8 469.2,198.4 460.3,199.2 454.3,201.9 454.5,210.7 461.2,213.1 467.5,217.0 474.8,218.2 483.0,218.8 490.0,217.3 493.1,222.8 495.3,229.2 502.7,237.3 508.4,240.2 516.9,240.8 526.0,239.6 517.6,240.7 520.5,234.3 525.2,229.5 532.3,226.7 533.0,218.2 530.1,210.2 534.2,205.3 538.4,200.8 542.3,195.9 534.9,194.0 527.1,192.6 518.7,194.1 513.1,190.7 514.0,182.7 512.1,173.6 507.2,169.4 512.1,173.6 514.1,180.2 512.9,189.6 516.7,194.4 525.5,193.2 534.9,194.0 541.5,195.9 550.6,195.5 559.0,195.1 567.1,197.3 567.7,205.6 570.7,211.2 572.9,218.3 571.6,226.1 577.1,231.5 584.5,233.6 591.4,235.9 596.8,239.3 593.5,244.5 589.6,249.8 582.5,248.4 589.6,249.8 593.5,244.5 597.2,239.7 593.5,244.5 595.7,252.5 597.5,259.4 599.5,266.1 605.2,269.5 612.5,271.1 613.6,279.1 622.6,280.2 627.5,284.0 636.0,284.0 641.0,280.3 648.3,277.0 651.7,284.1 648.5,278.4 655.4,276.1 664.1,276.3 672.0,278.2 672.8,286.3 676.6,291.5 677.5,299.3 671.5,302.2 668.3,308.4 671.3,302.7 677.2,300.1 678.3,292.2 688.3,290.0 696.1,288.4 703.2,287.1 709.5,284.9 717.2,283.5 723.9,281.1 716.4,279.8 724.7,280.3 717.8,282.7 709.5,284.9 703.2,287.1 696.1,288.4 688.3,290.0 681.4,291.6 677.3,296.7 672.6,301.3 669.7,307.1 665.4,313.7 659.2,319.5 653.5,323.3 645.6,327.4 638.5,330.4 629.5,329.8 622.4,327.1 615.3,323.7 609.4,320.6 606.5,326.2 602.4,330.9 594.1,330.6 589.7,326.4 584.5,323.1 577.9,321.2 570.5,322.2 563.4,324.2 556.2,325.5 549.0,327.0 541.8,325.4 533.8,324.9 526.9,326.4 520.6,328.7 512.8,329.7 511.3,337.1 506.8,342.3 504.1,348.1 500.9,353.4 496.3,357.8 493.5,363.8 492.8,372.8 500.9,374.7 509.1,374.0 500.9,374.7 493.2,373.8 488.5,378.2 491.6,383.6 488.7,391.0 483.4,395.1 482.1,402.8 485.3,408.4 476.3,408.3 448.7,400.3 438.2,393.9 421.8,383.4 415.2,381.3 424.9,378.6 431.3,373.4 434.5,367.3 435.3,359.6 430.6,355.7 429.6,347.7 422.8,345.8 413.8,348.4 406.6,350.0 398.9,351.3 391.6,349.6 382.1,348.6 377.6,344.6 369.8,345.6 364.7,349.0 357.3,351.0 347.4,347.1 341.2,344.4 332.8,343.0 326.3,340.7 315.2,334.6 309.5,331.5 303.8,328.3 297.0,325.1 290.3,322.9 283.3,318.8 285.7,311.1 281.1,315.8 276.4,321.0 271.9,326.0 265.9,323.1 259.7,325.6 250.5,326.3 244.5,323.5 234.4,325.4 228.5,322.4 222.6,319.2 218.0,315.0 213.5,311.0 210.4,304.8 210.2,296.4 205.1,291.9 196.7,288.7 189.3,286.6 181.8,285.3 172.5,284.4 164.0,285.0 155.8,287.1 155.9,297.9 157.4,305.1 138.4,222.8 134.3,218.3 129.6,214.3 121.1,215.0 115.8,211.5 109.9,208.6 106.0,203.2 103.0,194.8 103.2,185.6 109.4,177.8 117.4,176.6 120.7,171.5 131.3,173.4 136.6,169.2 140.9,164.9 146.3,161.6 141.8,157.6 152.6,144.1 143.9,153.4 138.2,159.2 132.0,163.8 125.4,167.8 119.7,170.6 131.3,173.4 138.7,174.7 147.8,174.7 158.4,178.7 165.7,181.6 173.5,184.8 185.1,186.6 195.7,186.9 204.0,187.1 212.8,188.0 214.7,181.4 218.1,186.6 223.6,189.7 231.8,192.9 242.7,197.2 249.4,199.7 256.2,202.1 264.1,204.8 272.8,207.6 280.2,209.9 293.4,212.8 300.8,214.2 309.5,215.8 318.3,215.6 325.9,214.6 332.6,211.3 334.8,210.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Serrote Branco</title></polyline>
+<polyline points="334.8,210.2 328.7,213.1 321.6,215.2 313.9,216.0 305.4,215.0 297.7,213.6 286.0,211.2 278.5,209.4 270.4,206.9 261.5,203.9 253.1,200.9 246.0,198.4 237.7,195.3 226.2,190.6 212.8,188.0 205.1,187.2 195.7,186.9 187.2,186.8 178.5,186.4 171.3,183.9 162.1,180.2 150.3,175.4 142.8,174.0 133.2,173.7 121.7,171.6 132.0,163.8 138.2,159.2 143.9,153.4 152.6,144.1 157.6,138.8 163.4,133.6 169.8,130.0 175.7,126.6 182.2,122.9 189.8,118.6 203.1,111.1 209.9,107.2 216.4,103.5 220.9,108.9 224.1,115.0 225.6,122.3 238.1,122.5 234.3,127.1 238.1,122.5 227.7,123.5 225.1,117.6 222.2,111.8 220.4,105.1 220.5,96.3 220.3,87.1 217.9,80.9 220.3,87.1 220.6,95.8 218.3,102.5 209.9,107.2 203.1,111.1 194.3,116.2 185.3,121.1 177.3,125.7 169.8,130.0 163.4,133.6 157.9,138.5 152.6,144.1 143.9,153.4 138.2,159.2 132.0,163.8 125.4,167.8 119.9,171.1 111.5,176.4 102.7,181.7 96.7,185.3 89.2,186.6 73.6,185.0 61.0,183.9 54.2,186.0 53.4,193.7 48.4,198.6 44.3,203.6 36.1,202.6 40.1,207.4 41.4,215.3 44.5,220.9 46.4,227.8 50.8,232.4 57.5,237.6 61.4,243.5 70.4,248.9 77.5,251.5 83.7,253.8 91.4,256.7 98.4,261.2 105.4,259.4 99.7,262.3 106.4,268.6 113.2,274.9 109.1,279.7 103.8,283.6 100.6,288.8 103.8,283.6 108.9,280.1 112.8,275.2 118.1,278.4 124.6,280.3 142.8,282.1 149.7,285.0 158.9,286.5 166.7,283.8 174.6,285.3 183.2,285.4 190.9,286.9 199.4,289.9 207.9,291.1 214.6,294.3 220.0,299.2 227.3,302.8 231.8,307.1 238.7,310.6 246.5,314.6 255.8,314.5 261.7,310.5 269.8,312.2 276.4,314.6 283.8,313.1 286.5,307.0 284.3,299.3 281.5,290.0 286.5,284.9 300.2,284.9 308.8,278.1 317.2,269.6 322.0,265.5 328.4,263.2 334.4,260.3 334.6,249.3 330.5,237.6 328.7,230.8 329.1,222.7 326.6,216.1 331.1,212.0 334.8,210.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – São Severino</title></polyline>
+<circle cx="329.7" cy="234.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="347.8" cy="207.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="328.9" cy="216.8" r="2.2" fill="#b9b9b2"/>
+<polygon points="334.8,196.7 322.1,220.1 347.5,220.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="712.7" cy="278.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="569.3" y="273.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Serrote Branco 18,7 km</text>
+<circle cx="510.9" cy="347.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="517.9" y="342.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Cacimba de Pedra 18,1 km</text>
+<circle cx="510.4" cy="373.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="517.4" y="368.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Reinaldo 17,5 km</text>
+<circle cx="667.0" cy="306.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="542.2" y="301.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Picote Fino 17,2 km</text>
+<circle cx="601.8" cy="322.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="489.4" y="317.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Boa Vista 15,7 km</text>
+<circle cx="232.2" cy="127.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="239.2" y="122.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">São Severino 15,4 km</text>
+<circle cx="492.3" cy="411.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="499.3" y="406.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Logradouro 15,2 km</text>
+<circle cx="656.1" cy="284.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="217.6" cy="80.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="224.6" y="75.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Favela 14,5 km</text>
+<circle cx="112.0" cy="255.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="119.0" y="250.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pilões 14,5 km</text>
+<circle cx="102.1" cy="289.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="109.1" y="284.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Marrecas 14,1 km</text>
+<circle cx="436.6" cy="343.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="153.9" cy="306.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="160.9" y="301.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Lagoa do Açude 12,4 km</text>
+<circle cx="138.4" cy="222.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="145.4" y="217.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Patos Ecoville 12,1 km</text>
+<circle cx="600.1" cy="231.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="493.9" y="226.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Mangangá 11,9 km</text>
+<circle cx="144.6" cy="141.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="151.6" y="136.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pia 10,7 km</text>
+<circle cx="576.0" cy="249.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="414.0" y="244.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Olho d&#x27;Água Velho 10,7 km</text>
+<circle cx="191.5" cy="292.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="379.2" cy="344.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="386.2" y="339.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Serra Preta 10,3 km</text>
+<circle cx="118.6" cy="177.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="125.6" y="172.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pia de Pedro Izidro 9,5 km</text>
+<circle cx="218.8" cy="314.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="527.6" cy="237.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="138.2" cy="167.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="541.9" cy="195.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="548.9" y="190.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Bruno 8,5 km</text>
+<circle cx="508.9" cy="168.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="515.9" y="163.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Rajada 8,4 km</text>
+<circle cx="312.7" cy="332.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="493.8" cy="222.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="479.2" cy="197.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="486.2" y="212.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Quixaba Velha 6,0 km</text>
+<circle cx="288.6" cy="311.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="295.6" y="326.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Aroeiras 5,7 km</text>
+<circle cx="430.4" cy="163.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="437.4" y="158.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Cupim 5,6 km</text>
+<circle cx="215.3" cy="174.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="222.3" y="189.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Serrota 5,4 km</text>
+<circle cx="423.1" cy="181.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="430.1" y="176.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Calado 4,7 km</text>
+<circle cx="365.4" cy="133.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="372.4" y="128.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Picotes 4,0 km</text>
+<circle cx="251.8" cy="199.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<rect x="323.9" y="211.8" width="10" height="10" fill="#1d1d1b"/><text x="337.9" y="234.8" font-weight="600" fill="#1d1d1b">Sede de Quixaba</text>
+<line x1="35" x2="161.8" y1="463.3" y2="463.3" stroke="#8a8a84" stroke-width="2"/><text x="35" y="477.3" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="454.3134226052013" y2="454.3134226052013" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="458.3134226052013" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,447.3 421.4,459.6 434.6,459.6" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="458.3134226052013" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="472.3134226052013" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="481.3134226052013" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="477.3134226052013" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="481.3134226052013" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="500.3134226052013" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="504.3134226052013" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="500.3134226052013" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="504.3134226052013" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="523.3134226052014" y2="523.3134226052014" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="527.3134226052014" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="546.3134226052014" y2="546.3134226052014" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="550.3134226052014" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital de transporte de eleitores da 28ª ZE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (31):</strong> Serrote Branco, Cacimba de Pedra, Reinaldo, Picote Fino, Boa Vista, São Severino, Logradouro, Boa Esperança, Favela, Pilões, Marrecas, Preacas, Lagoa do Açude, Patos Ecoville, Mangangá, Pia, Olho d&#x27;Água Velho, Cachoeiras, Serra Preta, Pia de Pedro Izidro, Cachoeira de Dentro, Saco do Marcolino, Pia Nova, Bruno, Rajada, Sítio Motorista, Cuncas, Quixaba Velha, Aroeiras, Cupim e Serrota.</li>
+<li><strong>De 3 a 5 km (3):</strong> Calado, Picotes e Serrota Vermelha.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (3):</strong> Floresta, Quixaba e Riacho de Quixaba.</li>
+</ul><h2>Rotas do Edital de transporte de eleitores da 28ª ZE</h2>
+<p>O edital tem 0 rotas para Quixaba. Horários: não informados. Veículos: não informados.</p>
+<p><strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-PB) para Quixaba.</strong> O quadro de percursos do transporte de eleitores (edital da zona no DJE/TRE-PB) ainda não foi incorporado a este levantamento. A análise considera apenas a distância até o local de votação</p>
+<p><strong>Atenção:</strong> Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral para este município (edições lidas até 18/10/2026). As rotas do mapa são sugestões deste levantamento. </p>
+<p>Fonte: Quadro de percursos não localizado nas edições do DJE/TRE-PB consultadas.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 34 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Serrote Branco</strong></td><td>Sede – Picotes – Cupim – Calado – Quixaba Velha – Cuncas – Saco do Marcolino – Bruno – Rajada – Olho d&#x27;Água Velho – Mangangá – Boa Esperança – Picote Fino – Serrote Branco – Boa Vista – Cacimba de Pedra – Reinaldo – Logradouro – Preacas – Serra Preta – Sítio Motorista – Aroeiras – Cachoeira de Dentro – Cachoeiras – Lagoa do Açude – Patos Ecoville – Pia de Pedro Izidro – Pia Nova – Pia – Serrota – Serrota Vermelha – Sede</td><td>Picotes, Cupim, Calado, Quixaba Velha, Cuncas, Saco do Marcolino, Bruno, Rajada, Olho d&#x27;Água Velho, Mangangá, Boa Esperança, Picote Fino, Serrote Branco, Boa Vista, Cacimba de Pedra, Reinaldo, Logradouro, Preacas, Serra Preta, Sítio Motorista, Aroeiras, Cachoeira de Dentro, Cachoeiras, Lagoa do Açude, Patos Ecoville, Pia de Pedro Izidro, Pia Nova, Pia, Serrota, Serrota Vermelha</td><td>104,3 km (ida e volta)</td><td>~3h32</td></tr><tr><td><strong>Rota nova – São Severino</strong></td><td>Sede – São Severino – Favela – Pilões – Marrecas – Sede</td><td>São Severino, Favela, Pilões, Marrecas</td><td>48,3 km (ida e volta)</td><td>~1h06</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMQ</strong></p><p>Quixaba/PB, ___ de outubro de 2026.</p><p>Ao(À) Excelentíssimo(a) Senhor(a)<br><strong>[nome do(a) Juiz(a) Eleitoral]</strong><br>Juiz(a) Eleitoral da 28ª Zona Eleitoral – [sede da zona]/PB</p><p><strong>Assunto:</strong> Sugestão de rotas de transporte gratuito de eleitores da zona rural – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo(a) Senhor(a) Juiz(a),</p><p>O Município de Quixaba, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação. Não localizamos no Diário da Justiça Eleitoral (DJE/TRE-PB) quadro de percursos nem ato sobre o transporte de eleitores para este município; estas localidades: Serrote Branco, Cacimba de Pedra, Reinaldo, Picote Fino, Boa Vista, São Severino, Logradouro, Boa Esperança, Favela, Pilões, Marrecas, Preacas, Lagoa do Açude, Patos Ecoville, Mangangá, Pia, Olho d&#x27;Água Velho, Cachoeiras, Serra Preta, Pia de Pedro Izidro, Cachoeira de Dentro, Saco do Marcolino, Pia Nova, Bruno, Rajada, Sítio Motorista, Cuncas, Quixaba Velha, Aroeiras, Cupim, Serrota, Calado, Picotes e Serrota Vermelha.</p><p>Sugerimos, respeitosamente, que Vossa Excelência avalie instituir o transporte gratuito de eleitores no 2º turno, com as seguintes rotas:</p><ol><li>a criação da Rota nova – Serrote Branco (Sede – Picotes – Cupim – Calado – Quixaba Velha – Cuncas – Saco do Marcolino – Bruno – Rajada – Olho d&#x27;Água Velho – Mangangá – Boa Esperança – Picote Fino – Serrote Branco – Boa Vista – Cacimba de Pedra – Reinaldo – Logradouro – Preacas – Serra Preta – Sítio Motorista – Aroeiras – Cachoeira de Dentro – Cachoeiras – Lagoa do Açude – Patos Ecoville – Pia de Pedro Izidro – Pia Nova – Pia – Serrota – Serrota Vermelha – Sede);</li><li>a criação da Rota nova – São Severino (Sede – São Severino – Favela – Pilões – Marrecas – Sede).</li></ol><p>As rotas sugeridas atendem as localidades mais distantes. Caso esse Juízo já tenha definido rotas, pedimos que estas sugestões sejam consideradas naquilo que ainda não estiver contemplado.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Quixaba</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Quixaba; Quadro de percursos não localizado nas edições do DJE/TRE-PB consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

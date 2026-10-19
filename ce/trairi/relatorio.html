@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Trairi</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Trairi</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/trairi.pdf?v=1792369198" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Trairi (97ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 97ª Zona Eleitoral <strong>7 rotas novas</strong> no transporte gratuito de Trairi.
+<strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-CE) para Trairi</strong> (Quadro de percursos do transporte de eleitores da 97ª ZE não publicado no DJE/TRE-CE até a edição 237 (16/10/2026): busca por &quot;transporte&quot;, &quot;percurso&quot;, &quot;rota&quot;, &quot;veículo&quot;, &quot;zona rural&quot;, &quot;6.091&quot; e &quot;comissão&quot; em todos os trechos da zona nas edições 140–237 não achou edital/portaria de transporte, dispensa nem comissão especial de transporte. A análise considera apenas a distância até o local de votação.). As 7 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Trairi tem 49.964 eleitores aptos em 75 locais de votação e 191 seções. São 68 locais rurais, com 38.799 eleitores (78% do total).</li>
+<li>55 locais rurais ficam a 10 km ou mais da sede, com 32.325 eleitores. Os mais distantes: Agrovila do PA Várzea do Mundaú (43,6 km), Bacumixa De Baixo (40,1 km) e Bacumixá (35,2 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Vieira do Sal (34,4 km do local de votação), Cipoal (15,3 km do local de votação), Bolandeira (4,5 km do local de votação), Queimadas (3,1 km do local de votação), Estivas (3,1 km do local de votação), Sítio Leão (3,0 km do local de votação) e Gameleira (3,0 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 126 localidades rurais de Trairi que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista do TRE-CE e a posição de cada local publicada pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Vieira do Sal</td><td>34,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Cipoal</td><td>15,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Bolandeira</td><td>4,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Queimadas</td><td>3,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Estivas</td><td>3,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Leão</td><td>3,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Gameleira</td><td>3,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 126 localidades rurais de Trairi, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 998" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Trairi: 7 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="536.4,692.4 533.9,676.9 545.1,655.7 546.0,626.6 554.3,610.3 549.3,593.2 553.4,553.4 559.9,540.6 553.6,511.1 535.4,489.9 534.6,479.3 550.7,471.9 559.5,457.8 551.2,439.7 583.7,439.7 631.0,421.1 645.8,433.3 666.9,421.3 670.2,405.7 691.2,404.0 705.3,379.8 725.0,375.2 700.5,342.4 674.2,295.6 665.2,287.5 615.5,223.1 603.6,210.3 576.5,193.9 547.0,169.2 527.3,165.9 507.8,169.6 478.1,160.7 453.9,144.9 444.5,145.3 420.5,132.9 395.6,112.2 384.1,93.9 360.9,81.9 338.7,80.0 310.9,99.3 302.0,104.9 272.9,102.4 253.4,117.1 259.9,131.0 253.0,145.4 234.2,132.5 210.5,147.0 177.7,148.5 146.2,141.8 124.6,126.3 92.7,133.7 76.9,130.4 62.6,136.2 55.9,164.6 68.0,179.8 63.8,190.2 69.9,210.9 49.3,237.9 35.0,275.0 45.8,284.3 54.9,306.7 69.0,319.8 58.4,329.6 54.5,348.7 74.2,370.6 76.3,380.2 67.6,403.2 72.5,428.1 84.4,428.9 92.1,444.9 86.4,458.6 104.5,480.4 114.5,509.9 139.8,521.1 158.8,523.5 180.4,536.4 204.7,557.4 211.1,578.3 404.1,713.8 392.7,736.4 398.3,740.7 384.4,769.6 379.6,789.9 362.8,804.0 344.7,800.7 344.1,822.5 321.7,851.5 320.7,861.1 338.9,866.1 366.5,852.6 402.2,860.7 435.2,865.0 437.5,850.7 451.2,837.0 440.4,821.9 448.2,791.4 458.0,776.8 476.1,771.5 489.3,758.4 494.5,717.1 536.4,692.4 536.4,692.4" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="123.0,326.4 125.4,146.9 123.0,326.4 123.0,326.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Vieira do Sal</title></polyline>
+<polyline points="372.2,636.8 369.9,640.5 368.9,646.0 375.3,646.6 382.0,649.9 379.7,660.5 376.8,669.0 375.2,675.4 374.0,680.4 371.6,684.1 370.6,689.8 369.0,694.3 367.7,701.7 371.8,703.7 374.0,707.5 374.8,714.4 373.2,718.9 373.2,724.8 372.4,730.9 369.7,735.1 365.6,737.2 364.0,742.4 364.5,749.0 363.7,755.5 362.0,762.3 359.5,767.7 358.5,772.8 357.7,777.9 354.6,783.9 350.2,786.0 358.8,789.0 362.1,791.5 366.5,792.9 371.1,794.2 375.8,795.6 378.8,798.9 382.6,801.2 387.3,802.7 389.5,806.6 393.1,808.8 394.4,813.4 396.2,818.6 397.6,823.2 399.3,828.4 400.9,833.5 399.3,828.4 397.8,823.6 396.2,818.6 394.6,813.6 393.3,808.9 389.5,806.6 387.3,802.7 382.6,801.2 379.0,799.0 376.3,795.8 371.5,794.4 366.9,793.1 362.5,791.7 358.8,789.0 351.4,787.5 354.6,783.9 357.4,780.6 358.6,775.9 359.2,767.9 361.0,763.8 362.9,759.2 364.3,752.7 364.4,746.5 364.6,739.4 367.7,736.0 371.2,732.8 372.9,727.3 373.8,722.4 372.8,717.6 374.7,712.3 373.9,706.4 370.9,702.9 368.1,699.0 369.6,692.2 370.3,685.5 374.0,680.4 375.2,675.4 376.8,669.0 378.3,664.5 381.9,654.1 376.1,646.7 368.9,646.0 369.9,640.5 372.2,636.8 372.2,636.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Cipoal</title></polyline>
+<polyline points="487.9,598.5 483.0,597.5 476.4,595.9 473.2,581.0 473.4,575.3 473.6,564.7 473.9,554.1 473.5,560.6 473.3,567.9 473.1,574.4 473.0,581.1 472.7,592.1 472.5,598.1 474.4,602.1 479.1,603.7 486.2,605.5 498.3,608.5 505.6,610.4 510.4,611.7 514.2,614.7 512.9,619.2 515.3,615.9 512.5,612.3 501.3,609.0 496.7,607.8 486.8,605.4 479.3,603.5 474.7,601.5 472.8,597.6 479.8,596.8 484.6,597.9 487.9,598.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Bolandeira</title></polyline>
+<polyline points="452.5,366.7 455.0,362.1 456.9,357.6 459.7,354.3 468.3,354.2 475.3,353.5 480.3,352.6 488.4,348.6 482.1,346.8 487.9,348.3 483.9,350.6 480.0,352.7 472.2,353.9 460.5,352.5 457.8,356.4 455.3,361.1 452.5,366.7 452.5,366.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Queimadas</title></polyline>
+<polyline points="218.9,178.4 220.5,174.2 224.3,171.8 228.0,169.6 233.0,168.8 237.3,167.0 243.2,167.3 248.5,169.2 253.2,170.5 258.6,168.5 262.7,165.6 258.6,168.5 254.8,170.5 248.5,169.2 244.2,167.3 238.7,166.8 234.2,168.4 229.0,169.1 225.4,171.4 220.9,172.7 219.5,177.1 218.9,178.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Estivas</title></polyline>
+<polyline points="312.3,573.5 306.9,572.0 301.6,572.9 295.6,573.3 292.4,576.6 290.9,581.1 289.4,585.5 283.4,585.7 276.6,585.9 270.2,586.1 276.6,585.9 283.4,585.7 289.2,585.5 290.9,581.2 292.3,576.8 294.9,573.5 300.5,573.0 305.7,572.0 312.2,573.7 312.3,573.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Sítio Leão</title></polyline>
+<polyline points="164.0,472.2 157.5,469.6 153.2,466.4 148.4,464.4 146.8,460.2 145.3,455.7 142.8,451.3 141.0,445.2 136.5,442.4 131.6,443.6 136.5,442.4 141.0,444.3 141.7,449.4 144.8,454.7 146.7,459.1 148.4,464.4 153.2,466.4 157.5,469.6 162.2,472.1 164.0,472.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Gameleira</title></polyline>
+<circle cx="512.6" cy="685.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="699.9" cy="379.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="260.4" cy="167.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="187.5" cy="346.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="597.0" cy="431.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="449.7" cy="168.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="138.1" cy="437.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="436.4" cy="172.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="344.9" cy="237.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="139.7" cy="372.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="475.8" cy="581.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="303.6" cy="602.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="591.3" cy="399.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="492.6" cy="566.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="528.1" cy="331.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="436.8" cy="507.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="419.8" cy="563.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="694.1" cy="389.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="130.6" cy="376.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="257.6" cy="198.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="301.6" cy="469.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="472.4" cy="595.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="694.1" cy="391.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="356.6" cy="201.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="356.8" cy="201.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="294.5" cy="422.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="450.1" cy="597.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="364.9" cy="615.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="588.2" cy="328.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="296.0" cy="470.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="655.1" cy="412.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="157.0" cy="490.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="436.2" cy="355.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="477.9" cy="450.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="289.8" cy="227.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="643.7" cy="392.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="153.0" cy="481.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="182.1" cy="469.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="445.4" cy="451.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="449.7" cy="335.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="147.2" cy="461.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="433.6" cy="324.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="313.2" cy="215.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="213.2" cy="533.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="324.6" cy="168.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="131.8" cy="213.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="586.9" cy="318.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="676.8" cy="389.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="585.8" cy="318.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="461.6" cy="354.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="473.2" cy="568.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="210.9" cy="197.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="403.4" cy="656.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="478.5" cy="699.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="308.8" cy="246.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="454.7" cy="624.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="295.4" cy="448.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="293.6" cy="215.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="286.4" cy="204.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="370.3" cy="342.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="168.2" cy="478.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="79.0" cy="206.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="125.4" cy="334.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="572.3" cy="284.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="334.6" cy="165.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="156.2" cy="473.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="155.9" cy="468.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="454.6" cy="369.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="426.4" cy="277.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="458.0" cy="451.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="221.9" cy="525.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="590.3" cy="205.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="179.4" cy="173.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="141.4" cy="209.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="431.4" cy="197.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="354.2" cy="442.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="521.7" cy="170.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="474.8" cy="525.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="484.0" cy="432.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="304.0" cy="131.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="522.7" cy="171.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="493.7" cy="282.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="228.8" cy="231.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="289.7" cy="397.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="622.5" cy="297.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="596.7" cy="255.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="297.6" cy="205.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="620.7" cy="410.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="437.3" cy="144.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="415.1" cy="347.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="322.1" cy="95.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="338.0" cy="161.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="418.0" cy="346.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="285.2" cy="432.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="663.2" cy="392.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="299.3" cy="546.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="162.8" cy="471.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="598.5" cy="254.5" r="2.2" fill="#b9b9b2"/>
+<polygon points="530.6,269.4 519.3,290.3 541.9,290.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="323.2,83.6 310.9,106.4 335.6,106.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="323.2" y="120.6" text-anchor="middle" fill="#5c5c57">Mundaú</text>
+<polygon points="307.2,124.7 300.4,137.3 314.1,137.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="525.8,267.0 514.9,287.1 536.6,287.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="530.2,260.3 516.6,285.3 543.8,285.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="355.3,432.6 345.2,451.1 365.3,451.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="355.3" y="464.7" text-anchor="middle" fill="#5c5c57">Córrego Fundo</text>
+<polygon points="523.6,159.9 511.0,183.3 536.3,183.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="523.6" y="197.6" text-anchor="middle" fill="#5c5c57">Fleixeiras</text>
+<polygon points="336.2,150.0 324.0,172.4 348.4,172.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="336.2" y="186.7" text-anchor="middle" fill="#5c5c57">Canaã</text>
+<polygon points="638.1,283.4 629.4,299.5 646.9,299.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="123.0,317.0 114.2,333.3 131.9,333.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="485.8,420.4 476.6,437.3 495.0,437.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="485.8" y="450.7" text-anchor="middle" fill="#5c5c57">Campestre</text>
+<polygon points="572.5,300.4 562.1,319.5 582.8,319.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="572.5" y="333.2" text-anchor="middle" fill="#5c5c57">Carnaúba Torta</text>
+<polygon points="297.6,540.0 290.1,553.6 305.0,553.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="563.2,274.6 555.4,289.1 571.1,289.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="475.0,519.2 465.8,536.1 484.1,536.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="475.0" y="549.5" text-anchor="middle" fill="#5c5c57">Gualdrapas</text>
+<polygon points="269.6,403.3 260.7,419.7 278.4,419.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="164.0,461.4 153.5,480.8 174.5,480.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="164.0" y="494.6" text-anchor="middle" fill="#5c5c57">Purão</text>
+<polygon points="592.4,197.9 583.0,215.2 601.7,215.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="592.4" y="228.7" text-anchor="middle" fill="#5c5c57">Guajirú</text>
+<polygon points="417.1,339.4 408.4,355.4 425.7,355.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="465.7,195.5 458.1,209.6 473.3,209.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="435.8,136.5 426.8,153.2 444.8,153.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="435.8" y="166.5" text-anchor="middle" fill="#5c5c57">Emboaca</text>
+<polygon points="425.0,395.1 417.1,409.6 432.9,409.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="259.9,366.7 252.6,380.2 267.2,380.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="202.0,282.8 194.0,297.5 210.0,297.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="452.4,357.4 443.6,373.6 461.2,373.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="331.9,145.1 321.3,164.6 342.5,164.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="432.7,186.1 424.9,200.4 440.5,200.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="462.8,620.0 454.9,634.5 470.7,634.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="220.1,511.8 212.0,526.8 228.2,526.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="74.0,189.9 65.6,205.4 82.4,205.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="224.0,188.9 215.2,205.1 232.8,205.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="379.6,274.5 372.1,288.2 387.1,288.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="311.5,224.8 303.2,240.0 319.8,240.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="417.3,650.4 409.8,664.1 424.7,664.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="450.9,308.5 444.1,320.8 457.6,320.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="622.7,401.1 613.7,417.6 631.6,417.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="622.7" y="430.9" text-anchor="middle" fill="#5c5c57">Munguba</text>
+<polygon points="462.8,442.5 455.0,456.8 470.6,456.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="447.8,472.5 440.5,486.0 455.1,486.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="623.4,290.2 616.6,302.8 630.3,302.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="432.5,268.1 424.7,282.5 440.3,282.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="308.4,163.4 298.2,182.0 318.5,182.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="308.4" y="195.7" text-anchor="middle" fill="#5c5c57">Alagadico De Cima</text>
+<polygon points="348.0,359.3 340.2,373.6 355.7,373.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="509.2,523.9 501.4,538.3 517.0,538.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="596.8,246.5 589.9,259.2 603.7,259.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="428.1,578.9 420.9,592.1 435.2,592.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="662.3,383.3 654.4,397.8 670.1,397.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="146.2,201.1 138.9,214.5 153.5,214.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="290.8,387.1 282.1,403.1 299.5,403.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="226.1,226.5 219.3,239.1 233.0,239.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="211.3,366.9 203.7,380.8 218.8,380.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="533.5,287.3 519.5,313.1 547.5,313.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="298.5,195.8 289.7,212.1 307.4,212.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="114.3,274.0 106.6,288.2 122.1,288.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="472.7,557.3 463.6,574.1 481.8,574.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="472.7" y="587.5" text-anchor="middle" fill="#5c5c57">Padre Anchieta</text>
+<polygon points="372.7,628.2 364.4,643.5 381.0,643.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="472.1,517.8 462.3,535.8 481.9,535.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="307.0,436.8 299.0,451.6 315.1,451.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="266.5,291.0 259.5,303.9 273.5,303.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="312.2,565.7 304.8,579.3 319.7,579.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="493.3,275.8 484.5,292.0 502.1,292.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="64.3,228.5 56.9,242.3 71.8,242.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="219.2,265.1 211.4,279.4 227.0,279.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="286.6,425.6 279.1,439.4 294.1,439.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="180.2,170.8 172.9,184.2 187.4,184.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="381.9,337.5 374.0,352.1 389.9,352.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="219.2,170.9 212.0,184.1 226.4,184.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="236.4,405.7 229.2,418.8 243.5,418.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="489.9,690.9 482.4,704.6 497.3,704.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="488.3,590.5 480.7,604.6 495.9,604.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="93.1,375.2 86.1,388.0 100.1,388.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="333.1,90.8 323.7,108.1 342.5,108.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="370.7,168.0 361.2,185.6 380.3,185.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="370.7" y="199.1" text-anchor="middle" fill="#5c5c57">Peixinhos</text>
+<polygon points="107.6,362.7 101.0,374.8 114.2,374.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="537.2,305.2 530.4,317.6 543.9,317.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="376.7,521.5 370.6,532.7 382.8,532.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="125.4" cy="146.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="132.4" y="141.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Vieira do Sal 34,4 km</text>
+<circle cx="401.8" cy="837.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="408.8" y="832.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Cipoal 15,3 km</text>
+<circle cx="511.7" cy="621.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="518.7" y="616.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Bolandeira 4,5 km</text>
+<circle cx="481.8" cy="347.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="488.8" y="342.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Queimadas 3,1 km</text>
+<circle cx="264.4" cy="164.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="271.4" y="159.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Estivas 3,1 km</text>
+<circle cx="269.6" cy="585.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="276.6" y="580.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Leão 3,0 km</text>
+<circle cx="131.7" cy="444.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="138.7" y="439.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Gameleira 3,0 km</text>
+<rect x="520.6" y="276.7" width="10" height="10" fill="#1d1d1b"/><text x="534.6" y="299.7" font-weight="600" fill="#1d1d1b">Sede de Trairi</text>
+<line x1="35" x2="122.0" y1="896.1" y2="896.1" stroke="#8a8a84" stroke-width="2"/><text x="35" y="910.1" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="887.1443760492481" y2="887.1443760492481" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="891.1443760492481" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,880.1 421.4,892.4 434.6,892.4" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="891.1443760492481" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="905.1443760492481" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="914.1443760492481" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="910.1443760492481" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="914.1443760492481" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="933.1443760492481" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="937.1443760492481" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="933.1443760492481" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="937.1443760492481" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="956.1443760492481" y2="956.1443760492481" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="960.1443760492481" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="979.1443760492481" y2="979.1443760492481" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="983.1443760492481" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TRE-CE e TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital de transporte de eleitores da 97ª ZE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (2):</strong> Vieira do Sal e Cipoal.</li>
+<li><strong>De 3 a 5 km (5):</strong> Bolandeira, Queimadas, Estivas, Sítio Leão e Gameleira.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (119):</strong> Agrovila, Agrovila do PA Batalha, Agrovila do PA Várzea do Mundaú, Alagadiço, Alagamar do Sal, Almecégas, Angelim, Assentamento Clemente, Assentamento Curralinho, Atola, Bacumixá, Bacumixá do Meio, Barbatana, Barra do Atola, Barracas, Barrinha Norte, Bonfim, Cajazeira, Cajazeira dos Baés, Cajueiro Ferrado, Campestre, Cana Brava, Canaan, Canaã, Caraíbas, Caraúbas, Carnaúba Torta, Chapadão, Chão Duro, Comunidade Quilombola Associação Trairiense Afroquilombola Negros dos Batistas, Conjunto Habitacional Nossa Senhora do Livramento, Curimã, Curimãs, Curralinho, Córrego Doce, Córrego Fundo, Córrego Ramada, Córrego da Ramada, Córrego dos Furtados, Córrego dos Pires, Córregos dos Furtado, Emboaca, Esperinha, Estiva, Estrela, Fazenda Bio-Dorf, Feijão, Flecheiras, Fleicheiras, Gengibre, Genipapeiro, Guajirú, Gualdrapas, Gurguri, Ilha, Ipu Miranda, Jandaíra, Jenipapeiro, Jurema, Lagoa Nova, Lagoa Redonda, Lagoa da Batalha, Lagoa das Almécegas, Lagoa de Dentro, Lagoa do Bacumixá, Lagoa do Feijão, Lagoas Novas, Lagoinha das Flores, Lugarejo Chapadão, Maceió, Mangue, Manguinhos, Marrecas, Miradinha, Mundaú, Mundo Novo, Munguba, Muribeca, Muriti, NU Oiticicas, Novo Oriente, Oiticica, Padre Anchieta, Padre José Anchieta, Padre José de Anchieta, Palmeira, Panan, Panã, Passa Lição, Piancó, Porão, Purão, Purão Caras, Purão IX, Purão V, Purão VI, Purão VII, Purão VIII, Purão X, Quebra-Braço, Retalho, Riachão, Salgado, Salgado do Nicolau, Seridó, Serrote, Tejipió, Tigipió, Timbaúba, Triângulo, Ubaia, Urubu, Vieira dos Carros, Volta do Córrego, Vázea do Mundaú, Zé Aires, Água Boa, Água Boa dos Baés e Água Boa dos Sanches.</li>
+</ul><h2>Rotas do Edital de transporte de eleitores da 97ª ZE</h2>
+<p>O edital tem 0 rotas para Trairi. Horários: não informados. Veículos: não informados.</p>
+<p><strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-CE) para Trairi.</strong> Quadro de percursos do transporte de eleitores da 97ª ZE não publicado no DJE/TRE-CE até a edição 237 (16/10/2026): busca por &quot;transporte&quot;, &quot;percurso&quot;, &quot;rota&quot;, &quot;veículo&quot;, &quot;zona rural&quot;, &quot;6.091&quot; e &quot;comissão&quot; em todos os trechos da zona nas edições 140–237 não achou edital/portaria de transporte, dispensa nem comissão especial de transporte. A análise considera apenas a distância até o local de votação.</p>
+<p><strong>Atenção:</strong> Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral para este município (edições lidas até 18/10/2026). As rotas do mapa são sugestões deste levantamento. </p>
+<p>Fonte: Quadro de percursos (DJE/TRE-CE) ainda não incorporado a este levantamento.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 7 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Vieira do Sal</strong></td><td>Bacumixá – Vieira do Sal – Bacumixá</td><td>Vieira do Sal</td><td>26,9 km (ida e volta)</td><td>~40 min</td></tr><tr><td><strong>Rota nova – Cipoal</strong></td><td>Lagoas Novas – Cipoal – Lagoas Novas</td><td>Cipoal</td><td>30,5 km (ida e volta)</td><td>~1h14</td></tr><tr><td><strong>Rota nova – Bolandeira</strong></td><td>Sede – Bolandeira – Sede</td><td>Bolandeira</td><td>13,4 km (ida e volta)</td><td>~17 min</td></tr><tr><td><strong>Rota nova – Queimadas</strong></td><td>Muribeca – Queimadas – Muribeca</td><td>Queimadas</td><td>6,1 km (ida e volta)</td><td>~15 min</td></tr><tr><td><strong>Rota nova – Estivas</strong></td><td>Córrego dos Pires – Estivas – Córrego dos Pires</td><td>Estivas</td><td>6,2 km (ida e volta)</td><td>~15 min</td></tr><tr><td><strong>Rota nova – Sítio Leão</strong></td><td>Sede – Sítio Leão – Sede</td><td>Sítio Leão</td><td>6,0 km (ida e volta)</td><td>~14 min</td></tr><tr><td><strong>Rota nova – Gameleira</strong></td><td>Purão – Gameleira – Purão</td><td>Gameleira</td><td>5,9 km (ida e volta)</td><td>~14 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMT</strong></p><p>Trairi/CE, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. Cristiano Sanches de Carvalho</strong><br>Juiz Eleitoral da 97ª Zona Eleitoral – Trairi/CE</p><p><strong>Assunto:</strong> Sugestão de rotas de transporte gratuito de eleitores da zona rural – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Trairi, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação. Não localizamos no Diário da Justiça Eleitoral (DJE/TRE-CE) quadro de percursos nem ato sobre o transporte de eleitores para este município; estas localidades: Vieira do Sal, Cipoal, Bolandeira, Queimadas, Estivas, Sítio Leão e Gameleira.</p><p>Sugerimos, respeitosamente, que Vossa Excelência avalie instituir o transporte gratuito de eleitores no 2º turno, com as seguintes rotas:</p><ol><li>a criação da Rota nova – Vieira do Sal (Bacumixá – Vieira do Sal – Bacumixá);</li><li>a criação da Rota nova – Cipoal (Lagoas Novas – Cipoal – Lagoas Novas);</li><li>a criação da Rota nova – Bolandeira (Sede – Bolandeira – Sede);</li><li>a criação da Rota nova – Queimadas (Muribeca – Queimadas – Muribeca);</li><li>a criação da Rota nova – Estivas (Córrego dos Pires – Estivas – Córrego dos Pires);</li><li>a criação da Rota nova – Sítio Leão (Sede – Sítio Leão – Sede);</li><li>a criação da Rota nova – Gameleira (Purão – Gameleira – Purão).</li></ol><p>As rotas sugeridas atendem as localidades mais distantes. Caso esse Juízo já tenha definido rotas, pedimos que estas sugestões sejam consideradas naquilo que ainda não estiver contemplado.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Trairi</p></blockquote>
+<p class="fontes">Fontes: TRE-CE e TSE, Locais de Votação de Trairi; Quadro de percursos (DJE/TRE-CE) ainda não incorporado a este levantamento; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

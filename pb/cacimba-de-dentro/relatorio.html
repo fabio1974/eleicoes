@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Cacimba de Dentro</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Cacimba de Dentro</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/cacimba-de-dentro.pdf?v=1792369354" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Cacimba de Dentro (20ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 20ª Zona Eleitoral <strong>2 rotas novas e 3 paradas extras em rotas do edital</strong> no transporte gratuito de Cacimba de Dentro.
+Traçamos pelas estradas o percurso das 10 rotas do Edital nº 45/2026. 2 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 3 ficam a 1–2 km.</p>
+<ul>
+<li>Cacimba de Dentro tem 14.357 eleitores aptos em 9 locais de votação e 43 seções. São 2 locais rurais, com 2.376 eleitores (17% do total).</li>
+<li>2 locais rurais ficam a 10 km ou mais da sede, com 2.376 eleitores. Os mais distantes: Logradouro Cacimba De Dentro (11,4 km) e Rua Manoel Belo, Logradouro - Cacimba De Dentro (11,4 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Lagoa de Fora (11,1 km do local de votação) e Assentamento Santa Verônica (4,8 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Anafê, Matas de Baixo e Jurema.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 29 localidades rurais de Cacimba de Dentro que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Lagoa de Fora</td><td>11,1</td><td>Rota 06</td><td>3,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Jaguaré</td><td>10,7</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Filgueira</td><td>8,4</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Matas de Riachão</td><td>8,2</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Anafê</td><td>8,2</td><td>Rota 06</td><td>2,0</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Matas de Baixo</td><td>7,6</td><td>Rota 02</td><td>1,6</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Matas de Olho d&#x27;Água</td><td>6,5</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Caraúbas</td><td>5,8</td><td>Rota 06</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Maracajá</td><td>5,8</td><td>Rota 05</td><td>0,6</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Conceição</td><td>5,2</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Assentamento Santa Verônica</td><td>4,8</td><td>Rota 03</td><td>2,2</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Picadas</td><td>4,6</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Barreiros</td><td>4,5</td><td>Rota 06</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Boa Vista</td><td>4,4</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Timbaúba</td><td>4,3</td><td>Rota 08</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Mium</td><td>3,7</td><td>Rota 06</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Lagoa Salgada 1</td><td>3,6</td><td>Rota 05</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Lagoa Salgada</td><td>3,5</td><td>Rota 05</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Xique-xique</td><td>3,2</td><td>Rota 03</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Jurema</td><td>3,0</td><td>Rota 01</td><td>1,5</td><td>Rota passa perto (1–2 km)</td></tr></tbody></table></div>
+<p>2 das 39 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: São Luiz (Rota 07) e Logradouro (Por dentro/Por fora) (Rota 10). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 29 localidades rurais de Cacimba de Dentro, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 889" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Cacimba de Dentro: 5 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital Edital nº 45/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="501.9,756.3 597.9,757.2 662.4,727.5 679.1,691.8 565.0,459.9 627.1,454.8 674.4,395.4 725.0,423.7 694.4,381.5 708.8,361.1 683.7,324.4 532.5,270.6 460.6,267.8 392.4,229.4 266.3,171.8 209.7,119.4 98.4,80.0 52.9,233.5 103.9,704.3 187.9,721.9 174.4,670.4 195.8,650.0 240.8,651.0 278.3,690.4 343.7,708.5 393.8,710.3 501.9,756.3 501.9,756.3" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="88.2,160.2 99.1,157.0 107.9,151.5 113.4,141.7 122.6,136.1 128.8,125.8 134.7,116.1 148.2,119.5 152.5,109.7 148.9,98.4 152.5,109.7 157.3,121.6 166.4,126.6 178.4,132.8 186.6,144.8 195.0,157.8 200.1,166.8 198.9,180.0 198.2,195.6 197.9,209.8 195.9,221.9 194.9,236.4 198.1,248.4 197.4,252.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="189.0,638.2 183.0,647.6 171.2,653.1 167.4,667.3 166.9,683.0 162.8,693.8 169.1,703.5 177.7,712.0 169.1,703.5 162.8,693.8 166.9,683.0 168.1,669.9 169.2,656.0 178.6,650.1 189.1,646.4 201.4,642.4 203.9,630.5 205.9,617.7 205.3,604.4 203.8,591.1 200.9,579.8 195.7,571.0 200.1,559.6 206.3,546.8 213.1,539.2 227.7,538.3 241.0,540.1 249.2,532.9 257.6,538.8 270.2,537.4 281.9,534.0 292.0,528.3 300.4,521.9 306.9,512.5 318.6,509.3 328.9,504.7 334.7,494.9 342.9,487.4 356.8,486.8 368.1,484.0 380.5,482.1 388.0,489.4 397.1,494.4 400.9,504.8 405.4,514.6 418.1,516.4 429.9,520.0 437.5,527.8 423.8,529.5 416.5,536.2 407.3,530.6 397.8,537.7 387.7,541.6 373.8,539.8 363.4,543.6 351.0,545.5 337.9,547.8 327.9,543.9 315.6,542.2 302.3,543.5 289.5,541.3 280.4,534.9 268.9,538.2 255.3,538.6 242.9,537.0 241.1,524.1 237.9,512.9 232.1,503.5 225.3,495.4 216.2,489.9 202.8,488.9 189.7,487.7 177.2,485.7 168.3,479.9 167.5,479.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="152.3,356.5 150.2,343.1 149.2,328.4 143.7,319.0 138.3,310.4 137.7,296.4 147.4,282.9 157.6,276.1 166.9,267.6 175.0,259.3 183.1,251.5 196.0,250.4 197.4,252.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="139.1,291.0 147.4,282.9 157.6,276.1 166.9,267.6 175.0,259.3 183.1,251.5 195.9,254.3 201.9,262.4 210.1,273.5 216.7,281.2 228.2,287.3 241.4,285.2 244.6,273.9 246.8,260.0 244.6,272.6 242.1,284.3 232.2,289.3 222.0,284.0 213.1,277.4 206.4,268.1 200.0,259.9 197.4,252.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="301.7,330.1 288.6,328.4 280.2,320.5 272.1,314.4 263.4,308.4 256.7,300.8 246.5,296.5 237.0,302.4 231.9,313.2 226.9,322.4 221.7,331.5 213.6,339.2 206.4,346.5 198.4,352.8 194.9,364.2 189.7,373.3 194.8,383.9 201.7,391.2 205.3,402.1 208.3,413.1 205.3,402.1 201.7,391.2 194.8,383.9 187.7,376.9 193.2,367.5 191.5,355.1 201.7,350.7 211.9,341.2 219.6,334.4 224.9,325.5 230.1,316.0 235.1,306.4 239.9,297.0 253.8,299.9 276.1,302.4 286.6,294.5 299.8,281.8 308.1,274.7 317.7,268.3 326.3,276.3 335.0,288.0 341.4,296.6 343.7,309.5 344.8,323.4 354.0,334.3 363.1,341.9 366.5,357.8 369.0,370.8 375.6,389.0 385.2,398.4 392.8,407.2 399.3,414.8 408.0,421.8 412.1,434.4 415.1,447.4 416.8,460.2 417.6,475.6 421.2,487.8 424.3,499.2 427.3,510.7 430.7,523.0 439.9,529.0 442.7,533.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="500.5,337.1 495.8,349.2 486.7,355.9 480.3,365.4 473.1,381.3 469.9,399.7 468.2,412.0 465.5,426.6 463.8,439.5 461.6,452.3 463.8,439.5 478.2,440.1 491.6,441.3 504.6,442.5 519.3,442.4 505.5,442.7 491.6,441.3 478.2,440.1 463.8,439.5 465.5,426.6 456.9,432.1 440.3,429.5 428.5,426.4 419.8,431.8 410.7,426.1 403.4,418.1 394.8,409.8 388.0,400.8 379.4,394.9 371.9,380.2 368.2,367.4 365.9,352.9 359.0,338.5 347.2,328.7 344.2,316.2 343.0,301.4 336.8,290.3 329.7,281.0 320.4,268.5 314.8,260.2 319.6,250.7 314.8,260.2 320.4,268.5 329.0,280.1 336.8,290.3 342.5,298.8 344.2,316.2 346.5,328.0 359.0,338.5 368.2,343.5 376.6,337.6 385.8,332.4 398.3,330.2 412.9,330.1 417.8,320.8 430.9,323.8 440.1,329.1 453.7,328.6 464.4,332.9 470.7,341.9 479.1,348.8 490.9,351.2 496.4,360.9 507.1,367.3 524.5,372.5 535.9,377.3 540.2,386.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="622.6,614.4 617.6,605.1 610.6,598.0 602.7,591.4 595.0,599.1 591.0,610.1 578.2,607.8 569.2,602.1 555.5,601.9 550.5,587.6 542.1,580.4 541.3,580.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="350.6,658.0 359.0,651.9 368.0,646.9 377.6,642.3 386.9,637.6 393.2,629.9 401.0,623.2 405.2,613.4 403.4,601.1 400.2,589.3 393.1,579.8 387.1,570.7 381.0,561.0 372.9,554.2 364.8,547.8 372.9,554.2 381.0,561.0 388.0,568.1 382.4,576.7 377.7,590.2 369.5,596.5 362.9,604.0 359.9,615.8 352.3,625.2 341.4,629.0 337.4,632.9" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="442.7,533.7 434.2,526.3 429.1,517.2 425.9,505.3 422.8,493.6 419.4,481.4 415.8,469.7 417.6,457.2 414.5,445.4 411.4,429.4 406.0,420.2 398.1,413.8 391.3,405.3 380.9,395.9 371.9,380.2 368.2,367.4 365.9,352.9 359.0,338.5 347.2,328.7 344.2,316.2 343.0,301.4 336.8,290.3 329.7,281.0 320.4,268.5 314.8,260.2 319.6,250.7 314.8,260.2 309.7,273.5 299.8,281.8 292.0,288.8 284.6,298.6 265.4,301.5 251.0,298.6 241.5,294.0 232.2,289.3 222.0,284.0 213.1,277.4 206.4,268.1 200.0,259.9 197.4,252.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 09</title></polyline>
+<polyline points="321.4,247.4 315.0,255.2 318.4,265.8 326.3,276.3 335.0,288.0 341.4,296.6 343.7,309.5 344.8,323.4 354.0,334.3 363.1,341.9 366.5,357.8 369.0,370.8 375.6,389.0 385.2,398.4 392.8,407.2 399.3,414.8 408.0,421.8 412.1,434.4 415.1,447.4 416.8,460.2 417.6,475.6 421.2,487.8 424.3,499.2 427.3,510.7 430.7,523.0 439.9,529.0 442.7,533.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 10</title></polyline>
+<polyline points="426.7,517.6 425.7,504.3 422.6,492.9 419.4,481.4 415.8,469.7 417.6,457.2 414.5,445.4 417.3,432.7 428.5,426.4 436.5,420.5 449.2,418.3 462.3,417.4 468.3,409.3 471.0,391.6 476.7,374.9 482.3,360.3 490.7,351.4 497.9,344.7 502.4,333.4 509.3,324.7 518.2,317.0 526.7,310.5 546.6,307.7 558.3,303.4 571.6,299.7 584.7,300.6 600.0,302.2 611.8,298.8 622.7,307.1 632.8,314.3 638.5,322.7 649.8,326.9 663.5,327.6 670.8,320.2 663.5,327.6 649.8,326.9 638.5,322.7 632.8,314.3 622.7,307.1 613.4,298.5 603.9,303.0 592.2,299.8 576.9,300.1 563.1,300.8 552.9,307.7 536.5,308.4 523.8,310.5 517.1,319.3 508.0,327.3 498.5,341.0 492.5,350.1 483.8,358.0 478.1,370.3 473.1,381.3 469.9,399.7 468.2,412.0 459.5,417.6 444.9,418.5 433.3,422.6 425.5,429.0 415.5,433.4 415.1,447.4 416.8,460.2 417.6,475.6 421.2,487.8 424.3,499.2 427.3,510.7 426.7,517.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Lagoa de Fora</title></polyline>
+<polyline points="198.6,249.1 185.1,250.8 176.5,257.8 168.5,265.0 162.7,273.4 151.3,279.3 142.5,288.6 127.3,293.4 114.1,292.6 99.5,294.9 84.8,296.5 71.0,299.1 59.5,302.0 41.1,307.0 45.5,320.1 35.0,313.0 53.9,303.6 66.7,300.2 79.3,296.9 94.4,295.8 108.8,293.3 123.2,293.6 137.5,291.4 147.4,282.9 157.6,276.1 166.9,267.6 175.0,259.3 183.1,251.5 196.0,250.4 198.6,249.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Assentamento Santa Verônica</title></polyline>
+<polyline points="202.1,162.6 209.9,175.2 215.7,185.6 222.2,194.0 229.6,202.5 239.5,213.2 252.9,221.4 262.6,209.5 267.4,195.8 265.9,181.8 267.4,195.8 264.3,208.6 256.3,220.8 244.9,217.2 234.9,208.4 227.8,200.0 219.2,189.9 212.8,180.1 206.2,167.8 202.1,162.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 01</title></polyline>
+<polyline points="167.5,479.5 153.1,479.3 139.9,477.0 128.4,473.8 118.7,478.3 108.7,482.5 118.7,478.3 128.4,473.8 139.9,477.0 153.1,479.3 167.4,479.5 167.5,479.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 02</title></polyline>
+<polyline points="500.5,337.1 508.0,327.3 517.1,319.3 517.2,304.0 526.1,293.3 530.6,282.1 547.6,281.6 557.8,277.8 547.6,281.6 534.1,283.9 526.7,292.2 518.0,301.3 518.3,316.7 510.9,323.3 503.2,332.1 500.5,337.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 06</title></polyline>
+<circle cx="176.9" cy="713.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="207.4" cy="618.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="167.4" cy="479.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="207.8" cy="542.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="500.9" cy="337.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="225.0" cy="440.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="88.1" cy="160.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="273.8" cy="533.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="321.1" cy="247.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="147.5" cy="95.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="351.0" cy="658.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="522.0" cy="443.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="373.0" cy="388.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="376.3" cy="391.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="150.5" cy="342.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="428.8" cy="425.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="362.1" cy="545.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="195.5" cy="158.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="540.9" cy="581.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="361.7" cy="487.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="139.2" cy="291.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="391.4" cy="558.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="457.6" cy="482.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="197.6" cy="255.9" r="2.2" fill="#b9b9b2"/>
+<polygon points="442.1,523.3 432.2,541.4 451.9,541.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="464.3,540.3 451.3,564.3 477.4,564.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="426.8,504.6 414.2,527.7 439.3,527.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="453.7,521.5 443.0,541.1 464.3,541.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="443.0,501.4 430.0,525.3 456.0,525.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="203.7,237.4 192.4,258.2 215.0,258.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="203.7" y="272.2" text-anchor="middle" fill="#5c5c57">Centro</text>
+<polygon points="438.8,511.6 431.1,525.8 446.5,525.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="441.1,520.2 430.6,539.6 451.6,539.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="199.0,239.5 190.2,255.8 207.9,255.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="679.7" cy="325.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="542.5" y="320.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Lagoa de Fora 11,1 km</text>
+<circle cx="560.3" cy="281.5" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="478.9" y="276.5" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Anafê 8,2 km</text>
+<circle cx="101.1" cy="479.3" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="108.1" y="474.3" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Matas de Baixo 7,6 km</text>
+<circle cx="47.4" cy="317.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="54.4" y="312.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Assentamento Santa Verônica 4,8 km</text>
+<circle cx="265.1" cy="173.3" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="272.1" y="168.3" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Jurema 3,0 km</text>
+<rect x="437.9" y="528.7" width="10" height="10" fill="#1d1d1b"/><text x="451.9" y="551.7" font-weight="600" fill="#1d1d1b">Sede de Cacimba de Dentro</text>
+<line x1="35" x2="243.9" y1="787.2" y2="787.2" stroke="#8a8a84" stroke-width="2"/><text x="35" y="801.2" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="778.1799628942487" y2="778.1799628942487" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="782.1799628942487" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,771.2 421.4,783.4 434.6,783.4" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="782.1799628942487" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="796.1799628942487" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="805.1799628942487" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="801.1799628942487" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="805.1799628942487" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="824.1799628942487" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="828.1799628942487" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="824.1799628942487" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="828.1799628942487" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="847.1799628942487" y2="847.1799628942487" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="851.1799628942487" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="870.1799628942487" y2="870.1799628942487" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="874.1799628942487" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 45/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (10):</strong> Lagoa de Fora, Jaguaré, Filgueira, Matas de Riachão, Anafê, Matas de Baixo, Matas de Olho d&#x27;Água, Caraúbas, Maracajá e Conceição.</li>
+<li><strong>De 3 a 5 km (10):</strong> Assentamento Santa Verônica, Picadas, Barreiros, Boa Vista, Timbaúba, Mium, Lagoa Salgada 1, Lagoa Salgada, Xique-xique e Jurema.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (9):</strong> Fazenda Morais, Fazenda Onofre, Lagoa Cavada, Lagoa d&#x27;Água, Lagoa de Pedra, Logradouro de São Francisco, Mocotó, Saburá e Sítio Lagoa de Onça.</li>
+</ul><h2>Rotas do Edital nº 45/2026</h2>
+<p>O edital tem 10 rotas para Cacimba de Dentro. Horários: saídas a partir das 07:00 h, várias por rota, até 17:00/17:30 h. Veículos: Rota 01: ÔNIBUS OFA7H69; Rota 02: MICRO- ÔNIBUS RLU9D13; Rota 03: ÔNIBUS OEY1I83; Rota 04: MICRO- ÔNIBUS RLU4C73; Rota 05: ÔNIBUS QSG2H52; Rota 06: ÔNIBUS OFZ7C74; Rota 07: ÔNIBUS QSJ4H27; Rota 08: VAN RLY7F26; Rota 09: ÔNIBUS RLZ2G84; Rota 10: VAN SKY3C59.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Conceição – Boa Vista – Mocotó – Distrito de Logradouro</td></tr><tr><td>02</td><td>Figueiras – Jaguaré – Olho D&#x27;água – Matas do Olho D&#x27;água – Picadas – Saburá – Sede – Matas do Riachão</td></tr><tr><td>03</td><td>Três Lagoas – Logradouro</td></tr><tr><td>04</td><td>Lagoa Cavada – Logradouro de Baixo/Cano – Logradouro</td></tr><tr><td>05</td><td>Baixa Grande – Juriti – Carrapicho – Lagoa Salgada – Sede</td></tr><tr><td>06</td><td>Caraúbas – Boi Manso – Mium – Barreiros II – Trapiá</td></tr><tr><td>07</td><td>São Luiz – Capivara – Lagoa de Onça</td></tr><tr><td>08</td><td>Timbaúba – Trapiá do Rio – Lagoa D&#x27;água – Foguinho</td></tr><tr><td>09</td><td>Sede – Barreiros – Logradouro</td></tr><tr><td>10</td><td>Barreiros – Logradouro (Por dentro/Por fora)</td></tr></tbody></table></div>
+<p><strong>Atenção:</strong> As rotas foram publicadas para o 1º turno (04/10) e não houve ato próprio do 2º turno no DJE até 18/10/2026; elas são consideradas válidas para o 2º turno. Confirme com o Cartório Eleitoral da zona.</p>
+<p>Fonte: Edital nº 45/2026 TRE-PB/PTRE/20ª_ZONA (Divulgação dos Quadros Gerais de Percursos e Horários Programados de Araruna, Cacimba de Dentro, Riachão e Tacima), DJE/TRE-PB nº 198/2026, disp. 18/09/2026, publ. 19/09/2026, p. 26-32 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=PB&amp;numDiario=198&amp;anoDiario=2026).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 5 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Lagoa de Fora</strong></td><td>Sede – Lagoa de Fora – Sede</td><td>Lagoa de Fora</td><td>22,2 km (ida e volta)</td><td>~49 min</td></tr><tr><td><strong>Rota nova – Assentamento Santa Verônica</strong></td><td>Sede – Assentamento Santa Verônica – Sede</td><td>Assentamento Santa Verônica</td><td>9,5 km (ida e volta)</td><td>~11 min</td></tr><tr><td><strong>Parada extra na Rota 01</strong></td><td>desvio pelo caminho atual: Jurema</td><td>Jurema</td><td>+6,6 km</td><td>+10 min</td></tr><tr><td><strong>Parada extra na Rota 02</strong></td><td>desvio pelo caminho atual: Matas de Baixo</td><td>Matas de Baixo</td><td>+3,4 km</td><td>+8 min</td></tr><tr><td><strong>Parada extra na Rota 06</strong></td><td>desvio pelo caminho atual: Anafê</td><td>Anafê</td><td>+4,8 km</td><td>+12 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMCD</strong></p><p>Cacimba de Dentro/PB, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Diego Garcia Oliveira</strong><br>Juiz Eleitoral da 20ª Zona Eleitoral – Araruna/PB</p><p><strong>Assunto:</strong> Sugestão de inclusão de rotas no quadro de percursos (Edital nº 45/2026) – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Cacimba de Dentro, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação e do percurso das rotas do Edital nº 45/2026: Lagoa de Fora, Assentamento Santa Verônica, Anafê, Matas de Baixo e Jurema.</p><p>Sugerimos, respeitosamente:</p><ol><li>a criação da Rota nova – Lagoa de Fora (Sede – Lagoa de Fora – Sede);</li><li>a criação da Rota nova – Assentamento Santa Verônica (Sede – Assentamento Santa Verônica – Sede);</li><li>a inclusão de parada em Jurema na Rota 01, mantido todo o percurso atual;</li><li>a inclusão de parada em Matas de Baixo na Rota 02, mantido todo o percurso atual;</li><li>a inclusão de parada em Anafê na Rota 06, mantido todo o percurso atual.</li></ol><p>Todas as sugestões acrescentam percurso. Nenhuma rota do Edital nº 45/2026 deve ser reduzida ou removida.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Cacimba de Dentro</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Cacimba de Dentro; Edital nº 45/2026 TRE-PB/PTRE/20ª_ZONA (Divulgação dos Quadros Gerais de Percursos e Horários Programados de Araruna, Cacimba de Dentro, Riachão e Tacima), DJE/TRE-PB nº 198/2026, disp. 18/09/2026, publ. 19/09/2026, p. 26-32 (https://dje-rest.tse.jus.br/dje/rest/downloadDiario?tribunal=PB&amp;numDiario=198&amp;anoDiario=2026); IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>
