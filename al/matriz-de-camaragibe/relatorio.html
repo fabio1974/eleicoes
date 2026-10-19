@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Matriz de Camaragibe</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Matriz de Camaragibe</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/matriz-de-camaragibe.pdf?v=1792370896" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Matriz de Camaragibe (12ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 12ª Zona Eleitoral <strong>4 rotas novas</strong> no transporte gratuito de Matriz de Camaragibe.
+<strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-AL) para Matriz de Camaragibe</strong> (Comissão Especial de Transporte da 12ª ZE instalada pela Portaria nº 3/2026 (DJE/TRE-AL nº 171/2026, de 01/09/2026) para &quot;4 de outubro de 2026 e [...] 25 de outubro de 2026, se houver segundo turno&quot;; nenhum quadro de percursos da 12ª ZE no DJE/TRE-AL até 16/10/2026 (edições 140 a 204).). As 27 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Matriz de Camaragibe tem 18.672 eleitores aptos em 5 locais de votação e 53 seções. São 0 locais rurais, com 0 eleitores (0% do total).</li>
+
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Aldeia Indígena Wassu Cocal (39,1 km do local de votação), Fazenda Água Fria (33,4 km do local de votação), Agrovila do PA Camaçari (33,3 km do local de votação), Fazenda Rancho Frio (31,6 km do local de votação), Agrovila 1 Camari (31,2 km do local de votação), Fazenda Humaitá (30,3 km do local de votação), Fazenda Ilha Grande (25,9 km do local de votação), Fazenda Tamanduá (23,3 km do local de votação), Agrovila do PA Paraíso Agrícola 2 (21,2 km do local de votação), Agrovila do PA Paraíso Agrícola (18,8 km do local de votação), Agrovila do PA Santa Cruz do Riachão 2 (17,5 km do local de votação), Agrovila do PA Santa Cruz do Riachão (17,4 km do local de votação), Fazenda Palmeiral (17,3 km do local de votação), Fazenda Curitiba (17,3 km do local de votação), Fazenda Embira (16,5 km do local de votação), FAZENDA CANTA GALO (13,1 km do local de votação), Fazenda Serra d&#x27;Água (11,4 km do local de votação), Fazenda Santa Luzia (9,7 km do local de votação), Fazenda Boa Esperança (8,3 km do local de votação), Fazenda Carrilho (8,2 km do local de votação), Fazenda Ceará (7,2 km do local de votação), FAZENDA CANADÁ (7,0 km do local de votação), Usina Camaragibe (6,6 km do local de votação), Comunidade Quilombola Perpétua (5,6 km do local de votação), Fazenda Maranhão (5,5 km do local de votação), Fazenda São Vicente (4,4 km do local de votação) e Fazenda Vale (3,2 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 28 localidades rurais de Matriz de Camaragibe que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Aldeia Indígena Wassu Cocal</td><td>39,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Água Fria</td><td>33,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Agrovila do PA Camaçari</td><td>33,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Rancho Frio</td><td>31,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Agrovila 1 Camari</td><td>31,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Humaitá</td><td>30,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Ilha Grande</td><td>25,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Tamanduá</td><td>23,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Agrovila do PA Paraíso Agrícola 2</td><td>21,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Agrovila do PA Paraíso Agrícola</td><td>18,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Agrovila do PA Santa Cruz do Riachão 2</td><td>17,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Agrovila do PA Santa Cruz do Riachão</td><td>17,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Palmeiral</td><td>17,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Curitiba</td><td>17,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Embira</td><td>16,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>FAZENDA CANTA GALO</td><td>13,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Serra d&#x27;Água</td><td>11,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Santa Luzia</td><td>9,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Boa Esperança</td><td>8,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Carrilho</td><td>8,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Ceará</td><td>7,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>FAZENDA CANADÁ</td><td>7,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Usina Camaragibe</td><td>6,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Perpétua</td><td>5,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Maranhão</td><td>5,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda São Vicente</td><td>4,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Vale</td><td>3,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 28 localidades rurais de Matriz de Camaragibe, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 683" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Matriz de Camaragibe: 27 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="643.6,506.0 622.7,474.8 629.3,467.6 664.4,472.2 687.4,490.9 725.0,475.8 721.9,450.2 697.4,440.7 665.9,446.4 627.0,391.1 597.6,373.4 575.8,370.6 556.4,357.8 528.0,364.0 513.9,321.0 529.3,278.5 549.7,274.4 577.4,236.6 427.7,143.2 118.1,80.0 117.9,94.3 103.6,111.5 75.2,123.2 35.0,153.7 47.3,162.4 57.0,230.4 104.1,273.4 251.2,254.2 376.8,422.1 441.0,507.8 643.6,506.0 643.6,506.0" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="500.2,410.2 495.1,414.2 493.3,420.8 490.2,426.1 483.8,427.9 478.8,425.1 474.2,428.4 469.0,437.2 466.8,443.0 465.3,451.8 463.9,459.4 462.6,466.0 456.5,470.8 459.6,478.6 461.6,485.1 465.7,490.5 473.2,496.7 477.2,500.4 479.0,506.4 482.9,510.3 482.2,520.2 480.1,528.1 482.5,522.7 483.2,512.7 479.0,506.4 477.2,500.4 473.2,496.7 467.7,493.0 464.1,488.3 460.9,483.7 457.6,476.9 454.9,471.5 460.8,468.7 463.2,463.0 464.7,454.6 466.8,443.0 465.7,435.9 462.2,430.4 458.2,426.0 454.2,421.8 452.1,415.2 446.7,412.7 439.6,413.8 433.5,411.8 427.6,410.0 419.9,410.3 413.9,408.5 408.7,405.5 403.1,402.5 395.8,405.8 390.4,403.4 384.5,406.0 377.7,405.0 376.8,397.4 373.2,392.5 376.7,396.8 377.6,404.2 383.1,406.9 387.3,402.5 393.5,405.0 401.5,403.7 408.7,405.5 413.9,408.5 419.9,410.3 427.4,409.9 433.3,411.8 439.2,413.9 445.7,412.7 450.1,409.2 447.6,403.4 446.7,395.8 449.0,389.7 452.4,383.5 456.6,376.5 460.6,370.7 460.4,363.0 458.2,357.2 455.0,352.0 459.4,348.6 461.4,342.7 464.5,337.9 466.7,332.4 467.1,323.2 466.8,331.2 464.6,337.6 461.6,342.4 459.4,348.2 455.0,352.0 454.4,344.5 452.1,337.9 449.9,329.3 447.3,323.6 442.8,320.2 438.2,316.9 432.6,313.0 427.3,310.2 425.5,300.7 424.2,294.2 421.1,289.5 417.0,284.8 410.5,286.4 406.5,290.4 401.7,295.0 405.7,291.2 410.3,287.5 414.1,282.8 409.7,279.5 403.6,282.4 398.5,279.1 390.8,280.8 386.0,277.8 383.6,272.4 375.7,273.4 367.1,274.4 358.4,273.4 351.8,271.9 345.4,270.3 337.9,267.8 332.1,264.1 322.7,265.0 315.6,265.8 312.1,270.8 306.1,272.8 299.7,274.7 306.1,272.8 312.1,270.8 308.0,265.6 301.7,263.7 298.4,259.1 294.2,255.4 294.0,247.3 289.6,243.1 284.8,238.9 278.0,237.4 272.2,235.3 270.2,229.4 266.6,224.7 270.1,229.1 272.2,235.3 278.0,237.4 284.8,238.9 289.5,235.5 296.4,231.0 294.8,222.8 290.8,218.3 283.3,218.1 280.9,212.7 274.0,211.4 275.9,205.4 279.8,201.1 279.6,193.1 273.9,190.3 270.5,185.8 265.3,181.9 261.8,177.7 259.8,171.6 252.9,172.6 249.8,177.5 245.4,181.0 240.2,183.6 235.7,187.0 233.0,192.7 226.7,194.6 222.6,198.4 218.5,202.4 213.2,204.8 216.5,209.3 220.9,213.1 216.9,209.4 211.3,207.1 217.1,203.1 222.1,199.1 226.7,194.6 233.0,192.7 235.6,187.2 240.2,183.6 245.4,181.0 249.8,177.5 252.9,172.6 246.2,171.5 238.8,171.0 246.2,171.5 252.4,169.3 250.8,175.9 247.2,180.2 241.9,182.6 237.0,185.6 234.4,191.2 228.5,193.8 223.6,197.0 219.6,201.9 213.9,204.6 208.3,207.0 202.7,209.5 196.9,207.5 186.2,210.6 180.1,208.8 175.6,213.2 170.1,216.5 165.9,222.0 159.3,220.3 156.0,215.8 151.4,212.4 152.8,206.1 158.0,203.5 164.2,200.3 167.2,195.1 167.8,187.8 168.7,180.8 170.3,174.4 171.1,167.3 168.4,161.9 164.9,157.5 90.0,120.2 85.1,200.2 81.3,206.3 76.0,208.8 79.9,213.8 83.2,218.5 83.9,225.6 83.0,233.0 76.6,234.4 73.2,238.8 76.2,245.3 80.4,249.6 85.9,252.4 90.6,255.7 93.2,260.9 96.3,265.7 98.5,271.4 104.3,269.2 108.4,264.7 110.2,258.3 111.2,251.5 116.5,248.2 122.3,245.4 126.6,241.7 134.4,241.2 143.3,241.3 146.9,245.6 145.6,253.0 141.2,257.2 139.8,263.8 141.2,257.2 145.6,253.0 148.9,248.3 145.6,243.8 139.2,241.3 131.8,241.6 125.2,243.3 120.0,247.0 114.1,249.0 110.1,252.7 110.7,259.9 107.0,265.7 102.9,270.5 98.4,273.7 92.9,276.3 85.4,277.6 80.0,280.0 75.3,283.7 71.0,287.9 70.7,296.1 79.4,294.9 84.1,291.3 88.8,286.2 93.7,282.4 98.6,279.5 106.2,277.5 113.7,276.4 120.9,275.3 128.9,275.2 134.8,277.7 138.7,281.9 142.9,285.5 146.6,289.5 151.2,293.3 155.7,296.5 162.6,295.7 170.4,296.4 179.0,296.5 185.9,292.8 190.5,289.5 197.9,290.0 205.8,289.4 213.3,288.8 220.9,289.0 228.8,289.0 236.3,288.5 239.6,284.0 245.8,281.3 251.8,279.0 255.9,275.1 261.0,271.6 265.6,268.0 272.8,266.5 280.8,265.9 288.3,266.3 297.2,264.1 304.9,264.3 311.3,266.9 318.7,266.4 325.2,263.9 333.7,265.5 339.5,268.5 345.7,270.5 352.7,271.7 360.1,274.1 369.2,274.5 377.0,271.5 384.4,272.3 386.2,278.3 392.8,279.6 399.9,280.5 407.8,280.4 415.4,282.8 418.7,287.6 423.2,293.0 425.4,299.0 426.4,307.0 429.2,311.8 438.2,316.9 442.8,320.2 447.3,323.6 449.7,328.9 452.1,334.4 453.6,340.9 453.5,348.5 456.7,354.1 459.1,359.3 460.8,366.5 458.7,373.0 454.2,380.5 451.0,386.0 448.2,391.2 446.7,398.0 448.7,405.3 451.1,412.3 453.9,421.0 457.4,425.4 461.7,429.8 465.2,435.1 471.9,432.2 475.3,426.6 482.9,427.6 489.1,426.1 492.9,422.2 494.1,415.5 498.4,410.7 500.2,410.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Aldeia Indígena Wassu Cocal</title></polyline>
+<polyline points="500.2,410.2 495.1,414.2 493.3,420.8 490.2,426.1 483.8,427.9 478.8,425.1 474.2,428.4 469.0,437.2 466.8,443.0 465.3,451.8 463.8,460.0 462.3,467.0 456.5,470.8 459.6,478.6 461.6,485.1 465.7,490.5 473.2,496.7 477.2,500.4 479.0,506.4 482.9,510.3 482.2,520.2 485.0,525.4 491.1,527.7 499.1,524.4 507.0,520.8 518.0,520.3 523.2,525.0 526.6,530.6 531.3,534.7 539.4,538.9 544.7,547.4 552.2,548.3 559.4,546.0 564.1,541.2 571.1,534.4 576.3,528.1 583.8,532.9 590.0,527.9 585.1,532.7 580.8,525.4 574.4,530.7 566.4,539.0 562.3,543.0 556.0,549.7 548.4,549.2 542.8,542.6 536.0,536.5 530.0,534.0 523.2,525.0 519.1,520.5 510.8,519.8 499.1,524.4 491.9,527.4 485.0,525.4 482.2,520.2 483.2,512.7 479.0,506.4 477.2,500.4 473.2,496.7 467.7,493.0 464.1,488.3 460.9,483.7 457.6,476.9 454.9,471.5 460.8,468.7 463.2,463.0 464.7,454.6 466.8,443.0 469.0,437.2 471.9,432.2 475.3,426.6 482.9,427.6 489.1,426.1 492.9,422.2 494.1,415.5 498.4,410.7 500.2,410.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – FAZENDA CANTA GALO</title></polyline>
+<polyline points="511.4,406.5 519.4,405.9 523.2,410.3 531.0,411.9 537.0,413.9 543.6,418.7 548.7,422.4 553.2,425.9 556.3,430.4 559.4,437.1 563.8,445.0 568.5,448.8 575.2,450.0 580.1,447.0 584.4,441.8 580.1,447.0 575.2,450.0 568.5,448.8 563.8,445.0 559.4,437.1 556.3,430.4 553.2,425.9 548.7,422.4 543.6,418.7 537.0,413.9 531.0,411.9 524.0,410.9 520.7,406.4 525.6,402.8 533.5,402.7 537.4,398.8 535.3,391.5 530.3,385.9 531.1,377.9 529.4,368.5 525.4,356.4 523.1,349.8 520.3,342.0 515.4,327.1 514.2,320.4 516.6,313.7 518.9,306.9 521.1,300.8 523.7,293.7 518.9,284.6 510.5,280.9 504.6,277.1 487.3,271.0 475.2,268.6 464.0,262.7 455.0,256.7 449.0,252.5 443.5,244.6 437.7,239.6 434.4,232.8 429.5,219.2 427.1,210.4 424.7,204.0 423.9,196.4 421.0,190.9 417.8,183.2 420.3,177.4 413.7,176.2 405.9,175.9 400.3,178.1 395.1,175.2 391.3,170.9 387.0,167.0 380.1,164.5 372.7,164.9 368.0,169.5 368.7,176.6 364.2,179.9 360.3,175.2 360.1,167.6 358.0,161.7 353.5,158.3 356.9,153.9 363.2,151.5 367.5,148.2 373.5,146.2 368.2,148.7 363.2,151.5 357.3,153.6 351.2,155.3 344.1,156.2 338.7,158.9 332.6,161.3 328.6,165.1 324.2,168.7 318.3,170.6 311.0,169.9 308.1,165.0 303.1,160.1 297.9,154.9 294.5,150.1 297.7,145.5 294.5,150.1 297.9,154.9 303.1,160.1 308.1,165.0 311.0,169.9 318.3,170.6 324.2,168.7 328.6,165.1 332.6,161.3 338.7,158.9 343.8,156.3 348.5,153.4 352.4,157.2 359.0,158.6 364.8,156.6 369.1,160.9 375.7,162.1 381.5,164.9 387.8,167.0 391.5,171.1 395.4,175.6 400.9,177.9 407.0,176.2 414.5,176.7 417.7,181.2 420.0,188.5 423.3,193.6 424.1,201.7 426.2,207.5 428.1,214.7 434.4,232.8 436.7,238.7 441.4,241.8 447.1,250.4 451.0,254.2 464.0,262.7 470.3,266.6 482.0,269.3 499.3,275.0 510.5,280.9 516.3,283.0 523.0,288.5 521.5,299.8 518.9,306.9 516.6,313.7 514.2,320.4 515.4,326.9 520.3,342.0 523.1,349.8 525.4,356.4 527.8,363.6 530.6,372.0 530.2,381.8 532.2,387.9 536.1,393.4 535.2,401.3 528.9,403.1 521.4,404.1 514.7,405.8 511.4,406.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Agrovila do PA Paraíso Agrícola 2</title></polyline>
+<polyline points="511.4,406.5 519.4,405.9 523.2,410.3 531.0,411.9 537.0,413.9 543.6,418.7 548.7,422.4 553.2,425.9 556.3,430.4 559.4,437.1 563.8,445.0 568.5,448.8 570.4,457.0 577.1,468.1 579.8,474.0 581.2,483.7 583.7,489.9 588.1,484.2 590.8,478.6 594.2,474.1 596.0,467.8 603.9,466.2 610.9,469.0 618.4,468.3 624.1,466.2 619.8,470.4 624.2,466.7 618.1,468.8 609.2,467.4 606.4,461.6 602.4,457.1 597.3,454.0 591.9,449.6 585.8,447.3 578.1,447.9 570.9,449.1 564.2,445.7 561.2,440.5 557.7,433.5 554.9,427.2 548.7,422.4 543.6,418.7 537.0,413.9 531.0,411.9 524.0,410.9 520.7,406.4 513.5,405.9 511.4,406.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – FAZENDA CANADÁ</title></polyline>
+<circle cx="518.9" cy="442.5" r="2.2" fill="#b9b9b2"/>
+<polygon points="500.4,394.9 485.8,421.8 515.0,421.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="513.9,385.6 494.6,421.2 533.2,421.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="505.7,392.8 491.1,419.8 520.4,419.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="511.6,393.7 499.0,416.9 524.2,416.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="90.0" cy="120.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="97.0" y="115.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Aldeia Indígena Wassu Cocal 39,1 km</text>
+<circle cx="139.9" cy="266.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="146.9" y="261.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Água Fria 33,4 km</text>
+<circle cx="85.1" cy="200.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="92.1" y="195.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Agrovila do PA Camaçari 33,3 km</text>
+<circle cx="192.9" cy="116.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="199.9" y="131.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Rancho Frio 31,6 km</text>
+<circle cx="73.1" cy="238.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="80.1" y="233.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Agrovila 1 Camari 31,2 km</text>
+<circle cx="168.6" cy="180.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="175.6" y="175.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Humaitá 30,3 km</text>
+<circle cx="220.7" cy="218.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="227.7" y="213.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Ilha Grande 25,9 km</text>
+<circle cx="238.4" cy="171.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="298.5" cy="142.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="305.5" y="157.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Agrovila do PA Paraíso Agrícola 2 21,2 km</text>
+<circle cx="267.6" cy="224.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="274.6" y="239.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Agrovila do PA Paraíso Agrícola 18,8 km</text>
+<circle cx="376.5" cy="145.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="383.5" y="140.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Agrovila do PA Santa Cruz do Riachão 2 17,5 km</text>
+<circle cx="351.7" cy="155.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="358.7" y="170.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Agrovila do PA Santa Cruz do Riachão 17,4 km</text>
+<circle cx="287.5" cy="242.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="368.4" cy="182.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="375.4" y="197.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Curitiba 17,3 km</text>
+<circle cx="297.2" cy="276.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="304.2" y="271.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Embira 16,5 km</text>
+<circle cx="592.3" cy="527.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="424.1" y="522.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">FAZENDA CANTA GALO 13,1 km</text>
+<circle cx="404.9" cy="296.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="411.9" y="291.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Serra d&#x27;Água 11,4 km</text>
+<circle cx="460.0" cy="246.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="467.0" y="261.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Santa Luzia 9,7 km</text>
+<circle cx="363.8" cy="397.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="370.8" y="392.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Boa Esperança 8,3 km</text>
+<circle cx="469.9" cy="318.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="476.9" y="313.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Carrilho 8,2 km</text>
+<circle cx="470.5" cy="525.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="477.5" y="540.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Ceará 7,2 km</text>
+<circle cx="621.6" cy="473.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="484.4" y="468.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">FAZENDA CANADÁ 7,0 km</text>
+<circle cx="455.6" cy="351.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="462.6" y="346.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Usina Camaragibe 6,6 km</text>
+<circle cx="584.0" cy="495.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="347.6" y="490.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Perpétua 5,6 km</text>
+<circle cx="489.0" cy="487.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="496.0" y="502.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Maranhão 5,5 km</text>
+<circle cx="585.9" cy="439.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="417.7" y="434.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda São Vicente 4,4 km</text>
+<circle cx="467.1" cy="459.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="474.1" y="454.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Vale 3,2 km</text>
+<rect x="514.6" y="408.3" width="10" height="10" fill="#1d1d1b"/><text x="528.6" y="431.3" font-weight="600" fill="#1d1d1b">Sede de Matriz de Camaragibe</text>
+<line x1="35" x2="150.2" y1="580.5" y2="580.5" stroke="#8a8a84" stroke-width="2"/><text x="35" y="594.5" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="571.5201334816443" y2="571.5201334816443" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="575.5201334816443" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,564.5 421.4,576.8 434.6,576.8" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="575.5201334816443" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="589.5201334816443" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="598.5201334816443" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="594.5201334816443" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="598.5201334816443" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="617.5201334816443" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="621.5201334816443" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="617.5201334816443" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="621.5201334816443" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="640.5201334816443" y2="640.5201334816443" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="644.5201334816443" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="663.5201334816443" y2="663.5201334816443" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="667.5201334816443" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital de transporte de eleitores da 12ª ZE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (25):</strong> Aldeia Indígena Wassu Cocal, Fazenda Água Fria, Agrovila do PA Camaçari, Fazenda Rancho Frio, Agrovila 1 Camari, Fazenda Humaitá, Fazenda Ilha Grande, Fazenda Tamanduá, Agrovila do PA Paraíso Agrícola 2, Agrovila do PA Paraíso Agrícola, Agrovila do PA Santa Cruz do Riachão 2, Agrovila do PA Santa Cruz do Riachão, Fazenda Palmeiral, Fazenda Curitiba, Fazenda Embira, FAZENDA CANTA GALO, Fazenda Serra d&#x27;Água, Fazenda Santa Luzia, Fazenda Boa Esperança, Fazenda Carrilho, Fazenda Ceará, FAZENDA CANADÁ, Usina Camaragibe, Comunidade Quilombola Perpétua e Fazenda Maranhão.</li>
+<li><strong>De 3 a 5 km (2):</strong> Fazenda São Vicente e Fazenda Vale.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (1):</strong> FAZENDA BOM JESUS.</li>
+</ul><h2>Rotas do Edital de transporte de eleitores da 12ª ZE</h2>
+<p>O edital tem 0 rotas para Matriz de Camaragibe. Horários: não informados. Veículos: não informados.</p>
+<p><strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-AL) para Matriz de Camaragibe.</strong> Comissão Especial de Transporte da 12ª ZE instalada pela Portaria nº 3/2026 (DJE/TRE-AL nº 171/2026, de 01/09/2026) para &quot;4 de outubro de 2026 e [...] 25 de outubro de 2026, se houver segundo turno&quot;; nenhum quadro de percursos da 12ª ZE no DJE/TRE-AL até 16/10/2026 (edições 140 a 204).</p>
+<p><strong>Atenção:</strong> Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral para este município (edições lidas até 18/10/2026). As rotas do mapa são sugestões deste levantamento. A comissão de transporte foi instalada, mas o quadro de percursos não foi publicado no DJE. </p>
+<p>Fonte: Quadro de percursos não localizado nas edições do DJE/TRE-AL consultadas.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 27 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Aldeia Indígena Wassu Cocal</strong></td><td>Sede – Fazenda Vale – Fazenda Maranhão – Fazenda Ceará – Fazenda Boa Esperança – Usina Camaragibe – Fazenda Carrilho – Fazenda Serra d&#x27;Água – Fazenda Embira – Fazenda Palmeiral – Agrovila do PA Paraíso Agrícola – Fazenda Ilha Grande – Fazenda Tamanduá – Fazenda Humaitá – Fazenda Rancho Frio – Aldeia Indígena Wassu Cocal – Agrovila do PA Camaçari – Agrovila 1 Camari – Fazenda Água Fria – Sede</td><td>Fazenda Vale, Fazenda Maranhão, Fazenda Ceará, Fazenda Boa Esperança, Usina Camaragibe, Fazenda Carrilho, Fazenda Serra d&#x27;Água, Fazenda Embira, Fazenda Palmeiral, Agrovila do PA Paraíso Agrícola, Fazenda Ilha Grande, Fazenda Tamanduá, Fazenda Humaitá, Fazenda Rancho Frio, Aldeia Indígena Wassu Cocal, Agrovila do PA Camaçari, Agrovila 1 Camari, Fazenda Água Fria</td><td>121,2 km (ida e volta)</td><td>~3h47</td></tr><tr><td><strong>Rota nova – FAZENDA CANTA GALO</strong></td><td>Sede – FAZENDA CANTA GALO – Sede</td><td>FAZENDA CANTA GALO</td><td>26,2 km (ida e volta)</td><td>~37 min</td></tr><tr><td><strong>Rota nova – Agrovila do PA Paraíso Agrícola 2</strong></td><td>Sede – Fazenda São Vicente – Fazenda Santa Luzia – Fazenda Curitiba – Agrovila do PA Santa Cruz do Riachão – Agrovila do PA Santa Cruz do Riachão 2 – Agrovila do PA Paraíso Agrícola 2 – Sede</td><td>Fazenda São Vicente, Fazenda Santa Luzia, Fazenda Curitiba, Agrovila do PA Santa Cruz do Riachão, Agrovila do PA Santa Cruz do Riachão 2, Agrovila do PA Paraíso Agrícola 2</td><td>54,5 km (ida e volta)</td><td>~1h54</td></tr><tr><td><strong>Rota nova – FAZENDA CANADÁ</strong></td><td>Sede – Comunidade Quilombola Perpétua – FAZENDA CANADÁ – Sede</td><td>Comunidade Quilombola Perpétua, FAZENDA CANADÁ</td><td>15,9 km (ida e volta)</td><td>~38 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMMC</strong></p><p>Matriz de Camaragibe/AL, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Dr. José Ivan Melo dos Santos</strong><br>Juiz Eleitoral da 12ª Zona Eleitoral – Passo de Camaragibe/AL</p><p><strong>Assunto:</strong> Sugestão de rotas de transporte gratuito de eleitores da zona rural – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Matriz de Camaragibe, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento de localidades rurais distantes do local de votação. Não localizamos no Diário da Justiça Eleitoral (DJE/TRE-AL) quadro de percursos nem ato sobre o transporte de eleitores para este município; estas localidades: Aldeia Indígena Wassu Cocal, Fazenda Água Fria, Agrovila do PA Camaçari, Fazenda Rancho Frio, Agrovila 1 Camari, Fazenda Humaitá, Fazenda Ilha Grande, Fazenda Tamanduá, Agrovila do PA Paraíso Agrícola 2, Agrovila do PA Paraíso Agrícola, Agrovila do PA Santa Cruz do Riachão 2, Agrovila do PA Santa Cruz do Riachão, Fazenda Palmeiral, Fazenda Curitiba, Fazenda Embira, FAZENDA CANTA GALO, Fazenda Serra d&#x27;Água, Fazenda Santa Luzia, Fazenda Boa Esperança, Fazenda Carrilho, Fazenda Ceará, FAZENDA CANADÁ, Usina Camaragibe, Comunidade Quilombola Perpétua, Fazenda Maranhão, Fazenda São Vicente e Fazenda Vale.</p><p>Sugerimos, respeitosamente, que Vossa Excelência avalie instituir o transporte gratuito de eleitores no 2º turno, com as seguintes rotas:</p><ol><li>a criação da Rota nova – Aldeia Indígena Wassu Cocal (Sede – Fazenda Vale – Fazenda Maranhão – Fazenda Ceará – Fazenda Boa Esperança – Usina Camaragibe – Fazenda Carrilho – Fazenda Serra d&#x27;Água – Fazenda Embira – Fazenda Palmeiral – Agrovila do PA Paraíso Agrícola – Fazenda Ilha Grande – Fazenda Tamanduá – Fazenda Humaitá – Fazenda Rancho Frio – Aldeia Indígena Wassu Cocal – Agrovila do PA Camaçari – Agrovila 1 Camari – Fazenda Água Fria – Sede);</li><li>a criação da Rota nova – FAZENDA CANTA GALO (Sede – FAZENDA CANTA GALO – Sede);</li><li>a criação da Rota nova – Agrovila do PA Paraíso Agrícola 2 (Sede – Fazenda São Vicente – Fazenda Santa Luzia – Fazenda Curitiba – Agrovila do PA Santa Cruz do Riachão – Agrovila do PA Santa Cruz do Riachão 2 – Agrovila do PA Paraíso Agrícola 2 – Sede);</li><li>a criação da Rota nova – FAZENDA CANADÁ (Sede – Comunidade Quilombola Perpétua – FAZENDA CANADÁ – Sede).</li></ol><p>As rotas sugeridas atendem as localidades mais distantes. Caso esse Juízo já tenha definido rotas, pedimos que estas sugestões sejam consideradas naquilo que ainda não estiver contemplado.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Matriz de Camaragibe</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Matriz de Camaragibe; Quadro de percursos não localizado nas edições do DJE/TRE-AL consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>
