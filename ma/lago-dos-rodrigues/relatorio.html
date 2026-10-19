@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Lago dos Rodrigues</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Lago dos Rodrigues</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/lago-dos-rodrigues.pdf?v=1792372862" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Lago dos Rodrigues (74ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 74ª Zona Eleitoral <strong>6 rotas novas</strong> no transporte gratuito de Lago dos Rodrigues.
+<strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-MA) para Lago dos Rodrigues</strong>. As 8 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Lago dos Rodrigues tem 8.298 eleitores aptos em 18 locais de votação e 34 seções. São 12 locais rurais, com 3.255 eleitores (39% do total).</li>
+<li>6 locais rurais ficam a 10 km ou mais da sede, com 1.464 eleitores. Os mais distantes: Povoado Centro Do Toinho (19,8 km), Povoado São João Da Mata (19,2 km) e Povoado Boa Vista Dos Lopes (15,8 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Santa Madalena (11,6 km do local de votação), Olho d&#x27;Água do Zé Codó (9,2 km do local de votação), Olho d&#x27;&#x27;Água do Zé Codó (8,8 km do local de votação), São João do Lago Verde (6,1 km do local de votação), Ana Nery (5,9 km do local de votação), São Manoel (4,1 km do local de votação), Abreu (3,4 km do local de votação) e Centro do Abreu (3,3 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 24 localidades rurais de Lago dos Rodrigues que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Santa Madalena</td><td>11,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Olho d&#x27;Água do Zé Codó</td><td>9,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Olho d&#x27;&#x27;Água do Zé Codó</td><td>8,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>São João do Lago Verde</td><td>6,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Ana Nery</td><td>5,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>São Manoel</td><td>4,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Abreu</td><td>3,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Centro do Abreu</td><td>3,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 24 localidades rurais de Lago dos Rodrigues, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 934" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Lago dos Rodrigues: 8 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas (não há rotas publicadas no DJE), com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="725.0,148.9 626.2,84.2 568.4,80.0 503.7,105.1 459.5,112.4 431.0,84.5 460.2,207.0 429.9,203.2 183.9,455.1 185.3,589.8 178.0,611.7 141.8,642.0 95.2,692.1 92.8,711.9 66.7,719.9 43.7,747.4 35.0,778.4 39.5,795.4 236.5,701.5 229.5,632.2 237.2,615.5 325.2,661.1 252.8,725.8 262.9,794.7 349.9,801.7 379.5,780.1 410.8,711.2 452.5,671.9 491.5,670.5 516.6,635.7 514.1,570.6 545.5,565.4 554.5,521.2 530.5,477.4 554.8,424.5 591.4,405.0 623.0,403.9 628.3,374.4 663.8,359.1 659.9,338.5 695.8,296.4 703.4,270.3 709.3,183.7 725.0,148.9 725.0,148.9" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="523.7,491.1 530.6,497.3 535.4,502.8 544.4,506.4 555.2,507.6 564.1,512.4 574.6,512.8 587.4,512.0 602.3,512.0 616.4,515.5 633.0,519.2 643.4,524.3 653.3,527.7 666.1,532.6 677.8,534.3 686.7,532.4 691.1,524.2 695.5,515.6 690.9,499.3 685.3,479.9 694.1,470.0 704.0,461.2 708.6,454.3 701.8,432.8 700.4,422.3 696.6,410.3 696.6,398.4 697.4,382.4 688.6,385.6 696.2,381.2 696.4,392.9 696.9,403.9 697.9,416.9 700.2,426.1 708.7,447.7 707.2,456.9 694.1,470.0 687.5,476.2 688.9,494.1 696.1,512.8 692.3,521.5 688.4,529.3 677.8,534.3 666.1,532.6 655.4,527.7 643.4,524.3 636.0,519.7 621.9,516.9 611.8,512.7 594.4,512.1 574.6,512.8 564.1,512.4 555.2,507.6 545.3,506.7 537.6,502.8 530.6,497.3 524.3,492.6 523.7,491.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Santa Madalena</title></polyline>
+<polyline points="229.7,561.7 221.1,571.2 217.8,578.6 211.7,588.0 206.2,593.7 197.8,596.8 193.5,603.3 185.0,607.6 177.3,612.5 171.5,618.7 163.1,626.3 156.5,631.4 149.1,637.2 142.0,641.6 136.2,649.3 131.8,656.2 126.1,661.1 122.8,669.0 113.9,671.8 107.8,677.6 103.4,683.8 96.8,689.9 92.5,696.3 89.9,704.5 88.4,713.7 79.3,715.3 73.2,719.9 65.1,722.8 60.8,729.6 56.3,736.3 46.7,743.3 43.6,750.8 50.6,739.0 57.8,734.8 61.3,727.8 66.9,721.7 75.6,718.2 83.6,714.8 91.7,711.8 89.9,702.8 93.0,695.1 98.2,688.6 104.0,683.2 109.1,676.3 114.7,671.2 123.8,668.1 126.6,660.5 132.8,655.6 137.7,647.5 143.7,640.6 151.4,635.6 159.8,628.6 167.8,622.8 172.5,616.8 179.5,611.4 188.0,605.8 194.5,600.5 202.5,595.3 209.4,590.7 213.6,584.1 218.6,577.6 225.8,564.5 229.7,561.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Olho d&#x27;Água do Zé Codó</title></polyline>
+<polyline points="349.4,636.4 370.6,682.8 375.9,689.7 410.6,708.1 429.8,714.4 421.5,718.1 410.4,719.8 398.3,720.4 388.0,723.2 379.3,727.2 388.0,723.2 398.3,720.4 410.4,719.8 420.7,718.2 434.0,715.9 413.8,709.3 379.9,692.4 372.7,686.4 349.4,636.4 349.4,636.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – São João do Lago Verde</title></polyline>
+<polyline points="503.5,178.6 494.7,181.7 482.2,183.7 478.2,173.0 480.3,158.5 474.0,149.5 466.8,140.5 462.1,123.5 459.7,111.3 463.6,104.2 459.7,111.3 462.1,123.5 466.8,140.5 474.0,149.5 479.7,156.6 478.2,173.0 476.3,187.6 485.5,181.6 496.5,181.1 503.5,178.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – São Manoel</title></polyline>
+<polyline points="428.9,460.2 416.2,461.5 407.2,463.7 398.5,460.3 387.5,460.2 377.2,461.3 365.3,462.8 353.0,466.0 341.4,466.3 333.2,461.8 341.4,466.3 353.0,466.0 363.2,465.2 370.8,461.2 380.2,462.5 388.8,459.8 402.1,463.4 412.8,462.8 422.7,459.7 428.9,460.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Abreu</title></polyline>
+<polyline points="251.7,502.6 252.7,491.6 254.0,481.6 259.9,476.1 263.7,468.5 274.8,463.3 283.0,458.5 293.1,452.8 299.7,446.5 305.6,441.2 315.0,442.9 305.6,441.2 299.7,446.5 293.1,452.8 283.0,458.5 274.8,463.3 266.2,466.0 259.9,476.1 254.0,481.6 252.7,491.6 251.7,502.6 251.7,502.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Centro do Abreu</title></polyline>
+<circle cx="470.3" cy="144.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="260.8" cy="603.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="231.2" cy="462.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="464.4" cy="189.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="510.4" cy="387.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="518.0" cy="180.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="520.4" cy="274.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="451.5" cy="311.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="572.5" cy="199.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="248.2" cy="519.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="329.4" cy="325.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="249.2" cy="694.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="421.9" cy="461.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="342.7" cy="625.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="345.4" cy="631.9" r="2.2" fill="#b9b9b2"/>
+<polygon points="235.1,508.5 225.0,527.1 245.2,527.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="251.8,493.3 242.8,509.9 260.8,509.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="234.4,509.3 224.8,527.1 244.0,527.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="239.9,515.8 230.5,533.2 249.4,533.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="342.9,617.7 333.8,634.5 352.1,634.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="342.9" y="647.9" text-anchor="middle" fill="#5c5c57">Povoado Barraquinha</text>
+<polygon points="574.7,206.9 566.3,222.3 583.1,222.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="428.9,451.7 421.3,465.6 436.4,465.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="499.9,404.2 493.8,415.3 505.9,415.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="328.0,331.4 321.2,343.9 334.7,343.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="446.6,319.9 439.2,333.6 454.1,333.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="242.4,535.6 232.6,553.6 252.2,553.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="244.5,418.2 237.5,431.0 251.4,431.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="245.2,675.9 238.1,688.9 252.2,688.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="522.1,484.7 515.5,496.9 528.8,496.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="503.7,171.2 496.5,184.5 510.9,184.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="509.6,286.3 502.7,299.1 516.6,299.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="350.6,628.6 343.9,641.0 357.3,641.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="229.5,553.1 221.8,567.3 237.2,567.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="645.0" cy="372.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="501.6" y="367.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santa Madalena 11,6 km</text>
+<circle cx="45.4" cy="752.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="52.4" y="747.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Olho d&#x27;Água do Zé Codó 9,2 km</text>
+<circle cx="50.0" cy="746.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="57.0" y="761.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Olho d&#x27;&#x27;Água do Zé Codó 8,8 km</text>
+<circle cx="378.1" cy="735.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="385.1" y="730.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">São João do Lago Verde 6,1 km</text>
+<circle cx="378.5" cy="729.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="385.5" y="744.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Ana Nery 5,9 km</text>
+<circle cx="461.7" cy="100.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="468.7" y="95.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">São Manoel 4,1 km</text>
+<circle cx="335.3" cy="461.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="342.3" y="456.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Abreu 3,4 km</text>
+<circle cx="314.5" cy="451.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<rect x="243.2" y="514.5" width="10" height="10" fill="#1d1d1b"/><text x="257.2" y="537.5" font-weight="600" fill="#1d1d1b">Sede de Lago dos Rodrigues</text>
+<line x1="35" x2="191.7" y1="831.7" y2="831.7" stroke="#8a8a84" stroke-width="2"/><text x="35" y="845.7" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="822.6641452345066" y2="822.6641452345066" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="826.6641452345066" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,815.7 421.4,827.9 434.6,827.9" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="826.6641452345066" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="840.6641452345066" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="849.6641452345066" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="845.6641452345066" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="849.6641452345066" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="868.6641452345066" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="872.6641452345066" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="868.6641452345066" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="872.6641452345066" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="891.6641452345066" y2="891.6641452345066" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="895.6641452345066" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="914.6641452345066" y2="914.6641452345066" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="918.6641452345066" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Sem rotas publicadas no DJE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (5):</strong> Santa Madalena, Olho d&#x27;Água do Zé Codó, Olho d&#x27;&#x27;Água do Zé Codó, São João do Lago Verde e Ana Nery.</li>
+<li><strong>De 3 a 5 km (3):</strong> São Manoel, Abreu e Centro do Abreu.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (16):</strong> Barraquinha, Barroquinha, Boa Vista, Centro, Centro dos Custódio, Centro dos Flores, Centro dos Pernambucos, Centro dos Toinhos, Cesário, Juruparana, Lago dos Rodrigues, Laguinho do Simião, São Francisco, São João da Mata, São Lourenço e Três Poços.</li>
+</ul><h2>Rotas da Justiça Eleitoral</h2>
+<p><strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-MA) para Lago dos Rodrigues.</strong> Pesquisamos todas as edições do DJE/TRE-MA publicadas desde o fim de julho de 2026. As rotas do mapa e da seção de propostas são sugestões deste levantamento.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 8 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Santa Madalena</strong></td><td>Sede – Santa Madalena – Sede</td><td>Santa Madalena</td><td>23,1 km (ida e volta)</td><td>~46 min</td></tr><tr><td><strong>Rota nova – Olho d&#x27;Água do Zé Codó</strong></td><td>Sede – Olho d&#x27;&#x27;Água do Zé Codó – Olho d&#x27;Água do Zé Codó – Sede</td><td>Olho d&#x27;&#x27;Água do Zé Codó, Olho d&#x27;Água do Zé Codó</td><td>18,3 km (ida e volta)</td><td>~44 min</td></tr><tr><td><strong>Rota nova – São João do Lago Verde</strong></td><td>Sede – Ana Nery – São João do Lago Verde – Sede</td><td>Ana Nery, São João do Lago Verde</td><td>12,2 km (ida e volta)</td><td>~18 min</td></tr><tr><td><strong>Rota nova – São Manoel</strong></td><td>Sede – São Manoel – Sede</td><td>São Manoel</td><td>8,2 km (ida e volta)</td><td>~20 min</td></tr><tr><td><strong>Rota nova – Abreu</strong></td><td>Sede – Abreu – Sede</td><td>Abreu</td><td>6,7 km (ida e volta)</td><td>~10 min</td></tr><tr><td><strong>Rota nova – Centro do Abreu</strong></td><td>Sede – Centro do Abreu – Sede</td><td>Centro do Abreu</td><td>6,7 km (ida e volta)</td><td>~10 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMLR</strong></p><p>Lago dos Rodrigues/MA, ___ de outubro de 2026.</p><p>Ao(À) Excelentíssimo(a) Senhor(a)<br><strong>[nome do(a) Juiz(a) Eleitoral]</strong><br>Juiz(a) Eleitoral da 74ª Zona Eleitoral – [sede da zona]/MA</p><p><strong>Assunto:</strong> Sugestão de rotas de transporte gratuito de eleitores da zona rural – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo(a) Senhor(a) Juiz(a),</p><p>O Município de Lago dos Rodrigues, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento das localidades rurais distantes do local de votação, para as quais não localizamos no Diário da Justiça Eleitoral (DJE/TRE-MA) quadro de percursos nem ato sobre o transporte de eleitores: Santa Madalena, Olho d&#x27;Água do Zé Codó, Olho d&#x27;&#x27;Água do Zé Codó, São João do Lago Verde, Ana Nery, São Manoel, Abreu e Centro do Abreu.</p><p>Sugerimos, respeitosamente, que Vossa Excelência avalie instituir o transporte gratuito de eleitores no 2º turno, com as seguintes rotas:</p><ol><li>a criação da Rota nova – Santa Madalena (Sede – Santa Madalena – Sede);</li><li>a criação da Rota nova – Olho d&#x27;Água do Zé Codó (Sede – Olho d&#x27;&#x27;Água do Zé Codó – Olho d&#x27;Água do Zé Codó – Sede);</li><li>a criação da Rota nova – São João do Lago Verde (Sede – Ana Nery – São João do Lago Verde – Sede);</li><li>a criação da Rota nova – São Manoel (Sede – São Manoel – Sede);</li><li>a criação da Rota nova – Abreu (Sede – Abreu – Sede);</li><li>a criação da Rota nova – Centro do Abreu (Sede – Centro do Abreu – Sede).</li></ol><p>As rotas sugeridas atendem as localidades mais distantes. Caso esse Juízo já tenha definido rotas, pedimos que estas sugestões sejam consideradas naquilo que ainda não estiver contemplado.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Lago dos Rodrigues</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Lago dos Rodrigues; Quadro de percursos não localizado nas edições do DJE/TRE-MA consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

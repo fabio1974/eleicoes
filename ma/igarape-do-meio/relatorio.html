@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Igarapé do Meio</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Igarapé do Meio</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/igarape-do-meio.pdf?v=1792372774" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Igarapé do Meio (77ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 77ª Zona Eleitoral <strong>3 rotas novas</strong> no transporte gratuito de Igarapé do Meio.
+<strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-MA) para Igarapé do Meio</strong>. As 10 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Igarapé do Meio tem 10.876 eleitores aptos em 24 locais de votação e 50 seções. São 20 locais rurais, com 5.067 eleitores (47% do total).</li>
+<li>13 locais rurais ficam a 10 km ou mais da sede, com 3.571 eleitores. Os mais distantes: Povoado Arirana (26,2 km), Povoado Tarumãn (23,1 km) e Povoado Toari (22,6 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Fazenda Nova (43,4 km do local de votação), Cara Branca (32,2 km do local de votação), Carrasco (29,7 km do local de votação), Beira do Lago (29,6 km do local de votação), Vila Bela (27,8 km do local de votação), Centro do José Felix (27,6 km do local de votação), Rita (6,9 km do local de votação), Fazenda União (3,4 km do local de votação), Santa Barbara (3,3 km do local de votação) e Maxmiano (3,1 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 39 localidades rurais de Igarapé do Meio que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço. 3 locais não foram encontrados nas duas bases: Povoado Juçaralzinho, Povoado Cajazeira e Povoado Floresta, com 356 eleitores.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Fazenda Nova</td><td>43,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Cara Branca</td><td>32,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Carrasco</td><td>29,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Beira do Lago</td><td>29,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Vila Bela</td><td>27,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Centro do José Felix</td><td>27,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Rita</td><td>6,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda União</td><td>3,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Santa Barbara</td><td>3,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Maxmiano</td><td>3,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 39 localidades rurais de Igarapé do Meio, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 780" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Igarapé do Meio: 10 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas (não há rotas publicadas no DJE), com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="612.4,435.8 643.1,355.5 725.0,145.6 715.7,133.6 688.3,124.7 671.4,112.3 649.1,109.8 589.7,112.7 555.9,105.1 545.6,97.1 507.4,91.3 483.1,80.0 446.0,101.6 436.4,117.4 439.5,130.7 427.7,148.3 359.4,183.9 356.7,205.7 330.9,208.4 311.8,231.1 276.4,231.3 255.5,244.4 244.1,260.7 216.8,272.5 211.6,290.7 195.0,295.4 196.1,327.0 182.3,351.7 149.8,386.2 132.7,373.1 108.6,388.0 90.8,392.9 77.7,437.4 330.0,458.7 394.3,465.0 411.5,461.6 453.1,500.1 472.9,504.8 493.8,472.3 510.7,475.0 525.0,466.7 521.6,447.6 556.1,435.6 595.7,430.9 612.4,435.8 612.4,435.8" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="255.3,290.4 249.9,294.5 242.3,298.6 237.3,301.3 230.9,304.7 225.5,307.5 212.3,314.7 202.2,320.0 197.2,322.7 237.7,403.3 245.0,403.6 251.0,404.8 258.0,406.0 264.0,406.9 270.5,407.1 276.5,442.3 321.4,470.7 324.3,466.8 331.2,465.2 340.1,461.9 344.1,466.4 365.1,458.0 464.3,506.3 459.8,504.0 453.9,505.5 450.1,508.6 446.5,513.4 444.0,517.6 441.9,523.4 440.1,529.8 433.9,541.4 436.3,551.3 428.4,560.1 421.5,565.2 417.4,568.3 412.1,570.8 402.5,571.1 396.0,572.0 389.8,573.4 386.8,577.1 383.5,581.3 379.9,588.9 374.8,596.2 370.2,603.4 369.5,610.1 365.9,614.6 358.2,618.4 355.1,622.0 352.2,625.9 345.6,625.5 335.6,627.5 324.3,631.7 299.0,645.2 292.8,646.3 286.1,646.7 260.9,612.5 252.5,599.9 239.5,580.5 236.9,575.3 235.3,568.8 233.8,561.9 232.1,554.5 230.7,548.4 229.4,542.9 228.2,537.2 226.7,532.0 224.0,527.9 220.4,524.5 213.5,520.2 208.9,517.4 203.7,514.2 191.2,506.6 179.4,499.4 174.8,496.6 170.0,493.7 163.7,489.9 158.0,486.4 150.7,481.9 144.1,477.9 139.4,475.1 133.3,471.3 129.1,468.7 115.2,460.3 110.7,457.5 105.8,454.5 92.8,446.5 81.1,439.3 65.0,429.4 53.8,422.4 47.8,418.8 43.3,415.9 38.3,412.8 35.0,409.3 59.9,395.5 79.8,385.1 87.3,381.1 105.9,371.3 116.3,365.8 127.2,360.0 136.5,355.1 146.9,349.6 157.9,343.8 166.5,339.2 173.7,335.3 178.6,332.6 183.8,329.8 188.4,327.4 193.8,324.6 202.2,320.0 212.3,314.7 223.0,309.0 230.9,304.7 237.3,301.3 242.3,298.6 249.9,294.5 255.2,291.7 255.3,290.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fazenda Nova</title></polyline>
+<polyline points="449.3,185.7 495.6,159.5 503.0,155.3 495.6,159.5 492.8,153.9 490.6,149.5 485.9,152.1 490.2,149.2 488.1,140.0 484.2,136.4 482.0,131.6 478.5,126.7 474.2,122.4 471.5,117.3 473.2,108.4 471.6,113.9 472.5,121.1 477.3,125.5 481.2,128.8 484.0,135.3 488.1,140.0 490.5,145.6 486.1,150.4 492.3,152.7 494.1,157.8 449.7,185.5 449.3,185.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Rita</title></polyline>
+<polyline points="583.6,258.4 579.9,253.6 575.8,251.0 570.3,248.8 565.3,246.9 561.7,243.1 556.7,244.8 551.6,246.9 548.5,251.0 545.3,255.3 540.5,257.7 534.0,257.1 540.5,257.7 545.3,255.3 548.5,251.0 551.6,246.9 556.7,244.8 561.7,243.1 565.3,246.9 570.3,248.8 575.4,250.8 579.9,253.6 582.7,257.6 583.6,258.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Maxmiano</title></polyline>
+<circle cx="471.6" cy="309.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="583.2" cy="318.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="272.5" cy="283.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="694.9" cy="162.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="517.9" cy="440.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="610.5" cy="327.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="374.3" cy="219.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="584.1" cy="138.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="375.0" cy="218.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="609.5" cy="424.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="481.6" cy="477.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="376.1" cy="218.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="439.2" cy="383.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="448.1" cy="186.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="678.0" cy="155.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="447.3" cy="187.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="254.6" cy="289.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="644.4" cy="146.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="677.4" cy="159.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="434.8" cy="299.2" r="2.2" fill="#b9b9b2"/>
+<polygon points="297.8,259.5 288.4,276.8 307.1,276.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="303.5,248.1 292.4,268.6 314.7,268.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="510.0,427.0 501.9,442.0 518.2,442.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="377.9,212.8 369.3,228.5 386.4,228.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="449.1,176.8 441.0,191.6 457.1,191.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="603.1,324.5 595.2,339.0 610.9,339.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="646.5,138.1 639.1,151.7 653.8,151.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="439.5,377.4 432.2,390.8 446.8,390.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="581.0,129.8 571.1,148.1 591.0,148.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="581.0" y="161.8" text-anchor="middle" fill="#5c5c57">Povoado São Vicente</text>
+<polygon points="476.7,274.1 469.5,287.2 483.8,287.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="612.0,421.0 604.6,434.5 619.3,434.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="313.1,244.2 301.8,264.9 324.4,264.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="255.3,284.0 249.3,295.0 261.2,295.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="677.4,151.1 670.5,163.7 684.2,163.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="349.6,337.9 343.5,349.2 355.7,349.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="484.2,465.2 477.9,476.8 490.5,476.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="456.9,493.6 450.5,505.4 463.3,505.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="435.1,291.0 428.5,303.0 441.6,303.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="607.1,208.6 601.1,219.5 613.0,219.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="583.5,252.1 577.4,263.2 589.5,263.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="290.6,239.6 279.5,260.1 301.8,260.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="464.3" cy="506.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="471.3" y="501.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Nova 43,4 km</text>
+<circle cx="364.8" cy="457.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="371.8" y="452.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Cara Branca 32,2 km</text>
+<circle cx="321.4" cy="470.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="328.4" y="465.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Carrasco 29,7 km</text>
+<circle cx="271.9" cy="407.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="278.9" y="402.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Beira do Lago 29,6 km</text>
+<circle cx="237.7" cy="403.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="244.7" y="418.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Vila Bela 27,8 km</text>
+<circle cx="276.5" cy="442.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="283.5" y="437.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Centro do José Felix 27,6 km</text>
+<circle cx="473.6" cy="103.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="480.6" y="98.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Rita 6,9 km</text>
+<circle cx="198.7" cy="326.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="205.7" y="321.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda União 3,4 km</text>
+<circle cx="506.2" cy="151.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="513.2" y="146.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santa Barbara 3,3 km</text>
+<circle cx="533.8" cy="257.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="540.8" y="252.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Maxmiano 3,1 km</text>
+<rect x="297.2" y="257.9" width="10" height="10" fill="#1d1d1b"/><text x="311.2" y="280.9" font-weight="600" fill="#1d1d1b">Sede de Igarapé do Meio</text>
+<line x1="35" x2="135.2" y1="677.6" y2="677.6" stroke="#8a8a84" stroke-width="2"/><text x="35" y="691.6" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="668.6026818539567" y2="668.6026818539567" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="672.6026818539567" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,661.6 421.4,673.9 434.6,673.9" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="672.6026818539567" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="686.6026818539567" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="695.6026818539567" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="691.6026818539567" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="695.6026818539567" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="714.6026818539567" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="718.6026818539567" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="714.6026818539567" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="718.6026818539567" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="737.6026818539567" y2="737.6026818539567" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="741.6026818539567" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="760.6026818539567" y2="760.6026818539567" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="764.6026818539567" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Sem rotas publicadas no DJE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (7):</strong> Fazenda Nova, Cara Branca, Carrasco, Beira do Lago, Vila Bela, Centro do José Felix e Rita.</li>
+<li><strong>De 3 a 5 km (3):</strong> Fazenda União, Santa Barbara e Maxmiano.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (29):</strong> Agrovila do PA Diamante Negro, Agrovila do PA Quilombola Goiaba, Agrovila do PA Vila Riachão, Alto do Piquizeiro, Arirana, Bacuri, Beira do Campo, Capoeira, Ceplac, Comunidade Quilombola São Benedito, Comunidade Quilombola Vila Diamante, Entrada da Lagoa, Goiaba, Lago Azul, Laje Comprida, Patrício, Puraqueu, Puraquéu, Raimundo Pinaco, Raimundo Pinoco, Retiro dos Preto, Riachão, São Benedito, São Vicente, Tarumam, Tarumá, Toari, Vila Diamante Negro e Vila Falcão.</li>
+</ul><h2>Rotas da Justiça Eleitoral</h2>
+<p><strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-MA) para Igarapé do Meio.</strong> Pesquisamos todas as edições do DJE/TRE-MA publicadas desde o fim de julho de 2026. As rotas do mapa e da seção de propostas são sugestões deste levantamento.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 10 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Fazenda Nova</strong></td><td>Sede – Fazenda União – Vila Bela – Beira do Lago – Centro do José Felix – Carrasco – Cara Branca – Fazenda Nova – Sede</td><td>Fazenda União, Vila Bela, Beira do Lago, Centro do José Felix, Carrasco, Cara Branca, Fazenda Nova</td><td>69,6 km (ida e volta)</td><td>~1h40</td></tr><tr><td><strong>Rota nova – Rita</strong></td><td>Sede – Santa Barbara – Rita – Sede</td><td>Santa Barbara, Rita</td><td>15,0 km (ida e volta)</td><td>~18 min</td></tr><tr><td><strong>Rota nova – Maxmiano</strong></td><td>Sede – Maxmiano – Sede</td><td>Maxmiano</td><td>6,2 km (ida e volta)</td><td>~15 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMIM</strong></p><p>Igarapé do Meio/MA, ___ de outubro de 2026.</p><p>Ao(À) Excelentíssimo(a) Senhor(a)<br><strong>[nome do(a) Juiz(a) Eleitoral]</strong><br>Juiz(a) Eleitoral da 77ª Zona Eleitoral – [sede da zona]/MA</p><p><strong>Assunto:</strong> Sugestão de rotas de transporte gratuito de eleitores da zona rural – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo(a) Senhor(a) Juiz(a),</p><p>O Município de Igarapé do Meio, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento das localidades rurais distantes do local de votação, para as quais não localizamos no Diário da Justiça Eleitoral (DJE/TRE-MA) quadro de percursos nem ato sobre o transporte de eleitores: Fazenda Nova, Cara Branca, Carrasco, Beira do Lago, Vila Bela, Centro do José Felix, Rita, Fazenda União, Santa Barbara e Maxmiano.</p><p>Sugerimos, respeitosamente, que Vossa Excelência avalie instituir o transporte gratuito de eleitores no 2º turno, com as seguintes rotas:</p><ol><li>a criação da Rota nova – Fazenda Nova (Sede – Fazenda União – Vila Bela – Beira do Lago – Centro do José Felix – Carrasco – Cara Branca – Fazenda Nova – Sede);</li><li>a criação da Rota nova – Rita (Sede – Santa Barbara – Rita – Sede);</li><li>a criação da Rota nova – Maxmiano (Sede – Maxmiano – Sede).</li></ol><p>As rotas sugeridas atendem as localidades mais distantes. Caso esse Juízo já tenha definido rotas, pedimos que estas sugestões sejam consideradas naquilo que ainda não estiver contemplado.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Igarapé do Meio</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Igarapé do Meio; Quadro de percursos não localizado nas edições do DJE/TRE-MA consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

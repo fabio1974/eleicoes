@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Paulo Ramos</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Paulo Ramos</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/paulo-ramos.pdf?v=1792372916" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Paulo Ramos (102ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 102ª Zona Eleitoral <strong>10 rotas novas</strong> no transporte gratuito de Paulo Ramos.
+<strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-MA) para Paulo Ramos</strong>. As 21 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Paulo Ramos tem 16.875 eleitores aptos em 26 locais de votação e 63 seções. São 19 locais rurais, com 6.873 eleitores (41% do total).</li>
+<li>14 locais rurais ficam a 10 km ou mais da sede, com 5.384 eleitores. Os mais distantes: Povoado Brejo Grande (52,1 km), Povoado Serra Dos Montes (48,6 km) e Povoado Alto Dos Maricotas (42,9 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Assentamento Centrão (21,8 km do local de votação), Poço d&#x27;Anta (19,2 km do local de votação), Assinobrás (13,4 km do local de votação), Chapada Grande (13,3 km do local de votação), Brejo Grande (10,5 km do local de votação), Sabesa (9,9 km do local de votação), Umbaca (8,3 km do local de votação), Lagoa do Arroz (7,1 km do local de votação), Mururu (6,3 km do local de votação), Jacu (5,9 km do local de votação), Cardoso dos Barroso (5,3 km do local de votação), Vila 10 (5,2 km do local de votação), Centro dos Pereiras (5,0 km do local de votação), Cajazeira (4,6 km do local de votação), Bacaba Nova (4,5 km do local de votação), Porção do Damião (4,2 km do local de votação), Centro dos Cobrinhas (3,3 km do local de votação), Bela Vista (3,2 km do local de votação), Duas Lagoas (3,2 km do local de votação), Marajá (3,1 km do local de votação) e Santa Rosa (3,0 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 55 localidades rurais de Paulo Ramos que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Assentamento Centrão</td><td>21,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Poço d&#x27;Anta</td><td>19,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Assinobrás</td><td>13,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Chapada Grande</td><td>13,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Brejo Grande</td><td>10,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sabesa</td><td>9,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Umbaca</td><td>8,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Lagoa do Arroz</td><td>7,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Mururu</td><td>6,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Jacu</td><td>5,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Cardoso dos Barroso</td><td>5,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Vila 10</td><td>5,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Centro dos Pereiras</td><td>5,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Cajazeira</td><td>4,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Bacaba Nova</td><td>4,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Porção do Damião</td><td>4,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Centro dos Cobrinhas</td><td>3,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Bela Vista</td><td>3,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Duas Lagoas</td><td>3,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Marajá</td><td>3,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Santa Rosa</td><td>3,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 55 localidades rurais de Paulo Ramos, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 516" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Paulo Ramos: 21 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas (não há rotas publicadas no DJE), com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="445.3,363.5 457.5,372.6 480.7,383.0 493.0,383.6 527.8,372.2 540.4,365.0 548.5,351.7 558.5,344.4 565.6,334.7 575.8,332.0 587.5,316.3 600.6,313.1 607.3,275.9 605.3,266.5 596.9,257.4 591.7,256.5 650.2,219.3 707.3,142.1 725.0,113.2 713.0,108.8 697.2,109.1 687.3,102.1 656.2,97.5 646.6,94.5 563.9,80.3 533.1,93.3 517.8,101.6 501.2,114.3 456.5,113.8 359.9,132.6 326.1,130.2 244.1,118.2 175.0,164.9 173.2,176.3 171.4,224.2 169.0,233.9 119.9,182.8 52.7,199.8 37.3,257.6 35.0,264.1 46.2,282.4 59.7,300.2 58.0,308.4 72.9,324.1 66.0,338.8 111.0,338.5 151.2,299.6 153.3,307.4 161.5,316.2 171.4,318.3 199.3,320.4 208.3,307.8 215.3,304.8 228.5,315.6 234.5,314.2 252.5,318.9 265.8,326.4 281.6,325.2 288.2,320.6 299.1,323.6 343.0,278.6 397.6,293.0 422.5,316.8 418.0,330.1 420.2,336.6 429.5,339.3 424.4,349.1 445.3,363.5 445.3,363.5" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="167.1,233.8 168.5,231.3 168.3,227.4 170.2,225.2 173.0,222.8 174.8,221.1 177.0,219.9 179.4,220.9 181.6,222.9 182.6,225.4 183.4,228.6 184.5,231.6 185.1,234.9 185.5,238.1 187.3,240.0 185.5,238.3 185.1,234.9 184.5,231.6 183.4,228.6 182.6,225.4 181.6,222.9 179.4,220.9 177.0,219.9 174.8,221.1 173.0,222.8 170.2,225.2 168.4,226.8 167.7,229.8 166.3,232.3 163.7,233.9 161.5,235.7 158.4,237.0 155.7,238.3 152.8,240.6 148.0,245.7 145.6,247.9 143.9,250.6 143.1,254.0 144.4,256.6 145.1,259.8 143.6,261.8 142.6,265.0 145.1,268.4 146.4,270.8 147.8,275.2 148.5,279.0 147.3,284.0 144.6,297.4 150.3,299.2 152.7,307.7 160.4,316.0 170.6,318.7 176.8,318.7 181.8,319.3 187.1,319.8 181.8,319.3 176.8,318.7 170.6,318.7 161.6,316.9 152.7,307.7 150.7,300.2 144.6,297.4 139.9,298.7 141.2,303.1 141.3,306.7 141.8,310.0 138.7,310.3 135.3,310.5 138.7,310.3 141.8,310.0 141.3,306.7 141.2,303.1 139.9,298.7 136.6,298.9 133.1,301.0 131.0,303.2 128.2,306.6 127.5,310.1 125.8,313.8 121.5,319.1 115.6,318.8 111.6,319.5 107.6,321.7 104.9,323.7 103.3,321.1 101.0,317.4 98.4,313.0 97.0,309.5 95.1,307.3 94.4,304.0 93.7,299.9 92.1,296.6 91.8,292.4 92.1,289.0 92.3,285.7 92.7,280.5 93.1,277.1 93.3,273.6 93.7,269.8 93.9,265.0 93.9,260.6 93.7,256.8 95.5,255.2 97.7,253.9 100.2,252.3 102.4,251.0 103.0,247.7 167.1,233.9 167.1,233.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Assentamento Centrão</title></polyline>
+<polyline points="532.1,242.4 531.0,245.8 532.7,248.5 534.0,251.5 534.6,254.4 534.0,257.2 532.6,259.2 533.2,262.2 533.5,265.3 533.1,268.7 532.6,271.6 532.4,274.8 531.1,277.0 529.4,278.8 528.8,281.5 529.7,284.6 527.9,286.9 523.9,287.9 521.6,290.2 522.9,292.5 524.4,294.6 525.4,297.0 524.1,299.1 523.0,301.6 522.1,304.1 520.5,306.2 519.8,309.2 517.7,311.8 516.3,313.8 513.0,313.6 510.1,313.0 508.0,311.6 506.3,313.4 504.4,314.8 502.5,316.3 500.2,317.6 499.5,323.2 499.4,326.6 500.0,330.4 499.9,333.7 499.6,336.9 499.5,340.3 500.7,342.7 502.3,345.1 504.5,346.7 506.4,348.1 505.7,350.9 507.1,353.0 509.4,354.2 512.0,355.1 515.2,355.4 517.9,354.3 521.3,354.2 524.7,354.3 527.3,355.1 530.0,355.8 531.9,357.3 535.1,357.8 538.5,357.7 541.2,357.2 543.7,356.3 541.2,357.2 538.5,357.7 535.1,357.8 532.0,357.3 530.0,355.8 527.3,355.1 524.7,354.3 521.3,354.2 517.9,354.3 515.2,355.4 512.0,355.1 509.4,354.2 507.1,353.0 505.7,350.9 506.4,348.1 504.5,346.7 502.3,345.1 500.9,342.9 499.4,341.0 499.6,337.7 499.9,334.6 500.0,331.2 499.7,327.6 499.2,324.3 500.3,320.7 500.3,317.3 502.6,316.2 504.5,314.7 506.5,313.2 509.0,312.3 511.4,313.7 514.3,314.8 516.8,313.1 518.5,310.8 520.0,308.8 520.3,305.5 522.2,304.0 523.0,301.4 524.3,298.8 525.4,296.3 524.5,293.7 522.4,291.9 522.7,288.4 525.5,287.3 528.9,287.1 529.3,283.5 529.3,279.9 530.4,277.6 532.0,275.8 532.5,272.7 532.7,269.5 533.6,266.9 533.3,263.6 532.8,260.7 534.1,258.6 534.7,254.9 534.0,251.5 532.9,249.0 531.3,247.0 531.9,243.1 532.1,242.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Poço d&#x27;Anta</title></polyline>
+<polyline points="542.4,258.9 544.8,260.7 546.0,262.9 547.6,265.4 549.0,267.8 549.8,270.5 551.0,272.9 549.7,275.2 548.3,277.8 547.7,280.5 546.3,282.5 547.7,280.5 548.3,277.8 549.5,275.6 550.8,273.2 550.0,270.6 549.0,267.8 547.6,265.4 546.2,263.3 545.0,261.1 542.4,259.1 538.4,258.4 534.7,258.4 531.4,258.8 528.8,258.0 525.5,256.9 522.8,256.1 520.5,255.0 518.3,253.8 516.8,251.3 514.7,250.1 513.7,247.4 512.0,245.6 508.6,245.1 508.1,242.3 505.9,240.9 502.7,241.4 500.2,242.9 496.7,243.6 493.3,243.1 490.3,242.7 487.9,241.5 487.1,238.9 483.8,238.0 482.0,236.3 478.7,236.4 475.7,237.1 472.9,238.4 470.0,239.5 468.5,241.4 465.1,241.5 468.2,241.7 469.6,239.5 472.3,238.8 474.4,237.5 477.1,236.6 479.7,235.9 483.3,236.9 486.2,237.7 487.7,241.2 489.8,242.3 493.2,243.0 496.0,243.9 498.7,243.1 501.4,242.2 503.5,240.5 506.4,241.0 508.2,242.6 509.9,245.3 512.9,246.1 513.9,248.8 515.8,250.3 517.5,252.2 519.2,254.5 522.5,255.9 525.0,256.7 528.8,258.0 531.4,258.8 534.7,258.4 538.4,258.4 541.6,258.6 542.4,258.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Sabesa</title></polyline>
+<polyline points="542.4,258.9 544.2,257.2 546.9,255.0 551.1,253.6 554.8,252.3 558.9,251.8 562.7,250.5 565.4,248.7 568.6,248.3 570.7,250.5 572.9,252.0 575.9,252.6 580.2,252.0 584.0,253.0 586.2,254.4 589.0,255.6 591.5,256.7 595.6,256.4 597.6,257.7 599.6,260.3 601.9,262.9 603.9,265.0 607.2,267.3 610.0,269.1 612.3,270.6 610.0,269.1 607.2,267.3 604.7,265.8 602.9,264.2 600.9,262.0 598.9,259.3 597.4,256.9 594.3,256.5 590.9,256.4 588.2,255.6 585.5,254.1 582.6,252.5 578.3,252.3 574.8,252.7 571.1,250.9 569.0,248.4 565.4,248.7 563.3,250.2 560.7,251.1 557.2,252.1 553.4,252.9 548.3,254.7 545.5,255.4 543.9,257.7 542.4,258.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Umbaca</title></polyline>
+<polyline points="632.6,175.4 635.9,172.5 637.7,170.2 639.4,168.2 641.7,166.7 644.9,165.4 647.0,167.6 648.4,169.7 652.3,170.6 655.5,170.8 652.3,170.6 649.3,170.1 647.3,168.2 645.4,165.2 643.0,166.5 640.3,167.5 638.7,169.4 636.9,171.2 634.6,174.2 632.6,175.7 632.4,178.9 632.2,182.5 630.2,184.5 628.4,186.5 627.2,189.0 627.8,192.0 629.7,193.9 628.8,196.9 627.1,199.4 624.7,201.2 623.0,202.9 628.7,209.2 631.4,211.5 632.7,209.4 634.1,206.2 632.9,208.9 631.4,211.5 642.0,220.6 646.6,224.4 648.9,226.2 646.7,224.5 642.0,220.6 631.4,211.5 628.7,209.2 623.8,204.7 619.4,205.3 615.6,206.5 612.4,206.7 609.5,205.3 607.9,203.1 609.5,205.3 611.9,206.8 615.6,206.5 618.3,205.5 621.0,204.3 623.0,202.9 624.7,201.2 626.8,199.9 628.1,197.7 629.7,195.9 628.9,193.0 627.3,190.4 627.9,187.3 630.2,184.5 632.1,182.8 632.2,179.3 632.6,176.0 632.6,175.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Lagoa do Arroz</title></polyline>
+<polyline points="562.1,101.0 562.4,96.8 563.9,94.8 566.5,94.1 568.8,93.0 571.8,93.3 574.5,94.2 577.2,95.2 579.4,93.9 580.9,91.8 583.0,90.5 585.7,89.7 587.9,88.5 590.0,87.2 592.6,86.3 595.0,85.1 596.5,83.2 600.0,82.6 603.5,81.3 606.0,80.3 608.8,81.1 606.0,80.3 603.5,81.3 600.6,81.9 597.9,82.9 595.7,84.4 593.5,85.8 590.8,86.7 588.6,88.0 586.5,89.3 584.1,90.4 581.4,91.1 579.9,93.1 578.7,95.5 576.0,94.7 572.9,93.5 569.9,92.8 567.2,93.7 564.9,94.8 562.4,96.8 562.1,101.0 562.1,101.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Mururu</title></polyline>
+<polyline points="260.6,124.3 263.8,124.7 267.0,125.0 269.4,129.2 272.4,130.5 276.3,130.0 274.6,132.2 271.8,131.4 274.6,132.2 276.4,134.7 277.0,137.4 278.4,140.0 279.0,143.9 278.1,146.5 278.1,149.8 279.3,152.2 279.5,155.4 281.2,158.3 281.2,161.7 281.3,158.5 280.1,156.1 279.2,153.5 278.8,150.5 278.5,147.3 278.9,144.4 278.6,141.2 277.5,138.9 276.7,135.5 275.5,133.1 276.7,130.8 273.1,130.7 270.0,129.8 268.4,126.8 266.6,124.9 260.6,124.3 260.6,124.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Jacu</title></polyline>
+<polyline points="656.5,131.5 661.0,131.5 663.3,129.9 666.2,126.6 671.4,121.4 673.4,119.6 676.1,118.1 678.0,113.8 687.3,106.9 678.5,113.2 677.1,116.9 673.9,119.3 671.4,121.4 666.2,126.6 663.3,129.9 661.5,131.5 657.7,131.1 653.9,132.3 651.3,131.3 646.5,129.6 643.9,128.6 639.8,129.6 636.0,130.7 630.1,131.4 625.7,132.2 621.8,133.3 616.8,133.5 613.1,134.1 616.1,133.5 619.3,133.8 623.2,132.8 627.4,131.8 633.1,131.1 638.2,129.9 643.5,128.7 646.5,129.6 650.0,130.9 653.4,132.3 656.5,131.5 656.5,131.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Bacaba Nova</title></polyline>
+<polyline points="530.0,94.8 529.7,98.5 526.4,99.3 523.3,98.8 520.3,99.3 517.0,101.1 514.6,102.6 513.1,105.2 512.7,108.4 511.0,110.3 512.7,108.4 513.1,105.2 514.6,102.6 517.0,101.1 519.7,99.6 523.3,98.8 526.4,99.3 529.7,98.5 530.8,96.1 530.0,94.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Centro dos Cobrinhas</title></polyline>
+<polyline points="685.0,151.5 684.2,148.5 683.3,145.3 684.9,143.3 686.4,141.3 688.5,139.7 691.3,136.0 692.9,134.0 694.6,131.6 697.0,130.5 699.0,128.6 697.2,130.3 694.6,131.6 692.9,134.0 691.3,136.0 690.1,138.3 687.8,139.7 686.2,141.6 684.6,143.5 684.1,147.1 684.9,151.0 685.0,151.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Marajá</title></polyline>
+<circle cx="634.4" cy="121.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="231.5" cy="147.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="505.6" cy="144.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="587.0" cy="129.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="633.4" cy="130.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="543.8" cy="109.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="653.6" cy="150.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="648.2" cy="117.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="481.9" cy="174.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="396.0" cy="153.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="576.3" cy="154.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="563.2" cy="123.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="271.0" cy="125.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="561.5" cy="95.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="529.4" cy="238.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="561.6" cy="95.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="539.9" cy="258.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="219.3" cy="167.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="588.7" cy="184.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="486.8" cy="164.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="321.4" cy="227.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="177.6" cy="168.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="654.3" cy="131.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="463.3" cy="134.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="462.8" cy="134.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="529.7" cy="94.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="632.0" cy="175.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="648.6" cy="101.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="490.7" cy="147.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="414.6" cy="142.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="380.6" cy="142.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="530.8" cy="95.8" r="2.2" fill="#b9b9b2"/>
+<polygon points="555.5,130.9 544.5,151.1 566.5,151.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="563.7,125.0 552.4,145.8 575.0,145.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="560.8,121.9 548.9,143.8 572.7,143.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="216.5,159.6 209.1,173.3 224.0,173.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="167.2,225.8 159.5,240.0 174.9,240.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="656.6,122.2 647.6,138.9 665.7,138.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="656.6" y="152.3" text-anchor="middle" fill="#5c5c57">Zona Rural</text>
+<polygon points="542.1,249.4 533.1,266.1 551.2,266.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="322.9,217.6 315.5,231.3 330.3,231.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="380.4,133.4 372.9,147.2 387.9,147.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="685.3,143.0 677.3,157.7 693.3,157.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="461.2,126.4 452.2,143.0 470.2,143.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="632.6,166.5 624.1,182.1 641.1,182.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="554.9,134.2 547.0,148.8 562.8,148.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="587.4,174.0 578.6,190.3 596.2,190.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="177.0,159.8 169.4,173.8 184.5,173.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="489.2,156.4 482.7,168.5 495.8,168.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="260.7,117.1 253.9,129.5 267.4,129.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="564.4,131.6 553.3,152.1 575.5,152.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="562.5,93.8 555.5,106.5 569.4,106.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="529.9,86.7 522.2,100.9 537.6,100.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="564.1,120.5 553.2,140.6 575.1,140.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="532.2,235.1 525.4,247.8 539.1,247.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="413.0,135.3 406.6,147.0 419.3,147.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="649.7,93.7 642.7,106.8 656.8,106.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="570.6,136.3 560.3,155.2 580.9,155.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="489.3,140.2 482.5,152.7 496.1,152.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="103.6" cy="247.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="110.6" y="242.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Assentamento Centrão 21,8 km</text>
+<circle cx="545.1" cy="355.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="552.1" y="350.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Poço d&#x27;Anta 19,2 km</text>
+<circle cx="104.2" cy="323.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="111.2" y="318.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Assinobrás 13,4 km</text>
+<circle cx="187.1" cy="318.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="194.1" y="333.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Chapada Grande 13,3 km</text>
+<circle cx="133.7" cy="310.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="140.7" y="305.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Brejo Grande 10,5 km</text>
+<circle cx="465.1" cy="244.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="472.1" y="239.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sabesa 9,9 km</text>
+<circle cx="613.1" cy="270.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="525.5" y="265.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Umbaca 8,3 km</text>
+<circle cx="651.3" cy="226.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="514.1" y="221.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Lagoa do Arroz 7,1 km</text>
+<circle cx="610.3" cy="82.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="522.7" y="77.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Mururu 6,3 km</text>
+<circle cx="280.3" cy="161.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="287.3" y="156.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Jacu 5,9 km</text>
+<circle cx="606.0" cy="202.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="437.8" y="197.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Cardoso dos Barroso 5,3 km</text>
+<circle cx="634.1" cy="206.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="586.2" cy="254.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="188.3" cy="240.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="195.3" y="255.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Cajazeira 4,6 km</text>
+<circle cx="612.8" cy="134.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="494.2" y="129.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Bacaba Nova 4,5 km</text>
+<circle cx="688.4" cy="107.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="538.8" y="102.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Porção do Damião 4,2 km</text>
+<circle cx="509.0" cy="111.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="657.6" cy="171.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="545.2" y="166.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Bela Vista 3,2 km</text>
+<circle cx="269.7" cy="130.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="276.7" y="125.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Duas Lagoas 3,2 km</text>
+<circle cx="699.8" cy="128.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="612.2" y="123.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Marajá 3,1 km</text>
+<circle cx="546.4" cy="284.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="553.4" y="279.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santa Rosa 3,0 km</text>
+<rect x="555.0" y="136.9" width="10" height="10" fill="#1d1d1b"/><text x="569.0" y="159.9" font-weight="600" fill="#1d1d1b">Sede de Paulo Ramos</text>
+<line x1="35" x2="85.1" y1="413.6" y2="413.6" stroke="#8a8a84" stroke-width="2"/><text x="35" y="427.6" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="404.6444659255681" y2="404.6444659255681" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="408.6444659255681" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,397.6 421.4,409.9 434.6,409.9" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="408.6444659255681" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="422.6444659255681" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="431.6444659255681" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="427.6444659255681" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="431.6444659255681" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="450.6444659255681" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="454.6444659255681" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="450.6444659255681" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="454.6444659255681" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="473.6444659255681" y2="473.6444659255681" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="477.6444659255681" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="496.6444659255681" y2="496.6444659255681" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="500.6444659255681" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Sem rotas publicadas no DJE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (12):</strong> Assentamento Centrão, Poço d&#x27;Anta, Assinobrás, Chapada Grande, Brejo Grande, Sabesa, Umbaca, Lagoa do Arroz, Mururu, Jacu, Cardoso dos Barroso e Vila 10.</li>
+<li><strong>De 3 a 5 km (9):</strong> Centro dos Pereiras, Cajazeira, Bacaba Nova, Porção do Damião, Centro dos Cobrinhas, Bela Vista, Duas Lagoas, Marajá e Santa Rosa.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (34):</strong> Alto da Maricota, Alto dos Cearences, Bacuri, Baixa Fria, Boa Vista, Cajueiro, Cassiano de Freitas, Centro do José Leal, Centro do Leite, Centro do Zé Grosso, Centro dos Baianos, Centro dos Cardosos, Centro dos Leite, Centro dos Preto, Estrela, Gavião, Jejuí, Juçaral do Bonfim, La. Bonita, Maribondo, Matadouro, Morro do Boi, Nova Olinda, Pau Vermelho, Pedro Lourenço, Pisarra, Salgueira, Santo Antônio, Santo Antõnio do Sapecado, Serra do Monte, São José, Três Olhos d&#x27;Água, Zé Grosso e Zé Leal.</li>
+</ul><h2>Rotas da Justiça Eleitoral</h2>
+<p><strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-MA) para Paulo Ramos.</strong> Pesquisamos todas as edições do DJE/TRE-MA publicadas desde o fim de julho de 2026. As rotas do mapa e da seção de propostas são sugestões deste levantamento.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 21 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Assentamento Centrão</strong></td><td>Sede – Cajazeira – Chapada Grande – Brejo Grande – Assinobrás – Assentamento Centrão – Sede</td><td>Cajazeira, Chapada Grande, Brejo Grande, Assinobrás, Assentamento Centrão</td><td>53,7 km (ida e volta)</td><td>~1h47</td></tr><tr><td><strong>Rota nova – Poço d&#x27;Anta</strong></td><td>Sede – Poço d&#x27;Anta – Sede</td><td>Poço d&#x27;Anta</td><td>38,3 km (ida e volta)</td><td>~1h33</td></tr><tr><td><strong>Rota nova – Sabesa</strong></td><td>Sede – Santa Rosa – Sabesa – Sede</td><td>Santa Rosa, Sabesa</td><td>25,8 km (ida e volta)</td><td>~1h00</td></tr><tr><td><strong>Rota nova – Umbaca</strong></td><td>Sede – Centro dos Pereiras – Umbaca – Sede</td><td>Centro dos Pereiras, Umbaca</td><td>16,7 km (ida e volta)</td><td>~25 min</td></tr><tr><td><strong>Rota nova – Lagoa do Arroz</strong></td><td>Sede – Bela Vista – Vila 10 – Lagoa do Arroz – Cardoso dos Barroso – Sede</td><td>Bela Vista, Vila 10, Lagoa do Arroz, Cardoso dos Barroso</td><td>25,7 km (ida e volta)</td><td>~51 min</td></tr><tr><td><strong>Rota nova – Mururu</strong></td><td>Sede – Mururu – Sede</td><td>Mururu</td><td>12,7 km (ida e volta)</td><td>~29 min</td></tr><tr><td><strong>Rota nova – Jacu</strong></td><td>Sede – Duas Lagoas – Jacu – Sede</td><td>Duas Lagoas, Jacu</td><td>12,8 km (ida e volta)</td><td>~27 min</td></tr><tr><td><strong>Rota nova – Bacaba Nova</strong></td><td>Sede – Porção do Damião – Bacaba Nova – Sede</td><td>Porção do Damião, Bacaba Nova</td><td>17,5 km (ida e volta)</td><td>~26 min</td></tr><tr><td><strong>Rota nova – Centro dos Cobrinhas</strong></td><td>Sede – Centro dos Cobrinhas – Sede</td><td>Centro dos Cobrinhas</td><td>6,5 km (ida e volta)</td><td>~16 min</td></tr><tr><td><strong>Rota nova – Marajá</strong></td><td>Sede – Marajá – Sede</td><td>Marajá</td><td>6,2 km (ida e volta)</td><td>~15 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMPR</strong></p><p>Paulo Ramos/MA, ___ de outubro de 2026.</p><p>Ao(À) Excelentíssimo(a) Senhor(a)<br><strong>[nome do(a) Juiz(a) Eleitoral]</strong><br>Juiz(a) Eleitoral da 102ª Zona Eleitoral – [sede da zona]/MA</p><p><strong>Assunto:</strong> Sugestão de rotas de transporte gratuito de eleitores da zona rural – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo(a) Senhor(a) Juiz(a),</p><p>O Município de Paulo Ramos, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento das localidades rurais distantes do local de votação, para as quais não localizamos no Diário da Justiça Eleitoral (DJE/TRE-MA) quadro de percursos nem ato sobre o transporte de eleitores: Assentamento Centrão, Poço d&#x27;Anta, Assinobrás, Chapada Grande, Brejo Grande, Sabesa, Umbaca, Lagoa do Arroz, Mururu, Jacu, Cardoso dos Barroso, Vila 10, Centro dos Pereiras, Cajazeira, Bacaba Nova, Porção do Damião, Centro dos Cobrinhas, Bela Vista, Duas Lagoas, Marajá e Santa Rosa.</p><p>Sugerimos, respeitosamente, que Vossa Excelência avalie instituir o transporte gratuito de eleitores no 2º turno, com as seguintes rotas:</p><ol><li>a criação da Rota nova – Assentamento Centrão (Sede – Cajazeira – Chapada Grande – Brejo Grande – Assinobrás – Assentamento Centrão – Sede);</li><li>a criação da Rota nova – Poço d&#x27;Anta (Sede – Poço d&#x27;Anta – Sede);</li><li>a criação da Rota nova – Sabesa (Sede – Santa Rosa – Sabesa – Sede);</li><li>a criação da Rota nova – Umbaca (Sede – Centro dos Pereiras – Umbaca – Sede);</li><li>a criação da Rota nova – Lagoa do Arroz (Sede – Bela Vista – Vila 10 – Lagoa do Arroz – Cardoso dos Barroso – Sede);</li><li>a criação da Rota nova – Mururu (Sede – Mururu – Sede);</li><li>a criação da Rota nova – Jacu (Sede – Duas Lagoas – Jacu – Sede);</li><li>a criação da Rota nova – Bacaba Nova (Sede – Porção do Damião – Bacaba Nova – Sede);</li><li>a criação da Rota nova – Centro dos Cobrinhas (Sede – Centro dos Cobrinhas – Sede);</li><li>a criação da Rota nova – Marajá (Sede – Marajá – Sede).</li></ol><p>As rotas sugeridas atendem as localidades mais distantes. Caso esse Juízo já tenha definido rotas, pedimos que estas sugestões sejam consideradas naquilo que ainda não estiver contemplado.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Paulo Ramos</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Paulo Ramos; Quadro de percursos não localizado nas edições do DJE/TRE-MA consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Nazaré da Mata</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Nazaré da Mata</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/nazare-da-mata.pdf?v=1792372739" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Nazaré da Mata (23ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 23ª Zona Eleitoral <strong>4 rotas novas</strong> no transporte gratuito de Nazaré da Mata.
+<strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-PE) para Nazaré da Mata</strong>. As 6 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Nazaré da Mata tem 25.706 eleitores aptos em 15 locais de votação e 81 seções. São 2 locais rurais, com 1.337 eleitores (5% do total).</li>
+
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Sítio São José (7,1 km do local de votação), Engenho Ajudante (6,8 km do local de votação), Campo (6,4 km do local de votação), Lagoa dos Ramos de Baixo (6,1 km do local de votação), Engenho Teimoso (5,7 km do local de votação) e Camarazal (4,8 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 9 localidades rurais de Nazaré da Mata que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Sítio São José</td><td>7,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Engenho Ajudante</td><td>6,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Campo</td><td>6,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Lagoa dos Ramos de Baixo</td><td>6,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Engenho Teimoso</td><td>5,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Camarazal</td><td>4,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 9 localidades rurais de Nazaré da Mata, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 804" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Nazaré da Mata: 6 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas (não há rotas publicadas no DJE), com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="696.1,230.7 653.4,250.3 564.9,136.0 446.7,105.8 316.0,174.3 315.1,212.5 234.2,80.0 35.0,482.8 168.8,581.5 266.6,671.7 284.4,617.1 403.6,541.9 449.4,507.2 499.6,490.8 528.9,448.1 570.7,456.6 599.2,421.9 612.1,354.3 677.9,302.7 725.0,248.5 696.1,230.7 696.1,230.7" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="372.9,423.1 378.2,414.8 389.4,417.0 402.5,418.2 411.8,413.7 421.1,408.9 433.2,407.3 441.6,412.7 449.0,419.7 454.1,429.3 460.0,436.9 471.0,431.2 479.7,424.4 491.9,422.4 513.0,426.1 529.7,428.9 543.0,427.7 555.9,423.5 566.1,418.3 579.8,411.3 588.1,397.1 591.2,384.9 588.4,396.0 584.1,407.2 572.2,415.2 561.4,420.7 552.0,425.5 538.9,428.2 523.3,427.9 499.1,423.7 486.7,421.9 473.0,429.7 465.4,435.7 455.5,431.6 450.3,422.1 445.0,414.0 435.2,409.2 426.8,403.9 420.8,411.4 409.6,414.5 399.7,418.1 387.0,416.8 376.2,420.3 372.9,423.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Sítio São José</title></polyline>
+<polyline points="412.4,331.1 417.9,322.9 426.1,316.2 434.0,310.1 438.8,301.4 443.9,293.0 456.7,293.8 462.1,284.3 464.7,272.8 471.4,265.0 475.8,255.5 470.7,246.8 474.4,235.2 486.4,238.0 498.1,235.8 501.6,225.7 502.7,212.4 497.0,201.3 498.7,184.4 492.4,173.5 482.8,164.3 480.3,152.1 476.6,136.9 479.0,148.5 480.9,161.7 492.4,172.3 498.0,181.6 498.9,195.0 499.8,208.9 501.2,222.7 499.8,235.0 488.2,238.6 477.0,234.8 469.9,241.1 474.3,252.9 471.4,265.0 464.7,272.8 462.1,284.3 457.4,293.5 445.1,292.1 439.2,300.2 434.9,309.3 426.1,316.2 418.5,322.5 412.6,330.6 412.4,331.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Engenho Ajudante</title></polyline>
+<polyline points="337.3,526.1 326.8,538.6 320.2,554.0 314.0,568.0 309.5,578.6 304.5,590.2 299.8,601.5 288.4,605.1 275.9,608.8 269.0,615.9 256.2,620.4 239.4,619.3 227.2,623.9 219.7,630.1 209.6,626.8 200.4,621.1 193.7,614.3 198.8,604.4 210.7,600.4 198.8,604.4 192.0,611.6 199.7,620.5 190.4,627.1 185.3,635.6 194.5,641.4 203.0,646.4 213.8,649.1 225.0,652.5 235.2,655.7 242.4,646.3 251.1,639.0 267.2,631.4 279.8,629.5 292.3,627.6 299.2,614.4 299.8,601.5 304.5,590.2 309.5,578.6 314.0,568.0 319.0,556.7 325.0,542.5 331.4,528.0 337.3,526.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Campo</title></polyline>
+<polyline points="353.0,381.0 347.2,371.8 344.5,358.4 340.0,344.7 336.5,332.8 328.1,322.9 321.0,309.2 306.2,310.3 297.0,320.3 286.6,328.2 263.2,335.3 241.5,334.7 238.6,323.9 241.5,334.7 253.7,337.0 286.6,328.2 297.0,320.3 303.1,311.4 315.3,309.0 319.7,300.1 325.3,290.4 329.3,269.2 331.9,258.0 326.6,244.1 321.2,228.0 313.5,219.4 302.0,209.3 295.7,197.1 290.4,180.6 295.7,197.1 302.0,209.3 313.5,219.4 321.2,228.0 325.1,240.6 330.9,252.3 329.9,267.4 326.4,278.5 324.6,291.7 319.4,301.7 324.3,315.8 330.3,326.4 338.4,336.0 341.4,349.5 345.8,362.3 346.8,377.4 353.0,381.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Engenho Teimoso</title></polyline>
+<circle cx="471.1" cy="264.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="345.8" cy="550.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="339.1" cy="532.6" r="2.2" fill="#b9b9b2"/>
+<polygon points="396.4,356.9 382.8,382.0 410.1,382.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="375.6,367.4 365.2,386.5 385.9,386.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="364.9,362.2 350.9,388.0 378.9,388.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="382.7,349.5 368.8,375.0 396.5,375.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="393.3,366.0 383.8,383.7 402.9,383.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="351.5,376.2 336.9,403.2 366.2,403.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="412.5,319.8 401.7,339.7 423.3,339.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="393.8,363.8 385.1,379.8 402.5,379.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="352.9,370.1 343.0,388.4 362.8,388.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="343.5,382.2 332.0,403.4 355.0,403.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="373.3,411.6 362.2,432.0 384.4,432.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="397.3,390.2 387.5,408.3 407.1,408.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="397.3" y="421.9" text-anchor="middle" fill="#5c5c57">Loteamento Novo</text>
+<polygon points="344.4,396.5 333.9,416.0 355.0,416.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="391.6,356.2 383.2,371.6 399.9,371.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="336.4,517.9 328.8,531.9 344.0,531.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="589.8" cy="375.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="452.6" y="370.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio São José 7,1 km</text>
+<circle cx="476.0" cy="135.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="483.0" y="130.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Engenho Ajudante 6,8 km</text>
+<circle cx="211.0" cy="588.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="218.0" y="583.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Campo 6,4 km</text>
+<circle cx="199.9" cy="656.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="206.9" y="651.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Lagoa dos Ramos de Baixo 6,1 km</text>
+<circle cx="292.4" cy="178.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="299.4" y="173.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Engenho Teimoso 5,7 km</text>
+<circle cx="237.4" cy="314.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="244.4" y="309.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Camarazal 4,8 km</text>
+<rect x="366.4" y="384.7" width="10" height="10" fill="#1d1d1b"/><text x="380.4" y="407.7" font-weight="600" fill="#1d1d1b">Sede de Nazaré da Mata</text>
+<line x1="35" x2="235.3" y1="701.7" y2="701.7" stroke="#8a8a84" stroke-width="2"/><text x="35" y="715.7" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="692.7461340206149" y2="692.7461340206149" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="696.7461340206149" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,685.7 421.4,698.0 434.6,698.0" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="696.7461340206149" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="710.7461340206149" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="719.7461340206149" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="715.7461340206149" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="719.7461340206149" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="738.7461340206149" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="742.7461340206149" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="738.7461340206149" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="742.7461340206149" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="761.7461340206149" y2="761.7461340206149" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="765.7461340206149" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="784.7461340206149" y2="784.7461340206149" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="788.7461340206149" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Sem rotas publicadas no DJE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (5):</strong> Sítio São José, Engenho Ajudante, Campo, Lagoa dos Ramos de Baixo e Engenho Teimoso.</li>
+<li><strong>De 3 a 5 km (1):</strong> Camarazal.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (3):</strong> Engenho Cacicule, Loteamento Cinco Corações e Loteamento Diamante.</li>
+</ul><h2>Rotas da Justiça Eleitoral</h2>
+<p><strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-PE) para Nazaré da Mata.</strong> Pesquisamos todas as edições do DJE/TRE-PE publicadas desde o fim de julho de 2026. As rotas do mapa e da seção de propostas são sugestões deste levantamento.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 6 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Sítio São José</strong></td><td>Sede – Sítio São José – Sede</td><td>Sítio São José</td><td>14,1 km (ida e volta)</td><td>~25 min</td></tr><tr><td><strong>Rota nova – Engenho Ajudante</strong></td><td>Sede – Engenho Ajudante – Sede</td><td>Engenho Ajudante</td><td>13,7 km (ida e volta)</td><td>~30 min</td></tr><tr><td><strong>Rota nova – Campo</strong></td><td>Loteamento Cinco Corações – Campo – Lagoa dos Ramos de Baixo – Loteamento Cinco Corações</td><td>Campo, Lagoa dos Ramos de Baixo</td><td>15,0 km (ida e volta)</td><td>~30 min</td></tr><tr><td><strong>Rota nova – Engenho Teimoso</strong></td><td>Sede – Camarazal – Engenho Teimoso – Sede</td><td>Camarazal, Engenho Teimoso</td><td>16,9 km (ida e volta)</td><td>~19 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMNM</strong></p><p>Nazaré da Mata/PE, ___ de outubro de 2026.</p><p>Ao(À) Excelentíssimo(a) Senhor(a)<br><strong>[nome do(a) Juiz(a) Eleitoral]</strong><br>Juiz(a) Eleitoral da 23ª Zona Eleitoral – [sede da zona]/PE</p><p><strong>Assunto:</strong> Sugestão de rotas de transporte gratuito de eleitores da zona rural – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo(a) Senhor(a) Juiz(a),</p><p>O Município de Nazaré da Mata, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento das localidades rurais distantes do local de votação, para as quais não localizamos no Diário da Justiça Eleitoral (DJE/TRE-PE) quadro de percursos nem ato sobre o transporte de eleitores: Sítio São José, Engenho Ajudante, Campo, Lagoa dos Ramos de Baixo, Engenho Teimoso e Camarazal.</p><p>Sugerimos, respeitosamente, que Vossa Excelência avalie instituir o transporte gratuito de eleitores no 2º turno, com as seguintes rotas:</p><ol><li>a criação da Rota nova – Sítio São José (Sede – Sítio São José – Sede);</li><li>a criação da Rota nova – Engenho Ajudante (Sede – Engenho Ajudante – Sede);</li><li>a criação da Rota nova – Campo (Loteamento Cinco Corações – Campo – Lagoa dos Ramos de Baixo – Loteamento Cinco Corações);</li><li>a criação da Rota nova – Engenho Teimoso (Sede – Camarazal – Engenho Teimoso – Sede).</li></ol><p>As rotas sugeridas atendem as localidades mais distantes. Caso esse Juízo já tenha definido rotas, pedimos que estas sugestões sejam consideradas naquilo que ainda não estiver contemplado.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Nazaré da Mata</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Nazaré da Mata; Quadro de percursos não localizado nas edições do DJE/TRE-PE consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

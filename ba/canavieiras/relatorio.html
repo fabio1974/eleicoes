@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Canavieiras</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Canavieiras</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/canavieiras.pdf?v=1792373197" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Canavieiras (116ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 116ª Zona Eleitoral <strong>11 rotas novas</strong> no transporte gratuito de Canavieiras.
+<strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-BA) para Canavieiras</strong>. As 55 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Canavieiras tem 25.497 eleitores aptos em 24 locais de votação e 91 seções. São 10 locais rurais, com 3.767 eleitores (15% do total).</li>
+<li>10 locais rurais ficam a 10 km ou mais da sede, com 3.767 eleitores. Os mais distantes: Rodovia Transouricana Km 55 - Zona Rural (55,1 km), Rodovia Transouricana Km 56 - Zona Rural (55,1 km) e Rodovia Transouricana Km 47 - Zona Rural (46,0 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Campinhos (133,1 km do local de votação), Rio Pardo (19,5 km do local de votação), Agrovila do PA Canaã (18,9 km do local de votação), Projeto de Assentamento Canaã Dois (18,7 km do local de votação), Fazenda Talisman (18,0 km do local de votação), Barreiras (17,1 km do local de votação), Nova (11,5 km do local de votação), Fazenda Ouro Verde (11,5 km do local de votação), Fazenda Esperança (10,6 km do local de votação), Campo Grande (10,4 km do local de votação), Bom Futuro (10,0 km do local de votação), Fazenda Santa Rosa (9,9 km do local de votação), Osmundo Carneiro (9,7 km do local de votação), Fazenda Santa Clara (9,3 km do local de votação), Fazenda Nossa Senhora da Ajuda (9,1 km do local de votação), Barra Velha (8,8 km do local de votação), Campo do Arroz (8,7 km do local de votação), Fazenda Zé Isidro (8,6 km do local de votação), Fazenda Lua (8,5 km do local de votação), Cubiculo (8,5 km do local de votação), Sítio Vila do Sol (8,3 km do local de votação), Ruinha (8,2 km do local de votação), Fazenda Lagos (7,5 km do local de votação), Deus Dará (7,3 km do local de votação), Humaitá (7,2 km do local de votação), Brasas (7,2 km do local de votação), Morobó (7,0 km do local de votação), Conceição (7,0 km do local de votação), Fazenda Tf (7,0 km do local de votação), São Miguel (6,9 km do local de votação), Fazenda Santa Isabel (6,5 km do local de votação), Córrego Grande (6,2 km do local de votação), Morobá (5,9 km do local de votação), Boca da Cachoeira (5,8 km do local de votação), Campo Limpo (5,7 km do local de votação), Fazenda Pastorinha (5,6 km do local de votação), Fazenda Jovita (5,5 km do local de votação), Portão de Ferro (5,4 km do local de votação), Ribeira Grande (4,9 km do local de votação), Fazenda Luane (4,9 km do local de votação), Sítio Alto (4,8 km do local de votação), Fazenda Alegria (4,7 km do local de votação), Bom Viver (4,3 km do local de votação), Fazenda Altamira (4,3 km do local de votação), Fazenda Sedrero (4,2 km do local de votação), Rodovia BA-270 (4,1 km do local de votação), Outeiro (4,0 km do local de votação), Estreito (4,0 km do local de votação), Rio Doce (3,9 km do local de votação), Margarida (3,8 km do local de votação), Fazenda Santa Terezinha (3,6 km do local de votação), Curva do Leão (3,6 km do local de votação), São José Dois (3,2 km do local de votação), Liana Belém (3,2 km do local de votação) e Nova Vida (3,1 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 86 localidades rurais de Canavieiras que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Campinhos</td><td>133,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Rio Pardo</td><td>19,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Agrovila do PA Canaã</td><td>18,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Projeto de Assentamento Canaã Dois</td><td>18,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Talisman</td><td>18,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Barreiras</td><td>17,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Nova</td><td>11,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Ouro Verde</td><td>11,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Esperança</td><td>10,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Campo Grande</td><td>10,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Bom Futuro</td><td>10,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Santa Rosa</td><td>9,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Osmundo Carneiro</td><td>9,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Santa Clara</td><td>9,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Nossa Senhora da Ajuda</td><td>9,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Barra Velha</td><td>8,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Campo do Arroz</td><td>8,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Zé Isidro</td><td>8,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Lua</td><td>8,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Cubiculo</td><td>8,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Vila do Sol</td><td>8,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Ruinha</td><td>8,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Lagos</td><td>7,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Deus Dará</td><td>7,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Humaitá</td><td>7,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Brasas</td><td>7,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Morobó</td><td>7,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Conceição</td><td>7,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Tf</td><td>7,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>São Miguel</td><td>6,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Santa Isabel</td><td>6,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Córrego Grande</td><td>6,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Morobá</td><td>5,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Boca da Cachoeira</td><td>5,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Campo Limpo</td><td>5,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Pastorinha</td><td>5,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Jovita</td><td>5,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Portão de Ferro</td><td>5,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Ribeira Grande</td><td>4,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Luane</td><td>4,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Alto</td><td>4,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Alegria</td><td>4,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Bom Viver</td><td>4,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Altamira</td><td>4,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Sedrero</td><td>4,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Rodovia BA-270</td><td>4,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Outeiro</td><td>4,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Estreito</td><td>4,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Rio Doce</td><td>3,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Margarida</td><td>3,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Santa Terezinha</td><td>3,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Curva do Leão</td><td>3,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>São José Dois</td><td>3,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Liana Belém</td><td>3,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Nova Vida</td><td>3,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 86 localidades rurais de Canavieiras, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 909" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Canavieiras: 55 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas (não há rotas publicadas no DJE), com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="725.0,655.9 698.8,585.0 690.5,582.1 678.6,552.9 664.9,508.5 660.1,478.5 656.8,409.9 651.4,401.4 654.3,325.2 652.4,299.6 643.8,245.8 637.7,229.6 640.5,222.9 620.1,148.0 609.2,101.3 587.5,99.5 575.9,106.7 572.4,83.1 559.0,86.9 554.9,99.3 546.1,109.1 535.6,134.5 541.1,140.9 533.6,159.3 540.1,176.5 506.6,206.6 470.4,214.3 454.0,222.3 437.7,225.8 419.8,245.8 396.7,254.0 363.3,258.4 357.8,267.0 340.1,281.1 316.2,289.4 290.7,286.0 276.2,287.2 286.2,314.3 300.2,306.7 305.6,314.3 326.5,321.0 331.6,331.4 318.1,353.1 315.8,372.3 325.1,378.4 345.4,373.9 352.7,384.1 351.9,393.6 342.5,401.3 337.7,418.1 317.4,407.7 301.2,408.3 276.1,401.8 262.4,414.2 245.2,421.3 245.2,428.9 231.2,437.6 230.7,444.3 208.1,453.8 194.2,453.8 188.9,462.2 182.5,467.9 160.0,469.4 136.5,475.5 97.7,503.4 86.5,526.7 59.1,550.2 59.7,567.3 42.4,571.6 35.4,595.6 35.0,614.5 41.7,622.5 58.4,622.5 73.7,631.6 76.9,666.0 85.5,676.2 99.7,700.7 94.1,715.1 107.9,740.4 99.2,751.1 76.0,762.6 69.8,772.2 52.5,776.7 66.3,777.2 77.3,771.4 88.4,775.1 104.0,772.5 113.3,760.2 128.1,759.9 152.4,767.9 154.0,752.9 178.3,745.5 190.8,730.9 208.1,734.7 204.9,719.3 223.5,699.9 230.5,705.6 248.6,708.7 266.3,694.3 282.2,706.2 297.4,707.1 307.5,714.9 321.2,717.4 334.2,699.8 343.7,704.7 366.5,702.8 372.7,714.3 392.6,719.3 392.3,741.8 409.9,741.4 419.4,727.7 432.2,725.1 431.9,717.2 413.5,699.4 415.3,685.5 715.7,658.0 725.0,655.9 725.0,655.9" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="86.8,693.6 688.5,661.5 86.8,693.6 86.8,693.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Campinhos</title></polyline>
+<polyline points="87.0,693.5 85.1,689.9 83.4,686.3 80.8,681.8 80.9,677.1 79.3,674.4 77.0,671.1 75.1,667.6 73.7,663.8 72.0,656.5 71.1,652.4 68.3,650.1 63.9,650.6 60.4,651.9 57.3,650.3 53.4,651.2 50.8,648.7 46.9,646.5 44.0,644.2 41.8,641.1 39.9,638.6 36.1,637.8 36.5,633.6 36.4,628.8 37.9,625.9 36.9,622.1 35.6,619.0 37.4,616.1 37.9,612.0 40.6,609.8 43.9,608.4 40.6,609.8 37.9,612.0 37.3,615.7 35.3,618.7 36.9,622.1 38.3,625.1 36.7,628.0 37.9,631.3 36.3,634.3 37.3,638.1 40.6,639.1 42.3,642.6 44.7,644.8 48.9,647.6 51.5,649.5 55.7,650.0 58.7,651.7 62.8,651.1 66.9,650.3 70.8,650.9 71.8,655.0 73.1,661.1 74.1,664.4 75.9,669.2 78.5,673.4 80.8,675.6 81.0,680.0 82.1,684.1 83.9,687.1 86.3,692.1 87.0,693.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Osmundo Carneiro</title></polyline>
+<polyline points="564.6,353.3 565.4,357.1 559.5,356.8 554.9,357.1 550.9,355.2 547.4,352.9 544.5,351.0 539.4,350.1 534.4,351.6 531.5,353.5 528.6,358.5 530.7,361.9 532.9,364.2 530.7,361.9 527.6,360.1 523.0,362.9 517.1,364.5 512.6,365.8 508.9,366.8 503.1,366.6 496.6,365.8 497.6,369.8 499.1,372.7 498.0,376.0 497.4,379.8 500.4,381.4 502.6,384.3 506.4,385.4 510.4,384.7 514.0,383.9 518.3,384.1 521.9,384.9 523.9,387.3 522.8,390.9 523.3,394.9 525.2,397.4 524.1,401.4 526.7,403.6 523.5,405.0 519.4,406.7 515.9,408.1 513.2,405.9 513.4,401.5 513.3,397.2 509.7,395.1 507.4,392.9 504.9,389.4 503.5,385.3 501.3,382.4 498.6,380.6 497.8,376.9 499.1,373.7 497.8,370.1 496.6,366.5 490.0,364.9 494.0,365.5 499.8,366.2 505.5,367.0 510.7,366.4 514.8,365.2 519.7,363.8 525.7,362.1 528.6,358.5 530.4,355.3 532.3,352.8 536.0,350.6 542.3,350.4 545.7,351.8 549.3,354.2 552.6,356.2 557.2,356.7 562.2,358.2 565.4,359.8 564.9,354.5 564.0,349.9 562.9,343.7 561.3,335.6 560.7,329.7 560.5,324.0 560.3,318.0 560.4,313.2 560.7,308.5 561.2,303.0 561.7,296.7 562.2,290.9 561.7,296.7 561.2,303.0 560.7,308.5 560.4,313.2 560.3,318.0 560.5,324.0 560.7,329.7 561.3,335.6 562.4,341.4 564.0,349.9 564.8,354.0 565.5,358.0 567.2,360.8 569.1,363.4 571.2,366.2 574.0,370.2 577.3,374.6 579.6,376.8 583.1,378.7 591.4,377.2 597.0,377.7 600.3,379.0 604.7,379.0 608.2,379.9 611.3,378.6 617.0,376.0 617.8,371.7 617.9,367.0 618.0,362.5 617.9,356.4 617.8,350.7 618.0,345.3 618.2,340.6 620.3,337.2 623.0,335.1 620.3,337.2 618.2,340.6 618.0,345.3 617.8,350.7 617.9,356.4 618.0,362.5 617.9,367.0 617.8,371.7 617.0,376.0 611.3,378.6 608.2,379.9 604.7,379.0 600.3,379.0 603.1,384.5 604.9,387.9 606.2,391.3 601.1,401.4 593.7,412.6 589.7,418.7 588.1,422.1 587.2,428.8 586.4,436.6 490.3,504.1 487.5,501.9 487.0,495.5 484.4,491.7 483.5,487.9 483.3,483.4 481.5,480.4 479.8,477.7 476.4,476.7 472.1,476.5 469.0,478.0 466.6,474.9 464.2,471.9 460.8,469.8 457.9,468.1 455.0,465.4 454.0,461.1 452.4,458.2 451.9,453.0 452.4,449.1 451.3,445.0 451.5,440.8 452.4,437.3 452.0,433.4 453.4,429.2 456.6,425.7 460.2,423.3 465.0,421.2 470.5,418.8 473.7,416.4 476.2,414.6 479.2,412.4 480.5,409.0 481.2,405.1 483.6,407.0 488.8,407.0 492.7,406.1 497.0,407.6 504.0,409.4 508.3,409.9 513.1,408.8 517.6,407.7 520.7,405.7 524.3,404.8 527.5,403.2 531.6,402.7 534.3,400.5 537.3,398.9 540.0,396.2 544.0,391.4 546.1,388.8 548.2,385.3 551.2,381.8 554.1,378.7 558.2,376.5 561.1,374.7 563.0,371.1 564.5,367.7 566.6,364.3 566.3,360.2 564.9,354.5 564.0,349.9 562.9,343.7 561.3,335.6 560.7,329.7 560.5,324.0 560.3,318.0 560.4,313.2 560.7,308.5 561.2,303.0 561.7,296.7 562.2,290.9 562.6,286.3 564.4,282.4 566.1,279.5 570.0,278.8 573.5,277.8 577.5,277.4 581.1,276.3 584.6,275.2 587.7,276.5 590.0,278.7 593.7,279.5 597.7,279.8 601.1,278.7 597.8,279.9 593.7,279.5 590.2,278.6 587.8,276.6 584.6,275.2 581.1,276.3 577.7,277.3 573.8,277.9 570.0,278.8 566.1,279.5 564.4,282.4 562.8,285.5 562.2,290.9 561.7,296.7 561.2,303.0 560.7,308.5 560.4,313.2 560.3,318.0 560.5,324.0 560.7,329.7 561.3,335.6 562.4,341.4 564.0,349.9 564.6,353.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Rio Pardo</title></polyline>
+<polyline points="407.5,526.7 404.8,525.0 402.3,523.0 398.9,524.3 396.1,525.9 393.9,528.1 390.9,531.7 387.6,533.0 381.2,533.5 377.0,534.0 373.3,535.4 370.1,537.0 367.4,540.0 366.9,544.5 366.0,548.9 363.8,552.7 360.6,551.3 363.5,552.9 363.8,557.0 363.1,561.1 361.7,564.3 362.1,568.4 359.2,570.8 355.7,573.5 350.7,572.8 348.1,570.3 344.3,567.0 345.0,561.7 346.3,558.2 345.2,554.1 342.9,551.4 340.6,549.2 339.8,545.4 337.9,542.8 335.7,539.9 332.2,538.7 329.9,536.0 327.5,532.7 326.0,529.7 323.3,526.9 320.4,524.1 316.5,521.8 312.2,517.6 309.8,515.3 308.1,512.3 309.3,509.1 312.6,508.1 311.8,504.0 309.5,499.1 307.5,496.0 303.5,494.9 299.0,494.7 299.6,490.1 299.3,486.0 297.9,482.4 295.4,480.2 293.0,478.1 293.6,474.2 295.3,470.5 294.2,466.9 294.9,463.1 298.4,461.1 299.1,456.3 300.0,452.4 298.3,449.7 296.3,447.1 299.4,444.2 302.9,442.1 306.8,440.6 311.4,438.6 312.7,433.0 315.7,430.0 318.9,425.5 324.3,423.9 328.7,425.2 333.0,426.5 328.7,425.2 324.3,423.9 319.4,425.2 317.3,428.0 314.1,430.8 312.9,436.5 309.1,439.2 305.6,440.6 301.5,442.8 298.4,445.0 294.5,445.7 291.8,443.8 289.6,441.7 289.0,437.5 287.3,434.6 287.2,429.9 286.8,434.0 288.7,436.8 289.5,440.7 291.5,443.5 293.9,445.7 296.5,447.6 298.7,449.9 299.9,453.2 298.6,457.5 296.8,461.8 294.1,463.6 294.9,467.6 295.2,472.0 292.6,475.2 293.9,478.9 297.2,481.0 298.6,484.6 299.7,488.8 298.5,492.3 301.8,494.8 305.8,495.1 308.5,497.0 310.7,501.4 312.3,505.2 313.0,509.3 316.5,510.7 319.7,512.3 322.7,513.9 325.5,516.0 326.2,519.8 327.9,522.8 330.9,525.3 335.1,526.3 340.2,526.2 344.7,526.0 349.4,525.6 354.5,525.5 358.8,525.1 361.9,526.4 365.2,528.4 367.6,531.0 367.5,535.6 371.2,536.3 374.5,534.8 377.8,533.7 383.9,533.2 388.1,532.9 392.6,530.1 395.2,526.9 397.7,524.8 401.0,523.6 404.7,524.9 407.5,526.7 407.5,526.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Agrovila do PA Canaã</title></polyline>
+<polyline points="266.3,637.5 269.2,639.3 279.7,641.4 282.5,643.2 287.6,643.6 290.9,641.8 295.4,641.7 298.4,643.1 303.6,643.8 307.7,640.7 310.4,638.8 314.7,635.5 316.6,633.0 320.1,630.3 326.6,628.8 329.8,624.8 334.8,620.3 338.3,619.0 342.6,618.4 347.1,618.2 355.7,618.9 360.3,622.9 366.3,621.3 432.4,702.3 408.8,724.9 406.4,722.8 403.2,724.1 401.2,721.7 397.2,720.1 392.7,718.6 388.8,717.3 385.2,716.1 381.2,717.1 377.8,718.2 375.1,720.5 372.2,722.9 367.9,722.5 365.0,720.4 361.8,718.7 358.7,716.9 355.2,715.7 350.8,715.5 346.4,715.7 342.1,716.1 339.7,718.5 338.2,722.0 336.0,724.3 331.7,724.6 326.9,724.2 328.1,720.3 328.8,716.7 326.1,714.9 323.2,712.6 319.3,711.6 315.2,710.7 313.4,707.8 310.8,705.6 307.1,706.6 302.9,707.0 298.2,706.5 294.6,707.4 290.7,708.1 286.4,707.1 282.3,706.5 277.6,706.5 274.9,702.2 273.4,698.5 270.2,696.1 267.2,694.0 265.5,690.6 264.0,687.5 263.3,683.0 262.9,678.8 262.3,674.8 262.5,670.6 261.4,666.9 261.1,662.7 261.9,657.8 261.2,654.0 260.0,650.8 260.4,646.6 261.5,643.3 257.4,644.8 252.6,645.1 248.1,648.8 242.6,653.5 238.8,656.8 233.8,665.4 232.0,668.4 233.8,665.4 238.4,657.3 242.6,653.5 246.1,650.6 252.6,645.1 257.0,645.0 261.5,643.3 263.4,640.7 264.8,637.7 266.3,637.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fazenda Talisman</title></polyline>
+<polyline points="373.9,314.9 383.1,316.4 386.5,318.4 400.9,324.6 409.6,326.0 415.5,326.8 419.6,327.4 424.4,328.5 481.8,297.1 443.6,268.8 439.8,268.2 437.0,266.6 433.6,265.3 429.3,265.4 425.5,264.7 423.0,266.6 420.6,268.7 418.7,271.6 416.0,273.9 412.7,272.7 409.9,270.8 403.7,269.0 401.2,267.1 397.5,268.3 395.1,270.7 392.1,272.1 388.1,273.6 385.2,271.4 382.0,269.1 377.5,270.2 373.1,270.8 370.1,272.7 365.9,273.4 363.2,275.9 361.5,278.6 360.5,282.4 358.2,284.5 354.6,285.3 351.6,286.9 353.6,292.7 354.6,296.4 356.0,301.7 358.5,305.9 361.2,310.3 364.0,312.4 368.1,313.3 373.3,314.3 374.2,318.0 373.9,322.3 373.6,326.7 372.3,330.2 371.1,333.5 372.1,337.1 375.9,337.7 378.0,340.0 378.3,344.2 378.7,348.3 378.9,352.4 379.2,356.8 378.0,360.6 374.9,362.6 371.4,363.7 371.3,368.1 372.0,372.2 371.4,377.3 370.3,380.7 367.5,383.1 364.4,386.0 361.9,388.3 359.6,390.4 356.9,393.0 359.5,390.6 361.9,388.3 364.4,386.0 367.5,383.1 370.3,380.7 371.4,377.3 372.2,373.7 371.1,370.3 371.3,366.0 373.4,363.0 376.9,362.0 378.7,358.9 379.1,354.9 378.7,350.3 378.4,346.1 378.1,341.4 376.7,338.4 373.2,337.1 370.1,335.6 371.5,332.4 372.9,328.7 372.9,324.3 373.5,320.5 374.2,316.7 373.9,314.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Nova</title></polyline>
+<polyline points="373.9,314.9 373.7,319.3 373.3,323.5 372.9,328.7 371.6,332.0 370.1,335.3 373.2,337.1 376.5,338.3 378.1,341.4 378.4,345.5 378.7,349.8 379.0,354.1 378.9,358.4 377.3,361.7 373.4,363.0 371.1,365.3 371.1,369.8 372.3,373.3 371.4,377.3 370.3,380.7 367.5,383.1 364.4,386.0 361.9,388.3 359.6,390.4 356.9,393.0 353.7,394.5 350.6,395.8 347.8,397.8 344.9,399.5 342.8,401.9 342.0,405.9 342.4,410.6 341.8,406.6 342.8,403.0 344.1,399.8 347.3,398.1 349.8,396.3 352.7,394.7 356.2,393.7 358.6,391.4 361.9,393.1 363.3,396.8 365.4,399.5 368.9,401.1 373.0,400.9 372.7,405.0 372.0,410.3 370.2,413.3 368.4,416.3 370.2,413.3 372.0,410.3 372.7,405.0 373.9,401.7 369.5,401.3 366.3,399.8 363.5,397.6 361.9,393.1 359.5,390.6 356.9,393.0 353.7,394.5 350.6,395.8 347.8,397.8 344.9,399.5 342.8,401.9 342.0,405.9 342.4,410.6 342.1,415.0 339.1,416.4 335.1,415.7 331.5,414.5 328.7,412.6 325.6,410.9 322.7,409.3 319.5,407.8 315.3,407.1 311.4,408.0 305.5,408.3 301.3,407.7 298.9,404.8 297.2,401.9 295.5,398.6 297.9,396.1 300.5,394.3 302.8,392.2 305.7,390.4 308.3,386.6 308.4,382.3 310.9,379.7 313.2,377.5 318.3,377.2 321.9,376.1 323.0,372.6 323.8,368.6 325.2,365.3 326.8,361.2 328.6,356.7 330.8,353.5 333.9,351.6 336.9,349.8 339.6,348.2 342.7,346.4 345.0,344.3 346.0,340.6 346.6,336.5 348.8,333.2 352.1,331.7 355.3,330.0 357.5,327.3 359.9,324.2 362.6,320.8 365.5,318.8 367.5,315.8 364.0,312.4 361.2,310.3 358.5,305.9 356.7,303.1 354.6,296.4 353.6,292.7 352.5,289.0 348.4,288.2 343.9,288.7 340.1,290.0 333.0,292.7 327.8,290.6 324.4,288.9 321.4,287.2 319.8,284.1 317.3,281.1 313.5,280.4 308.8,281.5 305.4,282.8 301.8,281.7 298.2,280.2 292.8,280.1 288.0,280.9 283.3,282.4 278.6,282.4 274.4,281.2 269.7,279.8 268.2,283.1 266.0,285.5 266.4,289.8 268.9,293.2 270.8,295.7 268.6,298.3 270.7,296.0 268.9,293.2 266.7,290.5 265.1,286.5 267.5,283.8 269.7,279.8 274.4,281.2 278.6,282.4 283.3,282.4 288.0,280.9 291.7,280.1 296.9,280.0 301.8,281.7 305.2,282.8 308.8,281.5 312.1,280.4 316.6,280.6 319.0,282.7 320.8,286.1 323.5,288.6 326.8,289.8 330.1,292.7 340.1,290.0 343.9,288.7 348.4,288.2 352.3,288.7 353.6,292.7 354.6,296.4 356.0,301.7 358.5,305.9 361.2,310.3 364.0,312.4 368.1,313.3 373.3,314.3 373.9,314.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fazenda Ouro Verde</title></polyline>
+<polyline points="639.8,520.3 635.8,519.9 631.2,520.5 627.1,518.8 624.1,517.3 620.2,515.3 617.0,513.7 613.1,512.1 609.8,511.0 606.1,512.0 602.7,513.1 595.7,512.4 590.9,511.5 586.6,513.5 584.6,516.5 585.3,520.2 587.2,522.8 590.4,524.4 593.5,525.8 590.4,524.4 587.2,522.8 585.3,520.2 582.7,518.3 580.0,520.0 577.4,523.0 573.5,525.2 564.2,527.7 561.4,530.2 558.9,532.0 555.3,533.7 551.6,534.7 546.5,538.5 545.7,543.5 546.2,538.9 550.5,535.3 555.3,533.7 558.9,532.0 561.4,530.2 564.2,527.7 572.0,525.6 575.8,532.1 577.4,534.9 580.5,536.5 584.1,537.6 586.7,539.5 584.1,537.6 580.5,536.5 577.4,534.9 575.8,532.1 575.2,524.8 578.0,522.3 580.3,519.7 584.2,517.3 585.5,514.2 589.7,511.7 595.7,512.4 600.6,513.3 604.5,512.5 608.4,511.4 604.5,508.7 600.8,507.2 596.7,504.4 593.7,501.8 591.2,499.7 586.1,499.3 583.0,497.5 581.9,493.9 582.1,489.0 582.5,484.7 583.0,480.7 583.6,476.5 584.1,472.3 583.6,476.5 583.0,480.7 582.5,484.7 582.1,488.9 574.5,490.0 572.0,488.0 569.4,485.9 564.6,482.4 561.2,479.9 556.7,477.9 552.3,476.3 548.1,474.7 544.4,473.3 538.9,471.3 535.2,469.9 531.3,468.4 527.2,466.9 524.3,464.8 527.2,466.9 531.3,468.4 535.2,469.9 538.9,471.3 544.4,473.3 548.1,474.7 552.3,476.3 556.7,477.9 560.5,479.5 563.2,481.4 567.2,484.3 571.5,487.6 573.5,489.9 579.0,489.4 581.8,491.4 582.3,495.7 583.8,498.7 588.7,499.5 592.9,501.0 595.7,503.5 598.4,505.8 601.6,507.5 606.6,509.5 610.1,510.9 614.8,512.7 619.3,514.9 624.1,517.3 627.1,518.8 630.1,520.3 635.1,520.1 639.1,518.9 639.8,520.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Campo Grande</title></polyline>
+<polyline points="452.7,588.0 450.6,585.5 446.0,588.0 444.1,590.7 441.0,592.1 437.6,590.9 431.9,590.7 427.5,590.9 425.0,592.9 424.7,597.3 426.3,600.1 426.5,604.7 427.3,608.6 430.5,610.1 433.0,612.1 434.9,614.8 436.0,618.4 438.9,620.0 441.4,622.2 443.5,625.1 445.4,627.7 448.2,629.5 451.5,631.6 454.6,633.2 451.5,631.6 448.2,629.5 445.4,627.7 443.5,625.1 441.6,622.4 439.2,620.0 436.1,618.8 435.1,615.3 433.0,612.1 430.5,610.1 427.3,608.6 426.5,604.7 426.3,600.4 424.7,597.6 425.3,593.9 427.5,590.9 431.9,590.7 436.8,590.8 440.8,592.1 444.1,590.7 446.0,588.0 449.9,585.7 452.7,587.9 454.0,591.2 455.6,594.2 463.9,596.5 468.2,596.4 474.9,593.1 477.6,590.3 483.3,586.4 490.6,586.1 494.1,587.1 499.5,590.3 503.3,592.6 506.5,594.1 512.1,594.7 516.2,592.3 518.5,589.4 520.1,585.2 521.8,581.1 522.2,576.8 524.1,573.7 526.7,571.8 528.1,566.8 531.4,564.9 534.8,563.0 537.8,561.6 541.9,560.9 537.8,561.6 534.8,563.0 531.4,564.9 528.1,566.8 526.7,571.8 524.1,573.7 522.3,576.4 521.8,581.1 520.4,584.5 518.9,588.6 516.2,592.3 512.9,594.6 507.4,594.3 503.3,592.6 499.5,590.3 494.1,587.1 490.6,586.1 486.2,586.4 478.9,588.2 475.2,592.8 468.2,596.4 463.9,596.5 457.8,594.8 454.0,591.2 452.7,587.9 450.6,585.5 446.0,588.0 444.1,590.7 441.0,592.1 437.6,590.9 431.9,590.7 427.5,590.9 425.0,592.9 418.8,591.1 413.8,590.0 409.0,588.3 405.2,586.8 402.5,584.9 398.3,585.7 402.0,584.9 404.9,586.7 409.0,588.3 412.6,589.6 418.2,590.9 424.2,592.9 427.5,590.9 431.9,590.7 436.8,590.8 440.8,592.1 444.1,590.7 446.0,588.0 449.9,585.7 452.7,587.9 452.7,588.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fazenda Nossa Senhora da Ajuda</title></polyline>
+<polyline points="112.7,526.6 117.3,526.8 121.6,525.8 126.6,524.9 127.2,520.8 125.9,517.4 124.7,513.1 122.9,510.5 120.3,507.1 119.1,503.5 116.0,502.3 111.9,501.8 109.7,499.4 107.8,496.7 109.7,499.4 111.9,501.6 116.0,502.3 119.1,503.5 120.3,507.1 122.0,509.7 124.2,512.0 125.3,515.8 126.7,519.2 127.4,524.1 122.0,525.7 118.3,526.6 113.7,526.3 112.7,526.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fazenda Altamira</title></polyline>
+<polyline points="572.9,120.3 571.5,116.1 570.7,111.0 569.7,105.2 568.9,100.3 567.8,91.8 566.7,88.4 563.4,87.3 559.9,86.0 561.9,82.9 564.2,80.9 561.9,82.9 558.5,84.0 554.0,83.6 550.0,84.8 553.7,83.4 557.3,84.3 560.3,86.3 564.6,87.4 567.2,89.6 568.5,96.6 569.1,101.8 570.3,108.7 571.2,114.2 572.0,118.1 572.9,120.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Outeiro</title></polyline>
+<circle cx="622.5" cy="219.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="623.3" cy="231.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="542.0" cy="347.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="424.5" cy="594.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="558.6" cy="321.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="564.4" cy="377.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="613.4" cy="513.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="560.4" cy="330.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="583.9" cy="185.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="90.4" cy="709.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="475.0" cy="614.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="417.8" cy="536.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="562.1" cy="343.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="367.7" cy="316.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="570.9" cy="111.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="368.9" cy="315.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="721.1" cy="652.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="454.5" cy="591.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="705.0" cy="603.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="678.0" cy="563.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="115.7" cy="527.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="659.6" cy="620.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="585.0" cy="201.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="185.5" cy="697.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="87.5" cy="691.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="267.2" cy="636.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="185.7" cy="697.2" r="2.2" fill="#b9b9b2"/>
+<polygon points="651.4,522.3 642.8,538.1 660.0,538.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="651.5,524.6 643.4,539.6 659.7,539.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="646.6,503.1 631.0,531.9 662.2,531.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="650.4,512.4 637.5,536.1 663.2,536.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="636.1,516.2 624.4,537.8 647.8,537.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="641.6,513.2 631.3,532.2 652.0,532.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="639.8,512.1 629.8,530.5 649.7,530.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="647.3,507.2 634.8,530.3 659.9,530.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="646.4,498.7 634.2,521.2 658.7,521.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="651.4,521.3 642.3,538.1 660.5,538.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="649.6,513.3 640.0,531.1 659.3,531.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="640.2,509.0 629.7,528.4 650.7,528.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="185.6,690.2 178.5,703.2 192.6,703.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="266.2,628.1 257.4,644.3 275.0,644.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="452.4,579.5 444.1,594.7 460.6,594.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="112.7,518.4 104.8,532.9 120.6,532.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="407.4,520.3 401.2,531.7 413.6,531.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="583.7,194.3 575.0,210.5 592.5,210.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="573.0,112.6 565.6,126.1 580.3,126.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="374.1,305.8 365.5,321.7 382.7,321.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="671.5,539.9 664.0,553.6 678.9,553.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="86.8,687.0 80.6,698.4 93.0,698.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="646.6,492.2 636.6,510.5 656.6,510.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="564.7,345.2 557.0,359.3 572.3,359.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="688.5" cy="661.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="569.9" y="656.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Campinhos 133,1 km</text>
+<circle cx="490.3" cy="504.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="497.3" y="499.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Rio Pardo 19,5 km</text>
+<circle cx="334.2" cy="426.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="341.2" y="421.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Agrovila do PA Canaã 18,9 km</text>
+<circle cx="331.3" cy="426.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="338.3" y="441.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Projeto de Assentamento Canaã Dois 18,7 km</text>
+<circle cx="432.4" cy="702.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="439.4" y="697.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Talisman 18,0 km</text>
+<circle cx="299.8" cy="422.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="481.8" cy="297.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="488.8" y="292.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Nova 11,5 km</text>
+<circle cx="267.1" cy="300.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="274.1" y="295.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Ouro Verde 11,5 km</text>
+<circle cx="298.2" cy="409.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="305.2" y="404.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Esperança 10,6 km</text>
+<circle cx="528.6" cy="457.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="535.6" y="472.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Campo Grande 10,4 km</text>
+<circle cx="525.3" cy="385.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="532.3" y="380.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Bom Futuro 10,0 km</text>
+<circle cx="369.6" cy="417.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="44.4" cy="604.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="51.4" y="599.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Osmundo Carneiro 9,7 km</text>
+<circle cx="343.0" cy="410.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="548.4" cy="561.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="555.4" y="556.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Nossa Senhora da Ajuda 9,1 km</text>
+<circle cx="641.5" cy="287.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="587.1" cy="437.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="624.1" cy="334.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="468.3" y="329.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Zé Isidro 8,6 km</text>
+<circle cx="365.9" cy="620.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="372.9" y="615.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Lua 8,5 km</text>
+<circle cx="545.8" cy="546.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="552.8" y="541.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Cubiculo 8,5 km</text>
+<circle cx="589.9" cy="427.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="533.7" cy="563.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="540.7" y="578.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Ruinha 8,2 km</text>
+<circle cx="355.4" cy="395.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="362.4" y="390.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Lagos 7,5 km</text>
+<circle cx="349.0" cy="569.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="356.0" y="564.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Deus Dará 7,3 km</text>
+<circle cx="604.9" cy="564.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="602.5" cy="565.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="583.1" cy="468.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="525.1" cy="575.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="532.1" y="590.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Conceição 7,0 km</text>
+<circle cx="489.3" cy="363.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="496.3" y="358.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Tf 7,0 km</text>
+<circle cx="460.4" cy="637.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="467.4" y="632.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">São Miguel 6,9 km</text>
+<circle cx="561.6" cy="528.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="387.2" y="523.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Santa Isabel 6,5 km</text>
+<circle cx="337.0" cy="617.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="583.3" cy="482.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="593.6" cy="528.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="599.5" cy="400.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="583.6" cy="491.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="421.6" y="486.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Pastorinha 5,6 km</text>
+<circle cx="527.6" cy="400.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="534.6" y="395.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Jovita 5,5 km</text>
+<circle cx="515.2" cy="593.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="522.2" y="608.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Portão de Ferro 5,4 km</text>
+<circle cx="563.9" cy="290.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="359.8" cy="552.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="366.8" y="547.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Luane 4,9 km</text>
+<circle cx="394.6" cy="586.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="401.6" y="581.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Alto 4,8 km</text>
+<circle cx="535.1" cy="367.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="439.3" cy="608.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="106.6" cy="494.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="113.6" y="489.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Altamira 4,3 km</text>
+<circle cx="604.7" cy="377.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="426.6" cy="325.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="549.1" cy="84.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="556.1" y="79.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Outeiro 4,0 km</text>
+<circle cx="370.4" cy="546.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="564.5" cy="80.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="464.5" y="95.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Rio Doce 3,9 km</text>
+<circle cx="231.2" cy="668.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="238.2" y="663.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Margarida 3,8 km</text>
+<circle cx="71.1" cy="648.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="78.1" y="643.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Santa Terezinha 3,6 km</text>
+<circle cx="597.9" cy="378.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="601.5" cy="512.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="601.3" cy="512.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="305.9" cy="644.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="312.9" y="639.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Nova Vida 3,1 km</text>
+<rect x="645.3" y="523.3" width="10" height="10" fill="#1d1d1b"/><text x="659.3" y="546.3" font-weight="600" fill="#1d1d1b">Sede de Canavieiras</text>
+<line x1="35" x2="100.5" y1="807.2" y2="807.2" stroke="#8a8a84" stroke-width="2"/><text x="35" y="821.2" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="798.1812080961427" y2="798.1812080961427" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="802.1812080961427" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,791.2 421.4,803.4 434.6,803.4" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="802.1812080961427" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="816.1812080961427" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="825.1812080961427" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="821.1812080961427" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="825.1812080961427" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="844.1812080961427" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="848.1812080961427" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="844.1812080961427" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="848.1812080961427" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="867.1812080961427" y2="867.1812080961427" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="871.1812080961427" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="890.1812080961427" y2="890.1812080961427" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="894.1812080961427" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Sem rotas publicadas no DJE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (38):</strong> Campinhos, Rio Pardo, Agrovila do PA Canaã, Projeto de Assentamento Canaã Dois, Fazenda Talisman, Barreiras, Nova, Fazenda Ouro Verde, Fazenda Esperança, Campo Grande, Bom Futuro, Fazenda Santa Rosa, Osmundo Carneiro, Fazenda Santa Clara, Fazenda Nossa Senhora da Ajuda, Barra Velha, Campo do Arroz, Fazenda Zé Isidro, Fazenda Lua, Cubiculo, Sítio Vila do Sol, Ruinha, Fazenda Lagos, Deus Dará, Humaitá, Brasas, Morobó, Conceição, Fazenda Tf, São Miguel, Fazenda Santa Isabel, Córrego Grande, Morobá, Boca da Cachoeira, Campo Limpo, Fazenda Pastorinha, Fazenda Jovita e Portão de Ferro.</li>
+<li><strong>De 3 a 5 km (17):</strong> Ribeira Grande, Fazenda Luane, Sítio Alto, Fazenda Alegria, Bom Viver, Fazenda Altamira, Fazenda Sedrero, Rodovia BA-270, Outeiro, Estreito, Rio Doce, Margarida, Fazenda Santa Terezinha, Curva do Leão, São José Dois, Liana Belém e Nova Vida.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (31):</strong> Agrovila do PA São José, Barra Grande, Barra de Peso, Barras das Canavieiras, Canta Galo, Era Nova, Fazenda Areia, Fazenda Conjunto Ipanema, Fazenda Incon, Fazenda Olhos de Deus, Fazenda Rosário, Fazenda São Bento, Fazenda Terra Firme, Hermilândia, Juerana, Oiticica, Ouricana, Parelândia, Pedra Alta, Perelândia, Pimenta, Pimenteiras, Poxim do Sul, Ramal de Barreiras, Retiro, Rodovia BA-001, Sul América, São Jorge, Sítio Arlindo, Sítio Bom Jesus e Sítio da Barra.</li>
+</ul><h2>Rotas da Justiça Eleitoral</h2>
+<p><strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-BA) para Canavieiras.</strong> Pesquisamos todas as edições do DJE/TRE-BA publicadas desde o fim de julho de 2026. As rotas do mapa e da seção de propostas são sugestões deste levantamento.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 55 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Campinhos</strong></td><td>Sede – Campinhos – Sede</td><td>Campinhos</td><td>115,2 km (ida e volta)</td><td>~2h53</td></tr><tr><td><strong>Rota nova – Osmundo Carneiro</strong></td><td>Sede – Fazenda Santa Terezinha – Osmundo Carneiro – Sede</td><td>Fazenda Santa Terezinha, Osmundo Carneiro</td><td>19,4 km (ida e volta)</td><td>~47 min</td></tr><tr><td><strong>Rota nova – Rio Pardo</strong></td><td>Sede – Fazenda Alegria – Bom Futuro – Fazenda Jovita – Fazenda Tf – Ribeira Grande – Fazenda Zé Isidro – Fazenda Sedrero – Curva do Leão – Campo Limpo – Sítio Vila do Sol – Campo do Arroz – Rio Pardo – Barra Velha – Sede</td><td>Fazenda Alegria, Bom Futuro, Fazenda Jovita, Fazenda Tf, Ribeira Grande, Fazenda Zé Isidro, Fazenda Sedrero, Curva do Leão, Campo Limpo, Sítio Vila do Sol, Campo do Arroz, Rio Pardo, Barra Velha</td><td>104,2 km (ida e volta)</td><td>~2h55</td></tr><tr><td><strong>Rota nova – Agrovila do PA Canaã</strong></td><td>Sede – Estreito – Fazenda Luane – Deus Dará – Agrovila do PA Canaã – Projeto de Assentamento Canaã Dois – Barreiras – Sede</td><td>Estreito, Fazenda Luane, Deus Dará, Agrovila do PA Canaã, Projeto de Assentamento Canaã Dois, Barreiras</td><td>47,2 km (ida e volta)</td><td>~1h53</td></tr><tr><td><strong>Rota nova – Fazenda Talisman</strong></td><td>Sede – Nova Vida – Córrego Grande – Fazenda Lua – Fazenda Talisman – Margarida – Sede</td><td>Nova Vida, Córrego Grande, Fazenda Lua, Fazenda Talisman, Margarida</td><td>43,2 km (ida e volta)</td><td>~1h12</td></tr><tr><td><strong>Rota nova – Nova</strong></td><td>Sede – Rodovia BA-270 – Nova – Fazenda Lagos – Sede</td><td>Rodovia BA-270, Nova, Fazenda Lagos</td><td>36,5 km (ida e volta)</td><td>~1h12</td></tr><tr><td><strong>Rota nova – Fazenda Ouro Verde</strong></td><td>Sede – Fazenda Santa Clara – Fazenda Santa Rosa – Fazenda Esperança – Fazenda Ouro Verde – Sede</td><td>Fazenda Santa Clara, Fazenda Santa Rosa, Fazenda Esperança, Fazenda Ouro Verde</td><td>56,0 km (ida e volta)</td><td>~1h46</td></tr><tr><td><strong>Rota nova – Campo Grande</strong></td><td>Sede – São José Dois – Liana Belém – Boca da Cachoeira – Fazenda Santa Isabel – Cubiculo – Brasas – Humaitá – Fazenda Pastorinha – Morobá – Morobó – Campo Grande – Sede</td><td>São José Dois, Liana Belém, Boca da Cachoeira, Fazenda Santa Isabel, Cubiculo, Brasas, Humaitá, Fazenda Pastorinha, Morobá, Morobó, Campo Grande</td><td>42,2 km (ida e volta)</td><td>~1h11</td></tr><tr><td><strong>Rota nova – Fazenda Nossa Senhora da Ajuda</strong></td><td>Ouricana – Bom Viver – São Miguel – Portão de Ferro – Conceição – Ruinha – Fazenda Nossa Senhora da Ajuda – Sítio Alto – Ouricana</td><td>Bom Viver, São Miguel, Portão de Ferro, Conceição, Ruinha, Fazenda Nossa Senhora da Ajuda, Sítio Alto</td><td>41,5 km (ida e volta)</td><td>~1h10</td></tr><tr><td><strong>Rota nova – Fazenda Altamira</strong></td><td>Sede – Fazenda Altamira – Sede</td><td>Fazenda Altamira</td><td>8,6 km (ida e volta)</td><td>~20 min</td></tr><tr><td><strong>Rota nova – Outeiro</strong></td><td>Oiticica – Rio Doce – Outeiro – Oiticica</td><td>Rio Doce, Outeiro</td><td>9,2 km (ida e volta)</td><td>~12 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMC</strong></p><p>Canavieiras/BA, ___ de outubro de 2026.</p><p>Ao(À) Excelentíssimo(a) Senhor(a)<br><strong>[nome do(a) Juiz(a) Eleitoral]</strong><br>Juiz(a) Eleitoral da 116ª Zona Eleitoral – [sede da zona]/BA</p><p><strong>Assunto:</strong> Sugestão de rotas de transporte gratuito de eleitores da zona rural – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo(a) Senhor(a) Juiz(a),</p><p>O Município de Canavieiras, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento das localidades rurais distantes do local de votação, para as quais não localizamos no Diário da Justiça Eleitoral (DJE/TRE-BA) quadro de percursos nem ato sobre o transporte de eleitores: Campinhos, Rio Pardo, Agrovila do PA Canaã, Projeto de Assentamento Canaã Dois, Fazenda Talisman, Barreiras, Nova, Fazenda Ouro Verde, Fazenda Esperança, Campo Grande, Bom Futuro, Fazenda Santa Rosa, Osmundo Carneiro, Fazenda Santa Clara, Fazenda Nossa Senhora da Ajuda, Barra Velha, Campo do Arroz, Fazenda Zé Isidro, Fazenda Lua, Cubiculo, Sítio Vila do Sol, Ruinha, Fazenda Lagos, Deus Dará, Humaitá, Brasas, Morobó, Conceição, Fazenda Tf, São Miguel, Fazenda Santa Isabel, Córrego Grande, Morobá, Boca da Cachoeira, Campo Limpo, Fazenda Pastorinha, Fazenda Jovita, Portão de Ferro, Ribeira Grande, Fazenda Luane, Sítio Alto, Fazenda Alegria, Bom Viver, Fazenda Altamira, Fazenda Sedrero, Rodovia BA-270, Outeiro, Estreito, Rio Doce, Margarida, Fazenda Santa Terezinha, Curva do Leão, São José Dois, Liana Belém e Nova Vida.</p><p>Sugerimos, respeitosamente, que Vossa Excelência avalie instituir o transporte gratuito de eleitores no 2º turno, com as seguintes rotas:</p><ol><li>a criação da Rota nova – Campinhos (Sede – Campinhos – Sede);</li><li>a criação da Rota nova – Osmundo Carneiro (Sede – Fazenda Santa Terezinha – Osmundo Carneiro – Sede);</li><li>a criação da Rota nova – Rio Pardo (Sede – Fazenda Alegria – Bom Futuro – Fazenda Jovita – Fazenda Tf – Ribeira Grande – Fazenda Zé Isidro – Fazenda Sedrero – Curva do Leão – Campo Limpo – Sítio Vila do Sol – Campo do Arroz – Rio Pardo – Barra Velha – Sede);</li><li>a criação da Rota nova – Agrovila do PA Canaã (Sede – Estreito – Fazenda Luane – Deus Dará – Agrovila do PA Canaã – Projeto de Assentamento Canaã Dois – Barreiras – Sede);</li><li>a criação da Rota nova – Fazenda Talisman (Sede – Nova Vida – Córrego Grande – Fazenda Lua – Fazenda Talisman – Margarida – Sede);</li><li>a criação da Rota nova – Nova (Sede – Rodovia BA-270 – Nova – Fazenda Lagos – Sede);</li><li>a criação da Rota nova – Fazenda Ouro Verde (Sede – Fazenda Santa Clara – Fazenda Santa Rosa – Fazenda Esperança – Fazenda Ouro Verde – Sede);</li><li>a criação da Rota nova – Campo Grande (Sede – São José Dois – Liana Belém – Boca da Cachoeira – Fazenda Santa Isabel – Cubiculo – Brasas – Humaitá – Fazenda Pastorinha – Morobá – Morobó – Campo Grande – Sede);</li><li>a criação da Rota nova – Fazenda Nossa Senhora da Ajuda (Ouricana – Bom Viver – São Miguel – Portão de Ferro – Conceição – Ruinha – Fazenda Nossa Senhora da Ajuda – Sítio Alto – Ouricana);</li><li>a criação da Rota nova – Fazenda Altamira (Sede – Fazenda Altamira – Sede);</li><li>a criação da Rota nova – Outeiro (Oiticica – Rio Doce – Outeiro – Oiticica).</li></ol><p>As rotas sugeridas atendem as localidades mais distantes. Caso esse Juízo já tenha definido rotas, pedimos que estas sugestões sejam consideradas naquilo que ainda não estiver contemplado.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Canavieiras</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Canavieiras; Quadro de percursos não localizado nas edições do DJE/TRE-BA consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

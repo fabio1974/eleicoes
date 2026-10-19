@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Aporá</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Aporá</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/apora.pdf?v=1792373050" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Aporá (44ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 44ª Zona Eleitoral <strong>9 rotas novas</strong> no transporte gratuito de Aporá.
+<strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-BA) para Aporá</strong>. As 51 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Aporá tem 14.224 eleitores aptos em 10 locais de votação e 47 seções. São 7 locais rurais, com 9.644 eleitores (68% do total).</li>
+<li>6 locais rurais ficam a 10 km ou mais da sede, com 9.148 eleitores. Os mais distantes: Povoado Piçarra - Zona Rural (30,3 km), Povoado Chapada - Zona Rural (26,5 km) e Itamira (19,4 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Bebedouro (22,4 km do local de votação), Goiabeira (21,0 km do local de votação), Santa Maria (20,6 km do local de votação), Riachão (15,3 km do local de votação), Gameleira (12,8 km do local de votação), Jacu (12,6 km do local de votação), Torre da Lua (11,0 km do local de votação), Pedrinhas (10,3 km do local de votação), Santana (9,8 km do local de votação), Caatinga dos Mundeis (9,7 km do local de votação), Cambucá (9,6 km do local de votação), Coité (8,8 km do local de votação), Malhadas (7,8 km do local de votação), Pedro Ribeiro (7,7 km do local de votação), Bosque (7,7 km do local de votação), Tabuado (7,7 km do local de votação), Altamira (7,5 km do local de votação), Tamborim (7,4 km do local de votação), Riacho de Pedras (7,0 km do local de votação), Frade (6,6 km do local de votação), Figueiredo (6,3 km do local de votação), Morena (6,1 km do local de votação), Caraíba (6,1 km do local de votação), Retiro (5,9 km do local de votação), Lagoa do Pilão (5,4 km do local de votação), Cana Brava (5,4 km do local de votação), Boca do Mato (5,4 km do local de votação), Tamanduá (5,3 km do local de votação), Queimada Velha (5,3 km do local de votação), Várzea (5,2 km do local de votação), Barra do Ribeiro (5,2 km do local de votação), Quatis (5,2 km do local de votação), Estiva (5,2 km do local de votação), Cabolclo (4,9 km do local de votação), Retiro de Fora (4,8 km do local de votação), Fazenda Tamburi (4,5 km do local de votação), Caraíbas (4,4 km do local de votação), Lajes (4,2 km do local de votação), Chapada (4,0 km do local de votação), Remanso (4,0 km do local de votação), Sítio (3,9 km do local de votação), Campo Grande (3,8 km do local de votação), Vaca Velha (3,8 km do local de votação), Ribeiro de Fora (3,8 km do local de votação), Volta do Inhambupe (3,8 km do local de votação), Cascalheira (3,8 km do local de votação), Estrada do Sítio a Chapada (3,6 km do local de votação), Limpo (3,6 km do local de votação), Marcelina (3,5 km do local de votação), Suriano (3,1 km do local de votação) e Estrada Limpo (3,0 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 63 localidades rurais de Aporá que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Bebedouro</td><td>22,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Goiabeira</td><td>21,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Santa Maria</td><td>20,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Riachão</td><td>15,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Gameleira</td><td>12,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Jacu</td><td>12,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Torre da Lua</td><td>11,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Pedrinhas</td><td>10,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Santana</td><td>9,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Caatinga dos Mundeis</td><td>9,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Cambucá</td><td>9,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Coité</td><td>8,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Malhadas</td><td>7,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Pedro Ribeiro</td><td>7,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Bosque</td><td>7,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Tabuado</td><td>7,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Altamira</td><td>7,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Tamborim</td><td>7,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Riacho de Pedras</td><td>7,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Frade</td><td>6,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Figueiredo</td><td>6,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Morena</td><td>6,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Caraíba</td><td>6,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Retiro</td><td>5,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Lagoa do Pilão</td><td>5,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Cana Brava</td><td>5,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Boca do Mato</td><td>5,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Tamanduá</td><td>5,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Queimada Velha</td><td>5,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Várzea</td><td>5,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Barra do Ribeiro</td><td>5,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Quatis</td><td>5,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Estiva</td><td>5,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Cabolclo</td><td>4,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Retiro de Fora</td><td>4,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Tamburi</td><td>4,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Caraíbas</td><td>4,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Lajes</td><td>4,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Chapada</td><td>4,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Remanso</td><td>4,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio</td><td>3,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Campo Grande</td><td>3,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Vaca Velha</td><td>3,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Ribeiro de Fora</td><td>3,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Volta do Inhambupe</td><td>3,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Cascalheira</td><td>3,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Estrada do Sítio a Chapada</td><td>3,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Limpo</td><td>3,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Marcelina</td><td>3,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Suriano</td><td>3,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Estrada Limpo</td><td>3,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 63 localidades rurais de Aporá, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 983" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Aporá: 51 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas (não há rotas publicadas no DJE), com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="654.7,284.0 690.6,213.3 699.0,183.3 687.0,171.3 666.7,126.6 627.5,101.6 615.5,83.8 606.4,96.0 557.3,98.6 545.3,87.6 525.5,100.6 501.1,94.0 479.4,80.0 441.0,82.8 444.6,114.3 429.8,138.5 414.3,148.7 398.5,142.6 365.2,153.5 316.9,145.1 288.1,157.6 255.3,162.4 198.1,122.2 124.3,177.2 112.1,155.6 56.4,148.7 87.9,181.5 111.6,232.4 126.3,280.5 128.4,304.9 150.0,336.4 146.4,372.6 126.6,404.6 118.2,445.3 91.5,455.7 68.1,490.1 83.1,527.5 105.7,544.8 105.2,572.3 84.4,591.3 74.2,636.1 60.7,656.2 35.0,666.1 62.0,709.4 72.4,734.8 98.3,733.8 130.1,746.3 158.9,770.4 165.3,757.5 211.6,761.5 227.6,775.3 250.5,776.0 309.2,800.2 336.0,786.5 324.5,735.6 327.6,666.1 351.5,662.8 314.6,544.8 363.9,522.4 396.5,550.6 400.3,567.2 420.7,573.3 461.6,573.5 461.1,550.1 448.6,530.3 449.4,500.3 457.6,475.3 470.8,473.6 539.7,395.2 557.3,380.2 654.7,284.0 654.7,284.0" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="149.6,578.6 156.3,577.6 160.9,574.1 165.8,570.7 168.8,565.9 172.6,561.1 170.2,555.7 170.2,547.6 166.1,543.7 162.1,540.1 157.8,536.0 153.7,532.4 147.3,531.0 150.4,526.4 155.6,523.8 157.5,517.5 160.7,512.8 163.3,507.5 167.5,504.0 170.8,499.6 175.0,496.1 180.2,493.3 186.1,491.5 192.6,490.2 198.3,492.2 205.9,492.7 213.4,493.4 219.9,495.2 222.7,500.5 226.1,504.9 225.1,511.7 226.1,504.9 222.7,500.5 219.9,495.2 213.4,493.4 205.9,492.7 198.3,492.2 192.6,490.2 186.1,491.5 180.2,493.3 175.6,496.4 173.9,502.4 175.9,508.7 178.1,514.6 179.3,521.2 182.2,526.9 183.2,533.8 185.7,539.2 183.2,544.8 184.0,551.9 188.6,554.9 192.9,558.3 198.9,560.6 204.9,562.8 211.9,564.9 218.4,567.0 226.1,567.7 234.9,567.8 242.5,567.7 245.3,562.5 249.7,559.2 255.7,557.0 258.8,552.4 264.1,549.8 272.1,546.0 275.4,539.3 283.8,537.1 293.1,536.0 304.4,534.8 311.7,531.8 312.7,539.8 315.3,546.7 319.9,549.9 326.0,551.6 337.9,569.2 338.8,577.6 340.7,584.6 340.3,594.3 341.6,602.7 341.7,612.3 343.7,621.5 348.1,633.7 350.0,641.2 348.7,648.4 345.6,653.0 349.6,657.6 344.7,663.7 338.0,664.7 329.6,665.7 327.4,671.1 327.2,680.2 326.7,688.8 325.7,696.0 325.7,704.8 325.4,712.9 325.0,723.2 324.6,731.2 322.5,736.9 317.7,739.8 313.7,734.8 307.4,732.0 300.8,730.6 294.0,726.9 288.9,722.9 280.8,716.0 275.6,711.5 268.4,705.4 263.2,703.0 260.2,698.2 257.3,693.3 254.1,688.2 246.2,687.6 245.6,694.9 242.6,700.7 242.8,708.2 243.7,715.5 243.0,722.6 240.2,728.3 246.3,730.2 209.2,731.8 206.7,726.5 199.3,725.9 187.9,724.0 179.5,725.3 172.3,728.7 167.0,732.2 162.2,737.5 158.1,741.8 153.4,747.0 84.1,722.4 64.3,633.8 64.4,626.0 65.3,618.5 67.4,612.7 65.1,606.5 71.7,604.9 79.1,604.4 86.5,603.4 94.3,602.6 90.5,590.4 87.7,584.4 81.7,582.1 78.2,576.6 77.6,569.5 75.7,563.4 74.7,555.5 71.9,549.2 68.1,543.2 64.5,537.5 61.0,531.9 58.0,526.8 55.0,522.0 55.5,513.5 57.9,508.3 56.9,499.7 64.0,498.8 69.9,497.0 76.3,494.8 69.9,497.0 64.0,498.8 56.8,499.3 57.9,506.2 55.9,512.3 53.9,518.3 56.4,523.5 60.2,530.5 63.6,535.9 67.2,541.7 70.8,547.2 78.7,546.6 87.4,550.9 90.6,555.5 96.4,557.7 101.1,560.7 107.4,562.0 111.3,566.1 116.1,569.3 120.5,572.8 126.3,575.9 131.0,579.1 138.3,579.6 145.6,579.0 148.9,583.5 150.2,590.1 153.0,595.5 155.4,601.7 156.7,608.3 158.0,614.8 161.8,618.6 168.3,619.9 172.4,623.5 178.4,621.7 184.5,620.2 190.9,621.5 195.0,625.2 199.0,629.0 203.8,631.9 206.9,636.5 210.6,640.5 215.7,638.0 217.9,632.3 215.7,638.0 210.6,640.5 206.9,636.5 203.8,631.9 199.0,629.0 195.0,625.2 190.9,621.6 184.5,620.2 178.4,621.7 173.0,624.0 168.9,620.4 162.6,618.9 155.2,620.1 153.1,626.3 149.1,632.5 148.6,642.0 150.0,648.7 151.2,655.6 152.6,662.0 155.5,668.2 158.5,673.2 156.3,683.1 156.3,693.2 158.0,700.4 162.3,705.5 166.6,709.0 167.9,715.7 169.9,722.5 168.3,729.2 164.4,734.9 159.7,740.3 155.4,744.9 151.1,748.7 146.5,752.8 150.0,759.4 153.9,764.7 157.5,769.8 162.0,773.3 166.3,776.8 169.1,781.8 171.4,788.5 170.5,795.5 166.5,799.1 162.4,803.7 158.4,808.8 155.1,813.7 151.4,819.1 160.2,826.3 169.1,831.3 174.7,834.4 183.1,839.3 194.1,845.6 200.5,849.3 209.0,850.7 217.9,850.6 231.2,850.3 241.1,850.1 252.8,849.8 261.7,849.6 270.3,849.3 278.6,849.1 286.6,848.8 298.3,848.3 296.3,835.0 294.3,824.1 295.7,831.6 297.5,842.8 299.8,848.3 309.2,847.9 325.7,847.1 337.6,846.6 340.3,841.2 345.0,833.0 347.3,827.5 344.8,822.3 347.3,827.5 345.0,833.0 342.1,838.1 338.7,844.1 325.7,847.1 312.0,847.8 301.6,848.2 293.6,848.5 283.5,848.9 276.1,849.1 266.5,849.4 255.0,849.7 246.4,849.9 237.4,850.2 224.4,850.4 214.7,850.6 205.5,850.8 198.6,848.2 183.1,839.3 174.7,834.4 169.1,831.3 160.2,826.3 154.4,823.0 153.1,816.5 156.5,811.5 160.1,806.3 164.7,801.3 168.7,796.5 171.7,791.7 169.7,784.4 167.5,778.9 163.9,774.1 158.8,771.5 153.9,764.7 150.0,759.4 146.7,754.6 149.9,749.8 155.4,744.9 159.2,740.6 164.4,734.9 168.0,729.7 171.6,725.6 168.1,721.1 167.6,711.8 165.5,705.9 159.4,703.9 157.0,698.3 155.8,690.0 157.8,679.3 156.9,671.3 154.0,665.9 152.4,659.8 150.5,651.1 150.1,643.6 148.9,632.7 152.7,628.1 154.3,621.7 158.5,616.8 157.1,610.2 155.8,603.6 154.5,597.2 150.9,592.9 148.6,587.5 148.4,579.9 149.6,578.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Bebedouro</title></polyline>
+<polyline points="239.7,377.1 236.4,381.7 238.5,388.5 235.6,393.7 230.7,397.2 228.0,402.4 226.8,409.3 226.1,416.8 225.2,423.7 222.9,429.2 217.4,431.5 212.0,434.1 207.2,437.0 200.7,439.5 195.4,442.3 190.9,445.8 188.9,452.9 187.8,459.4 180.9,458.1 173.7,458.8 167.2,460.2 160.5,461.3 155.0,463.6 160.5,461.3 167.2,460.2 173.7,458.8 177.9,454.9 183.4,452.5 189.4,451.0 191.4,445.3 196.6,441.4 203.3,438.8 208.5,436.0 213.4,433.3 218.8,431.0 223.7,428.1 227.8,424.5 232.9,421.4 237.3,418.2 241.2,414.2 245.6,410.4 252.5,412.1 258.1,416.1 266.3,427.7 268.2,434.8 269.0,444.6 273.3,454.1 274.2,461.2 273.3,454.1 269.8,446.7 268.2,434.8 266.3,427.7 260.6,418.5 252.5,412.1 258.7,410.5 267.5,410.9 275.1,411.4 285.4,417.2 289.6,421.0 298.0,423.0 304.4,425.1 310.1,428.1 316.0,431.4 321.0,434.8 314.3,436.8 308.6,441.4 305.0,445.5 303.4,451.7 306.4,457.0 311.9,460.4 316.3,464.4 322.5,467.4 326.7,470.9 331.5,474.8 336.3,479.3 338.8,486.0 338.3,493.2 335.4,499.4 335.6,507.1 329.0,509.7 335.8,510.9 342.9,513.9 350.7,514.7 358.9,516.6 366.3,518.7 371.9,521.0 379.3,520.4 383.3,516.5 379.3,520.4 371.9,521.0 366.3,518.7 360.1,516.9 353.5,515.3 347.4,513.6 338.9,512.5 333.7,510.0 326.3,506.8 310.7,499.4 305.7,494.5 302.1,490.1 288.1,474.3 276.0,461.6 273.3,454.1 269.8,446.7 268.2,434.8 266.3,427.7 260.6,418.5 252.5,412.1 245.7,407.2 239.4,391.0 237.3,385.2 237.9,377.7 239.7,377.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Pedrinhas</title></polyline>
+<polyline points="504.3,273.3 500.1,276.8 490.4,285.1 485.7,289.1 485.7,296.7 483.8,302.4 486.2,308.5 489.4,314.7 486.5,321.7 485.8,328.8 485.2,336.0 483.8,343.5 485.2,336.0 485.8,328.8 486.5,321.7 489.3,316.4 487.0,309.5 483.6,305.2 485.2,298.7 483.3,291.1 469.8,289.7 459.4,289.0 450.1,288.4 441.8,289.1 435.4,290.3 429.2,294.9 424.2,290.8 420.8,283.9 417.1,276.5 414.6,271.3 409.0,269.1 405.1,265.2 401.1,261.0 398.7,253.2 396.8,247.4 392.9,242.4 390.3,237.1 384.8,229.7 388.9,226.0 392.3,220.0 392.7,212.6 389.9,207.3 389.4,200.0 392.4,195.1 395.4,190.1 400.8,187.4 408.6,187.2 415.1,188.8 419.3,192.3 427.0,192.4 434.2,191.9 441.7,192.2 448.9,192.6 454.0,189.9 460.1,188.2 459.5,180.9 460.9,174.4 459.5,180.9 460.3,187.7 458.3,194.1 460.8,200.6 464.0,207.5 466.0,213.3 468.6,218.8 472.0,223.3 476.9,228.0 481.7,231.6 486.3,240.9 489.3,245.7 493.8,248.9 498.7,252.2 502.1,258.8 503.8,264.8 507.1,271.1 501.4,275.7 496.4,280.1 490.4,285.1 485.7,289.1 485.7,296.7 483.8,302.4 486.2,308.5 489.4,314.7 486.5,321.7 485.8,328.8 485.2,336.0 490.5,338.6 494.1,344.0 497.0,349.8 499.3,357.6 508.9,357.7 517.1,357.8 525.2,362.1 531.8,365.2 537.3,367.8 543.0,370.4 543.5,379.0 549.9,382.0 556.4,380.8 562.4,379.1 567.9,376.8 571.9,372.8 577.5,370.2 583.8,368.7 590.9,368.1 596.9,366.2 590.9,368.1 583.8,368.7 577.5,370.2 571.9,372.8 567.9,376.8 562.4,379.1 556.4,380.8 549.9,382.0 543.8,380.3 543.3,372.4 537.3,367.8 531.8,365.2 525.2,362.1 519.9,359.5 512.0,357.8 503.5,357.7 498.1,353.8 496.1,346.4 493.0,340.8 487.1,337.3 485.7,329.8 486.5,321.7 489.3,316.4 487.0,309.5 483.6,305.2 485.2,298.7 483.3,291.1 490.4,285.1 496.4,280.1 501.4,275.7 504.3,273.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Caatinga dos Mundeis</title></polyline>
+<polyline points="176.9,233.0 174.4,239.6 172.7,246.3 171.3,254.7 168.6,260.1 161.3,259.8 153.2,259.9 147.1,261.6 138.0,261.6 133.7,264.9 133.6,273.0 134.7,280.0 133.6,273.0 133.7,264.9 131.9,258.7 132.8,251.0 136.2,243.7 137.7,236.5 139.4,228.7 142.1,222.5 145.9,217.3 148.3,211.8 151.4,206.0 155.3,199.4 158.7,193.0 160.7,185.6 166.1,182.4 171.2,179.6 176.8,175.6 180.3,170.5 183.2,165.1 185.8,159.4 187.5,151.9 188.6,144.1 190.2,133.5 191.0,125.4 192.4,117.4 199.3,115.9 204.9,113.3 210.1,109.1 214.1,104.3 221.4,102.8 226.6,100.2 233.5,99.4 240.5,100.2 244.4,104.7 247.3,109.7 253.3,112.6 257.3,117.1 260.4,122.4 266.3,125.6 270.6,129.9 274.7,135.2 277.5,140.1 282.5,143.1 289.5,145.5 291.8,150.9 294.2,156.8 299.1,160.5 294.5,164.7 298.3,170.4 301.2,176.0 301.1,184.1 300.2,191.5 299.4,198.5 296.0,206.3 293.5,211.7 286.9,213.6 280.7,215.8 274.3,217.1 268.7,220.9 263.6,224.5 257.3,226.0 249.6,226.6 247.9,220.4 241.9,218.6 234.2,218.7 227.8,217.2 222.8,213.8 217.9,210.9 213.3,207.3 207.3,212.0 203.4,218.8 200.4,224.8 197.0,229.5 192.3,232.9 187.0,235.6 177.9,236.4 176.9,233.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Cambucá</title></polyline>
+<polyline points="430.7,360.5 427.3,355.5 422.8,349.3 418.7,345.7 413.0,343.7 409.4,339.5 404.8,334.7 401.7,329.4 399.3,324.0 396.1,319.4 390.7,315.1 379.7,312.7 387.4,310.8 391.8,306.9 395.8,302.8 399.2,297.6 395.8,302.8 391.8,306.9 388.2,310.9 392.0,316.1 397.1,320.0 399.9,325.1 402.4,330.5 406.7,335.7 410.6,340.2 414.8,344.2 420.4,346.5 425.6,353.4 429.2,358.0 432.7,362.3 437.5,366.7 440.9,371.4 442.4,377.5 445.7,385.4 445.6,393.1 448.8,397.9 455.1,399.3 463.5,398.1 469.6,402.5 477.4,403.6 482.7,406.6 484.9,415.0 490.0,419.5 496.7,422.9 503.0,427.3 507.7,433.1 510.6,437.9 517.5,435.8 524.4,434.7 517.5,435.8 512.0,438.5 511.2,446.1 509.4,454.6 505.6,459.2 505.4,467.3 501.9,474.1 494.4,474.5 489.3,477.1 481.2,476.2 472.5,474.8 462.8,474.7 453.4,492.4 450.7,498.2 443.7,499.8 450.7,498.2 453.4,492.4 457.8,474.9 451.3,470.8 447.0,466.0 443.6,461.0 439.2,457.1 433.4,451.9 438.2,445.5 444.1,441.7 448.9,438.9 447.7,432.4 445.8,426.3 449.0,421.9 450.8,415.4 453.0,409.9 451.6,401.7 447.9,396.7 445.8,391.0 442.9,381.6 441.3,375.3 437.8,367.0 432.7,362.3 430.7,360.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Malhadas</title></polyline>
+<polyline points="249.6,360.8 245.3,356.8 243.4,350.3 233.7,353.4 226.5,354.4 219.6,353.6 212.1,353.2 206.6,350.6 199.0,348.4 192.3,346.8 185.1,344.9 178.2,343.3 172.4,341.3 178.2,343.3 183.9,346.0 183.0,354.0 179.1,359.6 174.9,363.2 170.7,367.0 168.0,372.3 165.8,377.7 165.5,385.3 165.1,392.7 165.6,400.1 162.1,404.4 157.9,407.9 151.0,408.7 145.5,411.0 142.6,415.8 139.2,420.3 142.5,416.0 145.5,411.0 151.0,408.7 157.9,407.9 162.1,404.4 165.6,400.1 165.1,392.7 165.5,385.3 165.8,377.7 168.0,372.3 170.7,367.0 174.9,363.2 179.1,359.6 182.9,354.9 190.6,353.5 195.5,350.1 202.3,349.2 208.1,351.6 213.9,353.6 221.6,353.8 229.2,354.3 239.3,351.4 244.9,354.2 248.5,359.6 249.6,360.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Altamira</title></polyline>
+<polyline points="630.3,211.8 634.3,208.1 642.4,209.0 650.8,209.7 658.1,210.3 668.2,211.3 675.9,212.0 686.2,212.9 695.2,213.7 705.9,214.6 714.4,215.1 721.7,215.6 719.4,209.4 715.6,204.9 711.4,199.9 707.1,194.7 703.4,190.1 699.8,184.5 701.8,178.7 707.7,176.7 713.3,174.3 707.9,176.6 702.4,178.7 699.1,183.3 702.2,188.5 706.2,193.5 709.7,197.9 713.5,202.5 718.3,208.1 722.4,212.9 716.8,215.3 708.7,214.8 701.5,214.3 692.4,213.5 679.2,212.3 672.0,211.6 665.0,211.0 657.3,210.3 648.9,209.5 640.9,208.8 633.8,209.8 630.3,211.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Riacho de Pedras</title></polyline>
+<polyline points="264.1,346.3 270.0,344.0 275.9,341.7 283.1,340.9 291.1,338.9 297.6,336.9 305.5,337.1 312.9,336.6 321.7,336.1 329.5,335.7 339.8,332.5 343.6,337.1 348.1,340.5 352.4,346.6 356.5,352.5 363.5,362.6 360.8,368.3 363.8,363.6 359.3,356.5 355.1,350.4 350.7,344.0 346.4,340.5 342.7,336.3 333.6,334.5 324.3,336.0 314.1,336.6 305.5,337.1 297.6,336.9 291.1,338.9 285.1,340.8 277.7,341.3 270.0,344.0 264.1,346.3 264.1,346.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Cana Brava</title></polyline>
+<polyline points="627.6,207.7 629.4,200.7 628.3,194.0 628.3,186.1 629.3,179.3 631.0,172.9 631.8,165.9 628.0,161.9 625.3,156.5 625.4,148.9 625.7,141.0 626.3,133.8 629.6,129.5 633.6,125.6 637.0,121.1 633.7,125.5 629.7,129.3 626.3,133.8 625.7,141.0 625.3,148.4 625.0,155.8 627.9,161.7 631.8,165.9 631.0,172.9 629.3,179.3 628.3,186.1 624.1,189.8 617.8,193.2 610.2,193.5 605.7,197.0 601.0,200.1 596.0,203.2 591.3,206.2 585.5,204.3 582.1,199.9 575.4,197.8 569.8,195.7 564.0,193.7 558.8,191.0 551.7,191.6 545.3,190.2 542.6,185.0 539.5,180.4 536.2,174.6 534.1,168.9 536.2,174.6 539.5,180.4 542.6,185.0 545.3,190.2 551.7,191.6 558.6,190.9 563.5,193.7 569.8,195.7 575.4,197.8 581.4,199.5 585.0,203.8 588.3,208.7 593.5,211.9 599.8,210.3 607.9,213.0 614.8,215.0 618.5,210.0 624.9,208.1 627.6,207.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Quatis</title></polyline>
+<circle cx="312.0" cy="330.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="319.2" cy="336.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="131.7" cy="211.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="182.3" cy="552.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="173.9" cy="274.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="150.0" cy="208.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="154.9" cy="210.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="245.0" cy="351.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="427.4" cy="358.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="175.4" cy="234.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="503.3" cy="275.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="150.4" cy="581.0" r="2.2" fill="#b9b9b2"/>
+<polygon points="627.5,197.9 617.9,215.5 637.1,215.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="616.6,189.3 605.1,210.4 628.0,210.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="630.3,199.6 618.7,220.9 641.9,220.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="249.5,346.6 235.9,371.6 263.0,371.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="249.5" y="386.1" text-anchor="middle" fill="#5c5c57">Itamira</text>
+<polygon points="264.0,334.8 253.2,354.6 274.7,354.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="177.0,222.0 166.7,241.0 187.3,241.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="177.0" y="254.7" text-anchor="middle" fill="#5c5c57">Povoado Chapada</text>
+<polygon points="430.8,350.5 421.5,367.7 440.2,367.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="430.8" y="381.2" text-anchor="middle" fill="#5c5c57">Povoado Mangabeira</text>
+<polygon points="504.1,264.4 495.8,279.6 512.4,279.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="149.7,569.9 141.4,585.2 158.1,585.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="239.8,364.6 227.9,386.5 251.7,386.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="340.5" cy="808.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="347.5" y="803.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Bebedouro 22,4 km</text>
+<circle cx="84.1" cy="722.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="91.1" y="717.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Goiabeira 21,0 km</text>
+<circle cx="291.3" cy="814.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="298.3" y="829.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santa Maria 20,6 km</text>
+<circle cx="341.7" cy="666.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="348.7" y="661.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Riachão 15,3 km</text>
+<circle cx="319.3" cy="634.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="326.3" y="629.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Gameleira 12,8 km</text>
+<circle cx="320.3" cy="733.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="327.3" y="728.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Jacu 12,6 km</text>
+<circle cx="263.9" cy="745.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="270.9" y="760.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Torre da Lua 11,0 km</text>
+<circle cx="383.5" cy="510.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="390.5" y="505.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pedrinhas 10,3 km</text>
+<circle cx="209.2" cy="731.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="216.2" y="726.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santana 9,8 km</text>
+<circle cx="592.6" cy="363.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="418.2" y="358.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Caatinga dos Mundeis 9,7 km</text>
+<circle cx="299.0" cy="147.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="306.0" y="142.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Cambucá 9,6 km</text>
+<circle cx="146.2" cy="744.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="153.2" y="739.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Coité 8,8 km</text>
+<circle cx="442.5" cy="499.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="397.6" cy="209.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="404.6" y="204.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pedro Ribeiro 7,7 km</text>
+<circle cx="220.9" cy="517.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="227.9" y="512.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Bosque 7,7 km</text>
+<circle cx="330.9" cy="514.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="337.9" y="529.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Tabuado 7,7 km</text>
+<circle cx="131.3" cy="425.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="138.3" y="420.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Altamira 7,5 km</text>
+<circle cx="84.5" cy="513.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="91.5" y="508.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Tamborim 7,4 km</text>
+<circle cx="715.5" cy="170.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="565.9" y="165.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Riacho de Pedras 7,0 km</text>
+<circle cx="275.8" cy="538.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="282.8" y="553.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Frade 6,6 km</text>
+<circle cx="157.5" cy="467.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="164.5" y="462.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Figueiredo 6,3 km</text>
+<circle cx="524.4" cy="434.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="531.4" y="429.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Morena 6,1 km</text>
+<circle cx="269.3" cy="548.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="168.3" cy="405.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="175.3" y="400.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Retiro 5,9 km</text>
+<circle cx="184.2" cy="130.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="191.2" y="125.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Lagoa do Pilão 5,4 km</text>
+<circle cx="361.4" cy="371.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="368.4" y="386.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Cana Brava 5,4 km</text>
+<circle cx="213.9" cy="632.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="220.9" y="647.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Boca do Mato 5,4 km</text>
+<circle cx="324.4" cy="430.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="331.4" y="425.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Tamanduá 5,3 km</text>
+<circle cx="401.1" cy="258.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="408.1" y="253.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Queimada Velha 5,3 km</text>
+<circle cx="261.2" cy="216.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="268.2" y="211.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Várzea 5,2 km</text>
+<circle cx="64.3" cy="633.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="71.3" y="628.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Barra do Ribeiro 5,2 km</text>
+<circle cx="535.9" cy="168.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="542.9" y="183.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Quatis 5,2 km</text>
+<circle cx="463.7" cy="174.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="470.7" y="169.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Estiva 5,2 km</text>
+<circle cx="161.0" cy="506.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="190.2" cy="458.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="175.7" cy="497.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="182.7" y="492.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Tamburi 4,5 km</text>
+<circle cx="273.3" cy="463.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="280.3" y="458.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Caraíbas 4,4 km</text>
+<circle cx="631.9" cy="116.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="550.5" y="111.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Lajes 4,2 km</text>
+<circle cx="132.8" cy="280.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="139.8" y="275.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Chapada 4,0 km</text>
+<circle cx="392.4" cy="288.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="399.4" y="283.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Remanso 4,0 km</text>
+<circle cx="176.7" cy="338.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="183.7" y="333.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio 3,9 km</text>
+<circle cx="485.6" cy="343.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="492.6" y="338.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Campo Grande 3,8 km</text>
+<circle cx="184.6" cy="167.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="191.6" y="162.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Vaca Velha 3,8 km</text>
+<circle cx="200.0" cy="442.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="207.0" y="437.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Ribeiro de Fora 3,8 km</text>
+<circle cx="68.5" cy="601.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="75.5" y="596.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Volta do Inhambupe 3,8 km</text>
+<circle cx="345.9" cy="339.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="352.9" y="334.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Cascalheira 3,8 km</text>
+<circle cx="174.7" cy="343.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="181.7" y="358.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Estrada do Sítio a Chapada 3,6 km</text>
+<circle cx="428.0" cy="295.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="435.0" y="310.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Limpo 3,6 km</text>
+<circle cx="375.2" cy="314.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="133.2" cy="266.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="140.2" y="261.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Suriano 3,1 km</text>
+<circle cx="389.1" cy="310.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<rect x="616.7" y="204.9" width="10" height="10" fill="#1d1d1b"/><text x="630.7" y="227.9" font-weight="600" fill="#1d1d1b">Sede de Aporá</text>
+<line x1="35" x2="149.6" y1="880.8" y2="880.8" stroke="#8a8a84" stroke-width="2"/><text x="35" y="894.8" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="871.760756553489" y2="871.760756553489" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="875.760756553489" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,864.8 421.4,877.0 434.6,877.0" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="875.760756553489" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="889.760756553489" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="898.760756553489" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="894.760756553489" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="898.760756553489" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="917.760756553489" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="921.760756553489" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="917.760756553489" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="921.760756553489" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="940.760756553489" y2="940.760756553489" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="944.760756553489" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="963.760756553489" y2="963.760756553489" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="967.760756553489" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Sem rotas publicadas no DJE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (33):</strong> Bebedouro, Goiabeira, Santa Maria, Riachão, Gameleira, Jacu, Torre da Lua, Pedrinhas, Santana, Caatinga dos Mundeis, Cambucá, Coité, Malhadas, Pedro Ribeiro, Bosque, Tabuado, Altamira, Tamborim, Riacho de Pedras, Frade, Figueiredo, Morena, Caraíba, Retiro, Lagoa do Pilão, Cana Brava, Boca do Mato, Tamanduá, Queimada Velha, Várzea, Barra do Ribeiro, Quatis e Estiva.</li>
+<li><strong>De 3 a 5 km (18):</strong> Cabolclo, Retiro de Fora, Fazenda Tamburi, Caraíbas, Lajes, Chapada, Remanso, Sítio, Campo Grande, Vaca Velha, Ribeiro de Fora, Volta do Inhambupe, Cascalheira, Estrada do Sítio a Chapada, Limpo, Marcelina, Suriano e Estrada Limpo.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (12):</strong> Barrajado, Contendas, Crioulo, Cruz das Almas, Itamira, Mangabeira, Olhos d&#x27;Água, Piçarra, Pé de Serra, Pé-de-Serra, Ribeiro e Ribeiro dos Tapuios.</li>
+</ul><h2>Rotas da Justiça Eleitoral</h2>
+<p><strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-BA) para Aporá.</strong> Pesquisamos todas as edições do DJE/TRE-BA publicadas desde o fim de julho de 2026. As rotas do mapa e da seção de propostas são sugestões deste levantamento.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 51 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Bebedouro</strong></td><td>Sede – Cabolclo – Fazenda Tamburi – Bosque – Caraíba – Frade – Gameleira – Riachão – Jacu – Torre da Lua – Santana – Coité – Goiabeira – Barra do Ribeiro – Volta do Inhambupe – Tamborim – Boca do Mato – Santa Maria – Bebedouro – Sede</td><td>Cabolclo, Fazenda Tamburi, Bosque, Caraíba, Frade, Gameleira, Riachão, Jacu, Torre da Lua, Santana, Coité, Goiabeira, Barra do Ribeiro, Volta do Inhambupe, Tamborim, Boca do Mato, Santa Maria, Bebedouro</td><td>125,2 km (ida e volta)</td><td>~4h25</td></tr><tr><td><strong>Rota nova – Pedrinhas</strong></td><td>Itamira – Ribeiro de Fora – Retiro de Fora – Figueiredo – Caraíbas – Tamanduá – Tabuado – Pedrinhas – Itamira</td><td>Ribeiro de Fora, Retiro de Fora, Figueiredo, Caraíbas, Tamanduá, Tabuado, Pedrinhas</td><td>39,0 km (ida e volta)</td><td>~1h23</td></tr><tr><td><strong>Rota nova – Caatinga dos Mundeis</strong></td><td>Sede – Campo Grande – Limpo – Queimada Velha – Pedro Ribeiro – Estiva – Caatinga dos Mundeis – Sede</td><td>Campo Grande, Limpo, Queimada Velha, Pedro Ribeiro, Estiva, Caatinga dos Mundeis</td><td>43,1 km (ida e volta)</td><td>~1h35</td></tr><tr><td><strong>Rota nova – Cambucá</strong></td><td>Sede – Suriano – Chapada – Vaca Velha – Lagoa do Pilão – Cambucá – Várzea – Sede</td><td>Suriano, Chapada, Vaca Velha, Lagoa do Pilão, Cambucá, Várzea</td><td>28,3 km (ida e volta)</td><td>~1h09</td></tr><tr><td><strong>Rota nova – Malhadas</strong></td><td>Sede – Estrada Limpo – Marcelina – Remanso – Morena – Malhadas – Sede</td><td>Estrada Limpo, Marcelina, Remanso, Morena, Malhadas</td><td>28,9 km (ida e volta)</td><td>~1h07</td></tr><tr><td><strong>Rota nova – Altamira</strong></td><td>Itamira – Sítio – Estrada do Sítio a Chapada – Retiro – Altamira – Itamira</td><td>Sítio, Estrada do Sítio a Chapada, Retiro, Altamira</td><td>16,9 km (ida e volta)</td><td>~33 min</td></tr><tr><td><strong>Rota nova – Riacho de Pedras</strong></td><td>Sede – Riacho de Pedras – Sede</td><td>Riacho de Pedras</td><td>14,1 km (ida e volta)</td><td>~17 min</td></tr><tr><td><strong>Rota nova – Cana Brava</strong></td><td>Itamira – Cascalheira – Cana Brava – Itamira</td><td>Cascalheira, Cana Brava</td><td>10,8 km (ida e volta)</td><td>~16 min</td></tr><tr><td><strong>Rota nova – Quatis</strong></td><td>Sede – Lajes – Quatis – Sede</td><td>Lajes, Quatis</td><td>17,9 km (ida e volta)</td><td>~41 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMA</strong></p><p>Aporá/BA, ___ de outubro de 2026.</p><p>Ao Excelentíssimo Senhor<br><strong>Adalberto Lima Borges Filho</strong><br>Juiz Eleitoral da 44ª Zona Eleitoral – Inhambupe/BA</p><p><strong>Assunto:</strong> Sugestão de rotas de transporte gratuito de eleitores da zona rural – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo Senhor Juiz,</p><p>O Município de Aporá, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento das localidades rurais distantes do local de votação, para as quais não localizamos no Diário da Justiça Eleitoral (DJE/TRE-BA) quadro de percursos nem ato sobre o transporte de eleitores: Bebedouro, Goiabeira, Santa Maria, Riachão, Gameleira, Jacu, Torre da Lua, Pedrinhas, Santana, Caatinga dos Mundeis, Cambucá, Coité, Malhadas, Pedro Ribeiro, Bosque, Tabuado, Altamira, Tamborim, Riacho de Pedras, Frade, Figueiredo, Morena, Caraíba, Retiro, Lagoa do Pilão, Cana Brava, Boca do Mato, Tamanduá, Queimada Velha, Várzea, Barra do Ribeiro, Quatis, Estiva, Cabolclo, Retiro de Fora, Fazenda Tamburi, Caraíbas, Lajes, Chapada, Remanso, Sítio, Campo Grande, Vaca Velha, Ribeiro de Fora, Volta do Inhambupe, Cascalheira, Estrada do Sítio a Chapada, Limpo, Marcelina, Suriano e Estrada Limpo.</p><p>Sugerimos, respeitosamente, que Vossa Excelência avalie instituir o transporte gratuito de eleitores no 2º turno, com as seguintes rotas:</p><ol><li>a criação da Rota nova – Bebedouro (Sede – Cabolclo – Fazenda Tamburi – Bosque – Caraíba – Frade – Gameleira – Riachão – Jacu – Torre da Lua – Santana – Coité – Goiabeira – Barra do Ribeiro – Volta do Inhambupe – Tamborim – Boca do Mato – Santa Maria – Bebedouro – Sede);</li><li>a criação da Rota nova – Pedrinhas (Itamira – Ribeiro de Fora – Retiro de Fora – Figueiredo – Caraíbas – Tamanduá – Tabuado – Pedrinhas – Itamira);</li><li>a criação da Rota nova – Caatinga dos Mundeis (Sede – Campo Grande – Limpo – Queimada Velha – Pedro Ribeiro – Estiva – Caatinga dos Mundeis – Sede);</li><li>a criação da Rota nova – Cambucá (Sede – Suriano – Chapada – Vaca Velha – Lagoa do Pilão – Cambucá – Várzea – Sede);</li><li>a criação da Rota nova – Malhadas (Sede – Estrada Limpo – Marcelina – Remanso – Morena – Malhadas – Sede);</li><li>a criação da Rota nova – Altamira (Itamira – Sítio – Estrada do Sítio a Chapada – Retiro – Altamira – Itamira);</li><li>a criação da Rota nova – Riacho de Pedras (Sede – Riacho de Pedras – Sede);</li><li>a criação da Rota nova – Cana Brava (Itamira – Cascalheira – Cana Brava – Itamira);</li><li>a criação da Rota nova – Quatis (Sede – Lajes – Quatis – Sede).</li></ol><p>As rotas sugeridas atendem as localidades mais distantes. Caso esse Juízo já tenha definido rotas, pedimos que estas sugestões sejam consideradas naquilo que ainda não estiver contemplado.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Aporá</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Aporá; Quadro de percursos não localizado nas edições do DJE/TRE-BA consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

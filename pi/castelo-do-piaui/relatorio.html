@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Castelo do Piauí</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Castelo do Piauí</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/castelo-do-piaui.pdf?v=1792373392" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Castelo do Piauí (34ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 34ª Zona Eleitoral <strong>12 rotas novas</strong> no transporte gratuito de Castelo do Piauí.
+<strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-PI) para Castelo do Piauí</strong>. As 39 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Castelo do Piauí tem 16.989 eleitores aptos em 40 locais de votação e 92 seções. São 26 locais rurais, com 5.040 eleitores (30% do total).</li>
+<li>24 locais rurais ficam a 10 km ou mais da sede, com 4.804 eleitores. Os mais distantes: Lagoa do Frio (82,9 km), Terra Dura (58,1 km) e Manoel dos Santos (43,0 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Boa Ventura (31,2 km do local de votação), Fervedor (21,8 km do local de votação), Carnaubal (17,2 km do local de votação), Caldeirão da Cruz (16,7 km do local de votação), Tanque (16,7 km do local de votação), Assentamento São Francisco (16,5 km do local de votação), Caraíba (15,2 km do local de votação), Meios (13,6 km do local de votação), Barragem (12,6 km do local de votação), Nova Olinda (11,5 km do local de votação), Assentamento Fazenda Nova (11,5 km do local de votação), Olaria (11,3 km do local de votação), Angelim (11,1 km do local de votação), Lago Verde (10,6 km do local de votação), Guapó (9,4 km do local de votação), Rancho do Povo (9,0 km do local de votação), Sabonete (7,1 km do local de votação), Vereda do Rocha (6,7 km do local de votação), Itaúna (6,6 km do local de votação), Assentamento Itaúna (6,6 km do local de votação), Curupati (6,4 km do local de votação), Mirassol (6,1 km do local de votação), Cantinho (6,1 km do local de votação), Mirasol (6,1 km do local de votação), Assentamento Francisca Trindade (5,8 km do local de votação), Bonsucesso (5,7 km do local de votação), São Félix (5,5 km do local de votação), São Miguel (5,3 km do local de votação), Baixa Verde (5,1 km do local de votação), Morro Vemelho (5,1 km do local de votação), Fornos (5,1 km do local de votação), Mangueira (5,0 km do local de votação), Arrecife (4,8 km do local de votação), Assentamento Fornos (4,5 km do local de votação), Pereiro I (3,7 km do local de votação), Pereiro II (3,7 km do local de votação), Alegre (3,7 km do local de votação), Imburana (3,6 km do local de votação) e São José de Dentro (3,6 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 76 localidades rurais de Castelo do Piauí que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço. 1 locais não foram encontrados nas duas bases: Localidade Morada Nova I (Lagoa), com 18 eleitores.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Boa Ventura</td><td>31,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fervedor</td><td>21,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Carnaubal</td><td>17,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Caldeirão da Cruz</td><td>16,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Tanque</td><td>16,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Assentamento São Francisco</td><td>16,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Caraíba</td><td>15,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Meios</td><td>13,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Barragem</td><td>12,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Nova Olinda</td><td>11,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Assentamento Fazenda Nova</td><td>11,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Olaria</td><td>11,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Angelim</td><td>11,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Lago Verde</td><td>10,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Guapó</td><td>9,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Rancho do Povo</td><td>9,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sabonete</td><td>7,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Vereda do Rocha</td><td>6,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Itaúna</td><td>6,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Assentamento Itaúna</td><td>6,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Curupati</td><td>6,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Mirassol</td><td>6,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Cantinho</td><td>6,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Mirasol</td><td>6,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Assentamento Francisca Trindade</td><td>5,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Bonsucesso</td><td>5,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>São Félix</td><td>5,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>São Miguel</td><td>5,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Baixa Verde</td><td>5,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Morro Vemelho</td><td>5,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fornos</td><td>5,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Mangueira</td><td>5,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Arrecife</td><td>4,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Assentamento Fornos</td><td>4,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Pereiro I</td><td>3,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Pereiro II</td><td>3,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Alegre</td><td>3,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Imburana</td><td>3,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>São José de Dentro</td><td>3,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 76 localidades rurais de Castelo do Piauí, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 907" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Castelo do Piauí: 39 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas (não há rotas publicadas no DJE), com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="164.7,672.3 169.1,678.2 207.3,690.4 256.8,697.8 311.6,732.5 368.7,724.7 414.0,735.0 418.3,709.7 438.4,698.7 473.9,677.1 499.2,665.6 520.7,601.9 537.8,599.9 581.2,589.1 587.7,575.2 598.5,574.5 613.9,569.4 630.8,572.2 638.7,568.1 652.3,555.6 669.3,529.2 674.4,513.5 688.4,527.2 725.0,520.2 716.9,499.2 705.8,489.2 700.0,489.9 676.4,469.9 677.9,464.7 664.8,437.4 663.3,428.5 645.7,420.1 639.5,420.9 631.1,404.3 618.2,396.4 618.2,389.6 608.6,376.0 601.1,374.3 594.2,380.5 583.2,371.0 563.1,366.1 559.3,372.6 550.5,369.6 551.9,356.5 543.7,348.2 541.7,340.0 553.8,327.3 551.7,320.6 554.1,310.0 560.6,298.9 583.3,277.8 596.6,275.5 603.5,266.3 597.4,250.7 592.3,244.6 580.4,243.5 578.5,232.4 557.4,237.4 502.0,214.5 505.1,174.0 477.5,144.1 466.3,118.2 471.6,90.7 456.4,90.7 442.0,80.0 437.6,85.5 434.9,102.4 426.3,108.0 428.1,133.6 422.7,136.5 411.2,134.0 403.7,127.8 375.4,136.4 368.0,146.5 353.7,148.3 341.8,154.2 329.5,155.5 330.3,166.1 308.2,180.3 306.7,198.2 295.0,205.7 283.9,207.5 275.4,221.0 265.5,230.5 264.2,239.2 247.8,249.3 233.9,253.5 220.3,266.0 214.9,277.1 205.9,275.2 181.8,276.5 168.9,238.3 179.5,195.9 179.0,166.6 171.9,152.4 129.0,170.4 128.8,207.9 118.5,246.0 123.4,280.6 102.1,288.6 83.5,305.3 65.7,337.0 47.3,377.3 104.7,404.9 105.2,424.4 96.2,425.8 80.5,435.9 64.4,432.0 60.0,445.5 48.8,442.7 40.1,454.2 35.0,468.2 53.6,458.8 68.8,463.0 56.5,470.7 65.2,482.5 83.9,484.6 87.4,495.1 101.0,498.3 99.1,503.1 113.7,510.9 128.7,498.3 137.7,507.7 134.3,516.5 151.9,515.9 160.3,524.5 155.4,530.4 177.1,533.1 190.0,536.5 182.3,544.8 195.4,553.1 197.0,559.4 205.1,562.1 207.1,573.0 221.5,576.0 222.2,555.3 234.2,552.0 244.0,559.4 217.5,604.0 177.3,628.8 157.0,662.0 164.7,672.3 164.7,672.3" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="390.4,691.2 389.9,696.1 388.5,698.4 385.3,701.2 383.3,703.5 380.1,704.8 377.7,705.8 375.4,707.2 371.5,708.0 368.3,709.1 365.1,709.9 362.7,711.1 361.0,713.6 359.8,716.1 358.1,718.5 356.7,721.4 355.5,724.6 355.1,727.8 353.4,731.1 351.8,733.5 350.0,736.3 347.3,738.4 343.6,738.2 340.4,737.1 335.1,733.8 332.5,731.9 326.0,733.4 323.7,734.7 322.2,736.8 319.4,740.8 317.2,744.0 313.7,747.4 311.4,748.8 309.7,751.6 307.3,754.0 305.2,755.8 295.7,760.2 292.9,761.2 290.2,762.1 284.8,764.1 281.1,765.4 278.8,767.1 275.2,767.6 272.3,768.9 268.9,770.2 265.6,771.7 263.2,772.8 261.0,774.2 257.8,774.9 255.0,773.4 253.1,771.7 249.2,770.4 245.1,769.8 243.4,767.8 242.7,765.0 243.2,762.0 245.6,760.2 245.2,756.4 245.1,752.9 248.9,746.2 249.4,742.8 250.3,737.1 251.5,733.7 252.2,730.9 253.5,726.7 254.1,722.2 254.3,718.9 255.3,716.3 255.9,711.6 256.0,708.2 256.4,704.8 256.9,700.8 257.6,697.9 256.4,695.7 254.4,693.0 252.2,690.3 250.6,687.6 249.4,685.2 248.8,681.1 248.8,676.8 246.6,675.6 246.2,672.6 245.2,670.1 244.5,667.4 244.7,663.6 244.4,667.1 245.2,670.1 246.2,672.6 246.6,675.6 248.8,676.8 248.9,680.2 248.7,683.7 249.8,686.2 251.3,688.8 254.4,693.0 256.4,695.7 257.6,697.9 256.9,700.8 256.4,704.8 256.0,708.2 255.9,711.6 255.4,715.7 254.3,718.0 254.1,722.2 253.5,726.7 252.2,730.9 251.5,733.7 250.3,737.1 249.4,741.2 249.6,744.5 246.0,751.0 245.1,753.8 245.4,757.1 245.0,761.0 242.8,762.2 242.9,765.6 243.3,769.4 247.0,770.2 251.2,770.6 253.4,772.1 255.6,774.0 258.6,774.5 261.6,774.1 263.9,772.4 267.7,770.9 270.3,769.5 273.0,768.6 276.0,767.5 280.2,766.0 284.8,764.1 288.2,762.9 291.6,761.6 295.1,760.4 304.3,757.0 306.9,754.2 309.7,751.6 311.4,748.8 313.5,747.5 316.1,745.4 318.6,742.0 321.5,737.8 323.7,734.7 326.0,733.4 330.0,731.5 333.5,732.6 338.3,736.1 342.9,738.0 346.6,738.5 350.0,736.3 351.5,734.4 352.9,731.9 354.4,729.8 355.2,727.1 355.8,722.7 357.2,720.4 358.9,717.4 360.4,715.1 361.7,712.7 363.3,710.8 365.9,709.8 369.2,708.8 374.0,707.3 376.8,706.7 379.0,705.4 382.9,703.7 384.8,702.3 385.4,698.5 389.6,698.3 390.1,693.2 390.4,691.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Boa Ventura</title></polyline>
+<polyline points="579.3,480.3 582.5,481.2 586.0,479.6 587.8,477.5 592.8,474.7 598.7,471.9 600.1,469.7 609.6,469.8 619.0,471.5 624.2,474.2 627.2,474.8 630.1,474.3 631.7,476.3 632.7,479.1 631.4,481.4 632.4,484.6 635.0,486.4 636.7,488.7 637.9,491.4 640.3,494.6 642.2,497.1 643.2,499.7 645.5,501.8 648.5,504.4 649.4,506.8 649.2,510.0 649.2,513.6 649.6,517.1 649.7,520.5 650.2,523.7 649.4,527.1 648.8,530.2 647.5,532.4 645.7,534.4 643.4,535.9 683.4,508.3 692.0,480.8 690.4,478.4 690.2,468.3 691.1,459.2 691.7,453.3 692.3,447.1 692.1,443.9 685.6,445.5 683.2,446.5 679.7,447.0 675.9,447.1 677.7,448.7 681.7,447.9 683.7,446.3 691.8,442.9 692.4,446.0 691.7,453.3 691.1,459.2 690.2,468.3 689.5,476.1 692.6,479.9 695.4,480.6 698.2,481.5 701.1,482.9 703.2,484.3 707.0,488.7 709.7,491.2 710.2,494.2 711.5,498.0 714.2,500.9 714.3,508.1 715.8,510.7 720.6,513.3 724.7,515.0 720.6,513.3 717.1,511.7 715.1,509.9 714.3,501.7 711.5,498.0 710.2,495.1 710.1,491.5 707.0,488.7 703.2,484.3 701.1,482.9 698.2,481.5 695.4,480.6 692.6,479.9 690.4,478.4 690.2,468.3 691.1,459.2 691.7,453.3 692.3,447.1 692.1,443.9 685.6,445.5 682.9,447.5 679.3,448.5 675.9,448.5 672.4,449.7 661.1,453.0 659.0,454.3 654.6,459.5 652.5,461.1 648.6,462.8 645.6,463.7 644.0,465.7 642.7,468.1 635.8,472.8 630.1,474.3 627.2,474.8 624.2,474.2 621.0,472.2 609.6,469.8 602.0,468.5 600.1,470.1 592.8,474.7 589.2,476.5 586.8,478.7 584.7,480.7 579.5,480.3 579.3,480.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fervedor</title></polyline>
+<polyline points="490.8,372.4 492.8,373.9 495.1,375.2 496.6,377.7 498.1,380.1 499.3,382.9 501.3,384.9 502.6,387.4 505.5,388.5 507.9,389.9 508.7,394.3 518.2,388.1 520.7,383.8 532.9,370.0 534.4,368.1 536.7,367.0 540.1,367.0 543.6,366.6 547.9,366.3 551.7,366.3 555.3,366.6 560.4,366.7 563.5,366.0 566.4,364.9 569.4,364.2 572.7,364.6 573.5,367.2 576.0,368.5 579.1,369.2 581.9,368.6 585.2,367.8 591.9,367.1 595.2,367.0 599.2,368.0 601.0,369.9 603.3,371.5 607.4,371.4 610.6,372.3 613.2,371.2 617.0,372.3 620.8,374.3 625.9,375.9 621.8,374.1 618.9,373.1 616.2,371.0 611.5,372.1 608.7,371.4 604.8,372.3 602.0,370.6 600.0,368.8 597.7,367.2 594.3,367.1 585.2,367.8 582.2,368.5 579.1,369.2 576.0,368.5 573.5,367.2 572.7,364.6 569.4,364.2 566.4,364.9 563.5,366.0 560.4,366.7 557.0,366.7 551.7,366.3 548.3,366.3 544.7,366.5 541.7,366.8 537.3,366.9 534.8,367.9 532.9,370.0 520.7,383.8 518.2,388.1 508.8,396.7 508.0,393.0 507.6,389.6 504.5,387.9 501.7,386.8 500.4,384.2 498.7,381.6 497.5,379.4 495.7,376.5 493.8,374.9 491.4,373.1 489.7,371.3 490.4,367.0 491.4,363.9 491.0,359.6 492.7,358.0 491.4,355.6 489.8,353.7 488.2,351.7 487.3,349.0 485.6,343.3 487.2,340.8 488.9,339.1 492.0,338.3 495.5,338.0 498.8,338.2 495.5,338.0 492.0,338.3 488.9,339.1 487.2,340.8 484.1,342.2 478.8,341.8 475.0,341.9 470.9,341.9 467.7,341.6 464.0,339.8 460.1,339.6 463.7,339.7 466.9,341.3 470.2,341.4 473.3,341.8 476.4,342.1 481.0,342.1 485.5,342.3 486.8,347.0 487.6,349.9 488.5,352.3 490.3,354.5 491.9,356.4 489.9,358.1 491.9,361.3 491.1,364.6 488.8,370.6 490.6,372.2 490.8,372.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Carnaubal</title></polyline>
+<polyline points="474.3,247.0 476.6,245.2 478.0,242.8 479.1,240.2 481.0,238.4 482.6,236.4 484.0,234.3 485.6,232.3 486.8,229.9 488.5,227.7 489.7,225.4 489.2,220.4 489.7,216.8 488.9,147.2 551.9,141.0 553.0,144.6 554.2,147.9 555.3,150.4 556.6,153.2 558.1,155.1 559.2,158.3 559.7,161.6 560.0,166.2 559.0,168.8 559.1,172.4 558.3,175.2 559.0,178.2 560.5,181.9 561.2,185.3 560.4,188.7 559.3,192.2 557.4,194.2 552.1,195.1 547.4,195.5 543.3,194.2 539.9,194.3 537.9,196.5 534.3,197.7 531.0,198.5 528.8,199.9 527.5,202.3 525.5,204.7 523.3,206.0 520.8,206.9 516.6,208.9 513.7,209.7 511.3,211.3 507.6,212.4 504.5,213.7 501.3,214.9 496.0,216.6 493.0,216.0 490.0,216.5 489.2,220.0 489.7,223.5 489.1,226.8 487.6,229.0 486.3,231.4 484.7,233.6 483.1,235.4 481.7,237.8 479.8,239.4 478.4,241.6 477.4,244.4 475.3,245.9 474.3,247.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Tanque</title></polyline>
+<polyline points="373.3,425.7 369.4,425.5 365.7,425.5 356.6,423.6 351.2,422.3 348.8,421.1 340.3,413.3 335.2,408.7 329.4,403.4 327.4,401.6 325.5,399.9 323.6,398.1 321.7,396.4 319.8,394.6 317.8,392.9 315.1,390.4 313.3,388.7 309.6,385.4 307.7,383.6 302.1,378.6 299.8,376.6 297.9,374.8 296.1,373.1 293.0,370.4 290.9,368.4 288.3,366.1 284.9,363.1 287.7,359.8 285.6,362.3 288.3,366.1 290.9,368.4 293.0,370.4 295.1,372.3 297.6,374.5 299.8,376.6 302.1,378.6 306.0,382.1 308.1,384.0 311.7,387.3 313.4,388.9 317.8,392.9 319.8,394.6 321.5,396.2 323.6,398.1 325.5,399.9 327.4,401.6 329.4,403.4 334.7,408.2 338.7,411.9 348.8,421.1 351.2,422.3 356.6,423.6 363.0,425.2 367.6,425.5 371.5,425.6 373.3,425.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Assentamento Fazenda Nova</title></polyline>
+<polyline points="579.3,480.3 572.7,481.3 570.0,482.2 566.5,484.5 562.3,488.1 561.3,485.0 558.4,483.8 555.3,483.1 552.4,482.5 549.5,481.8 548.8,485.2 549.6,489.0 549.3,494.3 549.6,498.7 545.9,500.6 542.3,500.3 536.5,498.5 528.4,499.1 525.3,498.2 522.2,497.9 508.7,490.4 497.0,483.7 490.3,479.9 487.3,481.0 488.8,479.1 497.0,483.7 508.7,490.4 521.3,497.6 525.3,498.2 528.4,499.1 535.3,498.3 542.3,500.3 545.1,501.2 549.6,498.7 552.8,497.2 557.1,494.9 559.0,493.3 561.3,489.2 566.5,484.5 568.7,482.8 572.7,481.3 576.1,480.3 579.3,480.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Lago Verde</title></polyline>
+<polyline points="379.7,418.1 378.6,415.4 378.5,412.0 378.0,408.8 377.8,405.6 376.8,403.0 374.5,401.3 373.4,398.9 372.3,394.9 365.6,388.2 363.5,385.6 361.9,382.6 361.9,379.1 361.8,373.8 361.1,368.8 361.1,365.0 360.5,360.7 361.1,365.0 361.1,368.8 361.8,373.8 361.9,379.1 361.9,382.6 363.5,385.5 365.6,388.2 371.8,393.2 373.4,398.9 374.5,401.3 376.8,403.0 377.8,405.6 378.0,408.8 378.5,412.0 378.6,415.3 379.7,417.9 379.7,418.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Itaúna</title></polyline>
+<polyline points="547.6,283.3 545.7,286.1 543.6,290.1 542.5,293.6 541.9,296.6 538.2,299.1 536.2,300.6 532.9,303.4 529.9,305.9 528.0,307.4 527.0,310.4 525.5,313.0 525.1,316.0 524.7,319.3 523.5,323.4 524.8,326.3 522.0,327.3 518.9,332.5 521.1,327.9 523.6,326.7 524.6,324.2 524.1,321.1 524.8,318.4 524.6,314.7 526.3,312.5 527.3,309.5 528.4,307.0 532.9,303.4 535.3,301.2 537.4,299.8 540.0,297.8 542.0,296.4 542.8,292.5 544.7,287.7 546.4,285.1 547.6,283.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Curupati</title></polyline>
+<polyline points="199.8,474.8 197.6,477.6 196.6,480.2 197.5,482.8 197.6,486.1 194.4,488.5 193.6,491.3 192.3,493.4 191.2,496.8 189.3,499.9 187.1,501.8 185.9,504.2 187.2,506.5 188.2,509.0 188.8,512.6 188.4,515.6 189.3,520.0 190.3,522.4 192.2,525.4 190.3,522.4 189.3,520.0 188.5,516.4 188.8,513.2 188.4,509.9 187.8,507.0 185.9,504.2 187.1,501.8 189.3,499.9 190.9,497.5 192.3,493.4 193.6,491.3 194.4,488.5 196.2,486.6 197.6,483.4 196.8,480.9 197.2,477.9 199.1,476.4 199.8,474.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Mirassol</title></polyline>
+<polyline points="392.5,429.4 393.7,431.6 395.8,434.4 397.9,437.3 400.1,440.3 402.9,442.7 406.0,445.3 408.0,448.4 409.3,450.6 413.5,451.4 417.7,452.1 420.0,454.1 422.3,455.3 425.6,455.1 427.4,453.2 428.6,450.8 431.9,449.5 433.0,446.7 434.9,444.8 435.4,441.9 437.2,439.9 439.6,438.5 441.1,436.2 444.0,433.8 446.4,431.7 447.2,428.9 444.8,426.7 442.9,424.4 434.4,425.3 430.2,425.7 423.7,426.4 412.0,427.6 405.9,428.1 402.5,428.4 397.7,428.0 394.3,427.8 391.1,427.5 392.5,429.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Cantinho</title></polyline>
+<polyline points="388.7,415.2 391.1,413.5 389.8,411.3 389.5,407.4 392.6,406.0 396.7,404.9 398.6,403.3 399.5,400.2 400.8,397.8 403.1,394.7 404.8,392.5 406.5,390.4 408.0,388.2 409.3,385.9 411.5,380.7 412.6,378.2 414.9,374.9 417.3,371.5 414.9,374.9 412.6,378.2 411.5,380.7 409.9,384.5 408.5,387.4 407.1,389.5 405.3,391.8 403.1,394.7 401.5,396.6 400.1,399.0 399.5,401.9 397.7,404.2 395.4,405.5 391.5,406.4 390.3,410.0 390.9,413.1 388.7,414.8 388.7,415.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Assentamento Francisca Trindade</title></polyline>
+<polyline points="217.3,445.3 215.0,443.6 212.1,442.8 209.1,442.0 206.4,440.9 203.7,441.7 200.3,441.7 197.5,440.7 194.4,441.3 190.9,441.3 188.4,440.4 185.4,439.1 188.4,440.4 190.9,441.3 194.2,441.4 197.0,440.8 200.2,441.5 203.1,442.2 205.1,440.7 207.7,441.7 212.1,442.8 215.0,443.6 217.9,444.3 217.3,445.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Alegre</title></polyline>
+<circle cx="506.5" cy="392.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="489.4" cy="223.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="397.8" cy="451.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="162.3" cy="535.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="501.9" cy="388.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="202.8" cy="268.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="467.8" cy="263.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="479.4" cy="377.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="461.7" cy="87.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="413.2" cy="409.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="454.5" cy="100.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="225.6" cy="436.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="406.6" cy="405.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="176.5" cy="285.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="573.3" cy="480.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="587.0" cy="563.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="503.6" cy="256.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="445.9" cy="223.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="210.9" cy="284.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="489.4" cy="370.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="549.2" cy="283.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="131.0" cy="332.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="199.4" cy="477.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="460.9" cy="653.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="210.1" cy="283.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="88.2" cy="316.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="489.7" cy="370.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="485.0" cy="258.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="142.5" cy="219.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="609.6" cy="421.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="468.6" cy="659.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="80.8" cy="329.2" r="2.2" fill="#b9b9b2"/>
+<polygon points="383.7,415.1 375.8,429.7 391.6,429.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="382.7,413.8 373.6,430.5 391.7,430.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="383.4,412.0 371.5,433.8 395.2,433.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="380.6,414.6 372.4,429.7 388.8,429.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="392.4,417.7 381.5,437.9 403.4,437.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="200.1,466.6 192.2,481.1 208.0,481.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="579.3,472.9 572.3,485.8 586.3,485.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="585.0,556.9 578.4,569.1 591.6,569.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="262.2,520.6 255.9,532.1 268.4,532.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="469.2,652.1 461.6,666.1 476.8,666.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="209.3,274.9 202.2,288.1 216.5,288.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="132.6,323.8 125.7,336.4 139.4,336.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="89.2,307.8 81.5,322.0 96.9,322.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="141.3,211.3 133.7,225.2 148.9,225.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="381.0,416.5 372.3,432.5 389.7,432.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="379.1,415.2 369.9,432.2 388.3,432.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="373.3,419.2 366.9,430.9 379.6,430.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="156.4,399.8 148.0,415.3 164.9,415.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="384.3,408.2 375.6,424.3 392.9,424.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="383.8,412.7 373.3,432.0 394.3,432.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="216.6,437.2 209.2,450.7 224.0,450.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="174.5,283.5 167.6,296.3 181.5,296.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="373.1,424.9 362.1,445.1 384.0,445.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="527.3,581.4 520.9,593.0 533.6,593.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="547.6,276.2 540.8,288.7 554.4,288.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="66.7,441.9 60.1,454.0 73.2,454.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="579.3,472.9 572.4,485.6 586.2,485.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="141.1,487.4 135.1,498.4 147.1,498.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="390.3,682.1 382.5,696.5 398.1,696.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="444.3,126.3 438.3,137.3 450.4,137.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="402.9,405.0 395.9,418.1 410.0,418.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="473.1,240.3 467.8,250.2 478.4,250.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="610.4,413.0 603.6,425.6 617.2,425.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="199.2,358.8 192.5,371.1 205.9,371.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="81.7,322.5 76.1,332.9 87.3,332.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="490.7,365.7 484.1,377.8 497.2,377.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="379.6,408.8 370.8,425.0 388.3,425.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="389.1,406.8 381.1,421.4 397.0,421.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="378.7,416.2 369.4,433.2 387.9,433.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="259.5" cy="657.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="266.5" y="652.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Boa Ventura 31,2 km</text>
+<circle cx="725.0" cy="514.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="618.8" y="509.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fervedor 21,8 km</text>
+<circle cx="628.8" cy="394.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="516.4" y="389.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Carnaubal 17,2 km</text>
+<circle cx="683.4" cy="508.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="521.4" y="523.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Caldeirão da Cruz 16,7 km</text>
+<circle cx="488.9" cy="147.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="495.9" y="142.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Tanque 16,7 km</text>
+<circle cx="691.7" cy="478.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="473.9" y="473.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Assentamento São Francisco 16,5 km</text>
+<circle cx="609.2" cy="368.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="509.2" y="363.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Caraíba 15,2 km</text>
+<circle cx="638.6" cy="535.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="551.0" y="550.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Meios 13,6 km</text>
+<circle cx="583.8" cy="368.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="678.7" cy="446.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="553.9" y="441.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Nova Olinda 11,5 km</text>
+<circle cx="287.7" cy="359.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="294.7" y="354.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Assentamento Fazenda Nova 11,5 km</text>
+<circle cx="674.8" cy="442.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="581.0" y="457.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Olaria 11,3 km</text>
+<circle cx="649.2" cy="516.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="487.1" cy="481.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="494.1" y="496.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Lago Verde 10,6 km</text>
+<circle cx="647.1" cy="500.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="552.1" cy="367.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="530.4" cy="366.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="457.2" cy="336.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="464.2" y="331.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Vereda do Rocha 6,7 km</text>
+<circle cx="360.3" cy="358.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="367.3" y="373.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Itaúna 6,6 km</text>
+<circle cx="359.5" cy="358.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="528.7" cy="346.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="194.3" cy="526.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="201.3" y="521.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Mirassol 6,1 km</text>
+<circle cx="447.0" cy="427.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="454.0" y="422.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Cantinho 6,1 km</text>
+<circle cx="194.4" cy="526.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="201.4" y="541.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Mirasol 6,1 km</text>
+<circle cx="420.7" cy="373.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="631.1" cy="474.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="497.4" cy="345.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="499.4" cy="328.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="428.9" cy="450.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="435.9" y="445.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Baixa Verde 5,1 km</text>
+<circle cx="513.3" cy="378.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="527.8" cy="322.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="534.8" y="317.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fornos 5,1 km</text>
+<circle cx="428.3" cy="451.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="494.0" cy="308.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="501.0" y="303.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Arrecife 4,8 km</text>
+<circle cx="525.6" cy="319.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="479.5" cy="194.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="486.5" y="189.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pereiro I 3,7 km</text>
+<circle cx="481.9" cy="169.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="488.9" y="164.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pereiro II 3,7 km</text>
+<circle cx="184.8" cy="439.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="191.8" y="434.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Alegre 3,7 km</text>
+<circle cx="452.3" cy="171.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="549.5" cy="481.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<rect x="373.6" y="420.9" width="10" height="10" fill="#1d1d1b"/><text x="387.6" y="443.9" font-weight="600" fill="#1d1d1b">Sede de Castelo do Piauí</text>
+<line x1="35" x2="85.4" y1="805.0" y2="805.0" stroke="#8a8a84" stroke-width="2"/><text x="35" y="819.0" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="796.0166558546895" y2="796.0166558546895" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="800.0166558546895" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,789.0 421.4,801.3 434.6,801.3" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="800.0166558546895" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="814.0166558546895" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="823.0166558546895" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="819.0166558546895" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="823.0166558546895" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="842.0166558546895" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="846.0166558546895" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="842.0166558546895" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="846.0166558546895" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="865.0166558546895" y2="865.0166558546895" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="869.0166558546895" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="888.0166558546895" y2="888.0166558546895" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="892.0166558546895" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Sem rotas publicadas no DJE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (31):</strong> Boa Ventura, Fervedor, Carnaubal, Caldeirão da Cruz, Tanque, Assentamento São Francisco, Caraíba, Meios, Barragem, Nova Olinda, Assentamento Fazenda Nova, Olaria, Angelim, Lago Verde, Guapó, Rancho do Povo, Sabonete, Vereda do Rocha, Itaúna, Assentamento Itaúna, Curupati, Mirassol, Cantinho, Mirasol, Assentamento Francisca Trindade, Bonsucesso, São Félix, São Miguel, Baixa Verde, Morro Vemelho e Fornos.</li>
+<li><strong>De 3 a 5 km (8):</strong> Mangueira, Arrecife, Assentamento Fornos, Pereiro I, Pereiro II, Alegre, Imburana e São José de Dentro.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (37):</strong> Agreste, Agrovila do PA Angico Branco, Agrovila do PA Espinhos, Agrovila do PE Boa Vista, Assentamento Angico Branco, Açude, Baixa Fria, Barro Branco, Bom Jardim, Buriti do Sobrado, Cumbe, Cumbe de Baixo, Espinho, Faveira, Jacaré, Lagoa Redonda, Lagoa do Barro, Lagoa do Frio, Manoel dos Santos, Morro Alegre, Palmeirinha, Pedreira, Pedreiras, Picos, Pé da Serra, Resfriado, Retiranal, Retiro Velho, Rocha, Santa Helena, São Gonçalo, São Mateus, Tapera, Terra Dura, Vargem, Vereda da Jurubeba e Vista Alegre.</li>
+</ul><h2>Rotas da Justiça Eleitoral</h2>
+<p><strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-PI) para Castelo do Piauí.</strong> Pesquisamos todas as edições do DJE/TRE-PI publicadas desde o fim de julho de 2026. As rotas do mapa e da seção de propostas são sugestões deste levantamento.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 39 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Boa Ventura</strong></td><td>Lagoa do Frio – Boa Ventura – Lagoa do Frio</td><td>Boa Ventura</td><td>62,4 km (ida e volta)</td><td>~2h32</td></tr><tr><td><strong>Rota nova – Fervedor</strong></td><td>Sede – Bonsucesso – Guapó – Angelim – Meios – Caldeirão da Cruz – Assentamento São Francisco – Nova Olinda – Olaria – Fervedor – Sede</td><td>Bonsucesso, Guapó, Angelim, Meios, Caldeirão da Cruz, Assentamento São Francisco, Nova Olinda, Olaria, Fervedor</td><td>59,0 km (ida e volta)</td><td>~1h25</td></tr><tr><td><strong>Rota nova – Carnaubal</strong></td><td>Espinho – Morro Vemelho – Sabonete – Rancho do Povo – Barragem – Caraíba – Carnaubal – São Félix – São Miguel – Arrecife – Vereda do Rocha – Espinho</td><td>Morro Vemelho, Sabonete, Rancho do Povo, Barragem, Caraíba, Carnaubal, São Félix, São Miguel, Arrecife, Vereda do Rocha</td><td>51,2 km (ida e volta)</td><td>~1h57</td></tr><tr><td><strong>Rota nova – Tanque</strong></td><td>Retiranal – Pereiro I – Pereiro II – Tanque – Imburana – Retiranal</td><td>Pereiro I, Pereiro II, Tanque, Imburana</td><td>23,5 km (ida e volta)</td><td>~35 min</td></tr><tr><td><strong>Rota nova – Assentamento Fazenda Nova</strong></td><td>Sede – Assentamento Fazenda Nova – Sede</td><td>Assentamento Fazenda Nova</td><td>23,2 km (ida e volta)</td><td>~24 min</td></tr><tr><td><strong>Rota nova – Lago Verde</strong></td><td>Picos – São José de Dentro – Lago Verde – Picos</td><td>São José de Dentro, Lago Verde</td><td>22,9 km (ida e volta)</td><td>~27 min</td></tr><tr><td><strong>Rota nova – Itaúna</strong></td><td>Sede – Itaúna – Assentamento Itaúna – Sede</td><td>Itaúna, Assentamento Itaúna</td><td>13,2 km (ida e volta)</td><td>~32 min</td></tr><tr><td><strong>Rota nova – Curupati</strong></td><td>Assentamento Angico Branco – Assentamento Fornos – Fornos – Curupati – Assentamento Angico Branco</td><td>Assentamento Fornos, Fornos, Curupati</td><td>12,9 km (ida e volta)</td><td>~31 min</td></tr><tr><td><strong>Rota nova – Mirassol</strong></td><td>Sede – Mirasol – Mirassol – Sede</td><td>Mirasol, Mirassol</td><td>12,2 km (ida e volta)</td><td>~23 min</td></tr><tr><td><strong>Rota nova – Cantinho</strong></td><td>Sede – Baixa Verde – Mangueira – Cantinho – Sede</td><td>Baixa Verde, Mangueira, Cantinho</td><td>14,5 km (ida e volta)</td><td>~24 min</td></tr><tr><td><strong>Rota nova – Assentamento Francisca Trindade</strong></td><td>Sede – Assentamento Francisca Trindade – Sede</td><td>Assentamento Francisca Trindade</td><td>11,5 km (ida e volta)</td><td>~18 min</td></tr><tr><td><strong>Rota nova – Alegre</strong></td><td>Vereda da Jurubeba – Alegre – Vereda da Jurubeba</td><td>Alegre</td><td>7,4 km (ida e volta)</td><td>~18 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMCP</strong></p><p>Castelo do Piauí/PI, ___ de outubro de 2026.</p><p>Ao(À) Excelentíssimo(a) Senhor(a)<br><strong>[nome do(a) Juiz(a) Eleitoral]</strong><br>Juiz(a) Eleitoral da 34ª Zona Eleitoral – [sede da zona]/PI</p><p><strong>Assunto:</strong> Sugestão de rotas de transporte gratuito de eleitores da zona rural – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo(a) Senhor(a) Juiz(a),</p><p>O Município de Castelo do Piauí, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento das localidades rurais distantes do local de votação, para as quais não localizamos no Diário da Justiça Eleitoral (DJE/TRE-PI) quadro de percursos nem ato sobre o transporte de eleitores: Boa Ventura, Fervedor, Carnaubal, Caldeirão da Cruz, Tanque, Assentamento São Francisco, Caraíba, Meios, Barragem, Nova Olinda, Assentamento Fazenda Nova, Olaria, Angelim, Lago Verde, Guapó, Rancho do Povo, Sabonete, Vereda do Rocha, Itaúna, Assentamento Itaúna, Curupati, Mirassol, Cantinho, Mirasol, Assentamento Francisca Trindade, Bonsucesso, São Félix, São Miguel, Baixa Verde, Morro Vemelho, Fornos, Mangueira, Arrecife, Assentamento Fornos, Pereiro I, Pereiro II, Alegre, Imburana e São José de Dentro.</p><p>Sugerimos, respeitosamente, que Vossa Excelência avalie instituir o transporte gratuito de eleitores no 2º turno, com as seguintes rotas:</p><ol><li>a criação da Rota nova – Boa Ventura (Lagoa do Frio – Boa Ventura – Lagoa do Frio);</li><li>a criação da Rota nova – Fervedor (Sede – Bonsucesso – Guapó – Angelim – Meios – Caldeirão da Cruz – Assentamento São Francisco – Nova Olinda – Olaria – Fervedor – Sede);</li><li>a criação da Rota nova – Carnaubal (Espinho – Morro Vemelho – Sabonete – Rancho do Povo – Barragem – Caraíba – Carnaubal – São Félix – São Miguel – Arrecife – Vereda do Rocha – Espinho);</li><li>a criação da Rota nova – Tanque (Retiranal – Pereiro I – Pereiro II – Tanque – Imburana – Retiranal);</li><li>a criação da Rota nova – Assentamento Fazenda Nova (Sede – Assentamento Fazenda Nova – Sede);</li><li>a criação da Rota nova – Lago Verde (Picos – São José de Dentro – Lago Verde – Picos);</li><li>a criação da Rota nova – Itaúna (Sede – Itaúna – Assentamento Itaúna – Sede);</li><li>a criação da Rota nova – Curupati (Assentamento Angico Branco – Assentamento Fornos – Fornos – Curupati – Assentamento Angico Branco);</li><li>a criação da Rota nova – Mirassol (Sede – Mirasol – Mirassol – Sede);</li><li>a criação da Rota nova – Cantinho (Sede – Baixa Verde – Mangueira – Cantinho – Sede);</li><li>a criação da Rota nova – Assentamento Francisca Trindade (Sede – Assentamento Francisca Trindade – Sede);</li><li>a criação da Rota nova – Alegre (Vereda da Jurubeba – Alegre – Vereda da Jurubeba).</li></ol><p>As rotas sugeridas atendem as localidades mais distantes. Caso esse Juízo já tenha definido rotas, pedimos que estas sugestões sejam consideradas naquilo que ainda não estiver contemplado.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Castelo do Piauí</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Castelo do Piauí; Quadro de percursos não localizado nas edições do DJE/TRE-PI consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

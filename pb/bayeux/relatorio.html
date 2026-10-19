@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Bayeux</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Bayeux</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/bayeux.pdf?v=1792373453" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Bayeux (61ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 61ª Zona Eleitoral <strong>3 rotas novas</strong> no transporte gratuito de Bayeux.
+<strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-PB) para Bayeux</strong>. As 6 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Bayeux tem 74.486 eleitores aptos em 35 locais de votação e 248 seções. São 0 locais rurais, com 0 eleitores (0% do total).</li>
+
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Alto do Contorno (4,3 km do local de votação), Jardim Europa I (4,3 km do local de votação), Planalto Tibiri II (4,2 km do local de votação), Portal de Santa Rita (3,9 km do local de votação), Bairro dos Novais (3,7 km do local de votação) e Castro Pinto (3,5 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 8 localidades rurais de Bayeux que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Alto do Contorno</td><td>4,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Jardim Europa I</td><td>4,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Planalto Tibiri II</td><td>4,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Portal de Santa Rita</td><td>3,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Bairro dos Novais</td><td>3,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Castro Pinto</td><td>3,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 8 localidades rurais de Bayeux, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1029" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Bayeux: 6 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas (não há rotas publicadas no DJE), com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="718.8,146.1 556.5,80.0 458.4,111.0 500.7,176.1 492.5,357.0 390.1,410.7 211.4,442.8 183.5,545.1 113.2,610.2 70.8,709.4 256.8,897.5 461.5,895.4 528.6,736.3 430.5,571.9 504.9,496.5 690.9,433.5 725.0,331.1 669.2,242.3 718.8,146.1 718.8,146.1" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="226.3,480.8 188.6,478.4 174.8,460.1 132.1,470.4 97.6,495.9 76.7,481.9 56.4,466.5 59.3,434.9 83.9,427.4 121.4,432.6 166.3,438.6 195.7,441.3 206.5,466.6 224.2,479.9 226.3,480.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Alto do Contorno</title></polyline>
+<polyline points="204.9,689.4 212.8,713.1 224.7,734.9 236.8,756.5 241.3,786.4 231.6,811.0 216.0,827.9 185.5,825.6 166.5,806.2 149.8,822.4 124.0,809.8 107.9,794.4 89.2,810.4 73.9,838.1 54.9,823.2 51.6,792.0 44.1,762.4 35.8,737.5 58.4,728.6 82.5,739.5 98.9,755.9 128.9,768.4 147.2,787.0 166.5,806.2 185.0,825.0 201.5,841.2 218.2,826.8 241.7,800.9 240.4,768.9 230.7,745.6 218.8,724.3 207.0,702.4 204.9,689.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Jardim Europa I</title></polyline>
+<polyline points="399.8,613.0 372.4,600.3 344.4,575.3 327.3,558.7 309.4,542.4 326.8,560.7 360.1,590.6 387.3,614.8 406.3,631.9 422.8,646.5 440.7,662.5 459.4,679.3 484.9,701.8 501.3,716.6 528.7,712.3 543.5,693.1 565.7,705.1 583.3,722.1 603.6,735.4 583.3,722.1 565.7,705.1 550.5,688.1 532.8,704.5 515.5,719.3 493.9,707.8 473.2,690.3 455.0,674.0 437.7,658.7 417.6,640.8 400.2,625.2 399.8,613.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Bairro dos Novais</title></polyline>
+<circle cx="130.9" cy="539.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="229.7" cy="428.6" r="2.2" fill="#b9b9b2"/>
+<polygon points="328.1,467.5 312.4,496.5 343.9,496.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="541.0,446.6 528.0,470.6 554.1,470.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="378.8,467.8 367.2,489.1 390.3,489.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="338.5,460.2 326.5,482.1 350.4,482.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="662.0,408.3 651.8,427.0 672.1,427.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="461.5,479.3 450.0,500.4 472.9,500.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="410.8,453.7 398.6,476.2 423.0,476.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="315.7,436.4 305.8,454.7 325.7,454.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="543.1,457.4 532.5,477.0 553.7,477.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="241.3,587.3 229.4,609.2 253.2,609.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="253.7,513.6 242.5,534.3 265.0,534.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="281.6,496.0 270.3,516.8 292.9,516.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="408.8,557.6 397.1,579.1 420.5,579.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="368.4,545.7 357.3,566.3 379.6,566.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="400.5,604.5 391.2,621.6 409.8,621.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="360.2,665.5 343.0,697.1 377.3,697.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="285.8,552.4 272.1,577.5 299.4,577.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="560.7,424.9 547.7,448.9 573.7,448.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="226.9,467.2 215.8,487.7 238.0,487.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="245.5,488.9 234.3,509.4 256.6,509.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="365.3,549.0 352.4,572.8 378.3,572.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="406.7,516.2 394.0,539.6 419.4,539.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="362.2,699.1 348.5,724.3 375.9,724.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="342.6,500.4 331.6,520.7 353.6,520.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="204.1,674.7 191.8,697.4 216.5,697.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="212.4,535.2 202.0,554.3 222.8,554.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="421.2,440.3 406.1,468.1 436.2,468.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="390.1,655.2 379.0,675.9 401.3,675.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="195.9,509.0 184.1,530.6 207.6,530.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="195.9,511.2 185.2,530.7 206.5,530.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="354.0,438.4 343.0,458.7 365.0,458.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="470.8,451.1 461.0,469.1 480.6,469.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="502.8,426.5 489.3,451.3 516.3,451.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="350.9,696.0 341.1,714.0 360.7,714.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="344.7,535.9 334.9,553.8 354.4,553.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="163.3" cy="452.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="170.3" y="447.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Alto do Contorno 4,3 km</text>
+<circle cx="36.1" cy="733.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="43.1" y="728.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Jardim Europa I 4,3 km</text>
+<circle cx="47.8" cy="781.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="54.8" y="776.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Planalto Tibiri II 4,2 km</text>
+<circle cx="71.2" cy="840.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="78.2" y="835.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Portal de Santa Rita 3,9 km</text>
+<circle cx="600.0" cy="748.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="444.2" y="743.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Bairro dos Novais 3,7 km</text>
+<circle cx="97.5" cy="807.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="104.5" y="802.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Castro Pinto 3,5 km</text>
+<rect x="247.4" y="515.9" width="10" height="10" fill="#1d1d1b"/><text x="261.4" y="538.9" font-weight="600" fill="#1d1d1b">Sede de Bayeux</text>
+<line x1="35" x2="500.5" y1="927.5" y2="927.5" stroke="#8a8a84" stroke-width="2"/><text x="35" y="941.5" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="918.4914624648067" y2="918.4914624648067" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="922.4914624648067" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,911.5 421.4,923.7 434.6,923.7" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="922.4914624648067" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="936.4914624648067" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="945.4914624648067" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="941.4914624648067" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="945.4914624648067" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="964.4914624648067" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="968.4914624648067" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="964.4914624648067" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="968.4914624648067" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="987.4914624648067" y2="987.4914624648067" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="991.4914624648067" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1010.4914624648067" y2="1010.4914624648067" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1014.4914624648067" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Sem rotas publicadas no DJE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (0):</strong> nenhuma.</li>
+<li><strong>De 3 a 5 km (6):</strong> Alto do Contorno, Jardim Europa I, Planalto Tibiri II, Portal de Santa Rita, Bairro dos Novais e Castro Pinto.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (2):</strong> Jardim Faixa Alegre e Planalto de Santa Rita.</li>
+</ul><h2>Rotas da Justiça Eleitoral</h2>
+<p><strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-PB) para Bayeux.</strong> Pesquisamos todas as edições do DJE/TRE-PB publicadas desde o fim de julho de 2026. As rotas do mapa e da seção de propostas são sugestões deste levantamento.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 6 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Alto do Contorno</strong></td><td>Sede – Alto do Contorno – Sede</td><td>Alto do Contorno</td><td>5,2 km (ida e volta)</td><td>~8 min</td></tr><tr><td><strong>Rota nova – Jardim Europa I</strong></td><td>Sede – Castro Pinto – Portal de Santa Rita – Planalto Tibiri II – Jardim Europa I – Sede</td><td>Castro Pinto, Portal de Santa Rita, Planalto Tibiri II, Jardim Europa I</td><td>10,0 km (ida e volta)</td><td>~24 min</td></tr><tr><td><strong>Rota nova – Bairro dos Novais</strong></td><td>Sede – Bairro dos Novais – Sede</td><td>Bairro dos Novais</td><td>10,0 km (ida e volta)</td><td>~12 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMB</strong></p><p>Bayeux/PB, ___ de outubro de 2026.</p><p>Ao(À) Excelentíssimo(a) Senhor(a)<br><strong>[nome do(a) Juiz(a) Eleitoral]</strong><br>Juiz(a) Eleitoral da 61ª Zona Eleitoral – [sede da zona]/PB</p><p><strong>Assunto:</strong> Sugestão de rotas de transporte gratuito de eleitores da zona rural – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo(a) Senhor(a) Juiz(a),</p><p>O Município de Bayeux, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento das localidades rurais distantes do local de votação, para as quais não localizamos no Diário da Justiça Eleitoral (DJE/TRE-PB) quadro de percursos nem ato sobre o transporte de eleitores: Alto do Contorno, Jardim Europa I, Planalto Tibiri II, Portal de Santa Rita, Bairro dos Novais e Castro Pinto.</p><p>Sugerimos, respeitosamente, que Vossa Excelência avalie instituir o transporte gratuito de eleitores no 2º turno, com as seguintes rotas:</p><ol><li>a criação da Rota nova – Alto do Contorno (Sede – Alto do Contorno – Sede);</li><li>a criação da Rota nova – Jardim Europa I (Sede – Castro Pinto – Portal de Santa Rita – Planalto Tibiri II – Jardim Europa I – Sede);</li><li>a criação da Rota nova – Bairro dos Novais (Sede – Bairro dos Novais – Sede).</li></ol><p>As rotas sugeridas atendem as localidades mais distantes. Caso esse Juízo já tenha definido rotas, pedimos que estas sugestões sejam consideradas naquilo que ainda não estiver contemplado.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Bayeux</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Bayeux; Quadro de percursos não localizado nas edições do DJE/TRE-PB consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

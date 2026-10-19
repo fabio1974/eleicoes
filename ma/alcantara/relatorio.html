@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Alcântara</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Alcântara</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/alcantara.pdf?v=1792372703" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Alcântara (52ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 52ª Zona Eleitoral <strong>20 rotas novas</strong> no transporte gratuito de Alcântara.
+<strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-MA) para Alcântara</strong>. As 45 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Alcântara tem 17.672 eleitores aptos em 50 locais de votação e 79 seções. São 46 locais rurais, com 12.470 eleitores (71% do total).</li>
+<li>46 locais rurais ficam a 10 km ou mais da sede, com 12.470 eleitores. Os mais distantes: Povoado Portugal (67,6 km), Povoado Boa Vista Zona Rural (64,8 km) e Povoado Tubarão (61,8 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Comunidade Quilombola Canavieira (9,0 km do local de votação), Santa Rita (8,3 km do local de votação), Comunidade Quilombola Santa Bárbara (8,3 km do local de votação), Caçador (7,3 km do local de votação), Cajiba (7,3 km do local de votação), Sao Francisco (7,3 km do local de votação), Sao Mauricio (6,6 km do local de votação), Comunidade Quilombola Cajiba (6,3 km do local de votação), Pacuri (5,7 km do local de votação), Comunidade Quilombola Pacurí (5,7 km do local de votação), Comunidade Quilombola Itapera (5,5 km do local de votação), Bom Jardim (5,4 km do local de votação), Comunidade Quilombola Mocajubal 2 (5,4 km do local de votação), Itapera (5,3 km do local de votação), Comunidade Quilombola Curuçá (5,0 km do local de votação), Comunidade Quilombola Trajano (5,0 km do local de votação), Comunidade Quilombola Carrapicho (5,0 km do local de votação), Comunidade Quilombola São Pedro (4,9 km do local de votação), Cabral (4,8 km do local de votação), Bordao (4,7 km do local de votação), Porto do Meio (4,6 km do local de votação), Comunidade Quilombola Santa Rita (4,5 km do local de votação), Comunidade Quilombola Coqueiro 2 (4,5 km do local de votação), Ilha das Cutias (4,4 km do local de votação), Comunidade Quilombola Queruver (4,4 km do local de votação), Comunidade Quilombola Santa Catarina (4,4 km do local de votação), Comunidade Quilombola Santana de Caboclo (4,3 km do local de votação), Comunidade Quilombola Cajapari (4,2 km do local de votação), Comunidade Quilombola Codó (4,2 km do local de votação), Itacunhem (4,1 km do local de votação), Comunidade Quilombola Corre Fresco (4,1 km do local de votação), Santana de Caboclo (4,0 km do local de votação), Camuritiua (3,9 km do local de votação), Comunidade Quilombola Maria Preta ou Timbira (3,8 km do local de votação), Beju-Açu (3,7 km do local de votação), Itauna (3,6 km do local de votação), Comunidade Quilombola São Maurício (3,6 km do local de votação), Comunidade Quilombola Timbira (3,5 km do local de votação), Santa Barbara (3,3 km do local de votação), Comunidade Quilombola Itapiranga (3,3 km do local de votação), Tiquara (3,2 km do local de votação), Comunidade Quilombola São Benedito (3,2 km do local de votação), Curuçá (3,1 km do local de votação), Comunidade Quilombola Bituba (3,1 km do local de votação) e Peroba de Baixo (3,0 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 197 localidades rurais de Alcântara que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Comunidade Quilombola Canavieira</td><td>9,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Santa Rita</td><td>8,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Santa Bárbara</td><td>8,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Caçador</td><td>7,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Cajiba</td><td>7,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sao Francisco</td><td>7,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sao Mauricio</td><td>6,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Cajiba</td><td>6,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Pacuri</td><td>5,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Pacurí</td><td>5,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Itapera</td><td>5,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Bom Jardim</td><td>5,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Mocajubal 2</td><td>5,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Itapera</td><td>5,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Curuçá</td><td>5,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Trajano</td><td>5,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Carrapicho</td><td>5,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola São Pedro</td><td>4,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Cabral</td><td>4,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Bordao</td><td>4,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Porto do Meio</td><td>4,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Santa Rita</td><td>4,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Coqueiro 2</td><td>4,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Ilha das Cutias</td><td>4,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Queruver</td><td>4,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Santa Catarina</td><td>4,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Santana de Caboclo</td><td>4,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Cajapari</td><td>4,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Codó</td><td>4,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Itacunhem</td><td>4,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Corre Fresco</td><td>4,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Santana de Caboclo</td><td>4,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Camuritiua</td><td>3,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Maria Preta ou Timbira</td><td>3,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Beju-Açu</td><td>3,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Itauna</td><td>3,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola São Maurício</td><td>3,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Timbira</td><td>3,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Santa Barbara</td><td>3,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Itapiranga</td><td>3,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Tiquara</td><td>3,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola São Benedito</td><td>3,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Curuçá</td><td>3,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Bituba</td><td>3,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Peroba de Baixo</td><td>3,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 197 localidades rurais de Alcântara, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1149" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Alcântara: 45 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas (não há rotas publicadas no DJE), com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="349.4,938.0 357.9,919.8 365.7,888.9 384.2,839.5 386.9,811.1 395.2,802.9 409.9,803.3 433.9,820.8 461.4,795.9 478.4,786.7 497.2,731.2 508.1,716.3 521.4,709.3 530.1,717.7 563.3,673.5 556.6,643.3 534.1,629.0 506.5,617.6 462.6,631.5 454.6,618.7 468.9,601.4 496.6,585.4 515.7,589.0 529.2,583.5 540.0,588.8 564.2,590.6 573.3,579.7 598.8,579.5 619.8,588.8 640.9,592.8 667.7,581.0 697.6,527.0 694.6,501.1 682.8,486.7 711.9,463.6 725.0,444.0 713.8,397.0 686.6,335.2 675.7,329.5 672.9,310.3 660.1,264.4 648.1,212.1 612.0,169.2 605.1,151.2 577.5,118.6 526.7,80.0 505.8,92.4 482.9,80.8 455.2,86.7 447.7,92.6 414.4,98.1 397.3,107.2 392.7,136.9 377.5,151.4 371.6,176.1 344.8,185.2 335.3,205.0 289.6,247.6 286.4,262.3 271.7,269.9 267.0,280.6 247.6,285.7 220.2,311.6 211.8,356.5 179.8,366.8 142.7,412.8 137.0,449.7 143.5,470.1 168.4,501.9 173.7,526.0 164.8,561.8 157.2,577.4 139.5,598.9 137.9,614.7 152.2,632.6 130.3,650.5 103.1,665.0 98.2,673.5 67.0,684.9 62.0,707.8 35.0,735.0 37.3,770.4 54.0,766.2 82.0,782.0 103.5,842.5 53.8,996.6 64.5,1016.6 82.4,1015.7 91.7,986.7 126.5,999.5 144.6,980.1 155.6,987.3 173.0,984.6 166.9,960.9 169.7,952.1 198.7,939.2 216.0,940.7 225.9,934.8 236.5,915.0 253.1,907.2 276.3,908.5 288.3,903.0 326.1,923.6 341.6,927.0 349.4,938.0 349.4,938.0" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="347.9,205.5 350.9,199.0 356.3,196.8 360.0,192.8 365.6,190.2 373.8,190.1 382.6,193.9 391.2,193.8 399.3,191.7 407.9,188.6 424.7,180.8 423.8,175.8 419.3,173.6 416.7,170.0 414.2,166.6 410.9,164.1 407.9,161.1 405.3,158.0 401.2,155.2 397.3,152.7 393.3,149.9 389.6,147.8 385.3,146.3 389.6,147.8 393.3,149.9 397.1,152.6 401.2,155.2 405.3,158.0 407.9,161.1 410.9,164.1 414.2,166.6 416.7,170.0 419.1,173.5 423.0,175.7 427.0,178.0 407.9,188.6 401.4,191.3 391.2,193.8 385.7,194.4 376.5,191.1 369.4,189.3 363.4,190.6 357.4,196.1 350.9,199.0 347.5,202.3 347.9,205.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Canavieira</title></polyline>
+<polyline points="410.3,618.9 407.6,614.7 404.1,612.1 398.7,612.6 393.8,613.6 388.7,612.5 383.1,612.2 378.1,613.0 375.7,616.6 373.2,620.0 371.0,623.8 369.9,628.8 375.1,629.6 377.5,632.9 379.8,636.4 384.1,637.9 379.8,636.4 377.5,632.9 375.1,629.6 369.9,631.3 369.2,636.7 368.0,641.7 365.7,645.2 363.3,648.8 364.5,653.8 363.7,658.8 364.4,664.6 363.1,669.4 360.7,674.2 365.1,675.6 370.2,676.4 374.2,679.0 379.1,677.8 380.5,673.2 383.3,669.7 387.7,671.0 383.3,669.7 380.5,673.2 379.1,677.8 374.2,679.0 370.5,676.6 365.1,675.6 360.7,674.2 362.6,670.3 364.5,666.2 363.9,661.0 364.3,655.0 363.3,649.8 364.9,645.6 367.8,642.6 368.9,637.6 370.0,632.7 370.6,626.8 371.8,621.7 373.2,617.4 370.3,614.0 367.7,610.8 364.0,608.0 360.7,605.3 357.5,601.9 353.6,599.7 348.1,599.3 353.6,599.7 357.5,601.9 360.7,605.3 364.0,608.0 367.4,610.6 370.3,614.0 373.1,617.1 377.1,614.3 380.8,612.1 386.3,612.5 391.3,613.3 396.3,614.1 399.9,611.9 405.1,612.5 408.2,615.4 410.3,618.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Santa Rita</title></polyline>
+<polyline points="347.3,736.3 350.0,740.9 359.5,744.7 358.3,739.6 358.9,734.3 358.5,729.0 360.0,724.7 363.4,721.3 366.9,718.2 370.9,715.9 369.7,710.9 368.0,706.9 369.7,710.9 371.0,715.5 367.3,717.7 364.0,720.6 360.5,723.8 358.9,728.2 358.6,733.5 358.2,739.0 359.3,744.2 352.3,741.8 346.8,739.7 341.4,737.5 333.9,737.5 318.0,740.8 311.6,742.1 298.7,737.5 299.9,732.2 303.8,730.3 304.8,725.5 306.7,721.3 308.2,716.5 308.7,711.0 309.7,706.2 310.8,701.2 310.5,695.8 309.4,691.0 309.1,685.6 310.0,680.2 309.1,685.1 309.4,691.0 309.1,685.6 310.0,680.2 309.1,685.1 309.4,691.0 310.5,695.8 310.8,701.2 309.7,706.2 308.7,711.0 308.2,716.5 306.7,721.3 304.8,725.2 303.8,730.3 299.9,732.2 296.9,734.9 288.9,734.8 294.4,735.8 298.7,737.5 309.0,741.8 318.0,740.8 333.9,737.5 339.2,736.8 346.8,739.7 347.3,736.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Caçador</title></polyline>
+<polyline points="466.7,335.0 468.7,329.3 473.8,326.8 479.1,323.4 483.1,320.2 486.1,317.5 490.8,315.4 496.5,314.5 500.1,311.3 503.0,306.6 496.7,306.4 491.5,305.1 475.9,302.3 470.8,299.5 467.1,297.0 463.5,294.5 460.1,291.7 463.5,294.5 467.1,297.0 470.8,299.5 475.9,302.3 488.6,306.3 493.9,305.8 500.8,305.7 500.1,311.3 496.5,314.5 490.8,315.4 486.1,317.5 483.1,320.2 479.8,322.9 474.6,326.4 470.0,327.7 467.1,333.2 466.7,335.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Pacuri</title></polyline>
+<polyline points="613.7,212.8 608.1,213.1 603.4,214.8 598.1,215.3 593.9,213.8 588.5,212.6 583.7,210.3 578.2,211.0 578.3,205.4 579.0,200.3 583.0,193.4 582.1,187.7 582.4,181.2 583.7,176.6 584.4,171.0 585.1,165.0 584.2,170.4 583.7,176.6 582.4,181.2 582.1,187.7 583.0,193.4 580.5,198.1 578.7,203.4 574.7,209.4 579.4,210.6 587.5,212.2 592.0,213.5 596.7,214.8 602.5,215.0 607.8,213.3 612.2,211.2 613.7,212.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Itapera</title></polyline>
+<polyline points="198.8,423.5 202.8,425.6 205.9,430.9 208.5,434.8 209.7,440.3 215.4,440.7 220.7,438.3 223.9,435.8 230.0,436.3 234.5,437.6 236.6,442.0 238.7,445.9 237.3,451.2 237.4,457.6 234.3,460.5 230.3,462.3 229.0,466.8 225.3,469.5 228.8,467.1 230.2,462.5 234.3,460.5 237.6,458.0 237.3,452.4 238.8,447.8 237.3,443.2 235.4,438.5 230.0,436.3 224.7,435.8 221.1,438.1 217.3,440.4 209.7,440.3 208.5,434.8 205.9,430.9 203.3,426.7 205.6,422.8 208.7,418.3 213.1,416.6 217.5,414.3 219.8,410.0 219.9,404.1 218.0,399.9 215.3,396.8 215.6,391.1 214.3,385.1 216.4,380.4 217.3,375.0 216.4,380.4 214.2,384.3 215.4,389.4 215.6,395.4 218.0,399.9 219.9,404.1 219.9,409.8 217.8,413.9 213.6,416.4 209.1,417.8 206.7,421.3 202.5,425.0 198.8,423.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Bom Jardim</title></polyline>
+<polyline points="468.7,422.9 464.7,420.2 466.7,415.8 485.6,392.5 486.2,382.8 496.8,373.8 500.1,369.4 497.6,372.9 486.8,377.9 472.0,382.1 469.9,378.4 470.6,371.4 469.4,366.4 468.3,360.1 467.8,354.8 468.3,360.1 469.4,366.4 470.6,371.4 469.9,378.4 472.0,382.1 486.2,382.8 485.8,391.4 468.2,413.1 464.9,419.8 468.8,422.0 468.7,422.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Mocajubal 2</title></polyline>
+<polyline points="529.5,526.1 527.2,521.1 528.2,515.7 527.6,508.7 524.5,500.1 530.5,500.2 540.2,502.0 546.1,503.3 558.5,503.8 582.9,504.5 563.7,504.0 548.9,503.5 540.6,502.1 532.3,500.4 526.5,500.3 526.7,506.1 528.1,511.1 527.4,519.3 528.6,524.3 529.5,526.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Trajano</title></polyline>
+<polyline points="153.9,679.3 147.6,679.1 141.8,678.1 136.2,679.2 131.7,681.3 124.3,683.1 119.7,685.2 115.2,688.7 111.7,691.2 106.8,690.2 102.4,688.3 97.4,689.5 91.0,689.3 87.3,687.1 82.9,685.0 76.7,685.7 82.0,685.0 86.9,686.9 91.0,689.3 96.5,689.5 101.7,688.4 106.5,690.1 111.1,691.3 115.2,688.7 118.2,686.0 124.3,683.1 129.5,682.0 134.8,679.6 139.0,678.1 144.7,678.8 150.1,679.2 153.9,679.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Carrapicho</title></polyline>
+<polyline points="177.3,832.0 182.4,832.8 192.5,825.0 192.9,831.2 198.2,836.3 200.8,839.7 204.6,842.8 207.9,847.7 214.6,851.7 227.1,857.6 231.8,851.0 229.4,856.2 216.1,851.6 209.4,849.8 206.5,846.4 200.8,839.7 198.2,836.3 192.6,833.3 194.0,828.9 185.2,830.6 181.3,833.1 177.3,832.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola São Pedro</title></polyline>
+<polyline points="208.5,703.4 212.8,701.4 218.7,700.4 219.3,692.9 214.9,691.3 210.4,689.2 206.1,687.0 203.6,682.8 199.3,681.4 197.7,677.2 193.9,674.5 193.3,669.0 191.1,665.0 189.1,661.1 184.0,658.3 188.3,660.8 190.7,664.2 192.9,668.1 193.2,673.6 196.9,675.9 198.8,680.5 203.3,682.7 205.9,686.7 209.4,689.0 213.4,691.1 219.3,692.9 220.4,698.4 217.3,701.1 210.6,702.8 208.5,703.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Coqueiro 2</title></polyline>
+<polyline points="227.4,312.4 231.9,313.7 237.9,313.2 242.3,310.4 246.4,308.3 251.8,309.2 254.4,312.8 257.1,315.9 259.0,320.3 264.4,322.7 269.0,324.4 274.7,325.7 281.1,326.0 283.4,329.7 281.1,326.0 274.7,325.7 269.0,324.4 264.4,322.7 260.0,321.2 257.1,315.9 254.4,312.8 252.0,309.3 246.8,308.2 242.3,310.4 238.4,312.9 234.5,314.9 230.2,313.4 227.4,312.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Santana de Caboclo</title></polyline>
+<polyline points="181.6,547.6 185.1,551.6 187.2,555.6 192.9,557.3 195.4,553.6 198.7,550.9 204.1,548.8 208.5,546.4 213.2,544.8 209.6,542.6 207.7,538.5 205.3,534.7 203.2,529.8 202.2,524.3 201.1,519.4 202.2,524.3 203.2,529.8 204.9,533.9 207.4,537.6 208.9,542.2 212.6,544.3 216.6,546.5 220.1,549.3 226.7,550.9 231.6,552.0 236.1,553.2 231.6,552.0 226.7,550.9 220.9,549.7 217.6,547.1 213.2,544.8 208.5,546.4 204.1,548.8 199.8,550.5 196.0,552.9 194.0,557.3 188.6,556.7 185.1,551.6 182.5,547.8 181.6,547.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Cajapari</title></polyline>
+<polyline points="274.7,813.8 282.1,815.1 290.4,817.5 296.5,816.8 300.6,814.1 304.1,810.6 306.5,807.1 309.9,802.3 312.3,799.0 316.6,797.5 322.1,799.0 324.3,804.3 323.3,799.4 318.8,798.1 313.0,798.6 309.9,802.3 306.5,807.1 304.1,810.6 301.3,813.6 296.5,816.8 291.8,817.9 282.1,815.1 276.6,813.5 274.7,813.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Camuritiua</title></polyline>
+<polyline points="424.4,723.3 419.8,725.3 417.2,728.5 415.8,732.8 412.7,735.5 410.4,739.3 409.0,743.7 407.3,747.8 406.8,753.3 411.3,759.6 414.5,762.6 416.2,766.6 414.5,762.6 411.5,759.8 408.3,756.7 404.9,754.4 406.0,749.8 407.9,745.6 409.9,741.6 411.7,737.2 414.1,733.8 416.8,730.2 419.0,726.1 422.8,723.8 424.4,723.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Itauna</title></polyline>
+<polyline points="426.6,721.8 426.3,716.3 425.7,711.0 424.7,706.1 423.2,701.8 421.6,697.5 424.3,694.2 428.8,692.5 432.6,690.5 435.3,687.3 439.6,685.8 441.1,681.4 439.5,685.6 435.4,687.2 432.6,690.5 428.8,692.5 424.5,694.0 421.6,697.1 423.2,701.8 424.7,706.1 425.7,711.0 426.3,716.3 426.6,721.8 426.6,721.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Santa Barbara</title></polyline>
+<polyline points="343.7,504.8 349.0,505.6 352.5,508.2 351.8,513.4 353.0,518.7 356.9,521.1 359.4,525.1 362.0,528.5 365.0,532.7 368.0,535.8 372.4,538.3 375.0,541.5 372.4,538.3 368.9,535.8 365.0,532.7 362.4,529.6 360.1,525.7 357.4,522.0 354.3,519.1 350.4,517.2 352.6,512.9 349.0,505.6 343.7,504.8 343.7,504.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Itapiranga</title></polyline>
+<polyline points="234.3,730.1 238.5,734.6 241.3,740.3 243.6,745.0 246.8,752.6 249.2,757.5 253.1,755.5 255.1,751.1 255.9,745.5 255.1,751.1 253.1,755.5 250.2,758.4 247.9,754.7 244.7,747.5 242.5,742.6 240.1,737.9 237.0,731.3 234.3,730.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Tiquara</title></polyline>
+<polyline points="107.3,752.0 111.3,749.7 116.4,748.1 120.6,745.7 125.3,744.6 131.3,745.3 136.4,746.9 139.2,749.8 143.1,752.5 148.4,752.9 153.0,751.4 148.4,752.9 143.1,752.5 139.2,749.8 136.4,746.9 131.3,745.3 125.9,744.7 120.7,745.4 117.9,748.6 111.3,749.7 107.3,752.0 107.3,752.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Bituba</title></polyline>
+<polyline points="269.2,385.1 266.2,388.0 265.5,393.0 262.4,395.6 259.6,400.6 255.9,402.6 250.9,401.5 246.6,399.7 242.4,396.9 237.9,395.3 242.4,396.9 246.0,399.7 250.9,401.5 254.3,404.3 258.3,402.4 260.1,398.3 262.9,394.8 267.3,391.1 268.6,385.9 269.2,385.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Peroba de Baixo</title></polyline>
+<circle cx="554.0" cy="511.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="385.3" cy="482.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="237.9" cy="395.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="422.6" cy="461.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="553.7" cy="511.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="620.2" cy="528.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="196.5" cy="461.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="446.6" cy="623.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="409.6" cy="755.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="446.7" cy="620.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="406.5" cy="757.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="382.4" cy="194.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="134.3" cy="653.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="272.4" cy="631.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="201.7" cy="840.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="296.7" cy="432.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="376.8" cy="614.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="177.7" cy="855.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="236.0" cy="800.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="188.1" cy="794.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="336.5" cy="408.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="258.0" cy="426.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="251.4" cy="753.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="250.4" cy="610.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="204.7" cy="365.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="336.0" cy="407.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="203.4" cy="366.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="160.6" cy="860.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="302.3" cy="812.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="372.2" cy="751.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="248.9" cy="607.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="437.5" cy="616.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="266.7" cy="791.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="422.2" cy="694.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="497.2" cy="475.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="171.8" cy="561.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="285.3" cy="783.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="194.0" cy="833.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="191.2" cy="830.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="180.8" cy="852.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="341.0" cy="752.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="166.0" cy="837.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="259.4" cy="686.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="666.9" cy="580.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="104.9" cy="836.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="160.8" cy="836.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="103.5" cy="835.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="378.7" cy="377.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="261.4" cy="823.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="443.9" cy="447.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="260.1" cy="827.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="502.4" cy="514.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="291.1" cy="816.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="620.5" cy="564.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="278.4" cy="821.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="630.8" cy="540.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="278.3" cy="820.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="341.2" cy="739.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="157.5" cy="672.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="624.5" cy="561.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="340.0" cy="736.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="483.5" cy="548.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="414.6" cy="624.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="614.4" cy="564.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="511.5" cy="462.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="399.7" cy="308.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="416.4" cy="728.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="427.5" cy="715.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="410.4" cy="605.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="200.6" cy="706.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="266.2" cy="835.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="103.3" cy="759.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="629.1" cy="255.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="141.9" cy="840.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="177.0" cy="633.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="397.3" cy="308.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="215.4" cy="700.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="628.3" cy="256.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="215.6" cy="803.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="349.7" cy="211.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="625.3" cy="553.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="176.9" cy="634.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="495.9" cy="223.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="525.6" cy="525.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="490.9" cy="437.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="417.3" cy="110.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="236.9" cy="732.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="263.5" cy="839.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="348.2" cy="505.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="629.7" cy="549.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="626.4" cy="557.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="625.5" cy="554.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="424.4" cy="107.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="562.5" cy="148.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="470.8" cy="424.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="492.3" cy="435.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="490.0" cy="228.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="230.8" cy="312.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="184.0" cy="386.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="254.6" cy="497.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="259.6" cy="588.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="412.7" cy="623.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="205.8" cy="704.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="237.1" cy="729.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="110.5" cy="854.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="349.6" cy="208.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="467.8" cy="330.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="259.5" cy="587.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="230.6" cy="313.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="271.9" cy="382.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="296.3" cy="546.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="218.3" cy="643.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="409.7" cy="622.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="614.8" cy="571.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="460.1" cy="456.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="268.3" cy="386.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="179.8" cy="546.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="424.8" cy="721.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="214.6" cy="797.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="641.9" cy="319.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="613.4" cy="210.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="487.1" cy="97.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="109.2" cy="755.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="459.9" cy="455.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="512.8" cy="458.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="424.9" cy="720.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="250.2" cy="498.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="197.3" cy="422.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="184.4" cy="385.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="469.6" cy="422.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="642.0" cy="319.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="467.0" cy="333.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="360.8" cy="394.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="488.7" cy="100.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="359.8" cy="394.2" r="2.2" fill="#b9b9b2"/>
+<polygon points="615.6,561.1 603.9,582.7 627.3,582.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="628.0,542.9 618.1,561.0 637.8,561.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="468.7,414.0 460.2,429.6 477.2,429.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="460.5,446.9 453.1,460.5 467.9,460.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="391.4,302.7 384.6,315.2 398.2,315.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="347.5,197.2 339.5,211.9 355.4,211.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="422.4,102.4 415.4,115.4 429.5,115.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="173.7,627.5 163.6,646.1 183.8,646.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="173.7" y="659.7" text-anchor="middle" fill="#5c5c57">Povoado Oitiua Zona Rural</text>
+<polygon points="107.1,742.5 98.2,759.0 116.1,759.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="107.1" y="772.4" text-anchor="middle" fill="#5c5c57">Povoado Raimundo Su Zona Rural</text>
+<polygon points="139.1,837.7 130.6,853.4 147.6,853.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="274.6,804.9 266.5,819.7 282.6,819.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="260.7,835.4 253.5,848.5 267.8,848.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="561.0,143.7 554.0,156.5 567.9,156.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="492.1,217.7 484.2,232.2 500.0,232.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="266.0,444.1 259.4,456.3 272.6,456.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="269.1,376.7 261.2,391.3 277.0,391.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="181.5,540.3 174.4,553.4 188.6,553.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="426.4,713.0 418.0,728.5 434.8,728.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="102.2,789.4 95.2,802.4 109.2,802.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="177.5,823.2 169.5,838.0 185.5,838.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="471.2,506.7 462.9,521.9 479.4,521.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="512.4,450.1 505.4,463.1 519.5,463.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="614.4,567.8 604.8,585.6 624.1,585.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="261.6,579.5 254.4,592.9 268.9,592.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="614.8,566.6 604.4,585.9 625.3,585.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="347.1,726.8 338.3,743.1 355.9,743.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="251.0,490.8 244.1,503.5 257.8,503.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="182.9,378.4 175.6,391.7 190.1,391.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="153.7,672.3 147.0,684.8 160.5,684.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="208.5,695.7 201.4,708.8 215.7,708.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="643.7,312.8 636.8,325.7 650.7,325.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="303.1,236.3 296.5,248.5 309.7,248.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="212.5,789.6 205.7,802.2 219.4,802.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="410.3,611.6 403.2,624.7 417.4,624.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="343.3,498.1 336.5,510.7 350.1,510.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="530.0,518.7 522.8,531.9 537.1,531.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="108.8,850.7 101.4,864.3 116.3,864.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="198.8,416.2 191.9,428.9 205.8,428.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="492.7,427.2 485.5,440.4 499.8,440.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="227.4,306.0 221.2,317.4 233.6,317.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="234.2,723.1 227.6,735.2 240.8,735.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="488.1,92.4 481.6,104.4 494.6,104.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="297.8,535.6 291.2,547.8 304.4,547.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="217.9,638.7 211.5,650.4 224.2,650.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="362.3,386.5 355.4,399.2 369.2,399.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="467.0,328.6 460.9,339.8 473.0,339.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="424.5,717.3 418.8,727.9 430.3,727.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="613.9,207.2 608.5,217.1 619.2,217.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="472.1,732.0 465.8,743.6 478.4,743.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="149.2,828.5 143.3,839.3 155.0,839.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="383.0" cy="149.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="390.0" y="144.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Canavieira 9,0 km</text>
+<circle cx="389.2" cy="672.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="396.2" y="667.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santa Rita 8,3 km</text>
+<circle cx="388.6" cy="671.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="395.6" y="686.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Santa Bárbara 8,3 km</text>
+<circle cx="304.3" cy="640.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="311.3" y="635.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Caçador 7,3 km</text>
+<circle cx="298.5" cy="659.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="305.5" y="654.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Cajiba 7,3 km</text>
+<circle cx="318.1" cy="674.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="272.2" cy="678.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="309.8" cy="691.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="316.8" y="706.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Cajiba 6,3 km</text>
+<circle cx="459.7" cy="290.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="466.7" y="285.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pacuri 5,7 km</text>
+<circle cx="460.5" cy="290.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="467.5" y="305.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Pacurí 5,7 km</text>
+<circle cx="585.9" cy="165.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="355.7" y="160.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Itapera 5,5 km</text>
+<circle cx="223.8" cy="471.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="230.8" y="466.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Bom Jardim 5,4 km</text>
+<circle cx="467.9" cy="354.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="474.9" y="349.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Mocajubal 2 5,4 km</text>
+<circle cx="585.0" cy="168.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="491.2" y="183.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Itapera 5,3 km</text>
+<circle cx="364.0" cy="656.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="582.9" cy="506.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="352.7" y="501.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Trajano 5,0 km</text>
+<circle cx="75.7" cy="684.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="82.7" y="679.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Carrapicho 5,0 km</text>
+<circle cx="233.1" cy="849.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="240.1" y="844.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola São Pedro 4,9 km</text>
+<circle cx="232.4" cy="849.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="239.4" y="864.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Cabral 4,8 km</text>
+<circle cx="345.9" cy="600.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="352.9" y="595.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Bordao 4,7 km</text>
+<circle cx="387.8" cy="638.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="394.8" y="653.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Porto do Meio 4,6 km</text>
+<circle cx="386.1" cy="639.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="184.0" cy="658.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="230.8" cy="859.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="502.7" cy="365.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="509.7" y="380.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Queruver 4,4 km</text>
+<circle cx="230.0" cy="857.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="286.6" cy="328.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="293.6" y="323.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Santana de Caboclo 4,3 km</text>
+<circle cx="200.7" cy="519.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="207.7" y="514.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Cajapari 4,2 km</text>
+<circle cx="237.5" cy="458.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="244.5" y="453.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Codó 4,2 km</text>
+<circle cx="240.2" cy="552.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="247.2" y="547.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Itacunhem 4,1 km</text>
+<circle cx="216.9" cy="371.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="223.9" y="366.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Corre Fresco 4,1 km</text>
+<circle cx="284.0" cy="329.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="291.0" y="344.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santana de Caboclo 4,0 km</text>
+<circle cx="325.9" cy="806.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="332.9" y="801.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Camuritiua 3,9 km</text>
+<circle cx="367.1" cy="704.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="374.1" y="719.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Maria Preta ou Timbira 3,8 km</text>
+<circle cx="286.0" cy="759.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="293.0" y="754.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Beju-Açu 3,7 km</text>
+<circle cx="428.7" cy="815.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="435.7" y="830.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Itauna 3,6 km</text>
+<circle cx="291.5" cy="735.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="370.7" cy="709.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="443.4" cy="679.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="375.0" cy="541.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="382.0" y="536.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Itapiranga 3,3 km</text>
+<circle cx="256.4" cy="740.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="263.4" y="735.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Tiquara 3,2 km</text>
+<circle cx="372.0" cy="714.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="371.8" cy="715.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="153.6" cy="750.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="235.9" cy="395.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="242.9" y="390.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Peroba de Baixo 3,0 km</text>
+<rect x="606.7" y="575.3" width="10" height="10" fill="#1d1d1b"/><text x="620.7" y="598.3" font-weight="600" fill="#1d1d1b">Sede de Alcântara</text>
+<line x1="35" x2="120.7" y1="1046.6" y2="1046.6" stroke="#8a8a84" stroke-width="2"/><text x="35" y="1060.6" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="1037.6188637617197" y2="1037.6188637617197" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="1041.6188637617197" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,1030.6 421.4,1042.9 434.6,1042.9" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="1041.6188637617197" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="1055.6188637617197" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="1064.6188637617197" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="1060.6188637617197" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="1064.6188637617197" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1083.6188637617197" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1087.6188637617197" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1083.6188637617197" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1087.6188637617197" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1106.6188637617197" y2="1106.6188637617197" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1110.6188637617197" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1129.6188637617197" y2="1129.6188637617197" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1133.6188637617197" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Sem rotas publicadas no DJE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (14):</strong> Comunidade Quilombola Canavieira, Santa Rita, Comunidade Quilombola Santa Bárbara, Caçador, Cajiba, Sao Francisco, Sao Mauricio, Comunidade Quilombola Cajiba, Pacuri, Comunidade Quilombola Pacurí, Comunidade Quilombola Itapera, Bom Jardim, Comunidade Quilombola Mocajubal 2 e Itapera.</li>
+<li><strong>De 3 a 5 km (31):</strong> Comunidade Quilombola Curuçá, Comunidade Quilombola Trajano, Comunidade Quilombola Carrapicho, Comunidade Quilombola São Pedro, Cabral, Bordao, Porto do Meio, Comunidade Quilombola Santa Rita, Comunidade Quilombola Coqueiro 2, Ilha das Cutias, Comunidade Quilombola Queruver, Comunidade Quilombola Santa Catarina, Comunidade Quilombola Santana de Caboclo, Comunidade Quilombola Cajapari, Comunidade Quilombola Codó, Itacunhem, Comunidade Quilombola Corre Fresco, Santana de Caboclo, Camuritiua, Comunidade Quilombola Maria Preta ou Timbira, Beju-Açu, Itauna, Comunidade Quilombola São Maurício, Comunidade Quilombola Timbira, Santa Barbara, Comunidade Quilombola Itapiranga, Tiquara, Comunidade Quilombola São Benedito, Curuçá, Comunidade Quilombola Bituba e Peroba de Baixo.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (152):</strong> Agrovila Marundá, Agrovila Pepital, Agrovila Peru, Ararengaua, Baixa do Grilo, Baracatatiua, Barreiro, Bebedouro, Boa Vista, Boca de Salina, Brito, Cajueiro, Canelatiua, Castelo, Cativeiro, Centro Alegre, Centro das Bananas, Cigadilho, Comunidade Quilombola Agrovila Marundá, Comunidade Quilombola Agrovila Pepital, Comunidade Quilombola Agrovila Peru, Comunidade Quilombola Alcântara, Comunidade Quilombola Anel Contorno, Comunidade Quilombola Ararengaua, Comunidade Quilombola Baiacuaua, Comunidade Quilombola Baixa Grande, Comunidade Quilombola Baracatatiua, Comunidade Quilombola Barreiro, Comunidade Quilombola Belém, Comunidade Quilombola Boa Vista, Comunidade Quilombola Bom Jesus, Comunidade Quilombola Brito, Comunidade Quilombola Caicaua, Comunidade Quilombola Cajueiro, Comunidade Quilombola Canelatiua, Comunidade Quilombola Castelo, Comunidade Quilombola Centro Alegre, Comunidade Quilombola Coco Ema, Comunidade Quilombola Conceição, Comunidade Quilombola Croa, Comunidade Quilombola Cujupé Novo, Comunidade Quilombola Cujupé Velho, Comunidade Quilombola Engenho, Comunidade Quilombola Espera, Comunidade Quilombola Esteio, Comunidade Quilombola Goiabal, Comunidade Quilombola Iguaíba, Comunidade Quilombola Iguaíba 2, Comunidade Quilombola Ilha do Cajual, Comunidade Quilombola Iririzal, Comunidade Quilombola Itamatatiua, Comunidade Quilombola Itaperaí, Comunidade Quilombola Itapuauá, Comunidade Quilombola Itauaú, Comunidade Quilombola Jacaré, Comunidade Quilombola Janã, Comunidade Quilombola Japeú, Comunidade Quilombola Jerucu, Comunidade Quilombola Ladeira, Comunidade Quilombola Lisboa, Comunidade Quilombola Macaco, Comunidade Quilombola Macacos, Comunidade Quilombola Mamuna, Comunidade Quilombola Mangueira, Comunidade Quilombola Mangueiral, Comunidade Quilombola Manival, Comunidade Quilombola Maruda, Comunidade Quilombola Mocagituba, Comunidade Quilombola Mocagituba 3, Comunidade Quilombola Mocajituba, Comunidade Quilombola Mocajubal 1, Comunidade Quilombola Murici, Comunidade Quilombola Mutiti, Comunidade Quilombola Oitiua, Comunidade Quilombola Palmeiras, Comunidade Quilombola Paquatíua, Comunidade Quilombola Paraíso, Comunidade Quilombola Pavão, Comunidade Quilombola Peri Açu, Comunidade Quilombola Perizinho, Comunidade Quilombola Peroba, Comunidade Quilombola Peroba de Baixo, Comunidade Quilombola Ponta Seca, Comunidade Quilombola Ponta d&#x27;Areia, Comunidade Quilombola Porto de Baixo, Comunidade Quilombola Portugal, Comunidade Quilombola Praia de Baixo, Comunidade Quilombola Prainha, Comunidade Quilombola Quiriritiua, Comunidade Quilombola Raimundo Su, Comunidade Quilombola Raimundo Sul, Comunidade Quilombola Remédios, Comunidade Quilombola Rio Grande, Comunidade Quilombola Rio dos Pau, Comunidade Quilombola Rua da Granja, Comunidade Quilombola Rua da União, Comunidade Quilombola Samucangaua, Comunidade Quilombola Samucangaua 1, Comunidade Quilombola Samucangaua 2, Comunidade Quilombola Santa Maria, Comunidade Quilombola Santo Inácio, Comunidade Quilombola Segurado, Comunidade Quilombola São João de Cortes, Comunidade Quilombola São Raimundo, Comunidade Quilombola Só Assim, Comunidade Quilombola Terra Mole, Comunidade Quilombola Tiquara, Comunidade Quilombola Triângulo, Comunidade Quilombola Tubarão, Comunidade Quilombola Tubarão 2, Comunidade Quilombola Vista Alegre, Cujupé Novo, Cujupé Velho, Espera, Esteio, Goiabal, Guanda, Iririzal, Itamatatiua, Itaperai, Itauaú, Itaúna, Japeú, Mamuna, Manival, Mocajituba, Oitiua, Pan-Mirim, Paraíso, Periaçu, Perizinho, Peroba, Ponta da Areia, Ponta do Jurumanduba, Porto do Boi, Praia de Baixo, Prainha, Quiriritiua, Raimundo Sul, Rio Grande, Santa Luiza, Santa Maria, Santana, Sao Benedito, Sao Joao de Cortes, Sao Raimundo, Segurado, São João de Cortes, Terra Mole, Tibotuba, Tubarao e Vista Alegre.</li>
+</ul><h2>Rotas da Justiça Eleitoral</h2>
+<p><strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-MA) para Alcântara.</strong> Pesquisamos todas as edições do DJE/TRE-MA publicadas desde o fim de julho de 2026. As rotas do mapa e da seção de propostas são sugestões deste levantamento.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 45 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Comunidade Quilombola Canavieira</strong></td><td>Sede – Comunidade Quilombola Canavieira – Sede</td><td>Comunidade Quilombola Canavieira</td><td>18,0 km (ida e volta)</td><td>~43 min</td></tr><tr><td><strong>Rota nova – Santa Rita</strong></td><td>Sede – Porto do Meio – Comunidade Quilombola Santa Rita – Comunidade Quilombola Curuçá – Comunidade Quilombola Santa Bárbara – Santa Rita – Bordao – Sede</td><td>Porto do Meio, Comunidade Quilombola Santa Rita, Comunidade Quilombola Curuçá, Comunidade Quilombola Santa Bárbara, Santa Rita, Bordao</td><td>23,7 km (ida e volta)</td><td>~46 min</td></tr><tr><td><strong>Rota nova – Caçador</strong></td><td>Sede – Curuçá – Comunidade Quilombola São Benedito – Comunidade Quilombola Timbira – Comunidade Quilombola Maria Preta ou Timbira – Sao Francisco – Comunidade Quilombola Cajiba – Cajiba – Caçador – Sao Mauricio – Comunidade Quilombola São Maurício – Beju-Açu – Sede</td><td>Curuçá, Comunidade Quilombola São Benedito, Comunidade Quilombola Timbira, Comunidade Quilombola Maria Preta ou Timbira, Sao Francisco, Comunidade Quilombola Cajiba, Cajiba, Caçador, Sao Mauricio, Comunidade Quilombola São Maurício, Beju-Açu</td><td>24,9 km (ida e volta)</td><td>~51 min</td></tr><tr><td><strong>Rota nova – Pacuri</strong></td><td>Sede – Pacuri – Comunidade Quilombola Pacurí – Sede</td><td>Pacuri, Comunidade Quilombola Pacurí</td><td>11,4 km (ida e volta)</td><td>~27 min</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Itapera</strong></td><td>Sede – Itapera – Comunidade Quilombola Itapera – Sede</td><td>Itapera, Comunidade Quilombola Itapera</td><td>11,0 km (ida e volta)</td><td>~27 min</td></tr><tr><td><strong>Rota nova – Bom Jardim</strong></td><td>Sede – Comunidade Quilombola Codó – Bom Jardim – Comunidade Quilombola Corre Fresco – Sede</td><td>Comunidade Quilombola Codó, Bom Jardim, Comunidade Quilombola Corre Fresco</td><td>18,7 km (ida e volta)</td><td>~45 min</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Mocajubal 2</strong></td><td>Agrovila Peru – Comunidade Quilombola Queruver – Comunidade Quilombola Mocajubal 2 – Agrovila Peru</td><td>Comunidade Quilombola Queruver, Comunidade Quilombola Mocajubal 2</td><td>13,9 km (ida e volta)</td><td>~26 min</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Trajano</strong></td><td>Sede – Comunidade Quilombola Trajano – Sede</td><td>Comunidade Quilombola Trajano</td><td>10,0 km (ida e volta)</td><td>~16 min</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Carrapicho</strong></td><td>Sede – Comunidade Quilombola Carrapicho – Sede</td><td>Comunidade Quilombola Carrapicho</td><td>10,0 km (ida e volta)</td><td>~24 min</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola São Pedro</strong></td><td>Sede – Cabral – Comunidade Quilombola São Pedro – Comunidade Quilombola Santa Catarina – Ilha das Cutias – Sede</td><td>Cabral, Comunidade Quilombola São Pedro, Comunidade Quilombola Santa Catarina, Ilha das Cutias</td><td>9,9 km (ida e volta)</td><td>~21 min</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Coqueiro 2</strong></td><td>Sede – Comunidade Quilombola Coqueiro 2 – Sede</td><td>Comunidade Quilombola Coqueiro 2</td><td>8,9 km (ida e volta)</td><td>~21 min</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Santana de Caboclo</strong></td><td>Sede – Santana de Caboclo – Comunidade Quilombola Santana de Caboclo – Sede</td><td>Santana de Caboclo, Comunidade Quilombola Santana de Caboclo</td><td>8,5 km (ida e volta)</td><td>~20 min</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Cajapari</strong></td><td>Sede – Comunidade Quilombola Cajapari – Itacunhem – Sede</td><td>Comunidade Quilombola Cajapari, Itacunhem</td><td>11,9 km (ida e volta)</td><td>~29 min</td></tr><tr><td><strong>Rota nova – Camuritiua</strong></td><td>Sede – Camuritiua – Sede</td><td>Camuritiua</td><td>7,8 km (ida e volta)</td><td>~12 min</td></tr><tr><td><strong>Rota nova – Itauna</strong></td><td>Sede – Itauna – Sede</td><td>Itauna</td><td>7,1 km (ida e volta)</td><td>~13 min</td></tr><tr><td><strong>Rota nova – Santa Barbara</strong></td><td>Sede – Santa Barbara – Sede</td><td>Santa Barbara</td><td>6,6 km (ida e volta)</td><td>~15 min</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Itapiranga</strong></td><td>Sede – Comunidade Quilombola Itapiranga – Sede</td><td>Comunidade Quilombola Itapiranga</td><td>6,7 km (ida e volta)</td><td>~15 min</td></tr><tr><td><strong>Rota nova – Tiquara</strong></td><td>Sede – Tiquara – Sede</td><td>Tiquara</td><td>6,4 km (ida e volta)</td><td>~10 min</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Bituba</strong></td><td>Sede – Comunidade Quilombola Bituba – Sede</td><td>Comunidade Quilombola Bituba</td><td>6,3 km (ida e volta)</td><td>~15 min</td></tr><tr><td><strong>Rota nova – Peroba de Baixo</strong></td><td>Sede – Peroba de Baixo – Sede</td><td>Peroba de Baixo</td><td>6,0 km (ida e volta)</td><td>~11 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMA</strong></p><p>Alcântara/MA, ___ de outubro de 2026.</p><p>Ao(À) Excelentíssimo(a) Senhor(a)<br><strong>[nome do(a) Juiz(a) Eleitoral]</strong><br>Juiz(a) Eleitoral da 52ª Zona Eleitoral – [sede da zona]/MA</p><p><strong>Assunto:</strong> Sugestão de rotas de transporte gratuito de eleitores da zona rural – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo(a) Senhor(a) Juiz(a),</p><p>O Município de Alcântara, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento das localidades rurais distantes do local de votação, para as quais não localizamos no Diário da Justiça Eleitoral (DJE/TRE-MA) quadro de percursos nem ato sobre o transporte de eleitores: Comunidade Quilombola Canavieira, Santa Rita, Comunidade Quilombola Santa Bárbara, Caçador, Cajiba, Sao Francisco, Sao Mauricio, Comunidade Quilombola Cajiba, Pacuri, Comunidade Quilombola Pacurí, Comunidade Quilombola Itapera, Bom Jardim, Comunidade Quilombola Mocajubal 2, Itapera, Comunidade Quilombola Curuçá, Comunidade Quilombola Trajano, Comunidade Quilombola Carrapicho, Comunidade Quilombola São Pedro, Cabral, Bordao, Porto do Meio, Comunidade Quilombola Santa Rita, Comunidade Quilombola Coqueiro 2, Ilha das Cutias, Comunidade Quilombola Queruver, Comunidade Quilombola Santa Catarina, Comunidade Quilombola Santana de Caboclo, Comunidade Quilombola Cajapari, Comunidade Quilombola Codó, Itacunhem, Comunidade Quilombola Corre Fresco, Santana de Caboclo, Camuritiua, Comunidade Quilombola Maria Preta ou Timbira, Beju-Açu, Itauna, Comunidade Quilombola São Maurício, Comunidade Quilombola Timbira, Santa Barbara, Comunidade Quilombola Itapiranga, Tiquara, Comunidade Quilombola São Benedito, Curuçá, Comunidade Quilombola Bituba e Peroba de Baixo.</p><p>Sugerimos, respeitosamente, que Vossa Excelência avalie instituir o transporte gratuito de eleitores no 2º turno, com as seguintes rotas:</p><ol><li>a criação da Rota nova – Comunidade Quilombola Canavieira (Sede – Comunidade Quilombola Canavieira – Sede);</li><li>a criação da Rota nova – Santa Rita (Sede – Porto do Meio – Comunidade Quilombola Santa Rita – Comunidade Quilombola Curuçá – Comunidade Quilombola Santa Bárbara – Santa Rita – Bordao – Sede);</li><li>a criação da Rota nova – Caçador (Sede – Curuçá – Comunidade Quilombola São Benedito – Comunidade Quilombola Timbira – Comunidade Quilombola Maria Preta ou Timbira – Sao Francisco – Comunidade Quilombola Cajiba – Cajiba – Caçador – Sao Mauricio – Comunidade Quilombola São Maurício – Beju-Açu – Sede);</li><li>a criação da Rota nova – Pacuri (Sede – Pacuri – Comunidade Quilombola Pacurí – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola Itapera (Sede – Itapera – Comunidade Quilombola Itapera – Sede);</li><li>a criação da Rota nova – Bom Jardim (Sede – Comunidade Quilombola Codó – Bom Jardim – Comunidade Quilombola Corre Fresco – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola Mocajubal 2 (Agrovila Peru – Comunidade Quilombola Queruver – Comunidade Quilombola Mocajubal 2 – Agrovila Peru);</li><li>a criação da Rota nova – Comunidade Quilombola Trajano (Sede – Comunidade Quilombola Trajano – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola Carrapicho (Sede – Comunidade Quilombola Carrapicho – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola São Pedro (Sede – Cabral – Comunidade Quilombola São Pedro – Comunidade Quilombola Santa Catarina – Ilha das Cutias – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola Coqueiro 2 (Sede – Comunidade Quilombola Coqueiro 2 – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola Santana de Caboclo (Sede – Santana de Caboclo – Comunidade Quilombola Santana de Caboclo – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola Cajapari (Sede – Comunidade Quilombola Cajapari – Itacunhem – Sede);</li><li>a criação da Rota nova – Camuritiua (Sede – Camuritiua – Sede);</li><li>a criação da Rota nova – Itauna (Sede – Itauna – Sede);</li><li>a criação da Rota nova – Santa Barbara (Sede – Santa Barbara – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola Itapiranga (Sede – Comunidade Quilombola Itapiranga – Sede);</li><li>a criação da Rota nova – Tiquara (Sede – Tiquara – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola Bituba (Sede – Comunidade Quilombola Bituba – Sede);</li><li>a criação da Rota nova – Peroba de Baixo (Sede – Peroba de Baixo – Sede).</li></ol><p>As rotas sugeridas atendem as localidades mais distantes. Caso esse Juízo já tenha definido rotas, pedimos que estas sugestões sejam consideradas naquilo que ainda não estiver contemplado.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Alcântara</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Alcântara; Quadro de percursos não localizado nas edições do DJE/TRE-MA consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

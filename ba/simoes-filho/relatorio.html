@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Simões Filho</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Simões Filho</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/simoes-filho.pdf?v=1792373010" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Simões Filho (33ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 33ª Zona Eleitoral <strong>3 rotas novas</strong> no transporte gratuito de Simões Filho.
+<strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-BA) para Simões Filho</strong>. As 3 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Simões Filho tem 90.162 eleitores aptos em 44 locais de votação e 264 seções. São 15 locais rurais, com 19.395 eleitores (22% do total).</li>
+<li>5 locais rurais ficam a 10 km ou mais da sede, com 7.045 eleitores. Os mais distantes: Rua Nova Esperança S/N - Zona Rural  (15,0 km), Largo Do Campo, 21 - Zona Rural (12,3 km) e Conjunto Ilha De São João - Zona Rural (11,8 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Passagem dos Teixeiras (9,2 km do local de votação), Comunidade Quilombola Dandá (4,8 km do local de votação) e Guerreiro (4,1 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 9 localidades rurais de Simões Filho que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Passagem dos Teixeiras</td><td>9,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Dandá</td><td>4,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Guerreiro</td><td>4,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 9 localidades rurais de Simões Filho, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1269" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Simões Filho: 3 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas (não há rotas publicadas no DJE), com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="483.1,163.8 472.2,135.0 368.6,81.5 298.2,80.0 266.5,123.1 154.0,447.3 168.8,477.0 110.3,534.1 125.7,586.6 91.0,689.7 54.3,730.8 63.3,761.6 35.0,845.8 45.9,918.7 113.3,1000.0 159.4,969.3 223.9,1017.8 283.8,1105.1 330.4,1137.3 350.8,1132.8 359.7,1080.3 413.2,1038.7 398.8,991.1 423.1,944.0 492.0,893.4 498.0,864.2 559.4,854.8 597.6,826.5 656.1,823.0 698.7,833.9 725.0,784.4 683.4,672.3 632.8,580.6 621.4,523.1 628.3,469.6 606.5,439.4 579.8,346.7 533.7,329.8 501.9,173.7 483.1,163.8 483.1,163.8" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="353.6,708.1 366.9,704.3 352.3,705.7 339.1,702.2 333.2,693.3 325.4,685.2 316.7,677.0 320.1,663.1 313.4,671.3 306.9,680.0 302.7,691.2 293.2,685.3 287.1,676.4 281.9,666.7 276.8,656.6 270.3,643.7 265.0,633.4 258.8,621.2 252.2,608.3 246.2,596.6 239.2,582.9 231.7,568.3 225.9,557.4 217.9,545.2 211.7,536.2 202.4,521.6 191.5,506.3 183.6,497.4 175.7,488.8 170.0,479.2 168.6,465.4 160.9,458.2 149.2,462.4 160.5,458.6 167.6,466.7 170.3,481.8 176.8,490.9 186.8,501.7 193.7,510.3 205.4,531.6 214.3,541.7 220.7,550.3 227.3,560.9 234.0,573.9 241.3,588.3 247.4,600.3 253.8,612.8 261.1,626.9 267.0,638.6 272.3,649.0 277.6,659.6 283.2,670.4 289.4,681.0 293.2,692.9 302.0,686.4 308.8,678.2 321.9,681.8 329.6,690.2 336.4,699.4 346.9,706.0 353.6,708.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Passagem dos Teixeiras</title></polyline>
+<polyline points="400.5,284.5 404.9,270.4 413.1,259.0 420.8,248.6 428.6,238.2 436.8,227.2 444.3,217.2 451.0,208.1 458.4,198.1 464.9,189.1 471.8,180.2 461.4,193.2 452.0,206.1 443.2,218.0 436.8,226.6 425.2,242.2 416.7,253.5 408.3,264.9 399.1,279.5 392.8,289.0 382.4,295.9 379.8,308.3 384.6,323.8 381.4,336.4 384.2,353.9 387.5,367.0 390.5,381.1 388.5,394.5 390.7,409.3 388.9,395.4 391.2,382.2 389.3,368.7 385.6,357.4 381.8,344.6 385.1,331.2 382.4,316.5 381.3,301.8 387.7,292.7 397.1,283.7 400.5,284.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Dandá</title></polyline>
+<polyline points="592.6,671.5 601.0,664.5 605.8,654.3 609.6,641.9 608.5,627.7 605.7,615.0 604.3,601.3 601.5,588.5 604.4,576.4 603.2,562.3 596.7,553.5 595.1,539.5 588.5,530.8 579.6,524.7 588.5,530.8 595.1,539.5 596.5,553.1 603.2,562.3 605.9,574.4 602.0,586.1 603.8,599.4 605.4,613.8 608.4,627.1 609.9,640.5 605.7,651.3 603.3,664.0 594.8,670.6 592.6,671.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Guerreiro</title></polyline>
+<circle cx="103.9" cy="923.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="94.7" cy="918.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="152.4" cy="748.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="405.8" cy="287.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="409.7" cy="287.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="445.4" cy="193.5" r="2.2" fill="#b9b9b2"/>
+<polygon points="365.6,714.8 350.9,742.0 380.4,742.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="377.5,699.9 363.7,725.4 391.4,725.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="376.0,654.8 364.1,676.8 388.0,676.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="368.1,697.0 351.0,728.5 385.2,728.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="351.7,717.1 339.7,739.4 363.8,739.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="353.2,691.4 337.0,721.4 369.5,721.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="366.6,766.1 352.5,792.0 380.7,792.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="420.6,710.5 408.9,732.2 432.4,732.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="400.8,817.2 386.3,843.9 415.3,843.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="404.8,821.6 392.1,845.0 417.5,845.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="381.0,806.9 366.1,834.3 395.8,834.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="383.5,739.3 371.7,760.9 395.2,760.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="443.0,826.6 431.7,847.3 454.2,847.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="71.7,856.5 61.6,875.1 81.8,875.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="71.7" y="888.8" text-anchor="middle" fill="#5c5c57">Ilha De São João</text>
+<polygon points="119.3,788.5 110.5,804.7 128.1,804.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="139.6,643.1 128.8,663.0 150.4,663.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="139.6" y="676.9" text-anchor="middle" fill="#5c5c57">Mapele</text>
+<polygon points="170.8,722.7 159.8,743.0 181.9,743.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="368.6,695.6 360.1,711.3 377.1,711.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="305.6,1009.0 294.0,1030.5 317.3,1030.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="305.6" y="1044.6" text-anchor="middle" fill="#5c5c57">Santo Antônio Do Rio Das Pedras</text>
+<polygon points="400.8,271.9 389.1,293.5 412.6,293.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="400.8" y="307.6" text-anchor="middle" fill="#5c5c57">Palmares</text>
+<polygon points="442.5,179.6 432.5,197.9 452.4,197.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="442.5" y="211.5" text-anchor="middle" fill="#5c5c57">Pitanga De Palmares</text>
+<polygon points="592.7,658.9 580.4,681.5 604.9,681.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="592.7" y="695.8" text-anchor="middle" fill="#5c5c57">Góes Calmon</text>
+<polygon points="368.6,697.4 361.3,710.8 375.9,710.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="371.6,632.5 358.2,657.2 385.0,657.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="459.3,812.6 447.5,834.4 471.1,834.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="329.4,633.0 318.0,654.1 340.9,654.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="329.4" y="668.1" text-anchor="middle" fill="#5c5c57">Santa Rosa</text>
+<polygon points="509.4,679.5 496.9,702.5 521.9,702.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="447.9,669.3 436.1,691.1 459.7,691.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="440.0,826.1 430.7,843.3 449.3,843.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="108.4,823.3 100.1,838.5 116.6,838.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="380.0,752.9 369.0,773.3 391.0,773.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="383.0,657.1 370.8,679.4 395.1,679.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="57.8,844.1 45.3,867.1 70.3,867.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="354.2,744.8 342.6,766.3 365.9,766.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="438.5,682.2 424.8,707.4 452.2,707.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="428.1,833.5 415.9,856.0 440.3,856.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="404.8,784.3 392.5,807.0 417.1,807.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="490.5,684.9 479.4,705.5 501.7,705.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="449.4,798.2 438.1,819.1 460.7,819.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="449.4" y="833.1" text-anchor="middle" fill="#5c5c57">Pitanguinha</text>
+<polygon points="507.4,683.8 499.0,699.3 515.8,699.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="376.5,645.1 366.7,663.3 386.4,663.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="379.5,806.9 368.4,827.4 390.6,827.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="435.5,672.2 428.7,684.6 442.3,684.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="315.1,1020.2 308.4,1032.5 321.7,1032.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="140.3" cy="465.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="147.3" y="460.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Passagem dos Teixeiras 9,2 km</text>
+<circle cx="380.5" cy="336.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="387.5" y="331.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Dandá 4,8 km</text>
+<circle cx="576.8" cy="518.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="470.6" y="513.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Guerreiro 4,1 km</text>
+<rect x="343.1" y="702.5" width="10" height="10" fill="#1d1d1b"/><text x="357.1" y="725.5" font-weight="600" fill="#1d1d1b">Sede de Simões Filho</text>
+<line x1="35" x2="258.3" y1="1167.3" y2="1167.3" stroke="#8a8a84" stroke-width="2"/><text x="35" y="1181.3" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="1158.3060344827416" y2="1158.3060344827416" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="1162.3060344827416" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,1151.3 421.4,1163.6 434.6,1163.6" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="1162.3060344827416" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="1176.3060344827416" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="1185.3060344827416" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="1181.3060344827416" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="1185.3060344827416" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1204.3060344827416" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1208.3060344827416" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1204.3060344827416" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1208.3060344827416" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1227.3060344827416" y2="1227.3060344827416" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1231.3060344827416" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1250.3060344827416" y2="1250.3060344827416" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1254.3060344827416" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Sem rotas publicadas no DJE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (1):</strong> Passagem dos Teixeiras.</li>
+<li><strong>De 3 a 5 km (2):</strong> Comunidade Quilombola Dandá e Guerreiro.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (6):</strong> Comunidade Quilombola Fazenda Coqueiros, Comunidade Quilombola Palmares Ii, Comunidade Quilombola Pitanga dos Palmares, Comunidade Quilombola Rio dos Macacos, Mapele e Quilombo Rio dos Macacos.</li>
+</ul><h2>Rotas da Justiça Eleitoral</h2>
+<p><strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-BA) para Simões Filho.</strong> Pesquisamos todas as edições do DJE/TRE-BA publicadas desde o fim de julho de 2026. As rotas do mapa e da seção de propostas são sugestões deste levantamento.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 3 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Passagem dos Teixeiras</strong></td><td>Sede – Passagem dos Teixeiras – Sede</td><td>Passagem dos Teixeiras</td><td>19,1 km (ida e volta)</td><td>~21 min</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Dandá</strong></td><td>Sede – Comunidade Quilombola Dandá – Sede</td><td>Comunidade Quilombola Dandá</td><td>12,6 km (ida e volta)</td><td>~13 min</td></tr><tr><td><strong>Rota nova – Guerreiro</strong></td><td>Sede – Guerreiro – Sede</td><td>Guerreiro</td><td>8,2 km (ida e volta)</td><td>~12 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMSF</strong></p><p>Simões Filho/BA, ___ de outubro de 2026.</p><p>Ao(À) Excelentíssimo(a) Senhor(a)<br><strong>Leonardo Carvalho Tenório de Albuquerque</strong><br>Juiz(a) Eleitoral da 33ª Zona Eleitoral – Simões Filho/BA</p><p><strong>Assunto:</strong> Sugestão de rotas de transporte gratuito de eleitores da zona rural – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo(a) Senhor(a) Juiz(a),</p><p>O Município de Simões Filho, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento das localidades rurais distantes do local de votação, para as quais não localizamos no Diário da Justiça Eleitoral (DJE/TRE-BA) quadro de percursos nem ato sobre o transporte de eleitores: Passagem dos Teixeiras, Comunidade Quilombola Dandá e Guerreiro.</p><p>Sugerimos, respeitosamente, que Vossa Excelência avalie instituir o transporte gratuito de eleitores no 2º turno, com as seguintes rotas:</p><ol><li>a criação da Rota nova – Passagem dos Teixeiras (Sede – Passagem dos Teixeiras – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola Dandá (Sede – Comunidade Quilombola Dandá – Sede);</li><li>a criação da Rota nova – Guerreiro (Sede – Guerreiro – Sede).</li></ol><p>As rotas sugeridas atendem as localidades mais distantes. Caso esse Juízo já tenha definido rotas, pedimos que estas sugestões sejam consideradas naquilo que ainda não estiver contemplado.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Simões Filho</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Simões Filho; Quadro de percursos não localizado nas edições do DJE/TRE-BA consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Cabo de Santo Agostinho</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Cabo de Santo Agostinho</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/cabo-de-santo-agostinho.pdf?v=1792372727" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Cabo de Santo Agostinho (15ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 15ª Zona Eleitoral <strong>10 rotas novas</strong> no transporte gratuito de Cabo de Santo Agostinho.
+<strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-PE) para Cabo de Santo Agostinho</strong>. As 28 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Cabo de Santo Agostinho tem 171.646 eleitores aptos em 63 locais de votação e 500 seções. São 6 locais rurais, com 13.098 eleitores (8% do total).</li>
+<li>4 locais rurais ficam a 10 km ou mais da sede, com 8.884 eleitores. Os mais distantes: Juçaral (58,5 km), Engenho Arariba De Baixo, S/N  -  Cabo (27,5 km) e Rodovia Pe 28, Km 17, S/N, Praia De Gaibú (15,1 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Engenho Coimbra (32,5 km do local de votação), Engenho Cachoeira Tapada (18,8 km do local de votação), RD Agroindústria (16,7 km do local de votação), Engenho Mato Grosso (11,0 km do local de votação), Pau Santo 2 (10,9 km do local de votação), Engenho Burahem (10,5 km do local de votação), Usina Bom Jesus 2 (10,2 km do local de votação), Engenho Matas (10,1 km do local de votação), Pau Santo 1 (10,1 km do local de votação), Engenho Sacambu (9,9 km do local de votação), Engenho Jacobina 1 (9,4 km do local de votação), Rocas Velha (9,0 km do local de votação), Usina Bom Jesus 1 (8,4 km do local de votação), Engenho Jacobina (8,0 km do local de votação), Engenho Universo (7,9 km do local de votação), Engenho Castelo (7,8 km do local de votação), Pau Santo (7,7 km do local de votação), Compesa - Gurjaú (7,2 km do local de votação), Engenho Pau Santo 2 (6,4 km do local de votação), Engenho Pantorra (6,1 km do local de votação), Engenho Pau Santo 1 (5,9 km do local de votação), Engenho Sebastopol (5,0 km do local de votação), Sebastopol (4,2 km do local de votação), Agrovila do PA Arariba da Pedra (4,1 km do local de votação), Engenho Potozi (4,0 km do local de votação), Comunidade Quilombola Onze Negras (3,5 km do local de votação), Engenho Serraria (3,4 km do local de votação) e Liberdade (3,1 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 39 localidades rurais de Cabo de Santo Agostinho que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Engenho Coimbra</td><td>32,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Engenho Cachoeira Tapada</td><td>18,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>RD Agroindústria</td><td>16,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Engenho Mato Grosso</td><td>11,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Pau Santo 2</td><td>10,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Engenho Burahem</td><td>10,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Usina Bom Jesus 2</td><td>10,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Engenho Matas</td><td>10,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Pau Santo 1</td><td>10,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Engenho Sacambu</td><td>9,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Engenho Jacobina 1</td><td>9,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Rocas Velha</td><td>9,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Usina Bom Jesus 1</td><td>8,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Engenho Jacobina</td><td>8,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Engenho Universo</td><td>7,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Engenho Castelo</td><td>7,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Pau Santo</td><td>7,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Compesa - Gurjaú</td><td>7,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Engenho Pau Santo 2</td><td>6,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Engenho Pantorra</td><td>6,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Engenho Pau Santo 1</td><td>5,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Engenho Sebastopol</td><td>5,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sebastopol</td><td>4,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Agrovila do PA Arariba da Pedra</td><td>4,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Engenho Potozi</td><td>4,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Onze Negras</td><td>3,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Engenho Serraria</td><td>3,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Liberdade</td><td>3,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 39 localidades rurais de Cabo de Santo Agostinho, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 685" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Cabo de Santo Agostinho: 28 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas (não há rotas publicadas no DJE), com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="301.3,441.4 364.2,488.9 379.2,474.3 389.9,481.4 422.4,489.9 429.9,505.3 445.5,520.1 476.9,524.7 486.2,518.1 529.6,547.3 553.7,535.3 592.4,543.8 604.6,526.8 621.4,528.4 629.3,541.2 645.1,543.4 654.9,553.5 665.4,532.7 688.5,537.5 696.8,523.9 695.0,511.2 678.0,503.1 676.6,464.7 689.9,432.1 672.3,417.3 682.8,380.2 685.7,350.4 697.0,322.7 725.0,289.6 718.7,274.4 704.9,301.2 691.1,308.1 680.6,293.1 667.2,295.7 655.9,260.8 634.2,261.4 637.2,272.8 623.2,285.8 610.5,280.9 606.6,266.5 586.6,272.2 563.9,236.3 450.5,269.5 423.8,262.4 409.4,244.6 372.5,216.8 361.6,204.5 345.5,202.7 327.7,193.3 299.9,202.4 285.3,194.7 271.1,229.0 252.9,258.6 257.8,273.4 166.1,209.1 153.4,198.8 145.5,200.0 126.8,220.5 129.1,237.9 101.9,249.7 99.9,214.6 74.7,229.8 73.7,248.5 65.6,259.4 59.1,304.4 55.1,308.9 54.9,334.4 73.7,352.7 84.3,378.8 106.6,366.4 111.2,378.4 107.6,405.4 124.4,411.2 162.3,397.2 183.4,408.4 201.4,409.6 256.6,390.8 278.4,380.8 290.0,400.5 283.7,420.8 301.3,441.4 301.3,441.4" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="648.8,265.7 646.3,269.9 645.5,264.1 647.1,258.0 648.3,253.2 649.7,247.7 650.9,242.5 652.4,237.4 654.8,232.0 657.2,226.6 659.1,222.3 661.0,218.1 662.8,214.0 664.8,209.5 666.9,204.9 668.9,200.5 670.9,196.3 673.6,193.0 677.6,188.9 680.6,185.8 684.1,182.4 687.1,179.3 691.1,175.2 695.2,172.3 699.0,169.2 701.3,165.6 700.2,159.8 698.6,154.7 696.8,148.8 695.4,143.6 694.1,138.3 692.1,132.5 688.6,135.0 683.8,136.3 676.6,135.5 671.7,134.3 666.0,133.1 659.8,133.5 654.8,134.9 650.2,136.3 645.5,137.6 640.5,139.1 635.5,140.5 629.8,141.8 621.0,143.6 615.1,144.7 607.2,145.8 600.6,148.5 595.5,149.4 591.4,146.5 588.3,143.7 584.4,140.6 581.7,137.3 582.4,131.7 580.5,126.0 578.9,121.8 577.8,116.9 575.9,112.1 573.9,107.8 572.0,103.3 569.2,99.8 569.3,93.5 568.1,88.6 564.2,86.3 558.1,85.4 553.2,86.7 549.4,89.4 543.6,88.6 540.2,85.9 535.6,83.4 530.2,82.3 525.2,81.3 520.4,82.5 516.9,85.4 511.6,86.6 507.1,89.3 503.8,92.0 500.6,95.6 496.7,97.9 492.1,100.1 487.0,101.4 482.0,102.3 477.9,104.3 473.6,106.7 469.7,108.8 464.7,111.6 461.7,114.5 456.1,115.4 451.5,117.8 447.5,120.0 442.6,121.5 437.7,123.0 433.1,124.5 429.1,126.6 424.4,127.9 418.7,129.8 414.0,133.0 409.5,136.1 405.7,138.4 400.8,140.9 395.9,143.2 392.6,146.6 390.4,150.6 389.7,156.0 386.0,158.3 382.8,155.1 378.0,153.9 373.1,155.0 370.1,158.2 364.7,160.1 369.5,158.8 372.1,155.2 376.9,154.1 382.5,154.8 385.2,158.3 389.2,156.3 390.4,150.6 392.6,146.6 395.9,143.2 400.2,141.5 405.7,138.4 409.5,136.1 414.0,133.0 418.0,130.3 422.0,128.0 427.7,127.5 431.4,125.2 436.1,123.5 441.5,121.9 447.0,120.2 451.5,117.8 455.7,115.6 461.2,114.8 464.7,111.6 469.7,108.8 473.6,106.7 477.9,104.3 482.0,102.3 487.0,101.4 492.1,100.1 496.2,98.2 500.0,96.1 503.6,92.5 506.9,89.5 510.0,86.5 515.7,86.0 519.0,83.3 524.3,81.8 530.0,82.2 533.4,85.4 539.3,85.6 542.7,88.2 547.4,89.9 551.8,87.5 557.5,85.5 562.8,84.1 565.5,87.4 569.2,89.8 569.0,96.0 570.1,101.0 573.1,105.9 575.3,110.9 577.4,115.5 578.5,120.6 580.5,126.0 582.2,130.7 581.6,136.1 583.7,140.0 587.7,143.2 590.9,146.0 594.4,149.0 600.6,148.5 604.9,146.3 610.8,145.4 616.2,144.6 625.3,142.7 630.8,141.6 636.1,140.4 641.1,138.9 646.0,137.5 651.4,135.9 656.6,134.4 661.7,133.1 667.6,133.4 673.2,134.7 679.6,136.1 685.4,135.9 690.4,134.9 693.0,138.8 694.7,143.7 696.4,148.6 697.9,153.6 699.4,158.7 699.8,164.5 697.4,168.2 693.5,172.3 687.7,178.2 683.9,180.7 680.6,185.8 677.6,188.9 674.4,192.2 671.3,195.5 669.2,199.9 667.2,204.3 664.8,209.5 662.9,213.8 661.0,218.1 659.1,222.3 657.2,226.6 655.2,231.1 652.6,236.8 651.9,243.4 650.6,248.9 651.5,254.0 650.4,260.4 649.3,265.8 648.8,265.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Engenho Coimbra</title></polyline>
+<polyline points="124.7,260.0 124.3,254.4 126.1,250.3 131.9,250.5 136.8,252.7 140.1,255.3 138.6,260.2 138.1,265.9 138.3,272.3 139.6,278.6 141.4,283.3 144.3,287.9 145.5,292.8 144.3,287.9 142.5,283.7 139.7,280.1 138.9,274.7 137.8,269.8 138.5,263.9 139.1,258.3 137.4,253.8 135.0,250.2 129.8,251.3 126.6,248.3 126.4,242.6 129.0,239.3 127.3,233.2 126.2,228.0 125.8,222.1 122.9,217.7 119.1,214.5 114.1,215.7 107.9,214.8 102.3,212.6 98.1,208.0 95.6,204.2 93.4,199.4 92.4,194.4 89.4,191.4 87.1,187.4 87.3,180.7 84.8,176.6 78.5,177.3 72.6,176.7 66.6,174.6 62.3,177.6 58.6,182.2 55.1,185.0 54.9,191.0 53.3,195.8 52.6,201.8 51.8,207.2 53.6,211.9 55.7,215.7 55.6,221.8 56.5,227.3 54.9,232.4 53.6,237.7 51.3,241.7 47.3,244.3 42.8,245.7 38.8,248.6 36.2,252.5 35.0,257.8 39.6,260.4 45.2,262.9 49.4,266.2 52.0,269.7 50.4,275.2 49.6,282.2 49.1,290.4 49.8,296.9 53.6,302.3 54.6,307.3 60.5,306.5 60.1,312.3 59.7,318.1 57.4,322.0 58.2,327.2 57.1,332.3 124.7,260.0 124.7,260.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Engenho Cachoeira Tapada</title></polyline>
+<polyline points="124.7,260.0 124.3,254.4 126.1,250.3 131.9,250.5 136.8,252.7 140.1,255.3 138.6,260.2 138.1,265.9 138.3,272.3 139.6,278.6 141.4,283.3 144.3,287.9 145.5,292.8 151.8,292.2 156.4,290.8 160.8,288.5 166.9,289.2 171.0,287.3 175.0,289.3 179.0,292.8 181.5,296.5 184.0,301.5 189.5,302.3 194.8,301.5 197.0,297.6 197.3,291.7 200.6,287.3 202.9,283.3 204.5,278.6 208.5,276.3 213.4,277.8 218.2,276.4 222.1,274.4 218.2,276.4 213.4,277.8 208.5,276.3 204.5,278.6 202.9,283.3 200.6,287.3 197.6,291.1 197.1,296.6 195.3,301.0 190.1,302.4 184.5,301.7 181.4,298.7 179.6,293.4 175.9,289.9 171.4,287.6 167.4,289.7 162.8,287.7 159.3,290.4 153.8,291.2 149.6,293.4 145.0,291.0 144.0,285.6 140.4,283.3 139.1,276.2 138.0,271.1 138.3,264.6 139.1,258.3 137.4,253.8 135.0,250.2 129.8,251.3 124.7,252.5 124.0,258.3 124.7,260.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Usina Bom Jesus 2</title></polyline>
+<polyline points="219.8,405.6 224.9,404.8 228.6,402.5 234.1,398.8 239.8,397.0 245.6,395.8 250.9,393.3 256.9,392.2 261.8,390.3 264.7,387.3 268.3,384.8 273.4,383.4 277.0,380.9 284.1,381.7 290.2,382.0 295.5,383.5 300.4,386.6 305.4,385.6 309.6,383.7 313.0,381.0 315.2,377.2 313.0,381.0 315.1,385.3 317.8,388.6 321.4,391.2 324.5,394.3 326.8,398.1 328.2,403.2 330.2,408.1 333.4,412.6 330.8,408.9 328.2,403.2 326.7,398.5 324.7,394.5 321.7,391.5 318.1,389.0 315.4,385.6 312.9,382.1 314.5,377.7 313.6,372.7 307.5,372.7 304.1,369.9 299.8,366.2 296.7,363.0 294.0,359.4 290.2,356.7 289.5,351.5 292.2,348.0 290.2,343.8 289.2,338.6 288.1,333.3 289.1,328.3 289.5,322.8 106.6,319.8 76.9,342.8 78.4,347.2 78.5,353.1 74.8,355.9 74.6,362.1 76.4,366.4 77.1,372.2 80.2,375.9 84.0,379.5 87.0,383.0 85.6,388.1 84.7,395.6 83.2,402.2 81.4,409.5 79.8,416.3 79.0,424.0 78.4,430.6 83.1,428.6 87.5,426.2 91.6,424.1 95.4,421.6 100.2,420.2 105.1,418.7 110.3,419.5 116.5,421.0 121.5,423.9 120.0,428.7 120.9,435.2 125.9,437.2 132.0,436.9 138.0,437.0 142.1,439.2 148.2,440.0 155.4,440.2 161.7,438.2 167.7,438.5 174.5,436.7 178.3,434.6 184.6,433.8 185.8,438.7 187.0,433.7 191.0,430.9 195.2,429.0 198.9,426.2 203.0,423.6 207.4,421.9 211.6,419.9 208.7,416.8 209.7,411.8 212.9,409.0 217.1,407.1 219.8,405.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – RD Agroindústria</title></polyline>
+<polyline points="219.8,405.6 224.9,404.8 228.6,402.5 234.1,398.8 239.8,397.0 245.6,395.8 250.9,393.3 256.9,392.2 261.8,390.3 271.0,386.3 275.7,383.8 281.3,383.3 287.3,381.5 293.6,382.4 298.6,385.3 303.7,386.4 307.7,383.5 312.4,382.1 314.4,378.1 314.9,372.7 320.5,372.3 324.1,369.6 328.2,367.4 331.0,364.2 334.2,361.3 333.0,356.4 335.8,353.1 340.9,352.1 346.2,352.8 349.2,355.8 352.2,358.8 353.9,363.2 350.2,361.0 352.2,357.0 349.1,354.1 351.9,351.0 354.6,347.7 351.5,344.7 349.0,341.2 348.1,336.1 346.7,331.5 342.2,329.9 339.7,333.6 337.6,337.4 336.9,342.9 338.6,347.1 337.6,352.4 333.3,354.1 334.0,359.5 331.8,363.9 328.5,366.9 324.7,369.5 321.1,372.0 316.0,373.0 314.5,377.5 312.7,381.7 308.3,383.5 303.7,386.4 298.6,385.3 294.4,382.9 288.3,381.5 282.8,383.4 276.6,383.4 272.5,385.4 265.4,389.4 260.0,391.1 253.9,392.6 249.0,393.7 243.0,397.0 236.5,398.0 231.6,400.0 227.7,403.0 223.6,405.0 219.8,405.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Engenho Burahem</title></polyline>
+<polyline points="455.1,382.5 452.0,379.2 454.3,375.4 457.1,371.7 455.6,367.3 454.7,362.1 451.2,359.6 447.5,357.2 443.2,354.2 439.2,351.0 440.4,346.2 441.0,340.9 437.6,338.3 433.3,336.4 432.6,330.6 429.9,326.8 428.4,322.2 424.8,319.8 426.2,315.2 431.0,314.1 436.3,313.4 438.7,309.3 441.2,305.6 438.4,302.4 433.1,300.5 429.3,298.3 424.3,299.2 429.3,298.3 433.1,300.5 437.7,302.1 441.1,304.6 439.1,308.5 437.4,312.9 432.3,313.8 427.2,314.8 422.8,312.1 421.2,307.6 422.8,312.1 425.6,315.3 430.6,314.1 435.8,313.2 438.4,309.7 440.9,306.1 438.4,302.4 433.1,300.5 429.3,298.3 426.0,295.5 426.8,290.3 424.8,286.1 424.4,280.6 422.0,276.8 418.1,274.7 415.6,278.3 414.0,283.6 413.8,289.8 408.8,291.6 404.9,293.6 408.8,291.6 413.3,290.1 414.0,283.6 415.6,278.3 416.7,273.3 420.3,276.0 423.6,278.7 424.2,284.2 426.0,288.5 426.8,293.9 428.6,298.1 433.1,300.5 437.7,302.1 441.1,304.6 439.1,308.5 437.4,312.9 432.3,313.8 427.2,314.8 424.5,317.9 427.4,321.1 429.4,325.2 431.5,329.1 432.4,334.6 435.5,337.4 439.4,339.5 441.0,344.0 440.6,349.7 442.8,353.7 446.2,356.3 449.7,358.7 453.6,360.8 454.1,366.4 457.3,369.5 455.8,374.2 452.7,377.5 454.8,382.2 455.1,382.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Engenho Mato Grosso</title></polyline>
+<polyline points="514.1,386.2 518.2,382.3 519.7,377.7 522.8,373.9 528.1,368.4 533.2,363.1 538.4,357.1 542.4,353.2 545.0,349.8 548.0,346.2 544.1,350.1 541.1,353.6 537.9,357.4 534.9,361.0 530.8,365.2 524.9,363.0 521.0,359.5 517.9,356.6 517.1,351.5 514.6,348.0 511.2,344.8 508.4,341.6 503.6,340.5 504.7,335.2 510.8,333.1 515.3,331.4 520.1,329.2 526.2,328.6 524.2,324.6 520.0,320.8 516.2,318.4 512.4,316.2 511.0,311.4 508.7,307.8 510.5,303.6 509.7,298.3 506.0,296.1 502.8,293.3 500.0,290.0 497.0,286.9 497.3,280.6 497.9,274.8 497.3,280.6 496.7,286.0 499.4,289.3 502.1,292.6 505.4,295.3 509.1,297.8 508.6,303.9 505.4,307.4 499.0,306.8 494.5,305.4 489.5,306.4 483.6,306.5 477.9,305.8 473.0,306.9 467.7,306.0 464.9,302.3 461.1,300.0 464.9,302.3 467.7,306.0 473.0,306.9 478.2,307.8 483.1,306.7 489.2,306.7 494.0,305.3 499.0,306.8 505.4,307.4 509.8,309.6 511.9,314.8 516.2,318.4 520.0,320.8 523.6,324.0 526.3,327.5 528.8,331.0 531.7,335.0 534.6,338.3 539.9,339.9 543.4,342.8 548.2,344.2 545.4,348.5 541.1,353.6 537.9,357.4 534.9,361.0 530.8,365.2 525.0,371.2 521.6,374.7 518.2,378.3 514.8,381.9 510.7,386.2 514.1,386.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Pau Santo 1</title></polyline>
+<polyline points="462.9,414.6 466.8,411.0 462.6,413.3 456.8,415.1 452.0,416.4 447.2,418.0 443.0,421.2 440.4,425.5 437.9,429.5 436.3,434.3 433.1,437.5 427.1,437.6 421.4,437.9 416.4,440.3 410.5,440.5 405.8,438.9 397.3,435.8 390.3,433.3 389.9,427.4 389.8,421.6 390.0,415.5 394.9,414.4 399.7,417.0 404.2,420.0 407.0,423.4 404.9,427.7 402.2,431.7 405.1,437.0 397.3,435.8 402.2,437.9 411.7,441.2 417.0,440.3 421.5,438.3 427.5,438.4 433.5,438.2 436.5,435.1 437.8,430.3 440.2,426.5 442.9,421.9 446.0,418.5 450.8,417.3 456.1,416.3 461.1,415.0 462.9,414.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Engenho Castelo</title></polyline>
+<polyline points="404.7,454.6 412.0,454.1 416.9,452.2 420.5,449.8 425.5,447.4 428.7,443.1 430.4,438.8 434.9,437.1 429.4,437.8 422.8,437.6 416.4,440.3 410.5,440.5 405.8,438.9 397.3,435.8 390.3,433.3 389.9,427.4 389.8,421.6 390.0,415.5 394.9,414.4 398.2,411.8 396.3,407.6 392.3,405.4 389.5,402.1 392.3,405.4 396.1,407.5 398.2,411.5 399.7,417.0 404.2,420.0 407.0,423.4 404.9,427.7 402.2,431.7 405.1,437.0 397.3,435.8 402.2,437.9 402.7,443.4 401.7,449.1 404.7,454.4 404.7,454.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Engenho Sebastopol</title></polyline>
+<polyline points="547.6,536.8 531.6,518.9 537.2,522.0 540.7,524.6 540.7,530.6 539.3,535.4 536.4,538.5 533.5,541.9 538.8,540.7 540.6,535.6 546.7,536.0 547.7,536.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Engenho Serraria</title></polyline>
+<circle cx="689.4" cy="331.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="666.8" cy="282.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="459.3" cy="358.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="470.2" cy="371.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="403.9" cy="475.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="381.4" cy="457.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="669.1" cy="516.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="609.7" cy="294.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="398.2" cy="463.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="126.8" cy="253.0" r="2.2" fill="#b9b9b2"/>
+<polygon points="502.4,378.2 487.4,405.8 517.4,405.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="508.5,373.7 491.4,405.1 525.6,405.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="517.0,369.8 501.8,397.7 532.1,397.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="514.0,374.8 503.3,394.6 524.8,394.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="516.8,365.9 499.8,397.1 533.7,397.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="547.6,517.5 529.3,551.1 565.8,551.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="522.5,402.9 506.6,432.2 538.4,432.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="213.6,367.8 198.7,395.3 228.6,395.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="523.3,396.0 506.6,426.7 539.9,426.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="502.8,405.5 488.2,432.3 517.3,432.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="664.0,462.3 647.0,493.7 681.0,493.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="404.7,440.3 391.1,465.3 418.2,465.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="544.0,429.7 527.3,460.5 560.7,460.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="464.5,395.7 447.4,427.2 481.6,427.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="647.8,248.1 630.7,279.6 664.9,279.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="510.5,396.2 498.1,418.9 522.8,418.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="502.8,406.1 485.2,438.5 520.4,438.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="608.2,298.9 592.0,328.6 624.3,328.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="494.9,402.3 480.1,429.5 509.6,429.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="680.4,321.2 664.3,350.8 696.4,350.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="517.2,370.4 505.0,392.7 529.3,392.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="507.5,378.5 493.7,403.9 521.3,403.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="462.9,398.2 447.2,427.1 478.6,427.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="488.6,403.4 475.1,428.1 502.0,428.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="603.4,285.5 591.7,307.1 615.2,307.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="617.2,283.1 605.5,304.8 629.0,304.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="620.8,285.0 603.7,316.5 637.9,316.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="606.8,285.1 592.4,311.6 621.2,311.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="648.8,251.0 635.0,276.4 662.6,276.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="646.6,261.7 633.5,286.0 659.8,286.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="524.3,367.9 511.1,392.1 537.4,392.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="528.0,360.9 514.8,385.3 541.2,385.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="536.1,372.0 520.4,400.8 551.8,400.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="525.9,377.2 510.8,404.9 540.9,404.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="454.8,365.9 438.8,395.4 470.8,395.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="124.8,246.0 111.6,270.4 138.1,270.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="124.8" y="284.9" text-anchor="middle" fill="#5c5c57">Juçaral</text>
+<polygon points="674.3,490.6 661.8,513.6 686.8,513.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="664.4,396.1 653.6,415.9 675.2,415.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="660.7,508.5 647.4,533.0 673.9,533.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="590.2,284.8 578.1,307.0 602.3,307.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="664.4,469.8 650.4,495.7 678.4,495.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="664.4" y="510.4" text-anchor="middle" fill="#5c5c57">Praia De Gaibú</text>
+<polygon points="466.3,384.5 461.5,393.2 471.0,393.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="620.8,274.5 606.3,301.3 635.3,301.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="663.0,466.2 651.2,488.0 674.8,488.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="342.7" cy="237.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="349.7" y="232.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Engenho Coimbra 32,5 km</text>
+<circle cx="57.9" cy="335.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="64.9" y="330.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Engenho Cachoeira Tapada 18,8 km</text>
+<circle cx="106.6" cy="319.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="113.6" y="314.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">RD Agroindústria 16,7 km</text>
+<circle cx="384.7" cy="304.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="391.7" y="299.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Engenho Mato Grosso 11,0 km</text>
+<circle cx="395.0" cy="296.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="355.7" cy="364.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="362.7" y="359.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Engenho Burahem 10,5 km</text>
+<circle cx="260.0" cy="261.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="267.0" y="256.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Usina Bom Jesus 2 10,2 km</text>
+<circle cx="349.0" cy="297.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="356.0" y="312.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Engenho Matas 10,1 km</text>
+<circle cx="459.1" cy="296.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="351.8" cy="340.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="358.8" y="335.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Engenho Sacambu 9,9 km</text>
+<circle cx="387.7" cy="233.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="497.2" cy="272.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="504.2" y="267.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Rocas Velha 9,0 km</text>
+<circle cx="479.7" cy="305.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="486.7" y="320.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Usina Bom Jesus 1 8,4 km</text>
+<circle cx="304.6" cy="265.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="311.6" y="280.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Engenho Jacobina 8,0 km</text>
+<circle cx="334.6" cy="414.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="341.6" y="409.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Engenho Universo 7,9 km</text>
+<circle cx="386.1" cy="425.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="393.1" y="440.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Engenho Castelo 7,8 km</text>
+<circle cx="423.8" cy="299.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="513.0" cy="301.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="440.0" cy="306.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="315.5" cy="377.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="322.5" y="372.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Engenho Pantorra 6,1 km</text>
+<circle cx="421.3" cy="304.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="388.9" cy="400.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="395.9" y="395.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Engenho Sebastopol 5,0 km</text>
+<circle cx="403.8" cy="405.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="149.1" cy="293.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="97.5" cy="224.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="104.5" y="219.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Engenho Potozi 4,0 km</text>
+<circle cx="514.8" cy="346.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="521.8" y="341.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Onze Negras 3,5 km</text>
+<circle cx="531.6" cy="518.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="538.6" y="513.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Engenho Serraria 3,4 km</text>
+<circle cx="266.0" cy="385.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<rect x="509.4" y="385.0" width="10" height="10" fill="#1d1d1b"/><text x="523.4" y="408.0" font-weight="600" fill="#1d1d1b">Sede de Cabo de Santo Agostinho</text>
+<line x1="35" x2="123.9" y1="583.5" y2="583.5" stroke="#8a8a84" stroke-width="2"/><text x="35" y="597.5" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="574.468344002611" y2="574.468344002611" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="578.468344002611" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,567.5 421.4,579.7 434.6,579.7" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="578.468344002611" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="592.468344002611" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="601.468344002611" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="597.468344002611" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="601.468344002611" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="620.468344002611" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="624.468344002611" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="620.468344002611" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="624.468344002611" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="643.468344002611" y2="643.468344002611" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="647.468344002611" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="666.468344002611" y2="666.468344002611" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="670.468344002611" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Sem rotas publicadas no DJE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (21):</strong> Engenho Coimbra, Engenho Cachoeira Tapada, RD Agroindústria, Engenho Mato Grosso, Pau Santo 2, Engenho Burahem, Usina Bom Jesus 2, Engenho Matas, Pau Santo 1, Engenho Sacambu, Engenho Jacobina 1, Rocas Velha, Usina Bom Jesus 1, Engenho Jacobina, Engenho Universo, Engenho Castelo, Pau Santo, Compesa - Gurjaú, Engenho Pau Santo 2, Engenho Pantorra e Engenho Pau Santo 1.</li>
+<li><strong>De 3 a 5 km (7):</strong> Engenho Sebastopol, Sebastopol, Agrovila do PA Arariba da Pedra, Engenho Potozi, Comunidade Quilombola Onze Negras, Engenho Serraria e Liberdade.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (11):</strong> Agrovila do PA Arariba de Baixo, Engenho Mercês, Engenho Novo, Guruji, Juçaral, Parapama, Ponte dos Carvalhos, Reserva do Paiva, Santo Agostinho, Utinga de Baixo - Engenho e Vila das Mercês.</li>
+</ul><h2>Rotas da Justiça Eleitoral</h2>
+<p><strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-PE) para Cabo de Santo Agostinho.</strong> Pesquisamos todas as edições do DJE/TRE-PE publicadas desde o fim de julho de 2026. As rotas do mapa e da seção de propostas são sugestões deste levantamento.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 28 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Engenho Coimbra</strong></td><td>Sede – Engenho Coimbra – Sede</td><td>Engenho Coimbra</td><td>65,8 km (ida e volta)</td><td>~1h45</td></tr><tr><td><strong>Rota nova – Engenho Cachoeira Tapada</strong></td><td>Juçaral – Agrovila do PA Arariba da Pedra – Engenho Potozi – Engenho Cachoeira Tapada – Juçaral</td><td>Agrovila do PA Arariba da Pedra, Engenho Potozi, Engenho Cachoeira Tapada</td><td>33,1 km (ida e volta)</td><td>~45 min</td></tr><tr><td><strong>Rota nova – Usina Bom Jesus 2</strong></td><td>Juçaral – Usina Bom Jesus 2 – Juçaral</td><td>Usina Bom Jesus 2</td><td>20,5 km (ida e volta)</td><td>~32 min</td></tr><tr><td><strong>Rota nova – RD Agroindústria</strong></td><td>Sede – Liberdade – Engenho Pantorra – Engenho Universo – Engenho Jacobina – RD Agroindústria – Sede</td><td>Liberdade, Engenho Pantorra, Engenho Universo, Engenho Jacobina, RD Agroindústria</td><td>47,8 km (ida e volta)</td><td>~1h34</td></tr><tr><td><strong>Rota nova – Engenho Burahem</strong></td><td>Sede – Engenho Burahem – Engenho Sacambu – Engenho Matas – Sede</td><td>Engenho Burahem, Engenho Sacambu, Engenho Matas</td><td>24,1 km (ida e volta)</td><td>~58 min</td></tr><tr><td><strong>Rota nova – Engenho Mato Grosso</strong></td><td>Sede – Engenho Pau Santo 2 – Pau Santo – Engenho Pau Santo 1 – Pau Santo 2 – Engenho Mato Grosso – Engenho Jacobina 1 – Sede</td><td>Engenho Pau Santo 2, Pau Santo, Engenho Pau Santo 1, Pau Santo 2, Engenho Mato Grosso, Engenho Jacobina 1</td><td>28,4 km (ida e volta)</td><td>~1h06</td></tr><tr><td><strong>Rota nova – Pau Santo 1</strong></td><td>Sede – Comunidade Quilombola Onze Negras – Compesa - Gurjaú – Rocas Velha – Usina Bom Jesus 1 – Pau Santo 1 – Sede</td><td>Comunidade Quilombola Onze Negras, Compesa - Gurjaú, Rocas Velha, Usina Bom Jesus 1, Pau Santo 1</td><td>30,0 km (ida e volta)</td><td>~59 min</td></tr><tr><td><strong>Rota nova – Engenho Castelo</strong></td><td>Sede – Engenho Castelo – Sede</td><td>Engenho Castelo</td><td>13,9 km (ida e volta)</td><td>~19 min</td></tr><tr><td><strong>Rota nova – Engenho Sebastopol</strong></td><td>Sede – Sebastopol – Engenho Sebastopol – Sede</td><td>Sebastopol, Engenho Sebastopol</td><td>12,7 km (ida e volta)</td><td>~23 min</td></tr><tr><td><strong>Rota nova – Engenho Serraria</strong></td><td>Sede – Engenho Serraria – Sede</td><td>Engenho Serraria</td><td>5,1 km (ida e volta)</td><td>~8 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMCSA</strong></p><p>Cabo de Santo Agostinho/PE, ___ de outubro de 2026.</p><p>Ao(À) Excelentíssimo(a) Senhor(a)<br><strong>[nome do(a) Juiz(a) Eleitoral]</strong><br>Juiz(a) Eleitoral da 15ª Zona Eleitoral – [sede da zona]/PE</p><p><strong>Assunto:</strong> Sugestão de rotas de transporte gratuito de eleitores da zona rural – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo(a) Senhor(a) Juiz(a),</p><p>O Município de Cabo de Santo Agostinho, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento das localidades rurais distantes do local de votação, para as quais não localizamos no Diário da Justiça Eleitoral (DJE/TRE-PE) quadro de percursos nem ato sobre o transporte de eleitores: Engenho Coimbra, Engenho Cachoeira Tapada, RD Agroindústria, Engenho Mato Grosso, Pau Santo 2, Engenho Burahem, Usina Bom Jesus 2, Engenho Matas, Pau Santo 1, Engenho Sacambu, Engenho Jacobina 1, Rocas Velha, Usina Bom Jesus 1, Engenho Jacobina, Engenho Universo, Engenho Castelo, Pau Santo, Compesa - Gurjaú, Engenho Pau Santo 2, Engenho Pantorra, Engenho Pau Santo 1, Engenho Sebastopol, Sebastopol, Agrovila do PA Arariba da Pedra, Engenho Potozi, Comunidade Quilombola Onze Negras, Engenho Serraria e Liberdade.</p><p>Sugerimos, respeitosamente, que Vossa Excelência avalie instituir o transporte gratuito de eleitores no 2º turno, com as seguintes rotas:</p><ol><li>a criação da Rota nova – Engenho Coimbra (Sede – Engenho Coimbra – Sede);</li><li>a criação da Rota nova – Engenho Cachoeira Tapada (Juçaral – Agrovila do PA Arariba da Pedra – Engenho Potozi – Engenho Cachoeira Tapada – Juçaral);</li><li>a criação da Rota nova – Usina Bom Jesus 2 (Juçaral – Usina Bom Jesus 2 – Juçaral);</li><li>a criação da Rota nova – RD Agroindústria (Sede – Liberdade – Engenho Pantorra – Engenho Universo – Engenho Jacobina – RD Agroindústria – Sede);</li><li>a criação da Rota nova – Engenho Burahem (Sede – Engenho Burahem – Engenho Sacambu – Engenho Matas – Sede);</li><li>a criação da Rota nova – Engenho Mato Grosso (Sede – Engenho Pau Santo 2 – Pau Santo – Engenho Pau Santo 1 – Pau Santo 2 – Engenho Mato Grosso – Engenho Jacobina 1 – Sede);</li><li>a criação da Rota nova – Pau Santo 1 (Sede – Comunidade Quilombola Onze Negras – Compesa - Gurjaú – Rocas Velha – Usina Bom Jesus 1 – Pau Santo 1 – Sede);</li><li>a criação da Rota nova – Engenho Castelo (Sede – Engenho Castelo – Sede);</li><li>a criação da Rota nova – Engenho Sebastopol (Sede – Sebastopol – Engenho Sebastopol – Sede);</li><li>a criação da Rota nova – Engenho Serraria (Sede – Engenho Serraria – Sede).</li></ol><p>As rotas sugeridas atendem as localidades mais distantes. Caso esse Juízo já tenha definido rotas, pedimos que estas sugestões sejam consideradas naquilo que ainda não estiver contemplado.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Cabo de Santo Agostinho</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Cabo de Santo Agostinho; Quadro de percursos não localizado nas edições do DJE/TRE-PE consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

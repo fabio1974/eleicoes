@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – São Mateus do Maranhão</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← São Mateus do Maranhão</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/sao-mateus-do-maranhao.pdf?v=1792372859" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – São Mateus do Maranhão (84ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 84ª Zona Eleitoral <strong>12 rotas novas</strong> no transporte gratuito de São Mateus do Maranhão.
+<strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-MA) para São Mateus do Maranhão</strong>. As 28 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>São Mateus do Maranhão tem 30.181 eleitores aptos em 24 locais de votação e 126 seções. São 10 locais rurais, com 5.239 eleitores (17% do total).</li>
+<li>6 locais rurais ficam a 10 km ou mais da sede, com 2.442 eleitores. Os mais distantes: Rua Principal, S/N (32,6 km), Rua Principal, S/N (25,6 km) e Povoado Jucareira (14,9 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Seco das Mulatas (88,8 km do local de votação), Bom Princípio (51,9 km do local de votação), Povoado Trizidela do Bom Principio (46,6 km do local de votação), Povoado Lago Verde (19,5 km do local de votação), Nova Vida (17,4 km do local de votação), Serraria (14,5 km do local de votação), Boca do Cercado (11,1 km do local de votação), Desaperta (10,8 km do local de votação), São Raimundo (9,8 km do local de votação), Morada Nova (9,4 km do local de votação), Povoado Barro Vermelho (8,9 km do local de votação), Maioba (8,4 km do local de votação), Conceição (7,6 km do local de votação), Povoado Barra (6,0 km do local de votação), Comunidade Quilombola Alto Grande (5,4 km do local de votação), Santo Antônio (5,4 km do local de votação), Cimauma (5,1 km do local de votação), Cajueiro (5,0 km do local de votação), Dendê (4,6 km do local de votação), Centro do Coroatá (4,4 km do local de votação), Centrão (4,4 km do local de votação), Vitor (4,2 km do local de votação), Nova Esperança (3,7 km do local de votação), Comunidade Quilombola Vai Quem Quer (Boi Baiano) (3,4 km do local de votação), Andirobal (3,4 km do local de votação), Curva (3,4 km do local de votação), Comunidade Quilombola Vila Nova (3,3 km do local de votação) e Povoado Santa Rosa (3,2 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 54 localidades rurais de São Mateus do Maranhão que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Seco das Mulatas</td><td>88,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Bom Princípio</td><td>51,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Povoado Trizidela do Bom Principio</td><td>46,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Povoado Lago Verde</td><td>19,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Nova Vida</td><td>17,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Serraria</td><td>14,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Boca do Cercado</td><td>11,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Desaperta</td><td>10,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>São Raimundo</td><td>9,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Morada Nova</td><td>9,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Povoado Barro Vermelho</td><td>8,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Maioba</td><td>8,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Conceição</td><td>7,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Povoado Barra</td><td>6,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Alto Grande</td><td>5,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Santo Antônio</td><td>5,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Cimauma</td><td>5,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Cajueiro</td><td>5,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Dendê</td><td>4,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Centro do Coroatá</td><td>4,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Centrão</td><td>4,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Vitor</td><td>4,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Nova Esperança</td><td>3,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Vai Quem Quer (Boi Baiano)</td><td>3,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Andirobal</td><td>3,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Curva</td><td>3,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Vila Nova</td><td>3,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Povoado Santa Rosa</td><td>3,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 54 localidades rurais de São Mateus do Maranhão, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 665" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">São Mateus do Maranhão: 28 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas (não há rotas publicadas no DJE), com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="523.1,528.8 512.3,501.5 502.9,495.1 507.4,473.0 514.9,460.5 593.8,460.7 598.3,430.4 583.7,412.5 585.8,393.1 617.0,368.7 620.4,360.6 615.8,336.6 622.4,322.7 636.6,305.2 656.7,298.3 669.3,280.6 664.4,267.7 653.8,260.5 659.8,238.3 647.8,227.7 651.3,212.6 673.2,205.8 686.3,185.6 695.0,181.3 686.2,165.5 692.8,156.4 707.2,161.4 711.1,149.8 725.0,136.7 718.8,111.1 670.2,86.5 658.9,110.8 643.2,113.9 623.5,132.9 618.0,132.2 607.9,161.8 580.6,176.9 571.4,190.0 579.6,215.3 572.5,220.6 553.3,217.3 539.9,210.4 508.2,203.9 492.5,203.7 484.2,195.8 470.9,197.4 470.1,174.4 430.8,86.3 265.4,84.7 252.0,80.0 246.6,89.5 243.2,102.6 260.4,125.8 257.7,132.9 264.3,159.4 245.4,183.4 249.5,199.2 246.5,216.4 230.5,221.6 222.8,230.7 227.7,258.0 232.6,264.5 234.2,298.1 221.1,301.6 226.8,313.4 224.1,322.6 233.9,354.5 254.4,360.6 247.9,372.1 225.6,367.4 201.3,348.1 187.5,348.3 149.7,355.1 112.8,372.4 101.9,367.2 93.2,372.8 84.4,387.3 73.2,372.8 60.7,380.3 71.0,410.0 49.8,420.7 57.7,431.3 54.4,446.1 39.7,437.6 35.0,449.8 40.8,459.9 39.4,475.5 125.6,474.1 146.9,455.8 149.4,444.4 187.6,473.3 235.1,472.5 233.9,487.3 239.7,494.6 229.3,505.8 324.0,505.8 316.4,471.2 460.2,469.0 460.2,529.6 523.1,528.8 523.1,528.8" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="297.3,489.2 295.1,486.1 292.3,483.5 288.4,482.2 285.0,480.8 282.1,478.3 279.9,475.8 278.8,471.3 279.5,467.3 281.2,464.0 280.3,458.7 278.2,455.2 276.7,451.4 275.0,447.3 273.1,444.0 269.2,445.2 265.8,443.9 262.2,445.3 259.2,447.4 254.8,448.8 251.1,446.8 143.7,457.4 147.1,455.7 150.5,452.6 151.4,448.0 152.8,444.4 154.3,440.0 155.8,436.4 157.9,433.5 160.0,430.5 163.4,425.6 165.0,419.3 162.3,416.4 157.5,416.1 152.4,415.1 147.0,415.1 143.9,410.4 141.9,407.1 183.6,336.8 297.5,489.2 297.5,489.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Seco das Mulatas</title></polyline>
+<polyline points="522.1,256.5 520.4,259.7 516.9,261.3 514.7,263.8 515.4,268.2 513.3,271.1 510.0,273.4 507.3,275.6 504.5,278.2 502.5,281.2 499.8,284.5 497.2,287.1 491.9,288.5 487.3,289.6 480.8,291.3 479.6,287.5 478.0,282.0 475.0,279.5 470.8,277.7 466.8,275.9 463.0,274.6 458.9,273.3 454.3,271.3 448.5,269.8 443.6,269.0 440.5,267.2 436.9,268.4 432.3,267.8 425.7,266.9 421.7,266.1 417.4,266.5 413.1,267.0 407.7,267.5 403.0,268.5 398.0,270.2 394.4,271.5 389.5,271.6 383.2,272.3 378.4,273.0 373.3,273.8 367.0,274.8 360.6,275.8 356.4,276.5 351.4,277.2 345.9,278.1 338.9,279.2 329.6,280.6 325.4,281.2 320.7,281.9 295.7,274.8 296.6,270.8 296.5,265.0 296.9,260.2 296.5,265.0 296.6,270.8 295.7,274.8 319.5,281.5 325.4,281.2 329.6,280.6 338.9,279.2 345.9,278.1 351.4,277.2 356.4,276.5 360.6,275.8 365.0,275.1 370.7,274.2 375.7,273.4 380.9,272.7 386.6,271.8 392.3,271.6 396.4,270.8 399.9,269.5 404.0,268.1 409.0,267.4 414.5,266.8 419.4,266.3 425.7,266.9 429.6,268.0 434.2,267.6 439.3,267.5 443.1,268.8 447.2,269.6 451.6,270.4 455.8,272.0 459.5,273.5 463.8,275.0 468.3,276.5 473.0,278.6 477.7,280.7 478.9,284.9 480.2,289.5 487.3,289.6 491.9,288.5 495.8,287.5 499.3,285.0 501.7,282.5 503.8,279.1 505.8,276.5 509.1,274.8 511.4,272.1 514.6,269.9 514.1,265.4 515.9,262.2 519.5,260.3 522.0,256.8 522.1,256.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Povoado Lago Verde</title></polyline>
+<polyline points="522.1,256.5 520.4,259.7 516.9,261.3 514.7,263.8 515.4,268.2 513.3,271.1 510.0,273.4 507.3,275.6 504.5,278.2 502.5,281.2 499.8,284.5 497.2,287.1 491.9,288.5 487.3,289.6 480.8,291.3 479.6,287.5 478.0,282.0 476.9,278.1 475.8,274.2 474.5,269.9 472.5,263.0 471.1,258.4 470.4,254.0 470.4,248.8 470.5,241.8 470.6,235.1 470.6,227.4 470.7,220.2 466.9,218.7 470.3,220.1 470.7,215.7 470.7,210.8 470.8,205.3 470.8,200.4 472.4,197.1 470.8,200.4 470.8,205.3 470.7,210.1 470.7,215.7 470.7,223.1 470.6,231.0 470.5,237.8 470.5,244.6 470.4,250.7 470.4,255.6 471.6,259.8 473.9,267.9 475.8,274.2 476.9,278.1 478.0,282.0 479.6,287.5 480.8,291.3 487.3,289.6 491.9,288.5 495.8,287.5 499.3,285.0 501.7,282.5 503.8,279.1 505.8,276.5 509.1,274.8 511.4,272.1 514.6,269.9 514.1,265.4 515.9,262.2 519.5,260.3 522.0,256.8 522.1,256.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Boca do Cercado</title></polyline>
+<polyline points="643.5,310.4 638.1,309.9 634.3,320.7 636.5,324.5 636.8,330.6 636.7,335.5 635.7,339.3 633.4,343.4 631.3,347.0 628.3,349.6 625.7,352.4 623.9,355.6 621.2,358.4 617.3,365.4 614.2,368.6 616.8,366.0 619.1,360.7 623.9,355.6 625.7,352.4 628.3,349.6 631.3,347.0 633.3,343.6 635.7,339.3 636.7,335.5 636.7,330.7 636.5,324.5 634.3,320.7 637.4,309.3 640.7,311.4 646.0,307.5 645.8,302.4 648.7,298.1 650.5,294.7 657.6,255.1 656.4,243.2 655.8,238.9 654.0,234.5 652.9,230.1 652.9,224.4 653.1,219.3 654.4,214.9 657.5,212.0 659.9,209.4 661.5,206.0 662.2,199.0 661.8,191.8 659.0,187.6 653.5,181.8 651.4,178.9 647.0,176.6 645.2,170.5 647.2,162.8 649.6,160.1 653.9,159.5 661.1,159.9 666.2,159.7 670.9,158.0 672.6,154.9 676.7,153.0 681.3,152.4 686.2,150.4 691.2,147.0 695.4,142.5 701.3,142.1 706.0,142.0 716.0,138.4 720.6,138.2 716.0,138.4 706.5,142.0 701.3,142.1 696.6,141.7 693.3,145.0 687.3,149.2 685.2,152.1 680.1,152.6 674.8,152.6 672.0,156.6 667.2,159.6 662.9,159.2 657.1,161.0 650.6,160.4 647.2,162.8 644.4,166.6 646.6,175.9 649.5,177.9 653.5,181.8 659.0,187.6 661.4,190.6 662.4,194.7 661.9,204.5 660.5,208.4 657.5,212.0 654.7,214.2 653.1,219.3 652.9,224.4 652.9,230.1 654.0,234.5 655.4,238.0 656.4,243.2 657.6,254.3 650.6,293.5 648.7,298.1 645.9,302.0 646.6,306.7 643.5,310.3 643.5,310.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Nova Vida</title></polyline>
+<polyline points="593.1,308.7 591.2,304.6 594.3,302.1 598.2,299.8 599.5,296.0 599.8,291.3 601.6,288.3 602.9,282.6 603.5,278.4 604.1,273.5 604.0,268.9 602.5,264.8 602.5,259.5 598.4,257.2 594.2,255.7 596.6,247.7 598.0,244.0 596.7,239.5 594.7,236.5 594.0,231.6 593.4,226.7 594.4,221.8 591.4,217.7 588.2,214.5 587.1,210.5 586.4,206.2 584.7,199.5 585.9,203.7 587.0,208.1 588.1,212.9 589.1,216.7 592.7,219.0 593.4,224.1 594.0,228.7 594.5,233.7 595.3,237.8 597.4,240.9 596.6,247.7 594.4,253.1 596.3,256.3 599.9,258.0 602.4,260.4 603.1,266.1 604.2,269.9 604.1,275.1 603.1,280.9 602.2,285.9 600.8,289.3 599.4,293.0 599.5,297.7 596.3,301.0 593.0,302.6 590.8,307.2 593.1,308.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Morada Nova</title></polyline>
+<polyline points="260.8,136.4 265.7,137.1 274.4,137.1 279.9,135.9 284.8,133.9 289.2,133.0 299.9,135.1 305.5,132.6 315.0,132.2 320.0,132.9 325.2,137.2 328.7,139.7 334.0,140.0 342.3,141.4 347.1,142.4 351.1,143.2 354.5,140.3 362.1,134.5 365.9,131.3 369.4,128.3 376.9,125.6 371.4,126.9 365.9,131.3 362.1,134.5 356.5,138.8 351.6,142.9 347.1,142.4 342.3,141.4 337.5,139.7 330.4,140.0 325.2,137.2 320.0,132.9 315.0,132.2 308.2,131.9 300.9,135.0 293.6,133.0 286.9,133.1 282.0,135.0 277.4,136.5 267.8,137.4 262.5,136.5 260.8,136.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Povoado Barro Vermelho</title></polyline>
+<polyline points="544.5,354.1 541.1,352.3 538.0,350.5 536.5,347.1 538.7,343.6 540.3,340.3 544.5,339.7 547.7,337.0 551.0,335.4 553.3,330.0 554.7,325.7 554.3,320.9 554.6,315.5 555.5,311.3 557.1,308.0 557.0,302.1 555.5,297.7 553.3,294.7 550.7,289.7 549.6,285.8 549.5,280.7 549.8,276.1 550.4,271.9 549.3,268.2 551.9,266.0 549.3,268.2 550.4,271.9 549.8,276.1 549.5,280.7 549.1,285.0 550.5,288.8 551.6,292.4 554.2,295.5 557.0,302.1 558.1,305.9 555.9,310.5 554.6,315.0 554.3,320.3 554.8,324.6 553.3,330.0 551.7,334.3 548.7,336.4 546.0,338.7 541.9,339.5 539.4,342.2 537.6,345.4 537.3,349.8 538.3,353.9 538.4,359.6 539.6,365.8 540.8,369.5 542.2,373.1 543.7,376.5 546.7,378.5 549.5,380.8 553.3,383.9 556.2,386.8 559.6,388.9 562.4,391.7 564.6,398.5 563.0,393.1 561.0,389.9 557.0,387.4 554.5,385.0 551.8,382.7 549.1,380.3 545.3,378.0 543.1,375.4 540.8,369.5 539.6,365.8 538.4,361.6 538.3,353.9 537.4,350.1 541.1,352.3 544.5,354.1 544.5,354.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Conceição</title></polyline>
+<polyline points="366.2,460.4 362.9,458.7 359.1,460.1 355.3,462.4 354.0,458.9 351.8,456.2 350.2,453.1 349.7,446.5 346.4,442.8 346.5,437.8 345.7,433.7 346.1,428.7 347.4,422.7 348.7,416.7 351.9,414.1 348.7,416.5 347.6,421.6 346.5,426.8 345.5,431.4 346.2,435.5 345.5,439.7 347.8,444.2 350.0,449.7 350.7,454.0 352.8,457.4 354.6,460.4 351.1,462.4 346.8,461.7 343.2,460.3 338.7,457.2 335.7,454.3 329.7,453.5 325.7,455.9 319.4,457.1 314.6,460.4 319.4,457.1 325.7,455.9 329.7,453.5 335.7,454.3 338.7,457.2 341.6,459.4 344.9,461.3 349.1,462.3 354.0,462.8 357.6,461.1 360.2,458.7 363.8,459.9 366.2,460.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Cimauma</title></polyline>
+<polyline points="488.7,388.5 487.8,392.6 491.0,394.4 493.5,396.8 497.3,398.2 500.4,400.0 503.1,402.5 505.2,405.1 507.6,407.9 510.8,409.8 514.0,411.7 518.2,410.2 522.1,407.7 525.5,406.2 529.9,407.3 533.6,408.9 530.1,407.5 526.4,406.2 522.3,407.6 519.0,409.7 515.2,411.4 511.3,410.1 507.6,407.9 505.3,405.3 503.3,402.6 500.8,400.2 497.8,398.3 493.9,397.0 491.3,394.6 487.7,393.2 489.0,388.9 488.7,388.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Centro do Coroatá</title></polyline>
+<polyline points="499.5,365.0 498.3,369.8 498.7,374.3 502.5,375.6 506.8,377.3 510.1,379.1 514.5,380.2 518.5,381.8 520.6,384.6 523.5,386.6 525.6,389.8 528.9,391.4 530.3,395.3 529.1,391.7 526.0,390.1 523.7,386.9 520.8,384.8 518.8,382.0 515.4,380.5 511.2,379.4 508.0,377.7 504.2,376.7 500.6,374.9 499.7,371.0 498.9,366.9 499.5,365.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Nova Esperança</title></polyline>
+<polyline points="502.7,339.4 497.1,339.5 490.9,339.6 486.8,336.2 485.9,332.2 485.7,327.4 477.7,324.6 476.9,329.0 474.4,331.7 476.8,329.2 477.7,324.6 485.6,325.3 485.8,330.9 486.8,336.2 489.1,339.6 495.2,339.6 500.6,339.4 506.0,339.1 510.6,338.5 513.0,335.3 515.0,330.9 517.3,327.7 519.0,324.6 520.2,319.0 521.5,313.5 522.5,309.6 523.5,305.9 522.5,309.6 521.5,313.5 520.5,317.8 519.4,321.9 518.2,326.2 515.0,330.9 513.3,334.5 512.0,338.0 507.6,338.9 503.3,339.4 502.7,339.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Andirobal</title></polyline>
+<polyline points="488.5,449.5 488.2,444.0 484.6,441.2 480.7,440.0 480.4,434.4 480.0,427.0 476.5,428.5 471.2,428.0 466.3,427.5 471.2,428.0 475.5,428.6 479.1,427.2 480.4,434.4 480.6,439.0 483.5,441.2 487.8,442.8 488.6,446.9 488.5,449.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Curva</title></polyline>
+<circle cx="533.4" cy="274.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="319.1" cy="513.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="546.2" cy="247.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="493.6" cy="417.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="482.3" cy="533.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="564.5" cy="373.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="479.4" cy="430.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="504.4" cy="403.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="479.6" cy="432.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="278.2" cy="488.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="282.6" cy="135.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="484.3" cy="468.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="514.9" cy="270.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="581.7" cy="321.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="470.4" cy="505.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="643.9" cy="299.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="537.0" cy="349.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="549.0" cy="357.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="486.8" cy="501.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="597.3" cy="308.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="263.7" cy="136.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="489.2" cy="448.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="296.2" cy="489.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="297.1" cy="488.0" r="2.2" fill="#b9b9b2"/>
+<polygon points="489.5,367.2 477.2,389.9 501.9,389.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="490.2,367.7 475.7,394.5 504.7,394.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="490.8,371.0 480.7,389.5 500.8,389.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="488.6,375.3 476.2,398.2 501.0,398.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="500.3,351.1 490.7,368.8 509.9,368.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="488.6,376.5 479.9,392.6 497.3,392.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="502.6,328.9 492.3,347.9 512.9,347.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="260.7,127.8 252.5,143.0 268.9,143.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="483.4,475.2 473.7,493.1 493.1,493.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="483.4" y="506.7" text-anchor="middle" fill="#5c5c57">Povoado Timbaúba</text>
+<polygon points="484.5,494.9 476.0,510.4 492.9,510.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="499.3,343.1 488.4,363.2 510.2,363.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="499.8,351.6 487.0,375.1 512.5,375.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="495.4,378.2 484.6,398.0 506.1,398.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="489.5,373.5 478.3,394.3 500.8,394.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="513.0,338.0 499.7,362.7 526.4,362.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="486.8,348.0 475.6,368.7 498.1,368.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="544.3,344.7 535.1,361.7 553.5,361.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="544.3" y="375.2" text-anchor="middle" fill="#5c5c57">Povoado Lagoinha</text>
+<polygon points="643.4,301.5 635.0,316.9 651.8,316.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="593.1,300.3 585.1,315.0 601.1,315.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="522.4,247.8 514.0,263.2 530.7,263.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="366.1,452.8 358.6,466.6 373.6,466.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="297.5,481.8 290.4,494.8 304.5,494.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="475.8,382.4 466.8,399.0 484.8,399.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="488.6,440.9 480.4,455.9 496.8,455.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="183.6" cy="336.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="190.6" y="331.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Seco das Mulatas 88,8 km</text>
+<circle cx="145.3" cy="404.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="152.3" y="399.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Bom Princípio 51,9 km</text>
+<circle cx="143.7" cy="457.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="150.7" y="452.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Povoado Trizidela do Bom Principio 46,6 km</text>
+<circle cx="295.9" cy="257.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="302.9" y="252.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Povoado Lago Verde 19,5 km</text>
+<circle cx="720.9" cy="137.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="608.5" y="132.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Nova Vida 17,4 km</text>
+<circle cx="684.6" cy="151.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="578.4" y="146.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Serraria 14,5 km</text>
+<circle cx="473.1" cy="197.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="480.1" y="192.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Boca do Cercado 11,1 km</text>
+<circle cx="647.4" cy="170.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="535.0" y="165.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Desaperta 10,8 km</text>
+<circle cx="463.8" cy="217.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="470.8" y="212.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">São Raimundo 9,8 km</text>
+<circle cx="584.9" cy="196.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="376.7" cy="124.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="383.7" y="119.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Povoado Barro Vermelho 8,9 km</text>
+<circle cx="662.8" cy="198.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="552.5" cy="264.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="559.5" y="259.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Conceição 7,6 km</text>
+<circle cx="249.0" cy="445.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="655.6" cy="238.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="400.6" y="233.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Alto Grande 5,4 km</text>
+<circle cx="613.1" cy="369.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="482.1" y="364.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santo Antônio 5,4 km</text>
+<circle cx="351.1" cy="411.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="358.1" y="406.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Cimauma 5,1 km</text>
+<circle cx="565.0" cy="401.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="465.0" y="396.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Cajueiro 5,0 km</text>
+<circle cx="595.1" cy="258.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="513.7" y="273.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Dendê 4,6 km</text>
+<circle cx="534.5" cy="409.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="541.5" y="424.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Centro do Coroatá 4,4 km</text>
+<circle cx="314.2" cy="457.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="321.2" y="472.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Centrão 4,4 km</text>
+<circle cx="556.9" cy="308.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="563.9" y="303.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Vitor 4,2 km</text>
+<circle cx="530.2" cy="395.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="537.2" y="410.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Nova Esperança 3,7 km</text>
+<circle cx="306.6" cy="131.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="525.8" cy="303.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="532.8" y="318.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Andirobal 3,4 km</text>
+<circle cx="462.4" cy="426.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="469.4" y="441.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Curva 3,4 km</text>
+<circle cx="305.0" cy="131.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="312.0" y="146.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Vila Nova 3,3 km</text>
+<circle cx="474.1" cy="331.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="481.1" y="346.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Povoado Santa Rosa 3,2 km</text>
+<rect x="486.8" y="365.6" width="10" height="10" fill="#1d1d1b"/><text x="500.8" y="388.6" font-weight="600" fill="#1d1d1b">Sede de São Mateus do Maranhão</text>
+<line x1="35" x2="106.1" y1="563.4" y2="563.4" stroke="#8a8a84" stroke-width="2"/><text x="35" y="577.4" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="554.3670882891157" y2="554.3670882891157" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="558.3670882891157" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,547.4 421.4,559.6 434.6,559.6" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="558.3670882891157" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="572.3670882891157" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="581.3670882891157" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="577.3670882891157" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="581.3670882891157" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="600.3670882891157" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="604.3670882891157" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="600.3670882891157" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="604.3670882891157" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="623.3670882891157" y2="623.3670882891157" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="627.3670882891157" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="646.3670882891157" y2="646.3670882891157" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="650.3670882891157" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Sem rotas publicadas no DJE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (17):</strong> Seco das Mulatas, Bom Princípio, Povoado Trizidela do Bom Principio, Povoado Lago Verde, Nova Vida, Serraria, Boca do Cercado, Desaperta, São Raimundo, Morada Nova, Povoado Barro Vermelho, Maioba, Conceição, Povoado Barra, Comunidade Quilombola Alto Grande, Santo Antônio e Cimauma.</li>
+<li><strong>De 3 a 5 km (11):</strong> Cajueiro, Dendê, Centro do Coroatá, Centrão, Vitor, Nova Esperança, Comunidade Quilombola Vai Quem Quer (Boi Baiano), Andirobal, Curva, Comunidade Quilombola Vila Nova e Povoado Santa Rosa.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (26):</strong> Alto Fogoso, Barro Preto, Brutos, Comunidade Quilombola Mutum, Comunidade Quilombola Queimada, Comunidade Quilombola Queimadas, Estrela, Fazenda São José, Floresta, Igarapé de Pedra, Lagoinha, Laje do Curral, Lajes do Curral, Limão, Mangueira, Morros, Piquizeiro, Povoado Centro Norato, Povoado Jucareira, Povoado Lagoinha, Povoado Veloso, Queimada, Satuba, São Benedito, Timbaúba e Veloso.</li>
+</ul><h2>Rotas da Justiça Eleitoral</h2>
+<p><strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-MA) para São Mateus do Maranhão.</strong> Pesquisamos todas as edições do DJE/TRE-MA publicadas desde o fim de julho de 2026. As rotas do mapa e da seção de propostas são sugestões deste levantamento.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 28 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Seco das Mulatas</strong></td><td>Sede – Povoado Barra – Povoado Trizidela do Bom Principio – Bom Princípio – Seco das Mulatas – Sede</td><td>Povoado Barra, Povoado Trizidela do Bom Principio, Bom Princípio, Seco das Mulatas</td><td>45,6 km (ida e volta)</td><td>~1h19</td></tr><tr><td><strong>Rota nova – Povoado Lago Verde</strong></td><td>Sede – Povoado Lago Verde – Sede</td><td>Povoado Lago Verde</td><td>38,9 km (ida e volta)</td><td>~1h31</td></tr><tr><td><strong>Rota nova – Boca do Cercado</strong></td><td>Sede – São Raimundo – Boca do Cercado – Sede</td><td>São Raimundo, Boca do Cercado</td><td>23,2 km (ida e volta)</td><td>~34 min</td></tr><tr><td><strong>Rota nova – Nova Vida</strong></td><td>Povoado Jucareira – Santo Antônio – Comunidade Quilombola Alto Grande – Maioba – Desaperta – Serraria – Nova Vida – Povoado Jucareira</td><td>Santo Antônio, Comunidade Quilombola Alto Grande, Maioba, Desaperta, Serraria, Nova Vida</td><td>45,9 km (ida e volta)</td><td>~1h18</td></tr><tr><td><strong>Rota nova – Morada Nova</strong></td><td>Povoado Veloso – Dendê – Morada Nova – Povoado Veloso</td><td>Dendê, Morada Nova</td><td>18,8 km (ida e volta)</td><td>~45 min</td></tr><tr><td><strong>Rota nova – Povoado Barro Vermelho</strong></td><td>Sede – Comunidade Quilombola Vila Nova – Comunidade Quilombola Vai Quem Quer (Boi Baiano) – Povoado Barro Vermelho – Sede</td><td>Comunidade Quilombola Vila Nova, Comunidade Quilombola Vai Quem Quer (Boi Baiano), Povoado Barro Vermelho</td><td>17,8 km (ida e volta)</td><td>~43 min</td></tr><tr><td><strong>Rota nova – Conceição</strong></td><td>Povoado Lagoinha – Vitor – Conceição – Cajueiro – Povoado Lagoinha</td><td>Vitor, Conceição, Cajueiro</td><td>24,0 km (ida e volta)</td><td>~56 min</td></tr><tr><td><strong>Rota nova – Cimauma</strong></td><td>Sede – Cimauma – Centrão – Sede</td><td>Cimauma, Centrão</td><td>17,0 km (ida e volta)</td><td>~41 min</td></tr><tr><td><strong>Rota nova – Centro do Coroatá</strong></td><td>Sede – Centro do Coroatá – Sede</td><td>Centro do Coroatá</td><td>8,7 km (ida e volta)</td><td>~20 min</td></tr><tr><td><strong>Rota nova – Nova Esperança</strong></td><td>Sede – Nova Esperança – Sede</td><td>Nova Esperança</td><td>7,3 km (ida e volta)</td><td>~18 min</td></tr><tr><td><strong>Rota nova – Andirobal</strong></td><td>Sede – Povoado Santa Rosa – Andirobal – Sede</td><td>Povoado Santa Rosa, Andirobal</td><td>13,2 km (ida e volta)</td><td>~26 min</td></tr><tr><td><strong>Rota nova – Curva</strong></td><td>Sede – Curva – Sede</td><td>Curva</td><td>6,8 km (ida e volta)</td><td>~14 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMSMM</strong></p><p>São Mateus do Maranhão/MA, ___ de outubro de 2026.</p><p>Ao(À) Excelentíssimo(a) Senhor(a)<br><strong>[nome do(a) Juiz(a) Eleitoral]</strong><br>Juiz(a) Eleitoral da 84ª Zona Eleitoral – [sede da zona]/MA</p><p><strong>Assunto:</strong> Sugestão de rotas de transporte gratuito de eleitores da zona rural – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo(a) Senhor(a) Juiz(a),</p><p>O Município de São Mateus do Maranhão, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento das localidades rurais distantes do local de votação, para as quais não localizamos no Diário da Justiça Eleitoral (DJE/TRE-MA) quadro de percursos nem ato sobre o transporte de eleitores: Seco das Mulatas, Bom Princípio, Povoado Trizidela do Bom Principio, Povoado Lago Verde, Nova Vida, Serraria, Boca do Cercado, Desaperta, São Raimundo, Morada Nova, Povoado Barro Vermelho, Maioba, Conceição, Povoado Barra, Comunidade Quilombola Alto Grande, Santo Antônio, Cimauma, Cajueiro, Dendê, Centro do Coroatá, Centrão, Vitor, Nova Esperança, Comunidade Quilombola Vai Quem Quer (Boi Baiano), Andirobal, Curva, Comunidade Quilombola Vila Nova e Povoado Santa Rosa.</p><p>Sugerimos, respeitosamente, que Vossa Excelência avalie instituir o transporte gratuito de eleitores no 2º turno, com as seguintes rotas:</p><ol><li>a criação da Rota nova – Seco das Mulatas (Sede – Povoado Barra – Povoado Trizidela do Bom Principio – Bom Princípio – Seco das Mulatas – Sede);</li><li>a criação da Rota nova – Povoado Lago Verde (Sede – Povoado Lago Verde – Sede);</li><li>a criação da Rota nova – Boca do Cercado (Sede – São Raimundo – Boca do Cercado – Sede);</li><li>a criação da Rota nova – Nova Vida (Povoado Jucareira – Santo Antônio – Comunidade Quilombola Alto Grande – Maioba – Desaperta – Serraria – Nova Vida – Povoado Jucareira);</li><li>a criação da Rota nova – Morada Nova (Povoado Veloso – Dendê – Morada Nova – Povoado Veloso);</li><li>a criação da Rota nova – Povoado Barro Vermelho (Sede – Comunidade Quilombola Vila Nova – Comunidade Quilombola Vai Quem Quer (Boi Baiano) – Povoado Barro Vermelho – Sede);</li><li>a criação da Rota nova – Conceição (Povoado Lagoinha – Vitor – Conceição – Cajueiro – Povoado Lagoinha);</li><li>a criação da Rota nova – Cimauma (Sede – Cimauma – Centrão – Sede);</li><li>a criação da Rota nova – Centro do Coroatá (Sede – Centro do Coroatá – Sede);</li><li>a criação da Rota nova – Nova Esperança (Sede – Nova Esperança – Sede);</li><li>a criação da Rota nova – Andirobal (Sede – Povoado Santa Rosa – Andirobal – Sede);</li><li>a criação da Rota nova – Curva (Sede – Curva – Sede).</li></ol><p>As rotas sugeridas atendem as localidades mais distantes. Caso esse Juízo já tenha definido rotas, pedimos que estas sugestões sejam consideradas naquilo que ainda não estiver contemplado.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de São Mateus do Maranhão</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de São Mateus do Maranhão; Quadro de percursos não localizado nas edições do DJE/TRE-MA consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

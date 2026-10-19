@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Macaparana</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Macaparana</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/macaparana.pdf?v=1792372914" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Macaparana (90ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 90ª Zona Eleitoral <strong>4 rotas novas</strong> no transporte gratuito de Macaparana.
+<strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-PE) para Macaparana</strong>. As 15 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Macaparana tem 20.060 eleitores aptos em 13 locais de votação e 67 seções. São 2 locais rurais, com 1.359 eleitores (7% do total).</li>
+
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Paquevira 2 (6,5 km do local de votação), Pau d&#x27;Arco (6,1 km do local de votação), Tanque do Marinho (5,8 km do local de votação), Covão (5,7 km do local de votação), Jararaca (5,5 km do local de votação), Paquevira 3 (5,4 km do local de votação), Abura (5,3 km do local de votação), Pau d&#x27;Arco 2 (5,3 km do local de votação), Paquevira 1 (4,4 km do local de votação), Palmas (4,2 km do local de votação), Sítio Urucu 2 (4,2 km do local de votação), Chã do Relógio (4,1 km do local de votação), Pá Seca 3 (3,9 km do local de votação), Paquexira (3,8 km do local de votação) e Sítio Urucu 1 (3,7 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 28 localidades rurais de Macaparana que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Paquevira 2</td><td>6,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Pau d&#x27;Arco</td><td>6,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Tanque do Marinho</td><td>5,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Covão</td><td>5,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Jararaca</td><td>5,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Paquevira 3</td><td>5,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Abura</td><td>5,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Pau d&#x27;Arco 2</td><td>5,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Paquevira 1</td><td>4,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Palmas</td><td>4,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Urucu 2</td><td>4,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Chã do Relógio</td><td>4,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Pá Seca 3</td><td>3,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Paquexira</td><td>3,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Urucu 1</td><td>3,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 28 localidades rurais de Macaparana, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1316" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Macaparana: 15 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas (não há rotas publicadas no DJE), com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="76.0,487.1 152.5,614.6 157.9,778.4 241.8,787.8 317.0,744.8 335.8,791.1 376.7,793.8 412.3,928.7 368.0,1059.6 423.7,1092.5 434.4,1123.3 565.9,1184.4 668.0,921.3 588.1,962.3 558.6,932.7 633.7,838.8 672.0,846.8 725.0,771.0 687.4,626.7 652.5,372.4 529.0,207.3 506.9,138.8 421.7,90.5 398.8,152.2 333.7,150.9 249.2,243.5 162.6,256.9 123.0,295.2 61.9,456.9 76.0,487.1 76.0,487.1" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="564.8,293.1 550.9,286.3 540.1,272.0 528.6,260.6 517.5,250.1 501.3,242.1 485.7,233.4 474.1,221.6 463.3,209.2 439.1,207.1 421.7,200.6 418.0,183.2 405.5,193.0 386.9,212.5 375.8,222.0 354.3,219.1 346.7,233.9 349.1,253.2 359.9,263.4 374.0,270.3 387.9,277.0 374.0,270.3 359.9,263.4 349.1,253.2 338.8,242.3 349.0,231.3 363.3,219.5 384.3,216.4 396.6,202.2 406.9,185.7 423.1,180.8 427.1,163.5 415.7,153.6 395.4,155.5 383.4,164.5 358.6,160.1 339.6,154.1 331.1,142.1 322.6,130.2 306.4,126.0 306.5,105.1 321.0,98.7 340.0,100.7 356.6,96.6 373.6,91.7 379.2,107.0 383.7,123.9 396.1,144.5 409.9,152.7 423.9,161.8 429.2,144.3 427.5,122.5 440.2,114.3 459.4,110.4 441.1,112.5 427.5,122.5 429.2,144.3 427.1,163.5 423.1,180.8 406.9,185.7 398.2,199.9 386.9,212.5 375.8,222.0 354.3,219.1 346.7,233.9 354.3,219.1 372.7,222.4 386.9,212.5 398.2,199.9 406.9,185.7 419.3,195.4 432.2,204.5 451.4,205.8 464.7,212.9 479.2,225.1 491.4,235.8 504.3,243.8 518.4,252.2 531.3,263.4 542.5,277.9 554.1,287.3 564.8,293.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Paquevira 2</title></polyline>
+<polyline points="97.9,389.3 101.4,371.2 104.8,353.1 117.3,344.0 135.2,341.7 133.9,318.4 126.4,305.7 128.4,287.3 138.9,277.4 151.6,269.6 161.9,259.1 180.3,255.3 181.4,236.3 189.6,222.8 198.6,209.9 198.7,189.5 179.5,191.5 168.2,202.7 156.3,212.8 156.9,232.7 156.3,212.8 167.5,203.7 176.7,191.3 194.8,188.8 202.7,175.8 215.0,167.7 225.8,156.4 243.3,159.3 252.6,170.3 262.7,181.3 275.1,189.1 265.5,204.5 251.4,214.7 242.2,227.7 246.2,245.7 229.2,250.2 212.8,256.3 197.2,261.1 195.7,281.4 182.8,290.1 168.8,296.6 155.0,303.3 147.3,315.9 135.5,325.2 133.0,343.4 112.4,343.4 103.9,355.7 100.8,373.9 97.9,389.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Pau d&#x27;Arco</title></polyline>
+<polyline points="432.3,730.1 432.8,710.3 441.8,698.8 451.8,688.5 454.7,671.1 465.2,656.8 478.1,647.9 484.9,634.1 481.7,615.6 492.6,600.6 506.6,589.9 492.6,600.6 481.7,615.6 485.4,632.9 479.1,646.8 465.8,655.8 457.8,668.3 452.3,684.0 451.8,703.8 436.8,696.2 434.2,678.5 434.5,658.5 440.5,642.6 444.1,624.7 449.5,608.7 455.1,589.3 462.9,571.1 469.2,555.3 464.8,534.0 469.1,516.8 464.8,534.0 471.1,550.7 464.7,567.2 454.3,587.1 449.5,608.7 444.4,624.0 440.5,642.6 434.5,658.5 433.8,678.1 440.7,691.8 433.0,704.3 428.2,721.3 432.3,730.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Palmas</title></polyline>
+<polyline points="625.1,380.4 608.6,369.8 591.1,376.9 575.5,385.8 561.2,394.8 555.3,414.0 563.3,426.3 556.1,446.9 548.4,459.9 540.7,472.8 529.6,483.6 522.9,500.8 520.8,520.3 532.1,533.3 520.8,520.3 522.9,500.8 529.6,483.6 540.7,472.8 548.4,459.9 556.1,446.9 563.3,432.5 553.3,420.0 558.7,404.2 575.5,385.8 588.0,377.1 604.0,371.3 623.9,375.6 625.1,380.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Sítio Urucu 2</title></polyline>
+<circle cx="74.9" cy="298.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="150.5" cy="270.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="42.2" cy="460.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="35.0" cy="387.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="79.0" cy="331.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="494.1" cy="330.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="286.1" cy="554.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="406.9" cy="558.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="403.5" cy="533.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="88.3" cy="398.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="312.9" cy="551.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="573.3" cy="285.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="625.0" cy="377.1" r="2.2" fill="#b9b9b2"/>
+<polygon points="423.0,740.4 409.9,764.6 436.1,764.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="449.8,749.3 435.6,775.5 464.1,775.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="404.9,776.5 393.6,797.4 416.2,797.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="440.4,743.7 427.3,768.0 453.6,768.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="564.6,283.1 555.1,300.7 574.1,300.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="564.6" y="314.2" text-anchor="middle" fill="#5c5c57">Poço Comprido</text>
+<polygon points="625.0,371.0 616.0,387.5 634.0,387.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="96.2,379.9 87.4,396.1 104.9,396.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="97.5,377.9 86.2,398.7 108.8,398.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="99.5,394.6 91.9,408.6 107.1,408.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="417.6,779.6 406.0,801.0 429.2,801.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="325.0,552.4 316.9,567.3 333.1,567.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="424.3,772.2 413.4,792.4 435.3,792.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="432.4,719.3 422.8,737.0 442.0,737.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="427.7" cy="278.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="434.7" y="273.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Paquevira 2 6,5 km</text>
+<circle cx="157.9" cy="246.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="164.9" y="241.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pau d&#x27;Arco 6,1 km</text>
+<circle cx="343.9" cy="138.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="350.9" y="133.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Tanque do Marinho 5,8 km</text>
+<circle cx="376.2" cy="80.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="383.2" y="75.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Covão 5,7 km</text>
+<circle cx="273.7" cy="191.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="280.7" y="186.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Jararaca 5,5 km</text>
+<circle cx="323.0" cy="222.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="330.0" y="217.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Paquevira 3 5,4 km</text>
+<circle cx="456.8" cy="97.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="463.8" y="92.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Abura 5,3 km</text>
+<circle cx="280.7" cy="205.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="287.7" y="200.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pau d&#x27;Arco 2 5,3 km</text>
+<circle cx="392.8" cy="229.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="399.8" y="244.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Paquevira 1 4,4 km</text>
+<circle cx="400.2" cy="488.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="407.2" y="483.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Palmas 4,2 km</text>
+<circle cx="548.5" cy="536.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="555.5" y="531.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Urucu 2 4,2 km</text>
+<circle cx="518.3" cy="532.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="525.3" y="547.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Chã do Relógio 4,1 km</text>
+<circle cx="439.8" cy="535.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="446.8" y="530.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pá Seca 3 3,9 km</text>
+<circle cx="409.6" cy="197.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="416.6" y="192.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Paquexira 3,8 km</text>
+<circle cx="518.3" cy="587.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="525.3" y="582.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Urucu 1 3,7 km</text>
+<rect x="469.9" y="771.6" width="10" height="10" fill="#1d1d1b"/><text x="483.9" y="794.6" font-weight="600" fill="#1d1d1b">Sede de Macaparana</text>
+<line x1="35" x2="337.3" y1="1214.4" y2="1214.4" stroke="#8a8a84" stroke-width="2"/><text x="35" y="1228.4" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="1205.4005186029253" y2="1205.4005186029253" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="1209.4005186029253" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,1198.4 421.4,1210.7 434.6,1210.7" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="1209.4005186029253" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="1223.4005186029253" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="1232.4005186029253" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="1228.4005186029253" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="1232.4005186029253" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1251.4005186029253" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1255.4005186029253" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1251.4005186029253" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1255.4005186029253" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1274.4005186029253" y2="1274.4005186029253" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1278.4005186029253" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1297.4005186029253" y2="1297.4005186029253" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1301.4005186029253" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Sem rotas publicadas no DJE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (8):</strong> Paquevira 2, Pau d&#x27;Arco, Tanque do Marinho, Covão, Jararaca, Paquevira 3, Abura e Pau d&#x27;Arco 2.</li>
+<li><strong>De 3 a 5 km (7):</strong> Paquevira 1, Palmas, Sítio Urucu 2, Chã do Relógio, Pá Seca 3, Paquexira e Sítio Urucu 1.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (13):</strong> Chã do Vento, Lagoa do Jerimum, Nova Esperança, Pau d&#x27;Arco 1, Pirauá, Poço Comprido 1, Poço Comprido 2, Pá Seca 1, Pá Seca 2, Ribeiro, Santa Maria, Serra do Urucu e São José.</li>
+</ul><h2>Rotas da Justiça Eleitoral</h2>
+<p><strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-PE) para Macaparana.</strong> Pesquisamos todas as edições do DJE/TRE-PE publicadas desde o fim de julho de 2026. As rotas do mapa e da seção de propostas são sugestões deste levantamento.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 15 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Paquevira 2</strong></td><td>Sede – Paquevira 2 – Paquevira 1 – Paquexira – Tanque do Marinho – Covão – Abura – Paquevira 3 – Sede</td><td>Paquevira 2, Paquevira 1, Paquexira, Tanque do Marinho, Covão, Abura, Paquevira 3</td><td>27,1 km (ida e volta)</td><td>~1h06</td></tr><tr><td><strong>Rota nova – Pau d&#x27;Arco</strong></td><td>Sede – Pau d&#x27;Arco – Jararaca – Pau d&#x27;Arco 2 – Sede</td><td>Pau d&#x27;Arco, Jararaca, Pau d&#x27;Arco 2</td><td>15,1 km (ida e volta)</td><td>~37 min</td></tr><tr><td><strong>Rota nova – Palmas</strong></td><td>Sede – Sítio Urucu 1 – Pá Seca 3 – Palmas – Sede</td><td>Sítio Urucu 1, Pá Seca 3, Palmas</td><td>14,4 km (ida e volta)</td><td>~35 min</td></tr><tr><td><strong>Rota nova – Sítio Urucu 2</strong></td><td>Sede – Sítio Urucu 2 – Chã do Relógio – Sede</td><td>Sítio Urucu 2, Chã do Relógio</td><td>8,6 km (ida e volta)</td><td>~21 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMM</strong></p><p>Macaparana/PE, ___ de outubro de 2026.</p><p>Ao(À) Excelentíssimo(a) Senhor(a)<br><strong>[nome do(a) Juiz(a) Eleitoral]</strong><br>Juiz(a) Eleitoral da 90ª Zona Eleitoral – [sede da zona]/PE</p><p><strong>Assunto:</strong> Sugestão de rotas de transporte gratuito de eleitores da zona rural – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo(a) Senhor(a) Juiz(a),</p><p>O Município de Macaparana, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento das localidades rurais distantes do local de votação, para as quais não localizamos no Diário da Justiça Eleitoral (DJE/TRE-PE) quadro de percursos nem ato sobre o transporte de eleitores: Paquevira 2, Pau d&#x27;Arco, Tanque do Marinho, Covão, Jararaca, Paquevira 3, Abura, Pau d&#x27;Arco 2, Paquevira 1, Palmas, Sítio Urucu 2, Chã do Relógio, Pá Seca 3, Paquexira e Sítio Urucu 1.</p><p>Sugerimos, respeitosamente, que Vossa Excelência avalie instituir o transporte gratuito de eleitores no 2º turno, com as seguintes rotas:</p><ol><li>a criação da Rota nova – Paquevira 2 (Sede – Paquevira 2 – Paquevira 1 – Paquexira – Tanque do Marinho – Covão – Abura – Paquevira 3 – Sede);</li><li>a criação da Rota nova – Pau d&#x27;Arco (Sede – Pau d&#x27;Arco – Jararaca – Pau d&#x27;Arco 2 – Sede);</li><li>a criação da Rota nova – Palmas (Sede – Sítio Urucu 1 – Pá Seca 3 – Palmas – Sede);</li><li>a criação da Rota nova – Sítio Urucu 2 (Sede – Sítio Urucu 2 – Chã do Relógio – Sede).</li></ol><p>As rotas sugeridas atendem as localidades mais distantes. Caso esse Juízo já tenha definido rotas, pedimos que estas sugestões sejam consideradas naquilo que ainda não estiver contemplado.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Macaparana</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Macaparana; Quadro de percursos não localizado nas edições do DJE/TRE-PE consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Tufilândia</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Tufilândia</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/tufilandia.pdf?v=1792372840" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Tufilândia (77ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 77ª Zona Eleitoral <strong>4 rotas novas</strong> no transporte gratuito de Tufilândia.
+<strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-MA) para Tufilândia</strong>. As 12 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Tufilândia tem 6.067 eleitores aptos em 12 locais de votação e 24 seções. São 9 locais rurais, com 3.246 eleitores (54% do total).</li>
+<li>7 locais rurais ficam a 10 km ou mais da sede, com 2.190 eleitores. Os mais distantes: Povoado Centro Dos Brancos S/N (41,2 km), Povoado Agua Bela S/N (29,2 km) e Rua Principal Sn (26,4 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Ilhinha (31,9 km do local de votação), Merenda (14,9 km do local de votação), Associação Edmundo Rio (14,1 km do local de votação), Gata (13,8 km do local de votação), Boa Esperança (13,3 km do local de votação), Alto da Cruz (12,8 km do local de votação), Igarapé Grande (12,1 km do local de votação), Igarapé do Cavalo (11,4 km do local de votação), Pimentel (10,7 km do local de votação), Fazendinha (6,2 km do local de votação), Povoado Fazendinha (5,6 km do local de votação) e Santa Teresa (5,0 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 25 localidades rurais de Tufilândia que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço. 1 locais não foram encontrados nas duas bases: Povoado Santa Tereza S/N, com 926 eleitores.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Ilhinha</td><td>31,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Merenda</td><td>14,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Associação Edmundo Rio</td><td>14,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Gata</td><td>13,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Boa Esperança</td><td>13,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Alto da Cruz</td><td>12,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Igarapé Grande</td><td>12,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Igarapé do Cavalo</td><td>11,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Pimentel</td><td>10,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazendinha</td><td>6,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Povoado Fazendinha</td><td>5,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Santa Teresa</td><td>5,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 25 localidades rurais de Tufilândia, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1382" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Tufilândia: 12 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas (não há rotas publicadas no DJE), com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="35.0,564.9 67.3,563.3 132.8,521.7 149.4,500.3 182.9,513.2 288.4,1250.3 345.0,1202.2 427.4,1101.6 570.9,994.1 560.8,925.8 570.5,760.1 575.7,741.5 553.1,689.0 543.0,485.7 547.4,443.3 530.0,417.4 534.5,385.1 605.2,377.8 643.6,399.3 661.4,368.1 688.1,373.0 668.2,347.1 677.1,326.1 648.4,276.8 602.0,253.8 597.5,221.4 549.4,213.8 464.2,213.4 344.1,279.2 336.5,300.2 300.9,290.9 250.8,305.5 216.0,295.4 217.7,265.9 192.2,231.1 212.4,204.5 206.3,172.1 169.2,101.8 112.2,80.0 35.0,564.9 35.0,564.9" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="411.7,416.9 450.7,417.9 479.2,424.8 487.0,429.1 494.1,434.2 505.6,443.0 518.6,448.3 536.2,448.8 552.6,448.6 567.0,448.0 578.9,449.1 588.2,452.2 610.4,460.4 619.3,463.9 637.3,471.0 648.2,474.7 641.0,480.7 635.2,487.1 626.6,492.2 618.4,500.9 612.7,507.5 607.7,514.7 605.6,525.5 605.1,537.6 604.7,550.9 603.4,565.1 598.0,578.4 594.0,588.6 580.6,587.8 567.2,587.6 558.9,591.5 548.8,595.1 543.9,602.5 536.6,608.9 531.2,616.6 536.3,630.0 544.3,634.4 550.7,642.8 557.5,649.6 567.8,646.7 576.5,642.7 581.2,632.7 585.7,621.3 593.9,610.0 598.0,601.5 595.7,588.2 601.5,570.4 604.6,558.3 604.0,544.8 604.2,531.6 607.4,520.3 610.1,509.9 617.4,502.8 624.5,494.9 630.8,488.9 637.9,482.8 646.4,478.5 654.8,471.5 660.9,464.4 661.4,450.3 663.5,439.0 671.3,431.4 677.8,421.9 678.7,408.3 675.1,399.4 619.4,273.4 412.2,416.8 412.2,416.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Ilhinha</title></polyline>
+<polyline points="560.4,1002.8 567.2,997.4 574.9,992.8 597.7,976.1 625.6,955.9 653.7,935.7 681.6,916.0 709.3,896.5 716.7,890.6 725.0,877.9 717.7,872.9 709.9,868.0 699.2,860.5 692.9,854.4 688.1,846.8 681.2,839.2 673.4,832.3 666.7,821.8 662.8,812.6 654.5,808.6 647.6,801.9 641.3,795.5 630.2,793.1 616.1,792.9 606.5,789.0 595.3,783.7 589.2,777.3 582.1,771.4 574.5,766.2 569.2,759.1 564.8,767.4 556.9,772.5 564.6,767.7 568.9,759.5 572.1,749.4 574.7,739.2 572.6,729.1 563.0,718.4 560.0,708.3 557.2,697.9 549.5,685.3 539.3,689.8 530.2,695.2 519.1,701.7 510.2,705.1 519.1,701.7 527.9,696.8 537.4,690.7 547.6,686.7 555.2,693.8 558.9,704.7 561.7,715.8 567.9,724.6 573.7,733.1 572.9,745.6 569.2,759.1 574.5,766.2 582.1,771.4 589.2,777.3 595.3,783.7 604.2,788.0 612.9,791.9 622.1,794.9 635.8,793.8 645.4,798.7 651.9,806.7 660.5,811.2 665.6,819.0 669.3,828.4 675.6,834.4 684.8,843.8 691.0,852.1 697.4,859.0 709.9,868.0 717.7,872.9 725.0,877.9 720.2,885.6 713.2,893.8 681.6,916.0 653.7,935.7 625.6,955.9 597.7,976.1 579.7,989.3 569.1,997.0 561.1,1002.2 560.4,1002.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Merenda</title></polyline>
+<polyline points="237.9,1085.1 254.8,1081.5 271.6,1080.0 288.0,1080.9 313.5,1079.7 323.4,1085.4 332.4,1088.8 346.4,1088.9 356.8,1091.5 367.4,1094.3 372.2,1102.3 376.3,1110.5 380.6,1118.9 378.1,1131.9 375.2,1142.3 378.2,1154.0 390.5,1151.0 380.8,1162.6 374.8,1147.2 376.7,1136.6 383.3,1123.9 378.3,1114.6 372.7,1103.6 368.4,1095.2 356.8,1091.5 346.4,1088.9 332.4,1088.8 323.4,1085.4 313.5,1079.7 297.8,1079.0 271.6,1080.0 254.8,1081.5 237.9,1085.1 237.9,1085.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fazendinha</title></polyline>
+<polyline points="333.9,674.9 311.6,677.3 295.9,680.0 277.7,680.3 262.7,676.9 245.0,679.5 230.7,682.2 217.4,682.4 204.6,685.5 194.2,691.6 187.6,697.8 177.2,699.9 187.6,697.8 194.2,691.6 204.6,685.5 215.3,682.9 230.7,682.2 245.0,679.5 261.3,676.9 274.7,679.9 295.9,680.0 311.6,677.3 325.3,672.5 332.8,667.6 333.9,674.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Santa Teresa</title></polyline>
+<circle cx="485.6" cy="975.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="304.1" cy="678.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="578.9" cy="993.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="338.3" cy="667.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="136.8" cy="272.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="330.8" cy="325.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="241.6" cy="1080.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="334.1" cy="672.0" r="2.2" fill="#b9b9b2"/>
+<polygon points="146.5,266.6 135.7,286.6 157.4,286.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="560.4,994.7 552.8,1008.5 567.9,1008.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="334.0,666.7 326.3,681.0 341.8,681.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="463.0,296.7 454.6,312.1 471.3,312.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="237.9,1077.1 230.3,1091.0 245.4,1091.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="412.0,408.7 404.5,422.6 419.6,422.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="304.5,817.9 297.2,831.4 311.9,831.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="328.4,317.2 321.8,329.3 334.9,329.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="477.5,944.3 470.9,956.5 484.1,956.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="145.3,265.9 137.3,280.7 153.4,280.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="147.7,268.4 138.2,285.9 157.3,285.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="619.4" cy="273.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="519.4" y="268.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Ilhinha 31,9 km</text>
+<circle cx="509.9" cy="703.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="516.9" y="698.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Merenda 14,9 km</text>
+<circle cx="540.9" cy="683.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="547.9" y="678.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Associação Edmundo Rio 14,1 km</text>
+<circle cx="543.6" cy="685.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="528.1" cy="617.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="535.1" y="612.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Boa Esperança 13,3 km</text>
+<circle cx="572.6" cy="646.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="441.6" y="641.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Alto da Cruz 12,8 km</text>
+<circle cx="553.2" cy="776.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="560.2" y="771.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Igarapé Grande 12,1 km</text>
+<circle cx="566.4" cy="757.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="404.4" y="752.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Igarapé do Cavalo 11,4 km</text>
+<circle cx="675.1" cy="393.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="568.9" y="388.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pimentel 10,7 km</text>
+<circle cx="389.0" cy="1149.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="396.0" y="1144.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazendinha 6,2 km</text>
+<circle cx="378.5" cy="1157.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="385.5" y="1172.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Povoado Fazendinha 5,6 km</text>
+<circle cx="174.3" cy="691.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="181.3" y="686.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santa Teresa 5,0 km</text>
+<rect x="131.8" y="267.8" width="10" height="10" fill="#1d1d1b"/><text x="145.8" y="290.8" font-weight="600" fill="#1d1d1b">Sede de Tufilândia</text>
+<line x1="35" x2="217.0" y1="1280.3" y2="1280.3" stroke="#8a8a84" stroke-width="2"/><text x="35" y="1294.3" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="1271.320305956942" y2="1271.320305956942" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="1275.320305956942" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,1264.3 421.4,1276.6 434.6,1276.6" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="1275.320305956942" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="1289.320305956942" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="1298.320305956942" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="1294.320305956942" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="1298.320305956942" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1317.320305956942" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1321.320305956942" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1317.320305956942" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1321.320305956942" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1340.320305956942" y2="1340.320305956942" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1344.320305956942" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1363.320305956942" y2="1363.320305956942" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1367.320305956942" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Sem rotas publicadas no DJE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (11):</strong> Ilhinha, Merenda, Associação Edmundo Rio, Gata, Boa Esperança, Alto da Cruz, Igarapé Grande, Igarapé do Cavalo, Pimentel, Fazendinha e Povoado Fazendinha.</li>
+<li><strong>De 3 a 5 km (1):</strong> Santa Teresa.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (13):</strong> Anajá, Atraca, Borgea, Centro do Cabral, Centro do Lima, Centro dos Brancos, Centro dos Limas, Estrada Novo Anajá, Pimenta, Poção da Juçara, Serra, Tufilândia e Água Bela.</li>
+</ul><h2>Rotas da Justiça Eleitoral</h2>
+<p><strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-MA) para Tufilândia.</strong> Pesquisamos todas as edições do DJE/TRE-MA publicadas desde o fim de julho de 2026. As rotas do mapa e da seção de propostas são sugestões deste levantamento.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 12 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Ilhinha</strong></td><td>Sede – Boa Esperança – Alto da Cruz – Pimentel – Ilhinha – Sede</td><td>Boa Esperança, Alto da Cruz, Pimentel, Ilhinha</td><td>37,2 km (ida e volta)</td><td>~1h17</td></tr><tr><td><strong>Rota nova – Merenda</strong></td><td>Sede – Igarapé Grande – Igarapé do Cavalo – Gata – Associação Edmundo Rio – Merenda – Sede</td><td>Igarapé Grande, Igarapé do Cavalo, Gata, Associação Edmundo Rio, Merenda</td><td>32,4 km (ida e volta)</td><td>~1h00</td></tr><tr><td><strong>Rota nova – Fazendinha</strong></td><td>Sede – Povoado Fazendinha – Fazendinha – Sede</td><td>Povoado Fazendinha, Fazendinha</td><td>12,5 km (ida e volta)</td><td>~29 min</td></tr><tr><td><strong>Rota nova – Santa Teresa</strong></td><td>Sede – Santa Teresa – Sede</td><td>Santa Teresa</td><td>10,0 km (ida e volta)</td><td>~16 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMT</strong></p><p>Tufilândia/MA, ___ de outubro de 2026.</p><p>Ao(À) Excelentíssimo(a) Senhor(a)<br><strong>[nome do(a) Juiz(a) Eleitoral]</strong><br>Juiz(a) Eleitoral da 77ª Zona Eleitoral – [sede da zona]/MA</p><p><strong>Assunto:</strong> Sugestão de rotas de transporte gratuito de eleitores da zona rural – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo(a) Senhor(a) Juiz(a),</p><p>O Município de Tufilândia, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento das localidades rurais distantes do local de votação, para as quais não localizamos no Diário da Justiça Eleitoral (DJE/TRE-MA) quadro de percursos nem ato sobre o transporte de eleitores: Ilhinha, Merenda, Associação Edmundo Rio, Gata, Boa Esperança, Alto da Cruz, Igarapé Grande, Igarapé do Cavalo, Pimentel, Fazendinha, Povoado Fazendinha e Santa Teresa.</p><p>Sugerimos, respeitosamente, que Vossa Excelência avalie instituir o transporte gratuito de eleitores no 2º turno, com as seguintes rotas:</p><ol><li>a criação da Rota nova – Ilhinha (Sede – Boa Esperança – Alto da Cruz – Pimentel – Ilhinha – Sede);</li><li>a criação da Rota nova – Merenda (Sede – Igarapé Grande – Igarapé do Cavalo – Gata – Associação Edmundo Rio – Merenda – Sede);</li><li>a criação da Rota nova – Fazendinha (Sede – Povoado Fazendinha – Fazendinha – Sede);</li><li>a criação da Rota nova – Santa Teresa (Sede – Santa Teresa – Sede).</li></ol><p>As rotas sugeridas atendem as localidades mais distantes. Caso esse Juízo já tenha definido rotas, pedimos que estas sugestões sejam consideradas naquilo que ainda não estiver contemplado.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Tufilândia</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Tufilândia; Quadro de percursos não localizado nas edições do DJE/TRE-MA consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

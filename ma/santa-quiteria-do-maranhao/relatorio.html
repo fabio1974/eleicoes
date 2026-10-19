@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Santa Quitéria do Maranhão</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Santa Quitéria do Maranhão</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/santa-quiteria-do-maranhao.pdf?v=1792372660" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Santa Quitéria do Maranhão (24ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 24ª Zona Eleitoral <strong>9 rotas novas</strong> no transporte gratuito de Santa Quitéria do Maranhão.
+<strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-MA) para Santa Quitéria do Maranhão</strong>. As 17 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Santa Quitéria do Maranhão tem 21.200 eleitores aptos em 27 locais de votação e 82 seções. São 20 locais rurais, com 10.084 eleitores (48% do total).</li>
+<li>14 locais rurais ficam a 10 km ou mais da sede, com 6.959 eleitores. Os mais distantes: Povoado Pau Serrado (77,4 km), Povoado Rio Grande Dos Lopes (66,7 km) e Povoado Cabeceira Da Tabatinga (66,4 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Mucura (53,5 km do local de votação), São Gonçalo (50,4 km do local de votação), Tabocas (49,9 km do local de votação), Barra da Campineira (48,3 km do local de votação), Taboca (9,6 km do local de votação), São José (9,4 km do local de votação), Rio Grande (8,5 km do local de votação), Entrada al cercado (8,1 km do local de votação), Munder (8,0 km do local de votação), Vereda (7,1 km do local de votação), Tabatinga dos Vieira (6,4 km do local de votação), Baixon de Coceira (5,2 km do local de votação), Titara (5,2 km do local de votação), Vitória (4,8 km do local de votação), Comunidade Quilombola Caruaras (4,5 km do local de votação), Rio Grande dos Gonçalves (3,6 km do local de votação) e Comunidade Quilombola Caruaras 3 (3,2 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 37 localidades rurais de Santa Quitéria do Maranhão que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço. 2 locais não foram encontrados nas duas bases: Povoado Santa Luzia e Povoado Lagoa Das Caraibas, com 1.199 eleitores.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Mucura</td><td>53,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>São Gonçalo</td><td>50,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Tabocas</td><td>49,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Barra da Campineira</td><td>48,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Taboca</td><td>9,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>São José</td><td>9,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Rio Grande</td><td>8,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Entrada al cercado</td><td>8,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Munder</td><td>8,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Vereda</td><td>7,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Tabatinga dos Vieira</td><td>6,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Baixon de Coceira</td><td>5,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Titara</td><td>5,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Vitória</td><td>4,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Caruaras</td><td>4,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Rio Grande dos Gonçalves</td><td>3,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Comunidade Quilombola Caruaras 3</td><td>3,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 37 localidades rurais de Santa Quitéria do Maranhão, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 656" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Santa Quitéria do Maranhão: 17 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas (não há rotas publicadas no DJE), com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="239.1,382.6 253.2,360.6 264.9,350.8 274.1,346.3 288.7,349.4 459.5,373.7 462.4,376.5 583.9,470.8 651.7,523.0 656.4,524.2 665.4,502.1 690.0,474.5 691.6,469.6 688.2,458.2 693.3,447.8 705.7,444.4 713.4,434.8 717.9,411.5 725.0,406.7 575.8,318.3 481.3,262.2 356.4,188.1 359.4,184.2 385.1,168.8 161.2,80.0 159.4,87.3 159.9,114.8 172.0,123.8 114.1,170.7 113.9,197.9 87.9,198.1 73.1,216.5 67.8,228.6 65.2,249.5 71.6,281.1 72.8,296.6 64.6,299.2 53.0,310.8 38.3,316.9 37.4,323.4 35.0,393.4 61.2,427.2 70.0,440.4 239.4,381.8 239.1,382.6" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="190.6,161.3 189.3,159.2 187.2,158.0 185.7,156.3 183.3,154.9 181.4,153.4 179.5,152.1 177.5,150.5 176.7,147.5 176.0,144.0 175.7,141.1 175.8,138.0 176.3,134.4 176.1,131.3 174.6,129.4 173.3,127.4 170.8,126.5 167.9,125.5 165.5,124.0 164.4,121.8 162.3,119.7 160.2,118.5 157.9,116.9 156.6,114.3 153.6,113.0 148.4,113.0 144.3,113.9 140.0,114.9 133.2,115.7 129.5,118.5 123.4,121.2 122.1,123.0 119.1,124.2 117.4,126.3 118.3,129.4 119.3,132.2 120.1,134.8 121.6,137.4 123.3,138.9 124.5,140.9 124.6,143.9 124.7,147.0 124.4,150.7 124.4,153.9 124.4,157.0 122.4,158.2 119.8,160.8 117.1,163.3 114.3,164.6 111.1,164.7 109.6,166.6 107.8,168.1 106.7,170.7 105.1,172.6 104.0,175.2 103.1,177.7 104.4,180.0 104.8,183.2 104.1,185.9 101.5,188.0 99.3,189.1 96.2,188.8 93.2,189.3 91.3,191.3 89.5,193.5 88.2,195.8 86.6,197.4 84.5,199.9 82.8,201.8 80.5,204.1 79.0,206.1 77.4,209.4 76.1,212.1 74.3,213.8 72.6,215.5 71.1,217.3 69.8,219.3 68.2,222.1 66.4,223.9 65.2,226.0 64.2,229.1 62.6,233.3 62.4,236.2 63.1,238.7 63.7,241.2 63.3,244.1 63.5,247.4 63.4,250.8 63.7,254.5 63.2,257.5 63.5,260.4 64.3,266.9 64.7,269.9 65.5,272.5 66.7,274.5 67.4,277.9 67.2,281.0 69.0,285.5 70.5,287.8 73.5,287.4 75.4,289.0 77.1,290.6 77.9,293.1 77.8,296.2 76.4,298.5 75.5,300.8 76.1,303.7 76.8,306.5 78.5,308.3 79.8,312.1 81.2,314.6 82.1,316.9 83.2,318.9 84.3,321.2 85.9,323.9 87.4,325.9 89.2,327.9 90.1,330.5 90.5,333.3 92.1,335.5 93.1,337.7 94.0,340.3 96.6,344.2 98.2,346.3 100.0,348.6 101.9,350.7 104.3,352.8 106.2,354.7 108.0,356.8 109.5,359.6 111.5,361.5 113.9,362.5 116.0,364.1 118.4,365.6 121.4,366.0 124.4,367.0 128.1,368.0 131.2,368.5 135.0,369.7 137.2,371.2 139.0,373.2 141.0,375.0 142.0,378.2 142.9,381.9 145.4,384.2 147.9,386.2 149.7,384.9 152.9,383.3 156.5,381.7 160.1,381.3 161.8,379.9 160.4,376.0 159.2,372.6 158.3,369.7 155.7,367.6 150.7,363.8 147.8,361.5 146.8,358.8 146.8,355.5 146.2,352.9 146.8,355.5 146.8,358.8 147.8,361.5 150.7,363.8 155.7,367.6 158.3,369.7 159.2,372.6 160.4,376.0 161.4,378.8 162.2,381.4 158.5,381.3 154.8,382.4 151.5,384.0 149.0,385.1 147.7,387.3 148.6,391.0 148.9,395.5 149.9,402.7 150.8,406.0 149.9,402.7 149.5,397.6 148.9,393.2 147.8,388.9 146.5,385.4 144.1,383.0 141.6,382.2 136.1,384.8 131.0,384.0 128.7,383.2 124.1,383.1 121.0,382.9 124.1,383.1 128.7,383.2 131.0,384.0 133.3,384.9 140.6,382.2 142.6,380.6 141.3,375.6 139.8,373.8 137.7,371.9 135.8,369.9 133.2,368.6 129.5,368.3 126.5,367.9 122.8,366.4 119.9,365.9 116.0,364.1 113.9,362.5 111.5,361.5 109.5,359.6 108.0,357.9 106.2,354.7 104.3,352.8 101.9,350.7 100.0,348.6 98.2,346.3 96.6,344.2 95.1,342.2 93.6,339.7 93.0,337.0 91.8,335.0 90.5,332.9 89.9,329.1 88.7,327.2 87.0,325.5 84.7,322.1 83.8,319.7 82.3,317.3 81.2,314.6 80.1,312.6 79.3,309.9 77.8,308.0 76.4,305.7 75.6,303.3 75.8,300.0 77.2,297.3 78.2,295.0 77.6,291.9 76.3,289.5 73.5,287.4 71.0,288.0 68.9,286.9 67.7,283.0 67.0,279.5 66.9,275.1 65.5,272.5 64.7,269.9 64.3,266.9 63.9,262.8 63.3,259.2 63.7,255.9 63.5,252.2 64.0,248.8 63.0,246.5 63.4,243.3 63.4,239.7 62.4,236.2 62.6,233.3 63.8,230.8 64.4,227.8 65.6,225.3 67.0,223.6 69.0,220.7 70.6,218.1 72.4,215.7 73.9,214.1 75.8,212.4 77.3,210.0 78.3,207.3 79.4,205.3 81.5,203.2 83.1,201.4 85.1,198.7 86.9,197.2 88.3,195.4 90.5,192.5 92.2,190.0 94.7,188.9 97.6,188.6 100.7,188.5 102.6,187.2 104.2,185.7 105.3,182.0 103.9,179.5 103.3,176.9 104.8,173.0 106.3,171.1 107.7,168.3 109.6,166.6 111.0,164.8 114.3,164.6 117.1,163.3 118.9,161.8 121.1,159.3 123.1,158.0 124.2,155.3 124.7,152.4 124.6,148.3 124.8,145.0 124.6,141.6 123.5,139.1 121.6,137.4 120.0,135.8 119.6,132.8 118.3,129.4 117.4,126.7 119.1,124.2 122.1,123.0 123.4,121.2 127.1,118.8 133.2,115.7 138.4,114.8 144.3,113.9 147.5,113.2 150.6,113.0 155.0,113.4 156.7,115.1 159.0,117.8 161.0,119.1 162.8,120.4 164.5,122.0 166.1,124.3 168.6,125.8 171.6,126.7 174.2,128.9 175.9,130.9 176.3,134.2 176.0,137.4 175.7,140.4 175.9,143.6 176.5,146.6 177.4,150.0 179.1,151.8 181.4,153.4 183.3,154.9 185.4,156.1 187.2,158.0 189.3,159.2 190.6,161.2 190.6,161.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Mucura</title></polyline>
+<polyline points="190.6,161.3 192.7,162.4 194.4,160.8 196.5,161.9 199.8,162.0 201.9,163.5 203.8,164.8 206.0,166.4 209.8,169.8 211.5,171.4 213.5,172.9 215.2,175.9 214.2,173.7 212.6,172.1 210.5,170.7 208.0,167.5 205.2,165.7 203.3,164.4 200.9,162.5 198.0,162.0 195.1,161.1 192.9,162.4 190.6,161.3 190.6,161.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Rio Grande dos Gonçalves</title></polyline>
+<polyline points="271.7,345.8 275.2,345.5 277.4,347.5 280.4,347.8 283.2,348.5 285.9,349.1 288.5,348.6 291.2,347.5 294.5,346.3 297.2,345.4 299.7,344.5 302.0,342.7 303.8,340.7 305.4,337.8 306.5,335.1 308.2,333.3 309.8,331.3 311.8,328.9 313.8,327.7 315.7,326.4 318.1,325.5 320.7,325.0 322.2,323.3 323.0,320.9 324.2,317.9 326.1,315.5 328.4,314.5 330.7,313.1 335.4,312.4 338.7,311.6 342.3,309.8 340.2,311.0 337.8,311.9 333.2,312.6 328.8,314.3 326.6,315.2 324.4,316.5 323.6,319.6 322.9,322.4 323.2,325.5 323.3,331.3 324.8,333.3 326.7,335.9 329.1,339.6 330.5,341.7 331.7,343.6 333.3,345.9 334.6,347.8 336.2,349.4 335.1,352.0 332.8,353.3 325.8,354.9 320.3,356.0 316.0,356.8 314.5,354.8 313.0,352.7 310.9,351.4 309.1,350.2 307.2,348.7 305.5,346.9 303.3,344.8 301.4,343.6 298.9,344.7 296.0,345.7 293.3,346.9 290.6,347.8 288.0,348.8 284.6,348.8 281.5,348.3 278.9,347.7 277.0,346.5 274.0,345.6 271.7,345.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Taboca</title></polyline>
+<polyline points="241.8,381.9 243.3,380.0 245.0,377.8 248.2,377.0 250.9,376.1 248.8,374.4 246.8,372.7 244.7,371.1 241.8,369.5 238.4,367.8 235.2,366.3 232.8,365.3 229.7,365.6 226.9,364.2 223.2,363.5 219.7,363.0 215.8,363.2 211.7,359.6 209.8,357.9 203.2,355.6 202.4,357.9 199.9,357.1 197.4,356.1 194.2,355.4 192.2,353.9 190.7,352.2 187.8,351.6 190.7,352.2 192.2,353.9 194.2,355.4 197.1,355.9 199.3,356.9 202.4,358.0 203.1,355.6 209.6,357.8 211.7,359.6 215.8,363.2 218.7,362.3 221.3,363.4 224.5,363.7 227.6,364.8 230.5,365.5 234.0,365.7 236.8,367.1 240.6,369.0 243.0,370.1 245.2,371.4 247.1,373.0 249.7,375.0 248.2,377.0 245.4,377.4 243.8,379.6 242.5,381.5 241.8,381.9" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – São José</title></polyline>
+<polyline points="421.2,219.2 419.1,217.9 417.5,216.0 414.4,212.9 412.9,211.1 411.6,209.0 408.7,206.5 406.7,204.0 406.2,200.6 402.5,190.8 400.9,186.4 396.7,180.9 394.7,178.4 393.0,176.5 390.4,173.8 386.5,170.7 384.9,169.0 382.0,169.3 380.0,170.9 378.4,172.7 377.6,175.1 378.5,178.0 376.0,178.8 373.0,178.2 371.0,179.3 369.3,180.8 367.7,182.4 365.5,184.0 363.5,185.5 360.8,186.5 358.6,187.9 356.9,189.4 354.8,190.5 357.6,191.4 358.8,193.4 360.7,195.3 362.6,197.2 364.7,198.6 366.6,200.4 369.9,201.6 373.1,204.1 376.3,204.0 379.1,202.6 382.9,202.9 386.7,203.8 392.7,205.3 395.8,205.3 399.3,205.8 405.2,206.7 407.2,208.0 410.2,209.3 412.3,210.4 413.7,212.3 417.5,216.0 419.1,217.9 421.2,219.2 421.2,219.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Rio Grande</title></polyline>
+<polyline points="210.0,269.5 206.0,267.9 203.1,267.0 201.6,265.2 201.5,262.1 200.2,258.8 199.0,256.3 197.3,253.9 195.2,252.4 192.3,251.6 189.8,250.6 186.8,248.2 184.2,246.4 182.2,243.9 181.1,241.1 179.6,239.1 179.6,236.0 178.7,233.5 183.1,231.8 180.5,232.7 179.3,234.8 179.5,237.9 180.4,240.4 182.0,243.3 183.3,245.7 185.6,247.2 187.9,249.5 190.5,250.9 193.7,252.0 196.2,252.9 197.9,254.8 199.5,257.1 201.4,261.2 201.4,264.6 203.1,267.0 206.0,267.9 208.7,268.4 210.0,269.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Tabatinga dos Vieira</title></polyline>
+<polyline points="654.4,468.5 651.5,467.5 650.6,470.1 649.4,472.1 649.0,474.8 647.9,477.1 645.5,478.9 643.2,480.4 640.7,482.1 638.4,484.0 636.3,485.5 634.3,488.4 632.9,491.3 632.4,494.4 632.7,497.4 631.5,499.7 632.2,502.7 630.8,500.5 632.1,498.4 632.7,495.6 632.9,491.3 634.3,488.4 635.6,486.4 637.2,484.8 639.9,482.8 642.3,481.0 644.6,479.7 646.3,478.0 648.1,476.3 649.1,474.1 650.0,471.6 651.0,469.1 652.8,467.5 654.4,468.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Titara</title></polyline>
+<polyline points="561.9,446.5 564.9,446.7 567.7,447.2 569.8,449.1 571.9,450.8 574.5,451.7 576.3,453.5 577.3,456.0 578.5,458.6 580.5,460.2 584.7,461.1 590.9,462.7 589.4,465.1 587.3,466.9 585.3,468.7 587.2,466.9 589.4,465.1 591.7,463.0 587.0,461.7 582.1,460.4 578.7,459.1 577.3,456.0 576.3,453.5 574.5,451.7 572.1,450.9 570.0,449.3 568.3,447.6 564.9,446.7 561.9,446.5 561.9,446.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Vitória</title></polyline>
+<polyline points="541.6,371.0 543.2,373.7 543.9,376.6 546.2,377.5 549.2,378.8 551.4,380.3 555.1,382.7 557.4,384.2 558.8,386.5 559.6,388.9 560.0,392.1 560.4,394.8 561.3,398.8 561.6,401.6 561.3,398.8 560.4,394.8 560.0,392.1 559.7,389.1 558.8,386.5 557.4,384.2 555.1,382.7 552.9,381.2 550.7,379.8 547.7,377.9 544.6,377.8 543.6,375.2 543.0,372.6 541.6,371.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Caruaras</title></polyline>
+<circle cx="613.2" cy="364.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="617.2" cy="475.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="568.8" cy="425.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="250.6" cy="364.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="611.9" cy="359.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="576.3" cy="374.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="563.1" cy="459.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="648.6" cy="474.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="587.7" cy="386.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="493.1" cy="326.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="422.1" cy="220.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="674.1" cy="429.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="273.6" cy="345.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="452.9" cy="367.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="657.9" cy="368.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="209.4" cy="268.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="598.7" cy="357.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="586.2" cy="375.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="541.1" cy="370.7" r="2.2" fill="#b9b9b2"/>
+<polygon points="673.5,469.3 665.0,484.9 681.9,484.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="657.6,447.6 644.9,471.1 670.4,471.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="655.9,444.2 641.9,469.9 669.8,469.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="655.1,451.2 646.6,466.9 663.7,466.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="657.4,448.4 644.9,471.4 669.9,471.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="654.5,457.9 644.4,476.6 664.6,476.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="657.0,453.6 649.5,467.3 664.5,467.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="658.5,457.4 649.4,474.3 667.7,474.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="271.7,335.7 262.1,353.4 281.4,353.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="271.7" y="367.0" text-anchor="middle" fill="#5c5c57">Povoado Coceira Zona Rural</text>
+<polygon points="421.1,210.2 412.6,226.0 429.6,226.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="489.4,312.9 480.2,329.9 498.6,329.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="489.4" y="343.3" text-anchor="middle" fill="#5c5c57">Povoado Barra Da Onça Zona Rural</text>
+<polygon points="597.6,347.1 589.0,362.8 606.1,362.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="453.9,359.6 444.9,376.2 462.9,376.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="453.9" y="389.6" text-anchor="middle" fill="#5c5c57">Povoado Roça Velha Zona Rural</text>
+<polygon points="522.9,405.5 515.6,419.0 530.3,419.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="190.3,152.2 181.5,168.4 199.0,168.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="541.7,362.8 534.0,377.1 549.4,377.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="659.5,359.1 650.9,375.0 668.1,375.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="634.6,451.9 625.7,468.4 643.6,468.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="634.6" y="481.8" text-anchor="middle" fill="#5c5c57">Povoado Roça De Santa Quitéria Zona Rural</text>
+<polygon points="562.2,437.3 553.5,453.3 570.8,453.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="241.7,373.9 234.2,387.6 249.2,387.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="586.2,368.8 578.5,383.1 593.9,383.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="606.6,466.9 599.0,480.9 614.2,480.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="672.7,422.3 665.0,436.5 680.4,436.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="209.8,262.3 203.1,274.8 216.6,274.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="267.1,205.0 260.9,216.3 273.2,216.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="146.2" cy="352.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="153.2" y="347.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Mucura 53,5 km</text>
+<circle cx="150.2" cy="408.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="157.2" y="403.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">São Gonçalo 50,4 km</text>
+<circle cx="119.9" cy="383.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="126.9" y="378.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Tabocas 49,9 km</text>
+<circle cx="147.6" cy="388.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="342.6" cy="310.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="349.6" y="305.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Taboca 9,6 km</text>
+<circle cx="185.6" cy="351.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="355.2" cy="191.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="362.2" y="186.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Rio Grande 8,5 km</text>
+<circle cx="336.4" cy="349.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="343.4" y="344.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Entrada al cercado 8,1 km</text>
+<circle cx="325.0" cy="307.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="332.0" y="322.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Munder 8,0 km</text>
+<circle cx="384.4" cy="167.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="391.4" y="162.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Vereda 7,1 km</text>
+<circle cx="185.1" cy="230.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="192.1" y="225.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Tabatinga dos Vieira 6,4 km</text>
+<circle cx="310.4" cy="330.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="632.6" cy="502.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="545.0" y="497.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Titara 5,2 km</text>
+<circle cx="585.2" cy="468.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="491.4" y="463.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Vitória 4,8 km</text>
+<circle cx="563.1" cy="402.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="326.7" y="397.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Caruaras 4,5 km</text>
+<circle cx="215.6" cy="176.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="559.9" cy="390.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="566.9" y="385.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Caruaras 3 3,2 km</text>
+<rect x="650.2" y="454.3" width="10" height="10" fill="#1d1d1b"/><text x="664.2" y="477.3" font-weight="600" fill="#1d1d1b">Sede de Santa Quitéria do Maranhão</text>
+<line x1="35" x2="81.6" y1="554.2" y2="554.2" stroke="#8a8a84" stroke-width="2"/><text x="35" y="568.2" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="545.1629162916322" y2="545.1629162916322" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="549.1629162916322" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,538.2 421.4,550.4 434.6,550.4" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="549.1629162916322" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="563.1629162916322" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="572.1629162916322" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="568.1629162916322" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="572.1629162916322" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="591.1629162916322" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="595.1629162916322" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="591.1629162916322" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="595.1629162916322" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="614.1629162916322" y2="614.1629162916322" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="618.1629162916322" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="637.1629162916322" y2="637.1629162916322" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="641.1629162916322" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Sem rotas publicadas no DJE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (13):</strong> Mucura, São Gonçalo, Tabocas, Barra da Campineira, Taboca, São José, Rio Grande, Entrada al cercado, Munder, Vereda, Tabatinga dos Vieira, Baixon de Coceira e Titara.</li>
+<li><strong>De 3 a 5 km (4):</strong> Vitória, Comunidade Quilombola Caruaras, Rio Grande dos Gonçalves e Comunidade Quilombola Caruaras 3.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (20):</strong> Alto Formoso, Areias, Barra da Onça, Barreira, Buriti Seco, Cabeceira da Tabatinga, Cajazeiras, Cantinho, Coceira, Comunidade Quilombola Canabrava, Comunidade Quilombola Fazendinha, Comunidade Quilombola Piquizeiro, Ladeira, Mata do Edgar, Mata dos Fernandes, Passagem Funda, Rodeador, Roça Velha, Santa Maria e Unha de Gato.</li>
+</ul><h2>Rotas da Justiça Eleitoral</h2>
+<p><strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-MA) para Santa Quitéria do Maranhão.</strong> Pesquisamos todas as edições do DJE/TRE-MA publicadas desde o fim de julho de 2026. As rotas do mapa e da seção de propostas são sugestões deste levantamento.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 17 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Mucura</strong></td><td>Sede – Mucura – Barra da Campineira – São Gonçalo – Tabocas – Sede</td><td>Mucura, Barra da Campineira, São Gonçalo, Tabocas</td><td>117,0 km (ida e volta)</td><td>~4h41</td></tr><tr><td><strong>Rota nova – Rio Grande dos Gonçalves</strong></td><td>Sede – Rio Grande dos Gonçalves – Sede</td><td>Rio Grande dos Gonçalves</td><td>7,1 km (ida e volta)</td><td>~17 min</td></tr><tr><td><strong>Rota nova – Taboca</strong></td><td>Sede – Baixon de Coceira – Munder – Taboca – Entrada al cercado – Sede</td><td>Baixon de Coceira, Munder, Taboca, Entrada al cercado</td><td>23,8 km (ida e volta)</td><td>~57 min</td></tr><tr><td><strong>Rota nova – São José</strong></td><td>Sede – São José – Sede</td><td>São José</td><td>18,8 km (ida e volta)</td><td>~45 min</td></tr><tr><td><strong>Rota nova – Rio Grande</strong></td><td>Sede – Vereda – Rio Grande – Sede</td><td>Vereda, Rio Grande</td><td>20,3 km (ida e volta)</td><td>~50 min</td></tr><tr><td><strong>Rota nova – Tabatinga dos Vieira</strong></td><td>Sede – Tabatinga dos Vieira – Sede</td><td>Tabatinga dos Vieira</td><td>12,8 km (ida e volta)</td><td>~31 min</td></tr><tr><td><strong>Rota nova – Titara</strong></td><td>Sede – Titara – Sede</td><td>Titara</td><td>10,4 km (ida e volta)</td><td>~25 min</td></tr><tr><td><strong>Rota nova – Vitória</strong></td><td>Sede – Vitória – Sede</td><td>Vitória</td><td>9,7 km (ida e volta)</td><td>~14 min</td></tr><tr><td><strong>Rota nova – Comunidade Quilombola Caruaras</strong></td><td>Sede – Comunidade Quilombola Caruaras 3 – Comunidade Quilombola Caruaras – Sede</td><td>Comunidade Quilombola Caruaras 3, Comunidade Quilombola Caruaras</td><td>9,1 km (ida e volta)</td><td>~14 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMSQM</strong></p><p>Santa Quitéria do Maranhão/MA, ___ de outubro de 2026.</p><p>Ao(À) Excelentíssimo(a) Senhor(a)<br><strong>[nome do(a) Juiz(a) Eleitoral]</strong><br>Juiz(a) Eleitoral da 24ª Zona Eleitoral – [sede da zona]/MA</p><p><strong>Assunto:</strong> Sugestão de rotas de transporte gratuito de eleitores da zona rural – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo(a) Senhor(a) Juiz(a),</p><p>O Município de Santa Quitéria do Maranhão, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento das localidades rurais distantes do local de votação, para as quais não localizamos no Diário da Justiça Eleitoral (DJE/TRE-MA) quadro de percursos nem ato sobre o transporte de eleitores: Mucura, São Gonçalo, Tabocas, Barra da Campineira, Taboca, São José, Rio Grande, Entrada al cercado, Munder, Vereda, Tabatinga dos Vieira, Baixon de Coceira, Titara, Vitória, Comunidade Quilombola Caruaras, Rio Grande dos Gonçalves e Comunidade Quilombola Caruaras 3.</p><p>Sugerimos, respeitosamente, que Vossa Excelência avalie instituir o transporte gratuito de eleitores no 2º turno, com as seguintes rotas:</p><ol><li>a criação da Rota nova – Mucura (Sede – Mucura – Barra da Campineira – São Gonçalo – Tabocas – Sede);</li><li>a criação da Rota nova – Rio Grande dos Gonçalves (Sede – Rio Grande dos Gonçalves – Sede);</li><li>a criação da Rota nova – Taboca (Sede – Baixon de Coceira – Munder – Taboca – Entrada al cercado – Sede);</li><li>a criação da Rota nova – São José (Sede – São José – Sede);</li><li>a criação da Rota nova – Rio Grande (Sede – Vereda – Rio Grande – Sede);</li><li>a criação da Rota nova – Tabatinga dos Vieira (Sede – Tabatinga dos Vieira – Sede);</li><li>a criação da Rota nova – Titara (Sede – Titara – Sede);</li><li>a criação da Rota nova – Vitória (Sede – Vitória – Sede);</li><li>a criação da Rota nova – Comunidade Quilombola Caruaras (Sede – Comunidade Quilombola Caruaras 3 – Comunidade Quilombola Caruaras – Sede).</li></ol><p>As rotas sugeridas atendem as localidades mais distantes. Caso esse Juízo já tenha definido rotas, pedimos que estas sugestões sejam consideradas naquilo que ainda não estiver contemplado.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Santa Quitéria do Maranhão</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Santa Quitéria do Maranhão; Quadro de percursos não localizado nas edições do DJE/TRE-MA consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

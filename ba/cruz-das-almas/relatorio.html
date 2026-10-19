@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Cruz das Almas</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Cruz das Almas</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/cruz-das-almas.pdf?v=1792373059" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Cruz das Almas (142ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 142ª Zona Eleitoral <strong>4 rotas novas</strong> no transporte gratuito de Cruz das Almas.
+<strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-BA) para Cruz das Almas</strong>. As 13 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Cruz das Almas tem 49.457 eleitores aptos em 38 locais de votação e 155 seções. São 14 locais rurais, com 10.706 eleitores (22% do total).</li>
+<li>1 locais rurais ficam a 10 km ou mais da sede, com 531 eleitores. Os mais distantes: Povoado Piabas - Zona Rural (12,1 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Pacheco (4,9 km do local de votação), Localidade Pacheco (4,1 km do local de votação), Localidade do Bebe Água (4,0 km do local de votação), Oripev (4,0 km do local de votação), Localidade da Baixinha (3,8 km do local de votação), Baixinha (3,8 km do local de votação), Gonçalão (3,8 km do local de votação), Engenho da Lagoa (3,5 km do local de votação), Ponto Certo (3,2 km do local de votação), Gurunga (3,2 km do local de votação), Umbaubeira (3,1 km do local de votação), Barrocas (3,0 km do local de votação) e Alegre (3,0 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 30 localidades rurais de Cruz das Almas que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Pacheco</td><td>4,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Localidade Pacheco</td><td>4,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Localidade do Bebe Água</td><td>4,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Oripev</td><td>4,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Localidade da Baixinha</td><td>3,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Baixinha</td><td>3,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Gonçalão</td><td>3,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Engenho da Lagoa</td><td>3,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Ponto Certo</td><td>3,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Gurunga</td><td>3,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Umbaubeira</td><td>3,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Barrocas</td><td>3,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Alegre</td><td>3,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 30 localidades rurais de Cruz das Almas, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 684" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Cruz das Almas: 13 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas (não há rotas publicadas no DJE), com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="723.4,159.4 663.3,155.7 603.6,177.1 592.5,156.9 554.2,140.1 501.6,147.1 434.1,113.7 391.7,143.4 332.5,140.1 293.4,112.1 239.1,105.9 176.5,80.0 103.3,130.2 37.1,145.4 35.0,157.8 107.0,224.4 100.0,238.0 130.0,278.7 154.7,286.5 226.3,354.0 244.4,396.0 309.8,449.9 325.5,472.5 310.3,498.0 310.7,538.4 546.4,499.3 668.6,492.7 701.5,462.6 706.1,416.2 687.6,312.9 705.3,276.7 725.0,177.5 723.4,159.4 723.4,159.4" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="378.9,504.8 374.6,495.4 364.5,492.6 352.0,493.7 340.0,492.1 332.6,485.0 326.9,478.0 326.5,465.3 324.4,454.8 331.5,444.7 340.4,441.0 354.2,440.0 367.1,436.0 373.8,429.5 367.2,435.5 359.7,440.4 345.7,440.0 334.7,443.3 326.1,447.3 324.1,458.3 326.7,468.3 319.7,473.8 305.2,473.0 293.8,474.1 287.0,467.2 283.0,458.8 278.6,449.0 271.6,443.3 266.1,450.5 254.2,451.0 246.0,446.8 254.2,451.0 266.1,450.5 271.1,443.0 278.6,449.0 282.5,457.9 286.4,466.5 292.5,473.9 304.6,473.1 317.2,473.0 326.9,478.0 332.6,485.0 338.9,491.6 348.8,494.3 359.9,491.4 369.4,494.7 379.2,497.6 378.9,504.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Pacheco</title></polyline>
+<polyline points="317.1,296.7 310.0,309.3 296.9,326.7 290.5,335.1 285.3,344.2 280.2,356.7 276.0,366.7 270.7,374.8 263.9,380.6 256.7,386.4 249.0,391.9 252.9,400.3 249.7,409.7 248.1,420.8 233.9,419.1 230.1,408.4 240.5,406.2 252.5,402.9 264.0,399.6 275.5,396.3 286.1,393.3 295.0,389.1 294.4,377.4 297.5,368.1 305.1,374.1 309.3,383.1 314.9,390.3 317.8,400.0 323.2,407.9 324.3,419.4 329.8,427.1 335.4,438.2 348.1,439.8 360.4,440.4 367.4,435.0 374.1,429.3 377.7,418.1 391.6,419.9 388.3,409.7 382.7,398.9 377.8,389.5 388.2,386.4 377.8,389.5 371.2,377.0 366.0,367.7 362.2,355.6 359.9,343.4 355.7,334.8 346.8,327.1 339.3,320.5 330.9,312.8 322.9,305.3 318.2,297.3 317.1,296.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Localidade Pacheco</title></polyline>
+<polyline points="225.0,289.3 224.1,301.1 226.0,312.1 226.7,324.4 223.6,336.2 223.4,349.4 222.7,362.2 222.3,375.2 224.9,387.1 221.1,378.5 219.4,367.7 224.0,359.5 223.2,348.0 224.4,333.5 226.8,322.8 225.5,311.3 223.5,298.4 225.0,289.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Barrocas</title></polyline>
+<polyline points="489.2,197.4 499.8,191.2 505.2,182.5 507.5,172.1 501.3,165.8 495.4,159.1 494.6,147.2 488.8,140.4 483.9,132.8 477.4,126.5 483.9,132.8 488.8,140.4 494.6,147.2 495.4,159.1 501.3,165.8 507.5,172.1 505.2,182.5 499.8,190.2 495.3,198.3 489.2,197.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Alegre</title></polyline>
+<circle cx="295.7" cy="475.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="162.6" cy="147.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="415.6" cy="456.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="353.5" cy="346.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="474.0" cy="335.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="63.0" cy="163.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="370.5" cy="551.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="248.1" cy="255.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="118.9" cy="223.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="611.4" cy="491.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="90.9" cy="181.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="243.0" cy="143.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="560.0" cy="171.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="361.7" cy="507.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="214.7" cy="287.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="551.4" cy="158.2" r="2.2" fill="#b9b9b2"/>
+<polygon points="471.5,230.0 463.1,245.5 479.9,245.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="497.9,245.2 484.8,269.3 511.0,269.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="493.4,253.3 484.5,269.7 502.3,269.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="469.9,228.7 459.1,248.5 480.7,248.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="509.4,265.1 497.3,287.5 521.5,287.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="477.3,243.9 467.7,261.6 486.9,261.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="459.2,262.9 448.1,283.4 470.3,283.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="488.8,232.5 476.6,255.0 501.0,255.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="498.3,245.4 487.7,264.9 508.9,264.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="492.5,199.2 476.4,228.9 508.6,228.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="474.8,265.6 464.3,285.0 485.3,285.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="440.3,229.0 428.6,250.5 452.0,250.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="317.3,284.9 305.9,305.8 328.6,305.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="317.3" y="319.8" text-anchor="middle" fill="#5c5c57">Povoado Embira</text>
+<polygon points="504.5,262.7 490.5,288.6 518.5,288.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="240.3,155.8 231.4,172.2 249.2,172.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="473.6,228.3 464.8,244.5 482.4,244.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="656.7,195.5 647.2,213.0 666.2,213.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="656.7" y="226.5" text-anchor="middle" fill="#5c5c57">Povoado Sapucaia</text>
+<polygon points="418.1,186.6 404.8,211.0 431.3,211.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="489.2,186.0 478.5,205.7 500.0,205.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="267.5,159.7 257.6,177.9 277.3,177.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="267.5" y="191.5" text-anchor="middle" fill="#5c5c57">Povoado Pumba I</text>
+<polygon points="225.1,278.9 215.1,297.3 235.1,297.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="225.1" y="311.0" text-anchor="middle" fill="#5c5c57">Povoado Boca Da Mata</text>
+<polygon points="379.4,495.3 370.5,511.6 388.3,511.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="368.3,206.3 357.7,225.8 378.9,225.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="368.3" y="239.6" text-anchor="middle" fill="#5c5c57">Povoado Toquinha</text>
+<polygon points="523.4,275.1 511.7,296.6 535.0,296.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="430.0,157.5 418.8,178.1 441.2,178.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="253.5,187.3 243.2,206.2 263.8,206.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="120.6,175.7 112.2,191.1 129.0,191.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="475.7,444.3 468.7,457.0 482.6,457.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="649.3,474.9 640.6,490.9 658.0,490.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="423.4,198.7 413.0,217.8 433.8,217.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="448.9,230.0 440.5,245.4 457.3,245.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="323.0,208.4 315.2,222.8 330.8,222.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="488.0,214.1 475.5,237.2 500.6,237.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="547.3,147.9 541.0,159.4 553.5,159.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="199.6,202.1 192.9,214.5 206.3,214.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="434.9,242.2 428.4,254.3 441.5,254.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="497.5,278.0 491.3,289.3 503.6,289.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="506.9,288.0 499.8,301.3 514.1,301.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="243.0" cy="442.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="250.0" y="437.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pacheco 4,9 km</text>
+<circle cx="247.0" cy="423.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="254.0" y="418.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Localidade Pacheco 4,1 km</text>
+<circle cx="270.5" cy="438.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="277.5" y="453.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Localidade do Bebe Água 4,0 km</text>
+<circle cx="227.5" cy="406.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="234.5" y="401.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Oripev 4,0 km</text>
+<circle cx="262.2" cy="398.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="264.2" cy="402.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="322.2" cy="408.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="329.2" y="403.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Gonçalão 3,8 km</text>
+<circle cx="388.4" cy="387.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="395.4" y="382.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Engenho da Lagoa 3,5 km</text>
+<circle cx="253.1" cy="380.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="260.1" y="375.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Ponto Certo 3,2 km</text>
+<circle cx="341.1" cy="440.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="348.1" y="435.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Gurunga 3,2 km</text>
+<circle cx="372.9" cy="421.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="222.7" cy="390.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="474.9" cy="118.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="481.9" y="113.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Alegre 3,0 km</text>
+<rect x="467.1" y="249.7" width="10" height="10" fill="#1d1d1b"/><text x="481.1" y="272.7" font-weight="600" fill="#1d1d1b">Sede de Cruz das Almas</text>
+<line x1="35" x2="220.3" y1="581.6" y2="581.6" stroke="#8a8a84" stroke-width="2"/><text x="35" y="595.6" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="572.6008050089541" y2="572.6008050089541" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="576.6008050089541" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,565.6 421.4,577.9 434.6,577.9" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="576.6008050089541" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="590.6008050089541" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="599.6008050089541" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="595.6008050089541" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="599.6008050089541" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="618.6008050089541" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="622.6008050089541" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="618.6008050089541" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="622.6008050089541" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="641.6008050089541" y2="641.6008050089541" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="645.6008050089541" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="664.6008050089541" y2="664.6008050089541" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="668.6008050089541" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Sem rotas publicadas no DJE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (0):</strong> nenhuma.</li>
+<li><strong>De 3 a 5 km (13):</strong> Pacheco, Localidade Pacheco, Localidade do Bebe Água, Oripev, Localidade da Baixinha, Baixinha, Gonçalão, Engenho da Lagoa, Ponto Certo, Gurunga, Umbaubeira, Barrocas e Alegre.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (17):</strong> Araca, Bebe Água, Boca da Mata, Caminhoá, Comunidade Quilombola Baixa da Linha, Comunidade Quilombola Vila Guaxinim, Lagoa Grande, Lagoa do Cedro, Massapê, Melancia, Má Vida, Piaba, Poções, Santa Luzia, Tiririca, Tua e Vila do Araça.</li>
+</ul><h2>Rotas da Justiça Eleitoral</h2>
+<p><strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-BA) para Cruz das Almas.</strong> Pesquisamos todas as edições do DJE/TRE-BA publicadas desde o fim de julho de 2026. As rotas do mapa e da seção de propostas são sugestões deste levantamento.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 13 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Pacheco</strong></td><td>Sede – Gurunga – Umbaubeira – Localidade do Bebe Água – Pacheco – Sede</td><td>Gurunga, Umbaubeira, Localidade do Bebe Água, Pacheco</td><td>15,1 km (ida e volta)</td><td>~37 min</td></tr><tr><td><strong>Rota nova – Localidade Pacheco</strong></td><td>Sede – Ponto Certo – Localidade da Baixinha – Baixinha – Localidade Pacheco – Oripev – Gonçalão – Engenho da Lagoa – Sede</td><td>Ponto Certo, Localidade da Baixinha, Baixinha, Localidade Pacheco, Oripev, Gonçalão, Engenho da Lagoa</td><td>18,4 km (ida e volta)</td><td>~41 min</td></tr><tr><td><strong>Rota nova – Barrocas</strong></td><td>Sede – Barrocas – Sede</td><td>Barrocas</td><td>6,1 km (ida e volta)</td><td>~15 min</td></tr><tr><td><strong>Rota nova – Alegre</strong></td><td>Sede – Alegre – Sede</td><td>Alegre</td><td>6,0 km (ida e volta)</td><td>~21 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMCA</strong></p><p>Cruz das Almas/BA, ___ de outubro de 2026.</p><p>Ao(À) Excelentíssimo(a) Senhor(a)<br><strong>[nome do(a) Juiz(a) Eleitoral]</strong><br>Juiz(a) Eleitoral da 142ª Zona Eleitoral – [sede da zona]/BA</p><p><strong>Assunto:</strong> Sugestão de rotas de transporte gratuito de eleitores da zona rural – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo(a) Senhor(a) Juiz(a),</p><p>O Município de Cruz das Almas, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento das localidades rurais distantes do local de votação, para as quais não localizamos no Diário da Justiça Eleitoral (DJE/TRE-BA) quadro de percursos nem ato sobre o transporte de eleitores: Pacheco, Localidade Pacheco, Localidade do Bebe Água, Oripev, Localidade da Baixinha, Baixinha, Gonçalão, Engenho da Lagoa, Ponto Certo, Gurunga, Umbaubeira, Barrocas e Alegre.</p><p>Sugerimos, respeitosamente, que Vossa Excelência avalie instituir o transporte gratuito de eleitores no 2º turno, com as seguintes rotas:</p><ol><li>a criação da Rota nova – Pacheco (Sede – Gurunga – Umbaubeira – Localidade do Bebe Água – Pacheco – Sede);</li><li>a criação da Rota nova – Localidade Pacheco (Sede – Ponto Certo – Localidade da Baixinha – Baixinha – Localidade Pacheco – Oripev – Gonçalão – Engenho da Lagoa – Sede);</li><li>a criação da Rota nova – Barrocas (Sede – Barrocas – Sede);</li><li>a criação da Rota nova – Alegre (Sede – Alegre – Sede).</li></ol><p>As rotas sugeridas atendem as localidades mais distantes. Caso esse Juízo já tenha definido rotas, pedimos que estas sugestões sejam consideradas naquilo que ainda não estiver contemplado.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Cruz das Almas</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Cruz das Almas; Quadro de percursos não localizado nas edições do DJE/TRE-BA consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

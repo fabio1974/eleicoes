@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Verdejante</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<p class="nao-imprimir"><a class="voltar" href="./">← Verdejante</a></p><p class="botoes nao-imprimir"><a class="botao" href="../relatorios/verdejante.pdf?v=1792372875" download>Baixar em PDF</a> <a class="botao sec" href="minuta.html">Minuta do ofício</a></p><article class="relatorio-web">
+<h1>Transporte de Eleitores – Verdejante (75ª ZE): proposta de novas rotas</h1><p class="data">18/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 75ª Zona Eleitoral <strong>4 rotas novas</strong> no transporte gratuito de Verdejante.
+<strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-PE) para Verdejante</strong>. As 13 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Verdejante tem 8.434 eleitores aptos em 8 locais de votação e 30 seções. São 6 locais rurais, com 3.664 eleitores (43% do total).</li>
+<li>4 locais rurais ficam a 10 km ou mais da sede, com 3.035 eleitores. Os mais distantes: Povoado De Lagoa (31,7 km), Povoado De Malhadareia (17,8 km) e Povoado De Grossos (16,5 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Sítio Boa Vista (16,4 km do local de votação), Massapê (13,1 km do local de votação), Sítio Juazeiro (12,9 km do local de votação), Sítio Atravessada (8,3 km do local de votação), Sítio Três Riachos (6,8 km do local de votação), Mamoeiro (5,2 km do local de votação), Sítio Campestre 1 (5,0 km do local de votação), Sítio Campestre 2 (4,7 km do local de votação), Sítio São José (4,7 km do local de votação), Pitombeira (3,9 km do local de votação), Riachinho (3,4 km do local de votação), Sítio Campestre 3 (3,1 km do local de votação) e Sítio Campestre 4 (3,1 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 26 localidades rurais de Verdejante que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Sítio Boa Vista</td><td>16,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Massapê</td><td>13,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Juazeiro</td><td>12,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Atravessada</td><td>8,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Três Riachos</td><td>6,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Mamoeiro</td><td>5,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Campestre 1</td><td>5,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Campestre 2</td><td>4,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio São José</td><td>4,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Pitombeira</td><td>3,9</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Riachinho</td><td>3,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Campestre 3</td><td>3,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Campestre 4</td><td>3,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 26 localidades rurais de Verdejante, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1047" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Verdejante: 13 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas (não há rotas publicadas no DJE), com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="287.3,80.0 294.7,116.2 234.7,193.1 239.8,215.0 214.8,240.3 178.9,249.8 179.5,270.8 165.9,294.9 159.3,335.2 112.2,349.5 100.3,370.8 108.9,385.7 99.7,412.7 132.3,430.5 122.0,454.2 118.7,532.6 90.8,554.5 86.3,597.6 61.4,618.1 67.9,670.6 35.0,721.3 121.1,875.1 148.4,861.1 148.7,816.6 216.3,816.3 229.4,806.2 261.7,807.4 264.4,840.3 282.5,839.4 303.9,860.5 325.5,829.4 352.8,821.0 392.0,834.1 408.0,847.2 435.1,903.3 463.8,891.7 472.7,902.1 503.3,890.8 523.5,906.5 548.1,903.5 567.4,914.8 606.0,893.5 689.7,789.9 725.0,770.6 701.6,747.1 703.3,666.1 712.8,626.4 692.7,613.0 684.3,573.8 665.3,559.3 668.0,533.8 614.3,505.6 614.3,457.2 603.6,422.2 548.4,387.5 525.3,336.4 493.2,316.2 478.1,286.0 474.2,238.5 448.1,211.2 453.2,173.5 441.6,177.6 416.1,169.9 393.5,179.1 356.1,161.9 336.5,161.3 324.7,144.7 318.4,112.3 300.0,80.6 287.3,80.0 287.3,80.0" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="102.0,573.2 107.7,577.1 118.8,579.2 124.6,575.4 128.1,569.4 130.1,560.8 135.7,557.1 141.7,553.2 146.9,548.9 155.0,542.4 163.6,544.5 168.9,548.2 172.0,554.7 179.9,556.9 189.0,557.3 195.3,559.9 196.5,568.6 197.6,579.2 210.2,587.0 213.9,592.8 218.6,598.0 216.4,605.5 225.3,614.8 221.1,620.5 213.2,622.0 210.1,629.1 209.8,638.3 209.7,647.7 210.4,657.3 213.2,664.7 216.3,671.0 213.3,677.8 210.1,684.1 214.0,689.3 211.7,696.5 204.9,701.8 200.3,707.0 195.9,715.2 188.8,728.3 184.4,734.4 188.0,739.9 194.6,746.4 194.5,755.2 191.2,763.3 188.5,770.1 184.2,775.0 190.0,778.5 192.5,785.1 193.5,793.5 197.6,798.6 192.1,804.7 182.9,805.4 175.2,808.9 167.4,807.8 162.4,803.5 153.6,803.7 147.6,798.9 136.8,800.7 128.4,797.1 118.1,797.5 111.1,795.3 104.9,799.7 92.7,801.9 80.0,803.4 69.8,804.5 61.0,804.2 68.6,800.5 90.7,789.7 89.8,781.4 93.0,774.8 95.4,768.1 98.3,762.0 96.3,754.9 94.2,747.8 97.1,741.7 92.1,734.1 91.4,725.7 96.1,721.1 101.7,717.8 100.5,709.1 101.2,700.5 103.7,694.0 105.2,686.3 108.5,680.5 113.3,675.1 114.6,666.6 112.5,658.5 111.0,649.3 108.5,642.1 105.9,635.8 108.6,628.4 112.4,620.9 114.4,612.1 111.8,602.6 107.7,597.1 102.8,592.7 99.0,587.1 101.0,575.5 102.0,573.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Sítio Boa Vista</title></polyline>
+<polyline points="590.9,660.6 561.3,654.6 551.3,655.3 547.4,644.0 541.6,640.8 534.7,638.4 537.2,630.9 528.3,631.5 522.4,626.7 520.7,619.4 518.3,611.8 524.1,604.9 530.1,608.7 537.2,606.7 543.8,611.2 538.3,607.1 535.9,600.5 533.0,593.9 529.6,588.0 528.1,598.6 524.1,604.9 519.2,609.8 521.3,616.6 521.9,625.7 525.5,631.3 532.8,633.1 537.1,640.3 544.9,642.1 550.4,647.8 548.8,655.8 541.9,658.3 505.8,675.0 499.4,677.7 488.6,677.4 479.8,674.5 470.9,667.7 463.7,659.5 458.3,654.9 441.5,653.6 408.8,655.0 394.9,655.7 386.7,657.7 380.4,661.8 372.8,669.0 366.1,673.1 350.8,677.1 342.7,678.1 344.0,686.9 340.0,691.8 335.0,696.2 335.9,705.5 339.2,712.2 342.9,719.5 347.5,724.4 350.8,733.8 350.7,743.3 346.6,751.1 342.9,757.8 342.8,768.1 342.8,777.0 341.4,784.7 346.4,788.9 353.7,793.5 357.6,801.5 361.1,809.0 366.8,812.8 375.5,814.4 383.0,817.4 391.1,818.7 396.8,815.0 405.6,815.8 413.7,812.8 420.5,816.7 428.5,818.1 439.3,816.6 447.3,818.9 455.4,820.8 463.9,821.3 471.3,823.1 476.7,826.9 485.0,825.2 493.5,826.1 500.9,824.5 511.2,825.1 518.2,821.8 526.7,814.6 529.8,808.5 535.9,804.7 540.0,799.8 548.3,797.6 558.5,797.4 560.0,789.5 562.5,781.6 564.6,774.7 571.1,769.5 570.5,760.9 574.0,753.2 578.6,748.6 583.9,744.8 591.0,742.6 599.2,741.9 603.7,737.3 607.4,731.6 605.4,720.3 602.1,714.5 599.1,708.6 598.6,699.7 594.3,693.9 592.5,686.3 591.2,673.5 587.0,666.8 589.6,660.4 590.9,660.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Massapê</title></polyline>
+<polyline points="429.3,420.0 434.1,424.7 431.3,435.4 428.6,442.2 426.0,448.7 422.4,457.7 419.2,465.5 418.6,476.4 419.5,484.5 419.2,493.2 416.6,499.7 413.6,507.1 411.2,513.7 409.7,522.4 408.1,531.9 404.8,542.1 400.6,552.0 396.6,561.8 395.2,569.3 396.2,577.8 397.4,586.6 396.2,577.8 395.2,569.3 396.6,561.8 399.2,555.2 402.4,547.8 406.6,537.6 408.4,529.6 409.9,521.3 411.4,513.0 414.6,504.6 417.7,497.2 419.8,490.1 418.6,476.4 418.7,466.9 421.7,459.5 424.6,452.1 427.3,445.3 431.3,435.4 434.0,428.6 431.7,421.2 429.3,420.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Sítio Três Riachos</title></polyline>
+<polyline points="249.2,204.8 255.9,202.1 259.6,196.2 269.8,194.1 280.2,190.3 292.1,190.7 302.2,191.7 307.9,187.6 315.9,183.4 323.0,180.0 329.0,184.7 326.0,192.0 329.9,186.8 325.7,180.1 317.7,182.6 311.3,186.6 304.7,190.5 295.7,191.9 287.8,189.7 275.8,191.3 267.4,195.1 259.9,192.4 257.5,200.3 250.5,204.1 249.2,204.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Pitombeira</title></polyline>
+<circle cx="471.9" cy="349.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="340.4" cy="335.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="247.8" cy="231.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="453.8" cy="356.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="298.2" cy="318.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="97.6" cy="589.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="448.7" cy="388.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="314.6" cy="324.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="434.0" cy="423.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="624.7" cy="669.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="588.7" cy="661.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="100.9" cy="574.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="454.3" cy="373.2" r="2.2" fill="#b9b9b2"/>
+<polygon points="425.3,402.8 412.7,425.8 437.8,425.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="429.4,407.0 417.0,429.9 441.9,429.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="590.9,649.3 579.9,669.4 601.8,669.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="590.9" y="683.3" text-anchor="middle" fill="#5c5c57">Zona Rural</text>
+<polygon points="102.4,563.8 93.4,580.3 111.3,580.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="624.4,662.3 616.0,677.8 632.8,677.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="309.2,312.1 301.4,326.6 317.1,326.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="452.9,368.0 445.6,381.3 460.1,381.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="249.0,197.0 241.7,210.4 256.3,210.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="194.4" cy="802.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="201.4" y="797.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Boa Vista 16,4 km</text>
+<circle cx="362.9" cy="747.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="369.9" y="742.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Massapê 13,1 km</text>
+<circle cx="112.5" cy="794.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="523.2" cy="820.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="530.2" y="815.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Atravessada 8,3 km</text>
+<circle cx="400.9" cy="590.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="407.9" y="585.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Três Riachos 6,8 km</text>
+<circle cx="544.0" cy="611.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="551.0" y="606.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Mamoeiro 5,2 km</text>
+<circle cx="527.9" cy="589.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="528.8" cy="610.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="535.8" y="625.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Campestre 2 4,7 km</text>
+<circle cx="195.3" cy="559.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="202.3" y="554.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio São José 4,7 km</text>
+<circle cx="325.5" cy="193.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="332.5" y="188.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Pitombeira 3,9 km</text>
+<circle cx="326.4" cy="182.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="541.6" cy="632.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="548.6" y="647.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Campestre 3 3,1 km</text>
+<circle cx="527.9" cy="635.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<rect x="429.0" y="418.9" width="10" height="10" fill="#1d1d1b"/><text x="443.0" y="441.9" font-weight="600" fill="#1d1d1b">Sede de Verdejante</text>
+<line x1="35" x2="168.7" y1="944.8" y2="944.8" stroke="#8a8a84" stroke-width="2"/><text x="35" y="958.8" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="935.8258064516039" y2="935.8258064516039" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="939.8258064516039" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,928.8 421.4,941.1 434.6,941.1" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="939.8258064516039" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="953.8258064516039" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="962.8258064516039" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="958.8258064516039" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="962.8258064516039" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="981.8258064516039" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="985.8258064516039" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="981.8258064516039" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="985.8258064516039" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1004.8258064516039" y2="1004.8258064516039" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1008.8258064516039" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1027.825806451604" y2="1027.825806451604" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1031.825806451604" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Sem rotas publicadas no DJE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (6):</strong> Sítio Boa Vista, Massapê, Sítio Juazeiro, Sítio Atravessada, Sítio Três Riachos e Mamoeiro.</li>
+<li><strong>De 3 a 5 km (7):</strong> Sítio Campestre 1, Sítio Campestre 2, Sítio São José, Pitombeira, Riachinho, Sítio Campestre 3 e Sítio Campestre 4.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (13):</strong> Grossos, Lagoa, Malhada da Areia, Oititica, Riacho Verde, Riacho Verde 3, Riacho Verde 4, Rocinha, São Joaquim, Sítio Angico Torto 1, Sítio Angico Torto 2, Sítio Bom Bocado e Verdejante.</li>
+</ul><h2>Rotas da Justiça Eleitoral</h2>
+<p><strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-PE) para Verdejante.</strong> Pesquisamos todas as edições do DJE/TRE-PE publicadas desde o fim de julho de 2026. As rotas do mapa e da seção de propostas são sugestões deste levantamento.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 13 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Sítio Boa Vista</strong></td><td>Sede – Sítio São José – Sítio Boa Vista – Sítio Juazeiro – Sede</td><td>Sítio São José, Sítio Boa Vista, Sítio Juazeiro</td><td>33,1 km (ida e volta)</td><td>~1h00</td></tr><tr><td><strong>Rota nova – Massapê</strong></td><td>Sede – Sítio Campestre 3 – Sítio Campestre 4 – Sítio Campestre 2 – Mamoeiro – Sítio Campestre 1 – Massapê – Sítio Atravessada – Sede</td><td>Sítio Campestre 3, Sítio Campestre 4, Sítio Campestre 2, Mamoeiro, Sítio Campestre 1, Massapê, Sítio Atravessada</td><td>40,6 km (ida e volta)</td><td>~1h03</td></tr><tr><td><strong>Rota nova – Sítio Três Riachos</strong></td><td>Sede – Sítio Três Riachos – Sede</td><td>Sítio Três Riachos</td><td>13,7 km (ida e volta)</td><td>~16 min</td></tr><tr><td><strong>Rota nova – Pitombeira</strong></td><td>São Joaquim – Pitombeira – Riachinho – São Joaquim</td><td>Pitombeira, Riachinho</td><td>7,9 km (ida e volta)</td><td>~19 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. A Prefeitura pode pôr à disposição da Justiça Eleitoral os veículos necessários da frota municipal, abastecidos e com motorista. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p><h2>Base legal e minuta do ofício</h2>
+<p>A Lei nº 6.091/1974 põe os veículos dos municípios à disposição da Justiça Eleitoral para o transporte gratuito de eleitores da zona rural. Quem define percursos e horários é o Juiz Eleitoral (art. 4º). A mesma lei proíbe qualquer outro transporte de eleitores no dia da eleição (art. 5º) e define como crime fazê-lo fora dessas regras (art. 11). Por isso a Prefeitura deve se limitar a sugerir rotas e oferecer veículos. Os veículos só rodam se a Justiça Eleitoral aprovar, sob a coordenação do Cartório.</p>
+<p>Antes de enviar, a assessoria jurídica do município deve revisar o texto.</p>
+<blockquote><p><strong>OFÍCIO Nº ___/2026 – GAB/PMV</strong></p><p>Verdejante/PE, ___ de outubro de 2026.</p><p>Ao(À) Excelentíssimo(a) Senhor(a)<br><strong>[nome do(a) Juiz(a) Eleitoral]</strong><br>Juiz(a) Eleitoral da 75ª Zona Eleitoral – [sede da zona]/PE</p><p><strong>Assunto:</strong> Sugestão de rotas de transporte gratuito de eleitores da zona rural – 2º turno das Eleições Gerais 2026.</p><p>Excelentíssimo(a) Senhor(a) Juiz(a),</p><p>O Município de Verdejante, com fundamento na Lei nº 6.091/1974, apresenta a Vossa Excelência, para avaliação, levantamento das localidades rurais distantes do local de votação, para as quais não localizamos no Diário da Justiça Eleitoral (DJE/TRE-PE) quadro de percursos nem ato sobre o transporte de eleitores: Sítio Boa Vista, Massapê, Sítio Juazeiro, Sítio Atravessada, Sítio Três Riachos, Mamoeiro, Sítio Campestre 1, Sítio Campestre 2, Sítio São José, Pitombeira, Riachinho, Sítio Campestre 3 e Sítio Campestre 4.</p><p>Sugerimos, respeitosamente, que Vossa Excelência avalie instituir o transporte gratuito de eleitores no 2º turno, com as seguintes rotas:</p><ol><li>a criação da Rota nova – Sítio Boa Vista (Sede – Sítio São José – Sítio Boa Vista – Sítio Juazeiro – Sede);</li><li>a criação da Rota nova – Massapê (Sede – Sítio Campestre 3 – Sítio Campestre 4 – Sítio Campestre 2 – Mamoeiro – Sítio Campestre 1 – Massapê – Sítio Atravessada – Sede);</li><li>a criação da Rota nova – Sítio Três Riachos (Sede – Sítio Três Riachos – Sede);</li><li>a criação da Rota nova – Pitombeira (São Joaquim – Pitombeira – Riachinho – São Joaquim).</li></ol><p>As rotas sugeridas atendem as localidades mais distantes. Caso esse Juízo já tenha definido rotas, pedimos que estas sugestões sejam consideradas naquilo que ainda não estiver contemplado.</p><p>Para essas rotas, o Município põe à disposição desse Juízo os seguintes veículos da frota municipal, abastecidos e com motorista: [listar modelo, placa e motorista].</p><p>Segue anexo o levantamento completo, com distâncias e mapa.</p><p>Respeitosamente,</p><p>______________________________<br>Prefeito(a) Municipal de Verdejante</p></blockquote>
+<p class="fontes">Fontes: TSE, Locais de Votação de Verdejante; Quadro de percursos não localizado nas edições do DJE/TRE-PE consultadas; IBGE, Localidades do Brasil 2022; OpenStreetMap (localidades) e OSRM (distâncias por estrada).</p>
+</article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>
