@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Venturosa</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.filtro { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 8px; padding:0; border:0; min-width:0; }
+.filtro legend { font-size:.85rem; color:var(--tx2); margin-bottom:6px; padding:0; }
+.filtro label { display:inline-flex; align-items:center; gap:6px; border:1px solid var(--bd); background:var(--card); border-radius:99px;
+  padding:6px 12px; font-size:.88rem; cursor:pointer; user-select:none; }
+.filtro input { accent-color:var(--ac); margin:0; }
+.filtro label:has(input:checked) { border-color:var(--ac); background:var(--ac-soft); }
+.filtro .n { color:var(--tx2); font-size:.8rem; }
+.filtro-acoes { font-size:.85rem; margin:0 0 12px; color:var(--tx2); } .filtro-acoes a { cursor:pointer; margin-right:10px; }
+.selecao { display:block; margin-top:4px; color:var(--ac); font-weight:600; font-size:.9rem; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<article class="relatorio-web">
+<h1>Transporte de Eleitores – Venturosa (120ª ZE): proposta de novas rotas</h1><p class="data">19/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 120ª Zona Eleitoral <strong>1 rota nova e 1 parada extra em rotas do edital</strong> no transporte gratuito de Venturosa.
+Traçamos pelas estradas o percurso das 22 rotas do Edital de roteiro dos transportes de eleitores nas Eleições Gerais 2026 em Venturosa - 120ª ZE. 3 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 1 ficam a 1–2 km.</p>
+<ul>
+<li>Venturosa tem 14.826 eleitores aptos em 8 locais de votação e 40 seções. São 2 locais rurais, com 1.297 eleitores (9% do total).</li>
+<li>2 locais rurais ficam a 10 km ou mais da sede, com 1.297 eleitores. Os mais distantes: Vila Do Grotão, Sn (33,4 km) e Povoado Do Cordeiro (Tará) Sn (13,1 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Comunidade Quilombola Negro do Osso (53,3 km do local de votação), Aldéia Mãe Maria (41,9 km do local de votação) e Baixa Grande (13,5 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Sítio Goiabeira.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 13 localidades rurais de Venturosa que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Comunidade Quilombola Negro do Osso</td><td>53,3</td><td>Rota 15</td><td>5,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Aldéia Mãe Maria</td><td>41,9</td><td>Rota 15</td><td>12,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Sítio Ingazeira</td><td>13,6</td><td>Rota 06</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Baixa Grande</td><td>13,5</td><td>Rota 15</td><td>5,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Pedra Fixe</td><td>8,6</td><td>Rota 10</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Olho d&#x27;Água</td><td>4,3</td><td>Rota 07</td><td>0,4</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Goiabeira</td><td>4,2</td><td>Rota 17</td><td>1,4</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Olho d&#x27;Água - Venturosa</td><td>3,1</td><td>Rota 07</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>2 das 72 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Fazenda de Geová (Rota 18) e Primavera (Rota 18). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 13 localidades rurais de Venturosa, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1337" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Venturosa: 4 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital de roteiro dos transportes de eleitores nas Eleições Gerais 2026 em Venturosa - 120ª ZE e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="317.6,211.8 304.9,258.1 282.2,292.2 262.6,305.3 253.6,344.4 234.4,361.2 230.6,410.6 199.6,468.0 201.1,504.7 186.2,521.7 150.2,596.3 130.6,598.4 108.9,638.5 86.5,639.1 55.2,678.9 70.4,721.1 58.3,753.1 37.2,775.4 35.0,815.5 255.8,977.3 331.2,1056.2 427.8,1118.3 466.6,1187.5 687.1,1162.7 725.0,995.9 616.6,931.9 627.8,909.9 620.4,879.5 601.1,859.0 613.2,841.0 612.3,796.9 516.9,773.9 488.1,775.7 460.7,794.7 433.7,788.5 444.0,744.7 435.3,704.0 446.8,686.3 445.8,656.2 426.9,640.0 422.9,605.6 301.7,478.9 317.6,211.8 317.6,211.8" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="679.7,1096.5 677.2,1103.9 672.3,1108.6 667.2,1115.2 661.3,1119.2 653.6,1121.2 645.0,1122.3 640.5,1127.5 633.7,1132.7 627.0,1137.2 623.4,1144.6 621.8,1152.6 623.7,1161.3 629.4,1165.6 634.2,1170.3 633.3,1180.1 632.1,1188.4 629.9,1195.6 629.5,1204.8 600.3,1198.1 591.8,1196.2 583.3,1194.2 575.7,1192.5 567.8,1190.7 559.8,1188.9 551.3,1186.9 543.1,1185.0 535.5,1183.3 527.9,1181.6 519.9,1179.8 511.4,1177.7 502.2,1175.6 495.0,1173.3 491.5,1167.3 487.1,1162.0 481.2,1156.9 476.0,1152.4 468.5,1147.7 461.2,1152.0 455.5,1159.4 449.0,1162.5 442.8,1158.4 440.4,1149.7 437.6,1141.4 434.4,1133.8 431.4,1127.1 428.3,1120.1 425.1,1112.5 422.0,1105.4 419.2,1098.8 413.7,1094.8 415.0,1086.4 422.1,1084.0 428.6,1081.0 428.3,1070.8 420.9,1065.7 413.7,1062.5 405.6,1058.9 398.7,1052.8 394.1,1048.1 378.8,1032.4 367.2,1020.5 362.2,1015.4 355.6,1006.4 351.0,998.9 345.1,989.6 317.0,957.3 276.5,910.9 262.3,892.5 248.5,867.1 244.5,859.4 240.2,851.3 236.9,844.6 233.0,836.1 228.9,828.6 223.9,820.2 219.2,811.2 216.0,805.0 211.8,797.0 207.0,787.8 201.4,777.0 198.1,770.4 192.2,758.9 188.4,751.7 183.3,745.8 177.3,739.4 167.0,728.4 160.8,721.8 156.8,715.9 153.4,709.8 150.0,703.7 145.8,705.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="115.1,727.4 124.2,727.7 131.6,730.8 135.6,723.8 140.2,718.4 144.2,712.8 148.6,706.7 145.8,705.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="427.3,925.1 419.6,931.9 414.4,936.5 407.5,942.4 402.4,946.8 395.5,952.9 390.3,957.4 384.9,962.1 379.9,966.6 370.8,974.5 366.1,980.0 359.0,989.0 351.5,998.1 355.6,1006.4 351.0,998.9 345.1,989.6 317.0,957.3 276.5,910.9 262.3,892.5 248.5,867.1 244.5,859.4 240.2,851.3 236.9,844.6 233.0,836.1 228.9,828.6 223.9,820.2 219.2,811.2 216.0,805.0 211.8,797.0 207.0,787.8 201.4,777.0 198.1,770.4 192.2,758.9 188.4,751.7 183.3,745.8 177.3,739.4 167.0,728.4 160.8,721.8 156.8,715.9 153.4,709.8 150.0,703.7 145.8,705.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="270.5,903.1 262.3,892.5 248.5,867.1 244.5,859.4 240.2,851.3 236.9,844.6 233.0,836.1 228.9,828.6 223.9,820.2 219.2,811.2 216.0,805.0 211.8,797.0 207.0,787.8 201.4,777.0 198.1,770.4 192.2,758.9 188.4,751.7 183.3,745.8 177.3,739.4 167.0,728.4 160.8,721.8 156.8,715.9 153.4,709.8 150.0,703.7 145.8,705.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="427.3,925.1 419.6,931.9 414.4,936.5 407.5,942.4 402.4,946.8 395.5,952.9 390.3,957.4 384.9,962.1 379.9,966.6 370.8,974.5 366.1,980.0 359.0,989.0 351.5,998.1 345.1,989.6 317.0,957.3 301.1,939.1 317.0,957.3 342.8,986.5 351.0,998.9 355.6,1006.4 356.4,1007.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="60.3,814.4 106.0,791.2 147.9,769.2 151.7,762.6 156.7,758.1 165.1,755.1 172.1,752.2 179.2,749.5 177.3,739.4 167.0,728.4 160.8,721.8 156.8,715.9 153.4,709.8 150.0,703.7 145.8,705.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="264.3,603.4 257.2,608.2 250.2,613.4 244.5,617.7 240.1,624.0 236.7,630.2 233.3,636.3 228.6,641.7 225.7,649.0 220.5,654.8 215.3,660.4 210.3,665.5 204.1,670.9 197.9,675.3 189.9,680.8 182.2,686.2 176.2,690.3 169.6,694.9 163.6,699.1 157.0,703.2 147.8,704.2 145.8,705.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="253.7,845.3 250.8,851.9 246.8,857.3 240.2,851.3 236.9,844.6 233.0,836.1 228.9,828.6 223.9,820.2 219.2,811.2 216.0,805.0 211.8,797.0 207.9,789.5 201.4,777.0 198.1,770.4 192.2,758.9 188.4,751.7 183.3,745.8 177.3,739.4 167.0,728.4 160.8,721.8 156.8,715.9 153.4,709.8 150.0,703.7 145.8,705.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="60.3,814.4 106.0,791.2 147.9,769.2 151.7,762.6 156.7,758.1 165.1,755.1 172.1,752.2 179.2,749.5 177.3,739.4 167.0,728.4 160.8,721.8 156.8,715.9 153.4,709.8 150.0,703.7 145.8,705.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 09</title></polyline>
+<polyline points="499.8,820.6 493.0,823.6 485.4,827.5 482.4,834.3 474.5,840.8 469.2,845.3 464.3,851.0 461.0,861.4 458.4,870.2 454.8,882.3 452.6,889.9 449.4,897.9 445.6,904.1 440.9,911.6 435.7,917.8 428.4,924.0 419.6,931.9 414.4,936.5 407.5,942.4 402.4,946.8 395.5,952.9 390.3,957.4 384.9,962.1 379.9,966.6 370.8,974.5 366.1,980.0 359.0,989.0 351.5,998.1 355.6,1006.4 351.0,998.9 345.1,989.6 317.0,957.3 276.5,910.9 262.3,892.5 248.5,867.1 244.5,859.4 240.2,851.3 236.9,844.6 233.0,836.1 228.9,828.6 223.9,820.2 219.2,811.2 216.0,805.0 211.8,797.0 207.0,787.8 201.4,777.0 198.1,770.4 192.2,758.9 188.4,751.7 183.3,745.8 177.3,739.4 167.0,728.4 160.8,721.8 156.8,715.9 153.4,709.8 150.0,703.7 145.8,705.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 10</title></polyline>
+<polyline points="434.3,785.6 440.8,789.9 448.0,787.6 455.5,785.7 459.8,778.8 464.7,773.5 473.5,771.6 480.8,767.6 485.7,761.2 489.8,752.9 494.2,747.3 500.4,734.8 503.0,742.7 505.3,750.6 508.5,758.9 511.0,765.9 513.8,773.9 516.9,780.2 523.1,785.3 528.1,790.2 532.4,796.3 523.3,796.0 515.1,802.0 515.6,812.0 511.0,817.6 503.7,819.9 494.9,821.9 488.4,825.1 483.2,832.5 478.5,837.6 469.2,845.3 464.3,851.0 461.0,861.4 458.4,870.2 454.8,882.3 452.6,889.9 449.4,897.9 445.6,904.1 440.9,911.6 435.7,917.8 428.4,924.0 419.6,931.9 414.4,936.5 407.5,942.4 402.4,946.8 395.5,952.9 390.3,957.4 384.9,962.1 379.9,966.6 370.8,974.5 366.1,980.0 359.0,989.0 351.5,998.1 355.6,1006.4 351.0,998.9 345.1,989.6 317.0,957.3 276.5,910.9 262.3,892.5 248.5,867.1 244.5,859.4 240.2,851.3 236.9,844.6 233.0,836.1 228.9,828.6 223.9,820.2 219.2,811.2 216.0,805.0 211.8,797.0 207.0,787.8 201.4,777.0 198.1,770.4 192.2,758.9 188.4,751.7 183.3,745.8 177.3,739.4 167.0,728.4 160.8,721.8 156.8,715.9 153.4,709.8 150.0,703.7 145.8,705.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 11</title></polyline>
+<polyline points="427.3,925.1 419.6,931.9 414.4,936.5 407.5,942.4 402.4,946.8 395.5,952.9 390.3,957.4 384.9,962.1 379.9,966.6 370.8,974.5 366.1,980.0 359.0,989.0 351.5,998.1 345.1,989.6 317.0,957.3 301.1,939.1 317.0,957.3 342.8,986.5 351.0,998.9 355.6,1006.4 356.4,1007.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 12</title></polyline>
+<polyline points="318.2,563.6 310.1,567.3 301.0,571.2 294.4,574.4 286.6,579.1 281.2,583.9 277.7,590.5 273.9,596.4 267.9,600.8 262.4,604.7 256.6,608.6 250.2,613.4 244.5,617.7 240.1,624.0 236.7,630.2 233.3,636.3 228.6,641.7 225.7,649.0 220.5,654.8 215.3,660.4 210.3,665.5 204.1,670.9 197.9,675.3 189.9,680.8 182.2,686.2 176.2,690.3 169.6,694.9 163.6,699.1 157.0,703.2 153.4,709.8 156.8,715.9 160.8,721.8 165.3,726.6 174.4,736.3 179.0,741.2 185.7,748.4 189.7,754.0 197.9,770.1 201.3,776.7 204.8,783.5 210.0,793.5 213.5,800.2 217.7,808.2 223.2,818.8 228.9,828.6 233.0,836.1 236.9,844.6 240.2,851.3 243.6,857.7 248.5,867.1 260.1,888.7 276.3,910.6 317.0,957.3 342.8,986.5 351.0,998.9 355.6,1006.4 360.5,1013.6 367.2,1020.5 374.6,1028.1 390.1,1044.0 396.3,1050.4 402.4,1056.6 409.7,1060.8 417.1,1064.0 423.7,1066.9 429.6,1073.4 427.9,1081.6 419.9,1083.9 413.9,1087.6 415.4,1096.3 420.9,1102.6 423.9,1109.6 428.3,1120.1 431.4,1127.1 434.4,1133.8 437.6,1141.4 440.3,1148.6 441.6,1156.8 446.3,1161.4 455.0,1159.9 459.9,1154.6 463.0,1148.3 472.1,1149.3 478.8,1154.9 487.1,1162.0 491.5,1167.3 495.0,1173.3 502.2,1175.6 511.4,1177.7 519.9,1179.8 527.9,1181.6 535.5,1183.3 543.1,1185.0 551.3,1186.9 559.8,1188.9 567.8,1190.7 575.7,1192.5 583.3,1194.2 591.8,1196.2 600.3,1198.1 629.5,1204.8 629.9,1195.6 632.1,1188.4 633.3,1180.1 634.1,1171.4 629.4,1165.6 623.7,1161.3 621.7,1153.6 623.4,1144.6 626.2,1137.8 632.1,1134.2 637.5,1129.2 642.7,1124.8 650.6,1121.7 659.0,1120.3 665.6,1117.1 671.0,1110.1 676.3,1105.2 678.7,1097.4 679.7,1096.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 13</title></polyline>
+<polyline points="546.5,909.0 535.3,914.4 527.8,917.3 518.3,921.5 510.7,925.2 500.6,924.6 492.6,927.3 482.7,931.1 477.3,935.5 473.3,942.5 473.1,955.9 468.4,962.1 462.1,967.2 455.4,971.4 448.0,973.5 445.5,981.5 442.6,988.6 434.0,989.4 426.9,986.1 416.4,988.9 406.4,991.3 396.7,990.8 388.3,992.4 380.1,994.3 374.9,1000.7 371.5,1006.7 365.7,1012.6 356.4,1007.7 351.0,998.9 345.1,989.6 317.0,957.3 276.5,910.9 262.3,892.5 248.5,867.1 244.5,859.4 240.2,851.3 236.9,844.6 233.0,836.1 228.9,828.6 223.9,820.2 219.2,811.2 216.0,805.0 211.8,797.0 207.0,787.8 201.4,777.0 198.1,770.4 192.2,758.9 188.4,751.7 183.3,745.8 177.3,739.4 167.0,728.4 160.8,721.8 156.8,715.9 153.4,709.8 150.0,703.7 145.8,705.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 14</title></polyline>
+<polyline points="180.8,495.8 187.0,499.2 164.1,607.1 114.6,600.8 111.4,607.0 108.0,613.3 104.4,619.0 100.1,624.9 92.0,627.5 86.8,631.6 81.9,636.7 83.9,644.1 95.0,656.2 103.6,665.6 110.9,673.6 118.9,682.3 123.8,687.7 129.0,692.5 136.3,696.4 145.4,701.1 145.8,705.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 15</title></polyline>
+<polyline points="499.8,820.6 493.0,823.6 485.4,827.5 482.4,834.3 474.5,840.8 469.2,845.3 464.3,851.0 461.0,861.4 458.4,870.2 454.8,882.3 452.6,889.9 449.4,897.9 445.6,904.1 440.9,911.6 435.7,917.8 428.4,924.0 419.6,931.9 414.4,936.5 407.5,942.4 402.4,946.8 395.5,952.9 390.3,957.4 384.9,962.1 379.9,966.6 370.8,974.5 366.1,980.0 359.0,989.0 351.5,998.1 355.6,1006.4 351.0,998.9 345.1,989.6 317.0,957.3 276.5,910.9 270.5,903.1 262.3,892.5 248.5,867.1 244.5,859.4 240.2,851.3 236.9,844.6 233.0,836.1 228.9,828.6 223.9,820.2 219.2,811.2 216.0,805.0 211.8,797.0 207.0,787.8 201.4,777.0 198.1,770.4 192.2,758.9 188.4,751.7 183.3,745.8 177.3,739.4 167.0,728.4 160.8,721.8 156.8,715.9 153.4,709.8 150.0,703.7 145.8,705.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 16</title></polyline>
+<polyline points="376.6,794.5 335.0,821.6 286.1,723.3 278.7,721.0 269.6,720.7 264.2,716.8 255.1,716.0 247.1,717.8 239.7,720.2 228.7,721.2 219.8,720.3 213.8,715.6 207.2,712.6 199.8,710.1 192.1,708.3 181.7,705.5 171.8,704.5 161.3,705.6 153.2,704.3 145.8,705.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 17</title></polyline>
+<polyline points="356.4,1007.7 351.0,998.9 345.1,989.6 317.0,957.3 276.5,910.9 262.3,892.5 248.5,867.1 244.5,859.4 240.2,851.3 236.9,844.6 233.0,836.1 228.9,828.6 223.9,820.2 219.2,811.2 216.0,805.0 211.8,797.0 207.0,787.8 201.4,777.0 198.1,770.4 192.2,758.9 188.4,751.7 183.3,745.8 177.3,739.4 167.0,728.4 160.8,721.8 156.8,715.9 153.4,709.8 150.0,703.7 145.8,705.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 18</title></polyline>
+<polyline points="339.4,537.8 332.2,546.7 323.4,558.4 318.2,563.6 311.9,566.6 303.8,570.1 296.6,573.1 290.1,577.0 283.9,581.0 279.7,586.3 276.3,593.3 271.7,598.1 266.0,602.2 259.9,606.5 252.8,611.6 246.7,615.9 241.9,620.9 238.0,628.0 233.9,635.2 229.2,640.4 226.2,647.9 220.5,654.8 215.3,660.4 210.3,665.5 204.1,670.9 197.9,675.3 189.9,680.8 182.2,686.2 176.2,690.3 169.6,694.9 163.6,699.1 157.0,703.2 147.8,704.2 145.8,705.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 19</title></polyline>
+<polyline points="172.9,874.6 175.9,868.2 184.3,860.0 188.9,854.7 186.2,844.9 188.0,836.7 193.0,830.7 196.3,824.1 200.7,819.3 206.7,814.2 213.1,809.7 213.5,800.2 210.2,793.9 207.0,787.8 201.4,777.0 198.1,770.4 192.2,758.9 188.4,751.7 183.3,745.8 177.3,739.4 167.0,728.4 160.8,721.8 156.8,715.9 153.4,709.8 150.0,703.7 145.8,705.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 20</title></polyline>
+<polyline points="591.1,1079.1 599.1,1080.8 606.5,1082.9 612.8,1087.3 618.2,1091.3 622.4,1096.7 631.8,1096.3 637.7,1092.9 643.7,1089.4 653.1,1089.1 662.2,1090.0 669.4,1092.7 677.2,1094.7 679.7,1096.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 21</title></polyline>
+<polyline points="311.9,566.6 303.8,570.1 296.6,573.1 290.1,577.0 283.9,581.0 279.7,586.3 276.3,593.3 271.7,598.1 266.0,602.2 259.9,606.5 252.8,611.6 246.7,615.9 241.9,620.9 238.2,627.4 233.9,635.2 229.2,640.4 226.2,647.9 220.5,654.8 215.3,660.4 210.3,665.5 204.1,670.9 197.9,675.3 189.9,680.8 182.2,686.2 176.2,690.3 169.6,694.9 163.6,699.1 157.0,703.2 147.8,704.2 145.8,705.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 22</title></polyline>
+<polyline points="154.5,707.7 158.7,702.4 164.4,698.6 173.4,692.3 179.7,687.9 185.4,683.9 192.6,678.9 199.6,674.0 205.6,669.9 211.4,664.4 220.1,655.3 224.7,650.5 228.2,642.6 232.5,637.1 236.7,630.2 240.1,624.0 243.9,618.2 250.2,613.4 256.0,609.3 262.4,604.7 267.9,600.8 273.3,596.9 277.6,590.8 280.8,584.5 285.7,579.7 291.6,576.1 298.5,572.3 307.2,568.6 315.4,565.1 321.5,560.9 332.2,546.7 337.2,540.4 344.6,531.8 346.2,522.6 349.7,512.7 352.0,505.3 352.3,495.6 356.5,489.4 359.8,482.7 360.0,470.6 361.5,462.6 363.7,454.6 371.8,443.0 372.0,432.8 293.9,389.0 191.8,307.0 183.1,308.6 177.7,304.1 182.1,297.3 179.6,290.5 177.9,282.0 180.1,274.7 183.2,267.2 190.0,264.6 193.2,258.3 198.6,250.5 200.8,243.3 199.0,235.8 195.8,223.3 191.1,218.1 188.2,211.5 185.2,201.6 190.3,196.1 190.5,187.0 196.2,181.2 202.6,175.8 205.9,168.6 208.3,156.0 216.1,154.1 239.2,157.6 248.2,159.2 260.6,161.5 280.0,164.9 298.4,168.4 311.1,170.8 319.2,172.2 327.9,173.8 337.1,173.2 352.0,170.5 367.1,167.6 378.8,165.5 393.7,162.7 404.0,160.8 420.0,157.8 428.1,156.2 437.8,154.4 451.6,151.8 460.9,150.1 469.4,148.2 478.8,145.1 485.8,142.7 497.3,138.9 512.4,134.0 524.0,130.1 531.9,127.5 539.3,124.3 551.9,118.1 572.4,108.0 578.9,104.8 586.0,101.4 594.3,98.0 611.7,90.6 619.7,87.3 627.0,84.2 636.2,80.3 634.0,89.6 628.9,102.4 626.1,109.4 622.7,118.0 619.9,124.8 617.1,131.6 614.1,139.1 610.0,148.9 606.3,157.6 602.8,164.3 594.6,179.6 591.0,186.7 588.2,193.6 584.8,202.2 582.2,208.9 579.1,218.1 576.3,226.7 573.5,235.4 570.4,244.2 567.5,253.1 562.9,260.0 550.4,275.2 545.0,281.7 538.0,290.2 529.9,300.0 524.0,304.3 517.8,308.0 509.9,312.7 500.4,318.3 492.9,322.8 481.9,329.3 473.6,338.3 469.3,343.7 466.5,350.5 463.8,357.2 459.4,362.4 453.5,367.4 444.4,371.9 437.0,377.9 431.4,382.3 425.3,387.2 420.1,391.4 413.9,400.0 406.6,410.7 402.7,416.4 393.7,419.0 384.6,418.2 377.0,420.2 372.3,424.8 372.7,438.4 367.0,449.6 363.3,455.7 360.2,468.2 360.3,478.5 358.1,486.9 353.4,493.5 351.8,502.8 349.7,512.7 347.0,519.4 346.2,528.4 337.2,540.4 332.2,546.7 323.4,558.4 318.2,563.6 310.1,567.3 301.0,571.2 294.4,574.4 286.6,579.1 281.2,583.9 277.7,590.5 273.9,596.4 267.9,600.8 262.4,604.7 256.6,608.6 250.2,613.4 244.5,617.7 240.1,624.0 236.7,630.2 233.3,636.3 228.6,641.7 225.7,649.0 220.5,654.8 215.3,660.4 210.3,665.5 204.1,670.9 197.9,675.3 189.9,680.8 182.2,686.2 176.2,690.3 169.6,694.9 163.6,699.1 157.0,703.2 154.5,707.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Comunidade Quilombola Negro do Osso</title></polyline>
+<polyline points="262.8,716.4 262.8,716.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 17</title></polyline>
+<circle cx="60.3" cy="814.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="499.6" cy="818.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="226.9" cy="622.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="221.6" cy="657.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="177.8" cy="691.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="108.9" cy="680.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="355.4" cy="1008.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="355.8" cy="1007.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="679.5" cy="1096.6" r="2.2" fill="#b9b9b2"/>
+<polygon points="135.6,706.8 124.4,727.4 146.8,727.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="140.6,694.7 128.8,716.4 152.3,716.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="138.4,691.9 123.7,719.0 153.1,719.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="156.1,698.5 145.6,717.9 166.7,717.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="154.9,697.7 145.7,714.7 164.1,714.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="682.8,1087.6 674.3,1103.2 691.2,1103.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="351.4,991.3 342.3,1008.1 360.5,1008.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="351.4" y="1021.5" text-anchor="middle" fill="#5c5c57">Zona Rural</text>
+<polygon points="126.6,686.2 112.1,713.0 141.1,713.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="258.6" cy="349.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="265.6" y="344.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Comunidade Quilombola Negro do Osso 53,3 km</text>
+<circle cx="310.7" cy="187.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="317.7" y="182.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Aldéia Mãe Maria 41,9 km</text>
+<circle cx="294.0" cy="389.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="301.0" y="384.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Baixa Grande 13,5 km</text>
+<circle cx="271.3" cy="678.5" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="278.3" y="673.5" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Sítio Goiabeira 4,2 km</text>
+<rect x="140.6" y="700.0" width="10" height="10" fill="#1d1d1b"/><text x="154.6" y="723.0" font-weight="600" fill="#1d1d1b">Sede de Venturosa</text>
+<line x1="35" x2="174.9" y1="1234.8" y2="1234.8" stroke="#8a8a84" stroke-width="2"/><text x="35" y="1248.8" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="1225.790054005399" y2="1225.790054005399" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="1229.790054005399" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,1218.8 421.4,1231.0 434.6,1231.0" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="1229.790054005399" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="1243.790054005399" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="1252.790054005399" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="1248.790054005399" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="1252.790054005399" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1271.790054005399" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1275.790054005399" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1271.790054005399" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1275.790054005399" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1294.790054005399" y2="1294.790054005399" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1298.790054005399" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1317.790054005399" y2="1317.790054005399" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1321.790054005399" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital de roteiro dos transportes de eleitores nas Eleições Gerais 2026 em Venturosa - 120ª ZE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (5):</strong> Comunidade Quilombola Negro do Osso, Aldéia Mãe Maria, Sítio Ingazeira, Baixa Grande e Pedra Fixe.</li>
+<li><strong>De 3 a 5 km (3):</strong> Sítio Olho d&#x27;Água, Sítio Goiabeira e Olho d&#x27;Água - Venturosa.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (5):</strong> Grotão, Rio dos Boi 1, Rio dos Boi 2, Tará e Tará Velho.</li>
+</ul><h2>Rotas do Edital de roteiro dos transportes de eleitores nas Eleições Gerais 2026 em Venturosa - 120ª ZE</h2>
+<p>O edital tem 22 rotas para Venturosa. Horários: Primeira viagem de cada roteiro às 6h30 com destino ao centro de Venturosa; última viagem às 17h30, saindo do centro para o local da rota. Veículos: Rota 01: SOE7G30; Rota 02: CZC7628; Rota 03: CZB3C91; Rota 04: KJJ2449; Rota 05: MUZ6570; Rota 06: LKS9J29; Rota 07: KND9905; Rota 08: CTS3582; Rota 09: BTA7A40; Rota 10: DBL1439; Rota 11: KMI7D70; Rota 12: LNG7732; Rota 13: SNQ5B47; Rota 14: SOD5J90; Rota 15: PFE2B22; Rota 16: SON9H66; Rota 17: SOB5A05; Rota 18: SOY2F98; Rota 19: SOE4J11; Rota 20: SPB7C22; Rota 21: SOY9C28; Rota 22: SOF1F09.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Grotão – Sede</td></tr><tr><td>02</td><td>Araça – Sede</td></tr><tr><td>03</td><td>Pedrinhas – Tará – Sede</td></tr><tr><td>04</td><td>Riacho da Luiza – Sede</td></tr><tr><td>05</td><td>Pedrinhas – Areias – Tara</td></tr><tr><td>06</td><td>Ingazeira – Corredor – Sede</td></tr><tr><td>07</td><td>Sítio do Meio – Capim – Sede</td></tr><tr><td>08</td><td>Brinco – Carrapateira – Sede</td></tr><tr><td>09</td><td>Ingazeira – Corredor – Sede</td></tr><tr><td>10</td><td>Pedra Fixe – Tara – Sede</td></tr><tr><td>11</td><td>Serra do Totel – Tara – Sede</td></tr><tr><td>12</td><td>Pedrinhas – Areias – Tará</td></tr><tr><td>13</td><td>Juremar – Grotão</td></tr><tr><td>14</td><td>Simiao – Tarazinho – Tará – Sede</td></tr><tr><td>15</td><td>Mamoeiro – Macaco – Caco – Azevem – Barro-branco – Sede</td></tr><tr><td>16</td><td>Pedra Fixe – Pedrinhas – Tara – Riacho da Luiza – Sede</td></tr><tr><td>17</td><td>Buqueirao – Caatinga Branca – Barbado – Campo Grande – Sede</td></tr><tr><td>18</td><td>Fazenda de Geová – Primavera – Tará – Sede</td></tr><tr><td>19</td><td>Porteiras – Serrota – Olho D&#x27;Água – Sede</td></tr><tr><td>20</td><td>Ouro Branco – Lagoa do Pé da Serra – Carrap Ateira – Sede</td></tr><tr><td>21</td><td>Pontais – Grotão</td></tr><tr><td>22</td><td>Serrota – Olho Dagua2 – Sede</td></tr></tbody></table></div>
+
+<p>Fonte: Edital de roteiro dos transportes de eleitores nas Eleições Gerais 2026 em Venturosa (120ª ZE), DJE/TRE-PE nº 218, disponibilizado em 16/09/2026, p. 248-252 (https://dje.tse.jus.br/dje/pdf/v1/edicao/129605).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 4 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Comunidade Quilombola Negro do Osso</strong></td><td>Sede – Baixa Grande – Comunidade Quilombola Negro do Osso – Aldéia Mãe Maria – Sede</td><td>Baixa Grande, Comunidade Quilombola Negro do Osso, Aldéia Mãe Maria</td><td>66,9 km (ida e volta)</td><td>~1h10</td></tr><tr><td><strong>Parada extra na Rota 17</strong></td><td>desvio pelo caminho atual: Sítio Goiabeira</td><td>Sítio Goiabeira</td><td>+0,0 km</td><td>+0 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. As extensões e paradas extras sugeridas são feitas pelos próprios veículos das rotas do Edital de roteiro dos transportes de eleitores nas Eleições Gerais 2026 em Venturosa - 120ª ZE. Para as rotas novas, a Prefeitura pode pôr à disposição da Justiça Eleitoral os seguintes veículos da frota municipal, abastecidos e com motorista: a definir pela Prefeitura. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p></article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

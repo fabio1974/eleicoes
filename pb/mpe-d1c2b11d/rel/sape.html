@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Sapé</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.filtro { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 8px; padding:0; border:0; min-width:0; }
+.filtro legend { font-size:.85rem; color:var(--tx2); margin-bottom:6px; padding:0; }
+.filtro label { display:inline-flex; align-items:center; gap:6px; border:1px solid var(--bd); background:var(--card); border-radius:99px;
+  padding:6px 12px; font-size:.88rem; cursor:pointer; user-select:none; }
+.filtro input { accent-color:var(--ac); margin:0; }
+.filtro label:has(input:checked) { border-color:var(--ac); background:var(--ac-soft); }
+.filtro .n { color:var(--tx2); font-size:.8rem; }
+.filtro-acoes { font-size:.85rem; margin:0 0 12px; color:var(--tx2); } .filtro-acoes a { cursor:pointer; margin-right:10px; }
+.selecao { display:block; margin-top:4px; color:var(--ac); font-weight:600; font-size:.9rem; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<article class="relatorio-web">
+<h1>Transporte de Eleitores – Sapé (4ª ZE): proposta de novas rotas</h1><p class="data">19/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 4ª Zona Eleitoral <strong>2 rotas novas</strong> no transporte gratuito de Sapé.
+Traçamos pelas estradas o percurso das 9 rotas do Edital nº 0010/2026 da 4ª ZE. 2 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 0 ficam a 1–2 km.</p>
+<ul>
+<li>Sapé tem 38.066 eleitores aptos em 27 locais de votação e 139 seções. São 7 locais rurais, com 5.137 eleitores (13% do total).</li>
+<li>4 locais rurais ficam a 10 km ou mais da sede, com 3.138 eleitores. Os mais distantes: Inhauá (20,1 km), Lagoa do Félix (19,9 km) e Souza (17,6 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Estrada Barreiros (7,8 km do local de votação) e Assentamento Rainha dos Anjos (4,5 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 36 localidades rurais de Sapé que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Assentamento Canudos</td><td>8,7</td><td>Eixo 4</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Agrovila do PA Canudos</td><td>8,6</td><td>Eixo 4</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Barra de Antas</td><td>8,6</td><td>Eixo 5</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Maraú</td><td>8,6</td><td>Eixo 4</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Jardim Ecovalle</td><td>8,4</td><td>Eixo 5</td><td>1,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Vila Beira Rio</td><td>8,4</td><td>Eixo 5</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Chan de Barra</td><td>8,1</td><td>Eixo 5</td><td>0,3</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Barra de Anta</td><td>7,9</td><td>Eixo 5</td><td>0,5</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fazenda São João</td><td>7,9</td><td>Eixo 9</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Estrada Barreiros</td><td>7,8</td><td>Eixo 6</td><td>3,5</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Anta dos Anjos</td><td>7,6</td><td>Eixo 4</td><td>0,5</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Nova Vivência</td><td>7,0</td><td>Eixo 5</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Bonito</td><td>6,4</td><td>Eixo 5</td><td>0,3</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sobrado</td><td>5,5</td><td>Eixo 5</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Curralinho</td><td>4,8</td><td>Eixo 3</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Assentamento Rainha dos Anjos</td><td>4,5</td><td>Eixo 2</td><td>2,3</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Padre Gino</td><td>4,3</td><td>Eixo 7</td><td>0,9</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Curralinho da Miriri</td><td>4,3</td><td>Eixo 3</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Pacatuba</td><td>4,2</td><td>Eixo 3</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Sítio Pedras</td><td>4,0</td><td>Eixo 8</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Fazenda Moreno</td><td>3,8</td><td>Eixo 2</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Vinte e Um de Abril</td><td>3,4</td><td>Eixo 6</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>7 das 41 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Sítio Açude Tanhém (Eixo 1), Antena/Fazendinha (Eixo 1), Sete Bocas de Boa Vista (Eixo 4), Assentamento Padre Gino Novo (Eixo 7), Quilombo (Eixo 7), Fazenda Nossa Senhora de Lourdes (Eixo 9) e Tira Couro (Eixo 9). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 36 localidades rurais de Sapé, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1170" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Sapé: 2 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital nº 0010/2026 da 4ª ZE e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="147.5,876.4 146.3,841.6 181.5,814.1 235.3,799.1 247.1,821.8 236.5,850.9 258.8,914.5 279.0,937.5 280.6,972.3 328.8,969.9 348.2,1020.5 396.8,1018.9 445.8,1037.9 471.3,1031.4 509.7,980.4 586.6,935.9 625.0,858.2 725.0,604.1 563.9,430.5 675.6,354.8 655.8,331.3 656.6,297.7 642.4,245.1 614.9,218.8 637.6,176.7 662.3,86.9 599.5,92.1 587.0,81.2 529.9,110.4 486.2,122.9 462.4,141.9 405.7,114.0 375.3,80.0 315.9,92.5 302.1,111.6 245.4,137.9 207.0,138.3 194.9,112.8 136.2,141.5 145.5,188.1 171.4,229.3 181.1,291.2 166.9,307.4 167.7,410.6 188.8,433.3 197.7,484.3 193.6,524.4 173.0,594.0 125.2,640.9 74.3,736.8 35.0,762.3 58.9,789.0 86.4,798.3 111.9,856.6 147.5,876.4 147.5,876.4" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="601.5,696.1 604.1,707.1 606.0,718.5 605.4,731.0 600.6,738.9 596.2,747.2 595.7,761.0 595.3,773.2 593.2,784.5 588.7,792.5 581.5,804.8 572.4,810.5 565.8,821.0 538.3,819.2 526.9,817.6 516.2,812.2 506.0,807.1 494.5,802.3 485.1,798.9 471.3,795.9 460.0,794.0 445.3,788.1 433.7,782.0 424.9,776.3 417.6,771.4 396.1,761.0 385.9,756.2 378.5,751.5 371.5,746.1 362.6,741.9 352.5,739.5 340.7,738.5 326.8,738.3 314.6,738.4 303.4,735.3 295.3,730.4 285.5,725.5 277.3,720.7 269.7,714.9 276.4,706.4 279.8,699.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Eixo 1</title></polyline>
+<polyline points="551.8,592.4 548.1,601.9 546.7,613.5 543.9,623.2 550.8,628.6 554.2,637.4 562.1,643.7 568.9,651.1 575.5,657.7 580.0,665.5 585.4,672.7 592.3,678.5 594.0,689.6 600.3,695.9 604.4,705.2 606.0,718.5 605.4,731.0 600.6,738.9 596.2,747.2 595.7,761.0 595.3,773.2 593.2,784.5 588.7,792.5 581.5,804.8 572.4,810.5 565.8,821.0 538.3,819.2 526.9,817.6 516.2,812.2 506.0,807.1 494.5,802.3 485.1,798.9 471.3,795.9 460.0,794.0 445.3,788.1 433.7,782.0 424.9,776.3 417.6,771.4 396.1,761.0 385.9,756.2 378.5,751.5 371.5,746.1 362.6,741.9 352.5,739.5 340.7,738.5 326.8,738.3 314.6,738.4 303.4,735.3 295.3,730.4 285.5,725.5 277.3,720.7 269.7,714.9 276.4,706.4 279.8,699.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Eixo 2</title></polyline>
+<polyline points="545.6,501.8 543.0,492.2 533.4,489.7 534.8,476.9 544.8,432.3 542.2,419.0 540.7,408.1 537.8,398.6 533.4,390.7 536.1,380.9 536.7,369.1 538.5,358.5 536.7,369.1 530.5,363.1 530.8,349.0 531.4,337.1 527.6,328.3 528.5,316.3 532.3,307.3 532.9,295.1 533.6,283.1 530.6,272.1 541.7,270.5 547.5,262.7 555.1,257.5 567.2,255.5 555.5,256.9 548.7,262.2 541.9,269.8 548.1,276.8 554.9,282.6 563.0,287.2 567.5,295.1 563.0,287.2 553.2,284.7 542.0,283.6 533.5,287.8 533.0,300.3 524.4,307.4 520.9,320.4 519.0,332.5 516.8,342.6 512.0,351.0 509.0,360.6 512.4,369.9 515.7,379.9 508.2,385.6 495.6,382.1 482.9,378.6 464.7,373.7 453.0,370.6 437.8,366.4 422.2,362.3 411.3,358.0 401.9,354.7 397.5,367.5 396.3,382.1 390.5,390.0 384.2,399.7 377.5,405.7 369.3,411.4 363.0,417.6 347.8,432.9 339.9,439.8 319.2,455.1 314.0,464.0 308.8,476.4 304.3,486.9 299.8,497.2 295.1,508.3 291.3,517.8 287.4,530.7 281.4,537.6 273.4,543.5 268.7,554.2 270.9,564.9 268.0,577.1 266.7,593.1 258.9,606.0 254.8,614.1 253.3,625.6 250.4,635.5 250.4,651.6 255.6,662.7 259.7,670.8 261.2,681.6 265.7,691.7 277.1,697.9 279.8,699.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Eixo 3</title></polyline>
+<polyline points="482.1,987.8 472.8,991.2 461.6,989.8 458.0,979.3 456.2,968.7 452.5,959.5 447.3,950.2 439.0,945.9 427.9,947.3 422.6,955.1 415.4,961.0 422.6,955.1 419.6,945.9 413.4,939.9 401.5,939.3 392.9,935.4 388.7,927.3 385.8,917.9 386.0,906.0 392.0,899.6 399.8,892.7 406.1,885.9 406.0,873.4 403.1,860.0 398.8,850.7 391.1,844.4 383.7,836.4 378.5,829.3 374.8,819.3 369.7,811.3 363.5,805.3 359.9,794.9 353.6,788.6 356.1,778.7 355.3,767.1 356.6,755.9 360.9,746.5 353.7,739.8 342.3,738.6 330.0,738.3 315.6,738.3 305.0,735.8 296.8,731.4 287.5,726.4 278.7,722.0 271.3,716.5 276.4,706.4 279.8,699.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Eixo 4</title></polyline>
+<polyline points="310.9,958.8 309.1,947.0 301.6,941.5 296.4,931.5 298.8,921.0 299.9,909.6 297.1,899.2 294.2,889.0 289.5,880.0 280.2,884.7 273.6,891.7 263.5,894.7 255.2,899.3 247.7,904.0 244.6,893.9 243.0,882.8 244.1,867.9 240.5,857.4 236.2,849.3 241.2,834.5 245.6,825.1 247.2,814.5 242.4,805.5 236.0,799.6 232.4,788.3 235.0,775.9 241.3,768.8 247.6,761.1 253.0,753.6 255.0,741.2 259.0,731.8 265.3,724.7 271.5,717.5 274.8,707.9 277.1,697.9 279.8,699.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Eixo 5</title></polyline>
+<polyline points="181.0,800.8 190.2,796.4 199.7,789.8 211.5,789.2 219.8,783.5 229.0,779.6 239.4,771.0 245.1,764.2 250.9,757.0 254.0,747.9 255.7,737.0 261.0,729.5 267.5,722.2 279.1,721.6 271.3,716.5 276.4,706.4 279.8,699.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Eixo 6</title></polyline>
+<polyline points="147.8,632.5 152.8,642.1 162.7,638.4 174.0,641.0 183.2,644.9 189.5,636.7 192.1,626.0 189.5,636.7 190.6,648.1 201.4,652.8 212.0,657.4 221.3,661.4 231.8,665.9 241.8,670.2 251.2,674.3 261.9,679.6 265.7,691.7 277.1,697.9 279.8,699.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Eixo 7</title></polyline>
+<polyline points="304.9,85.3 298.1,91.3 300.6,101.1 302.3,111.6 312.7,109.9 320.5,114.5 328.7,118.5 332.4,127.6 340.4,134.6 349.3,138.6 358.8,145.3 367.8,156.7 390.3,162.8 402.6,172.8 411.9,180.0 420.3,175.0 411.9,180.0 406.7,188.8 409.3,199.8 413.0,210.6 420.4,215.4 424.5,225.7 428.8,236.4 427.9,247.8 423.1,255.4 421.3,267.7 418.2,277.3 418.0,289.5 412.7,303.7 413.6,315.5 411.9,328.5 404.6,337.6 399.0,344.9 399.0,358.8 397.2,370.1 396.3,382.1 390.5,390.0 384.2,399.7 377.5,405.7 369.3,411.4 363.0,417.6 351.2,422.0 345.8,432.3 339.9,439.8 320.2,454.3 314.0,464.0 308.8,476.4 304.3,486.9 299.8,497.2 295.1,508.3 291.3,517.8 287.4,530.7 281.4,537.6 273.4,543.5 268.7,554.2 270.9,564.9 268.0,577.1 266.7,593.1 258.9,606.0 254.8,614.1 253.3,625.6 250.4,635.5 250.4,651.6 255.6,662.7 259.7,670.8 261.2,681.6 265.7,691.7 277.1,697.9 279.8,699.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Eixo 8</title></polyline>
+<polyline points="148.2,133.7 146.2,144.3 140.2,154.5 139.7,166.7 141.5,177.2 144.9,186.7 150.9,193.3 153.3,203.9 160.1,211.6 164.9,219.4 169.9,228.0 175.5,238.7 177.3,249.7 181.4,258.8 182.1,270.9 182.2,283.4 179.6,293.2 172.1,302.4 166.8,314.0 164.9,336.9 163.1,355.4 173.7,359.4 186.9,358.6 195.5,364.1 203.1,368.7 210.3,359.6 207.2,368.7 209.9,379.3 208.5,392.2 202.3,401.6 196.4,418.6 192.7,429.4 190.9,441.2 191.6,453.3 190.1,464.9 195.3,476.8 203.7,482.7 215.8,488.5 234.7,497.1 245.7,499.2 261.1,499.5 284.3,503.0 297.2,503.4 292.6,514.2 288.7,526.2 284.4,535.4 275.6,541.0 269.4,550.4 270.8,563.6 268.0,577.1 266.7,593.1 258.9,606.0 254.8,614.1 253.3,625.6 250.4,635.5 250.4,651.6 255.6,662.7 259.7,670.8 261.2,681.6 265.7,691.7 277.1,697.9 279.8,699.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Eixo 9</title></polyline>
+<polyline points="237.3,688.5 229.7,680.5 229.7,665.0 218.7,660.3 209.6,656.3 198.5,651.5 187.3,646.7 178.1,642.7 168.4,638.6 159.5,635.3 151.2,639.6 145.8,646.6 143.6,656.9 135.5,661.8 127.2,667.7 119.8,673.8 113.0,679.2 108.0,687.8 103.7,695.7 98.1,702.2 92.3,709.2 87.6,716.9 81.9,723.9 77.3,732.3 76.2,744.8 73.1,753.9 62.7,752.1 73.1,753.9 76.2,744.8 77.3,732.3 81.9,723.9 87.6,716.9 92.3,709.2 98.8,703.4 103.7,695.7 108.0,687.8 112.4,679.9 119.3,674.1 127.2,667.7 134.5,662.3 143.6,657.8 145.5,647.5 151.1,640.9 157.1,634.8 168.4,638.6 178.1,642.7 187.3,646.7 196.8,650.8 206.9,655.2 216.9,659.5 226.1,663.5 233.1,676.6 239.7,683.6 237.3,688.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Estrada Barreiros</title></polyline>
+<polyline points="601.5,696.1 589.4,695.5 577.7,696.4 566.3,694.4 558.6,688.7 550.0,684.9 544.7,677.8 532.6,676.9 526.0,671.2 520.6,663.6 512.3,658.8 503.7,665.6 506.4,675.8 504.9,687.1 500.7,696.8 504.6,687.6 507.1,677.2 506.0,665.9 511.0,658.5 520.1,663.4 525.7,670.8 532.6,676.9 544.3,677.7 549.8,684.5 558.6,688.7 566.3,694.4 577.7,696.4 588.1,694.6 599.1,695.8 601.5,696.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Assentamento Rainha dos Anjos</title></polyline>
+<circle cx="481.3" cy="986.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="486.6" cy="985.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="311.0" cy="958.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="407.7" cy="964.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="290.8" cy="988.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="307.8" cy="964.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="291.6" cy="948.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="293.6" cy="966.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="211.5" cy="358.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="368.1" cy="932.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="293.9" cy="881.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="264.1" cy="907.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="248.9" cy="903.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="575.5" cy="291.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="128.0" cy="666.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="563.9" cy="288.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="545.5" cy="501.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="424.3" cy="171.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="551.8" cy="592.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="181.7" cy="801.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="401.6" cy="340.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="290.8" cy="450.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="659.0" cy="681.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="513.4" cy="770.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="305.0" cy="85.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="602.8" cy="734.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="536.0" cy="374.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="520.2" cy="828.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="148.0" cy="134.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="353.1" cy="423.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="602.2" cy="699.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="312.3" cy="123.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="538.3" cy="820.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="399.3" cy="516.9" r="2.2" fill="#b9b9b2"/>
+<polygon points="266.9,716.0 260.6,727.7 273.2,727.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="269.7,678.5 255.0,705.5 284.4,705.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="277.8,678.7 260.7,710.3 295.0,710.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="264.1,705.3 251.0,729.3 277.1,729.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="262.8,673.2 248.6,699.5 277.1,699.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="245.4,677.6 234.1,698.4 256.7,698.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="270.5,673.8 260.6,692.0 280.5,692.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="296.4,663.1 286.7,680.9 306.1,680.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="266.5,716.4 255.2,737.2 277.8,737.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="237.3,677.7 227.0,696.8 247.7,696.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="274.6,664.3 264.1,683.5 285.0,683.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="397.6,508.5 387.5,527.1 407.7,527.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="397.6" y="540.7" text-anchor="middle" fill="#5c5c57">Renascença</text>
+<polygon points="360.8,410.7 352.4,426.2 369.2,426.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="308.6,116.6 298.0,136.1 319.2,136.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="308.6" y="149.9" text-anchor="middle" fill="#5c5c57">Inhauá</text>
+<polygon points="601.6,685.6 591.8,703.7 611.4,703.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="601.6" y="717.3" text-anchor="middle" fill="#5c5c57">Usina Santa Helena</text>
+<polygon points="304.5,649.6 294.7,667.7 314.4,667.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="290.8,703.4 281.7,720.1 299.8,720.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="275.8,682.2 266.2,699.9 285.4,699.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="310.2,731.8 300.0,750.5 320.4,750.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="308.6,730.6 299.6,747.1 317.5,747.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="142.6,141.1 136.1,153.1 149.2,153.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="298.0,662.8 287.3,682.5 308.8,682.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="278.6,648.4 267.6,668.6 289.6,668.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="553.8,368.3 545.1,384.3 562.5,384.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="268.9,677.0 259.7,693.9 278.1,693.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="532.8,815.8 525.1,829.8 540.4,829.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="280.2,693.0 275.5,701.7 285.0,701.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="62.1" cy="755.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="69.1" y="750.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Estrada Barreiros 7,8 km</text>
+<circle cx="500.0" cy="700.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="507.0" y="695.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Assentamento Rainha dos Anjos 4,5 km</text>
+<rect x="275.3" y="692.9" width="10" height="10" fill="#1d1d1b"/><text x="289.3" y="715.9" font-weight="600" fill="#1d1d1b">Sede de Sapé</text>
+<line x1="35" x2="217.3" y1="1067.9" y2="1067.9" stroke="#8a8a84" stroke-width="2"/><text x="35" y="1081.9" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="1058.906158357748" y2="1058.906158357748" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="1062.906158357748" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,1051.9 421.4,1064.2 434.6,1064.2" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="1062.906158357748" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="1076.906158357748" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="1085.906158357748" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="1081.906158357748" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="1085.906158357748" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="1104.906158357748" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="1108.906158357748" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="1104.906158357748" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="1108.906158357748" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="1127.906158357748" y2="1127.906158357748" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="1131.906158357748" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="1150.906158357748" y2="1150.906158357748" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="1154.906158357748" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 0010/2026 da 4ª ZE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (14):</strong> Assentamento Canudos, Agrovila do PA Canudos, Barra de Antas, Sítio Maraú, Jardim Ecovalle, Vila Beira Rio, Sítio Chan de Barra, Barra de Anta, Fazenda São João, Estrada Barreiros, Anta dos Anjos, Nova Vivência, Sítio Bonito e Sobrado.</li>
+<li><strong>De 3 a 5 km (8):</strong> Curralinho, Assentamento Rainha dos Anjos, Padre Gino, Curralinho da Miriri, Pacatuba, Sítio Pedras, Fazenda Moreno e Vinte e Um de Abril.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (14):</strong> Assentamento Santa Helena, Boa Vista, Cem, Inhauá, Lagoa do Félix, Pedro Teixeira, Renascença, Santa Helena, Santa Helena 1, Santa Helena 3, Sapucaia, Souza, Tucuns e Una.</li>
+</ul><h2>Rotas do Edital nº 0010/2026 da 4ª ZE</h2>
+<p>O edital tem 9 rotas para Sapé. Horários: Embarque às 6h nas localidades e desembarque às 8h no largo das Matrizes de cada município. Veículos: não informados.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td> 1</td><td>Sítio Açude Tanhém – Antena/Fazendinha – Usina Santa Helena – Sede</td></tr><tr><td> 2</td><td>Moreno – Usina Santa Helena – Sede</td></tr><tr><td> 3</td><td>Pacatuba – Sítio Sousa – Sítio Carnaúba – Curralinho – Sede</td></tr><tr><td> 4</td><td>Assentamento Canudos – Sítio Maraú – Sítio Antas dos Anjos – Sete Bocas de Boa Vista – Sede</td></tr><tr><td> 5</td><td>Sítio Barra de Antas – Assentamento Nova Vivência – Sede</td></tr><tr><td> 6</td><td>Assentamento 21 de Abril – Sede</td></tr><tr><td> 7</td><td>Sítio do Rocha – Sítio Várzea Grande – Assentamento Padre Gino Novo – Quilombo – Sítio Poço Redondo – Sede</td></tr><tr><td> 8</td><td>Sítio Inhauá – Sítio Pedra/Rio Seco – Fazenda Una – Sapucaia – Fazenda Buracão – Sede</td></tr><tr><td> 9</td><td>Sítio Lagoa do Félix – Fundo do Vale – Fazenda Betânia – Sítio São João – Fazenda Nossa Senhora de Lourdes – Tira Couro – Sede</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 0010/2026 da 4ª ZE (Rota dos transportes de eleitoras), anexo &quot;ROTAS DOS TRANSPORTES.pdf&quot;; DJE/TRE-PB nº 198, disponibilizado em 18/09/2026 (publ. 19/09/2026), p. 5 (edição inteira em fontes/dje/PB/198.pdf); quadro no anexo do DJE (https://sitdoc.tse.jus.br/sitdoc/DownloadFile?id=9aa7e146-9dbd-4ceb-a9ba-c68c401418d8&amp;app=dje&amp;extensao=pdf), cópia em fontes/coleta_agentes/rodada2/PB/anexos/ze004_ed198_9aa7e146.pdf.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 2 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Estrada Barreiros</strong></td><td>Sede – Estrada Barreiros – Sede</td><td>Estrada Barreiros</td><td>15,6 km (ida e volta)</td><td>~31 min</td></tr><tr><td><strong>Rota nova – Assentamento Rainha dos Anjos</strong></td><td>Sede – Assentamento Rainha dos Anjos – Sede</td><td>Assentamento Rainha dos Anjos</td><td>9,0 km (ida e volta)</td><td>~22 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. Para as rotas novas, a Prefeitura pode pôr à disposição da Justiça Eleitoral os seguintes veículos da frota municipal, abastecidos e com motorista: a definir pela Prefeitura. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p></article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

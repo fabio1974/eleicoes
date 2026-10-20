@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Maranguape</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.filtro { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 8px; padding:0; border:0; min-width:0; }
+.filtro legend { font-size:.85rem; color:var(--tx2); margin-bottom:6px; padding:0; }
+.filtro label { display:inline-flex; align-items:center; gap:6px; border:1px solid var(--bd); background:var(--card); border-radius:99px;
+  padding:6px 12px; font-size:.88rem; cursor:pointer; user-select:none; }
+.filtro input { accent-color:var(--ac); margin:0; }
+.filtro label:has(input:checked) { border-color:var(--ac); background:var(--ac-soft); }
+.filtro .n { color:var(--tx2); font-size:.8rem; }
+.filtro-acoes { font-size:.85rem; margin:0 0 12px; color:var(--tx2); } .filtro-acoes a { cursor:pointer; margin-right:10px; }
+.selecao { display:block; margin-top:4px; color:var(--ac); font-weight:600; font-size:.9rem; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<article class="relatorio-web">
+<h1>Transporte de Eleitores – Maranguape (4ª ZE): proposta de novas rotas</h1><p class="data">19/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 4ª Zona Eleitoral <strong>8 rotas novas</strong> no transporte gratuito de Maranguape.
+<strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-CE) para Maranguape</strong>. As 8 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Maranguape tem 83.707 eleitores aptos em 76 locais de votação e 313 seções. São 15 locais rurais, com 7.051 eleitores (8% do total).</li>
+<li>15 locais rurais ficam a 10 km ou mais da sede, com 7.051 eleitores. Os mais distantes: Vila Antônio Marques, 16 (49,3 km), Manoel Guedes (42,0 km) e Rato De Cima S/N (38,8 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Ypioca (3,8 km do local de votação), Tijuca (3,7 km do local de votação), Serra do Retiro (3,5 km do local de votação), Sítio Coqueirinho (3,5 km do local de votação), Cedro (3,2 km do local de votação), Riacho Verde (3,2 km do local de votação), Vertentes do Lagedo (3,0 km do local de votação) e Manoel Guedes (3,0 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 59 localidades rurais de Maranguape que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista do TRE-CE e a posição de cada local publicada pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Ypioca</td><td>3,8</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Tijuca</td><td>3,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Serra do Retiro</td><td>3,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Coqueirinho</td><td>3,5</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Cedro</td><td>3,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Riacho Verde</td><td>3,2</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Vertentes do Lagedo</td><td>3,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Manoel Guedes</td><td>3,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 59 localidades rurais de Maranguape, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 712" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Maranguape: 8 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas (não há rotas publicadas no DJE), com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="633.9,80.0 605.6,115.1 599.1,113.2 580.5,127.8 565.1,164.9 554.5,173.0 544.8,194.3 542.2,217.8 529.1,228.9 511.2,214.8 485.2,243.9 459.2,265.1 449.5,284.1 436.0,289.2 399.4,279.6 329.7,342.2 285.4,292.5 148.9,246.9 35.0,336.3 71.6,436.2 124.1,490.1 133.2,545.6 148.7,548.6 172.5,548.0 194.9,578.0 211.8,573.1 215.9,548.6 247.1,556.2 268.9,556.2 283.4,562.7 296.5,579.9 303.5,564.9 327.2,551.5 344.1,549.6 344.1,515.8 355.9,489.7 388.4,512.7 402.6,504.6 450.4,530.9 469.1,536.5 478.5,532.7 483.9,513.1 504.0,506.3 514.6,513.7 519.2,528.5 527.9,487.8 561.3,491.8 592.8,469.8 614.7,449.5 638.0,443.8 663.3,427.3 660.1,406.0 672.6,386.8 668.0,361.4 693.1,324.9 719.3,303.9 725.0,292.1 689.9,264.6 698.0,241.4 695.9,225.3 680.2,204.0 690.4,197.9 710.0,150.1 702.8,110.9 677.5,90.6 633.9,80.0 633.9,80.0" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="628.9,210.2 633.4,214.8 636.0,218.0 639.9,219.8 646.1,222.1 650.3,224.6 653.2,227.6 659.1,231.1 665.1,234.8 669.8,236.7 674.0,239.2 678.3,243.2 674.6,240.7 669.8,236.7 665.5,235.0 659.1,231.1 655.2,228.8 650.3,224.6 646.1,222.1 641.9,220.5 636.2,218.6 633.6,215.0 629.4,209.9 628.9,210.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Ypioca</title></polyline>
+<polyline points="590.9,381.1 595.4,379.7 599.6,378.1 603.3,375.6 608.4,374.9 613.8,374.5 619.1,374.9 624.1,376.2 625.1,371.4 626.9,367.4 630.4,365.1 633.3,362.2 635.3,358.5 633.3,362.2 630.4,365.1 626.9,367.3 625.1,371.2 624.1,376.2 619.3,375.1 614.2,374.4 608.4,374.9 603.3,375.6 599.8,378.0 595.7,379.6 591.0,380.6 590.9,381.1" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Tijuca</title></polyline>
+<polyline points="563.4,232.0 569.6,231.1 573.2,228.8 577.8,224.0 583.7,222.8 585.8,218.2 587.5,213.9 587.0,208.5 586.3,202.9 586.5,196.7 586.2,191.2 586.5,196.7 586.2,202.4 586.9,207.5 587.6,212.7 586.2,217.5 584.1,222.5 579.6,223.7 575.9,226.8 572.8,229.7 568.5,231.9 563.4,232.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Serra do Retiro</title></polyline>
+<polyline points="183.5,528.5 179.3,526.9 174.7,525.6 167.8,528.9 161.9,527.7 156.8,527.0 153.4,524.4 152.1,519.1 148.6,516.9 145.0,514.3 144.3,508.7 145.0,513.8 148.6,516.9 152.1,519.1 153.6,523.7 156.5,526.5 161.7,527.5 166.5,529.1 174.7,525.6 179.3,526.9 183.5,528.5 183.5,528.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Sítio Coqueirinho</title></polyline>
+<polyline points="95.7,402.5 92.3,399.7 89.7,396.3 88.1,391.4 86.6,386.8 86.2,381.3 87.5,376.1 91.3,371.6 94.3,368.3 100.3,368.7 95.3,368.0 91.3,371.6 87.5,376.1 86.2,380.6 86.3,386.2 88.1,390.7 89.2,395.7 91.9,399.1 94.3,402.5 95.7,402.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Cedro</title></polyline>
+<polyline points="501.2,483.6 499.6,478.9 500.0,473.1 503.8,470.5 502.4,466.0 498.3,463.7 496.3,460.0 493.9,456.4 490.9,453.2 488.3,450.0 483.1,452.1 485.6,448.7 488.9,451.2 491.9,454.1 494.6,457.6 497.7,460.6 499.9,464.2 502.9,467.5 501.1,471.7 499.6,476.9 499.4,483.9 501.2,483.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Riacho Verde</title></polyline>
+<polyline points="253.1,400.6 253.6,394.6 245.3,388.4 230.2,377.4 221.2,370.8 230.2,377.4 242.1,386.1 252.5,392.1 252.4,398.2 253.1,400.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Vertentes do Lagedo</title></polyline>
+<polyline points="213.4,467.5 217.3,465.6 219.8,469.1 217.9,474.1 217.1,479.6 220.9,481.5 228.6,483.3 233.6,486.9 236.6,489.8 241.1,491.1 236.6,489.8 233.6,486.9 229.9,483.8 225.4,482.5 218.3,480.8 217.7,474.5 219.8,470.5 217.8,466.1 213.4,467.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Manoel Guedes</title></polyline>
+<circle cx="598.5" cy="349.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="243.7" cy="468.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="466.8" cy="534.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="306.7" cy="433.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="422.0" cy="456.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="551.1" cy="464.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="153.7" cy="524.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="541.2" cy="338.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="337.1" cy="407.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="351.3" cy="356.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="85.9" cy="382.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="441.2" cy="495.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="312.8" cy="374.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="525.6" cy="430.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="269.3" cy="518.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="474.6" cy="272.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="532.9" cy="393.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="560.4" cy="347.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="585.6" cy="312.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="366.5" cy="439.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="397.3" cy="483.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="255.9" cy="387.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="540.4" cy="447.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="525.2" cy="298.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="351.3" cy="416.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="620.9" cy="273.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="524.5" cy="399.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="278.0" cy="528.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="90.3" cy="405.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="214.8" cy="462.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="553.5" cy="432.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="561.9" cy="318.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="436.6" cy="511.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="180.6" cy="406.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="575.4" cy="295.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="597.9" cy="306.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="556.7" cy="367.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="589.0" cy="382.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="326.1" cy="373.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="535.3" cy="267.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="392.3" cy="351.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="542.9" cy="261.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="500.4" cy="484.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="185.0" cy="528.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="291.2" cy="399.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="582.2" cy="326.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="571.8" cy="400.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="376.4" cy="452.0" r="2.2" fill="#b9b9b2"/>
+<polygon points="657.0,168.6 647.6,186.0 666.4,186.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="640.9,145.0 628.9,167.1 652.9,167.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="654.4,111.6 641.9,134.7 666.9,134.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="650.8,161.9 640.0,181.7 661.5,181.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="644.9,160.9 634.1,180.8 655.7,180.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="686.5,88.4 674.4,110.6 698.5,110.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="385.1,469.4 377.1,484.1 393.1,484.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="183.3,398.5 171.4,420.3 195.2,420.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="628.2,143.1 617.2,163.3 639.1,163.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="641.3,142.9 631.0,161.8 651.5,161.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="645.8,165.5 637.8,180.3 653.9,180.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="579.9,439.7 571.2,455.8 588.7,455.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="648.1,123.7 636.8,144.6 659.4,144.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="637.3,134.4 626.4,154.5 648.1,154.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="183.3,518.5 173.4,536.7 193.2,536.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="183.3" y="550.3" text-anchor="middle" fill="#5c5c57">Serra Do Lagedo</text>
+<polygon points="658.7,146.6 648.4,165.6 669.1,165.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="590.9,370.0 580.4,389.5 601.5,389.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="329.7,362.7 321.4,378.0 338.0,378.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="376.0,443.5 367.2,459.6 384.8,459.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="595.9,292.8 585.2,312.5 606.6,312.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="656.8,164.7 646.4,184.0 667.3,184.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="438.9,498.4 429.8,515.2 448.0,515.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="406.8,400.4 398.9,414.9 414.6,414.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="281.5,510.2 272.4,526.9 290.5,526.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="281.5" y="540.3" text-anchor="middle" fill="#5c5c57">Rato De Cima</text>
+<polygon points="509.5,378.2 499.7,396.3 519.3,396.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="390.3,340.4 381.6,356.2 398.9,356.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="501.1,473.0 491.2,491.3 511.1,491.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="95.6,391.2 84.5,411.5 106.6,411.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="547.1,255.0 542.1,264.1 552.1,264.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="557.3,353.8 546.9,373.1 567.8,373.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="587.2,435.7 576.9,454.5 597.4,454.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="184.1,400.8 174.0,419.2 194.1,419.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="363.5,409.5 355.9,423.4 371.0,423.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="290.9,386.4 279.3,407.8 302.6,407.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="628.7,200.1 619.5,217.2 638.0,217.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="673.0,98.7 659.7,123.1 686.2,123.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="443.2,449.1 436.4,461.7 450.1,461.7" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="563.2,224.8 556.5,237.2 570.0,237.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="517.3,398.1 508.5,414.3 526.1,414.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="173.4,399.6 165.3,414.5 181.5,414.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="619.1,233.2 611.7,246.8 626.4,246.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="483.5,282.8 475.6,297.4 491.4,297.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="622.8,250.6 610.0,274.3 635.7,274.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="581.5,319.0 572.9,334.7 590.0,334.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="624.4,242.9 611.3,266.9 637.4,266.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="518.2,292.5 507.1,313.0 529.4,313.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="572.0,390.0 563.3,406.0 580.6,406.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="643.2,157.5 631.6,178.7 654.7,178.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="283.2,392.6 272.0,413.1 294.3,413.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="560.6,315.5 552.7,330.0 568.5,330.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="253.2,389.0 241.9,409.8 264.4,409.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="575.9,291.7 568.6,305.3 583.3,305.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="635.6,164.8 627.5,179.6 643.6,179.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="635.8,175.1 622.6,199.4 648.9,199.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="615.4,133.7 608.4,146.7 622.5,146.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="546.5,424.1 537.9,440.0 555.2,440.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="662.7,120.6 651.1,142.0 674.3,142.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="659.1,146.7 648.9,165.6 669.4,165.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="667.8,96.5 657.4,115.8 678.3,115.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="213.7,457.8 203.9,475.8 223.5,475.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="213.7" y="489.4" text-anchor="middle" fill="#5c5c57">Manoel Guedes</text>
+<polygon points="632.2,140.9 620.7,161.9 643.6,161.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="639.0,142.0 626.7,164.7 651.3,164.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="639.9,157.8 630.0,176.1 649.9,176.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="667.5,98.6 656.6,118.6 678.3,118.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="174.4,405.6 168.4,416.6 180.4,416.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="620.9,245.0 613.5,258.7 628.4,258.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="660.3,119.5 648.7,140.7 671.8,140.7" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="669.0,122.5 662.7,134.2 675.3,134.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="673.7,101.2 663.7,119.6 683.7,119.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="633.7,137.8 623.4,156.6 643.9,156.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="649.2,122.0 638.1,142.5 660.4,142.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="634.2,163.6 626.5,177.8 642.0,177.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="637.1,133.8 626.1,154.0 648.1,154.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="283.4,399.0 278.3,408.3 288.4,408.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="534.6,256.6 526.8,270.9 542.3,270.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="679.1" cy="239.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="591.5" y="234.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Ypioca 3,8 km</text>
+<circle cx="635.4" cy="354.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="547.8" y="349.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Tijuca 3,7 km</text>
+<circle cx="588.9" cy="191.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="445.5" y="186.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Serra do Retiro 3,5 km</text>
+<circle cx="148.4" cy="495.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="155.4" y="490.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Coqueirinho 3,5 km</text>
+<circle cx="102.8" cy="370.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="109.8" y="365.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Cedro 3,2 km</text>
+<circle cx="482.3" cy="452.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="489.3" y="447.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Riacho Verde 3,2 km</text>
+<circle cx="220.1" cy="369.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="227.1" y="364.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Vertentes do Lagedo 3,0 km</text>
+<circle cx="243.3" cy="491.3" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="250.3" y="506.3" fill="#2f6fd6" fill-opacity="1" font-weight="600">Manoel Guedes 3,0 km</text>
+<rect x="637.5" y="142.4" width="10" height="10" fill="#1d1d1b"/><text x="651.5" y="165.4" font-weight="600" fill="#1d1d1b">Sede de Maranguape</text>
+<line x1="35" x2="120.5" y1="609.9" y2="609.9" stroke="#8a8a84" stroke-width="2"/><text x="35" y="623.9" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="600.9367088607518" y2="600.9367088607518" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="604.9367088607518" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,593.9 421.4,606.2 434.6,606.2" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="604.9367088607518" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="618.9367088607518" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="627.9367088607518" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="623.9367088607518" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="627.9367088607518" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="646.9367088607518" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="650.9367088607518" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="646.9367088607518" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="650.9367088607518" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="669.9367088607518" y2="669.9367088607518" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="673.9367088607518" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="692.9367088607518" y2="692.9367088607518" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="696.9367088607518" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TRE-CE e TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Sem rotas publicadas no DJE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (0):</strong> nenhuma.</li>
+<li><strong>De 3 a 5 km (8):</strong> Ypioca, Tijuca, Serra do Retiro, Sítio Coqueirinho, Cedro, Riacho Verde, Vertentes do Lagedo e Manoel Guedes.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (51):</strong> Agrovila do PA Sem Denominação, Alto Grande, Alto da Vassoura, Alto do Boi, Alto dos Pereiras, Amanari, Antônio Marques, Beira Sol, Bela Vista, Boa Vista (Jubaia), Boa Vista Valentin, Boa Vista dos Vieiras, Bu, Cachoeira, Cacimbão, Cacimbão (Umarizeiras), Cajazeiras, Cajueiro, Cajueiro Vila Castanhola, Columinjuba, Cruel, Fazenda Biguá, Fazenda Boa Vista, Fazenda São Lucas, Forquilha, Itapebussu, Jardim, Jardim Penedo, Jubaia, Ladeira Grande, Lages, Lagoa do Juvenal, Massapê, Melão, Nova Vila, Papara, Papoco, Papouco, Pedra d&#x27;Água, Penedo, Piroás, Rato, Recanto (Amanari), Riacho da Palha, Sapupara, São João do Amanari, Tanques, Trapiá, Umarizeiras, Vila Nova e Viçosa.</li>
+</ul><h2>Rotas da Justiça Eleitoral</h2>
+<p><strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-CE) para Maranguape.</strong> Pesquisamos todas as edições do DJE/TRE-CE publicadas desde o fim de julho de 2026. As rotas do mapa e da seção de propostas são sugestões deste levantamento.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 8 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Ypioca</strong></td><td>Sede – Ypioca – Sede</td><td>Ypioca</td><td>7,7 km (ida e volta)</td><td>~19 min</td></tr><tr><td><strong>Rota nova – Tijuca</strong></td><td>Sede – Tijuca – Sede</td><td>Tijuca</td><td>7,4 km (ida e volta)</td><td>~16 min</td></tr><tr><td><strong>Rota nova – Serra do Retiro</strong></td><td>Viçosa – Serra do Retiro – Viçosa</td><td>Serra do Retiro</td><td>7,0 km (ida e volta)</td><td>~17 min</td></tr><tr><td><strong>Rota nova – Sítio Coqueirinho</strong></td><td>Sede – Sítio Coqueirinho – Sede</td><td>Sítio Coqueirinho</td><td>6,9 km (ida e volta)</td><td>~17 min</td></tr><tr><td><strong>Rota nova – Cedro</strong></td><td>Sede – Cedro – Sede</td><td>Cedro</td><td>6,3 km (ida e volta)</td><td>~12 min</td></tr><tr><td><strong>Rota nova – Riacho Verde</strong></td><td>Sede – Riacho Verde – Sede</td><td>Riacho Verde</td><td>6,4 km (ida e volta)</td><td>~13 min</td></tr><tr><td><strong>Rota nova – Vertentes do Lagedo</strong></td><td>Sede – Vertentes do Lagedo – Sede</td><td>Vertentes do Lagedo</td><td>5,9 km (ida e volta)</td><td>~14 min</td></tr><tr><td><strong>Rota nova – Manoel Guedes</strong></td><td>Emeief Florêncio Barroso de Albuquerque (local de votação) – Manoel Guedes – Emeief Florêncio Barroso de Albuquerque (local de votação)</td><td>Manoel Guedes</td><td>6,1 km (ida e volta)</td><td>~15 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. Para essas rotas, a Prefeitura pode pôr à disposição da Justiça Eleitoral os seguintes veículos da frota municipal, abastecidos e com motorista: a definir pela Prefeitura. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p></article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

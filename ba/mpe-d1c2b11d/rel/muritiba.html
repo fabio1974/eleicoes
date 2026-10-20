@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Muritiba</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.filtro { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 8px; padding:0; border:0; min-width:0; }
+.filtro legend { font-size:.85rem; color:var(--tx2); margin-bottom:6px; padding:0; }
+.filtro label { display:inline-flex; align-items:center; gap:6px; border:1px solid var(--bd); background:var(--card); border-radius:99px;
+  padding:6px 12px; font-size:.88rem; cursor:pointer; user-select:none; }
+.filtro input { accent-color:var(--ac); margin:0; }
+.filtro label:has(input:checked) { border-color:var(--ac); background:var(--ac-soft); }
+.filtro .n { color:var(--tx2); font-size:.8rem; }
+.filtro-acoes { font-size:.85rem; margin:0 0 12px; color:var(--tx2); } .filtro-acoes a { cursor:pointer; margin-right:10px; }
+.selecao { display:block; margin-top:4px; color:var(--ac); font-weight:600; font-size:.9rem; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<article class="relatorio-web">
+<h1>Transporte de Eleitores – Muritiba (131ª ZE): proposta de novas rotas</h1><p class="data">19/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 131ª Zona Eleitoral <strong>1 parada extra em rotas do edital</strong> no transporte gratuito de Muritiba.
+Traçamos pelas estradas o percurso das 10 rotas do Edital nº 38/2026 da 131ª ZE, de 17/09/2026 (Quadro Geral de Percursos), republicado com o anexo .odt; rotas definitivas pelo Edital nº 45/2026, de 28/09/2026. 0 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 1 ficam a 1–2 km.</p>
+<ul>
+<li>Muritiba tem 23.755 eleitores aptos em 14 locais de votação e 74 seções. São 6 locais rurais, com 9.111 eleitores (38% do total).</li>
+<li>5 locais rurais ficam a 10 km ou mais da sede, com 8.773 eleitores. Os mais distantes: Praça São José - Zona Rural (23,4 km), Estrada De São José, S/N - Zona Rural (23,2 km) e Praça São José - Zona Rural (23,1 km).</li>
+
+<li><strong>Rota passa perto</strong> (1–2 km): Comunidade Quilombola Palames.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 20 localidades rurais de Muritiba que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Comunidade Quilombola Palames</td><td>5,8</td><td>Rota 01</td><td>1,1</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Laranjeiras</td><td>5,1</td><td>Rota 07</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Comunidade Quilombola Caatinga Seca</td><td>4,7</td><td>Rota 01</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Caatinga Seca</td><td>4,6</td><td>Rota 01</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Comunidade Quilombola Baixa Grande</td><td>4,4</td><td>Rota 03</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Candeal</td><td>3,0</td><td>Rota 08</td><td>0,6</td><td>Atendida (até 1 km da rota)</td></tr></tbody></table></div>
+<p>9 das 48 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Avenida Guimarães (Rota 02), Sungaia (Rota 07), Maxixi (Rota 08), Pulo do Bode (Rota 09 e Rota 10), Velambuí (Rota 09), Paraguai (Rota 10), Padre Piaza (Rota 10) e Avenida Paulo Souto (Rota 10). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 20 localidades rurais de Muritiba, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 429" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Muritiba: 1 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital nº 38/2026 da 131ª ZE, de 17/09/2026 (Quadro Geral de Percursos), republicado com o anexo .odt; rotas definitivas pelo Edital nº 45/2026, de 28/09/2026 e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="661.4,103.3 619.8,122.6 579.8,129.3 581.5,175.9 502.2,197.6 435.3,236.5 351.4,166.2 296.1,127.3 270.1,94.0 78.3,94.7 63.6,99.3 35.0,80.0 42.7,183.9 39.7,218.2 90.3,239.2 134.2,244.2 165.9,266.8 213.8,269.5 248.1,245.5 302.7,272.5 345.4,266.8 376.3,280.5 385.3,296.8 433.6,279.5 482.2,282.5 484.9,266.2 526.5,264.2 564.8,239.8 644.7,251.2 695.7,242.8 725.0,226.5 720.0,192.2 698.0,127.3 661.4,103.3 661.4,103.3" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="131.5,208.5 139.0,205.6 144.2,200.4 151.3,196.1 161.2,194.1 169.4,192.3 177.0,189.5 183.6,185.4 183.3,175.6 186.7,168.5 190.7,161.9 193.8,153.0 186.8,149.8 181.0,145.5 186.9,141.3 194.8,144.0 203.0,140.2 209.3,134.3 214.1,128.9 224.3,129.0 227.6,128.0" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="131.5,208.5 125.3,204.5 118.5,201.2 112.0,197.3 105.7,193.5 100.5,187.8 93.3,182.7 87.5,176.8 81.4,170.4 77.1,176.3 82.6,181.0 91.9,183.6 99.3,186.5 96.4,194.3 90.2,198.1 82.3,201.2 79.7,206.6" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="131.5,208.5 125.3,204.5 118.5,201.2 113.0,196.2 108.0,190.7 103.0,185.1 108.0,179.5 111.3,172.5 113.3,164.4 120.7,161.9 124.1,154.9 126.1,145.8 129.6,139.3 131.6,130.6 141.2,130.0 149.9,131.5 154.1,137.4 162.6,139.1 168.6,135.2 174.5,130.7 168.6,135.2 162.6,139.1 154.1,137.4 149.9,131.5 141.8,129.6 131.9,130.3 125.6,134.6 119.8,139.0 111.0,140.8 106.1,135.1 110.7,140.7 119.2,142.2 123.8,135.9 130.1,131.9 139.8,131.2 146.9,126.9 151.6,121.5 158.1,117.4 167.5,115.3 173.1,110.4 183.4,108.6 187.1,102.1 183.6,100.7" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="131.5,208.5 136.5,213.7 141.7,218.8 148.3,223.1 153.6,228.0 156.6,220.9 165.5,219.8 172.8,222.9 179.6,226.4 187.3,229.8 189.1,234.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="131.5,208.5 136.5,213.7 141.7,218.8 148.3,223.1 153.6,228.0 156.6,220.9 165.5,219.8 172.8,222.9 179.6,226.4 187.3,229.8 194.4,232.8 201.2,228.1 211.2,228.1 214.9,221.8 221.0,217.6 226.5,212.5 228.2,204.1 228.9,194.5 234.4,190.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="668.0,200.3 661.9,195.1 658.3,188.4 649.5,186.3 645.0,180.5 633.9,180.8 623.6,176.8 616.5,173.6 607.5,172.4 600.5,164.2 595.3,158.2 589.1,151.8 584.3,146.1 581.6,138.3 580.1,129.8 570.9,129.0 565.8,123.0 561.2,117.2 548.8,114.8 538.5,111.7 531.1,108.7 520.4,107.7 507.4,108.1 496.1,108.2 487.2,109.7 481.1,114.8 474.8,119.6 467.1,122.4 459.3,124.9 451.0,129.2 444.4,132.7 436.5,137.0 429.9,140.5 422.8,144.2 413.0,144.8 401.3,144.2 390.2,143.7 380.4,145.5 372.5,148.6 363.7,152.2 355.8,155.3 349.3,160.0 345.4,166.3 342.6,173.8 339.2,181.1 344.4,187.1 347.3,195.4 356.6,197.1 350.5,201.3 343.3,204.3 334.3,202.7 327.1,206.5 322.8,216.1 319.3,223.8 315.2,232.9 319.8,238.3 322.1,246.9 319.7,238.7 311.3,240.7 302.7,251.2 297.9,257.1 292.9,262.9 285.4,266.2 275.5,269.4 264.7,272.9 257.1,275.4 242.0,280.3 233.1,279.1 228.4,273.1 224.6,266.4 220.8,260.0 212.1,258.0 204.0,260.2 193.5,260.2 184.8,257.6 177.5,253.9 170.1,251.0 164.2,246.3 160.2,240.1 156.0,232.5 151.4,225.5 145.4,221.1 139.2,217.0 134.8,211.4 131.5,208.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="358.1,196.7 351.4,200.5 344.2,203.7 334.3,202.7 327.1,206.5 322.8,216.1 319.3,223.8 315.2,232.9 319.1,224.2 322.5,216.6 328.5,221.5 335.1,225.3 344.5,227.5 350.3,232.5 356.6,238.0 364.9,246.4 374.5,247.1 382.7,248.9 391.0,250.7 395.1,256.9 401.4,260.9 408.8,258.3 416.5,255.7 424.4,252.9 436.5,255.2 443.5,258.7 447.3,258.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="358.1,196.7 351.4,200.5 344.2,203.7 334.3,202.7 327.1,206.5 322.8,216.1 319.3,223.8 309.4,220.2 301.4,222.4 295.3,216.5 289.4,210.9 283.0,206.9 273.7,206.2 268.3,201.5 258.6,200.7 249.3,201.5 241.3,198.8 238.6,191.0 241.3,198.8 249.3,201.5 258.6,200.7 268.3,201.5 273.7,206.2 283.0,206.9 289.4,210.9 295.3,216.5 300.3,221.8 311.1,223.7 317.4,227.9 319.1,237.7 321.0,246.0 319.1,237.7 311.3,240.7 302.7,251.2 297.9,257.1 292.9,262.9 286.5,258.0 279.1,254.3 286.2,257.6 290.4,263.4 296.2,259.3 302.7,251.2 308.4,244.5 312.7,238.1 316.9,228.9 320.3,221.7 317.2,214.5 312.9,208.2 307.8,201.3 302.4,195.5 296.5,190.4 298.6,178.1 291.6,173.7 290.3,173.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="668.0,200.3 661.9,195.1 658.3,188.4 649.5,186.3 645.0,180.5 633.9,180.8 623.6,176.8 616.5,173.6 607.5,172.4 600.5,164.2 591.0,164.8 584.0,168.6 581.2,176.2 573.9,180.3 568.3,190.9 561.2,195.8 554.5,197.1" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 09</title></polyline>
+<polyline points="688.7,232.6 681.5,227.0 674.2,222.7 666.8,213.9 666.0,204.5 668.0,200.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 10</title></polyline>
+<polyline points="227.6,128.0 232.4,121.5 236.7,115.5 241.6,110.2 245.4,103.5 241.6,110.2 236.7,115.5 232.4,121.5 228.4,127.7 227.6,128.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 01</title></polyline>
+<circle cx="447.3" cy="258.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="227.2" cy="126.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="222.2" cy="131.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="174.5" cy="126.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="276.4" cy="225.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="187.8" cy="233.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="280.1" cy="248.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="93.4" cy="269.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="281.2" cy="249.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="289.4" cy="175.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="116.2" cy="159.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="538.6" cy="217.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="326.0" cy="244.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="359.1" cy="193.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="309.8" cy="228.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="307.4" cy="232.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="663.1" cy="224.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="321.4" cy="206.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="556.2" cy="197.2" r="2.2" fill="#b9b9b2"/>
+<polygon points="661.4,186.9 650.0,207.9 672.8,207.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="646.4,193.1 633.3,217.2 659.5,217.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="673.1,175.2 663.8,192.2 682.3,192.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="663.4,171.3 650.5,195.1 676.3,195.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="681.0,182.8 670.5,202.2 691.6,202.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="672.7,187.7 661.2,209.0 684.2,209.0" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="131.6,196.4 120.0,217.6 143.1,217.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="131.6" y="231.7" text-anchor="middle" fill="#5c5c57">Distrito De São José De Itaporã</text>
+<polygon points="128.6,198.6 116.0,221.8 141.2,221.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="554.5,189.2 546.8,203.3 562.2,203.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="325.4,202.3 314.7,222.0 336.1,222.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="325.4" y="235.8" text-anchor="middle" fill="#5c5c57">Povoado Carro Quebrado</text>
+<polygon points="636.4,168.3 625.4,188.6 647.4,188.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="668.1,194.6 656.4,216.1 679.7,216.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="130.9,197.2 119.5,218.2 142.3,218.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="126.2,191.6 115.8,210.8 136.7,210.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="247.5" cy="102.3" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="254.5" y="97.3" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Comunidade Quilombola Palames 5,8 km</text>
+<rect x="662.8" y="194.8" width="10" height="10" fill="#1d1d1b"/><text x="676.8" y="217.8" font-weight="600" fill="#1d1d1b">Sede de Muritiba</text>
+<line x1="35" x2="185.0" y1="326.8" y2="326.8" stroke="#8a8a84" stroke-width="2"/><text x="35" y="340.8" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="317.7905405405378" y2="317.7905405405378" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="321.7905405405378" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,310.8 421.4,323.0 434.6,323.0" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="321.7905405405378" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="335.7905405405378" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="344.7905405405378" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="340.7905405405378" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="344.7905405405378" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="363.7905405405378" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="367.7905405405378" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="363.7905405405378" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="367.7905405405378" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="386.7905405405378" y2="386.7905405405378" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="390.7905405405378" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="409.7905405405378" y2="409.7905405405378" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="413.7905405405378" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 38/2026 da 131ª ZE, de 17/09/2026 (Quadro Geral de Percursos), republicado com o anexo .odt; rotas definitivas pelo Edital nº 45/2026, de 28/09/2026 · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (2):</strong> Comunidade Quilombola Palames e Laranjeiras.</li>
+<li><strong>De 3 a 5 km (4):</strong> Comunidade Quilombola Caatinga Seca, Caatinga Seca, Comunidade Quilombola Baixa Grande e Candeal.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (14):</strong> Alegre, Candial, Carro Quebrado, Comunidade Quilombola Baixa Pequena, Comunidade Quilombola Santo Antônio, Fazendinha, Gravata, Gravata de Cima, Lagoa do Cedro, Pernambuco, Posto Sanca, Sanca, Tabuleiro da Bahiana e Tabuleiro da Baiana.</li>
+</ul><h2>Rotas do Edital nº 38/2026 da 131ª ZE, de 17/09/2026 (Quadro Geral de Percursos), republicado com o anexo .odt; rotas definitivas pelo Edital nº 45/2026, de 28/09/2026</h2>
+<p>O edital tem 10 rotas para Muritiba. Horários: não informados no anexo. Veículos: Ônibus, micro-ônibus, vans, Sprinter e Master (placa e motorista por rota no anexo); veículos cedidos pela Prefeitura.</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Praça São José – Pedrinhas – Pau Ferro – Caatinga Seca</td></tr><tr><td>02</td><td>Praça de São José – Avenida Guimarães – Pé de Serra – Aporá – Pindombeira</td></tr><tr><td>03</td><td>Praça de São José – Baixa Pequena – Baixa Grande – Mil Peixes – Tocos II</td></tr><tr><td>04</td><td>Praça de São José – Beija-Flor – Tabuleiro – Fazendinha</td></tr><tr><td>05</td><td>Praça de São José – Beija-Flor – Fazendinha – Marimbondo</td></tr><tr><td>06</td><td>Sede – Carro quebrado – Posto Sanca – Praça São José</td></tr><tr><td>07</td><td>Carro Quebrado – Sungaia – Tabuleiro da Baiana – Laranjeiras</td></tr><tr><td>08</td><td>Carro Quebrado – Marimbondo – Posto Sanca – Candial – Maxixi – Pernambuco</td></tr><tr><td>09</td><td>Sede – Pulo do Bode – Gravatá de Cima – Gravatá de Baixo – Velambuí</td></tr><tr><td>10</td><td>Cachoeirinha – Bairro Santana – Paraguai – Padre Piaza – Avenida Paulo Souto – Pulo do Bode – Sede</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 38/2026 da 131ª ZE, de 17/09/2026 (Quadro Geral de Percursos), republicado com o anexo .odt; rotas definitivas pelo Edital nº 45/2026, de 28/09/2026; DJE/TRE-BA nº 204, disponibilizado em 22/09/2026, p. 279–280 (republicação com o anexo; rotas tornadas definitivas pelo Edital nº 45/2026) (https://dje.tse.jus.br/dje/pdf/v1/edicao/129808); quadro no anexo do DJE (https://sitdoc.tse.jus.br/sitdoc/DownloadFile?id=764ec521-0368-433b-b9fd-9965fd83c45a&amp;app=dje&amp;extensao=odt), cópia em fontes/coleta_agentes/rodada2/BA/anexos/ze131_ed204_764ec521.odt.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 1 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Parada extra na Rota 01</strong></td><td>desvio pelo caminho atual: Comunidade Quilombola Palames</td><td>Comunidade Quilombola Palames</td><td>+2,3 km</td><td>+5 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. As extensões e paradas extras sugeridas são feitas pelos próprios veículos das rotas do Edital nº 38/2026 da 131ª ZE, de 17/09/2026 (Quadro Geral de Percursos), republicado com o anexo .odt; rotas definitivas pelo Edital nº 45/2026, de 28/09/2026. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p></article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

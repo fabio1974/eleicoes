@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Jaguaruana</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.filtro { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 8px; padding:0; border:0; min-width:0; }
+.filtro legend { font-size:.85rem; color:var(--tx2); margin-bottom:6px; padding:0; }
+.filtro label { display:inline-flex; align-items:center; gap:6px; border:1px solid var(--bd); background:var(--card); border-radius:99px;
+  padding:6px 12px; font-size:.88rem; cursor:pointer; user-select:none; }
+.filtro input { accent-color:var(--ac); margin:0; }
+.filtro label:has(input:checked) { border-color:var(--ac); background:var(--ac-soft); }
+.filtro .n { color:var(--tx2); font-size:.8rem; }
+.filtro-acoes { font-size:.85rem; margin:0 0 12px; color:var(--tx2); } .filtro-acoes a { cursor:pointer; margin-right:10px; }
+.selecao { display:block; margin-top:4px; color:var(--ac); font-weight:600; font-size:.9rem; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<article class="relatorio-web">
+<h1>Transporte de Eleitores – Jaguaruana (75ª ZE): proposta de novas rotas</h1><p class="data">19/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 75ª Zona Eleitoral <strong>5 rotas novas</strong> no transporte gratuito de Jaguaruana.
+<strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-CE) para Jaguaruana</strong>. As 6 localidades rurais a 3 km ou mais do local de votação ficam sem nenhum ônibus.</p>
+<ul>
+<li>Jaguaruana tem 29.116 eleitores aptos em 36 locais de votação e 115 seções. São 26 locais rurais, com 15.177 eleitores (52% do total).</li>
+<li>15 locais rurais ficam a 10 km ou mais da sede, com 7.896 eleitores. Os mais distantes: Assentamento Bela Vista (17,8 km), Estreito (16,6 km) e Santa Luzia (15,3 km).</li>
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Córrego da Pedra (19,7 km do local de votação), Sítio Formigueiro (17,4 km do local de votação), Lajedo do Ouro (14,1 km do local de votação), Fazenda Meri Pobo (6,6 km do local de votação), São José (4,3 km do local de votação) e Curralinho da Barra (3,0 km do local de votação).</li>
+
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 45 localidades rurais de Jaguaruana que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista do TRE-CE e a posição de cada local publicada pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Córrego da Pedra</td><td>19,7</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Sítio Formigueiro</td><td>17,4</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Lajedo do Ouro</td><td>14,1</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Fazenda Meri Pobo</td><td>6,6</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>São José</td><td>4,3</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr><tr><td>Curralinho da Barra</td><td>3,0</td><td>—</td><td>—</td><td>Sem rota publicada no DJE</td></tr></tbody></table></div>
+<p>O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 45 localidades rurais de Jaguaruana, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 880" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Jaguaruana: 6 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57">Rotas propostas (não há rotas publicadas no DJE), com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="263.1,612.4 545.7,748.0 581.8,639.6 621.8,496.7 725.0,260.5 679.4,180.4 673.8,135.2 669.8,80.0 325.1,157.4 315.9,133.0 325.3,103.2 252.3,128.0 250.9,149.2 242.3,170.4 35.0,171.2 101.8,285.7 123.0,338.7 135.6,352.3 131.0,405.7 129.2,454.7 158.4,491.9 153.6,522.9 263.1,612.4 263.1,612.4" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="295.1,486.6 295.7,492.9 297.2,497.6 299.4,502.6 302.4,509.8 304.5,515.2 308.5,524.6 310.6,528.9 313.3,535.7 316.4,542.8 319.4,549.2 321.2,553.7 324.6,560.0 335.7,585.7 339.9,588.4 345.5,589.6 347.4,596.9 361.3,627.8 377.9,643.2 382.6,645.0 386.2,649.4 388.7,657.0 391.7,660.5 394.9,664.1 399.9,665.5 406.6,667.0 413.0,668.8 416.8,671.2 420.1,674.1 423.3,677.4 427.4,679.8 432.9,681.7 438.9,683.3 444.0,684.4 454.1,688.2 459.5,689.9 464.4,691.3 469.4,692.3 474.3,693.9 479.0,695.3 485.4,697.2 491.1,700.2 495.7,704.5 498.9,708.0 502.2,711.6 505.9,715.8 510.0,719.1 513.9,721.7 510.0,719.1 505.9,715.8 502.2,711.6 498.9,708.0 495.7,704.5 492.7,701.4 488.5,698.4 483.5,696.7 477.4,694.5 472.0,693.5 467.5,691.9 461.1,690.4 456.2,688.9 448.2,685.9 443.5,684.3 437.5,682.9 431.7,681.2 427.0,679.6 422.5,676.8 419.5,673.4 416.1,670.7 410.6,667.9 404.7,666.5 398.4,665.1 393.0,661.9 389.2,657.6 385.6,653.7 386.6,646.8 382.0,644.9 361.7,628.3 348.0,601.0 345.8,591.1 341.6,589.0 336.2,586.2 326.1,564.1 323.1,556.4 320.6,552.0 317.3,545.3 313.9,537.0 310.6,528.9 308.5,524.6 304.5,515.2 302.4,509.8 300.2,504.6 298.2,499.9 296.5,495.6 295.1,490.8 295.1,486.6" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Córrego da Pedra</title></polyline>
+<polyline points="579.5,451.0 571.9,464.8 569.2,468.2 565.0,473.1 561.1,477.9 564.4,482.8 562.7,488.6 559.8,492.1 556.6,495.9 553.1,500.3 549.4,504.6 545.5,509.6 541.9,513.8 539.2,517.2 536.4,520.7 532.9,524.9 538.0,526.9 537.4,537.2 535.0,545.0 540.9,547.7 546.7,550.3 544.5,558.8 542.5,563.1 540.6,573.3 541.4,579.6 544.7,582.3 550.1,586.9 556.1,591.9 556.5,598.2 555.7,604.0 556.2,611.5 558.1,616.4 558.5,622.0 563.3,623.5 563.4,630.5 564.4,635.6 569.2,634.1 573.3,636.3 579.4,635.8 573.3,636.3 569.2,634.1 564.4,635.6 563.4,630.5 563.7,624.1 558.5,622.0 558.1,616.4 555.7,612.8 555.9,607.0 555.9,600.6 556.8,595.2 552.1,588.5 546.9,584.2 543.4,581.2 540.1,578.2 541.8,565.2 544.2,559.4 546.2,551.8 543.1,548.7 535.0,545.0 537.4,537.2 540.1,528.0 534.7,525.5 536.4,520.7 539.2,517.2 541.9,513.8 545.5,509.6 548.3,506.1 551.9,501.7 555.5,497.3 558.9,493.2 561.8,489.7 564.6,486.2 561.5,481.1 563.5,475.0 569.2,468.2 571.9,464.8 579.2,455.9 579.5,451.0" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Lajedo do Ouro</title></polyline>
+<polyline points="429.4,267.5 429.5,274.0 430.3,280.2 432.3,287.1 433.0,292.4 433.8,297.7 470.0,289.2 490.0,283.2 493.6,306.4 491.8,282.8 470.0,289.2 434.0,300.0 433.3,294.3 432.7,288.4 431.2,283.7 430.1,278.0 429.6,272.1 429.4,267.5" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Fazenda Meri Pobo</title></polyline>
+<polyline points="348.8,188.4 349.8,194.1 362.0,193.4 371.3,191.2 377.0,189.8 386.7,187.3 404.4,182.8 407.7,179.4 411.1,175.2 413.7,171.6 411.1,175.2 407.7,179.4 404.4,182.8 386.7,187.3 380.8,188.8 374.3,190.4 362.0,193.4 351.2,196.1 348.8,192.2 348.8,188.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – São José</title></polyline>
+<polyline points="336.2,344.2 338.9,339.7 338.3,346.0 342.4,349.8 346.4,353.4 349.8,356.5 351.7,360.9 354.7,364.8 359.2,369.9 362.1,373.0 359.2,369.9 355.6,365.9 352.3,362.0 351.9,356.0 346.4,353.4 342.4,349.8 338.3,346.0 340.2,341.6 336.2,344.2 336.2,344.2" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Curralinho da Barra</title></polyline>
+<circle cx="236.9" cy="486.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="400.3" cy="323.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="206.9" cy="291.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="299.7" cy="397.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="318.3" cy="367.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="340.1" cy="155.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="156.2" cy="288.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="345.1" cy="277.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="451.5" cy="256.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="293.3" cy="470.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="231.7" cy="269.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="201.3" cy="320.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="241.7" cy="200.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="377.1" cy="321.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="293.7" cy="212.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="217.3" cy="317.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="330.9" cy="469.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="413.9" cy="224.8" r="2.2" fill="#b9b9b2"/>
+<circle cx="191.4" cy="247.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="330.3" cy="448.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="300.5" cy="355.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="199.8" cy="504.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="386.3" cy="289.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="291.5" cy="345.1" r="2.2" fill="#b9b9b2"/>
+<circle cx="301.7" cy="145.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="579.8" cy="455.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="295.7" cy="489.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="253.5" cy="203.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="200.8" cy="466.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="347.6" cy="184.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="134.9" cy="339.5" r="2.2" fill="#b9b9b2"/>
+<circle cx="242.3" cy="223.6" r="2.2" fill="#b9b9b2"/>
+<circle cx="226.5" cy="469.9" r="2.2" fill="#b9b9b2"/>
+<circle cx="429.3" cy="268.7" r="2.2" fill="#b9b9b2"/>
+<polygon points="303.9,194.2 295.4,209.9 312.5,209.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="273.9,456.4 266.9,469.5 281.0,469.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="225.9,320.6 216.9,337.3 235.0,337.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="225.9" y="350.6" text-anchor="middle" fill="#5c5c57">Sargento</text>
+<polygon points="338.3,315.1 327.3,335.4 349.3,335.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="343.1,294.6 331.2,316.5 355.0,316.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="137.8,327.8 129.1,343.8 146.4,343.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="240.5,210.7 231.2,227.9 249.9,227.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="240.5" y="241.4" text-anchor="middle" fill="#5c5c57">Figueiredo</text>
+<polygon points="429.5,257.8 420.4,274.5 438.6,274.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="429.5" y="287.9" text-anchor="middle" fill="#5c5c57">Antonopolis</text>
+<polygon points="335.9,449.4 325.6,468.5 346.3,468.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="335.9" y="482.2" text-anchor="middle" fill="#5c5c57">Córrego do Machado</text>
+<polygon points="332.1,307.6 320.0,329.9 344.2,329.9" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="218.9,412.4 211.4,426.2 226.5,426.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="224.3,464.2 217.5,476.9 231.2,476.9" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="304.1,146.6 297.5,158.8 310.8,158.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="270.1,261.2 261.5,277.2 278.8,277.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="295.1,476.2 285.2,494.5 305.1,494.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="295.1" y="508.1" text-anchor="middle" fill="#5c5c57">Lagoa Vermelha</text>
+<polygon points="335.5,304.0 324.0,325.2 347.0,325.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="348.9,179.3 340.3,195.2 357.5,195.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="403.3,211.0 393.7,228.8 412.9,228.8" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="403.3" y="242.3" text-anchor="middle" fill="#5c5c57">São José</text>
+<polygon points="204.2,257.1 195.8,272.6 212.5,272.6" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="150.2,433.6 142.1,448.5 158.2,448.5" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="579.0,441.2 569.2,459.2 588.9,459.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="579.0" y="472.8" text-anchor="middle" fill="#5c5c57">Assentamento Bela Vista</text>
+<polygon points="489.1,215.9 482.3,228.3 495.8,228.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="294.1,335.9 283.1,356.3 305.2,356.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<text x="294.1" y="370.2" text-anchor="middle" fill="#5c5c57">Cardeais</text>
+<polygon points="388.5,274.8 380.6,289.4 396.4,289.4" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="257.5,199.4 249.4,214.4 265.7,214.4" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="339.7,292.6 329.7,311.1 349.8,311.1" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="193.0,251.8 185.2,266.1 200.7,266.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="358.1,307.0 347.5,326.5 368.7,326.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="188.6,499.0 181.5,512.1 195.6,512.1" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="340.1,309.8 327.6,332.8 352.6,332.8" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="183.4,271.0 175.1,286.3 191.6,286.3" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="336.1,334.6 327.0,351.3 345.2,351.3" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="205.4,456.3 198.4,469.2 212.4,469.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="287.3,413.2 279.8,427.0 294.8,427.0" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<polygon points="348.5,293.5 340.9,307.6 356.2,307.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="132.4,320.6 123.9,336.2 140.8,336.2" fill="#3fa34d" fill-opacity="0.45" stroke="#3fa34d"/>
+<circle cx="514.3" cy="723.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="521.3" y="718.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Córrego da Pedra 19,7 km</text>
+<circle cx="485.5" cy="697.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="492.5" y="692.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sítio Formigueiro 17,4 km</text>
+<circle cx="579.8" cy="636.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="436.4" y="631.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Lajedo do Ouro 14,1 km</text>
+<circle cx="495.1" cy="306.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="502.1" y="301.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Meri Pobo 6,6 km</text>
+<circle cx="413.4" cy="171.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="420.4" y="166.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">São José 4,3 km</text>
+<circle cx="363.1" cy="373.7" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="370.1" y="368.7" fill="#2f6fd6" fill-opacity="1" font-weight="600">Curralinho da Barra 3,0 km</text>
+<rect x="335.5" y="302.0" width="10" height="10" fill="#1d1d1b"/><text x="349.5" y="325.0" font-weight="600" fill="#1d1d1b">Sede de Jaguaruana</text>
+<line x1="35" x2="125.1" y1="778.4" y2="778.4" stroke="#8a8a84" stroke-width="2"/><text x="35" y="792.4" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="769.4062590553555" y2="769.4062590553555" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="773.4062590553555" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,762.4 421.4,774.7 434.6,774.7" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="773.4062590553555" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="787.4062590553555" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="796.4062590553555" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="792.4062590553555" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="796.4062590553555" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="815.4062590553555" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="819.4062590553555" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="815.4062590553555" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="819.4062590553555" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="838.4062590553555" y2="838.4062590553555" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="842.4062590553555" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="861.4062590553555" y2="861.4062590553555" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="865.4062590553555" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TRE-CE e TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Sem rotas publicadas no DJE · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (4):</strong> Córrego da Pedra, Sítio Formigueiro, Lajedo do Ouro e Fazenda Meri Pobo.</li>
+<li><strong>De 3 a 5 km (2):</strong> São José e Curralinho da Barra.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (39):</strong> Agrovila do PA Bela Vista, Antonópoles, Assentamento Bela Vista, Baixo Giqui, Borges, Caiçara, Campinas, Capoeira, Cardeais, Cipriano Lopes, Curralinho dos Patos, Córrego do Machado, Córrego do Machado 2, Córrego do Machado 3, Estreito, Fazenda Bernardino, Figueiredo, Figueiredo do Bruno, Frutuoso, Giqui, João Duarte, Jurema, Jureminha, Lagoa Vermelha, Matinho, Passagem da Moita, Pasta Branca, Pasta Vermelha, Patos, Pedreira, Pitombeira, Santa Luzia, Saquinho, São José do Lagamar, Sítio Caatinguinha, Sítio Carnaubal, Sítio Damião, Sítio Sargento e Sítio Volta.</li>
+</ul><h2>Rotas da Justiça Eleitoral</h2>
+<p><strong>Não há rotas de transporte de eleitores publicadas no Diário da Justiça Eleitoral (DJE/TRE-CE) para Jaguaruana.</strong> Pesquisamos todas as edições do DJE/TRE-CE publicadas desde o fim de julho de 2026. As rotas do mapa e da seção de propostas são sugestões deste levantamento.</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 6 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Córrego da Pedra</strong></td><td>Lagoa Vermelha – Sítio Formigueiro – Córrego da Pedra – Lagoa Vermelha</td><td>Sítio Formigueiro, Córrego da Pedra</td><td>39,5 km (ida e volta)</td><td>~1h20</td></tr><tr><td><strong>Rota nova – Lajedo do Ouro</strong></td><td>Assentamento Bela Vista – Lajedo do Ouro – Assentamento Bela Vista</td><td>Lajedo do Ouro</td><td>28,2 km (ida e volta)</td><td>~1h09</td></tr><tr><td><strong>Rota nova – Fazenda Meri Pobo</strong></td><td>Sede – Fazenda Meri Pobo – Sede</td><td>Fazenda Meri Pobo</td><td>13,2 km (ida e volta)</td><td>~26 min</td></tr><tr><td><strong>Rota nova – São José</strong></td><td>Giqui – São José – Giqui</td><td>São José</td><td>8,7 km (ida e volta)</td><td>~20 min</td></tr><tr><td><strong>Rota nova – Curralinho da Barra</strong></td><td>Sede – Curralinho da Barra – Sede</td><td>Curralinho da Barra</td><td>6,0 km (ida e volta)</td><td>~15 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. Para essas rotas, a Prefeitura pode pôr à disposição da Justiça Eleitoral os seguintes veículos da frota municipal, abastecidos e com motorista: a definir pela Prefeitura. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p></article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>

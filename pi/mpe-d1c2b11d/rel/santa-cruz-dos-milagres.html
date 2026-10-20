@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Relatório – Santa Cruz dos Milagres</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --tx:#1d1d1b; --tx2:#5c5c57; --bd:#e3e3de; --ac:#1f5fbf; --ac-tx:#fff; --ac-soft:#e8f0fc;
+        --warn-bg:#fff4dc; --warn-tx:#6b4a00; --ok:#2e7d32; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141413; --card:#1f1f1d; --tx:#ecece8; --tx2:#a6a6a0; --bd:#33332f; --ac:#6ea0ff;
+        --ac-tx:#0b1a33; --ac-soft:#1c2a44; --warn-bg:#3a2e12; --warn-tx:#f3d99a; --ok:#7bc67e; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:16px 16px 48px; }
+a { color:var(--ac); }
+.hero { background:var(--ac-soft); border-radius:14px; padding:22px 22px 18px; margin:8px 0 24px; }
+.hero h1 { font-size:1.65rem; line-height:1.2; margin:0 0 8px; }
+.hero p { margin:0 0 8px; max-width:760px; }
+.hero .pequeno { color:var(--tx2); font-size:.9rem; }
+h2 { font-size:1.25rem; margin:28px 0 10px; }
+.passos { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none; counter-reset:p; }
+.passos li { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px; counter-increment:p; }
+.passos li::before { content:counter(p); display:inline-flex; width:24px; height:24px; border-radius:50%; background:var(--ac); color:var(--ac-tx);
+        align-items:center; justify-content:center; font-weight:700; font-size:.85rem; margin-bottom:6px; }
+.passos b { display:block; }
+.resultado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+.busca { width:100%; font:inherit; padding:12px 14px; border:1px solid var(--bd); border-radius:10px; background:var(--card); color:var(--tx); margin-bottom:12px; }
+.lista { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.mun { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; text-decoration:none; color:var(--tx); display:block; }
+.mun.pronto { border-color:var(--ac); }
+.mun strong { display:block; font-size:1.05rem; }
+.mun span { color:var(--tx2); font-size:.85rem; }
+.mun.pronto span.st { color:var(--ok); font-weight:600; }
+.mun.prep { opacity:.6; }
+.estado strong { font-size:1.3rem; } .lista.estados { margin-bottom:8px; }
+.mun.bloqueado { cursor:not-allowed; border-style:dashed; background:repeating-linear-gradient(135deg, var(--card) 0 10px, var(--bg) 10px 20px); }
+.mun.bloqueado strong { opacity:.7; } .mun.bloqueado span.st { color:var(--warn-tx); font-weight:600; }
+.alerta { vertical-align:-2px; margin-right:2px; }
+.mun.feito { cursor:default; border-style:dashed; } .mun.feito strong, .mun.feito > span { opacity:.6; }
+.contador { color:var(--tx2); margin:0 0 10px; }
+.filtro { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 8px; padding:0; border:0; min-width:0; }
+.filtro legend { font-size:.85rem; color:var(--tx2); margin-bottom:6px; padding:0; }
+.filtro label { display:inline-flex; align-items:center; gap:6px; border:1px solid var(--bd); background:var(--card); border-radius:99px;
+  padding:6px 12px; font-size:.88rem; cursor:pointer; user-select:none; }
+.filtro input { accent-color:var(--ac); margin:0; }
+.filtro label:has(input:checked) { border-color:var(--ac); background:var(--ac-soft); }
+.filtro .n { color:var(--tx2); font-size:.8rem; }
+.filtro-acoes { font-size:.85rem; margin:0 0 12px; color:var(--tx2); } .filtro-acoes a { cursor:pointer; margin-right:10px; }
+.selecao { display:block; margin-top:4px; color:var(--ac); font-weight:600; font-size:.9rem; }
+.card { background:var(--card); border:1px solid var(--bd); border-radius:12px; overflow:hidden; }
+.card img { width:100%; display:block; background:#fff; }
+.info { padding:18px 20px; }
+dl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 16px; margin:0 0 12px; }
+dt { color:var(--tx2); font-size:.85rem; } dd { margin:0; font-size:1.2rem; font-weight:600; } dd.forte { color:var(--ac); }
+.selo { font-size:.75rem; font-weight:600; background:var(--warn-bg); color:var(--warn-tx); padding:2px 8px; border-radius:99px; vertical-align:middle; }
+.anexo { background:var(--ac-soft); border-left:4px solid var(--ac); padding:10px 12px; border-radius:8px; font-size:.95rem; margin:0 0 12px; }
+.anexo a { color:var(--ac); font-weight:600; }
+.aviso { background:var(--warn-bg); color:var(--warn-tx); padding:8px 10px; border-radius:8px; font-size:.9rem; }
+.botoes { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px; }
+.botao { display:inline-block; background:var(--ac); color:var(--ac-tx); text-decoration:none; padding:10px 14px; border-radius:8px; font-weight:600; border:1px solid var(--ac); cursor:pointer; font:inherit; font-weight:600; }
+.botao.sec { background:transparent; color:var(--ac); }
+.voltar { display:inline-block; margin:4px 0 12px; }
+.data { color:var(--tx2); font-size:.85rem; }
+.oficio { background:#fff; color:#111; border:1px solid var(--bd); border-radius:8px; padding:36px 40px; max-width:780px; font:16px/1.6 Georgia, "Times New Roman", serif; }
+.oficio p { margin:0 0 12px; } .oficio ol { margin:0 0 12px; padding-left:22px; } .oficio li { margin-bottom:4px; }
+.abst, dd.abst, .mun span.abst { color:#c62828 !important; font-weight:600; }
+@media (prefers-color-scheme: dark) { .abst, dd.abst, .mun span.abst { color:#ff7a7a !important; } }
+.mun.prep { opacity:1; } .mun.prep strong, .mun.prep > span:first-of-type { opacity:.6; }
+.urna { background:var(--bg); border:1px solid var(--bd); border-radius:10px; padding:10px 14px 4px; margin:0 0 12px; }
+.urna dl { grid-template-columns:repeat(3,minmax(0,1fr)); margin-bottom:6px; } .urna small { font-size:.75rem; font-weight:400; color:var(--tx2); }
+.legenda { padding:14px 20px 4px; border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); }
+.legenda p { margin:0 0 6px; } .legenda ul { list-style:none; padding:0; margin:0 0 10px; }
+.legenda li { display:flex; gap:10px; align-items:baseline; margin:0 0 6px; }
+.sim { flex:0 0 22px; display:inline-block; height:12px; position:relative; top:1px; }
+.linha-verm { border-top:3px solid #d1453b; height:0; top:-3px; }
+.linha-azul { border-top:3px dashed #2f6fd6; height:0; top:-3px; }
+.relatorio-web { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:18px 20px; min-width:0; max-width:100%; overflow-wrap:break-word; }
+.relatorio-web h1 { font-size:1.5rem; line-height:1.25; margin:0 0 4px; } .relatorio-web h2 { font-size:1.15rem; margin:22px 0 8px; }
+.relatorio-web figure { margin:8px 0; } .relatorio-web svg { width:100%; height:auto; border-radius:8px; }
+.relatorio-web figcaption, .relatorio-web .fontes { color:var(--tx2); font-size:.85rem; }
+.relatorio-web blockquote { border-left:3px solid var(--bd); margin:10px 0; padding:2px 14px; }
+.rolar { overflow-x:auto; } .relatorio-web table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+.relatorio-web th, .relatorio-web td { border-bottom:1px solid var(--bd); padding:5px 7px; text-align:left; vertical-align:top; }
+.relatorio-web th { background:var(--bg); }
+@media (max-width:600px) { .relatorio-web { padding:14px 12px; } }
+.limite { border-top:1.5px dashed #1d1d1b; height:0; top:-3px; }
+.tri { width:0; height:0; flex:0 0 0; margin:0 5px 0 6px; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #3fa34d; }
+.quad { flex:0 0 11px; height:11px; margin:0 6px 0 5px; background:var(--tx); }
+.bola-azul, .bola-clara, .anel, .bola-cinza { flex:0 0 11px; height:11px; border-radius:50%; margin:0 6px 0 5px; }
+.bola-azul { background:#2f6fd6; } .bola-clara { background:#2f6fd6; opacity:.45; } .anel { border:2px solid #2f6fd6; } .bola-cinza { background:#b9b9b2; flex-basis:7px; height:7px; margin:0 8px 0 7px; }
+footer { color:var(--tx2); font-size:.85rem; border-top:1px solid var(--bd); padding-top:16px; margin-top:32px; }
+@media (max-width:860px) { .passos { grid-template-columns:repeat(2,minmax(0,1fr)); } .lista { grid-template-columns:repeat(2,minmax(0,1fr)); } dl { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:520px) { .lista { grid-template-columns:1fr; } .oficio { padding:20px 18px; } .hero h1 { font-size:1.35rem; } .hero { padding:18px 16px 14px; } }
+/* celular: na página do município, primeiro os números e os botões, depois o mapa e a legenda */
+@media (max-width:600px) { .card.mun-pag { display:flex; flex-direction:column; } .card.mun-pag > .info { order:-1; border-bottom:1px solid var(--bd); }
+  .info { padding:16px 14px; } .legenda { padding:12px 14px 4px; } .botoes .botao { flex:1 1 auto; text-align:center; } }
+.atalho { display:inline-block; margin-top:6px; }
+@media print { body { background:#fff; } .nao-imprimir { display:none !important; } main { padding:0; } .oficio { border:0; padding:0; max-width:none; } }
+</style>
+<script data-goatcounter="https://eleicoes-ce.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><!-- contador de visitas (GoatCounter, sem cookies) -->
+</head>
+<body>
+<main>
+<article class="relatorio-web">
+<h1>Transporte de Eleitores – Santa Cruz dos Milagres (74ª ZE): proposta de novas rotas</h1><p class="data">19/10/2026</p>
+<h2>Resumo</h2>
+<p>Propomos ao Juiz Eleitoral da 74ª Zona Eleitoral <strong>5 rotas novas e 2 paradas extras em rotas do edital</strong> no transporte gratuito de Santa Cruz dos Milagres.
+Traçamos pelas estradas o percurso das 10 rotas do Edital nº 23/2026 - TRE/74ª ZONA. 15 localidades rurais distantes ficam a mais de 2 km do caminho de qualquer veículo, e outras 2 ficam a 1–2 km.</p>
+<ul>
+<li>Santa Cruz dos Milagres tem 3.995 eleitores aptos em 3 locais de votação e 14 seções. São 0 locais rurais, com 0 eleitores (0% do total).</li>
+
+<li><strong>Sem rota</strong> (mais de 2 km do percurso): Piripiri (67,9 km do local de votação), Massapê (67,7 km do local de votação), Baixas (67,2 km do local de votação), Residência (66,6 km do local de votação), Dourado (64,8 km do local de votação), Sambito (52,8 km do local de votação), Novo Estado (48,6 km do local de votação), Santa Terezinha (44,9 km do local de votação), Buritizinho (43,4 km do local de votação), Retiro (39,6 km do local de votação), Sussuarana (37,1 km do local de votação), Santa Fé (35,1 km do local de votação), Vista Alegre (4,8 km do local de votação), Galileia (4,5 km do local de votação) e Fazenda Sambaíba (3,1 km do local de votação).</li>
+<li><strong>Rota passa perto</strong> (1–2 km): Missionário e Boa Esperança.</li>
+<li>Todas as rotas do edital são mantidas. As propostas só acrescentam percurso.</li>
+</ul><h2>Como a carência foi calculada</h2>
+<p>Uma localidade tem carência quando fica longe do local de votação <strong>e</strong> longe do percurso dos veículos do edital. O cálculo seguiu quatro passos:</p>
+<ol>
+<li><strong>Localidades:</strong> usamos as 25 localidades rurais de Santa Cruz dos Milagres que estão no OpenStreetMap e na base Localidades do Brasil 2022, do IBGE.</li>
+<li><strong>Locais de votação:</strong> usamos a lista de locais e a posição de cada um publicadas pelo TSE (dados abertos do eleitorado por local de votação, 2026). Onde o TSE não traz a posição, o local foi posto no ponto do sítio ou distrito do seu endereço.</li>
+<li><strong>Distância ao local de votação:</strong> calculamos a distância por estrada (OSRM) de cada localidade até o local de votação mais próximo. Analisamos as que ficam a mais de 3 km.</li>
+<li><strong>Distância ao veículo:</strong> traçamos cada rota do edital pelas estradas, passando pelas paradas localizadas, e medimos a distância da localidade até o percurso mais próximo. Se a localidade aparece pelo nome como parada no edital, ela conta como atendida.</li>
+</ol>
+<div class="rolar"><table><thead><tr><th>Localidade</th><th>Até o local de votação (km, estrada)</th><th>Rota mais próxima</th><th>Até o percurso da rota (km)</th><th>Situação</th></tr></thead><tbody><tr><td>Tábua</td><td>75,8</td><td>Rota 04</td><td>1,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Brejinho</td><td>73,5</td><td>Rota 05</td><td>1,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Muquém</td><td>69,7</td><td>Rota 04</td><td>0,2</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Deserto</td><td>69,1</td><td>Rota 04</td><td>0,1</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Piripiri</td><td>67,9</td><td>Rota 01</td><td>5,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Massapê</td><td>67,7</td><td>Rota 04</td><td>3,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Baixas</td><td>67,2</td><td>Rota 04</td><td>3,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Residência</td><td>66,6</td><td>Rota 04</td><td>2,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Dourado</td><td>64,8</td><td>Rota 04</td><td>2,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Sambito</td><td>52,8</td><td>Rota 03</td><td>6,4</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Novo Estado</td><td>48,6</td><td>Rota 03</td><td>5,6</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Santa Terezinha</td><td>44,9</td><td>Rota 05</td><td>5,9</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Missionário</td><td>43,5</td><td>Rota 04</td><td>1,3</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Buritizinho</td><td>43,4</td><td>Rota 05</td><td>3,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Retiro</td><td>39,6</td><td>Rota 01</td><td>4,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Sussuarana</td><td>37,1</td><td>Rota 01</td><td>3,7</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Lagoa das Missões</td><td>35,8</td><td>Rota 01</td><td>0,9</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Santa Fé</td><td>35,1</td><td>Rota 05</td><td>3,0</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Serra Negra</td><td>34,8</td><td>Rota 01</td><td>0,5</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Boa Esperança</td><td>34,1</td><td>Rota 05</td><td>1,7</td><td>Rota passa perto (1–2 km)</td></tr><tr><td>Alto Alegre</td><td>25,0</td><td>Rota 04</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Alto Bonito</td><td>13,3</td><td>Rota 02</td><td>0,0</td><td>Atendida (até 1 km da rota)</td></tr><tr><td>Vista Alegre</td><td>4,8</td><td>Rota 08</td><td>4,2</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Galileia</td><td>4,5</td><td>Rota 08</td><td>3,1</td><td>Sem rota (mais de 2 km)</td></tr><tr><td>Fazenda Sambaíba</td><td>3,1</td><td>Rota 02</td><td>3,3</td><td>Sem rota (mais de 2 km)</td></tr></tbody></table></div>
+<p>27 das 64 paradas do edital não estão em nenhuma das duas bases e ficaram fora do traçado: Santa Cruz (Praça Manoel Portela) (Rota 01, Rota 01, Rota 02, Rota 02, Rota 03, Rota 03, Rota 04, Rota 04, Rota 05, Rota 05, Rota 06, Rota 06, Rota 07, Rota 07, Rota 08 e Rota 08), Buriti Grande (Rota 01), Buriti do Meio de Cima (Rota 02), Buriti do Meio de Baixo (Rota 02), Várzea Mansa (Rota 02), Santa Maria (Rota 05), Novo Oriente (Rota 06), Independência (Rota 06), Alto da Favela (Rota 06), Casa de Pedra (Fervedor) (Rota 06) e Santa Cruz (Perimetro Urbano) (Rota 09 e Rota 10). O percurso real pode passar por mais localidades do que o traçado mostra.</p><h2>Mapa e localidades rurais</h2>
+<p>O mapa mostra 25 localidades rurais de Santa Cruz dos Milagres, o percurso das rotas do edital (vermelho) e as rotas propostas (azul tracejado).</p>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 780" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="26" font-size="15" font-weight="600" fill="#1d1d1b" textLength="720" lengthAdjust="spacingAndGlyphs">Santa Cruz dos Milagres: 17 localidades rurais precisam de transporte, e as rotas propostas para atendê-las</text>
+<text x="20" y="46" fill="#5c5c57" textLength="720" lengthAdjust="spacingAndGlyphs">Rotas do Edital nº 23/2026 - TRE/74ª ZONA e rotas propostas, com percursos e distâncias pelas estradas (OpenStreetMap / IBGE / OSRM)</text>
+<polygon points="707.4,432.8 725.0,376.2 633.9,156.2 628.9,149.2 601.9,154.5 593.7,150.8 584.4,158.7 540.1,175.5 526.9,163.4 523.4,172.6 501.6,179.7 483.8,193.5 467.2,187.9 459.1,193.3 421.6,196.8 413.7,193.2 388.9,197.9 377.9,196.1 371.4,186.3 347.2,170.8 332.2,176.3 300.0,174.1 297.0,161.4 283.7,178.4 272.8,178.6 265.0,165.7 251.0,172.6 239.9,169.4 230.7,160.3 234.3,144.2 226.4,129.4 218.7,127.2 200.1,111.6 187.6,109.1 165.0,122.3 156.7,111.4 142.3,105.1 127.3,103.6 120.6,93.8 102.6,95.5 86.1,86.9 72.4,91.3 59.4,85.4 46.8,87.8 35.0,80.0 39.9,105.3 48.2,128.3 54.2,133.8 72.6,137.0 86.8,150.7 100.9,149.5 113.0,163.0 115.2,172.0 104.0,193.3 104.2,201.7 91.7,222.0 100.5,227.2 108.3,241.0 115.0,239.5 124.9,265.2 132.4,277.5 123.0,286.2 135.0,309.1 150.5,324.9 162.4,323.5 177.4,328.2 189.7,339.6 199.4,354.6 219.2,362.0 221.0,350.6 237.1,343.7 249.1,363.5 249.5,374.9 240.9,543.7 198.3,547.4 198.6,557.0 104.6,555.2 240.8,609.5 345.7,570.2 377.5,567.3 440.9,500.6 466.3,461.3 505.1,435.9 560.3,520.5 707.4,432.8 707.4,432.8" fill="#f6f6f2" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<polyline points="527.9,428.7 523.7,427.6 520.1,426.2 516.9,428.4 513.9,430.4 510.1,432.0 505.0,432.2 500.5,432.5 495.7,432.3 493.2,435.0 489.3,437.9 484.3,440.2 487.7,438.7 490.8,436.9 493.7,434.7 496.9,432.5 502.4,432.2 500.7,419.9 494.6,406.3 486.4,388.3 480.7,383.6 469.6,382.5 464.9,381.5 458.4,380.2 455.7,377.8 457.2,373.1 458.9,367.9 458.1,363.7 453.5,357.9 454.6,353.7 455.4,349.3 454.0,346.0 455.4,339.5 454.9,334.7 454.2,330.5 454.4,325.2 453.4,319.8 451.7,316.3 449.7,313.4 447.0,308.5 446.3,304.0 445.2,298.9 445.7,294.6 442.6,292.4 437.7,285.9 436.4,282.4 433.0,280.2 432.3,275.9 432.7,272.8" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 01</title></polyline>
+<polyline points="429.0,244.4 429.8,237.1 428.2,232.0 430.2,229.1 430.8,224.2 429.4,219.2 425.5,216.6 419.5,214.2 421.2,209.1 419.8,213.5 423.1,216.6 428.0,217.4 430.3,223.0 431.1,227.1 429.1,230.2 429.2,235.5 428.9,244.9 428.3,249.5 427.5,254.2 426.9,258.5 427.5,254.2 428.3,249.5 428.9,244.9 429.8,237.1 428.2,232.0 430.2,229.1 430.8,224.2 429.2,218.3 425.5,216.6 419.5,214.2 421.2,209.1 419.3,204.6 414.7,203.8 410.6,201.2 404.6,201.9 400.1,201.1 394.6,200.3 387.6,199.4 382.8,200.7 377.0,198.5 369.8,195.3 367.6,191.3 364.1,187.8 361.3,185.3 358.1,182.3 354.3,178.0 347.4,177.6 341.3,177.9 336.8,178.1 333.0,177.0 329.0,178.3 323.1,179.8 317.7,179.6 314.9,179.2" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 02</title></polyline>
+<polyline points="115.5,170.4 127.5,212.3 178.8,208.4 178.8,208.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 03</title></polyline>
+<polyline points="396.4,526.0 392.8,533.5 390.1,536.6 385.5,541.3 380.5,541.7 376.8,543.3 375.1,546.7 371.7,548.4 368.4,550.2 363.1,550.8 359.7,549.0 353.2,546.6 349.9,544.9 351.6,538.0 353.2,533.5 351.0,528.8 347.9,524.5 344.8,519.7 331.9,453.3 331.9,453.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 04</title></polyline>
+<polyline points="349.9,544.9 242.5,569.0 285.1,558.3 285.1,558.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 05</title></polyline>
+<polyline points="285.2,525.8 284.6,521.6 285.7,516.5 284.7,506.0 283.4,494.9 282.2,490.8 284.3,488.3 287.3,485.8 303.3,465.3 303.3,465.3" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 06</title></polyline>
+<polyline points="356.5,453.0 351.4,455.0 348.5,456.9 343.5,458.9 338.8,459.2 333.7,460.3 325.7,459.7 322.5,461.4 318.0,462.8 315.7,460.1 313.9,457.0 319.6,443.0 323.5,437.9 319.8,428.7 319.8,423.5 318.2,420.1 321.1,406.1 319.8,394.7 319.1,389.8 318.5,385.8 318.9,379.2 319.1,364.2 322.8,359.6 331.6,350.6 332.0,344.6 331.6,339.4 331.6,339.4" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 07</title></polyline>
+<polyline points="256.8,326.8 252.9,324.0 250.1,321.8 246.9,320.1 243.9,317.9 241.0,315.6 236.9,316.6 235.0,319.3 232.1,321.2 228.1,320.5 225.2,318.8 224.4,314.9 222.4,312.0 218.3,311.0 216.2,308.0 215.2,304.2 213.2,301.5 210.0,299.1 207.5,296.5 193.1,306.3 188.1,309.7 171.2,310.3 163.7,310.5 171.2,310.3 187.0,310.0 193.1,306.3 206.1,298.0 220.2,275.3 223.4,266.5 223.4,266.5" fill="none" stroke="#d1453b" stroke-width="1.8" stroke-opacity=".85" stroke-linejoin="round"><title>Rota 08</title></polyline>
+<polyline points="257.1,176.8 258.4,180.1 259.9,183.2 262.6,188.2 264.3,193.4 266.3,200.5 268.9,204.2 272.0,208.1 274.5,211.4 279.9,218.1 282.1,221.0 283.7,224.9 284.8,229.9 287.0,240.2 286.8,246.2 284.8,249.3 282.2,258.6 285.5,265.2 285.9,270.9 285.9,275.5 287.9,280.8 290.0,285.8 292.1,288.6 294.5,294.1 295.5,305.0 298.3,314.1 299.7,317.9 304.5,320.9 315.0,323.1 320.0,326.6 327.2,332.2 331.0,336.0 332.0,344.4 332.4,349.4 322.9,359.5 319.3,363.2 319.0,377.4 318.4,384.8 319.7,394.5 321.2,404.6 317.8,419.0 319.9,422.1 319.0,425.9 324.3,435.3 320.6,441.1 314.8,453.7 311.5,455.9 306.7,460.9 287.3,485.8 284.9,488.2 282.1,490.4 283.3,494.5 285.8,515.8 284.6,521.6 287.0,535.6 286.8,546.8 286.0,551.0 285.0,555.9 294.4,565.2 297.5,567.7 303.2,579.7 306.1,585.9 311.1,597.0 318.8,603.5 322.4,604.7 330.6,601.8 335.6,599.8 342.6,597.1 349.3,595.3 353.7,597.1 357.3,598.7 369.0,596.8 380.4,594.9 385.2,592.5 388.8,590.5 421.5,599.6 428.3,603.2 432.3,607.2 446.8,615.6 452.6,617.2 462.0,619.7 466.9,625.1 471.3,629.2 479.3,635.2 482.7,637.7 485.9,640.2 488.4,643.1 490.2,646.0 494.6,646.7 498.6,647.8 502.5,646.5 506.2,645.7 511.2,645.5 514.6,643.3 512.2,640.5 509.5,638.6 506.5,636.7 504.9,633.4 502.9,630.2 503.1,625.1 503.8,620.8 504.7,616.9 505.0,612.2 504.1,608.2 502.5,605.2 502.2,600.8 500.6,597.0 499.0,594.0 497.0,591.0 494.9,588.2 492.1,585.0 489.4,582.7 487.7,578.3 489.0,574.9 488.2,570.9 488.0,566.0 486.8,561.6 487.4,556.5 488.0,552.3 486.6,546.8 485.5,542.4 484.0,538.1 480.7,535.8 478.1,533.8 475.7,531.2 471.5,527.9 466.5,526.0 461.5,526.6 456.7,527.0 452.7,528.8 449.1,529.9 443.5,527.3 439.3,525.8 432.6,523.1 429.3,520.6 426.2,516.4 425.2,512.5 423.5,508.9 422.7,505.0 420.9,499.6 418.0,497.6 414.6,495.9 412.6,493.0 414.6,495.9 418.0,497.6 420.9,499.6 422.9,503.8 423.4,508.1 424.6,511.8 427.9,507.8 429.2,503.9 431.4,500.9 434.9,496.9 436.8,493.6 434.9,496.9 432.3,499.9 429.8,502.9 428.1,506.8 426.8,510.5 423.5,508.9 422.7,505.0 418.2,506.1 422.7,505.0 423.5,508.9 425.2,512.5 426.2,516.4 429.3,520.6 426.2,516.4 426.8,510.5 428.1,506.8 429.8,502.9 432.3,499.9 434.9,496.9 436.8,493.6 439.4,489.8 441.7,485.5 444.0,483.2 445.9,479.8 447.5,476.4 450.1,473.0 453.8,470.7 457.5,469.0 460.5,465.9 462.6,463.0 464.6,459.0 464.9,453.5 467.0,449.6 472.3,446.6 478.8,444.1 490.5,439.8 493.9,438.5 497.8,437.6 499.9,433.1 505.0,432.2 510.1,432.0 513.9,430.4 516.9,428.4 519.4,426.2 522.8,427.4 527.9,428.7 533.3,431.5 536.2,435.1 537.5,438.8 536.1,442.3 537.9,445.6 540.5,447.9 542.0,451.7 545.0,453.4 548.4,455.0 553.5,455.3 559.4,459.3 562.8,462.7 563.1,467.1 563.7,472.5 562.9,478.2 564.7,482.1 567.6,484.9 570.7,492.4 571.1,497.2 570.5,501.9 570.7,508.9 571.0,513.9 568.9,516.6 567.2,519.7 567.8,523.8 569.4,526.9 568.9,531.7 571.2,534.0 573.7,539.4 575.3,542.5 576.7,545.9 577.6,549.7 578.9,553.1 579.5,557.3 578.4,561.2 577.5,565.3 577.6,570.2 577.5,575.0 576.6,578.7 578.4,581.8 580.6,584.2 582.0,587.6 583.1,591.2 586.1,593.0 589.1,594.8 585.5,596.0 581.7,597.0 578.6,598.5 575.6,600.2 573.5,602.9 570.9,605.0 567.6,606.4 563.8,607.3 560.5,608.7 559.4,612.6 555.3,613.2 552.4,615.0 550.0,617.4 548.7,620.8 547.0,624.3 546.5,628.5 545.6,632.4 543.9,635.5 540.9,637.1 536.7,637.8 533.1,639.2 529.5,638.1 524.8,638.2 520.9,639.0 522.0,642.5 520.4,645.6 515.5,645.4 510.8,645.4 506.2,645.7 502.5,646.5 498.6,647.8 494.8,646.8 490.9,646.0 488.4,643.1 485.9,640.2 482.7,637.7 479.3,635.2 471.5,629.3 468.8,627.2 464.1,621.0 452.6,617.2 448.9,616.2 434.7,608.7 429.7,604.4 422.8,600.3 391.9,590.5 385.3,592.4 382.3,594.0 372.1,596.3 357.8,598.7 353.7,597.1 349.9,595.5 345.2,596.1 335.7,599.8 330.6,601.8 323.8,604.2 318.8,603.5 312.4,598.3 306.3,586.3 303.2,579.7 298.0,568.3 294.5,565.3 285.8,558.5 285.9,551.1 286.8,546.8 287.0,536.7 284.8,523.7 285.7,516.5 283.4,494.9 282.2,490.8 284.3,488.3 287.3,485.8 306.7,460.9 310.5,456.9 313.8,454.5 319.6,443.0 323.5,437.9 319.8,428.7 319.8,423.5 318.2,420.1 321.1,406.1 319.8,394.7 318.5,386.4 318.9,379.2 319.1,364.2 322.8,359.6 331.6,350.6 332.0,344.6 331.5,338.0 328.6,333.4 320.0,326.6 315.5,323.3 308.2,320.3 301.0,319.0 298.6,314.7 295.8,306.2 295.1,296.5 293.2,291.1 291.0,287.3 289.2,283.3 287.3,277.8 285.5,274.5 285.2,268.9 283.0,261.1 284.5,250.4 286.3,247.1 287.5,242.8 284.8,229.9 283.7,224.9 282.1,221.0 279.9,218.1 275.3,212.3 273.3,209.7 268.9,204.2 266.5,201.0 264.3,193.4 263.1,189.7 261.0,185.2 258.8,181.1 257.4,177.8 257.1,176.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Piripiri</title></polyline>
+<polyline points="257.5,176.7 45.3,136.2 42.6,121.1 257.5,176.7 257.5,176.7" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Sambito</title></polyline>
+<polyline points="257.1,176.8 258.4,180.1 259.9,183.2 262.6,188.2 264.3,193.4 266.3,200.5 268.9,204.2 272.0,208.1 274.5,211.4 279.9,218.1 282.1,221.0 283.7,224.9 284.8,229.9 287.0,240.2 286.8,246.2 284.8,249.3 282.2,258.6 285.5,265.2 285.9,270.9 285.9,275.5 287.9,280.8 290.0,285.8 292.1,288.6 294.5,294.1 295.5,305.0 298.3,314.1 299.7,317.9 304.5,320.9 315.0,323.1 320.0,326.6 327.2,332.2 331.0,336.0 332.0,344.4 332.4,349.4 322.9,359.5 319.3,363.2 319.0,377.4 318.4,384.8 319.7,394.5 321.2,404.6 317.8,419.0 319.9,422.1 319.0,425.9 324.3,435.3 320.6,441.1 314.8,453.7 311.5,455.9 306.7,460.9 287.3,485.8 284.9,488.2 282.1,490.4 283.3,494.5 285.8,515.8 284.6,521.6 287.0,535.6 286.8,546.8 286.0,551.0 285.0,555.9 294.4,565.2 297.5,567.7 303.2,579.7 306.1,585.9 311.1,597.0 318.8,603.5 308.5,611.9 304.5,617.5 303.6,625.8 302.8,629.7 298.8,630.3 295.0,629.1 291.8,627.2 288.6,625.0 286.5,622.5 281.2,622.3 277.3,621.5 275.1,619.0 272.5,616.9 270.3,613.9 267.5,611.6 264.9,609.4 262.2,607.1 257.8,606.6 254.1,605.5 248.9,605.8 246.5,608.7 244.1,610.9 240.6,612.2 236.4,613.8 232.3,614.4 236.4,613.8 240.6,612.2 244.1,610.9 246.5,608.7 248.8,606.1 252.4,604.9 255.7,606.4 260.2,606.9 264.1,608.4 266.2,610.9 268.4,613.5 271.9,614.9 273.9,618.3 276.9,620.8 279.7,622.9 283.6,621.4 286.9,623.0 289.1,625.4 292.9,627.8 296.2,629.7 300.7,630.0 303.6,625.8 304.4,618.1 307.7,612.7 317.5,604.5 312.4,598.3 306.3,586.3 303.2,579.7 298.0,568.3 294.5,565.3 285.8,558.5 285.9,551.1 286.8,546.8 287.0,536.7 284.8,523.7 285.7,516.5 283.4,494.9 282.2,490.8 284.3,488.3 287.3,485.8 306.7,460.9 310.5,456.9 313.8,454.5 319.6,443.0 323.5,437.9 319.8,428.7 319.8,423.5 318.2,420.1 321.1,406.1 319.8,394.7 318.5,386.4 318.9,379.2 319.1,364.2 322.8,359.6 331.6,350.6 332.0,344.6 331.5,338.0 328.6,333.4 320.0,326.6 315.5,323.3 308.2,320.3 301.0,319.0 298.6,314.7 295.8,306.2 295.1,296.5 293.2,291.1 291.0,287.3 289.2,283.3 287.3,277.8 285.5,274.5 285.2,268.9 283.0,261.1 284.5,250.4 286.3,247.1 287.5,242.8 284.8,229.9 283.7,224.9 282.1,221.0 279.9,218.1 275.3,212.3 273.3,209.7 268.9,204.2 266.5,201.0 264.3,193.4 263.1,189.7 261.0,185.2 258.8,181.1 257.4,177.8 257.1,176.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Santa Terezinha</title></polyline>
+<polyline points="257.1,176.8 258.4,180.1 259.9,183.2 262.6,188.2 264.3,193.4 266.3,200.5 268.9,204.2 272.0,208.1 274.6,204.6 272.7,207.4 274.5,211.4 279.9,218.1 282.1,221.0 283.7,224.9 284.8,229.9 286.0,235.4 284.8,229.9 283.7,224.9 282.1,221.0 279.9,218.1 275.3,212.3 273.3,209.7 268.9,204.2 266.5,201.0 264.3,193.4 263.1,189.7 256.1,201.3 253.8,204.9 251.7,208.7 249.9,211.7 248.0,214.6 245.9,217.6 244.7,224.9 236.9,225.5 241.8,224.7 245.3,219.1 248.0,214.6 249.9,211.7 251.7,208.7 253.8,204.9 256.1,201.3 262.8,190.0 261.0,185.2 258.8,181.1 257.4,177.8 257.1,176.8" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Vista Alegre</title></polyline>
+<polyline points="266.1,172.3 268.3,176.0 270.9,178.5 273.8,180.8 278.6,181.1 282.8,181.9 285.4,178.9 292.4,179.1 296.2,178.3 301.3,178.4 306.4,179.9 310.3,178.1 316.1,179.1 320.1,179.8 325.4,179.2 329.6,178.1 335.0,177.7 341.3,177.9 347.4,177.6 352.2,177.5 355.9,180.3 359.8,183.7 362.8,186.4 367.6,191.3 369.8,195.3 374.0,198.0 380.5,200.2 384.7,199.5 392.5,200.3 397.6,200.0 402.1,201.0 407.6,201.2 412.8,203.0 416.5,204.6 421.2,207.5 420.3,212.2 423.1,216.6 428.0,217.4 430.3,223.0 431.1,227.1 429.1,230.2 429.2,235.5 428.9,244.9 428.3,249.5 427.5,254.2 426.9,258.5 431.3,264.4 432.8,273.0 432.1,277.6 433.7,280.9 437.0,283.7 441.4,289.5 443.2,293.0 444.9,295.9 445.6,301.0 446.3,305.2 448.5,311.2 451.7,316.3 453.4,319.8 454.4,325.2 454.2,330.5 454.9,334.7 455.4,339.5 454.0,346.0 455.4,349.3 454.6,353.7 453.5,357.9 456.9,361.3 458.7,366.1 457.6,371.7 456.7,375.6 457.4,379.7 462.4,381.1 467.5,381.9 480.7,383.6 486.4,388.3 494.6,406.3 500.7,419.9 506.4,432.1 512.5,431.2 516.9,428.4 519.4,426.2 522.8,427.4 527.9,428.7 533.3,431.5 536.2,435.1 537.5,438.8 536.1,442.3 537.9,445.6 540.5,447.9 542.0,451.7 545.0,453.4 548.4,455.0 553.5,455.3 559.4,459.3 562.8,462.7 563.1,467.1 563.7,472.5 563.1,467.1 562.8,462.7 559.4,459.3 556.4,456.6 552.1,455.0 547.3,454.4 542.7,452.4 541.2,448.4 537.9,445.6 536.1,442.3 537.5,438.8 536.2,435.1 534.0,431.9 527.9,428.7 523.7,427.6 520.1,426.2 516.9,428.4 513.9,430.4 510.1,432.0 500.7,419.9 494.6,406.3 486.4,388.3 480.7,383.6 469.6,382.5 464.9,381.5 458.4,380.2 455.7,377.8 457.2,373.1 458.9,367.9 458.1,363.7 453.5,357.9 454.6,353.7 455.4,349.3 454.0,346.0 455.4,339.5 454.9,334.7 454.2,330.5 454.4,325.2 453.4,319.8 451.7,316.3 449.7,313.4 447.0,308.5 446.3,304.0 445.2,298.9 445.7,294.6 442.6,292.4 437.7,285.9 436.4,282.4 433.0,280.2 432.3,275.9 432.4,267.4 426.9,258.5 427.5,254.2 428.3,249.5 428.9,244.9 429.8,237.1 428.2,232.0 430.2,229.1 430.8,224.2 429.2,218.3 425.5,216.6 419.5,214.2 421.2,209.1 419.3,204.6 414.7,203.8 410.6,201.2 404.6,201.9 400.1,201.1 394.6,200.3 387.6,199.4 382.8,200.7 377.0,198.5 369.8,195.3 367.6,191.3 364.1,187.8 361.3,185.3 358.1,182.3 354.3,178.0 347.4,177.6 341.3,177.9 336.8,178.1 333.0,177.0 329.0,178.3 323.1,179.8 317.5,179.6 310.3,178.1 306.4,179.9 303.0,178.5 298.7,178.0 293.9,179.1 285.4,178.9 282.8,181.9 278.6,181.1 274.0,180.9 271.3,178.6 270.6,174.2 268.8,171.2 266.1,172.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Rota nova – Retiro</title></polyline>
+<polyline points="383.5,542.4 388.2,560.1 383.5,542.4 383.5,542.4" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 04</title></polyline>
+<polyline points="350.2,545.3 324.1,574.6 350.2,545.3 350.2,545.3" fill="none" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4" stroke-linejoin="round"><title>Parada extra na Rota 05</title></polyline>
+<circle cx="356.7" cy="506.2" r="2.2" fill="#b9b9b2"/>
+<circle cx="332.6" cy="566.0" r="2.2" fill="#b9b9b2"/>
+<circle cx="395.1" cy="534.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="397.7" cy="524.7" r="2.2" fill="#b9b9b2"/>
+<circle cx="476.1" cy="450.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="531.3" cy="422.4" r="2.2" fill="#b9b9b2"/>
+<circle cx="331.9" cy="453.3" r="2.2" fill="#b9b9b2"/>
+<circle cx="421.6" cy="207.3" r="2.2" fill="#b9b9b2"/>
+<polygon points="265.9,159.5 253.9,181.6 277.9,181.6" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="265.3,157.7 255.8,175.2 274.8,175.2" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<polygon points="257.5,166.4 247.7,184.5 267.3,184.5" fill="#3fa34d" fill-opacity="0.7" stroke="#3fa34d"/>
+<circle cx="569.0" cy="495.6" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="462.8" y="490.6" fill="#2f6fd6" fill-opacity="1" font-weight="600">Piripiri 67,9 km</text>
+<circle cx="423.5" cy="480.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="430.5" y="475.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Massapê 67,7 km</text>
+<circle cx="435.9" cy="492.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="442.9" y="507.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Baixas 67,2 km</text>
+<circle cx="418.7" cy="507.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="425.7" y="522.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Residência 66,6 km</text>
+<circle cx="432.1" cy="520.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="439.1" y="535.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Dourado 64,8 km</text>
+<circle cx="42.6" cy="121.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="49.6" y="116.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sambito 52,8 km</text>
+<circle cx="45.3" cy="136.2" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="52.3" y="131.2" fill="#2f6fd6" fill-opacity="1" font-weight="600">Novo Estado 48,6 km</text>
+<circle cx="163.8" cy="592.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="170.8" y="587.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santa Terezinha 44,9 km</text>
+<circle cx="388.2" cy="560.1" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="395.2" y="555.1" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Missionário 43,5 km</text>
+<circle cx="247.9" cy="610.8" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="254.9" y="605.8" fill="#2f6fd6" fill-opacity="1" font-weight="600">Buritizinho 43,4 km</text>
+<circle cx="565.1" cy="472.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<circle cx="520.2" cy="482.4" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="527.2" y="477.4" fill="#2f6fd6" fill-opacity="1" font-weight="600">Sussuarana 37,1 km</text>
+<circle cx="309.3" cy="596.9" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="316.3" y="591.9" fill="#2f6fd6" fill-opacity="1" font-weight="600">Santa Fé 35,1 km</text>
+<circle cx="324.1" cy="574.6" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="331.1" y="569.6" fill="#2f6fd6" fill-opacity=".8" font-weight="600">Boa Esperança 34,1 km</text>
+<circle cx="273.6" cy="238.1" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="280.6" y="233.1" fill="#2f6fd6" fill-opacity="1" font-weight="600">Vista Alegre 4,8 km</text>
+<circle cx="236.9" cy="225.5" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="243.9" y="220.5" fill="#2f6fd6" fill-opacity="1" font-weight="600">Galileia 4,5 km</text>
+<circle cx="275.7" cy="202.0" r="4.5" fill="#2f6fd6" fill-opacity="1"/>
+<text x="282.7" y="197.0" fill="#2f6fd6" fill-opacity="1" font-weight="600">Fazenda Sambaíba 3,1 km</text>
+<rect x="255.3" y="166.5" width="10" height="10" fill="#1d1d1b"/><text x="269.3" y="189.5" font-weight="600" fill="#1d1d1b">Sede de Santa Cruz dos Milagres</text>
+<line x1="35" x2="104.1" y1="678.0" y2="678.0" stroke="#8a8a84" stroke-width="2"/><text x="35" y="692.0" fill="#5c5c57">5 km</text>
+<line x1="150" x2="174" y1="669.0386666666625" y2="669.0386666666625" stroke="#d1453b" stroke-width="2.2"/>
+<text x="182" y="673.0386666666625" fill="#1d1d1b">Rota do edital (pelas estradas)</text>
+<polygon points="428.0,662.0 421.4,674.3 434.6,674.3" fill="#3fa34d" fill-opacity=".6" stroke="#3fa34d"/>
+<text x="442" y="673.0386666666625" fill="#1d1d1b">Local de votação com seções (tamanho = eleitores)</text>
+<rect x="157" y="687.0386666666625" width="10" height="10" fill="#1d1d1b"/>
+<text x="182" y="696.0386666666625" fill="#1d1d1b">Sede</text>
+<circle cx="248" cy="692.0386666666625" r="4.5" fill="#2f6fd6"/>
+<text x="258" y="696.0386666666625" fill="#1d1d1b">Localidade distante, sem rota (mais de 2 km)</text>
+<circle cx="162" cy="715.0386666666625" r="2.2" fill="#b9b9b2"/>
+<text x="182" y="719.0386666666625" fill="#1d1d1b">Outra localidade rural</text>
+<circle cx="428" cy="715.0386666666625" r="4.5" fill="#2f6fd6" fill-opacity=".45"/>
+<text x="442" y="719.0386666666625" fill="#1d1d1b">Rota passa a 1–2 km</text>
+<line x1="150" x2="174" y1="738.0386666666625" y2="738.0386666666625" stroke="#2f6fd6" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text x="182" y="742.0386666666625" fill="#1d1d1b">Rota nova ou parada extra proposta ao Juiz Eleitoral (pelas estradas)</text>
+<line x1="150" x2="174" y1="761.0386666666625" y2="761.0386666666625" stroke="#1d1d1b" stroke-width="1.2" stroke-dasharray="5 3"/>
+<text x="182" y="765.0386666666625" fill="#1d1d1b">Limite do município (IBGE)</text>
+</svg><figcaption>Locais de votação: TSE · localidades: OpenStreetMap e IBGE 2022 · rotas: Edital nº 23/2026 - TRE/74ª ZONA · distâncias por estrada: OSRM</figcaption></figure>
+<p>As localidades estão agrupadas pela distância, por estrada, até o local de votação mais próximo:</p>
+<ul>
+<li><strong>Mais de 5 km (22):</strong> Tábua, Brejinho, Muquém, Deserto, Piripiri, Massapê, Baixas, Residência, Dourado, Sambito, Novo Estado, Santa Terezinha, Missionário, Buritizinho, Retiro, Sussuarana, Lagoa das Missões, Santa Fé, Serra Negra, Boa Esperança, Alto Alegre e Alto Bonito.</li>
+<li><strong>De 3 a 5 km (3):</strong> Vista Alegre, Galileia e Fazenda Sambaíba.</li>
+<li><strong>Até 3 km ou com local de votação na própria localidade (0):</strong> .</li>
+</ul><h2>Rotas do Edital nº 23/2026 - TRE/74ª ZONA</h2>
+<p>O edital tem 10 rotas para Santa Cruz dos Milagres. Horários: a partir das 07:30h; os veículos percorrerão as rotas indicadas, uma após a outra.. Veículos: Quantidade de veículos previstos: &#x27;05 (três)&#x27; (divergência número/extenso); placas não informadas..</p>
+<div class="rolar"><table><thead><tr><th>Rota</th><th>Percurso (na ordem do edital)</th></tr></thead><tbody><tr><td>01</td><td>Santa Cruz (Praça Manoel Portela) – Buriti Grande – Serra Negra – Lagoa da Missão – Boi Manso – Gameleira – Santa Rosa – Santa Cruz (Praça Manoel Portela)</td></tr><tr><td>02</td><td>Santa Cruz (Praça Manoel Portela) – São Vicente – Alta Vista – Alto Bonito – Altamira – Melancia – Alto Novo – Buriti do Meio de Cima – Buriti do Meio de Baixo – Várzea Mansa – Pompeia – Canto dos Cocos – Santa Cruz (Praça Manoel Portela)</td></tr><tr><td>03</td><td>Santa Cruz (Praça Manoel Portela) – Riacho do Gado – São Domingos – Santa Angelica – Santa Cruz (Praça Manoel Portela)</td></tr><tr><td>04</td><td>Santa Cruz (Praça Manoel Portela) – Deserto – Muquem – Tabua – Todos os Santos – Alto Alegre – Santa Cruz (Praça Manoel Portela)</td></tr><tr><td>05</td><td>Santa Cruz (Praça Manoel Portela) – Rio dos Cocos – Brejinho – Santa Maria – Belo Horizonte – Lajes – Santa Cruz (Praça Manoel Portela)</td></tr><tr><td>06</td><td>Santa Cruz (Praça Manoel Portela) – Novo Oriente – Independência – Alto da Favela – Paus da Chapada – Alentejo – Abrolhos – Casa de Pedra (Fervedor) – Buriti Seco – Santa Cruz (Praça Manoel Portela)</td></tr><tr><td>07</td><td>Santa Cruz (Praça Manoel Portela) – Guarani – Capivara – Grota de Sombra – Marruás – Santa Cruz (Praça Manoel Portela)</td></tr><tr><td>08</td><td>Santa Cruz (Praça Manoel Portela) – Pensamento – Morro do Mel – Meios – Cajueiro – Santa Cruz (Praça Manoel Portela)</td></tr><tr><td>09</td><td>Santa Cruz (Perimetro Urbano)</td></tr><tr><td>10</td><td>Santa Cruz (Perimetro Urbano)</td></tr></tbody></table></div>
+
+<p>Fonte: Edital nº 23/2026 - TRE/74ª ZONA, DJE/TRE-PI nº 191/2026 (disp. 18/09/2026), PDF da edição; fonte complementar: INFO ROTAS – sistema oficial do TRE-PI (inforotas.tre-pi.jus.br), consulta em 2026-10-16 (rotas do INFO ROTAS preservadas em &quot;rotas_inforotas&quot;).</p><h2>Rotas propostas</h2>
+<p>As propostas atendem as 17 localidades com carência. Onde o ônibus já passa a 1–2 km, basta uma parada extra ou um desvio na rota existente. Onde não há rota, propomos uma rota nova saindo do local de votação mais próximo. As distâncias são por estrada.</p>
+<div class="rolar"><table><thead><tr><th>Proposta</th><th>Percurso</th><th>Localidades atendidas</th><th>Extensão</th><th>Tempo</th></tr></thead><tbody><tr><td><strong>Rota nova – Piripiri</strong></td><td>Sede – Massapê – Baixas – Residência – Dourado – Piripiri – Santa Fé – Sede</td><td>Massapê, Baixas, Residência, Dourado, Piripiri, Santa Fé</td><td>162,1 km (ida e volta)</td><td>~4h01</td></tr><tr><td><strong>Rota nova – Sambito</strong></td><td>Sede – Novo Estado – Sambito – Sede</td><td>Novo Estado, Sambito</td><td>42,5 km (ida e volta)</td><td>~1h04</td></tr><tr><td><strong>Rota nova – Santa Terezinha</strong></td><td>Sede – Santa Terezinha – Buritizinho – Sede</td><td>Santa Terezinha, Buritizinho</td><td>89,8 km (ida e volta)</td><td>~1h47</td></tr><tr><td><strong>Rota nova – Vista Alegre</strong></td><td>Sede – Fazenda Sambaíba – Vista Alegre – Galileia – Sede</td><td>Fazenda Sambaíba, Vista Alegre, Galileia</td><td>17,6 km (ida e volta)</td><td>~23 min</td></tr><tr><td><strong>Rota nova – Retiro</strong></td><td>Sede – Sussuarana – Retiro – Sede</td><td>Sussuarana, Retiro</td><td>79,0 km (ida e volta)</td><td>~3h10</td></tr><tr><td><strong>Parada extra na Rota 04</strong></td><td>desvio pelo caminho atual: Missionário</td><td>Missionário</td><td>+3,5 km</td><td>+5 min</td></tr><tr><td><strong>Parada extra na Rota 05</strong></td><td>desvio pelo caminho atual: Boa Esperança</td><td>Boa Esperança</td><td>+7,4 km</td><td>+11 min</td></tr></tbody></table></div>
+<p>Para as rotas novas, sugerimos os mesmos horários do edital. As extensões e paradas extras sugeridas são feitas pelos próprios veículos das rotas do Edital nº 23/2026 - TRE/74ª ZONA. Para as rotas novas, a Prefeitura pode pôr à disposição da Justiça Eleitoral os seguintes veículos da frota municipal, abastecidos e com motorista: a definir pela Prefeitura. Todas as propostas só acrescentam percurso, e nenhuma rota do edital é reduzida ou removida.</p></article>
+<footer>Fontes: TRE e TSE (locais de votação), Diário da Justiça Eletrônico dos TREs (editais de rotas), IBGE – Localidades do Brasil 2022, OpenStreetMap (localidades e estradas) e OSRM (distâncias por estrada). Levantamento técnico e apartidário; os números devem ser confirmados com o Cartório Eleitoral de cada zona.</footer>
+</main>
+</body>
+</html>
